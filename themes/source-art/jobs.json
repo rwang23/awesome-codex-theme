@@ -9,6 +9,7 @@
     "outputFormat": "png"
   },
   "commonPrompt": "Create original premium key art for a desktop coding workspace theme. Use contemporary Chinese animation background painting, refined ink-wash atmosphere, mineral-pigment color, cinematic depth, and precise environmental detail. The result must be a new composition, not an imitation of any named artist, studio, series, game, film, character, or franchise. Keep the entire left 46 percent calm and low contrast for readable interface controls. Put the main visual story in the right third. Keep important content inside the middle 82 percent vertically because the source will be cropped to 16:9. No text, letters, numbers, logo, watermark, signature, interface, border, frame, mockup, diptych, or split panel. No photorealism. Landscape 3:2.",
+  "fanArtPrompt": "Create premium unofficial fan-art key art for a desktop coding workspace theme. Depict only the declared work and characters in the scene brief, with recognizable canonical identity and signature props, but make a completely new composition rather than copying any official still, poster, key visual, camera angle, or promotional asset. Use polished cinematic Chinese fantasy animation rendering with refined ink atmosphere, mineral-pigment color, dimensional lighting, and believable materials; do not imitate a named artist or studio's signature style. Keep the entire left 46 percent calm, low contrast, and mostly environmental for readable interface controls. Put the main characters or scene action in the right third. Keep faces, bodies, and important action inside the middle 82 percent vertically because the source will be cropped to 16:9. No text, title, letters, numbers, logo, watermark, signature, interface, border, frame, mockup, diptych, split panel, or copied franchise emblem. No photorealism. Landscape 3:2.",
   "jobs": [
     {
       "id": "qinglan-odyssey",
@@ -73,6 +74,186 @@
     {
       "id": "nanjing-wall-plum",
       "prompt": "A quiet winter city edge with broad old brick wall courses, plum branches, river mist, and distant modern roofs. One restrained cinnabar blossom cluster holds the right side while cool gray masonry recedes into fog. Evoke Nanjing through history, winter, and river atmosphere without an exact monument."
+    },
+    {
+      "id": "mortal-journey-duo",
+      "rightsProfile": "fan-art",
+      "fanArt": {
+        "work": {
+          "en": "A Record of a Mortal's Journey to Immortality",
+          "zh-CN": "凡人修仙传"
+        },
+        "characters": {
+          "en": ["Han Li", "Nangong Wan"],
+          "zh-CN": ["韩立", "南宫婉"]
+        }
+      },
+      "prompt": "Unofficial fan art for 《凡人修仙传》 featuring 韩立 and 南宫婉. Place both full-body characters on the far-right side of a high stone cultivation terrace at misty dawn. Han Li has a calm, restrained expression, long dark hair tied back, a practical deep-blue cultivation robe, a storage pouch, and a faintly glowing small green bottle at his belt. Nangong Wan wears an elegant pale ivory and cool-blue layered robe with subtle silver ornaments, long black hair, and a poised but warm gaze. They stand several steps apart, looking toward each other rather than posing for a poster. Distant green mountains, a quiet formation circle, drifting medicinal petals, restrained jade and moon-white light."
+    },
+    {
+      "id": "mortal-journey-chibi",
+      "rightsProfile": "fan-art",
+      "fanArt": {
+        "work": {
+          "en": "A Record of a Mortal's Journey to Immortality",
+          "zh-CN": "凡人修仙传"
+        },
+        "characters": {
+          "en": ["Han Li", "Nangong Wan"],
+          "zh-CN": ["韩立", "南宫婉"]
+        }
+      },
+      "prompt": "Unofficial chibi fan art for 《凡人修仙传》 featuring Q-version 韩立 and 南宫婉 as two complete, polished miniature figures on the right. Han Li carefully protects a tiny luminous green bottle while checking a miniature herb garden; he wears a simplified deep-blue robe and storage pouches. Nangong Wan kneels beside him in a pale ivory-blue robe, holding a small spirit herb and smiling with composed amusement. Oversized leaves, tiny formation stones, soft mountain mist, jade and warm cream palette, expressive faces, refined 3D-animation materials, not sticker-like."
+    },
+    {
+      "id": "renegade-immortal-duo",
+      "rightsProfile": "fan-art",
+      "fanArt": {
+        "work": {
+          "en": "Renegade Immortal",
+          "zh-CN": "仙逆"
+        },
+        "characters": {
+          "en": ["Wang Lin", "Li Muwan"],
+          "zh-CN": ["王林", "李慕婉"]
+        }
+      },
+      "prompt": "Unofficial fan art for 《仙逆》 featuring 王林 and 李慕婉. On the right side beneath a cold indigo sky, Wang Lin stands in a dark black-and-gray robe with long black hair, a severe quiet face, and a faint red spiritual light circling one hand. Li Muwan stands close but not touching, in a pale blue-white robe with delicate alchemist details, holding a small warm lantern shaped like a pill furnace. Wind moves their sleeves while a distant ruined cultivation city and bare branches fade into snow mist. The emotional contrast is relentless cold around one protected warm light."
+    },
+    {
+      "id": "renegade-immortal-chibi",
+      "rightsProfile": "fan-art",
+      "fanArt": {
+        "work": {
+          "en": "Renegade Immortal",
+          "zh-CN": "仙逆"
+        },
+        "characters": {
+          "en": ["Wang Lin", "Li Muwan"],
+          "zh-CN": ["王林", "李慕婉"]
+        }
+      },
+      "prompt": "Unofficial chibi fan art for 《仙逆》 featuring Q-version 王林 and 李慕婉 inside a tiny woodcarving shop on the right. Wang Lin, in a simplified charcoal robe and long dark hair, concentrates intensely on carving a small wooden figure. Li Muwan, in a pale blue-white robe, tends a round glowing pill furnace and places a cup of tea near him. A few finished woodcarvings, snow outside the window, indigo shadows, one amber pool of light, charming expressions but emotionally grounded, polished miniature materials."
+    },
+    {
+      "id": "sword-of-coming-duo",
+      "rightsProfile": "fan-art",
+      "fanArt": {
+        "work": {
+          "en": "Sword of Coming",
+          "zh-CN": "剑来"
+        },
+        "characters": {
+          "en": ["Chen Ping'an", "Ning Yao"],
+          "zh-CN": ["陈平安", "宁姚"]
+        }
+      },
+      "prompt": "Unofficial fan art for 《剑来》 featuring 陈平安 and 宁姚. On the far-right of a rain-cleared small-town road, Chen Ping'an walks in simple dark-brown travel clothes and straw sandals, carrying a plain sword case and a cloth bundle, with a sincere steady expression. Ning Yao walks half a step ahead in a clean dark-red and black swordswoman outfit, long dark hair tied high, one hand resting near her sword as she turns back toward him. Whitewashed walls, wet bluestone, distant ink mountains, a road opening beyond the town, restrained cinnabar and parchment colors."
+    },
+    {
+      "id": "sword-of-coming-chibi",
+      "rightsProfile": "fan-art",
+      "fanArt": {
+        "work": {
+          "en": "Sword of Coming",
+          "zh-CN": "剑来"
+        },
+        "characters": {
+          "en": ["Chen Ping'an", "Ning Yao"],
+          "zh-CN": ["陈平安", "宁姚"]
+        }
+      },
+      "prompt": "Unofficial chibi fan art for 《剑来》 featuring Q-version 陈平安 and 宁姚 on the right side of a tiny bluestone town lane. Chen Ping'an leans forward under an oversized plain sword case, dressed in humble brown travel clothes and straw sandals, earnest and slightly flustered. Ning Yao, in a simplified dark-red swordswoman outfit with a high ponytail, points confidently toward the mountain road while holding her sword. Small white walls, a paper umbrella, puddle reflections, warm window light, polished chibi animation rendering."
+    },
+    {
+      "id": "battle-through-duo",
+      "rightsProfile": "fan-art",
+      "fanArt": {
+        "work": {
+          "en": "Battle Through the Heavens",
+          "zh-CN": "斗破苍穹"
+        },
+        "characters": {
+          "en": ["Xiao Yan", "Medusa (Cai Lin)"],
+          "zh-CN": ["萧炎", "美杜莎（彩鳞）"]
+        }
+      },
+      "prompt": "Unofficial fan art for 《斗破苍穹》 featuring 萧炎 and 美杜莎（彩鳞）. Place them on the right side of a desert ruin at twilight. Xiao Yan wears a fitted black martial robe with red accents, carries the massive dark Xuan Heavy Ruler behind one shoulder, and holds a controlled green-blue heavenly flame. Medusa stands beside him in an elegant violet-crimson queen's battle dress with gold serpent jewelry, long dark hair, commanding eyes, and a restrained translucent purple serpent aura. Windblown sand, broken stone, green flame versus violet energy, cinematic partnership rather than a promotional pose."
+    },
+    {
+      "id": "battle-through-chibi",
+      "rightsProfile": "fan-art",
+      "fanArt": {
+        "work": {
+          "en": "Battle Through the Heavens",
+          "zh-CN": "斗破苍穹"
+        },
+        "characters": {
+          "en": ["Xiao Yan", "Medusa (Cai Lin)"],
+          "zh-CN": ["萧炎", "美杜莎（彩鳞）"]
+        }
+      },
+      "prompt": "Unofficial chibi fan art for 《斗破苍穹》 featuring Q-version 萧炎 and 美杜莎（彩鳞） on the right. Xiao Yan in a small black-and-red martial robe struggles to balance a glowing two-color fire lotus while an oversized dark heavy ruler lies behind him. Medusa, in a simplified violet-crimson queen outfit with gold serpent ornaments, watches with an unimpressed expression while a tiny purple serpent curls around her arm. Miniature desert stones, green and violet glow, highly polished chibi materials, complete figures, playful but not plastic."
+    },
+    {
+      "id": "mortal-void-hall",
+      "rightsProfile": "fan-art",
+      "fanArt": {
+        "work": {
+          "en": "A Record of a Mortal's Journey to Immortality",
+          "zh-CN": "凡人修仙传"
+        },
+        "characters": {
+          "en": ["Han Li"],
+          "zh-CN": ["韩立"]
+        }
+      },
+      "prompt": "Unofficial fan-art memory scene for 《凡人修仙传》: 虚天殿. Compose a completely new wide view rather than recreating an official shot. The left half is quiet ice fog and monumental shadow. On the right, 韩立 in a practical deep-blue cultivation robe walks with several tiny distant cultivator silhouettes up immense translucent ice steps toward a colossal ancient hall door. Frozen chains, blue-white spiritual light, black stone, deep vertical scale, crisp architectural detail, mysterious danger, Han Li identifiable by his restrained robe, tied dark hair, storage pouch, and subtle green-bottle glow."
+    },
+    {
+      "id": "renegade-wedding-storm",
+      "rightsProfile": "fan-art",
+      "fanArt": {
+        "work": {
+          "en": "Renegade Immortal",
+          "zh-CN": "仙逆"
+        },
+        "characters": {
+          "en": ["Wang Lin", "Li Muwan"],
+          "zh-CN": ["王林", "李慕婉"]
+        }
+      },
+      "prompt": "Unofficial fan-art memory scene for 《仙逆》: 王林抢婚. Create a new camera angle from outside a mountain wedding hall during a sudden snowstorm. The calm left side holds pale snow and distant dark roofs. On the right, red wedding silk and lanterns whip into the air as 王林 descends above the steps in a dark robe, long black hair and cold red spiritual light, while 李慕婉 in ceremonial red-and-white layers turns upward from the hall entrance. The image should feel like one uncompromising arrival splitting warm ceremony from cold sky, with no readable wedding characters or symbols."
+    },
+    {
+      "id": "sword-confession-alley",
+      "rightsProfile": "fan-art",
+      "fanArt": {
+        "work": {
+          "en": "Sword of Coming",
+          "zh-CN": "剑来"
+        },
+        "characters": {
+          "en": ["Chen Ping'an", "Ning Yao"],
+          "zh-CN": ["陈平安", "宁姚"]
+        }
+      },
+      "prompt": "Unofficial fan-art memory scene for 《剑来》: 陈平安向宁姚告白. Make a new intimate composition in a quiet small-town lane after rain. Keep the left half as empty wet bluestone, soft wall shadows, and mist. On the right, 陈平安 in humble dark-brown clothes and straw sandals stands very straight, nervous but completely sincere, facing 宁姚. Ning Yao wears a dark-red swordswoman outfit, holds her sword against one shoulder, and looks back with surprised warmth. One amber window, pale rain light, white walls, restrained emotion, no text or romantic typography."
+    },
+    {
+      "id": "battle-three-year-pact",
+      "rightsProfile": "fan-art",
+      "fanArt": {
+        "work": {
+          "en": "Battle Through the Heavens",
+          "zh-CN": "斗破苍穹"
+        },
+        "characters": {
+          "en": ["Xiao Yan", "Nalan Yanran"],
+          "zh-CN": ["萧炎", "纳兰嫣然"]
+        }
+      },
+      "prompt": "Unofficial fan-art memory scene for 《斗破苍穹》: 三年之约. Compose a fresh wide view of a high mountain arena rather than copying an official shot. Leave the left half as pale cloud, worn stone, and distant sect terraces. On the right, 萧炎 in a black-and-red martial robe stands with the massive dark Xuan Heavy Ruler and green-blue heavenly flame facing 纳兰嫣然 in a pale cyan-and-white sword robe with a long narrow sword and wind energy. Broken arena tiles lift between them, cloud bands cut across the mountain, and their opposing silhouettes carry the full weight of the promised duel. No sect logos, banners, or readable symbols."
     }
   ]
 }

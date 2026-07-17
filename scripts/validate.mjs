@@ -11,7 +11,8 @@ const ROOT = path.resolve(SCRIPT_DIR, "..");
 const THEME_ID = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const SHA256 = /^[a-f0-9]{64}$/;
 const HEX = /^#[0-9A-Fa-f]{6}$/;
-const FORBIDDEN_PROMPT = /凡人修仙传|仙逆|剑来|studio\s+ghibli|makoto\s+shinkai|hayao\s+miyazaki|style\s+of/i;
+const FAN_ART_LICENSE_ID = "LicenseRef-ACT-Fan-Art-Notice";
+const FORBIDDEN_PROMPT = /凡人修仙传|仙逆|剑来|斗破苍穹|studio\s+ghibli|makoto\s+shinkai|hayao\s+miyazaki|style\s+of/i;
 const MAX_IMAGE_BYTES = 16 * 1024 * 1024;
 const SOURCE_WIDTH = 1536;
 const SOURCE_HEIGHT = 1024;
@@ -193,11 +194,22 @@ export async function validateRepository() {
     errors,
   );
   for (const sourceJob of sourceJobRecords) {
-    check(
-      !FORBIDDEN_PROMPT.test(sourceJob.prompt || ""),
-      sourceJob.id + " source prompt names a protected work, artist, or studio",
-      errors,
-    );
+    const rightsProfile = sourceJob.rightsProfile || "original";
+    if (rightsProfile === "fan-art") {
+      check(Boolean(sourceJob.fanArt?.work?.["zh-CN"]), sourceJob.id + " fan-art job must declare its work", errors);
+      check(Array.isArray(sourceJob.fanArt?.characters?.["zh-CN"]), sourceJob.id + " fan-art job must declare characters", errors);
+      check(
+        (sourceJob.prompt || "").includes(sourceJob.fanArt?.work?.["zh-CN"] || ""),
+        sourceJob.id + " fan-art prompt must name its declared work",
+        errors,
+      );
+    } else {
+      check(
+        !FORBIDDEN_PROMPT.test(sourceJob.prompt || ""),
+        sourceJob.id + " original prompt names a protected work, artist, or studio",
+        errors,
+      );
+    }
   }
   const collectionIds = catalog.collections.map((collection) => collection.id);
   check(new Set(collectionIds).size === collectionIds.length, "Catalog contains duplicate collection ids", errors);
@@ -205,9 +217,20 @@ export async function validateRepository() {
   check(registry.collections.length === catalog.collections.length, "Registry/catalog collection count mismatch", errors);
 
   for (const theme of catalog.themes) {
+    const rightsProfile = theme.rightsProfile || "original";
     check(THEME_ID.test(theme.id), "Invalid catalog id: " + theme.id, errors);
     check(collectionMap.has(theme.collection), theme.id + " references an unknown collection", errors);
-    check(["cinematic", "chibi", "cityscape"].includes(theme.variant), theme.id + " has an unsupported variant", errors);
+    check(["cinematic", "chibi", "cityscape", "scene"].includes(theme.variant), theme.id + " has an unsupported variant", errors);
+    check(["original", "fan-art"].includes(rightsProfile), theme.id + " has an unsupported rights profile", errors);
+    if (rightsProfile === "fan-art") {
+      check(Boolean(theme.fanArt?.work?.["zh-CN"]), theme.id + " fan-art work is missing", errors);
+      check(Array.isArray(theme.fanArt?.characters?.["zh-CN"]), theme.id + " fan-art characters are missing", errors);
+      check(theme.fanArt?.unofficial === true, theme.id + " must be marked unofficial", errors);
+      check(theme.fanArt?.commercialUse === false, theme.id + " must prohibit commercial use", errors);
+      check(theme.fanArt?.officialAssetsUsed === false, theme.id + " must disclose that no official assets were used", errors);
+    } else {
+      check(!theme.fanArt, theme.id + " original theme must not declare fan-art metadata", errors);
+    }
   }
 
   for (const collection of catalog.collections) {
@@ -218,6 +241,11 @@ export async function validateRepository() {
     const registryCollection = registry.collections.find((candidate) => candidate.id === collection.id);
     check(Boolean(registryCollection), "Missing registry collection: " + collection.id, errors);
     check(registryCollection?.themeCount === collectionThemes.length, collection.id + " registry theme count mismatch", errors);
+    check(
+      collectionThemes.every((theme) => (theme.rightsProfile || "original") === (collection.rightsProfile || "original")),
+      collection.id + " mixes incompatible rights profiles",
+      errors,
+    );
 
     const pairCounts = new Map();
     for (const theme of collectionThemes) {
@@ -256,7 +284,10 @@ export async function validateRepository() {
       readJson(provenancePath),
     ]);
     const sourceDimensions = readPngDimensions(sourceArt);
-    const completePrompt = sourceJobs.commonPrompt + "\n\nScene brief: " + sourceJob.prompt;
+    const rightsProfile = catalogTheme.rightsProfile || "original";
+    const fanArt = rightsProfile === "fan-art";
+    const commonPrompt = fanArt ? sourceJobs.fanArtPrompt : sourceJobs.commonPrompt;
+    const completePrompt = commonPrompt + "\n\nScene brief: " + sourceJob.prompt;
     check(
       sourceDimensions.width === SOURCE_WIDTH && sourceDimensions.height === SOURCE_HEIGHT,
       catalogTheme.id + " source-art dimensions mismatch",
@@ -264,6 +295,12 @@ export async function validateRepository() {
     );
     check(sourceArt.length > 0 && sourceArt.length <= MAX_IMAGE_BYTES, catalogTheme.id + " source-art size invalid", errors);
     check(sourceProvenance.themeId === catalogTheme.id, catalogTheme.id + " source provenance identity mismatch", errors);
+    check(sourceJob.rightsProfile === rightsProfile || (!sourceJob.rightsProfile && rightsProfile === "original"), catalogTheme.id + " source job rights-profile mismatch", errors);
+    check(
+      sourceProvenance.rightsProfile === rightsProfile || (!sourceProvenance.rightsProfile && rightsProfile === "original"),
+      catalogTheme.id + " source provenance rights-profile mismatch",
+      errors,
+    );
     check(sourceProvenance.workflow === sourceJobs.workflow.runner, catalogTheme.id + " source workflow mismatch", errors);
     check(sourceProvenance.model === sourceJobs.workflow.model, catalogTheme.id + " source model mismatch", errors);
     check(sourceProvenance.size === sourceJobs.workflow.size, catalogTheme.id + " source size disclosure mismatch", errors);
@@ -276,18 +313,41 @@ export async function validateRepository() {
       errors,
     );
     check(
-      sourceProvenance.disclosure?.includes("AI-generated original source art"),
+      sourceProvenance.disclosure?.includes(fanArt ? "AI-generated unofficial fan art" : "AI-generated original source art"),
       catalogTheme.id + " source AI disclosure missing",
       errors,
     );
+    if (fanArt) {
+      check(
+        JSON.stringify(sourceProvenance.fanArt) === JSON.stringify(sourceJob.fanArt),
+        catalogTheme.id + " source fan-art declaration mismatch",
+        errors,
+      );
+      check(
+        JSON.stringify(sourceJob.fanArt?.work) === JSON.stringify(catalogTheme.fanArt?.work)
+          && JSON.stringify(sourceJob.fanArt?.characters) === JSON.stringify(catalogTheme.fanArt?.characters),
+        catalogTheme.id + " catalog/job fan-art identity mismatch",
+        errors,
+      );
+    }
     check(theme.provenance?.aiGenerated === true, theme.id + " registry AI disclosure mismatch", errors);
-    check(theme.provenance?.rightsVerified === true, theme.id + " registry source rights proof missing", errors);
+    check(theme.rightsProfile === rightsProfile, theme.id + " registry rights-profile mismatch", errors);
+    check(theme.provenance?.rightsVerified === !fanArt, theme.id + " registry rights status mismatch", errors);
+    check(theme.provenance?.type === (fanArt ? "fan-art" : "original"), theme.id + " registry provenance type mismatch", errors);
     check(theme.provenance?.record === provenancePath, theme.id + " registry provenance record mismatch", errors);
     check(theme.provenance?.sourceArt === sourcePath, theme.id + " registry source-art path mismatch", errors);
     check(theme.provenance?.sourceSha256 === sourceProvenance.sourceSha256, theme.id + " registry source hash mismatch", errors);
     check(theme.provenance?.promptSha256 === sourceProvenance.promptSha256, theme.id + " registry prompt hash mismatch", errors);
     check(theme.provenance?.jobId === sourceProvenance.jobId, theme.id + " registry image job mismatch", errors);
-    check(theme.license?.spdx === "CC0-1.0" && theme.license?.rightsVerified === true, theme.id + " license or rights proof missing", errors);
+    check(
+      theme.license?.spdx === (fanArt ? FAN_ART_LICENSE_ID : "CC0-1.0")
+        && theme.license?.rightsVerified === !fanArt,
+      theme.id + " license or rights disclosure mismatch",
+      errors,
+    );
+    if (fanArt) {
+      check(JSON.stringify(theme.fanArt) === JSON.stringify(catalogTheme.fanArt), theme.id + " registry fan-art metadata mismatch", errors);
+    }
     check(theme.motion?.default === "reduced" && theme.motion?.animated === false, theme.id + " motion contract mismatch", errors);
     check(isSafeRelativePath(theme.package.path), theme.id + " package path is unsafe", errors);
     check(isSafeRelativePath(theme.package.manifest), theme.id + " manifest path is unsafe", errors);
@@ -305,10 +365,14 @@ export async function validateRepository() {
     check(manifest.collection === catalogTheme.collection, theme.id + " canonical collection mismatch", errors);
     check(manifest.variant === catalogTheme.variant, theme.id + " canonical variant mismatch", errors);
     check(manifest.pair === catalogTheme.pair, theme.id + " canonical pair mismatch", errors);
+    check(manifest.rightsProfile === rightsProfile, theme.id + " canonical rights-profile mismatch", errors);
     check(theme.collection === catalogTheme.collection, theme.id + " registry collection mismatch", errors);
-    check(manifest.provenance?.rightsVerified === true, theme.id + " canonical provenance is not rights-verified", errors);
+    check(manifest.provenance?.rightsVerified === !fanArt, theme.id + " canonical rights status mismatch", errors);
     check(manifest.provenance?.aiGenerated === true, theme.id + " generated-art disclosure mismatch", errors);
-    check(manifest.provenance?.type === "original", theme.id + " generated-art provenance type mismatch", errors);
+    check(manifest.provenance?.type === (fanArt ? "fan-art" : "original"), theme.id + " generated-art provenance type mismatch", errors);
+    if (fanArt) {
+      check(JSON.stringify(manifest.fanArt) === JSON.stringify(catalogTheme.fanArt), theme.id + " canonical fan-art metadata mismatch", errors);
+    }
     check(manifest.provenance?.source === provenancePath, theme.id + " source provenance path mismatch", errors);
     check(manifest.provenance?.model === sourceProvenance.model, theme.id + " manifest source model mismatch", errors);
     check(manifest.provenance?.jobId === sourceProvenance.jobId, theme.id + " manifest image job mismatch", errors);

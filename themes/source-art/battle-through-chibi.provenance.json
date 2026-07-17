@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "themeId": "battle-through-chibi",
+  "rightsProfile": "fan-art",
+  "workflow": "openai-image-job",
+  "model": "gpt-image-2",
+  "size": "1536x1024",
+  "quality": "high",
+  "jobId": "37d2342a-44c6-4544-882b-0c94b11cd7ba",
+  "promptSha256": "6a8e02a550136234aa29205651ed72de76d9db72c615e75d8e032b65b1a46e59",
+  "sourceSha256": "46f3b2df7c7c0703e95a20fb19cea8428b0b2aadcbab97ab08a02a093b9240e2",
+  "disclosure": "AI-generated unofficial fan art. No official image assets were used. Underlying character and franchise rights remain with their respective rights holders.",
+  "fanArt": {
+    "work": {
+      "en": "Battle Through the Heavens",
+      "zh-CN": "斗破苍穹"
+    },
+    "characters": {
+      "en": [
+        "Xiao Yan",
+        "Medusa (Cai Lin)"
+      ],
+      "zh-CN": [
+        "萧炎",
+        "美杜莎（彩鳞）"
+      ]
+    }
+  }
+}

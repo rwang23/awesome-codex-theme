@@ -1,5 +1,5 @@
 interface:
   display_name: "创建 Codex 主题"
-  short_description: "从原创视觉 brief 创建并校验 ACT 主题包"
+  short_description: "创建并校验原创或明确披露的 Fan Art 主题包"
   brand_color: "#325C53"
-  default_prompt: "Use $create-codex-theme to design an original bilingual Codex theme and validate its package."
+  default_prompt: "Use $create-codex-theme to design a bilingual Codex theme, select the correct original or fan-art rights profile, and validate its package."

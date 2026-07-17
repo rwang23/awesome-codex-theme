@@ -1,5 +1,19 @@
 # Changelog
 
+## 2026-07-17-00-00
+
+- Added eight unofficial character-tribute themes covering cinematic and chibi
+  pairs from four disclosed donghua works.
+- Added four remembered-scene themes: Void Hall, the wedding rescue, the
+  rain-alley confession, and the Three-Year Agreement.
+- Added original and fan-art rights profiles across the catalog, manifests,
+  registry schemas, validator, source provenance, Gallery, and contribution
+  Skill.
+- Added a public fan-art policy, non-commercial notice, declared work and
+  character metadata, and `rightsVerified: false` enforcement.
+- Expanded the Gallery to 28 themes and 56 generated 960×540 light/dark
+  previews, with a dedicated scene filter and fan-art disclosure.
+
 ## 2026-07-16-03-00
 
 - Replaced the derivative editorial Gallery direction with an independent,

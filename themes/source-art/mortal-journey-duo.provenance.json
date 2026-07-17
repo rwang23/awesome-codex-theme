@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "themeId": "mortal-journey-duo",
+  "rightsProfile": "fan-art",
+  "workflow": "openai-image-job",
+  "model": "gpt-image-2",
+  "size": "1536x1024",
+  "quality": "high",
+  "jobId": "12397720-09b0-4c3a-8586-f7e8f173be02",
+  "promptSha256": "e553f04e9e80af079c3b212548264fb24fa80b9935922b431b9572de206247aa",
+  "sourceSha256": "e696ca3a59db2f7f978f086c7e804718d2633d4fa7bd3ac4f774fdd538c6c335",
+  "disclosure": "AI-generated unofficial fan art. No official image assets were used. Underlying character and franchise rights remain with their respective rights holders.",
+  "fanArt": {
+    "work": {
+      "en": "A Record of a Mortal's Journey to Immortality",
+      "zh-CN": "凡人修仙传"
+    },
+    "characters": {
+      "en": [
+        "Han Li",
+        "Nangong Wan"
+      ],
+      "zh-CN": [
+        "韩立",
+        "南宫婉"
+      ]
+    }
+  }
+}

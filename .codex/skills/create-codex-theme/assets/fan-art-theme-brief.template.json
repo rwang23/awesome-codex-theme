@@ -1,0 +1,70 @@
+{
+  "id": "example-fan-scene",
+  "version": "1.0.0",
+  "collection": "donghua-memory-scenes-01",
+  "pair": "example-fan-scene",
+  "variant": "scene",
+  "rightsProfile": "fan-art",
+  "name": {
+    "zh-CN": "示例·记忆场面",
+    "en": "Example Memory Scene"
+  },
+  "description": {
+    "zh-CN": "用新的机位和环境叙事重构一个已声明场面，左侧安静承载工作区。",
+    "en": "Recompose a declared scene with a new camera and environmental story while keeping the workspace quiet on the left."
+  },
+  "tags": [
+    "fan-art",
+    "scene",
+    "donghua"
+  ],
+  "fanArt": {
+    "work": {
+      "zh-CN": "填写作品中文名",
+      "en": "Declared Work"
+    },
+    "characters": {
+      "zh-CN": [
+        "填写角色中文名"
+      ],
+      "en": [
+        "Declared Character"
+      ]
+    },
+    "unofficial": true,
+    "commercialUse": false,
+    "officialAssetsUsed": false
+  },
+  "art": {
+    "focusX": 0.76,
+    "focusY": 0.49,
+    "safeArea": "left",
+    "taskMode": "ambient"
+  },
+  "imagePrompt": "Unofficial fan art for 《填写作品中文名》 featuring 填写角色中文名 in a completely new composition. Describe a new camera angle, action, environment, signature props, and the quiet left workspace area. Do not copy an official still, poster, logo, or promotional asset.",
+  "rightsStatement": "Unofficial AI-generated fan art for personal non-commercial use. No official asset or copied composition is used, and no license or endorsement is claimed.",
+  "light": {
+    "tokens": {
+      "background": "#EEF1F4",
+      "surface": "#FFFFFF",
+      "surfaceAlt": "#DEE5EA",
+      "text": "#172129",
+      "muted": "#4E606C",
+      "accent": "#346B86",
+      "accentContrast": "#FFFFFF",
+      "border": "#A4B5BF"
+    }
+  },
+  "dark": {
+    "tokens": {
+      "background": "#091118",
+      "surface": "#111F29",
+      "surfaceAlt": "#192C38",
+      "text": "#EFF6F8",
+      "muted": "#A5B7C1",
+      "accent": "#76C7E6",
+      "accentContrast": "#08202A",
+      "border": "#355363"
+    }
+  }
+}

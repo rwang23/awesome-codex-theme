@@ -10,6 +10,7 @@
       "id": "original-xianxia-01",
       "order": 1,
       "pairing": "cinematic-chibi",
+      "rightsProfile": "original",
       "name": {
         "en": "Original Xianxia 01",
         "zh-CN": "原创国风修仙 01"
@@ -27,6 +28,7 @@
       "id": "china-city-atlas-01",
       "order": 2,
       "pairing": "standalone",
+      "rightsProfile": "original",
       "name": {
         "en": "China City Atlas 01",
         "zh-CN": "中国城市图鉴 01"
@@ -38,6 +40,42 @@
       "description": {
         "en": "Original city studies built from weather, street rhythm, terrain, and broad architectural cues, using reviewed image-job source art. No photograph, city logo, exact landmark, or official mascot is used.",
         "zh-CN": "从天气、街道节奏、地形和建筑轮廓里提取城市气质，源图通过 image job 生成并人工审查，不使用照片、城市标志、地标复刻或官方吉祥物。"
+      }
+    },
+    {
+      "id": "donghua-character-tributes-01",
+      "order": 3,
+      "pairing": "cinematic-chibi",
+      "rightsProfile": "fan-art",
+      "name": {
+        "en": "Donghua Character Tributes 01",
+        "zh-CN": "国漫角色致敬 01"
+      },
+      "title": {
+        "en": "Four stories, two fan-art forms.",
+        "zh-CN": "四部国漫，两种 Fan Art 表达。"
+      },
+      "description": {
+        "en": "Unofficial AI-generated fan art inspired by A Record of a Mortal's Journey to Immortality, Renegade Immortal, Sword of Coming, and Battle Through the Heavens. No official stills, logos, or promotional assets are used. Underlying rights remain with their respective owners.",
+        "zh-CN": "以《凡人修仙传》《仙逆》《剑来》《斗破苍穹》角色为主题的非官方 AI Fan Art。未使用官方剧照、Logo 或宣传素材，角色与作品权利仍归各自权利方。"
+      }
+    },
+    {
+      "id": "donghua-memory-scenes-01",
+      "order": 4,
+      "pairing": "standalone",
+      "rightsProfile": "fan-art",
+      "name": {
+        "en": "Donghua Memory Scenes 01",
+        "zh-CN": "国漫名场面 01"
+      },
+      "title": {
+        "en": "Four scenes fans remember.",
+        "zh-CN": "四个一眼就能想起的场面。"
+      },
+      "description": {
+        "en": "Four newly composed unofficial fan-art scenes: the Void Hall, Wang Lin's wedding intervention, Chen Ping'an's confession, and the Three-Year Agreement. They recall story beats without copying official shots.",
+        "zh-CN": "四幅重新构图的非官方 Fan Art：虚天殿、王林抢婚、陈平安告白与三年之约。保留剧情记忆点，但不照搬官方镜头。"
       }
     }
   ],
@@ -1022,6 +1060,726 @@
         "ink": "#080405",
         "glow": "#E8BD7B",
         "accentArt": "#DE566A",
+        "tokens": {
+          "background": "#170D10",
+          "surface": "#2B191D",
+          "surfaceAlt": "#3F242A",
+          "text": "#FFF1F2",
+          "muted": "#D2B3B6",
+          "accent": "#EA7182",
+          "accentContrast": "#360E15",
+          "border": "#71454D"
+        }
+      }
+    },
+    {
+      "id": "mortal-journey-duo",
+      "version": "1.0.0",
+      "collection": "donghua-character-tributes-01",
+      "pair": "mortal-journey",
+      "variant": "cinematic",
+      "rightsProfile": "fan-art",
+      "name": {
+        "en": "Mortal Journey · Kindred Paths",
+        "zh-CN": "凡人·道侣相望"
+      },
+      "description": {
+        "en": "Unofficial fan art of Han Li and Nangong Wan meeting across a misty cultivation terrace.",
+        "zh-CN": "韩立与南宫婉隔着雾中石台相望，克制、疏离，又保留彼此牵挂。"
+      },
+      "tags": ["fan-art", "donghua", "mortal-journey", "cinematic", "xianxia"],
+      "fanArt": {
+        "work": {
+          "en": "A Record of a Mortal's Journey to Immortality",
+          "zh-CN": "凡人修仙传"
+        },
+        "characters": {
+          "en": ["Han Li", "Nangong Wan"],
+          "zh-CN": ["韩立", "南宫婉"]
+        },
+        "unofficial": true,
+        "commercialUse": false,
+        "officialAssetsUsed": false
+      },
+      "art": {
+        "focusX": 0.76,
+        "focusY": 0.46,
+        "safeArea": "left",
+        "taskMode": "ambient"
+      },
+      "light": {
+        "tokens": {
+          "background": "#EDF3EE",
+          "surface": "#FFFFFF",
+          "surfaceAlt": "#DCE9DF",
+          "text": "#15231A",
+          "muted": "#52665A",
+          "accent": "#246A4B",
+          "accentContrast": "#FFFFFF",
+          "border": "#9AB4A4"
+        }
+      },
+      "dark": {
+        "tokens": {
+          "background": "#08130E",
+          "surface": "#102219",
+          "surfaceAlt": "#183226",
+          "text": "#EEF8F1",
+          "muted": "#A3B9AA",
+          "accent": "#73D3A0",
+          "accentContrast": "#0A2114",
+          "border": "#365E47"
+        }
+      }
+    },
+    {
+      "id": "mortal-journey-chibi",
+      "version": "1.0.0",
+      "collection": "donghua-character-tributes-01",
+      "pair": "mortal-journey",
+      "variant": "chibi",
+      "rightsProfile": "fan-art",
+      "name": {
+        "en": "Mortal Journey · Bottle Keepers",
+        "zh-CN": "凡人·掌天瓶小队"
+      },
+      "description": {
+        "en": "Chibi Han Li and Nangong Wan guard a tiny green bottle beside a miniature herb garden.",
+        "zh-CN": "Q 版韩立与南宫婉守着一只小绿瓶，旁边是一方缩小的灵药园。"
+      },
+      "tags": ["fan-art", "donghua", "mortal-journey", "chibi", "xianxia"],
+      "fanArt": {
+        "work": {
+          "en": "A Record of a Mortal's Journey to Immortality",
+          "zh-CN": "凡人修仙传"
+        },
+        "characters": {
+          "en": ["Han Li", "Nangong Wan"],
+          "zh-CN": ["韩立", "南宫婉"]
+        },
+        "unofficial": true,
+        "commercialUse": false,
+        "officialAssetsUsed": false
+      },
+      "art": {
+        "focusX": 0.77,
+        "focusY": 0.48,
+        "safeArea": "left",
+        "taskMode": "ambient"
+      },
+      "light": {
+        "tokens": {
+          "background": "#EDF3EE",
+          "surface": "#FFFFFF",
+          "surfaceAlt": "#DCE9DF",
+          "text": "#15231A",
+          "muted": "#52665A",
+          "accent": "#246A4B",
+          "accentContrast": "#FFFFFF",
+          "border": "#9AB4A4"
+        }
+      },
+      "dark": {
+        "tokens": {
+          "background": "#08130E",
+          "surface": "#102219",
+          "surfaceAlt": "#183226",
+          "text": "#EEF8F1",
+          "muted": "#A3B9AA",
+          "accent": "#73D3A0",
+          "accentContrast": "#0A2114",
+          "border": "#365E47"
+        }
+      }
+    },
+    {
+      "id": "renegade-immortal-duo",
+      "version": "1.0.0",
+      "collection": "donghua-character-tributes-01",
+      "pair": "renegade-immortal",
+      "variant": "cinematic",
+      "rightsProfile": "fan-art",
+      "name": {
+        "en": "Renegade Immortal · A Vow Against Heaven",
+        "zh-CN": "仙逆·执念相守"
+      },
+      "description": {
+        "en": "Unofficial fan art of Wang Lin and Li Muwan beneath a cold sky, held together by one warm lantern.",
+        "zh-CN": "王林与李慕婉立在冷色天幕下，万里寒意里只留一盏暖灯。"
+      },
+      "tags": ["fan-art", "donghua", "renegade-immortal", "cinematic", "xianxia"],
+      "fanArt": {
+        "work": {
+          "en": "Renegade Immortal",
+          "zh-CN": "仙逆"
+        },
+        "characters": {
+          "en": ["Wang Lin", "Li Muwan"],
+          "zh-CN": ["王林", "李慕婉"]
+        },
+        "unofficial": true,
+        "commercialUse": false,
+        "officialAssetsUsed": false
+      },
+      "art": {
+        "focusX": 0.77,
+        "focusY": 0.45,
+        "safeArea": "left",
+        "taskMode": "ambient"
+      },
+      "light": {
+        "tokens": {
+          "background": "#EFF3FB",
+          "surface": "#FFFFFF",
+          "surfaceAlt": "#DDE6F8",
+          "text": "#14213B",
+          "muted": "#55647D",
+          "accent": "#3459A6",
+          "accentContrast": "#FFFFFF",
+          "border": "#A5B5D4"
+        }
+      },
+      "dark": {
+        "tokens": {
+          "background": "#070D1B",
+          "surface": "#0F1930",
+          "surfaceAlt": "#182746",
+          "text": "#F1F5FF",
+          "muted": "#A8B4D1",
+          "accent": "#7FA5FF",
+          "accentContrast": "#09142C",
+          "border": "#3A4E78"
+        }
+      }
+    },
+    {
+      "id": "renegade-immortal-chibi",
+      "version": "1.0.0",
+      "collection": "donghua-character-tributes-01",
+      "pair": "renegade-immortal",
+      "variant": "chibi",
+      "rightsProfile": "fan-art",
+      "name": {
+        "en": "Renegade Immortal · Little Woodcarving Shop",
+        "zh-CN": "仙逆·木雕小铺"
+      },
+      "description": {
+        "en": "Chibi Wang Lin carves a tiny figure while Li Muwan tends a glowing pill furnace.",
+        "zh-CN": "Q 版王林低头刻木雕，李慕婉在旁照看一只发着暖光的小丹炉。"
+      },
+      "tags": ["fan-art", "donghua", "renegade-immortal", "chibi", "xianxia"],
+      "fanArt": {
+        "work": {
+          "en": "Renegade Immortal",
+          "zh-CN": "仙逆"
+        },
+        "characters": {
+          "en": ["Wang Lin", "Li Muwan"],
+          "zh-CN": ["王林", "李慕婉"]
+        },
+        "unofficial": true,
+        "commercialUse": false,
+        "officialAssetsUsed": false
+      },
+      "art": {
+        "focusX": 0.78,
+        "focusY": 0.5,
+        "safeArea": "left",
+        "taskMode": "ambient"
+      },
+      "light": {
+        "tokens": {
+          "background": "#EFF3FB",
+          "surface": "#FFFFFF",
+          "surfaceAlt": "#DDE6F8",
+          "text": "#14213B",
+          "muted": "#55647D",
+          "accent": "#3459A6",
+          "accentContrast": "#FFFFFF",
+          "border": "#A5B5D4"
+        }
+      },
+      "dark": {
+        "tokens": {
+          "background": "#070D1B",
+          "surface": "#0F1930",
+          "surfaceAlt": "#182746",
+          "text": "#F1F5FF",
+          "muted": "#A8B4D1",
+          "accent": "#7FA5FF",
+          "accentContrast": "#09142C",
+          "border": "#3A4E78"
+        }
+      }
+    },
+    {
+      "id": "sword-of-coming-duo",
+      "version": "1.0.0",
+      "collection": "donghua-character-tributes-01",
+      "pair": "sword-of-coming",
+      "variant": "cinematic",
+      "rightsProfile": "fan-art",
+      "name": {
+        "en": "Sword of Coming · Two Young Swords",
+        "zh-CN": "剑来·少年与宁姚"
+      },
+      "description": {
+        "en": "Unofficial fan art of Chen Ping'an and Ning Yao walking out of a small town toward an open mountain road.",
+        "zh-CN": "陈平安与宁姚从小镇走向山路，一人背剑，一人回头，脚下就是大道。"
+      },
+      "tags": ["fan-art", "donghua", "sword-of-coming", "cinematic", "wuxia"],
+      "fanArt": {
+        "work": {
+          "en": "Sword of Coming",
+          "zh-CN": "剑来"
+        },
+        "characters": {
+          "en": ["Chen Ping'an", "Ning Yao"],
+          "zh-CN": ["陈平安", "宁姚"]
+        },
+        "unofficial": true,
+        "commercialUse": false,
+        "officialAssetsUsed": false
+      },
+      "art": {
+        "focusX": 0.78,
+        "focusY": 0.46,
+        "safeArea": "left",
+        "taskMode": "ambient"
+      },
+      "light": {
+        "tokens": {
+          "background": "#F4F0E8",
+          "surface": "#FFFEFA",
+          "surfaceAlt": "#E8E1D5",
+          "text": "#241D17",
+          "muted": "#6C5F52",
+          "accent": "#8E302B",
+          "accentContrast": "#FFFFFF",
+          "border": "#B9AA98"
+        }
+      },
+      "dark": {
+        "tokens": {
+          "background": "#130C0B",
+          "surface": "#251512",
+          "surfaceAlt": "#35211C",
+          "text": "#FFF2E8",
+          "muted": "#C5AA9C",
+          "accent": "#EB7063",
+          "accentContrast": "#2D0D0A",
+          "border": "#67453A"
+        }
+      }
+    },
+    {
+      "id": "sword-of-coming-chibi",
+      "version": "1.0.0",
+      "collection": "donghua-character-tributes-01",
+      "pair": "sword-of-coming",
+      "variant": "chibi",
+      "rightsProfile": "fan-art",
+      "name": {
+        "en": "Sword of Coming · Small-Town Companions",
+        "zh-CN": "剑来·小镇同行"
+      },
+      "description": {
+        "en": "Chibi Chen Ping'an carries an oversized sword case while Ning Yao points toward the next road.",
+        "zh-CN": "Q 版陈平安背着过大的剑匣，宁姚抱剑指向下一段山路。"
+      },
+      "tags": ["fan-art", "donghua", "sword-of-coming", "chibi", "wuxia"],
+      "fanArt": {
+        "work": {
+          "en": "Sword of Coming",
+          "zh-CN": "剑来"
+        },
+        "characters": {
+          "en": ["Chen Ping'an", "Ning Yao"],
+          "zh-CN": ["陈平安", "宁姚"]
+        },
+        "unofficial": true,
+        "commercialUse": false,
+        "officialAssetsUsed": false
+      },
+      "art": {
+        "focusX": 0.79,
+        "focusY": 0.5,
+        "safeArea": "left",
+        "taskMode": "ambient"
+      },
+      "light": {
+        "tokens": {
+          "background": "#F4F0E8",
+          "surface": "#FFFEFA",
+          "surfaceAlt": "#E8E1D5",
+          "text": "#241D17",
+          "muted": "#6C5F52",
+          "accent": "#8E302B",
+          "accentContrast": "#FFFFFF",
+          "border": "#B9AA98"
+        }
+      },
+      "dark": {
+        "tokens": {
+          "background": "#130C0B",
+          "surface": "#251512",
+          "surfaceAlt": "#35211C",
+          "text": "#FFF2E8",
+          "muted": "#C5AA9C",
+          "accent": "#EB7063",
+          "accentContrast": "#2D0D0A",
+          "border": "#67453A"
+        }
+      }
+    },
+    {
+      "id": "battle-through-duo",
+      "version": "1.0.0",
+      "collection": "donghua-character-tributes-01",
+      "pair": "battle-through-heavens",
+      "variant": "cinematic",
+      "rightsProfile": "fan-art",
+      "name": {
+        "en": "Battle Through · Flame and Serpent",
+        "zh-CN": "斗破·异火与蛇影"
+      },
+      "description": {
+        "en": "Unofficial fan art of Xiao Yan and Medusa framed by green flame and a restrained violet serpent aura.",
+        "zh-CN": "萧炎与美杜莎并肩立在异火与紫色蛇影之间，危险感与默契同时存在。"
+      },
+      "tags": ["fan-art", "donghua", "battle-through-heavens", "cinematic", "fantasy"],
+      "fanArt": {
+        "work": {
+          "en": "Battle Through the Heavens",
+          "zh-CN": "斗破苍穹"
+        },
+        "characters": {
+          "en": ["Xiao Yan", "Medusa (Cai Lin)"],
+          "zh-CN": ["萧炎", "美杜莎（彩鳞）"]
+        },
+        "unofficial": true,
+        "commercialUse": false,
+        "officialAssetsUsed": false
+      },
+      "art": {
+        "focusX": 0.77,
+        "focusY": 0.45,
+        "safeArea": "left",
+        "taskMode": "ambient"
+      },
+      "light": {
+        "tokens": {
+          "background": "#F7F1EE",
+          "surface": "#FFFFFF",
+          "surfaceAlt": "#EADDD8",
+          "text": "#332321",
+          "muted": "#6A5652",
+          "accent": "#913645",
+          "accentContrast": "#FFFFFF",
+          "border": "#BDA6A0"
+        }
+      },
+      "dark": {
+        "tokens": {
+          "background": "#170D10",
+          "surface": "#2B191D",
+          "surfaceAlt": "#3F242A",
+          "text": "#FFF1F2",
+          "muted": "#D2B3B6",
+          "accent": "#EA7182",
+          "accentContrast": "#360E15",
+          "border": "#71454D"
+        }
+      }
+    },
+    {
+      "id": "battle-through-chibi",
+      "version": "1.0.0",
+      "collection": "donghua-character-tributes-01",
+      "pair": "battle-through-heavens",
+      "variant": "chibi",
+      "rightsProfile": "fan-art",
+      "name": {
+        "en": "Battle Through · Little Fire Lotus Team",
+        "zh-CN": "斗破·火莲小队"
+      },
+      "description": {
+        "en": "Chibi Xiao Yan balances a tiny fire lotus while Medusa watches with an unimpressed serpent companion.",
+        "zh-CN": "Q 版萧炎托着一朵迷你火莲，美杜莎和一条小蛇在旁边冷静围观。"
+      },
+      "tags": ["fan-art", "donghua", "battle-through-heavens", "chibi", "fantasy"],
+      "fanArt": {
+        "work": {
+          "en": "Battle Through the Heavens",
+          "zh-CN": "斗破苍穹"
+        },
+        "characters": {
+          "en": ["Xiao Yan", "Medusa (Cai Lin)"],
+          "zh-CN": ["萧炎", "美杜莎（彩鳞）"]
+        },
+        "unofficial": true,
+        "commercialUse": false,
+        "officialAssetsUsed": false
+      },
+      "art": {
+        "focusX": 0.78,
+        "focusY": 0.5,
+        "safeArea": "left",
+        "taskMode": "ambient"
+      },
+      "light": {
+        "tokens": {
+          "background": "#F7F1EE",
+          "surface": "#FFFFFF",
+          "surfaceAlt": "#EADDD8",
+          "text": "#332321",
+          "muted": "#6A5652",
+          "accent": "#913645",
+          "accentContrast": "#FFFFFF",
+          "border": "#BDA6A0"
+        }
+      },
+      "dark": {
+        "tokens": {
+          "background": "#170D10",
+          "surface": "#2B191D",
+          "surfaceAlt": "#3F242A",
+          "text": "#FFF1F2",
+          "muted": "#D2B3B6",
+          "accent": "#EA7182",
+          "accentContrast": "#360E15",
+          "border": "#71454D"
+        }
+      }
+    },
+    {
+      "id": "mortal-void-hall",
+      "version": "1.0.0",
+      "collection": "donghua-memory-scenes-01",
+      "pair": "mortal-void-hall",
+      "variant": "scene",
+      "rightsProfile": "fan-art",
+      "name": {
+        "en": "Mortal Journey · The Void Hall",
+        "zh-CN": "凡人·虚天殿"
+      },
+      "description": {
+        "en": "A newly composed fan-art view of Han Li entering the immense ice-blue Void Hall.",
+        "zh-CN": "韩立踏入冰蓝色虚天殿，巨大的殿门、冰阶与人影共同压出秘境尺度。"
+      },
+      "tags": ["fan-art", "donghua", "mortal-journey", "scene", "void-hall"],
+      "fanArt": {
+        "work": {
+          "en": "A Record of a Mortal's Journey to Immortality",
+          "zh-CN": "凡人修仙传"
+        },
+        "characters": {
+          "en": ["Han Li"],
+          "zh-CN": ["韩立"]
+        },
+        "unofficial": true,
+        "commercialUse": false,
+        "officialAssetsUsed": false
+      },
+      "art": {
+        "focusX": 0.78,
+        "focusY": 0.44,
+        "safeArea": "left",
+        "taskMode": "ambient"
+      },
+      "light": {
+        "tokens": {
+          "background": "#EDF3EE",
+          "surface": "#FFFFFF",
+          "surfaceAlt": "#DCE9DF",
+          "text": "#15231A",
+          "muted": "#52665A",
+          "accent": "#246A4B",
+          "accentContrast": "#FFFFFF",
+          "border": "#9AB4A4"
+        }
+      },
+      "dark": {
+        "tokens": {
+          "background": "#08130E",
+          "surface": "#102219",
+          "surfaceAlt": "#183226",
+          "text": "#EEF8F1",
+          "muted": "#A3B9AA",
+          "accent": "#73D3A0",
+          "accentContrast": "#0A2114",
+          "border": "#365E47"
+        }
+      }
+    },
+    {
+      "id": "renegade-wedding-storm",
+      "version": "1.0.0",
+      "collection": "donghua-memory-scenes-01",
+      "pair": "renegade-wedding-storm",
+      "variant": "scene",
+      "rightsProfile": "fan-art",
+      "name": {
+        "en": "Renegade Immortal · Wedding Storm",
+        "zh-CN": "仙逆·风雪抢婚"
+      },
+      "description": {
+        "en": "Wang Lin arrives above the wedding hall as cold wind tears through the red ceremony and Li Muwan looks up.",
+        "zh-CN": "王林从风雪中落在喜堂上空，红色婚仪被冷风卷开，李慕婉抬头看见来人。"
+      },
+      "tags": ["fan-art", "donghua", "renegade-immortal", "scene", "wedding"],
+      "fanArt": {
+        "work": {
+          "en": "Renegade Immortal",
+          "zh-CN": "仙逆"
+        },
+        "characters": {
+          "en": ["Wang Lin", "Li Muwan"],
+          "zh-CN": ["王林", "李慕婉"]
+        },
+        "unofficial": true,
+        "commercialUse": false,
+        "officialAssetsUsed": false
+      },
+      "art": {
+        "focusX": 0.77,
+        "focusY": 0.43,
+        "safeArea": "left",
+        "taskMode": "ambient"
+      },
+      "light": {
+        "tokens": {
+          "background": "#EFF3FB",
+          "surface": "#FFFFFF",
+          "surfaceAlt": "#DDE6F8",
+          "text": "#14213B",
+          "muted": "#55647D",
+          "accent": "#3459A6",
+          "accentContrast": "#FFFFFF",
+          "border": "#A5B5D4"
+        }
+      },
+      "dark": {
+        "tokens": {
+          "background": "#070D1B",
+          "surface": "#0F1930",
+          "surfaceAlt": "#182746",
+          "text": "#F1F5FF",
+          "muted": "#A8B4D1",
+          "accent": "#7FA5FF",
+          "accentContrast": "#09142C",
+          "border": "#3A4E78"
+        }
+      }
+    },
+    {
+      "id": "sword-confession-alley",
+      "version": "1.0.0",
+      "collection": "donghua-memory-scenes-01",
+      "pair": "sword-confession-alley",
+      "variant": "scene",
+      "rightsProfile": "fan-art",
+      "name": {
+        "en": "Sword of Coming · One Honest Sentence",
+        "zh-CN": "剑来·一句喜欢"
+      },
+      "description": {
+        "en": "Chen Ping'an speaks plainly to Ning Yao in a quiet small-town lane after the rain.",
+        "zh-CN": "雨后小镇巷口，陈平安认真说出喜欢，宁姚抱剑站在暖灯与青石之间。"
+      },
+      "tags": ["fan-art", "donghua", "sword-of-coming", "scene", "confession"],
+      "fanArt": {
+        "work": {
+          "en": "Sword of Coming",
+          "zh-CN": "剑来"
+        },
+        "characters": {
+          "en": ["Chen Ping'an", "Ning Yao"],
+          "zh-CN": ["陈平安", "宁姚"]
+        },
+        "unofficial": true,
+        "commercialUse": false,
+        "officialAssetsUsed": false
+      },
+      "art": {
+        "focusX": 0.78,
+        "focusY": 0.48,
+        "safeArea": "left",
+        "taskMode": "ambient"
+      },
+      "light": {
+        "tokens": {
+          "background": "#F4F0E8",
+          "surface": "#FFFEFA",
+          "surfaceAlt": "#E8E1D5",
+          "text": "#241D17",
+          "muted": "#6C5F52",
+          "accent": "#8E302B",
+          "accentContrast": "#FFFFFF",
+          "border": "#B9AA98"
+        }
+      },
+      "dark": {
+        "tokens": {
+          "background": "#130C0B",
+          "surface": "#251512",
+          "surfaceAlt": "#35211C",
+          "text": "#FFF2E8",
+          "muted": "#C5AA9C",
+          "accent": "#EB7063",
+          "accentContrast": "#2D0D0A",
+          "border": "#67453A"
+        }
+      }
+    },
+    {
+      "id": "battle-three-year-pact",
+      "version": "1.0.0",
+      "collection": "donghua-memory-scenes-01",
+      "pair": "battle-three-year-pact",
+      "variant": "scene",
+      "rightsProfile": "fan-art",
+      "name": {
+        "en": "Battle Through · The Three-Year Agreement",
+        "zh-CN": "斗破·三年之约"
+      },
+      "description": {
+        "en": "Xiao Yan faces Nalan Yanran across the mountain arena as green flame cuts through cloud and stone.",
+        "zh-CN": "云岚山擂台两端，萧炎与纳兰嫣然隔空对峙，青色异火穿过云与石阶。"
+      },
+      "tags": ["fan-art", "donghua", "battle-through-heavens", "scene", "three-year-agreement"],
+      "fanArt": {
+        "work": {
+          "en": "Battle Through the Heavens",
+          "zh-CN": "斗破苍穹"
+        },
+        "characters": {
+          "en": ["Xiao Yan", "Nalan Yanran"],
+          "zh-CN": ["萧炎", "纳兰嫣然"]
+        },
+        "unofficial": true,
+        "commercialUse": false,
+        "officialAssetsUsed": false
+      },
+      "art": {
+        "focusX": 0.77,
+        "focusY": 0.43,
+        "safeArea": "left",
+        "taskMode": "ambient"
+      },
+      "light": {
+        "tokens": {
+          "background": "#F7F1EE",
+          "surface": "#FFFFFF",
+          "surfaceAlt": "#EADDD8",
+          "text": "#332321",
+          "muted": "#6A5652",
+          "accent": "#913645",
+          "accentContrast": "#FFFFFF",
+          "border": "#BDA6A0"
+        }
+      },
+      "dark": {
         "tokens": {
           "background": "#170D10",
           "surface": "#2B191D",

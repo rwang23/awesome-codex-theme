@@ -2,7 +2,7 @@
 
 ## Project snapshot
 
-- Last reviewed: 2026-07-16
+- Last reviewed: 2026-07-17
 - Project: Awesome Codex Theme
 - Project root: C:\projects\tools\awesome-codex-theme
 - Purpose: free Codex desktop theme gallery, registry, and safe installer layer
@@ -14,10 +14,10 @@
 
 ## Current focus
 
-- Current phase: independent visual-system and source-art release
-- Most important task: keep the Chinese-first Gallery, reviewed source art, theme-pack contract, adapters, and contribution Skill verifiable
-- Explicitly out of scope: native protocol handler, package registry publishing, licensed franchise artwork
-- Active task pointer: local redesign is complete only after source generation, npm run check, browser QA, and a task-owned commit
+- Current phase: original and disclosed fan-art collection release
+- Most important task: keep the Chinese-first Gallery, real generated previews, rights profiles, theme-pack contract, adapters, and contribution Skill verifiable
+- Explicitly out of scope: native protocol handler, package registry publishing, official or licensed franchise assets, commercial fan-art licensing
+- Active task pointer: a collection is complete only after source generation, npm run check, browser QA, public Pages readback, and a task-owned commit
 
 ## Read first
 
@@ -32,9 +32,9 @@ Avoid dist/, context/raw/, docs/archive/, and generated history unless required.
 
 - Small edits: edit directly and run the focused check.
 - Multi-file behavior: use a short plan, npm run check, then browser smoke.
-- Theme additions: use $create-codex-theme, generate source art, inspect it, regenerate, and validate.
+- Theme additions: use $create-codex-theme, select the original or fan-art rights profile, generate source art, inspect it, regenerate, and validate.
 - Adapter claims: update docs/adapters.md and prove the exact target behavior.
-- Publishing, remote creation, or Pages activation: ask first.
+- Publishing, remote creation, or Pages activation: require authorization bound to the exact repository.
 - Never automate copyright clearance or authenticated publishing.
 
 ## Canonical commands
@@ -77,8 +77,9 @@ docs/CHANGELOG.md. Do not create empty task, memory, or archive files.
 ## Known pitfalls
 
 - A GitHub Pages button cannot execute a local installer.
-- Upstream theme screenshots must never be used as background packages.
-- Image-job output must be reviewed for text, logos, identifiable IP, safe-area drift, and 16:9 cropping.
+- Official screenshots, posters, promotional art, and upstream theme screenshots must never be used as background packages.
+- Image-job output must be reviewed for text, logos, undeclared IP, copied composition, safe-area drift, and 16:9 cropping.
+- Fan-art themes are unofficial, personal and non-commercial; they use a custom notice and cannot claim rights verification.
 - Windows and macOS use different Codex Dream Skin state roots.
 - Codex native supports an appearance preference, not full visual parity.
 - A build proves files, not rendered interaction.

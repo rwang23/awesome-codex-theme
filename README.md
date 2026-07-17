@@ -1,10 +1,10 @@
 # Awesome Codex Theme
 
-面向 Codex 的开放主题包标准、Registry、Validator 与原创主题 Gallery。
+面向 Codex 的开放主题包标准、Registry、Validator 与主题 Gallery。
 
-[在线浏览 16 套主题](https://rwang23.github.io/awesome-codex-theme/) · [English README](README.en.md) · [主题包标准](docs/standard.md) · [贡献指南](CONTRIBUTING.md)
+[在线浏览 28 套主题](https://rwang23.github.io/awesome-codex-theme/) · [English README](README.en.md) · [主题包标准](docs/standard.md) · [Fan Art 说明](docs/fan-art-policy.md) · [贡献指南](CONTRIBUTING.md)
 
-![青岚问道主题源图](themes/source-art/qinglan-odyssey.png)
+![凡人·虚天殿主题源图](themes/source-art/mortal-void-hall.png)
 
 ## 这不是另一个“换背景”脚本
 
@@ -19,18 +19,20 @@ Awesome Codex Theme 把这些问题放进同一套公开契约：
 - Adapter 在可信主题包之外导出 Codex 原生、Dream Skin、HeiGe Skin Studio 和 CodeDrobe 格式
 - GitHub Pages 提供预览、筛选、模式切换、下载和带哈希校验的安装命令
 
-## 首发主题
+## 主题收藏
 
-当前有 16 套主题、32 个明暗模式。
+当前有 28 套主题、56 张真实明暗预览。Gallery 卡片直接读取生成器输出的 960×540 PNG，不使用概念占位图。
 
 | 系列 | 内容 | 数量 |
 | --- | --- | ---: |
 | 原创国风修仙 01 | 4 个原创世界，每个世界有原画版和 Q 版 | 8 |
 | 中国城市图鉴 01 | 北京、上海、深圳、广州、成都、杭州、重庆、南京 | 8 |
+| 国漫角色致意 01 | 4 部作品的男女主原画版与 Q 版 | 8 |
+| 国漫名场面 01 | 虚天殿、抢婚、雨巷告白、三年之约 | 4 |
 
-所有首发源图都通过 OpenAI image job 生成，再由人工检查安全留白、文字、水印、Logo、可识别 IP 和 16:9 裁切。仓库保存 prompt、模型、job ID 与输出哈希的精简 provenance，不保存密钥或带 base64 图片的原始服务响应。
+所有源图都通过 OpenAI image job 生成，再由人工检查安全留白、文字、水印、Logo、人物身份和 16:9 裁切。仓库保存 prompt、模型、job ID 与输出哈希的精简 provenance，不保存密钥或带 base64 图片的原始服务响应。
 
-这些主题借用的是“修仙”“城市雨夜”“Q 版角色”这样的题材，不复制《凡人修仙传》《仙逆》《剑来》或其他作品的角色、服装、场景与画风。
+前两个系列是第一方原创素材，采用 CC0 1.0。后两个系列是明确标注的非官方 AI 同人创作，涉及《凡人修仙传》《仙逆》《剑来》和《斗破苍穹》的角色与场景，只面向个人、非商业的粉丝使用。它们不使用官方截图、海报、Logo 或宣传素材，也不声称获得权利方授权或背书；底层作品和角色权利仍归各自权利人。完整边界见 [Fan Art 政策](docs/fan-art-policy.md)。
 
 ## 使用主题
 
@@ -62,13 +64,13 @@ Awesome Codex Theme 把这些问题放进同一套公开契约：
 Skill 会协助完成：
 
 - 中文主文案与英文辅助文案
-- 原创性和素材授权检查
+- 原创主题与明确披露 Fan Art 的双轨素材检查
 - image job prompt 与源图审查
 - 明暗 token 与对比度门槛
 - `catalog.json` 和 image job 脚手架
 - 主题生成、Registry、Validator 与浏览器验收
 
-也可以先复制 [theme brief 模板](.codex/skills/create-codex-theme/assets/theme-brief.template.json)，然后运行：
+原创主题可以复制 [theme brief 模板](.codex/skills/create-codex-theme/assets/theme-brief.template.json)；明确的非官方同人主题使用 [fan-art brief 模板](.codex/skills/create-codex-theme/assets/fan-art-theme-brief.template.json)。然后运行：
 
 ```bash
 node .codex/skills/create-codex-theme/scripts/scaffold-theme.mjs \
@@ -119,6 +121,6 @@ docs/                        标准、架构、适配器和设计说明
 
 ## 授权与 AI 披露
 
-项目代码采用 MIT。第一方 AI 原创素材在可适用的权利范围内采用 CC0 1.0。每套主题都明确标记 `aiGenerated: true`，并保留可核对的 prompt 哈希和源图哈希。
+项目代码采用 MIT。第一方 AI 原创素材在可适用的权利范围内采用 CC0 1.0。非官方同人素材使用 `LicenseRef-ACT-Fan-Art-Notice`，明确标记 `rightsVerified: false`、禁止商业使用，并指向 [Fan Art 政策](docs/fan-art-policy.md)。每套主题都标记 `aiGenerated: true`，并保留可核对的 prompt 哈希和源图哈希。
 
-AI 输出不等于自动通过版权审查。贡献者仍然需要确认输入素材的权利，并检查输出是否包含第三方角色、Logo、签名或受保护表达。完整说明见 [NOTICE.md](NOTICE.md)。
+AI 输出不等于版权许可，也不能消除角色、世界观和其他底层权利。贡献者仍然需要确认输入素材的权利，并检查输出是否包含未披露的第三方角色、Logo、签名或受保护表达。完整说明见 [NOTICE.md](NOTICE.md)。

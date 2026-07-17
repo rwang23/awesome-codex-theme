@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "themeId": "sword-confession-alley",
+  "rightsProfile": "fan-art",
+  "workflow": "openai-image-job",
+  "model": "gpt-image-2",
+  "size": "1536x1024",
+  "quality": "high",
+  "jobId": "a8bf51fc-fe8b-49fc-ba0e-8d9c7f83603c",
+  "promptSha256": "684f4566cf26df7c986739393ecc25655c4d2089afe095506bb325cc3079aa2a",
+  "sourceSha256": "79886d0220f9153a1cc34aa3237234d28b2ce2a7c42dc5823566e56c11af750e",
+  "disclosure": "AI-generated unofficial fan art. No official image assets were used. Underlying character and franchise rights remain with their respective rights holders.",
+  "fanArt": {
+    "work": {
+      "en": "Sword of Coming",
+      "zh-CN": "剑来"
+    },
+    "characters": {
+      "en": [
+        "Chen Ping'an",
+        "Ning Yao"
+      ],
+      "zh-CN": [
+        "陈平安",
+        "宁姚"
+      ]
+    }
+  }
+}

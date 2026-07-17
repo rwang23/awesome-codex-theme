@@ -17,6 +17,8 @@ locations are reserved for execution evidence or closed history when needed.
 - architecture.md: package, site, install, and trust boundaries
 - art-direction.md: reviewed image-job direction for Original Xianxia 01
 - city-atlas-art-direction.md: city identity, anti-landmark, and composition rules
+- fan-art-direction.md: declared-character and remembered-scene art direction
+- fan-art-policy.md: public rights boundary, non-commercial terms, and takedown path
 - gallery-design.md: redesign evidence and the independent Gallery visual system
 - standard.md: version 1 canonical manifest and package contract
 - adapters.md: compatibility matrix and export behavior

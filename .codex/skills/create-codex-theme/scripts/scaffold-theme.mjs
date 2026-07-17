@@ -36,10 +36,12 @@ function validateTokens(mode, tokens) {
 }
 
 function validateBrief(brief, catalog) {
+  const rightsProfile = brief.rightsProfile || "original";
   requireValue(THEME_ID.test(brief.id || ""), "id must use kebab-case");
   requireValue(!catalog.themes.some((theme) => theme.id === brief.id), "theme id already exists: " + brief.id);
   requireValue(catalog.collections.some((collection) => collection.id === brief.collection), "unknown collection: " + brief.collection);
-  requireValue(["cinematic", "chibi", "cityscape"].includes(brief.variant), "unsupported variant");
+  requireValue(["cinematic", "chibi", "cityscape", "scene"].includes(brief.variant), "unsupported variant");
+  requireValue(["original", "fan-art"].includes(rightsProfile), "unsupported rightsProfile");
   requireValue(typeof brief.name?.["zh-CN"] === "string" && brief.name["zh-CN"].trim(), "Chinese name is required");
   requireValue(typeof brief.name?.en === "string" && brief.name.en.trim(), "English name is required");
   requireValue(typeof brief.description?.["zh-CN"] === "string" && brief.description["zh-CN"].trim(), "Chinese description is required");
@@ -47,18 +49,32 @@ function validateBrief(brief, catalog) {
   requireValue(Array.isArray(brief.tags) && brief.tags.length >= 2, "at least two tags are required");
   requireValue(typeof brief.imagePrompt === "string" && brief.imagePrompt.length >= 40, "imagePrompt is too short");
   requireValue(typeof brief.rightsStatement === "string" && brief.rightsStatement.length >= 30, "rightsStatement is too short");
+  if (rightsProfile === "fan-art") {
+    requireValue(typeof brief.fanArt?.work?.["zh-CN"] === "string", "fanArt.work Chinese name is required");
+    requireValue(typeof brief.fanArt?.work?.en === "string", "fanArt.work English name is required");
+    requireValue(Array.isArray(brief.fanArt?.characters?.["zh-CN"]) && brief.fanArt.characters["zh-CN"].length > 0, "fanArt.characters are required");
+    requireValue(Array.isArray(brief.fanArt?.characters?.en) && brief.fanArt.characters.en.length > 0, "fanArt.characters English names are required");
+    requireValue(
+      [brief.fanArt.work["zh-CN"], brief.fanArt.work.en].some((work) => brief.imagePrompt.includes(work)),
+      "fan-art imagePrompt must name the declared work",
+    );
+    requireValue(brief.fanArt?.unofficial === true, "fan art must be marked unofficial");
+    requireValue(brief.fanArt?.commercialUse === false, "fan art must prohibit commercial use");
+    requireValue(brief.fanArt?.officialAssetsUsed === false, "fan art must disclose that no official assets were used");
+  }
   requireValue(brief.art?.safeArea === "left", "v1 Gallery themes must use a left safe area");
   validateTokens("light", brief.light?.tokens);
   validateTokens("dark", brief.dark?.tokens);
 }
 
 function themeFromBrief(brief) {
-  return {
+  const theme = {
     id: brief.id,
     version: brief.version || "1.0.0",
     collection: brief.collection,
     pair: brief.pair || brief.id,
     variant: brief.variant,
+    rightsProfile: brief.rightsProfile || "original",
     name: brief.name,
     description: brief.description,
     tags: brief.tags,
@@ -66,6 +82,8 @@ function themeFromBrief(brief) {
     light: { tokens: brief.light.tokens },
     dark: { tokens: brief.dark.tokens },
   };
+  if (theme.rightsProfile === "fan-art") theme.fanArt = brief.fanArt;
+  return theme;
 }
 
 async function main() {
@@ -80,7 +98,19 @@ async function main() {
   requireValue(!jobs.jobs.some((job) => job.id === brief.id), "image job already exists: " + brief.id);
 
   const theme = themeFromBrief(brief);
-  const imageJob = { id: brief.id, prompt: brief.imagePrompt };
+  const imageJob = {
+    id: brief.id,
+    ...(theme.rightsProfile === "fan-art"
+      ? {
+          rightsProfile: "fan-art",
+          fanArt: {
+            work: brief.fanArt.work,
+            characters: brief.fanArt.characters,
+          },
+        }
+      : {}),
+    prompt: brief.imagePrompt,
+  };
   console.log(JSON.stringify({ theme, imageJob }, null, 2));
   if (!process.argv.includes("--apply")) {
     console.log("\nDry run only. Add --apply to update catalog and image jobs.");

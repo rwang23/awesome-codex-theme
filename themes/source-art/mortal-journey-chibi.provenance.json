@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "themeId": "mortal-journey-chibi",
+  "rightsProfile": "fan-art",
+  "workflow": "openai-image-job",
+  "model": "gpt-image-2",
+  "size": "1536x1024",
+  "quality": "high",
+  "jobId": "e10bd730-89c3-4948-a70b-2e2843062a31",
+  "promptSha256": "19b5d9873b360dcced7cf8567ed5095869c3769bfa76b5df9e7540228222ff11",
+  "sourceSha256": "5c036f00dc7e9d4a1e12a13cfe8492144aab63148d18122017f718afbc05556a",
+  "disclosure": "AI-generated unofficial fan art. No official image assets were used. Underlying character and franchise rights remain with their respective rights holders.",
+  "fanArt": {
+    "work": {
+      "en": "A Record of a Mortal's Journey to Immortality",
+      "zh-CN": "凡人修仙传"
+    },
+    "characters": {
+      "en": [
+        "Han Li",
+        "Nangong Wan"
+      ],
+      "zh-CN": [
+        "韩立",
+        "南宫婉"
+      ]
+    }
+  }
+}

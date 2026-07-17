@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "themeId": "mortal-void-hall",
+  "rightsProfile": "fan-art",
+  "workflow": "openai-image-job",
+  "model": "gpt-image-2",
+  "size": "1536x1024",
+  "quality": "high",
+  "jobId": "71881057-4688-4ff9-a56c-50826073c82d",
+  "promptSha256": "719a7146525174e1539a73dd43750a86bf40c433382ada09e7a6a779f7036c54",
+  "sourceSha256": "ee9cace63f1622efbe03b506b94576d59e6fb17f515080ca98a34084e5f286ce",
+  "disclosure": "AI-generated unofficial fan art. No official image assets were used. Underlying character and franchise rights remain with their respective rights holders.",
+  "fanArt": {
+    "work": {
+      "en": "A Record of a Mortal's Journey to Immortality",
+      "zh-CN": "凡人修仙传"
+    },
+    "characters": {
+      "en": [
+        "Han Li"
+      ],
+      "zh-CN": [
+        "韩立"
+      ]
+    }
+  }
+}

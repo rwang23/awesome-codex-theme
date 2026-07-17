@@ -34,6 +34,7 @@
           "collection",
           "pair",
           "variant",
+          "rightsProfile",
           "name",
           "description",
           "tags",

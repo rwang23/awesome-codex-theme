@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "themeId": "renegade-immortal-chibi",
+  "rightsProfile": "fan-art",
+  "workflow": "openai-image-job",
+  "model": "gpt-image-2",
+  "size": "1536x1024",
+  "quality": "high",
+  "jobId": "3fe93538-6809-4309-b5f3-271f7a9bd680",
+  "promptSha256": "3346def45e3fce8d19da5c5c8f071afc61a7d88154754d36fd5cfe7846790c8b",
+  "sourceSha256": "73a5859294c8f7218e8587fe4318db07b23a04ae1ce516004a8d7e4b2371dbf9",
+  "disclosure": "AI-generated unofficial fan art. No official image assets were used. Underlying character and franchise rights remain with their respective rights holders.",
+  "fanArt": {
+    "work": {
+      "en": "Renegade Immortal",
+      "zh-CN": "仙逆"
+    },
+    "characters": {
+      "en": [
+        "Wang Lin",
+        "Li Muwan"
+      ],
+      "zh-CN": [
+        "王林",
+        "李慕婉"
+      ]
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "themeId": "sword-of-coming-chibi",
+  "rightsProfile": "fan-art",
+  "workflow": "openai-image-job",
+  "model": "gpt-image-2",
+  "size": "1536x1024",
+  "quality": "high",
+  "jobId": "3393db56-27c9-47ff-9111-eabee4d14826",
+  "promptSha256": "8d7025927b806b92216cca8be7cabc260e198b19df8cff2fb88d865975fd5318",
+  "sourceSha256": "2cf6c46e0e4f46cb370cce1b2a64ae99793a85726a373cd0eed7752338767cd9",
+  "disclosure": "AI-generated unofficial fan art. No official image assets were used. Underlying character and franchise rights remain with their respective rights holders.",
+  "fanArt": {
+    "work": {
+      "en": "Sword of Coming",
+      "zh-CN": "剑来"
+    },
+    "characters": {
+      "en": [
+        "Chen Ping'an",
+        "Ning Yao"
+      ],
+      "zh-CN": [
+        "陈平安",
+        "宁姚"
+      ]
+    }
+  }
+}

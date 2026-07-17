@@ -37,7 +37,7 @@
         <div class="hero-copy">
           <div class="hero-kicker">
             <span class="signal" aria-hidden="true"><i></i><i></i><i></i></span>
-            <span data-i18n="heroKicker">开放标准 · 16 套原创首发主题</span>
+            <span data-i18n="heroKicker">开放标准 · 原创与非官方 Fan Art 双轨主题</span>
           </div>
           <h1 id="heroTitle">
             <span data-i18n="heroLineOne">给 Codex，</span>
@@ -48,7 +48,7 @@
           </p>
           <div class="hero-actions">
             <a class="hero-cta" href="#gallery">
-              <span data-i18n="browseThemes">浏览 16 套主题</span>
+              <span data-i18n="browseThemes">浏览全部主题</span>
               <span aria-hidden="true">↓</span>
             </a>
             <a class="hero-repo" href="https://github.com/rwang23/awesome-codex-theme">
@@ -99,8 +99,8 @@
       <section class="proof-strip" aria-label="项目状态">
         <div>
           <span class="proof-icon jade" aria-hidden="true"></span>
-          <strong>16</strong>
-          <span data-i18n="statThemes">套原创主题</span>
+          <strong id="themeStatValue">28</strong>
+          <span data-i18n="statThemes">套主题</span>
         </div>
         <div>
           <span class="proof-icon vermilion" aria-hidden="true"></span>
@@ -123,10 +123,10 @@
         <div class="section-heading">
           <div>
             <p class="eyebrow" data-i18n="collectionEyebrow">主题馆藏</p>
-            <h2 id="collectionTitle" data-i18n="collectionTitle">修仙世界，也有城市灯火。</h2>
+            <h2 id="collectionTitle" data-i18n="collectionTitle">原创世界、城市灯火，也有一眼认出的名场面。</h2>
           </div>
           <p data-i18n="collectionIntro">
-            首发包含四组原创修仙世界的原画版与 Q 版，以及八座中国城市的氛围图景。全部源图经过 image job 生成与人工审查。
+            馆藏现有 16 套原创主题，以及 12 套明确标注的非官方国漫 Fan Art。全部源图都通过 image job 生成并经过人工审查。
           </p>
         </div>
 
@@ -143,9 +143,10 @@
           </label>
           <div class="filter-group" id="filterGroup" role="group" aria-label="主题风格">
             <button class="filter-button is-active" type="button" data-filter="all" aria-pressed="true" data-i18n="filterAll">全部</button>
-            <button class="filter-button" type="button" data-filter="cinematic" aria-pressed="false" data-i18n="filterCinematic">原画 04</button>
-            <button class="filter-button" type="button" data-filter="chibi" aria-pressed="false" data-i18n="filterChibi">Q 版 04</button>
-            <button class="filter-button" type="button" data-filter="cityscape" aria-pressed="false" data-i18n="filterCityscape">城市 08</button>
+            <button class="filter-button" type="button" data-filter="cinematic" aria-pressed="false" data-i18n="filterCinematic">原画</button>
+            <button class="filter-button" type="button" data-filter="chibi" aria-pressed="false" data-i18n="filterChibi">Q 版</button>
+            <button class="filter-button" type="button" data-filter="cityscape" aria-pressed="false" data-i18n="filterCityscape">城市</button>
+            <button class="filter-button" type="button" data-filter="scene" aria-pressed="false" data-i18n="filterScene">名场面</button>
           </div>
         </div>
 
@@ -274,9 +275,10 @@ city rain theme.</code></pre>
           <small>Theme Pack Standard + Registry</small>
         </span>
       </div>
-      <p data-i18n="footerRights">首发 AI 原创素材采用 CC0，项目代码采用 MIT。</p>
+      <p data-i18n="footerRights">AI 原创素材采用 CC0；非官方 Fan Art 适用独立声明；项目代码采用 MIT。</p>
       <div>
         <a href="./NOTICE.md">Notice</a>
+        <a href="https://github.com/rwang23/awesome-codex-theme/blob/main/docs/fan-art-policy.md" target="_blank" rel="noreferrer">Fan Art</a>
         <a href="./LICENSE">License</a>
         <a href="./themes/registry.json">Registry</a>
       </div>
@@ -294,6 +296,7 @@ city rain theme.</code></pre>
         <p class="eyebrow" data-i18n="installEyebrow">安装 / 导出</p>
         <h2 id="dialogTitle"></h2>
         <p id="dialogDescription"></p>
+        <p class="dialog-rights" id="dialogRights" hidden></p>
 
         <div class="dialog-options">
           <fieldset>

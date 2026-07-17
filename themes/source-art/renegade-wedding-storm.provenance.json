@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "themeId": "renegade-wedding-storm",
+  "rightsProfile": "fan-art",
+  "workflow": "openai-image-job",
+  "model": "gpt-image-2",
+  "size": "1536x1024",
+  "quality": "high",
+  "jobId": "3ae4a740-e273-48af-af92-390e0769d244",
+  "promptSha256": "de52f63798fc094ab2e9a3f9cb0aa085fc5f1d87c66e40e147888db493058ac9",
+  "sourceSha256": "99e16715f24575e26f095fe7464cabd0bef8d85f81de7ae0d093ced25ef8aeef",
+  "disclosure": "AI-generated unofficial fan art. No official image assets were used. Underlying character and franchise rights remain with their respective rights holders.",
+  "fanArt": {
+    "work": {
+      "en": "Renegade Immortal",
+      "zh-CN": "仙逆"
+    },
+    "characters": {
+      "en": [
+        "Wang Lin",
+        "Li Muwan"
+      ],
+      "zh-CN": [
+        "王林",
+        "李慕婉"
+      ]
+    }
+  }
+}

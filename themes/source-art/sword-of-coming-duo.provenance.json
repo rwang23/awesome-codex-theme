@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "themeId": "sword-of-coming-duo",
+  "rightsProfile": "fan-art",
+  "workflow": "openai-image-job",
+  "model": "gpt-image-2",
+  "size": "1536x1024",
+  "quality": "high",
+  "jobId": "69660af3-7767-4afe-b223-acc508d14320",
+  "promptSha256": "56cb20f843c208a9f80df38ea3904e9b80ba052bf88aed46c4006c468e76e0c3",
+  "sourceSha256": "b4c2eec2335b0b0c6f0129da82cb73094d7de74023560e2a4e2823b512eb3923",
+  "disclosure": "AI-generated unofficial fan art. No official image assets were used. Underlying character and franchise rights remain with their respective rights holders.",
+  "fanArt": {
+    "work": {
+      "en": "Sword of Coming",
+      "zh-CN": "剑来"
+    },
+    "characters": {
+      "en": [
+        "Chen Ping'an",
+        "Ning Yao"
+      ],
+      "zh-CN": [
+        "陈平安",
+        "宁姚"
+      ]
+    }
+  }
+}

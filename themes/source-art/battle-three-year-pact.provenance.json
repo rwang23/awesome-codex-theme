@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "themeId": "battle-three-year-pact",
+  "rightsProfile": "fan-art",
+  "workflow": "openai-image-job",
+  "model": "gpt-image-2",
+  "size": "1536x1024",
+  "quality": "high",
+  "jobId": "1178e5e5-9a61-4582-9e6c-629275244dc7",
+  "promptSha256": "0136f82275cbd3cbf5e5482cd6da71b936e82e079282b6e287a940c64bee5f19",
+  "sourceSha256": "2250a8adf1602f83ea5c3303c594936b4597ee91c084ecdeece0629a35e5dc51",
+  "disclosure": "AI-generated unofficial fan art. No official image assets were used. Underlying character and franchise rights remain with their respective rights holders.",
+  "fanArt": {
+    "work": {
+      "en": "Battle Through the Heavens",
+      "zh-CN": "斗破苍穹"
+    },
+    "characters": {
+      "en": [
+        "Xiao Yan",
+        "Nalan Yanran"
+      ],
+      "zh-CN": [
+        "萧炎",
+        "纳兰嫣然"
+      ]
+    }
+  }
+}

@@ -8,23 +8,26 @@
 .codex/skills/create-codex-theme/
 ```
 
-## 素材边界
+## 两条素材轨道
 
-可以提交原创作品、CC0 或公有领域素材，以及许可证明确允许修改和再分发的作品。
+默认轨道是原创作品、CC0 或公有领域素材，以及许可证明确允许修改和再分发的作品。这类主题使用 `rightsProfile: original`，只有证据完整时才能标记 `rightsVerified: true`。
 
-不要提交：
+非官方同人轨道只接受贡献者明确声明的作品与角色，使用 `rightsProfile: fan-art` 和 [fan-art brief 模板](.codex/skills/create-codex-theme/assets/fan-art-theme-brief.template.json)。必须满足：
 
-- 名人肖像或未经同意的真实人物仿制
-- 受保护角色、服装、武器、Logo 或截图
-- 模仿具体在世画师、工作室、动漫、游戏或电影的生成图
-- 城市官方吉祥物、品牌招牌或旅游照片复刻
-- 无法核对作者、链接与再分发许可的素材
+- 只用于个人、非商业的粉丝使用
+- 标记 `unofficial: true`、`commercialUse: false`、`officialAssetsUsed: false`
+- 不使用或重绘官方截图、海报、Logo、宣传素材、镜头构图或他人同人图
+- 不模仿具体画师或工作室的标志性画风
+- 只出现 manifest 已声明的作品与角色
+- 使用 `LicenseRef-ACT-Fan-Art-Notice`，并保持 `rightsVerified: false`
+
+任何轨道都不要提交名人肖像、未经同意的真实人物仿制、品牌素材、无法核对来源的图片或未披露的受保护角色。Fan Art 的详细下架和权利边界见 [docs/fan-art-policy.md](docs/fan-art-policy.md)。
 
 使用 AI 生成不等于自动获得版权许可。贡献者仍然要对输入权利和输出审查负责。
 
 ## 主题要求
 
-- 一张 1536×1024 PNG 原创源图，文件不超过 16 MB
+- 一张 1536×1024 PNG 源图，文件不超过 16 MB
 - 左侧保留低信息安全区，主体集中在右侧三分之一
 - 源图不能烘焙 Codex UI、假控件、文字、Logo、水印或窗口边框
 - 稳定的 kebab-case 主题 ID
@@ -50,4 +53,4 @@ Validator 能检查结构、哈希与对比度，但不能替你确认版权。
 
 ## English summary
 
-Submit only artwork you can legally redistribute. Every theme needs reviewed source art, bilingual copy, light and dark tokens, explicit provenance, and a code-free canonical package. Do not submit protected characters, celebrity likenesses, screenshots, logos, exact landmarks, or generated images that imitate a named artist, studio, or franchise. Run `npm run check` and complete the browser review before opening a contribution.
+The default contribution track is original or clearly redistributable artwork. A separate unofficial fan-art track requires declared works and characters, personal non-commercial use, no official assets or copied compositions, `LicenseRef-ACT-Fan-Art-Notice`, and `rightsVerified: false`. Every theme still needs reviewed source art, bilingual copy, dual-mode tokens, explicit provenance, and a code-free canonical package. Run `npm run check` and complete browser review before opening a contribution.

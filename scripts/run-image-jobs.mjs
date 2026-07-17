@@ -83,7 +83,14 @@ async function runJob(job, config, runner, temporaryRoot, force) {
     return;
   }
 
-  const prompt = config.commonPrompt + "\n\nScene brief: " + job.prompt;
+  const rightsProfile = job.rightsProfile || "original";
+  const commonPrompt = rightsProfile === "fan-art"
+    ? config.fanArtPrompt
+    : config.commonPrompt;
+  if (typeof commonPrompt !== "string" || !commonPrompt.trim()) {
+    throw new Error(job.id + " is missing a common prompt for " + rightsProfile);
+  }
+  const prompt = commonPrompt + "\n\nScene brief: " + job.prompt;
   const payload = {
     model: config.workflow.model,
     prompt,
@@ -112,9 +119,11 @@ async function runJob(job, config, runner, temporaryRoot, force) {
     throw new Error(job.id + " returned " + dimensions.width + "x" + dimensions.height);
   }
   const jobResult = JSON.parse(await readFile(resultPath, "utf8"));
+  const fanArt = rightsProfile === "fan-art" ? job.fanArt : undefined;
   const provenance = {
     schemaVersion: 1,
     themeId: job.id,
+    rightsProfile,
     workflow: config.workflow.runner,
     model: config.workflow.model,
     size: config.workflow.size,
@@ -122,8 +131,11 @@ async function runJob(job, config, runner, temporaryRoot, force) {
     jobId: jobResult.job_id,
     promptSha256: sha256(Buffer.from(prompt, "utf8")),
     sourceSha256: sha256(image),
-    disclosure: "AI-generated original source art. Prompt and output were reviewed for third-party characters, logos, signatures, and text before release.",
+    disclosure: rightsProfile === "fan-art"
+      ? "AI-generated unofficial fan art. No official image assets were used. Underlying character and franchise rights remain with their respective rights holders."
+      : "AI-generated original source art. Prompt and output were reviewed for third-party characters, logos, signatures, and text before release.",
   };
+  if (fanArt) provenance.fanArt = fanArt;
   await writeFile(provenancePath, JSON.stringify(provenance, null, 2) + "\n", "utf8");
   console.log("done  " + job.id + " " + result.stdout);
 }

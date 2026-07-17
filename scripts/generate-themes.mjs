@@ -11,6 +11,8 @@ const ROOT = path.resolve(SCRIPT_DIR, "..");
 const CATALOG_PATH = path.join(ROOT, "themes", "catalog.json");
 const CHECK_MODE = process.argv.includes("--check");
 const GENERATOR_ID = "act-theme-generator-v2.0";
+const FAN_ART_LICENSE_ID = "LicenseRef-ACT-Fan-Art-Notice";
+const FAN_ART_POLICY_URL = "https://github.com/rwang23/awesome-codex-theme/blob/main/docs/fan-art-policy.md";
 
 function sha256(buffer) {
   return createHash("sha256").update(buffer).digest("hex");
@@ -20,7 +22,35 @@ function jsonBuffer(value) {
   return Buffer.from(JSON.stringify(value, null, 2) + "\n", "utf8");
 }
 
+function rightsFor(theme) {
+  const fanArt = theme.rightsProfile === "fan-art";
+  return fanArt
+    ? {
+        fanArt: true,
+        license: {
+          spdx: FAN_ART_LICENSE_ID,
+          scope: "artwork-only",
+          url: FAN_ART_POLICY_URL,
+        },
+        provenanceType: "fan-art",
+        rightsVerified: false,
+        notes: "Unofficial AI-generated fan art. No official image assets were used. No license or endorsement from the underlying franchise rights holders is claimed.",
+      }
+    : {
+        fanArt: false,
+        license: {
+          spdx: "CC0-1.0",
+          scope: "artwork-and-manifest",
+          url: "https://creativecommons.org/publicdomain/zero/1.0/",
+        },
+        provenanceType: "original",
+        rightsVerified: true,
+        notes: "Original AI-generated source art, reviewed for third-party characters, logos, signatures, text, screenshots, and franchise assets.",
+      };
+}
+
 function manifestFor(theme, assets, sourceProvenance) {
+  const rights = rightsFor(theme);
   const mode = (name) => ({
     asset: "assets/background-" + name + ".png",
     art: {
@@ -45,27 +75,25 @@ function manifestFor(theme, assets, sourceProvenance) {
     collection: theme.collection,
     variant: theme.variant,
     pair: theme.pair,
+    rightsProfile: theme.rightsProfile || "original",
     name: theme.name,
     description: theme.description,
+    ...(rights.fanArt ? { fanArt: theme.fanArt } : {}),
     author: {
       name: "Awesome Codex Theme",
     },
-    license: {
-      spdx: "CC0-1.0",
-      scope: "artwork-and-manifest",
-      url: "https://creativecommons.org/publicdomain/zero/1.0/",
-    },
+    license: rights.license,
     provenance: {
-      type: "original",
+      type: rights.provenanceType,
       source: "themes/source-art/" + theme.id + ".provenance.json",
       generator: "openai-image-job + " + GENERATOR_ID,
       aiGenerated: true,
-      rightsVerified: true,
+      rightsVerified: rights.rightsVerified,
       model: sourceProvenance.model,
       jobId: sourceProvenance.jobId,
       promptSha256: sourceProvenance.promptSha256,
       sourceSha256: sourceProvenance.sourceSha256,
-      notes: "Original AI-generated source art, reviewed for third-party characters, logos, signatures, text, screenshots, and franchise assets.",
+      notes: rights.notes,
     },
     compatibility: {
       codexDesktopTested: "26.707.12708.0",
@@ -282,6 +310,7 @@ export async function buildGeneratedFiles() {
   const registryThemes = [];
 
   for (const theme of catalog.themes) {
+    const rights = rightsFor(theme);
     const themeRoot = "themes/" + theme.id;
     const [sourceArt, sourceProvenance] = await Promise.all([
       readFile(path.join(ROOT, "themes", "source-art", theme.id + ".png")),
@@ -337,17 +366,20 @@ export async function buildGeneratedFiles() {
       collection: theme.collection,
       pair: theme.pair,
       variant: theme.variant,
+      rightsProfile: theme.rightsProfile || "original",
       name: theme.name,
       description: theme.description,
       tags: theme.tags,
+      ...(rights.fanArt ? { fanArt: theme.fanArt } : {}),
       license: {
-        spdx: "CC0-1.0",
-        rightsVerified: true,
+        spdx: rights.license.spdx,
+        rightsVerified: rights.rightsVerified,
+        url: rights.license.url,
       },
       provenance: {
-        type: "original",
+        type: rights.provenanceType,
         aiGenerated: true,
-        rightsVerified: true,
+        rightsVerified: rights.rightsVerified,
         generator: "openai-image-job + " + GENERATOR_ID,
         model: sourceProvenance.model,
         jobId: sourceProvenance.jobId,

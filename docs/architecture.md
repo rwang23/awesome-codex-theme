@@ -17,11 +17,23 @@ reviewable. Each .act-theme contains a versioned manifest and two derived PNG
 backgrounds. Every path, preview, package, and per-mode adapter bundle has
 recorded SHA-256 and byte-count evidence.
 
+Rights metadata follows the same source-of-truth path. Original themes and
+unofficial fan art use separate `rightsProfile` values. Fan-art records declare
+the underlying work and characters, prohibit commercial use, state that no
+official assets were used, and remain `rightsVerified: false`. The Gallery
+shows that status on cards and in the detail dialog instead of presenting all
+artwork as CC0.
+
 Reviewed source art is part of Git history. Derived theme directories,
 packages, registry output, and Pages artifacts are generated distribution
 outputs. A clean checkout can therefore rebuild the same light and dark
 backgrounds without API access while keeping raw image-service responses and
 credentials out of the repository.
+
+Gallery cards render the generated 960×540 light or dark preview PNG for each
+theme. They do not reuse the source image as a CSS background and do not fall
+back to illustrative placeholders. The validator checks every preview path,
+PNG dimension, byte count, and SHA-256 before the site can build.
 
 Adapters are deterministic build outputs outside the canonical trust boundary.
 Each per-mode ZIP contains explicit Codex-native, Dream Skin, HeiGe, and

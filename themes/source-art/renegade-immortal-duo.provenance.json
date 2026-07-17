@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "themeId": "renegade-immortal-duo",
+  "rightsProfile": "fan-art",
+  "workflow": "openai-image-job",
+  "model": "gpt-image-2",
+  "size": "1536x1024",
+  "quality": "high",
+  "jobId": "eced8a10-0302-4cde-8f6e-afb01c567046",
+  "promptSha256": "689ff79241986976fd6193654fe2c5df58a3fcb4232508b21af4f87f5942e62f",
+  "sourceSha256": "125b76f53430fbc9eb80fb74735c0a3e136682d802c6a34303a489f233b906e6",
+  "disclosure": "AI-generated unofficial fan art. No official image assets were used. Underlying character and franchise rights remain with their respective rights holders.",
+  "fanArt": {
+    "work": {
+      "en": "Renegade Immortal",
+      "zh-CN": "仙逆"
+    },
+    "characters": {
+      "en": [
+        "Wang Lin",
+        "Li Muwan"
+      ],
+      "zh-CN": [
+        "王林",
+        "李慕婉"
+      ]
+    }
+  }
+}

@@ -12,6 +12,7 @@
     "collection",
     "variant",
     "pair",
+    "rightsProfile",
     "name",
     "description",
     "author",
@@ -43,18 +44,43 @@
       "maxLength": 80
     },
     "variant": {
-      "enum": ["cinematic", "chibi", "cityscape"]
+      "enum": ["cinematic", "chibi", "cityscape", "scene"]
     },
     "pair": {
       "type": "string",
       "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
       "maxLength": 80
     },
+    "rightsProfile": {
+      "enum": ["original", "fan-art"]
+    },
     "name": {
       "$ref": "#/$defs/localized"
     },
     "description": {
       "$ref": "#/$defs/localized"
+    },
+    "fanArt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["work", "characters", "unofficial", "commercialUse", "officialAssetsUsed"],
+      "properties": {
+        "work": {
+          "$ref": "#/$defs/localized"
+        },
+        "characters": {
+          "$ref": "#/$defs/localizedStringArray"
+        },
+        "unofficial": {
+          "const": true
+        },
+        "commercialUse": {
+          "const": false
+        },
+        "officialAssetsUsed": {
+          "const": false
+        }
+      }
     },
     "author": {
       "type": "object",
@@ -106,7 +132,7 @@
       ],
       "properties": {
         "type": {
-          "enum": ["procedural", "original", "licensed", "public-domain"]
+          "enum": ["procedural", "original", "fan-art", "licensed", "public-domain"]
         },
         "source": {
           "type": "string",
@@ -120,7 +146,7 @@
           "type": "boolean"
         },
         "rightsVerified": {
-          "const": true
+          "type": "boolean"
         },
         "model": {
           "type": "string",
@@ -211,6 +237,20 @@
       }
     }
   },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "rightsProfile": {
+            "const": "fan-art"
+          }
+        }
+      },
+      "then": {
+        "required": ["fanArt"]
+      }
+    }
+  ],
   "$defs": {
     "localized": {
       "type": "object",
@@ -226,6 +266,33 @@
           "type": "string",
           "minLength": 1,
           "maxLength": 200
+        }
+      }
+    },
+    "localizedStringArray": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["en", "zh-CN"],
+      "properties": {
+        "en": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
+          }
+        },
+        "zh-CN": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
+          }
         }
       }
     },

@@ -4,25 +4,26 @@ const translations = {
     navStandard: "Standard",
     navAdapters: "Adapters",
     navCreator: "Creation Skill",
-    heroKicker: "Open theme library · 16 original launch themes",
+    heroKicker: "Open standard · Original and unofficial fan-art collections",
     heroLineOne: "Give Codex",
     heroLineTwo: "a change of scenery.",
     heroIntro: "This is more than a background swap. Every theme has recorded provenance, two color modes, integrity checks, and an honest compatibility label.",
-    browseThemes: "Browse 16 themes",
+    browseThemes: "Browse every theme",
     viewRepo: "View the GitHub repository",
-    statThemes: "original themes",
+    statThemes: "themes",
     statCode: "executable files inside each pack",
     statAdapters: "adapter targets",
     statContrast: "contrast gate",
     collectionEyebrow: "Theme library",
-    collectionTitle: "Fantasy realms meet city light.",
-    collectionIntro: "The launch set pairs four original xianxia worlds with chibi companions, plus eight Chinese city studies. Every source image is generated through an image job and reviewed by hand.",
+    collectionTitle: "Original worlds, city light, and scenes fans remember.",
+    collectionIntro: "The library now includes 16 original themes and 12 clearly disclosed unofficial donghua fan-art tributes. Every source image is generated through an image job and reviewed by hand.",
     searchLabel: "Search themes",
     searchPlaceholder: "Search worlds, moods, tags…",
     filterAll: "All styles",
-    filterCinematic: "Cinematic 04",
-    filterChibi: "Chibi 04",
-    filterCityscape: "City 08",
+    filterCinematic: "Cinematic",
+    filterChibi: "Chibi",
+    filterCityscape: "City",
+    filterScene: "Memory scene",
     emptyState: "No themes match this view.",
     standardEyebrow: "ACT theme pack standard",
     standardTitle: "Before a theme looks good, it should earn your trust.",
@@ -53,7 +54,7 @@ const translations = {
     closingKicker: "Free to use · Open to review · Ready for contributors",
     closingTitle: "Choose a theme and give your workspace its own weather.",
     browseCollection: "Open the theme library",
-    footerRights: "Original AI artwork is released under CC0. Project code is MIT.",
+    footerRights: "Original AI artwork is CC0. Unofficial fan art follows the separate fan-art notice. Project code is MIT.",
     installEyebrow: "INSTALL / EXPORT",
     chooseMode: "Mode",
     chooseTarget: "Target",
@@ -66,9 +67,13 @@ const translations = {
     trustNoteManual: "The browser never launches the target app. Download and inspect the adapter bundle, then import the matching export manually.",
     installTheme: "Install or export",
     original: "Original",
+    fanArtBadge: "Unofficial fan art",
+    fanArtLicense: "FAN ART",
+    fanArtNotice: "Unofficial AI fan art. No official stills, logos, or promotional assets were used. No license or endorsement from the underlying rights holders is claimed; personal, non-commercial use only.",
     cinematic: "Cinematic",
     chibi: "Chibi",
     cityscape: "City study",
+    scene: "Memory scene",
     light: "Light",
     dark: "Dark",
     copied: "Install command copied.",
@@ -80,7 +85,7 @@ const translations = {
     capabilityCodedrobe: "Source export with a generated CSS target. Review and import it through the CodeDrobe theme workflow.",
     resultCount: "themes shown",
     allCollections: "All collections",
-    allCollectionsCaption: "16 themes across two visual directions",
+    allCollectionsCaption: "Original, city, and unofficial fan-art themes",
     themeCount: "themes"
   },
   "zh-CN": {
@@ -88,25 +93,26 @@ const translations = {
     navStandard: "标准",
     navAdapters: "适配器",
     navCreator: "创作 Skill",
-    heroKicker: "开放标准 · 16 套原创首发主题",
+    heroKicker: "开放标准 · 原创与非官方 Fan Art 双轨主题",
     heroLineOne: "给 Codex，",
     heroLineTwo: "换一片风景。",
     heroIntro: "这里不只是换背景。每套主题都有清楚的来源、双模式色板、完整性校验和如实标注的适配范围。",
-    browseThemes: "浏览 16 套主题",
+    browseThemes: "浏览全部主题",
     viewRepo: "查看 GitHub 仓库",
-    statThemes: "套原创主题",
+    statThemes: "套主题",
     statCode: "个包内可执行文件",
     statAdapters: "个适配目标",
     statContrast: "对比度门槛",
     collectionEyebrow: "主题馆藏",
-    collectionTitle: "修仙世界，也有城市灯火。",
-    collectionIntro: "首发包含四组原创修仙世界的原画版与 Q 版，以及八座中国城市的氛围图景。全部源图经过 image job 生成与人工审查。",
+    collectionTitle: "原创世界、城市灯火，也有一眼认出的名场面。",
+    collectionIntro: "馆藏现有 16 套原创主题，以及 12 套明确标注的非官方国漫 Fan Art。全部源图都通过 image job 生成并经过人工审查。",
     searchLabel: "搜索主题",
     searchPlaceholder: "搜索世界、城市或氛围",
     filterAll: "全部",
-    filterCinematic: "原画 04",
-    filterChibi: "Q 版 04",
-    filterCityscape: "城市 08",
+    filterCinematic: "原画",
+    filterChibi: "Q 版",
+    filterCityscape: "城市",
+    filterScene: "名场面",
     emptyState: "当前条件下没有主题。",
     standardEyebrow: "ACT 主题包标准",
     standardTitle: "好看之前，先让一套主题值得信任。",
@@ -137,7 +143,7 @@ const translations = {
     closingKicker: "免费使用 · 开放审查 · 欢迎共创",
     closingTitle: "先选一套，让工作区有一点自己的气候。",
     browseCollection: "进入主题馆藏",
-    footerRights: "首发 AI 原创素材采用 CC0，项目代码采用 MIT。",
+    footerRights: "AI 原创素材采用 CC0；非官方 Fan Art 适用独立声明；项目代码采用 MIT。",
     installEyebrow: "安装 / 导出",
     chooseMode: "模式",
     chooseTarget: "目标引擎",
@@ -150,9 +156,13 @@ const translations = {
     trustNoteManual: "浏览器不会启动目标应用。请下载并检查适配包，再在对应引擎中手动导入。",
     installTheme: "安装或导出",
     original: "原创",
+    fanArtBadge: "非官方 Fan Art",
+    fanArtLicense: "FAN ART",
+    fanArtNotice: "这是非官方 AI Fan Art，未使用官方剧照、Logo 或宣传素材，也不声称获得权利方授权或背书，仅限个人非商业使用。",
     cinematic: "原画感",
     chibi: "Q 版",
     cityscape: "城市图景",
+    scene: "名场面",
     light: "明亮",
     dark: "暗色",
     copied: "安装命令已复制。",
@@ -164,7 +174,7 @@ const translations = {
     capabilityCodedrobe: "包含生成 CSS 的源码式导出，请在 CodeDrobe 主题工作流中审查后导入。",
     resultCount: "套主题",
     allCollections: "全部系列",
-    allCollectionsCaption: "两种视觉方向，共 16 套主题",
+    allCollectionsCaption: "原创、城市与非官方 Fan Art 主题",
     themeCount: "套主题"
   }
 };
@@ -206,6 +216,7 @@ const elements = {
   heroThemeName: document.querySelector("#heroThemeName"),
   heroThemeMeta: document.querySelector("#heroThemeMeta"),
   heroMode: document.querySelector("#heroMode"),
+  themeStatValue: document.querySelector("#themeStatValue"),
   search: document.querySelector("#themeSearch"),
   collectionGroup: document.querySelector("#collectionGroup"),
   filterGroup: document.querySelector("#filterGroup"),
@@ -219,6 +230,7 @@ const elements = {
   dialogMode: document.querySelector("#dialogMode"),
   engineSelect: document.querySelector("#engineSelect"),
   capabilityNote: document.querySelector("#capabilityNote"),
+  dialogRights: document.querySelector("#dialogRights"),
   commandPanel: document.querySelector("#commandPanel"),
   installCommand: document.querySelector("#installCommand"),
   copyCommand: document.querySelector("#copyCommand"),
@@ -301,6 +313,24 @@ function renderCollectionPicker() {
   elements.collectionGroup.replaceChildren(fragment);
 }
 
+function renderFilterLabels() {
+  if (!state.registry) return;
+  const labelKeys = {
+    all: "filterAll",
+    cinematic: "filterCinematic",
+    chibi: "filterChibi",
+    cityscape: "filterCityscape",
+    scene: "filterScene"
+  };
+  elements.filterGroup.querySelectorAll("button[data-filter]").forEach(function (button) {
+    const filter = button.dataset.filter;
+    const count = filter === "all"
+      ? state.registry.themes.length
+      : state.registry.themes.filter(function (theme) { return theme.variant === filter; }).length;
+    button.textContent = t(labelKeys[filter]) + " " + String(count).padStart(2, "0");
+  });
+}
+
 function updateHero(theme = state.heroTheme) {
   if (!theme) return;
   state.heroTheme = theme;
@@ -322,13 +352,15 @@ function updateLanguage() {
   });
 
   renderCollectionPicker();
+  renderFilterLabels();
 
   state.cards.forEach(function (card, id) {
     const theme = state.registry.themes.find(function (item) { return item.id === id; });
     card.title.textContent = localized(theme.name);
     card.description.textContent = localized(theme.description);
     card.variant.textContent = t(theme.variant);
-    card.original.textContent = t("original");
+    card.original.textContent = theme.rightsProfile === "fan-art" ? t("fanArtBadge") : t("original");
+    card.license.textContent = "AI · " + (theme.rightsProfile === "fan-art" ? t("fanArtLicense") : theme.license.spdx);
     card.collection.textContent = localized(collectionFor(theme)?.name);
     card.install.setAttribute("aria-label", t("installTheme") + ": " + localized(theme.name));
     card.image.alt = localized(theme.name) + " · " + t(state.cardModes.get(id));
@@ -358,6 +390,7 @@ function createCard(theme, index) {
   article.dataset.variant = theme.variant;
   article.dataset.collection = theme.collection;
   article.dataset.id = theme.id;
+  article.classList.toggle("is-fan-art", theme.rightsProfile === "fan-art");
 
   const visual = document.createElement("div");
   visual.className = "card-visual";
@@ -384,7 +417,7 @@ function createCard(theme, index) {
   number.textContent = String(index + 1).padStart(2, "0") + " / " + String(state.registry.themes.length).padStart(2, "0");
   const license = document.createElement("span");
   license.className = "card-license";
-  license.textContent = "AI · " + theme.license.spdx;
+  license.textContent = "AI · " + (theme.rightsProfile === "fan-art" ? t("fanArtLicense") : theme.license.spdx);
   visual.append(number, license);
 
   const body = document.createElement("div");
@@ -437,6 +470,7 @@ function createCard(theme, index) {
     title,
     description,
     original,
+    license,
     variant,
     collection,
     install,
@@ -455,15 +489,23 @@ function applyFilters() {
   let visible = 0;
   state.registry.themes.forEach(function (theme) {
     const record = state.cards.get(theme.id);
+    const collection = collectionFor(theme);
     const haystack = [
       theme.id,
-      localized(theme.name),
-      localized(theme.description),
+      theme.name["zh-CN"],
+      theme.name.en,
+      theme.description["zh-CN"],
+      theme.description.en,
       theme.variant,
       theme.pair,
-      localized(collectionFor(theme)?.name),
+      collection?.name?.["zh-CN"],
+      collection?.name?.en,
+      theme.fanArt?.work?.["zh-CN"],
+      theme.fanArt?.work?.en,
+      ...(theme.fanArt?.characters?.["zh-CN"] || []),
+      ...(theme.fanArt?.characters?.en || []),
       theme.tags.join(" ")
-    ].join(" ").toLocaleLowerCase(state.locale);
+    ].filter(Boolean).join(" ").toLocaleLowerCase(state.locale);
     const matchesCollection = state.collection === "all" || theme.collection === state.collection;
     const matchesFilter = state.filter === "all" || theme.variant === state.filter;
     const matchesQuery = !query || haystack.includes(query);
@@ -510,6 +552,10 @@ function updateDialog() {
   elements.dialogPreview.alt = localized(theme.name) + " · " + t(state.dialogMode);
   elements.dialogVariant.textContent = localized(collectionFor(theme)?.name) + " · " + t(theme.variant);
   elements.capabilityNote.textContent = t(capabilityKeys[state.engine]);
+  elements.dialogRights.hidden = theme.rightsProfile !== "fan-art";
+  elements.dialogRights.textContent = theme.rightsProfile === "fan-art"
+    ? localized(theme.fanArt?.work) + " · " + t("fanArtNotice")
+    : "";
   elements.trustNote.textContent = t(trustNoteKeys[state.engine]);
   elements.commandPanel.hidden = state.engine !== "dream-skin";
   elements.installCommand.textContent = installCommand(theme, state.dialogMode, state.os);
@@ -637,6 +683,7 @@ async function loadRegistry() {
       throw new Error("Unexpected registry contract");
     }
     state.registry = registry;
+    elements.themeStatValue.textContent = String(registry.themes.length).padStart(2, "0");
     state.heroTheme = registry.themes[0] || null;
     renderCollectionPicker();
     const fragment = document.createDocumentFragment();

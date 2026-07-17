@@ -28,31 +28,51 @@ async function exists(target) {
   }
 }
 
-test("repository validates sixteen dual-mode code-free themes in two collections", async function () {
+test("repository validates twenty-eight dual-mode code-free themes in four collections", async function () {
   const result = await validateRepository();
   assert.deepEqual(result, {
-    sources: 16,
-    themes: 16,
-    modes: 32,
-    packages: 16,
-    adapterBundles: 32
+    sources: 28,
+    themes: 28,
+    modes: 56,
+    packages: 28,
+    adapterBundles: 56
   });
 });
 
-test("registry exposes the paired xianxia and standalone city collections", async function () {
+test("registry exposes original and disclosed fan-art collections", async function () {
   const registry = JSON.parse(await readFile(path.join(ROOT, "themes", "registry.json"), "utf8"));
   assert.deepEqual(registry.collections.map(function (collection) {
     return [collection.id, collection.pairing, collection.themeCount];
   }), [
     ["original-xianxia-01", "cinematic-chibi", 8],
-    ["china-city-atlas-01", "standalone", 8]
+    ["china-city-atlas-01", "standalone", 8],
+    ["donghua-character-tributes-01", "cinematic-chibi", 8],
+    ["donghua-memory-scenes-01", "standalone", 4]
   ]);
   assert.equal(registry.themes.filter(function (theme) { return theme.variant === "cityscape"; }).length, 8);
+  assert.equal(registry.themes.filter(function (theme) { return theme.variant === "scene"; }).length, 4);
+  assert.equal(registry.themes.filter(function (theme) { return theme.rightsProfile === "fan-art"; }).length, 12);
+  assert.equal(registry.themes.filter(function (theme) { return theme.rightsProfile === "original"; }).length, 16);
   assert.equal(registry.themes.every(function (theme) { return typeof theme.collection === "string"; }), true);
   assert.equal(registry.themes.every(function (theme) {
     return theme.provenance?.aiGenerated === true
       && /^[a-f0-9]{64}$/.test(theme.provenance.sourceSha256)
       && /^[a-f0-9]{64}$/.test(theme.provenance.promptSha256);
+  }), true);
+  assert.equal(registry.themes.filter(function (theme) { return theme.rightsProfile === "fan-art"; }).every(function (theme) {
+    return theme.license.spdx === "LicenseRef-ACT-Fan-Art-Notice"
+      && theme.license.rightsVerified === false
+      && theme.provenance.type === "fan-art"
+      && theme.provenance.rightsVerified === false
+      && theme.fanArt?.unofficial === true
+      && theme.fanArt?.commercialUse === false
+      && theme.fanArt?.officialAssetsUsed === false;
+  }), true);
+  assert.equal(registry.themes.filter(function (theme) { return theme.rightsProfile === "original"; }).every(function (theme) {
+    return theme.license.spdx === "CC0-1.0"
+      && theme.license.rightsVerified === true
+      && theme.provenance.type === "original"
+      && theme.provenance.rightsVerified === true;
   }), true);
 });
 
@@ -84,7 +104,7 @@ test("static gallery builds with every public contract artifact", async function
   const output = path.join(temporary, "site");
   try {
     const result = await buildSite(output);
-    assert.equal(result.themes, 16);
+    assert.equal(result.themes, 28);
     const required = [
       "index.html",
       "assets/app.js",
@@ -103,6 +123,9 @@ test("static gallery builds with every public contract artifact", async function
     const app = await readFile(path.join(output, "assets", "app.js"), "utf8");
     assert.match(html, /Awesome Codex Theme/);
     assert.match(html, /id="trustNote"/);
+    assert.match(html, /id="dialogRights"/);
+    assert.match(html, /docs\/fan-art-policy\.md/);
+    assert.match(html, /data-filter="scene"/);
     assert.match(app, /elements\.trustNote\.textContent = t\(trustNoteKeys\[state\.engine\]\)/);
     assert.doesNotMatch(html, /TODO|preset-act/i);
   } finally {
