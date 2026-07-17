@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-07-16-02-00
+
+- Fixed the install dialog so its trust note follows the selected adapter
+  instead of always describing the Dream Skin installer.
+
 ## 2026-07-16-01-00
 
 - Added China City Atlas 01 with eight original, dual-mode city themes.

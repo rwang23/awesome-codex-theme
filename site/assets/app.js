@@ -55,7 +55,9 @@ const translations = {
     copyCommand: "Copy command",
     downloadExport: "Download adapter bundle",
     downloadPackage: "Canonical .act-theme",
-    trustNote: "The browser never writes to Codex. The command downloads a reviewable installer, verifies the selected adapter and image hashes, then writes to the Dream Skin library.",
+    trustNoteDream: "The browser never writes to Codex. The command downloads a reviewable installer, verifies the selected adapter and image hashes, then writes to the Dream Skin library.",
+    trustNoteNative: "The browser never writes to Codex. The native export only records the light or dark appearance preference; it does not apply the background or custom palette.",
+    trustNoteManual: "The browser never launches the target app. Download and inspect the adapter bundle, then import the matching export manually.",
     installTheme: "Install or export",
     original: "Original",
     cinematic: "Cinematic",
@@ -131,7 +133,9 @@ const translations = {
     copyCommand: "复制命令",
     downloadExport: "下载适配器包",
     downloadPackage: "标准 .act-theme",
-    trustNote: "浏览器不会直接改写 Codex。命令会下载可审查的安装器，核对适配包与背景图哈希后，再写入 Dream Skin 主题库。",
+    trustNoteDream: "浏览器不会直接改写 Codex。命令会下载可审查的安装器，核对适配包与背景图哈希后，再写入 Dream Skin 主题库。",
+    trustNoteNative: "浏览器不会直接改写 Codex。原生导出只记录明亮或暗色外观偏好，不会应用背景图或自定义色板。",
+    trustNoteManual: "浏览器不会启动目标应用。请下载并检查适配包，再在对应引擎中手动导入。",
     installTheme: "安装或导出",
     original: "原创",
     cinematic: "原画感",
@@ -158,6 +162,13 @@ const capabilityKeys = {
   "codex-native": "capabilityNative",
   "heige-skin-studio": "capabilityHeige",
   codedrobe: "capabilityCodedrobe"
+};
+
+const trustNoteKeys = {
+  "dream-skin": "trustNoteDream",
+  "codex-native": "trustNoteNative",
+  "heige-skin-studio": "trustNoteManual",
+  codedrobe: "trustNoteManual"
 };
 
 const state = {
@@ -196,6 +207,7 @@ const elements = {
   osSwitch: document.querySelector("#osSwitch"),
   downloadAdapter: document.querySelector("#downloadAdapter"),
   downloadPackage: document.querySelector("#downloadPackage"),
+  trustNote: document.querySelector("#trustNote"),
   toast: document.querySelector("#toast")
 };
 
@@ -461,6 +473,7 @@ function updateDialog() {
   elements.dialogPreview.alt = localized(theme.name) + " · " + t(state.dialogMode);
   elements.dialogVariant.textContent = localized(collectionFor(theme)?.name) + " · " + t(theme.variant);
   elements.capabilityNote.textContent = t(capabilityKeys[state.engine]);
+  elements.trustNote.textContent = t(trustNoteKeys[state.engine]);
   elements.commandPanel.hidden = state.engine !== "dream-skin";
   elements.installCommand.textContent = installCommand(theme, state.dialogMode, state.os);
   elements.downloadAdapter.href = assetUrl(modeRecord.adapterBundle.path);

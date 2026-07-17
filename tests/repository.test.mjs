@@ -93,7 +93,10 @@ test("static gallery builds with every public contract artifact", async function
       assert.equal(await exists(path.join(output, ...relative.split("/"))), true, relative);
     }
     const html = await readFile(path.join(output, "index.html"), "utf8");
+    const app = await readFile(path.join(output, "assets", "app.js"), "utf8");
     assert.match(html, /Awesome Codex Theme/);
+    assert.match(html, /id="trustNote"/);
+    assert.match(app, /elements\.trustNote\.textContent = t\(trustNoteKeys\[state\.engine\]\)/);
     assert.doesNotMatch(html, /TODO|preset-act/i);
   } finally {
     const resolved = path.resolve(temporary);
