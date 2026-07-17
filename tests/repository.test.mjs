@@ -6,6 +6,7 @@ import test from "node:test";
 import { fileURLToPath } from "node:url";
 
 import { buildSite } from "../scripts/build.mjs";
+import { buildWindowsInstaller } from "../scripts/build-installer.mjs";
 import { listZipEntries } from "../scripts/lib/zip.mjs";
 import { parseCodexNativeTheme } from "../scripts/lib/codex-native-theme.mjs";
 import {
@@ -33,7 +34,8 @@ test("repository validates twenty-eight dual-mode code-free themes in four colle
     themes: 28,
     modes: 56,
     packages: 28,
-    nativeExports: 56
+    nativeExports: 56,
+    captures: 56
   });
 });
 
@@ -52,6 +54,22 @@ test("registry exposes original and disclosed fan-art collections", async functi
   assert.equal(registry.themes.filter(function (theme) { return theme.rightsProfile === "fan-art"; }).length, 12);
   assert.equal(registry.themes.filter(function (theme) { return theme.rightsProfile === "original"; }).length, 16);
   assert.equal(registry.themes.every(function (theme) { return typeof theme.collection === "string"; }), true);
+  assert.equal(registry.themes.every(function (theme) {
+    return typeof theme.tagline?.en === "string"
+      && theme.tagline.en.length > 0
+      && typeof theme.tagline?.["zh-CN"] === "string"
+      && theme.tagline["zh-CN"].length > 0;
+  }), true);
+  assert.equal(registry.themes.every(function (theme) {
+    return ["light", "dark"].every(function (mode) {
+      const capture = theme.previews[mode].capture;
+      return capture?.appVersion === "26.707.3351.0"
+        && capture.fixture === "settings-appearance-v1"
+        && capture.width === 1440
+        && capture.height === 810
+        && capture.nativeSha256 === theme.previews[mode].nativeTheme.sha256;
+    });
+  }), true);
   assert.equal(registry.themes.every(function (theme) {
     return theme.provenance?.aiGenerated === true
       && /^[a-f0-9]{64}$/.test(theme.provenance.sourceSha256)
@@ -91,6 +109,7 @@ test("canonical archives contain only declared art, manifest, and Codex Native t
 
 test("registry exposes importable Codex Native v1 strings and no third-party adapters", async function () {
   const registry = JSON.parse(await readFile(path.join(ROOT, "themes", "registry.json"), "utf8"));
+  const nativeValues = new Set();
   for (const theme of registry.themes) {
     const manifest = JSON.parse(await readFile(path.join(ROOT, ...theme.package.manifest.split("/")), "utf8"));
     assert.deepEqual(Object.keys(theme.exports), ["codex-native"]);
@@ -98,6 +117,8 @@ test("registry exposes importable Codex Native v1 strings and no third-party ada
     for (const mode of ["light", "dark"]) {
       const record = theme.previews[mode].nativeTheme;
       const value = await readFile(path.join(ROOT, ...record.path.split("/")), "utf8");
+      assert.equal(nativeValues.has(value), false, theme.id + " " + mode + " must have a distinct Native payload");
+      nativeValues.add(value);
       const payload = parseCodexNativeTheme(value);
       assert.equal(payload.variant, mode);
       assert.equal(payload.codeThemeId, "codex");
@@ -107,6 +128,7 @@ test("registry exposes importable Codex Native v1 strings and no third-party ada
       assert.equal(payload.theme.opaqueWindows, true);
     }
   }
+  assert.equal(nativeValues.size, 56);
 });
 
 test("Codex Native parser rejects undeclared fields", function () {
@@ -155,6 +177,8 @@ test("static gallery builds with every public contract artifact", async function
       "themes/source-art/jobs.json",
       "schemas/theme-pack.schema.json",
       "schemas/registry.schema.json",
+      "downloads/awesome-codex-theme-installer-windows.zip",
+      "downloads/installer.json",
       ".nojekyll"
     ];
     for (const relative of required) {
@@ -167,7 +191,9 @@ test("static gallery builds with every public contract artifact", async function
       assert.equal(await exists(path.join(output, ...theme.package.path.split("/"))), true, theme.package.path);
       for (const mode of ["light", "dark"]) {
         const nativePath = theme.previews[mode].nativeTheme.path;
+        const capturePath = theme.previews[mode].capture.path;
         assert.equal(await exists(path.join(output, ...nativePath.split("/"))), true, nativePath);
+        assert.equal(await exists(path.join(output, ...capturePath.split("/"))), true, capturePath);
       }
     }
     assert.match(html, /Awesome Codex Theme/);
@@ -175,8 +201,10 @@ test("static gallery builds with every public contract artifact", async function
     assert.match(html, /id="dialogRights"/);
     assert.match(html, /docs\/fan-art-policy\.md/);
     assert.match(html, /data-filter="scene"/);
-    assert.match(html, /codex:\/\/settings/);
+    assert.doesNotMatch(html, /codex:\/\/settings/);
+    assert.match(html, /awesome-codex-theme-installer-windows\.zip/);
     assert.match(app, /nativeTheme\.path/);
+    assert.match(app, /modeRecord\.capture/);
     assert.doesNotMatch(app, /dream-skin|heige-skin-studio|codedrobe/i);
     assert.doesNotMatch(html, /TODO|preset-act/i);
   } finally {
@@ -185,6 +213,44 @@ test("static gallery builds with every public contract artifact", async function
       await rm(resolved, { recursive: true, force: true });
     }
   }
+});
+
+test("real screenshot evidence covers every mode and confirms Beta restoration", async function () {
+  const manifest = JSON.parse(await readFile(
+    path.join(ROOT, "screenshots", "codex-beta-26.707.3351.0", "manifest.json"),
+    "utf8",
+  ));
+  assert.equal(manifest.status, "complete");
+  assert.equal(manifest.testBench.packageFullName, "OpenAI.CodexBeta_26.707.3351.0_x64__2p2nqsd0c76g0");
+  assert.equal(manifest.fixture.id, "settings-appearance-v1");
+  assert.equal(manifest.fixture.sidebar, "hidden");
+  assert.equal(manifest.fixture.privateContent, "excluded");
+  assert.equal(manifest.baseline.restored, true);
+  assert.equal(manifest.baseline.finalSha256, manifest.baseline.sha256);
+  assert.equal(manifest.captures.length, 56);
+  assert.equal(new Set(manifest.captures.map(function (capture) {
+    return capture.themeId + "|" + capture.mode;
+  })).size, 56);
+});
+
+test("Windows installer is a no-admin helper with a bundled Registry", async function () {
+  const result = await buildWindowsInstaller();
+  const entries = listZipEntries(result.archive).map(function (entry) { return entry.name; }).sort();
+  assert.deepEqual(entries, [
+    "ACT-Installer.ps1",
+    "LICENSE.txt",
+    "Launch ACT Installer.cmd",
+    "README.txt",
+    "copy.json",
+    "registry.json"
+  ]);
+  assert.equal(result.manifest.requiresAdmin, false);
+  assert.match(result.manifest.installBoundary, /final import remains inside ChatGPT/);
+  const script = await readFile(path.join(ROOT, "installer", "windows", "ACT-Installer.ps1"), "utf8");
+  assert.match(script, /OpenAI\.CodexBeta/);
+  assert.match(script, /shell:AppsFolder/);
+  assert.match(script, /ConvertFrom-ACTNativeTheme/);
+  assert.doesNotMatch(script, /WindowsApps.*(?:Write|Set-Content)|app\.asar|remote-debugging-port/i);
 });
 
 test("gallery keeps the independent Chinese-first visual system", async function () {

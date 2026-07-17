@@ -51,6 +51,10 @@
               <span data-i18n="browseThemes">浏览全部主题</span>
               <span aria-hidden="true">↓</span>
             </a>
+            <a class="hero-installer" href="./downloads/awesome-codex-theme-installer-windows.zip" download>
+              <span data-i18n="downloadInstaller">下载 Windows 安装助手</span>
+              <span aria-hidden="true">↓</span>
+            </a>
             <a class="hero-repo" href="https://github.com/rwang23/awesome-codex-theme">
               <span data-i18n="viewRepo">查看 GitHub 仓库</span>
               <span aria-hidden="true">↗</span>
@@ -92,7 +96,7 @@
             </div>
           </div>
           <span class="theater-note note-one" aria-hidden="true">NATIVE v1</span>
-          <span class="theater-note note-two" aria-hidden="true">COVER ART</span>
+          <span class="theater-note note-two" id="heroVisualKind" aria-hidden="true">BETA CAPTURE</span>
         </div>
       </section>
 
@@ -280,7 +284,8 @@ city rain theme.</code></pre>
       <div class="dialog-content">
         <p class="eyebrow" data-i18n="installEyebrow">在 Codex 中使用</p>
         <h2 id="dialogTitle"></h2>
-        <p id="dialogDescription"></p>
+        <p class="dialog-tagline" id="dialogTagline"></p>
+        <p class="dialog-description" id="dialogDescription"></p>
         <p class="dialog-rights" id="dialogRights" hidden></p>
 
         <div class="dialog-options">
@@ -299,6 +304,14 @@ city rain theme.</code></pre>
 
         <div class="capability-note" id="capabilityNote"></div>
 
+        <div class="installer-card">
+          <span class="installer-mark" aria-hidden="true">ACT</span>
+          <div>
+            <strong data-i18n="installerTitle">更稳妥的一步交接</strong>
+            <p data-i18n="installerBody">免管理员权限的安装助手会校验主题、识别准确的 Stable 或 Beta 应用、复制所选主题并打开对应版本。最后一步仍由你在 ChatGPT 中确认导入。</p>
+          </div>
+        </div>
+
         <div class="command-panel">
           <div class="command-heading">
             <span data-i18n="verifiedCommand">Codex Native 主题字符串</span>
@@ -312,9 +325,9 @@ city rain theme.</code></pre>
         </div>
 
         <div class="dialog-actions">
-          <a class="primary-action" href="codex://settings">
-            <span data-i18n="openSettings">打开 Codex 设置</span>
-            <span aria-hidden="true">↗</span>
+          <a class="primary-action" href="./downloads/awesome-codex-theme-installer-windows.zip" download>
+            <span data-i18n="downloadInstaller">下载 Windows 安装助手</span>
+            <span aria-hidden="true">↓</span>
           </a>
           <a class="secondary-action" id="downloadNativeTheme" download>
             <span data-i18n="downloadExport">下载原生主题</span>

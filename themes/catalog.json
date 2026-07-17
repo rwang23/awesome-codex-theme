@@ -90,6 +90,10 @@
         "en": "Qinglan Odyssey",
         "zh-CN": "青岚问道"
       },
+      "tagline": {
+        "en": "Mist settles beyond the moon gate.",
+        "zh-CN": "雾过月门，山路正好安静。"
+      },
       "description": {
         "en": "Ink-green ridgelines, a quiet moon gate, and a long road through the mist.",
         "zh-CN": "墨绿山脊、月门与雾中长路，主视觉留在右侧，左侧保持安静。"
@@ -151,6 +155,10 @@
       "name": {
         "en": "Qinglan Little Cultivator",
         "zh-CN": "青岚小修"
+      },
+      "tagline": {
+        "en": "A little guardian keeps the lantern lit.",
+        "zh-CN": "纸灯亮着，小山灵替你守夜。"
       },
       "description": {
         "en": "A round original mountain spirit keeps watch beside a warm paper lantern.",
@@ -214,6 +222,10 @@
         "en": "Starbound Rebel",
         "zh-CN": "星河逆旅"
       },
+      "tagline": {
+        "en": "One red line cuts through the star road.",
+        "zh-CN": "星路向前，红光只留一笔。"
+      },
       "description": {
         "en": "A lone celestial route cuts through cobalt constellations and restrained red light.",
         "zh-CN": "钴蓝星图里穿过一条逆行天路，以克制红光做视觉锚点。"
@@ -275,6 +287,10 @@
       "name": {
         "en": "Starbound Spirit",
         "zh-CN": "星河灵童"
+      },
+      "tagline": {
+        "en": "A small comet takes the long way home.",
+        "zh-CN": "坐上小彗星，慢慢划过夜空。"
       },
       "description": {
         "en": "An original star spirit rides a tiny comet across a deep, quiet sky.",
@@ -338,6 +354,10 @@
         "en": "Mountain Sword Intent",
         "zh-CN": "山河剑意"
       },
+      "tagline": {
+        "en": "The mountain holds still for one sword stroke.",
+        "zh-CN": "山很重，剑光只需要一线。"
+      },
       "description": {
         "en": "Black-ink peaks and one vermilion sword line, composed like a modern book cover.",
         "zh-CN": "黑墨山峰与一线朱砂剑光，构图更像现代书封，而不是游戏截图。"
@@ -399,6 +419,10 @@
       "name": {
         "en": "Little Sword Wanderer",
         "zh-CN": "山河剑童"
+      },
+      "tagline": {
+        "en": "The sword case is too big. The road can wait.",
+        "zh-CN": "剑匣太大，少年还是照常出发。"
       },
       "description": {
         "en": "A tiny original swordling practices one careful stroke under a huge sunrise.",
@@ -462,6 +486,10 @@
         "en": "Cloudsea Pact",
         "zh-CN": "云海灵契"
       },
+      "tagline": {
+        "en": "The cloud sea keeps the floating islands quiet.",
+        "zh-CN": "浮岛很远，云海把声音收住。"
+      },
       "description": {
         "en": "Floating islands meet a pale jade horizon in an original spirit-contract world.",
         "zh-CN": "浮岛、玉色天际与原创灵契世界，整体清透，任务页也不会过分抢眼。"
@@ -523,6 +551,10 @@
       "name": {
         "en": "Cloudsea Mochi",
         "zh-CN": "云海团子"
+      },
+      "tagline": {
+        "en": "The cloud creature sleeps while the leaf drifts.",
+        "zh-CN": "团子睡着了，浮叶还在轻轻晃。"
       },
       "description": {
         "en": "A soft original cloud creature naps on a floating leaf above the sea of mist.",
@@ -586,6 +618,10 @@
         "en": "Beijing Meridian",
         "zh-CN": "北京·城轴晨光"
       },
+      "tagline": {
+        "en": "First light reaches the winter rooftops.",
+        "zh-CN": "冬日城轴，第一束光落在屋脊上。"
+      },
       "description": {
         "en": "Winter-blue air, measured rooflines, and the first warm light along a long city axis.",
         "zh-CN": "冬日蓝调、舒展屋脊和城轴上的第一束暖光，画面克制而端正。"
@@ -647,6 +683,10 @@
       "name": {
         "en": "Shanghai Afterglow",
         "zh-CN": "上海·潮汐霓虹"
+      },
+      "tagline": {
+        "en": "The tide stays out as the neon comes on.",
+        "zh-CN": "潮水未退，霓虹刚刚亮起。"
       },
       "description": {
         "en": "River lines, vertical glass, and restrained neon settling into evening haze.",
@@ -710,6 +750,10 @@
         "en": "Shenzhen Circuit Rain",
         "zh-CN": "深圳·绿芯阵雨"
       },
+      "tagline": {
+        "en": "Rain turns the circuit city green.",
+        "zh-CN": "一场阵雨，把整座城刷成绿光。"
+      },
       "description": {
         "en": "Fast rain crosses a leaf-green grid while the towers hold a cool electric glow.",
         "zh-CN": "阵雨穿过叶绿色网格，塔楼亮着冷静的电光，速度感留在画面右侧。"
@@ -771,6 +815,10 @@
       "name": {
         "en": "Guangzhou Riverwind",
         "zh-CN": "广州·珠水晚风"
+      },
+      "tagline": {
+        "en": "River wind moves through the banyan shade.",
+        "zh-CN": "榕荫里有风，江面正好入夜。"
       },
       "description": {
         "en": "Warm river air moves between banyan shade, curved light, and a soft amber skyline.",
@@ -834,6 +882,10 @@
         "en": "Chengdu Teahouse Rain",
         "zh-CN": "成都·竹窗细雨"
       },
+      "tagline": {
+        "en": "Rain at the bamboo window. Tea still warm.",
+        "zh-CN": "竹窗听雨，茶还没有凉。"
+      },
       "description": {
         "en": "Fine rain, bamboo shadow, tiled eaves, and tea steam keep the afternoon unhurried.",
         "zh-CN": "细雨、竹影、瓦檐和一缕茶汽，把下午放慢了一点。"
@@ -895,6 +947,10 @@
       "name": {
         "en": "Hangzhou Lake Letter",
         "zh-CN": "杭州·湖上来信"
+      },
+      "tagline": {
+        "en": "A letter from the lake can wait.",
+        "zh-CN": "湖上来信，不催你立刻回。"
       },
       "description": {
         "en": "A long causeway, lotus marks, and distant rain settle into pale lake light.",
@@ -958,6 +1014,10 @@
         "en": "Chongqing Vertical Night",
         "zh-CN": "重庆·山城夜航"
       },
+      "tagline": {
+        "en": "Light climbs the city and follows the river.",
+        "zh-CN": "城在山上，光沿着江面向前。"
+      },
       "description": {
         "en": "Stacked slopes, river reflections, and one bright transit line turn depth into rhythm.",
         "zh-CN": "层叠山坡、江面倒影和一条穿城光轨，把高低落差变成节奏。"
@@ -1019,6 +1079,10 @@
       "name": {
         "en": "Nanjing Wall Plum",
         "zh-CN": "南京·城墙梅影"
+      },
+      "tagline": {
+        "en": "Plum shadows leave one red note on old brick.",
+        "zh-CN": "梅影落在旧砖上，冬天有了一点红。"
       },
       "description": {
         "en": "Old wall courses, plum branches, and river mist hold a quiet red winter note.",
@@ -1083,6 +1147,10 @@
         "en": "Mortal Journey · Kindred Paths",
         "zh-CN": "凡人·道侣相望"
       },
+      "tagline": {
+        "en": "They still find each other through the mist.",
+        "zh-CN": "隔着雾与石台，还是看见了彼此。"
+      },
       "description": {
         "en": "Unofficial fan art of Han Li and Nangong Wan meeting across a misty cultivation terrace.",
         "zh-CN": "韩立与南宫婉隔着雾中石台相望，克制、疏离，又保留彼此牵挂。"
@@ -1109,26 +1177,26 @@
       },
       "light": {
         "tokens": {
-          "background": "#EDF3EE",
-          "surface": "#FFFFFF",
-          "surfaceAlt": "#DCE9DF",
-          "text": "#15231A",
-          "muted": "#52665A",
-          "accent": "#246A4B",
+          "background": "#F2F1E6",
+          "surface": "#FFFEF8",
+          "surfaceAlt": "#E4E1CA",
+          "text": "#242717",
+          "muted": "#5C6244",
+          "accent": "#5F6F21",
           "accentContrast": "#FFFFFF",
-          "border": "#9AB4A4"
+          "border": "#ADB286"
         }
       },
       "dark": {
         "tokens": {
-          "background": "#08130E",
-          "surface": "#102219",
-          "surfaceAlt": "#183226",
-          "text": "#EEF8F1",
-          "muted": "#A3B9AA",
-          "accent": "#73D3A0",
-          "accentContrast": "#0A2114",
-          "border": "#365E47"
+          "background": "#101306",
+          "surface": "#1A210B",
+          "surfaceAlt": "#293213",
+          "text": "#F5F7E8",
+          "muted": "#B8BE95",
+          "accent": "#C1D36A",
+          "accentContrast": "#182006",
+          "border": "#59652D"
         }
       }
     },
@@ -1142,6 +1210,10 @@
       "name": {
         "en": "Mortal Journey · Bottle Keepers",
         "zh-CN": "凡人·掌天瓶小队"
+      },
+      "tagline": {
+        "en": "Guard the green bottle. Mind the tiny herb garden.",
+        "zh-CN": "小绿瓶看得紧，灵药园也不能乱。"
       },
       "description": {
         "en": "Chibi Han Li and Nangong Wan guard a tiny green bottle beside a miniature herb garden.",
@@ -1169,26 +1241,26 @@
       },
       "light": {
         "tokens": {
-          "background": "#EDF3EE",
-          "surface": "#FFFFFF",
-          "surfaceAlt": "#DCE9DF",
-          "text": "#15231A",
-          "muted": "#52665A",
-          "accent": "#246A4B",
+          "background": "#FFF4EA",
+          "surface": "#FFFDFC",
+          "surfaceAlt": "#F7DEC7",
+          "text": "#3A2417",
+          "muted": "#745640",
+          "accent": "#A9502E",
           "accentContrast": "#FFFFFF",
-          "border": "#9AB4A4"
+          "border": "#CEA384"
         }
       },
       "dark": {
         "tokens": {
-          "background": "#08130E",
-          "surface": "#102219",
-          "surfaceAlt": "#183226",
-          "text": "#EEF8F1",
-          "muted": "#A3B9AA",
-          "accent": "#73D3A0",
-          "accentContrast": "#0A2114",
-          "border": "#365E47"
+          "background": "#211109",
+          "surface": "#311B10",
+          "surfaceAlt": "#492718",
+          "text": "#FFF3E8",
+          "muted": "#D7B49A",
+          "accent": "#FF9A67",
+          "accentContrast": "#321207",
+          "border": "#815038"
         }
       }
     },
@@ -1202,6 +1274,10 @@
       "name": {
         "en": "Renegade Immortal · A Vow Against Heaven",
         "zh-CN": "仙逆·执念相守"
+      },
+      "tagline": {
+        "en": "One warm lamp holds against the cold.",
+        "zh-CN": "万里都是冷色，只有一盏灯还暖。"
       },
       "description": {
         "en": "Unofficial fan art of Wang Lin and Li Muwan beneath a cold sky, held together by one warm lantern.",
@@ -1229,26 +1305,26 @@
       },
       "light": {
         "tokens": {
-          "background": "#EFF3FB",
-          "surface": "#FFFFFF",
-          "surfaceAlt": "#DDE6F8",
-          "text": "#14213B",
-          "muted": "#55647D",
-          "accent": "#3459A6",
+          "background": "#EEF1FA",
+          "surface": "#FBFCFF",
+          "surfaceAlt": "#DCE2F5",
+          "text": "#1C2440",
+          "muted": "#535E7A",
+          "accent": "#3A56A8",
           "accentContrast": "#FFFFFF",
-          "border": "#A5B5D4"
+          "border": "#9CAAD2"
         }
       },
       "dark": {
         "tokens": {
-          "background": "#070D1B",
-          "surface": "#0F1930",
-          "surfaceAlt": "#182746",
-          "text": "#F1F5FF",
-          "muted": "#A8B4D1",
-          "accent": "#7FA5FF",
-          "accentContrast": "#09142C",
-          "border": "#3A4E78"
+          "background": "#090D1D",
+          "surface": "#111933",
+          "surfaceAlt": "#1B2850",
+          "text": "#EEF2FF",
+          "muted": "#A8B4D7",
+          "accent": "#8CA6FF",
+          "accentContrast": "#10162E",
+          "border": "#41578F"
         }
       }
     },
@@ -1262,6 +1338,10 @@
       "name": {
         "en": "Renegade Immortal · Little Woodcarving Shop",
         "zh-CN": "仙逆·木雕小铺"
+      },
+      "tagline": {
+        "en": "The carving takes time. So does the little furnace.",
+        "zh-CN": "木雕慢慢刻，丹炉也慢慢亮。"
       },
       "description": {
         "en": "Chibi Wang Lin carves a tiny figure while Li Muwan tends a glowing pill furnace.",
@@ -1289,26 +1369,26 @@
       },
       "light": {
         "tokens": {
-          "background": "#EFF3FB",
-          "surface": "#FFFFFF",
-          "surfaceAlt": "#DDE6F8",
-          "text": "#14213B",
-          "muted": "#55647D",
-          "accent": "#3459A6",
+          "background": "#FFF0F6",
+          "surface": "#FFFCFD",
+          "surfaceAlt": "#F7D8E6",
+          "text": "#3A1C2A",
+          "muted": "#765064",
+          "accent": "#A84072",
           "accentContrast": "#FFFFFF",
-          "border": "#A5B5D4"
+          "border": "#D3A0B9"
         }
       },
       "dark": {
         "tokens": {
-          "background": "#070D1B",
-          "surface": "#0F1930",
-          "surfaceAlt": "#182746",
-          "text": "#F1F5FF",
-          "muted": "#A8B4D1",
-          "accent": "#7FA5FF",
-          "accentContrast": "#09142C",
-          "border": "#3A4E78"
+          "background": "#200B16",
+          "surface": "#321121",
+          "surfaceAlt": "#4A1931",
+          "text": "#FFF0F7",
+          "muted": "#D5A7BC",
+          "accent": "#FF87BA",
+          "accentContrast": "#321021",
+          "border": "#7E3657"
         }
       }
     },
@@ -1322,6 +1402,10 @@
       "name": {
         "en": "Sword of Coming · Two Young Swords",
         "zh-CN": "剑来·少年与宁姚"
+      },
+      "tagline": {
+        "en": "One carries the sword. One looks back.",
+        "zh-CN": "一人背剑，一人回头，山路就在前面。"
       },
       "description": {
         "en": "Unofficial fan art of Chen Ping'an and Ning Yao walking out of a small town toward an open mountain road.",
@@ -1349,26 +1433,26 @@
       },
       "light": {
         "tokens": {
-          "background": "#F4F0E8",
-          "surface": "#FFFEFA",
-          "surfaceAlt": "#E8E1D5",
-          "text": "#241D17",
-          "muted": "#6C5F52",
-          "accent": "#8E302B",
+          "background": "#EDF5F5",
+          "surface": "#FBFEFE",
+          "surfaceAlt": "#D6E8E8",
+          "text": "#152A2D",
+          "muted": "#4C6568",
+          "accent": "#1F6974",
           "accentContrast": "#FFFFFF",
-          "border": "#B9AA98"
+          "border": "#93B7BA"
         }
       },
       "dark": {
         "tokens": {
-          "background": "#130C0B",
-          "surface": "#251512",
-          "surfaceAlt": "#35211C",
-          "text": "#FFF2E8",
-          "muted": "#C5AA9C",
-          "accent": "#EB7063",
-          "accentContrast": "#2D0D0A",
-          "border": "#67453A"
+          "background": "#071518",
+          "surface": "#0E252A",
+          "surfaceAlt": "#16383E",
+          "text": "#EDF9FA",
+          "muted": "#A2C1C4",
+          "accent": "#65CCD4",
+          "accentContrast": "#092328",
+          "border": "#32636A"
         }
       }
     },
@@ -1382,6 +1466,10 @@
       "name": {
         "en": "Sword of Coming · Small-Town Companions",
         "zh-CN": "剑来·小镇同行"
+      },
+      "tagline": {
+        "en": "The sword case is heavy, but the road goes on.",
+        "zh-CN": "剑匣有点重，下一段路还是要走。"
       },
       "description": {
         "en": "Chibi Chen Ping'an carries an oversized sword case while Ning Yao points toward the next road.",
@@ -1409,26 +1497,26 @@
       },
       "light": {
         "tokens": {
-          "background": "#F4F0E8",
-          "surface": "#FFFEFA",
-          "surfaceAlt": "#E8E1D5",
-          "text": "#241D17",
-          "muted": "#6C5F52",
-          "accent": "#8E302B",
+          "background": "#FFF3E2",
+          "surface": "#FFFDF8",
+          "surfaceAlt": "#F7DDB6",
+          "text": "#392514",
+          "muted": "#73583C",
+          "accent": "#9A570F",
           "accentContrast": "#FFFFFF",
-          "border": "#B9AA98"
+          "border": "#CDA373"
         }
       },
       "dark": {
         "tokens": {
-          "background": "#130C0B",
-          "surface": "#251512",
-          "surfaceAlt": "#35211C",
-          "text": "#FFF2E8",
-          "muted": "#C5AA9C",
-          "accent": "#EB7063",
-          "accentContrast": "#2D0D0A",
-          "border": "#67453A"
+          "background": "#201205",
+          "surface": "#321C09",
+          "surfaceAlt": "#4A2B0E",
+          "text": "#FFF3DF",
+          "muted": "#D7B792",
+          "accent": "#FFB95F",
+          "accentContrast": "#2E1605",
+          "border": "#7D501B"
         }
       }
     },
@@ -1442,6 +1530,10 @@
       "name": {
         "en": "Battle Through · Flame and Serpent",
         "zh-CN": "斗破·异火与蛇影"
+      },
+      "tagline": {
+        "en": "Flame ahead, serpent behind, neither steps back.",
+        "zh-CN": "异火在前，蛇影在后，两人都没有退。"
       },
       "description": {
         "en": "Unofficial fan art of Xiao Yan and Medusa framed by green flame and a restrained violet serpent aura.",
@@ -1469,26 +1561,26 @@
       },
       "light": {
         "tokens": {
-          "background": "#F7F1EE",
-          "surface": "#FFFFFF",
-          "surfaceAlt": "#EADDD8",
-          "text": "#332321",
-          "muted": "#6A5652",
-          "accent": "#913645",
+          "background": "#FFF1E9",
+          "surface": "#FFFDFC",
+          "surfaceAlt": "#F7D8C7",
+          "text": "#3A2116",
+          "muted": "#75513E",
+          "accent": "#A3431F",
           "accentContrast": "#FFFFFF",
-          "border": "#BDA6A0"
+          "border": "#D09A7C"
         }
       },
       "dark": {
         "tokens": {
-          "background": "#170D10",
-          "surface": "#2B191D",
-          "surfaceAlt": "#3F242A",
-          "text": "#FFF1F2",
-          "muted": "#D2B3B6",
-          "accent": "#EA7182",
-          "accentContrast": "#360E15",
-          "border": "#71454D"
+          "background": "#230C05",
+          "surface": "#351409",
+          "surfaceAlt": "#4D2110",
+          "text": "#FFF1E8",
+          "muted": "#D8AD94",
+          "accent": "#FF8952",
+          "accentContrast": "#321006",
+          "border": "#83401F"
         }
       }
     },
@@ -1502,6 +1594,10 @@
       "name": {
         "en": "Battle Through · Little Fire Lotus Team",
         "zh-CN": "斗破·火莲小队"
+      },
+      "tagline": {
+        "en": "A tiny fire lotus draws a very serious audience.",
+        "zh-CN": "火莲不大，围观的人倒很认真。"
       },
       "description": {
         "en": "Chibi Xiao Yan balances a tiny fire lotus while Medusa watches with an unimpressed serpent companion.",
@@ -1529,26 +1625,26 @@
       },
       "light": {
         "tokens": {
-          "background": "#F7F1EE",
-          "surface": "#FFFFFF",
-          "surfaceAlt": "#EADDD8",
-          "text": "#332321",
-          "muted": "#6A5652",
-          "accent": "#913645",
+          "background": "#FAF0FC",
+          "surface": "#FFFCFF",
+          "surfaceAlt": "#ECD9F1",
+          "text": "#311C36",
+          "muted": "#69516F",
+          "accent": "#82459A",
           "accentContrast": "#FFFFFF",
-          "border": "#BDA6A0"
+          "border": "#BE9BC8"
         }
       },
       "dark": {
         "tokens": {
-          "background": "#170D10",
-          "surface": "#2B191D",
-          "surfaceAlt": "#3F242A",
-          "text": "#FFF1F2",
-          "muted": "#D2B3B6",
-          "accent": "#EA7182",
-          "accentContrast": "#360E15",
-          "border": "#71454D"
+          "background": "#1B0A20",
+          "surface": "#2B1033",
+          "surfaceAlt": "#40184A",
+          "text": "#FBEEFF",
+          "muted": "#C9A8D1",
+          "accent": "#DF91F0",
+          "accentContrast": "#270D2F",
+          "border": "#693A76"
         }
       }
     },
@@ -1562,6 +1658,10 @@
       "name": {
         "en": "Mortal Journey · The Void Hall",
         "zh-CN": "凡人·虚天殿"
+      },
+      "tagline": {
+        "en": "The hall doors rise beyond the frozen steps.",
+        "zh-CN": "冰阶尽头，殿门比人想得更高。"
       },
       "description": {
         "en": "A newly composed fan-art view of Han Li entering the immense ice-blue Void Hall.",
@@ -1589,26 +1689,26 @@
       },
       "light": {
         "tokens": {
-          "background": "#EDF3EE",
-          "surface": "#FFFFFF",
-          "surfaceAlt": "#DCE9DF",
-          "text": "#15231A",
-          "muted": "#52665A",
-          "accent": "#246A4B",
+          "background": "#F4F0FA",
+          "surface": "#FEFCFF",
+          "surfaceAlt": "#E6DCF2",
+          "text": "#2A1E38",
+          "muted": "#645570",
+          "accent": "#69479B",
           "accentContrast": "#FFFFFF",
-          "border": "#9AB4A4"
+          "border": "#B5A2C9"
         }
       },
       "dark": {
         "tokens": {
-          "background": "#08130E",
-          "surface": "#102219",
-          "surfaceAlt": "#183226",
-          "text": "#EEF8F1",
-          "muted": "#A3B9AA",
-          "accent": "#73D3A0",
-          "accentContrast": "#0A2114",
-          "border": "#365E47"
+          "background": "#10091A",
+          "surface": "#1D102B",
+          "surfaceAlt": "#2B183D",
+          "text": "#F7EEFF",
+          "muted": "#C2ABD4",
+          "accent": "#C09BEA",
+          "accentContrast": "#1B0D29",
+          "border": "#5F4777"
         }
       }
     },
@@ -1622,6 +1722,10 @@
       "name": {
         "en": "Renegade Immortal · Wedding Storm",
         "zh-CN": "仙逆·风雪抢婚"
+      },
+      "tagline": {
+        "en": "Snow lifts the wedding red as he arrives.",
+        "zh-CN": "红绸被风雪卷起，他终于赶到了。"
       },
       "description": {
         "en": "Wang Lin arrives above the wedding hall as cold wind tears through the red ceremony and Li Muwan looks up.",
@@ -1649,26 +1753,26 @@
       },
       "light": {
         "tokens": {
-          "background": "#EFF3FB",
-          "surface": "#FFFFFF",
-          "surfaceAlt": "#DDE6F8",
-          "text": "#14213B",
-          "muted": "#55647D",
-          "accent": "#3459A6",
+          "background": "#F9EEF0",
+          "surface": "#FFFDFD",
+          "surfaceAlt": "#EFD7DC",
+          "text": "#351B20",
+          "muted": "#724E56",
+          "accent": "#9D3041",
           "accentContrast": "#FFFFFF",
-          "border": "#A5B5D4"
+          "border": "#CA969F"
         }
       },
       "dark": {
         "tokens": {
-          "background": "#070D1B",
-          "surface": "#0F1930",
-          "surfaceAlt": "#182746",
-          "text": "#F1F5FF",
-          "muted": "#A8B4D1",
-          "accent": "#7FA5FF",
-          "accentContrast": "#09142C",
-          "border": "#3A4E78"
+          "background": "#20080D",
+          "surface": "#321017",
+          "surfaceAlt": "#4C1822",
+          "text": "#FFF0F2",
+          "muted": "#D7A6AE",
+          "accent": "#FF7787",
+          "accentContrast": "#310A12",
+          "border": "#813544"
         }
       }
     },
@@ -1682,6 +1786,10 @@
       "name": {
         "en": "Sword of Coming · One Honest Sentence",
         "zh-CN": "剑来·一句喜欢"
+      },
+      "tagline": {
+        "en": "One honest sentence at the end of the lane.",
+        "zh-CN": "巷口只有一句话，说完就没有退路。"
       },
       "description": {
         "en": "Chen Ping'an speaks plainly to Ning Yao in a quiet small-town lane after the rain.",
@@ -1709,26 +1817,26 @@
       },
       "light": {
         "tokens": {
-          "background": "#F4F0E8",
-          "surface": "#FFFEFA",
-          "surfaceAlt": "#E8E1D5",
-          "text": "#241D17",
-          "muted": "#6C5F52",
-          "accent": "#8E302B",
+          "background": "#F0F1FA",
+          "surface": "#FCFCFF",
+          "surfaceAlt": "#DEE0F2",
+          "text": "#20233D",
+          "muted": "#575D7A",
+          "accent": "#4E57A2",
           "accentContrast": "#FFFFFF",
-          "border": "#B9AA98"
+          "border": "#A2A8CD"
         }
       },
       "dark": {
         "tokens": {
-          "background": "#130C0B",
-          "surface": "#251512",
-          "surfaceAlt": "#35211C",
-          "text": "#FFF2E8",
-          "muted": "#C5AA9C",
-          "accent": "#EB7063",
-          "accentContrast": "#2D0D0A",
-          "border": "#67453A"
+          "background": "#0C0E20",
+          "surface": "#151A33",
+          "surfaceAlt": "#22294C",
+          "text": "#F1F2FF",
+          "muted": "#ADB1D4",
+          "accent": "#A6ADFF",
+          "accentContrast": "#171A3B",
+          "border": "#4B548E"
         }
       }
     },
@@ -1742,6 +1850,10 @@
       "name": {
         "en": "Battle Through · The Three-Year Agreement",
         "zh-CN": "斗破·三年之约"
+      },
+      "tagline": {
+        "en": "Three years later, neither side has forgotten.",
+        "zh-CN": "三年过去，擂台两端都没有忘。"
       },
       "description": {
         "en": "Xiao Yan faces Nalan Yanran across the mountain arena as green flame cuts through cloud and stone.",
@@ -1769,26 +1881,26 @@
       },
       "light": {
         "tokens": {
-          "background": "#F7F1EE",
-          "surface": "#FFFFFF",
-          "surfaceAlt": "#EADDD8",
-          "text": "#332321",
-          "muted": "#6A5652",
-          "accent": "#913645",
+          "background": "#F7F2E4",
+          "surface": "#FFFDF7",
+          "surfaceAlt": "#E9DEC0",
+          "text": "#302713",
+          "muted": "#6B6041",
+          "accent": "#7C5907",
           "accentContrast": "#FFFFFF",
-          "border": "#BDA6A0"
+          "border": "#BDAA72"
         }
       },
       "dark": {
         "tokens": {
-          "background": "#170D10",
-          "surface": "#2B191D",
-          "surfaceAlt": "#3F242A",
-          "text": "#FFF1F2",
-          "muted": "#D2B3B6",
-          "accent": "#EA7182",
-          "accentContrast": "#360E15",
-          "border": "#71454D"
+          "background": "#171005",
+          "surface": "#261B08",
+          "surfaceAlt": "#3A2A0D",
+          "text": "#FFF5D8",
+          "muted": "#CDBD8B",
+          "accent": "#F1C458",
+          "accentContrast": "#2C1D05",
+          "border": "#705B23"
         }
       }
     }

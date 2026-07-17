@@ -15,15 +15,15 @@ Awesome Codex Theme 把这些问题放进同一套公开契约：
 - `theme.json` 与 manifest Schema 统一描述身份、素材、明暗模式、来源和兼容范围
 - 标准 `.act-theme` 包只允许声明式配置与图片，不含脚本或远程 CSS
 - Registry 记录 SHA-256、文件大小、尺寸、版权声明和 Native 契约版本
-- Validator 检查包内文件白名单、哈希、图片完整性与 WCAG 对比度
+- Validator 检查包内文件白名单、哈希、图片完整性、WCAG 对比度与 Native 配色去重
 - 每个模式都导出 Codex 桌面版可直接导入的 `codex-theme-v1:` 字符串
-- GitHub Pages 提供封面浏览、筛选、模式切换、复制与下载
+- GitHub Pages 提供封面浏览、筛选、模式切换、复制、下载与 Windows 安装助手
 
-项目只兼容 Codex Native，不再导出 Dream Skin、HeiGe Skin Studio 或 CodeDrobe 格式，也不注入 CSS。Codex 的原生主题契约支持配色、对比度、字体、代码主题和语义色，但不支持背景图片。Gallery 中的插画因此统一标为“馆藏封面”，不是 Codex 实机截图，也不会被写入应用背景。
+项目只兼容 Codex Native，不再导出 Dream Skin、HeiGe Skin Studio 或 CodeDrobe 格式，也不注入 CSS。Codex 的原生主题契约支持配色、对比度、字体、代码主题和语义色，但不支持背景图片。仓库插画因此只作为“馆藏封面”，不会被写入应用背景；Gallery 展示的应用画面来自独立的 Beta 实机采集。
 
 ## 主题收藏
 
-当前有 28 套主题、56 张由源图确定性生成的明暗封面。Gallery 卡片直接读取 960×540 PNG，不使用临时占位图。原生配色的实机截图需要在隔离的 Codex 测试环境中导入后采集，不能用封面冒充。采集规范见 [Codex Native 测试与截图](docs/native-testing.md)。
+当前有 28 套主题、56 份不重复的明暗 Native 配色、56 张由源图确定性生成的明暗封面，以及 56 张从独立 ChatGPT Beta `26.707.3351.0` 逐套导入后采集的 1440×810 实机截图。Gallery 默认展示实机截图，封面继续作为创作档案和回退素材，不再用插画冒充应用画面。每张截图都绑定 Native 哈希、应用读回哈希、准确包版本、固定窗口与基线恢复证据。采集规范见 [Codex Native 测试与截图](docs/native-testing.md)。
 
 | 系列 | 内容 | 数量 |
 | --- | --- | ---: |
@@ -38,15 +38,18 @@ Awesome Codex Theme 把这些问题放进同一套公开契约：
 
 ## 使用主题
 
-最直接的入口是 [在线 Gallery](https://rwang23.github.io/awesome-codex-theme/)：
+最直接的入口是 [在线 Gallery](https://rwang23.github.io/awesome-codex-theme/)。Windows 用户推荐下载 Gallery 里的“Windows 安装助手”：
 
 1. 选择系列或搜索主题。
 2. 切换明亮、暗色封面。
 3. 打开“在 Codex 中使用”。
-4. 复制 `codex-theme-v1:` 主题字符串。
-5. 打开 Codex 的“设置 > 外观”，选择对应的明亮或暗色主题，再点“导入”并粘贴。
+4. 下载并解压安装助手，双击 `Launch ACT Installer.cmd`。
+5. 在助手中选择主题、模式和 Stable 或 Beta。助手会校验主题、复制字符串并打开准确的应用版本。
+6. 在 ChatGPT 的“设置 > 外观”中选择对应的明亮或暗色主题，点“导入”并粘贴。
 
-浏览器不会直接改写 Codex。主题字符串只包含声明式配置，不含脚本、CSS 或远程资源。当前契约和能力边界见 [Codex Native 兼容说明](docs/adapters.md)。
+也可以不使用助手，直接从 Gallery 复制 `codex-theme-v1:` 字符串并手动导入。
+
+安装助手不需要管理员权限，也不会修改 WindowsApps、应用文件、私有数据或会话。它刻意不自动点击最后的“导入”，让设置变更始终由用户在 ChatGPT 中确认。标准 `.act-theme` 仍然只包含声明式配置与素材，不含脚本、CSS 或远程资源。当前契约和能力边界见 [Codex Native 兼容说明](docs/adapters.md)。
 
 ## 用 Codex 创建新主题
 
@@ -102,6 +105,9 @@ npm run art:generate          # 通过 image job 生成源图
 npm run generate              # 导出主题、封面、Registry 与 Native 字符串
 npm run generate:check        # 检查生成产物是否漂移
 npm run validate              # 校验主题包和 Registry
+npm run installer:build       # 构建 Windows 安装助手 ZIP
+npm run installer:validate    # 无界面校验安装助手与内置 Registry
+npm run screenshots:probe     # 只读核对已启动的固定 Beta 测试台
 npm test                      # 运行仓库测试
 npm run build                 # 构建 GitHub Pages
 ```
@@ -115,6 +121,8 @@ themes/catalog.json          人工维护的主题目录
 themes/source-art/           image job 配置、源图与 provenance
 themes/registry.json         自动生成的公共 Registry
 scripts/                     生成器、校验器与站点构建
+installer/windows/           Windows 安装助手源文件与中英双语文案
+screenshots/                 固定 Beta 版本的实机截图与完整性清单
 site/                        无依赖 Gallery
 docs/                        标准、架构、Native 兼容与测试说明
 ```

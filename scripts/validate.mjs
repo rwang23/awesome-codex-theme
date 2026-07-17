@@ -18,6 +18,8 @@ const HEX = /^#[0-9A-Fa-f]{6}$/;
 const FAN_ART_LICENSE_ID = "LicenseRef-ACT-Fan-Art-Notice";
 const FORBIDDEN_PROMPT = /凡人修仙传|仙逆|剑来|斗破苍穹|studio\s+ghibli|makoto\s+shinkai|hayao\s+miyazaki|style\s+of/i;
 const MAX_IMAGE_BYTES = 16 * 1024 * 1024;
+const CODEX_BETA_CAPTURE_VERSION = "26.707.3351.0";
+const CODEX_BETA_PACKAGE = "OpenAI.CodexBeta_26.707.3351.0_x64__2p2nqsd0c76g0";
 const SOURCE_WIDTH = 1536;
 const SOURCE_HEIGHT = 1024;
 const CANONICAL_ENTRIES = [
@@ -163,6 +165,8 @@ function validateNativeTheme(theme, mode, nativeBytes, modeRecord, manifestMode,
 
 export async function validateRepository() {
   const errors = [];
+  let captureCount = 0;
+  const nativeThemeOwners = new Map();
   const [catalog, registry, sourceJobs, themeSchema, registrySchema] = await Promise.all([
     readJson("themes/catalog.json"),
     readJson("themes/registry.json"),
@@ -220,6 +224,16 @@ export async function validateRepository() {
     check(collectionMap.has(theme.collection), theme.id + " references an unknown collection", errors);
     check(["cinematic", "chibi", "cityscape", "scene"].includes(theme.variant), theme.id + " has an unsupported variant", errors);
     check(["original", "fan-art"].includes(rightsProfile), theme.id + " has an unsupported rights profile", errors);
+    check(
+      typeof theme.tagline?.en === "string"
+        && theme.tagline.en.length > 0
+        && theme.tagline.en.length <= 120
+        && typeof theme.tagline?.["zh-CN"] === "string"
+        && theme.tagline["zh-CN"].length > 0
+        && theme.tagline["zh-CN"].length <= 60,
+      theme.id + " must declare a concise bilingual tagline",
+      errors,
+    );
     if (rightsProfile === "fan-art") {
       check(Boolean(theme.fanArt?.work?.["zh-CN"]), theme.id + " fan-art work is missing", errors);
       check(Array.isArray(theme.fanArt?.characters?.["zh-CN"]), theme.id + " fan-art characters are missing", errors);
@@ -329,6 +343,7 @@ export async function validateRepository() {
       );
     }
     check(theme.provenance?.aiGenerated === true, theme.id + " registry AI disclosure mismatch", errors);
+    check(JSON.stringify(theme.tagline) === JSON.stringify(catalogTheme.tagline), theme.id + " registry tagline mismatch", errors);
     check(theme.rightsProfile === rightsProfile, theme.id + " registry rights-profile mismatch", errors);
     check(theme.provenance?.rightsVerified === !fanArt, theme.id + " registry rights status mismatch", errors);
     check(theme.provenance?.type === (fanArt ? "fan-art" : "original"), theme.id + " registry provenance type mismatch", errors);
@@ -360,6 +375,7 @@ export async function validateRepository() {
     check(sha256(packageBytes) === theme.package.sha256, theme.id + " package hash mismatch", errors);
     check(packageBytes.length === theme.package.bytes, theme.id + " package byte count mismatch", errors);
     check(manifest.schemaVersion === 1 && manifest.id === theme.id, theme.id + " canonical manifest identity mismatch", errors);
+    check(JSON.stringify(manifest.tagline) === JSON.stringify(catalogTheme.tagline), theme.id + " canonical tagline mismatch", errors);
     check(manifest.collection === catalogTheme.collection, theme.id + " canonical collection mismatch", errors);
     check(manifest.variant === catalogTheme.variant, theme.id + " canonical variant mismatch", errors);
     check(manifest.pair === catalogTheme.pair, theme.id + " canonical pair mismatch", errors);
@@ -417,11 +433,43 @@ export async function validateRepository() {
       check(sha256(preview) === modeRecord.previewSha256, theme.id + " " + mode + " preview hash mismatch", errors);
       check(sha256(nativeTheme) === modeRecord.nativeTheme.sha256, theme.id + " " + mode + " native theme hash mismatch", errors);
       check(nativeTheme.length === modeRecord.nativeTheme.bytes, theme.id + " " + mode + " native theme byte count mismatch", errors);
+      const nativeThemeSha256 = sha256(nativeTheme);
+      const duplicateOwner = nativeThemeOwners.get(nativeThemeSha256);
+      check(
+        !duplicateOwner,
+        theme.id + " " + mode + " duplicates the installable Native theme used by " + duplicateOwner,
+        errors,
+      );
+      if (!duplicateOwner) nativeThemeOwners.set(nativeThemeSha256, theme.id + " " + mode);
+      const capture = modeRecord.capture;
+      check(Boolean(capture), theme.id + " " + mode + " is missing a real Codex Beta capture", errors);
+      if (capture) {
+        captureCount += 1;
+        check(isSafeRelativePath(capture.path), theme.id + " " + mode + " capture path is unsafe", errors);
+        check(
+          capture.path === "screenshots/codex-beta-" + CODEX_BETA_CAPTURE_VERSION + "/" + theme.id + "-" + mode + ".png",
+          theme.id + " " + mode + " capture path mismatch",
+          errors,
+        );
+        const captureBytes = await readBytes(capture.path);
+        const captureDimensions = readPngDimensions(captureBytes);
+        check(captureDimensions.width === 1440 && captureDimensions.height === 810, theme.id + " " + mode + " capture dimensions mismatch", errors);
+        check(capture.width === 1440 && capture.height === 810, theme.id + " " + mode + " capture metadata dimensions mismatch", errors);
+        check(capture.bytes === captureBytes.length, theme.id + " " + mode + " capture byte count mismatch", errors);
+        check(capture.sha256 === sha256(captureBytes), theme.id + " " + mode + " capture hash mismatch", errors);
+        check(capture.nativeSha256 === modeRecord.nativeTheme.sha256, theme.id + " " + mode + " capture Native hash mismatch", errors);
+        check(/^[a-f0-9]{64}$/.test(capture.readbackSha256 || ""), theme.id + " " + mode + " capture readback hash is invalid", errors);
+        check(capture.canonicalizedByApp === true, theme.id + " " + mode + " capture must disclose Beta hex canonicalization", errors);
+        check(capture.appVersion === CODEX_BETA_CAPTURE_VERSION, theme.id + " " + mode + " capture app version mismatch", errors);
+        check(capture.packageFullName === CODEX_BETA_PACKAGE, theme.id + " " + mode + " capture package identity mismatch", errors);
+        check(capture.fixture === "settings-appearance-v1", theme.id + " " + mode + " capture fixture mismatch", errors);
+      }
       validateTokens(theme.id, mode, manifestMode.tokens, errors);
       validateNativeTheme(theme, mode, nativeTheme, modeRecord, manifestMode, packageBytes, errors);
     }
   }
 
+  check(captureCount === registry.themes.length * 2, "Registry must expose one real capture for every theme mode", errors);
   if (errors.length) {
     throw new Error("Validation failed:\n- " + errors.join("\n- "));
   }
@@ -431,6 +479,7 @@ export async function validateRepository() {
     modes: registry.themes.length * 2,
     packages: registry.themes.length,
     nativeExports: registry.themes.length * 2,
+    captures: captureCount,
   };
 }
 
@@ -438,7 +487,8 @@ async function main() {
   const result = await validateRepository();
   console.log(
     "Validated " + result.sources + " source images, " + result.themes + " themes, " + result.modes + " modes, "
-    + result.packages + " code-free packages, and " + result.nativeExports + " Codex Native exports.",
+    + result.packages + " code-free packages, " + result.nativeExports + " Codex Native exports, and "
+    + result.captures + " real Beta captures.",
   );
 }
 

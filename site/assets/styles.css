@@ -319,6 +319,7 @@ img {
 }
 
 .hero-cta,
+.hero-installer,
 .hero-repo {
   display: inline-flex;
   min-height: 50px;
@@ -338,12 +339,19 @@ img {
   box-shadow: 0 12px 26px rgba(49, 95, 85, 0.22);
 }
 
+.hero-installer {
+  color: #fff;
+  background: var(--vermilion);
+  box-shadow: 0 12px 26px rgba(198, 79, 60, 0.18);
+}
+
 .hero-repo {
   border: 1px solid var(--line-strong);
   background: rgba(255, 255, 255, 0.52);
 }
 
 .hero-cta:hover,
+.hero-installer:hover,
 .hero-repo:hover {
   transform: translateY(-2px);
 }
@@ -996,13 +1004,21 @@ img {
   letter-spacing: -0.03em;
 }
 
-.card-body p {
+.card-body .card-tagline {
+  margin: 9px 0 0;
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 650;
+  line-height: 1.6;
+}
+
+.card-body .card-description {
   display: -webkit-box;
   overflow: hidden;
   max-width: 540px;
-  margin: 9px 0 0;
+  margin: 5px 0 0;
   color: var(--ink-soft);
-  font-size: 12px;
+  font-size: 11px;
   line-height: 1.7;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
@@ -1438,7 +1454,15 @@ img {
   letter-spacing: -0.04em;
 }
 
-.dialog-content > p:not(.eyebrow, .trust-note) {
+.dialog-tagline {
+  margin: 13px 0 0;
+  color: var(--jade);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.55;
+}
+
+.dialog-description {
   margin: 13px 0 0;
   color: var(--ink-soft);
   font-size: 13px;
@@ -1503,6 +1527,42 @@ img {
   margin-top: 16px;
   color: var(--ink-soft);
   background: rgba(217, 161, 60, 0.1);
+  font-size: 10px;
+  line-height: 1.65;
+}
+
+.installer-card {
+  display: grid;
+  align-items: start;
+  grid-template-columns: auto 1fr;
+  gap: 13px;
+  padding: 15px;
+  border: 1px solid rgba(49, 95, 85, 0.2);
+  border-radius: 16px;
+  margin-top: 16px;
+  background: var(--jade-pale);
+}
+
+.installer-mark {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border-radius: 12px;
+  color: #fff;
+  background: var(--jade);
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.installer-card strong {
+  font-size: 12px;
+}
+
+.installer-card p {
+  margin: 5px 0 0;
+  color: var(--ink-soft);
   font-size: 10px;
   line-height: 1.65;
 }
@@ -1835,6 +1895,7 @@ img {
   }
 
   .hero-cta,
+  .hero-installer,
   .hero-repo {
     justify-content: space-between;
   }

@@ -36,6 +36,7 @@
           "variant",
           "rightsProfile",
           "name",
+          "tagline",
           "description",
           "tags",
           "license",
@@ -46,6 +47,9 @@
           "exports"
         ],
         "properties": {
+          "tagline": {
+            "$ref": "#/$defs/localizedShort"
+          },
           "previews": {
             "type": "object",
             "additionalProperties": false,
@@ -99,6 +103,23 @@
     }
   },
   "$defs": {
+    "localizedShort": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["en", "zh-CN"],
+      "properties": {
+        "en": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "zh-CN": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 60
+        }
+      }
+    },
     "modeRecord": {
       "type": "object",
       "additionalProperties": false,
@@ -156,6 +177,74 @@
               "pattern": "^codex-theme-v1:"
             }
           }
+        },
+        "capture": {
+          "$ref": "#/$defs/captureRecord"
+        }
+      }
+    },
+    "captureRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "sha256",
+        "bytes",
+        "width",
+        "height",
+        "nativeSha256",
+        "readbackSha256",
+        "canonicalizedByApp",
+        "appVersion",
+        "packageFullName",
+        "fixture",
+        "capturedAt"
+      ],
+      "properties": {
+        "path": {
+          "type": "string",
+          "pattern": "^screenshots/codex-beta-[0-9.]+/[a-z0-9-]+-(light|dark)\\.png$"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5242880
+        },
+        "width": {
+          "const": 1440
+        },
+        "height": {
+          "const": 810
+        },
+        "nativeSha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "readbackSha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "canonicalizedByApp": {
+          "type": "boolean"
+        },
+        "appVersion": {
+          "type": "string",
+          "minLength": 1
+        },
+        "packageFullName": {
+          "type": "string",
+          "pattern": "^OpenAI\\.CodexBeta_"
+        },
+        "fixture": {
+          "const": "settings-appearance-v1"
+        },
+        "capturedAt": {
+          "type": "string",
+          "format": "date-time"
         }
       }
     }

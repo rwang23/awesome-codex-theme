@@ -1,5 +1,24 @@
 # Changelog
 
+## 2026-07-17-02-00
+
+- Added a separate no-admin Windows companion installer with a validated
+  Registry snapshot and exact Stable/Beta package targeting.
+- Kept the final Native import as an explicit action inside ChatGPT and
+  prohibited app-file, WindowsApps, private-data, and conversation writes.
+- Added concise bilingual taglines to the catalog, manifests, Registry,
+  validation, Gallery cards, search, and install panel.
+- Replaced the ambiguous shared `codex://settings` action with an installer
+  download and retained direct copy/download paths.
+- Imported all 56 theme modes into the isolated ChatGPT Beta
+  `26.707.3351.0`, captured privacy-safe 1440×810 Appearance screenshots,
+  recorded semantic readback evidence, and restored the exact original
+  light/dark/System baseline.
+- Bound every real capture to the Registry and Validator, copied it into the
+  Pages build, and made the Gallery prefer real screenshots over cover art.
+- Gave all 56 modes distinct Codex Native payloads and made duplicate
+  installable themes a validation error.
+
 ## 2026-07-17-01-00
 
 - Narrowed compatibility to Codex Native and removed third-party adapter

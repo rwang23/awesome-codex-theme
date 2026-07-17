@@ -24,7 +24,7 @@ The complete machine-readable contract is schemas/theme-pack.schema.json.
 
 The manifest declares:
 
-- stable id, semantic version, localized name, and localized description;
+- stable id, semantic version, localized name, concise tagline, and description;
 - collection id, visual variant, and pair or standalone identity;
 - author and an SPDX-compatible asset license;
 - source, generator, AI-use disclosure, rights profile, and a rightsVerified assertion;
@@ -40,11 +40,21 @@ collection-policy violations, incomplete paired themes, and color combinations
 below the project contrast thresholds. It also parses every
 `codex-theme-v1:` string and verifies that its mode, colors, semantic colors,
 format, hash, byte count, Registry value, and packaged copy agree.
+It also rejects duplicate installable Native payloads, so two Gallery entries
+cannot present different artwork while importing the same theme.
 
 Background artwork is part of the ACT declaration and Gallery presentation. It
 is not a Codex Native background capability. Native compatibility covers the
 palette, contrast, font slots, built-in code theme, semantic colors, and window
 opacity declared by the import string.
+
+The localized tagline and description are presentation metadata for the
+Registry, Gallery, and installer. Codex Native v1 does not inject arbitrary
+headings, quotes, status text, or project labels into the application.
+
+The optional ACT Windows companion installer is outside this package standard.
+Its PowerShell launcher, Registry snapshot, copy, and license files must never
+be embedded in a `.act-theme` archive.
 
 ## Rights boundary
 

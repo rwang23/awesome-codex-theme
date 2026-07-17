@@ -2,6 +2,8 @@ import { cp, copyFile, mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
+import { buildWindowsInstaller } from "./build-installer.mjs";
+
 const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(SCRIPT_DIR, "..");
 const DEFAULT_OUTPUT = path.join(ROOT, "dist");
@@ -24,6 +26,7 @@ async function copyRelative(relativePath, output) {
 export async function buildSite(outputPath = DEFAULT_OUTPUT) {
   const output = assertSafeOutput(outputPath);
   const registry = JSON.parse(await readFile(path.join(ROOT, "themes", "registry.json"), "utf8"));
+  const installer = await buildWindowsInstaller();
 
   await rm(output, { recursive: true, force: true });
   await mkdir(output, { recursive: true });
@@ -37,6 +40,15 @@ export async function buildSite(outputPath = DEFAULT_OUTPUT) {
     copyRelative("LICENSE", output),
     copyRelative("NOTICE.md", output),
   ]);
+  await mkdir(path.join(output, "downloads"), { recursive: true });
+  await writeFile(
+    path.join(output, "downloads", "awesome-codex-theme-installer-windows.zip"),
+    installer.archive,
+  );
+  await writeFile(
+    path.join(output, "downloads", "installer.json"),
+    installer.manifestBuffer,
+  );
 
   const copied = new Set();
   for (const theme of registry.themes) {
@@ -48,7 +60,9 @@ export async function buildSite(outputPath = DEFAULT_OUTPUT) {
       theme.previews.dark.preview,
       theme.previews.light.nativeTheme.path,
       theme.previews.dark.nativeTheme.path,
-    ];
+      theme.previews.light.capture?.path,
+      theme.previews.dark.capture?.path,
+    ].filter(Boolean);
     for (const relativePath of paths) {
       if (copied.has(relativePath)) continue;
       await copyRelative(relativePath, output);
@@ -61,6 +75,7 @@ export async function buildSite(outputPath = DEFAULT_OUTPUT) {
     output,
     themes: registry.themes.length,
     copiedArtifacts: copied.size,
+    installer: installer.manifest,
   };
 }
 

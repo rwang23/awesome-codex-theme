@@ -15,15 +15,15 @@ Awesome Codex Theme puts those answers into one public contract:
 - A shared manifest Schema describes identity, assets, modes, provenance, and compatibility.
 - A canonical `.act-theme` contains declarative configuration and images only.
 - The Registry records SHA-256 hashes, byte counts, dimensions, rights statements, and the Native contract version.
-- The Validator checks the package allowlist, hashes, image integrity, and WCAG contrast.
+- The Validator checks the package allowlist, hashes, image integrity, WCAG contrast, and duplicate Native palettes.
 - Every mode exports a `codex-theme-v1:` string that Codex desktop can import.
-- GitHub Pages provides cover browsing, filters, mode switching, copying, and downloads.
+- GitHub Pages provides cover browsing, filters, mode switching, copying, downloads, and a Windows companion installer.
 
-The project targets Codex Native only. It no longer exports Dream Skin, HeiGe Skin Studio, or CodeDrobe formats, and it does not inject CSS. The native contract supports colors, contrast, fonts, a code theme, and semantic colors, but not background images. Gallery illustrations are labeled as cover art. They are not Codex screenshots and are not applied as app backgrounds.
+The project targets Codex Native only. It no longer exports Dream Skin, HeiGe Skin Studio, or CodeDrobe formats, and it does not inject CSS. The native contract supports colors, contrast, fonts, a code theme, and semantic colors, but not background images. Repository illustrations remain cover art and are never applied as app backgrounds. The application views shown by the Gallery come from the separate Beta capture workflow.
 
 ## Collections
 
-The repository contains 28 themes and 56 deterministic light/dark covers generated from reviewed source art. Gallery cards use those 960×540 PNG files rather than temporary placeholders. Native in-app screenshots must be captured after importing each palette in an isolated Codex test environment. See [Codex Native testing and screenshots](docs/native-testing.md).
+The repository contains 28 themes with 56 distinct light/dark Native palettes, 56 deterministic covers, and 56 real 1440×810 screenshots captured after importing every mode into the isolated ChatGPT Beta `26.707.3351.0` test bench. The Gallery prefers the real captures and keeps the covers as reviewed source/fallback artwork. Each capture is bound to its Native hash, app readback hash, exact package version, fixed fixture, and baseline restoration evidence. See [Codex Native testing and screenshots](docs/native-testing.md).
 
 | Collection | Contents | Themes |
 | --- | --- | ---: |
@@ -38,9 +38,9 @@ The first two collections are first-party original artwork under CC0 1.0. The la
 
 ## Use a theme
 
-Open the [Gallery](https://rwang23.github.io/awesome-codex-theme/), choose a theme and mode, then open the “Use in Codex” panel. Copy the `codex-theme-v1:` string. In Codex, open Settings > Appearance, choose the matching Light or Dark theme, select Import, and paste the string.
+Open the [Gallery](https://rwang23.github.io/awesome-codex-theme/), choose a theme and mode, then open the “Use in Codex” panel. Windows users can download the no-admin companion installer, extract it, and run `Launch ACT Installer.cmd`. The helper validates its bundled Registry, copies the selected `codex-theme-v1:` string, and opens the exact Stable or Beta package. You then confirm Import in ChatGPT under Settings > Appearance.
 
-The browser never writes directly to Codex. Native files are declarative and contain no scripts, CSS, or remote resources. See [Codex Native compatibility](docs/adapters.md) for the exact boundary.
+You can also copy and import the string manually. The browser and installer never patch WindowsApps, application files, private data, or conversations, and the installer deliberately leaves the final import to the user. Canonical theme packages remain declarative and contain no scripts, CSS, or remote resources. See [Codex Native compatibility](docs/adapters.md) for the exact boundary.
 
 ## Create a theme with Codex
 
@@ -90,6 +90,9 @@ npm run art:generate
 npm run generate
 npm run generate:check
 npm run validate
+npm run installer:build
+npm run installer:validate
+npm run screenshots:probe
 npm test
 npm run build
 ```

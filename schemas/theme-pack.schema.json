@@ -14,6 +14,7 @@
     "pair",
     "rightsProfile",
     "name",
+    "tagline",
     "description",
     "author",
     "license",
@@ -56,6 +57,9 @@
     },
     "name": {
       "$ref": "#/$defs/localized"
+    },
+    "tagline": {
+      "$ref": "#/$defs/localizedShort"
     },
     "description": {
       "$ref": "#/$defs/localized"
@@ -266,6 +270,23 @@
           "type": "string",
           "minLength": 1,
           "maxLength": 200
+        }
+      }
+    },
+    "localizedShort": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["en", "zh-CN"],
+      "properties": {
+        "en": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "zh-CN": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 60
         }
       }
     },

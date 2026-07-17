@@ -9,6 +9,7 @@ const translations = {
     heroLineTwo: "a change of scenery.",
     heroIntro: "Each gallery cover leads to a real Codex Native palette with recorded provenance, two color modes, integrity checks, and a versioned import string.",
     browseThemes: "Browse every theme",
+    downloadInstaller: "Download Windows installer",
     viewRepo: "View the GitHub repository",
     statThemes: "themes",
     statCode: "executable files inside each pack",
@@ -58,7 +59,9 @@ const translations = {
     openSettings: "Open Codex settings",
     downloadExport: "Download native theme",
     downloadPackage: "Canonical .act-theme",
-    trustNoteNative: "Copy the string, open Codex Settings > Appearance, choose the matching Light or Dark theme, and select Import. The illustration is a gallery cover and is not applied as an app background.",
+    installerTitle: "A safer handoff to the right app",
+    installerBody: "The no-admin helper validates every bundled theme, identifies the exact Stable or Beta app, copies your selection, and opens that app. You still confirm the final import inside ChatGPT.",
+    trustNoteNative: "Direct route: copy the string, open ChatGPT Settings > Appearance, choose the matching Light or Dark theme, and select Import. The installer never patches app files or private app data. Gallery artwork remains cover art.",
     installTheme: "Use in Codex",
     original: "Original",
     fanArtBadge: "Unofficial fan art",
@@ -66,6 +69,8 @@ const translations = {
     fanArtNotice: "Unofficial AI fan art. No official stills, logos, or promotional assets were used. No license or endorsement from the underlying rights holders is claimed; personal, non-commercial use only.",
     coverArt: "GALLERY COVER",
     coverBadge: "COVER",
+    realCapture: "REAL BETA CAPTURE",
+    captureBadge: "CAPTURE",
     cinematic: "Cinematic",
     chibi: "Chibi",
     cityscape: "City study",
@@ -75,7 +80,7 @@ const translations = {
     copied: "Codex Native theme copied.",
     copyFailed: "Copy failed. Select the theme string manually.",
     loadFailed: "The registry could not be loaded. Run the build and serve this directory over HTTP.",
-    capabilityNative: "Tested with Codex desktop 26.715.2305.0. The import applies the palette, contrast, semantic colors, and built-in Codex syntax theme without CSS injection or executable code.",
+    capabilityNative: "Native v1 contract verified with Stable 26.715.2305.0 and Beta 26.707.3351.0. Import applies the palette, contrast, semantic colors, and built-in Codex syntax theme without CSS injection.",
     resultCount: "themes shown",
     allCollections: "All collections",
     allCollectionsCaption: "Original, city, and unofficial fan-art themes",
@@ -91,6 +96,7 @@ const translations = {
     heroLineTwo: "换一片风景。",
     heroIntro: "每张馆藏封面都对应一套可由 Codex 原生导入的配色，包含明暗模式、来源记录、完整性校验和版本化主题字符串。",
     browseThemes: "浏览全部主题",
+    downloadInstaller: "下载 Windows 安装助手",
     viewRepo: "查看 GitHub 仓库",
     statThemes: "套主题",
     statCode: "个包内可执行文件",
@@ -119,7 +125,7 @@ const translations = {
     stepExportBody: "生成 Codex 桌面版能够直接导入的 Native v1 主题字符串。",
     compatibilityEyebrow: "Codex Native",
     compatibilityTitle: "只做一个目标，而且使用真实的 Codex 主题契约。",
-    compatibilityIntro: "Codex 原生支持强调色、背景色、前景色、对比度、字体、代码主题和语义色。原生契约不接受背景图片，因此 Gallery 插画会明确标为封面，而不是伪装成实机截图。",
+    compatibilityIntro: "Codex 原生支持强调色、背景色、前景色、对比度、字体、代码主题和语义色。原生契约不接受背景图片；仓库插画只作为封面，Gallery 中的应用画面来自独立 Beta 实机采集。",
     tableTarget: "目标",
     tableCoverage: "覆盖程度",
     tableDelivery: "交付方式",
@@ -140,7 +146,9 @@ const translations = {
     openSettings: "打开 Codex 设置",
     downloadExport: "下载原生主题",
     downloadPackage: "标准 .act-theme",
-    trustNoteNative: "复制字符串后，打开 Codex 设置 > 外观，在对应的明亮或暗色主题中选择“导入”。插画只是 Gallery 封面，不会作为应用背景写入 Codex。",
+    installerTitle: "更稳妥的一步交接",
+    installerBody: "免管理员权限的安装助手会校验全部内置主题、准确识别 Stable 或 Beta 应用、复制所选主题并打开对应版本。最后一步仍由你在 ChatGPT 中确认导入。",
+    trustNoteNative: "直接导入也可以：复制字符串，打开 ChatGPT 设置 > 外观，在对应的明亮或暗色主题中选择“导入”。安装助手不会修改应用文件或私有数据；Gallery 插画仍然只是封面。",
     installTheme: "在 Codex 中使用",
     original: "原创",
     fanArtBadge: "非官方 Fan Art",
@@ -148,6 +156,8 @@ const translations = {
     fanArtNotice: "这是非官方 AI Fan Art，未使用官方剧照、Logo 或宣传素材，也不声称获得权利方授权或背书，仅限个人非商业使用。",
     coverArt: "馆藏封面",
     coverBadge: "封面",
+    realCapture: "Beta 实机截图",
+    captureBadge: "实机",
     cinematic: "原画感",
     chibi: "Q 版",
     cityscape: "城市图景",
@@ -157,7 +167,7 @@ const translations = {
     copied: "Codex Native 主题已复制。",
     copyFailed: "复制失败，请手动选择主题字符串。",
     loadFailed: "无法读取 Registry。请先构建项目，并通过 HTTP 服务访问。",
-    capabilityNative: "已按 Codex 桌面版 26.715.2305.0 验证格式。导入会应用配色、对比度、语义色和内置 Codex 代码主题，不注入 CSS，也不执行脚本。",
+    capabilityNative: "Native v1 契约已在 Stable 26.715.2305.0 与 Beta 26.707.3351.0 中验证。导入会应用配色、对比度、语义色和内置 Codex 代码主题，不注入 CSS。",
     resultCount: "套主题",
     allCollections: "全部系列",
     allCollectionsCaption: "原创、城市与非官方 Fan Art 主题",
@@ -185,6 +195,7 @@ const elements = {
   heroPreview: document.querySelector("#heroPreview"),
   heroThemeName: document.querySelector("#heroThemeName"),
   heroThemeMeta: document.querySelector("#heroThemeMeta"),
+  heroVisualKind: document.querySelector("#heroVisualKind"),
   heroMode: document.querySelector("#heroMode"),
   themeStatValue: document.querySelector("#themeStatValue"),
   search: document.querySelector("#themeSearch"),
@@ -196,6 +207,7 @@ const elements = {
   dialogPreview: document.querySelector("#dialogPreview"),
   dialogVariant: document.querySelector("#dialogVariant"),
   dialogTitle: document.querySelector("#dialogTitle"),
+  dialogTagline: document.querySelector("#dialogTagline"),
   dialogDescription: document.querySelector("#dialogDescription"),
   dialogMode: document.querySelector("#dialogMode"),
   capabilityNote: document.querySelector("#capabilityNote"),
@@ -215,6 +227,21 @@ function t(key) {
 function localized(record) {
   if (!record) return "";
   return record[state.locale] || record.en || Object.values(record)[0] || "";
+}
+
+function visualFor(modeRecord) {
+  if (modeRecord.capture) {
+    return {
+      path: modeRecord.capture.path,
+      label: t("realCapture"),
+      badge: t("captureBadge") + " · BETA " + modeRecord.capture.appVersion
+    };
+  }
+  return {
+    path: modeRecord.preview,
+    label: t("coverArt"),
+    badge: t("coverBadge")
+  };
 }
 
 function collectionFor(theme) {
@@ -297,10 +324,12 @@ function renderFilterLabels() {
 function updateHero(theme = state.heroTheme) {
   if (!theme) return;
   state.heroTheme = theme;
-  elements.heroPreview.src = assetUrl(theme.previews[state.heroMode].preview);
-  elements.heroPreview.alt = localized(theme.name) + " · " + t("coverArt") + " · " + t(state.heroMode);
+  const visual = visualFor(theme.previews[state.heroMode]);
+  elements.heroPreview.src = assetUrl(visual.path);
+  elements.heroPreview.alt = localized(theme.name) + " · " + visual.label + " · " + t(state.heroMode);
   elements.heroThemeName.textContent = localized(theme.name);
-  elements.heroThemeMeta.textContent = t("coverArt") + " · " + localized(collectionFor(theme)?.name) + " · " + t(state.heroMode);
+  elements.heroThemeMeta.textContent = visual.label + " · " + localized(collectionFor(theme)?.name) + " · " + t(state.heroMode);
+  elements.heroVisualKind.textContent = theme.previews[state.heroMode].capture ? "BETA CAPTURE" : "COVER ART";
   setActiveButton(elements.heroMode, "data-mode", state.heroMode);
 }
 
@@ -320,17 +349,17 @@ function updateLanguage() {
   state.cards.forEach(function (card, id) {
     const theme = state.registry.themes.find(function (item) { return item.id === id; });
     card.title.textContent = localized(theme.name);
+    card.tagline.textContent = localized(theme.tagline);
     card.description.textContent = localized(theme.description);
     card.variant.textContent = t(theme.variant);
     card.original.textContent = theme.rightsProfile === "fan-art" ? t("fanArtBadge") : t("original");
-    card.license.textContent = t("coverBadge") + " · AI · " + (theme.rightsProfile === "fan-art" ? t("fanArtLicense") : theme.license.spdx);
     card.collection.textContent = localized(collectionFor(theme)?.name);
     card.install.setAttribute("aria-label", t("installTheme") + ": " + localized(theme.name));
-    card.image.alt = localized(theme.name) + " · " + t("coverArt") + " · " + t(state.cardModes.get(id));
     card.lightButton.setAttribute("aria-label", t("light"));
     card.darkButton.setAttribute("aria-label", t("dark"));
     card.lightButton.textContent = state.locale === "zh-CN" ? "日" : "L";
     card.darkButton.textContent = state.locale === "zh-CN" ? "夜" : "D";
+    card.updateMode(state.cardModes.get(id));
   });
   elements.dialogMode.querySelector('[data-mode="light"]').textContent = t("light");
   elements.dialogMode.querySelector('[data-mode="dark"]').textContent = t("dark");
@@ -390,8 +419,11 @@ function createCard(theme, index) {
   const collection = document.createElement("span");
   meta.append(original, variant, collection);
   const title = document.createElement("h3");
+  const tagline = document.createElement("p");
+  tagline.className = "card-tagline";
   const description = document.createElement("p");
-  copy.append(meta, title, description);
+  description.className = "card-description";
+  copy.append(meta, title, tagline, description);
   const install = makeButton("↗", "card-install");
   body.append(copy, install);
   article.append(visual, body);
@@ -401,8 +433,10 @@ function createCard(theme, index) {
 
   function updateMode(mode) {
     state.cardModes.set(theme.id, mode);
-    image.src = assetUrl(theme.previews[mode].preview);
-    image.alt = localized(theme.name) + " · " + t("coverArt") + " · " + t(mode);
+    const visualRecord = visualFor(theme.previews[mode]);
+    image.src = assetUrl(visualRecord.path);
+    image.alt = localized(theme.name) + " · " + visualRecord.label + " · " + t(mode);
+    license.textContent = visualRecord.badge;
     setActiveButton(toggle, "data-mode", mode);
   }
 
@@ -428,6 +462,7 @@ function createCard(theme, index) {
     article,
     image,
     title,
+    tagline,
     description,
     original,
     license,
@@ -454,6 +489,8 @@ function applyFilters() {
       theme.id,
       theme.name["zh-CN"],
       theme.name.en,
+      theme.tagline["zh-CN"],
+      theme.tagline.en,
       theme.description["zh-CN"],
       theme.description.en,
       theme.variant,
@@ -481,11 +518,13 @@ function updateDialog() {
   const theme = state.currentTheme;
   if (!theme) return;
   const modeRecord = theme.previews[state.dialogMode];
+  const visual = visualFor(modeRecord);
   elements.dialogTitle.textContent = localized(theme.name);
+  elements.dialogTagline.textContent = localized(theme.tagline);
   elements.dialogDescription.textContent = localized(theme.description);
-  elements.dialogPreview.src = assetUrl(modeRecord.preview);
-  elements.dialogPreview.alt = localized(theme.name) + " · " + t("coverArt") + " · " + t(state.dialogMode);
-  elements.dialogVariant.textContent = t("coverArt") + " · " + localized(collectionFor(theme)?.name) + " · " + t(theme.variant);
+  elements.dialogPreview.src = assetUrl(visual.path);
+  elements.dialogPreview.alt = localized(theme.name) + " · " + visual.label + " · " + t(state.dialogMode);
+  elements.dialogVariant.textContent = visual.label + " · " + localized(collectionFor(theme)?.name) + " · " + t(theme.variant);
   elements.capabilityNote.textContent = t("capabilityNative");
   elements.dialogRights.hidden = theme.rightsProfile !== "fan-art";
   elements.dialogRights.textContent = theme.rightsProfile === "fan-art"

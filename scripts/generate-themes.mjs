@@ -14,6 +14,12 @@ import {
 const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(SCRIPT_DIR, "..");
 const CATALOG_PATH = path.join(ROOT, "themes", "catalog.json");
+const CAPTURE_MANIFEST_PATH = path.join(
+  ROOT,
+  "screenshots",
+  "codex-beta-26.707.3351.0",
+  "manifest.json",
+);
 const CHECK_MODE = process.argv.includes("--check");
 const GENERATOR_ID = "act-theme-generator-v3.0";
 const FAN_ART_LICENSE_ID = "LicenseRef-ACT-Fan-Art-Notice";
@@ -89,6 +95,7 @@ function manifestFor(theme, assets, nativeThemes, sourceProvenance) {
     pair: theme.pair,
     rightsProfile: theme.rightsProfile || "original",
     name: theme.name,
+    tagline: theme.tagline,
     description: theme.description,
     ...(rights.fanArt ? { fanArt: theme.fanArt } : {}),
     author: {
@@ -132,8 +139,32 @@ function nativeThemeBuffer(theme, mode) {
   );
 }
 
+async function loadCaptureContext() {
+  try {
+    const manifest = JSON.parse(await readFile(CAPTURE_MANIFEST_PATH, "utf8"));
+    if (manifest.schemaVersion !== "act-native-capture-manifest-v1"
+      || manifest.status !== "complete"
+      || manifest.baseline?.restored !== true) {
+      return { manifest: null, index: new Map() };
+    }
+    return {
+      manifest,
+      index: new Map(
+        manifest.captures.map((capture) => [
+          capture.themeId + "|" + capture.mode,
+          capture,
+        ]),
+      ),
+    };
+  } catch (error) {
+    if (error.code === "ENOENT") return { manifest: null, index: new Map() };
+    throw error;
+  }
+}
+
 export async function buildGeneratedFiles() {
   const catalog = JSON.parse(await readFile(CATALOG_PATH, "utf8"));
+  const captureContext = await loadCaptureContext();
   const files = new Map();
   const registryThemes = [];
 
@@ -179,6 +210,7 @@ export async function buildGeneratedFiles() {
     const modeRecords = {};
     for (const mode of ["light", "dark"]) {
       const nativeThemePath = "packages/native/" + theme.id + "-" + mode + ".codex-theme.txt";
+      const capture = captureContext.index.get(theme.id + "|" + mode);
       files.set(nativeThemePath, nativeThemes[mode]);
       modeRecords[mode] = {
         preview: themeRoot + "/previews/" + mode + ".png",
@@ -193,6 +225,22 @@ export async function buildGeneratedFiles() {
           testedVersion: CODEX_NATIVE_TESTED_VERSION,
           value: nativeThemes[mode].toString("utf8").trim(),
         },
+        ...(capture ? {
+          capture: {
+            path: capture.path,
+            sha256: capture.sha256,
+            bytes: capture.bytes,
+            width: capture.width,
+            height: capture.height,
+            nativeSha256: capture.nativeSha256,
+            readbackSha256: capture.readbackSha256,
+            canonicalizedByApp: capture.canonicalizedByApp,
+            appVersion: captureContext.manifest.testBench.version,
+            packageFullName: captureContext.manifest.testBench.packageFullName,
+            fixture: captureContext.manifest.fixture.id,
+            capturedAt: capture.capturedAt,
+          },
+        } : {}),
       };
     }
 
@@ -204,6 +252,7 @@ export async function buildGeneratedFiles() {
       variant: theme.variant,
       rightsProfile: theme.rightsProfile || "original",
       name: theme.name,
+      tagline: theme.tagline,
       description: theme.description,
       tags: theme.tags,
       ...(rights.fanArt ? { fanArt: theme.fanArt } : {}),

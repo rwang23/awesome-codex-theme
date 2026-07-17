@@ -10,6 +10,10 @@
     "generate:check": "node scripts/generate-themes.mjs --check",
     "validate": "node scripts/validate.mjs",
     "test": "node --test",
+    "installer:build": "node scripts/build-installer.mjs",
+    "installer:validate": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File installer/windows/ACT-Installer.ps1 -RegistryPath themes/registry.json -HeadlessValidate",
+    "screenshots:probe": "node scripts/capture-native-screenshots.mjs",
+    "screenshots:capture": "node scripts/capture-native-screenshots.mjs --apply",
     "build": "node scripts/build.mjs",
     "check": "npm run generate && npm run validate && npm test && npm run build",
     "serve": "node scripts/serve.mjs"
