@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; img-src 'self' asset: http://asset.localhost https://rwang23.github.io data:; style-src 'self'; script-src 'self'; connect-src 'self' ipc: http://ipc.localhost; object-src 'none'; base-uri 'none'; form-action 'none'"
+    >
+    <title>Awesome Codex Theme</title>
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="titlebar" id="titlebar">
+        <div class="brand" aria-label="Awesome Codex Theme">
+          <span class="brand-mark" aria-hidden="true">境</span>
+          <span>
+            <strong>Awesome Codex Theme</strong>
+            <small>THEME MANAGER</small>
+          </span>
+        </div>
+        <div class="titlebar-status">
+          <span class="status-dot" id="catalogDot"></span>
+          <span id="catalogLabel">正在读取主题目录</span>
+        </div>
+        <div class="window-controls" aria-label="窗口控制">
+          <button id="windowMinimize" type="button" aria-label="最小化">
+            <span aria-hidden="true"></span>
+          </button>
+          <button id="windowMaximize" type="button" aria-label="最大化或还原">
+            <span aria-hidden="true"></span>
+          </button>
+          <button class="window-close" id="windowClose" type="button" aria-label="关闭">
+            <span aria-hidden="true"></span>
+          </button>
+        </div>
+      </header>
+
+      <main class="workspace">
+        <aside class="catalog-panel">
+          <div class="catalog-heading">
+            <div>
+              <p class="eyebrow">主题馆藏 / ARCHIVE</p>
+              <h1>选择一种<br>工作气候。</h1>
+            </div>
+            <button class="icon-button" id="refreshCatalog" type="button" aria-label="刷新主题目录" title="刷新主题目录">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M19 8a7 7 0 1 0 .7 6"></path>
+                <path d="M19 3v5h-5"></path>
+              </svg>
+            </button>
+          </div>
+
+          <label class="search-field" for="search">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="10.5" cy="10.5" r="5.5"></circle>
+              <path d="m15 15 5 5"></path>
+            </svg>
+            <input id="search" type="search" placeholder="搜索主题、城市或氛围" autocomplete="off">
+            <kbd id="searchShortcut">Ctrl K</kbd>
+          </label>
+
+          <div class="collection-tabs" id="collectionTabs" role="tablist" aria-label="主题系列"></div>
+          <div class="theme-list" id="themeList" role="listbox" aria-label="主题列表"></div>
+          <p class="empty-state" id="emptyState" hidden>没有找到符合条件的主题。</p>
+        </aside>
+
+        <section class="theme-stage" aria-live="polite">
+          <div class="stage-toolbar">
+            <div class="mode-switch" id="modeSwitch" role="group" aria-label="主题模式">
+              <button type="button" data-mode="light">明亮</button>
+              <button type="button" data-mode="dark">暗色</button>
+            </div>
+            <div class="verified-badge">
+              <span aria-hidden="true">✓</span>
+              <strong>Beta 实机截图</strong>
+              <small id="captureVersion"></small>
+            </div>
+          </div>
+
+          <figure class="capture-frame">
+            <div class="capture-glow" aria-hidden="true"></div>
+            <img id="themeCapture" alt="">
+            <figcaption>
+              <span>REAL APP CAPTURE</span>
+              <span id="captureHash"></span>
+            </figcaption>
+          </figure>
+
+          <div class="theme-details">
+            <div class="theme-copy">
+              <p class="eyebrow" id="collectionName"></p>
+              <h2 id="themeName"></h2>
+              <p class="theme-tagline" id="themeTagline"></p>
+              <p class="theme-description" id="themeDescription"></p>
+              <div class="theme-metadata">
+                <span id="rightsBadge"></span>
+                <span>Codex Native v1</span>
+                <span id="testedVersion"></span>
+              </div>
+            </div>
+
+            <div class="action-card">
+              <div class="action-card-heading">
+                <div>
+                  <small>01 / 复制</small>
+                  <strong>把主题交给 Codex</strong>
+                </div>
+                <span class="native-chip">NATIVE</span>
+              </div>
+              <button class="primary-action" id="copyTheme" type="button">
+                <span>复制主题字符串</span>
+                <kbd id="copyShortcut">Ctrl C</kbd>
+              </button>
+              <div class="launch-row">
+                <select id="targetSelect" aria-label="选择 ChatGPT 版本"></select>
+                <button id="openCodex" type="button">打开应用 <span>↗</span></button>
+              </div>
+              <p>在 ChatGPT「设置 → 外观」中选择对应模式，再点“导入”粘贴。管理器不会修改应用文件，也不会自动确认最后一步。</p>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="statusbar">
+        <div class="catalog-version">
+          <span>REGISTRY</span>
+          <code id="registryHash">—</code>
+          <span id="themeCount">—</span>
+        </div>
+        <div class="footer-actions">
+          <button id="openGallery" type="button">在线 Gallery</button>
+          <button id="openRepository" type="button">GitHub</button>
+          <button class="update-button" id="updateButton" type="button">
+            <span class="update-dot" aria-hidden="true"></span>
+            <span id="updateLabel">检查应用更新</span>
+          </button>
+        </div>
+      </footer>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

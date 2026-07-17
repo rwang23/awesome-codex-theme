@@ -1,0 +1,25 @@
+{
+  "name": "@awesome-codex-theme/theme-manager",
+  "version": "0.2.0-alpha.1",
+  "private": true,
+  "type": "module",
+  "description": "Cross-platform Codex Native theme manager for Awesome Codex Theme.",
+  "scripts": {
+    "tauri": "tauri",
+    "prepare:assets": "node ../../scripts/prepare-desktop.mjs && tauri icon build/icon.png --output src-tauri/icons",
+    "start": "npm run prepare:assets && tauri dev",
+    "pretest": "npm run prepare:assets",
+    "test": "cargo test --manifest-path src-tauri/Cargo.toml",
+    "check": "cargo fmt --manifest-path src-tauri/Cargo.toml --check && cargo test --manifest-path src-tauri/Cargo.toml",
+    "build": "npm run prepare:assets && tauri build",
+    "build:win": "npm run prepare:assets && tauri build --bundles nsis",
+    "build:mac": "npm run prepare:assets && tauri build --bundles dmg",
+    "build:win:release": "npm run prepare:assets && tauri build --config src-tauri/tauri.release.conf.json --bundles nsis",
+    "build:mac:release": "npm run prepare:assets && tauri build --config src-tauri/tauri.release.conf.json --bundles dmg"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "2.11.4"
+  },
+  "author": "Awesome Codex Theme contributors",
+  "license": "MIT"
+}

@@ -179,6 +179,8 @@ test("static gallery builds with every public contract artifact", async function
       "schemas/registry.schema.json",
       "downloads/awesome-codex-theme-installer-windows.zip",
       "downloads/installer.json",
+      "downloads/catalog.json",
+      "docs/assets/theme-manager-windows.png",
       ".nojekyll"
     ];
     for (const relative of required) {
@@ -203,6 +205,7 @@ test("static gallery builds with every public contract artifact", async function
     assert.match(html, /data-filter="scene"/);
     assert.doesNotMatch(html, /codex:\/\/settings/);
     assert.match(html, /awesome-codex-theme-installer-windows\.zip/);
+    assert.match(html, /theme-manager-windows\.png/);
     assert.match(app, /nativeTheme\.path/);
     assert.match(app, /modeRecord\.capture/);
     assert.doesNotMatch(app, /dream-skin|heige-skin-studio|codedrobe/i);
@@ -213,6 +216,48 @@ test("static gallery builds with every public contract artifact", async function
       await rm(resolved, { recursive: true, force: true });
     }
   }
+});
+
+test("Tauri manager keeps theme values in Rust and limits desktop capabilities", async function () {
+  const [
+    backend,
+    catalog,
+    updater,
+    bridge,
+    configText,
+    capabilityText,
+    cargo,
+    appPackage,
+  ] = await Promise.all([
+    readFile(path.join(ROOT, "apps", "theme-manager", "src-tauri", "src", "lib.rs"), "utf8"),
+    readFile(path.join(ROOT, "apps", "theme-manager", "src-tauri", "src", "catalog.rs"), "utf8"),
+    readFile(path.join(ROOT, "apps", "theme-manager", "src-tauri", "src", "updater.rs"), "utf8"),
+    readFile(path.join(ROOT, "apps", "theme-manager", "src", "renderer", "bridge.js"), "utf8"),
+    readFile(path.join(ROOT, "apps", "theme-manager", "src-tauri", "tauri.conf.json"), "utf8"),
+    readFile(path.join(ROOT, "apps", "theme-manager", "src-tauri", "capabilities", "default.json"), "utf8"),
+    readFile(path.join(ROOT, "apps", "theme-manager", "src-tauri", "Cargo.toml"), "utf8"),
+    readFile(path.join(ROOT, "apps", "theme-manager", "package.json"), "utf8"),
+  ]);
+  const config = JSON.parse(configText);
+  const capability = JSON.parse(capabilityText);
+
+  assert.match(cargo, /features = \["protocol-asset"\]/);
+  assert.deepEqual(config.app.security.assetProtocol.scope, ["$RESOURCE/catalog/screenshots/**"]);
+  assert.deepEqual(capability.windows, ["main"]);
+  assert.ok(capability.permissions.every(function (permission) {
+    return permission.startsWith("core:");
+  }));
+  assert.match(catalog, /native_value_for/);
+  assert.match(catalog, /REMOTE_CATALOG_URL/);
+  assert.match(catalog, /registry_bytes\.len\(\) != expected_bytes/);
+  assert.match(backend, /copy_theme/);
+  assert.match(backend, /native_value_for\(&catalog, &theme_id, &mode\)/);
+  assert.doesNotMatch(bridge, /nativeTheme.*value|nativeValue/i);
+  assert.match(updater, /ACT_UPDATER_PUBKEY/);
+  assert.match(config.plugins.updater.endpoints[0], /^https:\/\/github\.com\/rwang23\/awesome-codex-theme\/releases\//);
+  assert.match(appPackage, /@tauri-apps\/cli/);
+  assert.doesNotMatch(appPackage, /electron/i);
+  assert.doesNotMatch(backend + catalog, /WindowsApps.*(?:write|copy)|app\.asar.*(?:write|copy)/i);
 });
 
 test("real screenshot evidence covers every mode and confirms Beta restoration", async function () {

@@ -1,5 +1,10 @@
 dist/
 node_modules/
+apps/theme-manager/build/
+apps/theme-manager/release/
+apps/theme-manager/src-tauri/icons/
+apps/theme-manager/src-tauri/gen/
+apps/theme-manager/src-tauri/target/
 context/raw/
 packages/
 themes/registry.json

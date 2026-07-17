@@ -22,6 +22,7 @@
       </a>
       <nav class="primary-nav" aria-label="主导航">
         <a href="#gallery" data-i18n="navThemes">主题</a>
+        <a href="#manager" data-i18n="navManager">桌面管理器</a>
         <a href="#standard" data-i18n="navStandard">标准</a>
         <a href="#compatibility" data-i18n="navNative">Codex Native</a>
         <a href="#creator" data-i18n="navCreator">创作 Skill</a>
@@ -51,9 +52,9 @@
               <span data-i18n="browseThemes">浏览全部主题</span>
               <span aria-hidden="true">↓</span>
             </a>
-            <a class="hero-installer" href="./downloads/awesome-codex-theme-installer-windows.zip" download>
-              <span data-i18n="downloadInstaller">下载 Windows 安装助手</span>
-              <span aria-hidden="true">↓</span>
+            <a class="hero-installer" href="#manager">
+              <span data-i18n="desktopManagerCta">查看桌面主题管理器</span>
+              <span aria-hidden="true">↘</span>
             </a>
             <a class="hero-repo" href="https://github.com/rwang23/awesome-codex-theme">
               <span data-i18n="viewRepo">查看 GitHub 仓库</span>
@@ -121,6 +122,52 @@
           <strong>AA</strong>
           <span data-i18n="statContrast">对比度门槛</span>
         </div>
+      </section>
+
+      <section class="manager-section" id="manager" aria-labelledby="managerTitle">
+        <div class="manager-copy">
+          <p class="eyebrow" data-i18n="managerEyebrow">Windows + macOS 桌面管理器</p>
+          <h2 id="managerTitle" data-i18n="managerTitle">主题持续更新，管理器也要跟得上。</h2>
+          <p data-i18n="managerIntro">
+            Tauri Theme Manager 每次启动都会校验远端 Registry；断网时继续使用上次验证通过的版本。签名发布通道启用后，应用更新也会通过 GitHub Releases 完成。
+          </p>
+          <ul class="manager-features">
+            <li>
+              <strong data-i18n="managerFeatureOneTitle">真实截图选主题</strong>
+              <span data-i18n="managerFeatureOneBody">每套明暗模式直接展示固定 Beta 测试台的实机截图。</span>
+            </li>
+            <li>
+              <strong data-i18n="managerFeatureTwoTitle">跨平台同一套体验</strong>
+              <span data-i18n="managerFeatureTwoBody">Windows 与 macOS 共用安全的本地界面和同一份 Registry。</span>
+            </li>
+            <li>
+              <strong data-i18n="managerFeatureThreeTitle">更新与导入分开</strong>
+              <span data-i18n="managerFeatureThreeBody">目录可自动同步；最终导入仍由你在 ChatGPT 外观设置中确认。</span>
+            </li>
+          </ul>
+          <div class="manager-actions">
+            <a class="manager-primary" href="https://github.com/rwang23/awesome-codex-theme/blob/main/docs/desktop-manager.md">
+              <span data-i18n="managerReleases">查看桌面版进展</span>
+              <span aria-hidden="true">↗</span>
+            </a>
+            <a class="manager-secondary" href="./downloads/awesome-codex-theme-installer-windows.zip" download>
+              <span data-i18n="legacyWindowsHelper">Windows 便携助手</span>
+              <span aria-hidden="true">↓</span>
+            </a>
+          </div>
+          <p class="manager-signing-note" data-i18n="managerSigningNote">
+            Windows 预览版已完成实机验证；正式更新仍需要发布签名，macOS 还需要 Apple 代码签名与公证。
+          </p>
+        </div>
+        <figure class="manager-visual">
+          <div class="manager-image-frame">
+            <img src="./docs/assets/theme-manager-windows.png" alt="" loading="lazy">
+          </div>
+          <figcaption>
+            <span data-i18n="managerScreenshotCaption">Tauri Windows 实机界面 · 内嵌 ChatGPT Beta 真实主题截图</span>
+            <span>0.2.0-alpha.1</span>
+          </figcaption>
+        </figure>
       </section>
 
       <section class="collection" aria-labelledby="collectionTitle">

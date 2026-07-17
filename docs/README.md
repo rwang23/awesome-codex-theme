@@ -6,7 +6,8 @@
 2. architecture.md
 3. standard.md
 4. adapters.md
-5. native-testing.md
+5. desktop-manager.md
+6. native-testing.md
 
 Read landscape.md when positioning or upstream compatibility changes. Do not
 use context/raw/, docs/archive/, or docs/report/ as first-read material; those
@@ -23,6 +24,8 @@ locations are reserved for execution evidence or closed history when needed.
 - gallery-design.md: redesign evidence and the independent Gallery visual system
 - standard.md: version 1 canonical manifest and package contract
 - adapters.md: Codex Native contract and unsupported capabilities
+- desktop-manager.md: Tauri architecture, catalog refresh, signed app updates,
+  measured package comparison, and macOS signing boundary
 - native-testing.md: isolated real-app validation and screenshot evidence
 - landscape.md: dated reference-project research and positioning
 - CHANGELOG.md: delivered project changes
@@ -33,7 +36,7 @@ locations are reserved for execution evidence or closed history when needed.
 
 Generated files belong under dist/, packages/, themes/<theme-id>/, and
 themes/registry.json. The editable sources are site/, themes/catalog.json,
-themes/source-art/, scripts/, and .codex/skills/.
+themes/source-art/, scripts/, apps/theme-manager/, and .codex/skills/.
 
 ## Maintenance
 

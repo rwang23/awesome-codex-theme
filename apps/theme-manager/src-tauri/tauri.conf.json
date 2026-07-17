@@ -1,0 +1,79 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "Awesome Codex Theme",
+  "version": "0.2.0-alpha.1",
+  "identifier": "io.github.rwang23.awesomecodextheme",
+  "build": {
+    "frontendDist": "../src/renderer"
+  },
+  "app": {
+    "withGlobalTauri": true,
+    "windows": [
+      {
+        "label": "main",
+        "title": "Awesome Codex Theme",
+        "width": 1240,
+        "height": 820,
+        "minWidth": 960,
+        "minHeight": 660,
+        "center": true,
+        "decorations": false,
+        "shadow": true,
+        "backgroundColor": "#f2f1eb"
+      }
+    ],
+    "security": {
+      "csp": "default-src 'self'; img-src 'self' asset: http://asset.localhost https://rwang23.github.io data:; style-src 'self'; script-src 'self'; connect-src 'self' ipc: http://ipc.localhost; object-src 'none'; base-uri 'none'; form-action 'none'",
+      "assetProtocol": {
+        "enable": true,
+        "scope": ["$RESOURCE/catalog/screenshots/**"]
+      }
+    }
+  },
+  "plugins": {
+    "updater": {
+      "pubkey": "",
+      "endpoints": [
+        "https://github.com/rwang23/awesome-codex-theme/releases/latest/download/latest.json"
+      ],
+      "windows": {
+        "installMode": "passive"
+      }
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "createUpdaterArtifacts": false,
+    "category": "DeveloperTool",
+    "shortDescription": "Free Codex Native theme gallery and manager.",
+    "longDescription": "Browse verified real-app captures, copy a validated Codex Native theme, and open ChatGPT without modifying application files.",
+    "resources": {
+      "../../../themes/registry.json": "catalog/registry.json",
+      "../../../screenshots/": "catalog/screenshots/",
+      "../../../LICENSE": "legal/LICENSE",
+      "../../../NOTICE.md": "legal/NOTICE.md"
+    },
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ],
+    "windows": {
+      "webviewInstallMode": {
+        "type": "downloadBootstrapper",
+        "silent": true
+      },
+      "nsis": {
+        "installMode": "currentUser",
+        "displayLanguageSelector": true,
+        "languages": ["SimpChinese", "English"]
+      }
+    },
+    "macOS": {
+      "minimumSystemVersion": "11.0"
+    }
+  }
+}

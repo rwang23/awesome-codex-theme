@@ -1,5 +1,26 @@
 # Changelog
 
+## 2026-07-17-03-00
+
+- Replaced the Electron candidate with a Tauri 2 Theme Manager that reuses the
+  Chinese-first real-screenshot interface and moves trusted operations into
+  Rust.
+- Added startup Registry refresh through a pinned Pages manifest, SHA-256 and
+  byte-count checks, strict Native payload validation, verified caching, and
+  bundled offline fallback.
+- Added Tauri's mandatory-signature updater, explicit restart-to-install
+  behavior, and an unreleased state when no updater public key is configured.
+- Added Windows Stable/Beta package discovery and macOS ChatGPT app discovery
+  without writing application files or private data.
+- Replaced the README hero artwork with an actual Theme Manager screenshot and
+  added the same real runtime surface to GitHub Pages.
+- Measured a 3.66 MiB Windows Tauri NSIS package against the 97.45 MiB
+  Electron candidate, then verified the release runtime and exact
+  271-character Native copy path.
+- Added desktop unit tests, Windows packaging, macOS ARM64/x64 CI, and a gated
+  `tauri-action` release path while documenting updater signing, Windows
+  signing, and macOS notarization gates.
+
 ## 2026-07-17-02-00
 
 - Added a separate no-admin Windows companion installer with a validated

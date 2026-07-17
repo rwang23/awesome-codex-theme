@@ -4,7 +4,9 @@
 
 [在线浏览 28 套主题](https://rwang23.github.io/awesome-codex-theme/) · [English README](README.en.md) · [主题包标准](docs/standard.md) · [Fan Art 说明](docs/fan-art-policy.md) · [贡献指南](CONTRIBUTING.md)
 
-![凡人·虚天殿主题源图](themes/source-art/mortal-void-hall.png)
+![Awesome Codex Theme 桌面管理器 Windows 实机界面，画面中展示 ChatGPT Beta 真实主题截图](docs/assets/theme-manager-windows.png)
+
+上图是 Tauri 2 Theme Manager 的 Windows 实机界面，主题预览来自独立 ChatGPT Beta `26.707.3351.0` 测试台，不是概念图，也不是把源插画贴进应用外壳。
 
 ## 这不是另一个“换背景”脚本
 
@@ -17,7 +19,7 @@ Awesome Codex Theme 把这些问题放进同一套公开契约：
 - Registry 记录 SHA-256、文件大小、尺寸、版权声明和 Native 契约版本
 - Validator 检查包内文件白名单、哈希、图片完整性、WCAG 对比度与 Native 配色去重
 - 每个模式都导出 Codex 桌面版可直接导入的 `codex-theme-v1:` 字符串
-- GitHub Pages 提供封面浏览、筛选、模式切换、复制、下载与 Windows 安装助手
+- GitHub Pages 与跨平台 Theme Manager 都直接展示真实 Beta 截图，并提供筛选、复制与下载
 
 项目只兼容 Codex Native，不再导出 Dream Skin、HeiGe Skin Studio 或 CodeDrobe 格式，也不注入 CSS。Codex 的原生主题契约支持配色、对比度、字体、代码主题和语义色，但不支持背景图片。仓库插画因此只作为“馆藏封面”，不会被写入应用背景；Gallery 展示的应用画面来自独立的 Beta 实机采集。
 
@@ -38,18 +40,27 @@ Awesome Codex Theme 把这些问题放进同一套公开契约：
 
 ## 使用主题
 
-最直接的入口是 [在线 Gallery](https://rwang23.github.io/awesome-codex-theme/)。Windows 用户推荐下载 Gallery 里的“Windows 安装助手”：
+最直接的入口是 [在线 Gallery](https://rwang23.github.io/awesome-codex-theme/)。需要持续同步主题时，使用 Tauri Theme Manager；首个签名 Release 发布前，也可以从源码构建。暂时不安装桌面应用时，Gallery 仍提供 Windows 便携助手。
 
 1. 选择系列或搜索主题。
-2. 切换明亮、暗色封面。
+2. 切换明亮、暗色实机截图。
 3. 打开“在 Codex 中使用”。
-4. 下载并解压安装助手，双击 `Launch ACT Installer.cmd`。
-5. 在助手中选择主题、模式和 Stable 或 Beta。助手会校验主题、复制字符串并打开准确的应用版本。
+4. 在 Theme Manager 中选择主题、模式和已检测到的 Stable 或 Beta。
+5. 管理器会校验目录、复制主题字符串并打开准确的应用版本。
 6. 在 ChatGPT 的“设置 > 外观”中选择对应的明亮或暗色主题，点“导入”并粘贴。
 
-也可以不使用助手，直接从 Gallery 复制 `codex-theme-v1:` 字符串并手动导入。
+也可以直接从 Gallery 复制 `codex-theme-v1:` 字符串并手动导入。Windows 便携助手仍然保留：下载后解压，双击 `Launch ACT Installer.cmd` 即可。
 
-安装助手不需要管理员权限，也不会修改 WindowsApps、应用文件、私有数据或会话。它刻意不自动点击最后的“导入”，让设置变更始终由用户在 ChatGPT 中确认。标准 `.act-theme` 仍然只包含声明式配置与素材，不含脚本、CSS 或远程资源。当前契约和能力边界见 [Codex Native 兼容说明](docs/adapters.md)。
+两种工具都不修改 WindowsApps、应用文件、ChatGPT 私有数据或会话，也不会自动点击最后的“导入”。设置变更始终由用户在 ChatGPT 中确认。标准 `.act-theme` 仍然只包含声明式配置与素材，不含脚本、CSS 或远程资源。当前契约和能力边界见 [Codex Native 兼容说明](docs/adapters.md)。
+
+## 桌面管理器与更新
+
+Theme Manager 把两类更新分开处理：
+
+- 主题目录更新：每次启动从 GitHub Pages 读取 `downloads/catalog.json`，校验 Registry 的 SHA-256、字节数、Schema 和 Native 主题结构；失败时继续使用上次验证通过的缓存或内置目录。
+- 应用自身更新：配置发布签名后的打包版会检查 GitHub Releases；下载完成后，由用户决定何时重启安装。没有发布公钥的开发构建不会假装更新通道已经可用。
+
+Windows 与 macOS 共用 Tauri 2、原生 HTML/CSS/JavaScript 和 Rust 安装核心，不再随应用打包 Chromium。当前 Windows NSIS 安装包为 3.66 MiB；同一界面的 Electron 候选包为 97.45 MiB，Tauri 版本缩小约 96.2%。Windows 已完成本机运行、复制链路和打包验证；macOS 的双架构 CI 路径已经提供，但正式更新必须先完成 Apple Developer 签名、公证和真机读回。项目不会把未签名产物冒充正式发行版。设计、安全边界和发布方式见 [桌面主题管理器](docs/desktop-manager.md)。
 
 ## 用 Codex 创建新主题
 
@@ -91,7 +102,7 @@ npm run check
 
 ## 本地开发
 
-环境要求：Node.js 22 或更高版本。项目没有 npm 运行时或开发依赖。
+环境要求：Node.js 22 或更高版本。桌面开发还需要 Rust stable；Windows 需要 Microsoft C++ Build Tools，macOS 构建需要 Xcode Command Line Tools。Gallery、Registry 和 Validator 没有 npm 依赖；Tauri CLI 只存在于 `apps/theme-manager`，不会把桌面依赖带进 Pages。
 
 ```bash
 npm run check
@@ -108,6 +119,11 @@ npm run validate              # 校验主题包和 Registry
 npm run installer:build       # 构建 Windows 安装助手 ZIP
 npm run installer:validate    # 无界面校验安装助手与内置 Registry
 npm run screenshots:probe     # 只读核对已启动的固定 Beta 测试台
+npm run desktop:test          # 校验 Rust 目录、Native 边界与更新状态
+npm run desktop:check         # Rust 格式检查与完整桌面测试
+npm run desktop:start         # 启动 Tauri Theme Manager
+npm run desktop:build:win     # 构建 Windows NSIS 安装包
+npm run desktop:build:mac     # 在 macOS 构建 DMG
 npm test                      # 运行仓库测试
 npm run build                 # 构建 GitHub Pages
 ```
@@ -116,6 +132,7 @@ npm run build                 # 构建 GitHub Pages
 
 ```text
 .codex/skills/               项目级主题创作 Skill
+apps/theme-manager/           Windows / macOS Tauri 2 Theme Manager
 schemas/                     主题包与 Registry JSON Schema
 themes/catalog.json          人工维护的主题目录
 themes/source-art/           image job 配置、源图与 provenance

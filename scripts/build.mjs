@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import { cp, copyFile, mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -25,7 +26,9 @@ async function copyRelative(relativePath, output) {
 
 export async function buildSite(outputPath = DEFAULT_OUTPUT) {
   const output = assertSafeOutput(outputPath);
-  const registry = JSON.parse(await readFile(path.join(ROOT, "themes", "registry.json"), "utf8"));
+  const registryBuffer = await readFile(path.join(ROOT, "themes", "registry.json"));
+  const registry = JSON.parse(registryBuffer.toString("utf8"));
+  const registrySha256 = createHash("sha256").update(registryBuffer).digest("hex");
   const installer = await buildWindowsInstaller();
 
   await rm(output, { recursive: true, force: true });
@@ -37,6 +40,7 @@ export async function buildSite(outputPath = DEFAULT_OUTPUT) {
     copyRelative("themes/source-art/jobs.json", output),
     copyRelative("schemas/theme-pack.schema.json", output),
     copyRelative("schemas/registry.schema.json", output),
+    copyRelative("docs/assets/theme-manager-windows.png", output),
     copyRelative("LICENSE", output),
     copyRelative("NOTICE.md", output),
   ]);
@@ -48,6 +52,26 @@ export async function buildSite(outputPath = DEFAULT_OUTPUT) {
   await writeFile(
     path.join(output, "downloads", "installer.json"),
     installer.manifestBuffer,
+  );
+  await writeFile(
+    path.join(output, "downloads", "catalog.json"),
+    Buffer.from(JSON.stringify({
+      schemaVersion: 1,
+      standard: registry.standard,
+      assetsBaseUrl: "https://rwang23.github.io/awesome-codex-theme/",
+      registry: {
+        url: "https://rwang23.github.io/awesome-codex-theme/themes/registry.json",
+        sha256: registrySha256,
+        bytes: registryBuffer.length,
+        themeCount: registry.themes.length,
+        modeCount: registry.themes.length * 2,
+      },
+      desktop: {
+        repository: "https://github.com/rwang23/awesome-codex-theme",
+        releases: "https://github.com/rwang23/awesome-codex-theme/releases",
+        currentVersion: "0.2.0-alpha.1",
+      },
+    }, null, 2) + "\n", "utf8"),
   );
 
   const copied = new Set();

@@ -4,7 +4,9 @@ An open Codex Native theme pack standard, Registry, Validator, and Gallery.
 
 [Browse 28 themes](https://rwang23.github.io/awesome-codex-theme/) · [中文 README](README.md) · [Theme pack standard](docs/standard.md) · [Fan Art policy](docs/fan-art-policy.md) · [Contributing](CONTRIBUTING.md)
 
-![Mortal Journey Void Hall source artwork](themes/source-art/mortal-void-hall.png)
+![Awesome Codex Theme Manager running on Windows with a real ChatGPT Beta theme capture](docs/assets/theme-manager-windows.png)
+
+This is the Tauri 2 Theme Manager running on Windows. Its preview comes from the isolated ChatGPT Beta `26.707.3351.0` test bench; it is not a concept mockup or source artwork pasted into a fake shell.
 
 ## More than a background switcher
 
@@ -17,7 +19,7 @@ Awesome Codex Theme puts those answers into one public contract:
 - The Registry records SHA-256 hashes, byte counts, dimensions, rights statements, and the Native contract version.
 - The Validator checks the package allowlist, hashes, image integrity, WCAG contrast, and duplicate Native palettes.
 - Every mode exports a `codex-theme-v1:` string that Codex desktop can import.
-- GitHub Pages provides cover browsing, filters, mode switching, copying, downloads, and a Windows companion installer.
+- GitHub Pages and the cross-platform Theme Manager both use real Beta captures for browsing, filtering, copying, and downloads.
 
 The project targets Codex Native only. It no longer exports Dream Skin, HeiGe Skin Studio, or CodeDrobe formats, and it does not inject CSS. The native contract supports colors, contrast, fonts, a code theme, and semantic colors, but not background images. Repository illustrations remain cover art and are never applied as app backgrounds. The application views shown by the Gallery come from the separate Beta capture workflow.
 
@@ -38,9 +40,18 @@ The first two collections are first-party original artwork under CC0 1.0. The la
 
 ## Use a theme
 
-Open the [Gallery](https://rwang23.github.io/awesome-codex-theme/), choose a theme and mode, then open the “Use in Codex” panel. Windows users can download the no-admin companion installer, extract it, and run `Launch ACT Installer.cmd`. The helper validates its bundled Registry, copies the selected `codex-theme-v1:` string, and opens the exact Stable or Beta package. You then confirm Import in ChatGPT under Settings > Appearance.
+Open the [Gallery](https://rwang23.github.io/awesome-codex-theme/) or use the Tauri Theme Manager. Before the first signed Release, the manager can be built from source. Choose a theme and mode, copy its `codex-theme-v1:` string, then confirm Import in ChatGPT under Settings > Appearance. The manager validates its catalog and opens the detected Stable or Beta app. The portable Windows helper remains available for users who do not want a desktop installation.
 
-You can also copy and import the string manually. The browser and installer never patch WindowsApps, application files, private data, or conversations, and the installer deliberately leaves the final import to the user. Canonical theme packages remain declarative and contain no scripts, CSS, or remote resources. See [Codex Native compatibility](docs/adapters.md) for the exact boundary.
+The browser, manager, and portable helper never patch WindowsApps, application files, private data, or conversations. They deliberately leave the final import to the user. Canonical theme packages remain declarative and contain no scripts, CSS, or remote resources. See [Codex Native compatibility](docs/adapters.md) for the exact boundary.
+
+## Desktop manager and updates
+
+The manager treats catalog and application updates as separate trust boundaries:
+
+- On every launch, it reads `downloads/catalog.json` from GitHub Pages and accepts the Registry only after checking its SHA-256, byte count, Schema, and Native payload shape. A verified cache and the bundled Registry provide offline fallbacks.
+- Once release signing is configured, packaged builds check GitHub Releases. An available update downloads in the background, but installation waits for the user to restart. Development builds without a public updater key do not claim that the update channel is live.
+
+Windows and macOS share Tauri 2, the dependency-free HTML/CSS/JavaScript interface, and one Rust core instead of bundling Chromium. The current Windows NSIS package is 3.66 MiB; the equivalent Electron candidate was 97.45 MiB, a 96.2% reduction. The Windows runtime, exact-copy path, and NSIS package are verified locally. The macOS dual-architecture CI path is present, but production updates still require Apple Developer signing, notarization, and real-device readback. Unsigned artifacts are not presented as finished releases. See [Desktop Theme Manager](docs/desktop-manager.md).
 
 ## Create a theme with Codex
 
@@ -76,7 +87,7 @@ npm run check
 
 ## Local development
 
-Node.js 22 or newer is required. The project has no npm runtime or development dependencies.
+Node.js 22 or newer is required. Desktop development also needs Rust stable; Windows needs Microsoft C++ Build Tools, and macOS builds need Xcode Command Line Tools. The Gallery, Registry, and Validator have no npm dependencies. The Tauri CLI lives only under `apps/theme-manager`.
 
 ```bash
 npm run check
@@ -93,6 +104,11 @@ npm run validate
 npm run installer:build
 npm run installer:validate
 npm run screenshots:probe
+npm run desktop:test
+npm run desktop:check
+npm run desktop:start
+npm run desktop:build:win
+npm run desktop:build:mac
 npm test
 npm run build
 ```

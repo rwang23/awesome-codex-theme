@@ -7,19 +7,25 @@
 - Project root: `C:\projects\tools\awesome-codex-theme`
 - Purpose: free Codex Native theme standard, Registry, Validator, and Gallery
 - Primary users: Chinese-speaking Codex desktop users and theme contributors
-- Main stack: static HTML/CSS/JavaScript and Node.js built-ins
-- Canonical package manager: npm, with zero runtime or development dependencies
+- Main stack: dependency-free static HTML/CSS/JavaScript, Node.js built-ins,
+  and a Tauri 2 desktop app with a narrow Rust backend
+- Canonical package manager: npm; desktop dependencies live only under
+  `apps/theme-manager`
 - Deployment: GitHub Pages through GitHub Actions
 - Production/live-data sensitivity: no live data; pushing, Pages changes, app installation, and real-app setting changes require exact authorization
 
 ## Current focus
 
-- Current phase: Codex Native installer and real-app screenshot evidence
+- Current phase: cross-platform Theme Manager, live catalog refresh, app update
+  delivery, and real-app screenshot evidence
 - Keep the Chinese-first Gallery, reviewed cover art, real Beta captures, rights profiles, theme-pack contract, Native import strings, and contribution Skill verifiable
 - Source illustrations are covers, not installable backgrounds. Gallery mode records prefer separately verified Beta captures and retain covers as fallback/source evidence.
 - Explicitly out of scope: CSS injection, app-file or private-data patching, automatic final import, third-party skin engines, native protocol handlers, official franchise assets, and commercial fan-art licensing
 - A collection is complete only after source review, `npm run check`, browser QA, Native contract validation, and a task-owned commit
 - A "real screenshot verified" claim requires a same-version import, semantic readback, fixed capture fixture, privacy review, and baseline restore under `docs/native-testing.md`
+- A "macOS auto-update ready" claim additionally requires signed, notarized
+  artifacts and a macOS action-after readback; source compatibility alone is
+  not enough
 
 ## Read first
 
@@ -53,6 +59,10 @@ acting.
     npm run generate:check
     npm run validate
     npm test
+    npm run desktop:test
+    npm run desktop:check
+    npm run desktop:start
+    npm run desktop:build:win
     npm run build
     npm run check
     npm run serve
@@ -75,7 +85,10 @@ Keep `docs/README.md` and this brief current. Record delivered changes in
 
 - Tool index: `context/tools/README.md`
 - Canonical helpers: `scripts/*.mjs`
-- Scripts that write app state: none. The Windows companion installer can copy a selected Native string to the clipboard and open an exact registered app package, but final import remains a user action.
+- Scripts that write ChatGPT state: none. The portable helper and Tauri
+  manager can copy a selected Native string and open an exact registered app;
+  the manager may cache a validated Registry in its own application data.
+  Final import remains a user action.
 - Workflow lint: `C:\Users\desre\.codex\tools\workflow-lint.ps1`
 
 ## Known pitfalls

@@ -2,7 +2,7 @@
 
 ## Layers
 
-The project has four separate layers.
+The project has five separate layers.
 
 The Gallery is a dependency-free GitHub Pages site. It reads
 `themes/registry.json`, renders the Chinese-first collection controls and
@@ -29,6 +29,21 @@ opens the selected registered Stable or Beta package by AUMID. It needs no
 administrator rights and does not patch WindowsApps, application files,
 private app data, or conversations. Import remains an explicit action inside
 ChatGPT.
+
+The cross-platform Tauri 2 Theme Manager is the primary interactive installer
+surface. Its local WebView shows real Beta captures; narrow Tauri commands ask
+the Rust backend to refresh the catalog, copy a theme by id and mode, discover
+an installed ChatGPT target, or check for a signed app update. The renderer
+cannot submit arbitrary clipboard text or load remote executable code. The
+Windows PowerShell companion remains a portable fallback.
+
+Catalog refresh and application update are intentionally separate. The catalog
+is checked at every launch against a hash-bound Pages manifest and falls back
+to a verified cache or bundled Registry. Release builds can use Tauri's
+mandatory-signature updater against GitHub Releases. The channel remains
+disabled when no updater public key is compiled in; production macOS updates
+also remain disabled until signed, notarized, real-device-verified artifacts
+exist.
 
 ## Artwork and screenshots
 
@@ -68,9 +83,10 @@ review and release provenance establish who controls that Registry. A
 compromised site and Registry remain a common trust root, so canonical packages
 keep a strict file allowlist and contain no executable code.
 
-Executable installer files live only in the separate installer ZIP. They are
-never permitted inside canonical theme packages, and the installer build
-records its own SHA-256 and byte count.
+Executable installer files live only in the separate portable ZIP or desktop
+application distributions. They are never permitted inside canonical theme
+packages. The portable installer build records its own SHA-256 and byte count;
+signed Tauri releases carry platform update metadata and updater signatures.
 
 ## Compatibility boundary
 
