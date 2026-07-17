@@ -1,0 +1,20 @@
+{
+  "name": "awesome-codex-theme",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "A free, community-run gallery and installer registry for Codex desktop themes.",
+  "scripts": {
+    "generate": "node scripts/generate-themes.mjs",
+    "generate:check": "node scripts/generate-themes.mjs --check",
+    "validate": "node scripts/validate.mjs",
+    "test": "node --test",
+    "build": "node scripts/build.mjs",
+    "check": "npm run generate && npm run validate && npm test && npm run build",
+    "serve": "node scripts/serve.mjs"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "license": "MIT"
+}

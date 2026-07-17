@@ -1,0 +1,500 @@
+{
+  "schemaVersion": 1,
+  "collection": {
+    "name": "Original Xianxia Collection 01",
+    "nameZh": "原创国风修仙系列 01",
+    "author": "Awesome Codex Theme",
+    "license": "CC0-1.0",
+    "codexDesktopTested": "26.707.12708.0"
+  },
+  "themes": [
+    {
+      "id": "qinglan-odyssey",
+      "version": "1.0.0",
+      "pair": "qinglan",
+      "variant": "cinematic",
+      "name": {
+        "en": "Qinglan Odyssey",
+        "zh-CN": "青岚问道"
+      },
+      "description": {
+        "en": "Ink-green ridgelines, a quiet moon gate, and a long road through the mist.",
+        "zh-CN": "墨绿山脊、月门与雾中长路，主视觉留在右侧，左侧保持安静。"
+      },
+      "tags": ["xianxia", "cinematic", "ink", "original"],
+      "pattern": "mountain",
+      "seed": 1101,
+      "art": {
+        "focusX": 0.76,
+        "focusY": 0.42,
+        "safeArea": "left",
+        "taskMode": "ambient"
+      },
+      "light": {
+        "skyTop": "#E9F1EA",
+        "skyBottom": "#AFC9B8",
+        "mist": "#F8FBF7",
+        "ridge": "#315543",
+        "ink": "#13291E",
+        "glow": "#D7E6B5",
+        "accentArt": "#6D9F72",
+        "tokens": {
+          "background": "#EDF3EE",
+          "surface": "#FFFFFF",
+          "surfaceAlt": "#DCE9DF",
+          "text": "#15231A",
+          "muted": "#52665A",
+          "accent": "#246A4B",
+          "accentContrast": "#FFFFFF",
+          "border": "#9AB4A4"
+        }
+      },
+      "dark": {
+        "skyTop": "#07140F",
+        "skyBottom": "#18352A",
+        "mist": "#89AE9A",
+        "ridge": "#10261C",
+        "ink": "#05100B",
+        "glow": "#BCD98A",
+        "accentArt": "#5CB98A",
+        "tokens": {
+          "background": "#08130E",
+          "surface": "#102219",
+          "surfaceAlt": "#183226",
+          "text": "#EEF8F1",
+          "muted": "#A3B9AA",
+          "accent": "#73D3A0",
+          "accentContrast": "#0A2114",
+          "border": "#365E47"
+        }
+      }
+    },
+    {
+      "id": "qinglan-sprite",
+      "version": "1.0.0",
+      "pair": "qinglan",
+      "variant": "chibi",
+      "name": {
+        "en": "Qinglan Little Cultivator",
+        "zh-CN": "青岚小修"
+      },
+      "description": {
+        "en": "A round original mountain spirit keeps watch beside a warm paper lantern.",
+        "zh-CN": "原创圆脸山灵守在纸灯旁，轻松、可爱，但不挤占原生控件。"
+      },
+      "tags": ["xianxia", "chibi", "mascot", "original"],
+      "pattern": "mountain",
+      "seed": 1102,
+      "art": {
+        "focusX": 0.78,
+        "focusY": 0.56,
+        "safeArea": "left",
+        "taskMode": "ambient"
+      },
+      "light": {
+        "skyTop": "#FFF6E8",
+        "skyBottom": "#E8C99E",
+        "mist": "#FFFDF7",
+        "ridge": "#86694D",
+        "ink": "#3A2A1D",
+        "glow": "#F8BD66",
+        "accentArt": "#A8522A",
+        "tokens": {
+          "background": "#FFF6EA",
+          "surface": "#FFFDFC",
+          "surfaceAlt": "#F8E4C7",
+          "text": "#352416",
+          "muted": "#6F5A43",
+          "accent": "#A34E24",
+          "accentContrast": "#FFFFFF",
+          "border": "#C5A47D"
+        }
+      },
+      "dark": {
+        "skyTop": "#1D120A",
+        "skyBottom": "#54321E",
+        "mist": "#C89A6A",
+        "ridge": "#2F1D12",
+        "ink": "#140B06",
+        "glow": "#F0AD5E",
+        "accentArt": "#E77A42",
+        "tokens": {
+          "background": "#21150D",
+          "surface": "#322116",
+          "surfaceAlt": "#462D1C",
+          "text": "#FFF6E8",
+          "muted": "#D2B99B",
+          "accent": "#F0A05C",
+          "accentContrast": "#32170A",
+          "border": "#765033"
+        }
+      }
+    },
+    {
+      "id": "starbound-rebel",
+      "version": "1.0.0",
+      "pair": "starbound",
+      "variant": "cinematic",
+      "name": {
+        "en": "Starbound Rebel",
+        "zh-CN": "星河逆旅"
+      },
+      "description": {
+        "en": "A lone celestial route cuts through cobalt constellations and restrained red light.",
+        "zh-CN": "钴蓝星图里穿过一条逆行天路，以克制红光做视觉锚点。"
+      },
+      "tags": ["xianxia", "cinematic", "celestial", "original"],
+      "pattern": "stars",
+      "seed": 2201,
+      "art": {
+        "focusX": 0.76,
+        "focusY": 0.4,
+        "safeArea": "left",
+        "taskMode": "banner"
+      },
+      "light": {
+        "skyTop": "#EFF4FC",
+        "skyBottom": "#B8CAE9",
+        "mist": "#FFFFFF",
+        "ridge": "#456397",
+        "ink": "#172D57",
+        "glow": "#FFB29B",
+        "accentArt": "#B6413B",
+        "tokens": {
+          "background": "#EFF3FB",
+          "surface": "#FFFFFF",
+          "surfaceAlt": "#DDE6F8",
+          "text": "#14213B",
+          "muted": "#55647D",
+          "accent": "#3459A6",
+          "accentContrast": "#FFFFFF",
+          "border": "#A5B5D4"
+        }
+      },
+      "dark": {
+        "skyTop": "#050A16",
+        "skyBottom": "#162B58",
+        "mist": "#758AB6",
+        "ridge": "#0D1A36",
+        "ink": "#030711",
+        "glow": "#FF7B66",
+        "accentArt": "#EF5249",
+        "tokens": {
+          "background": "#070D1B",
+          "surface": "#0F1930",
+          "surfaceAlt": "#182746",
+          "text": "#F1F5FF",
+          "muted": "#A8B4D1",
+          "accent": "#7FA5FF",
+          "accentContrast": "#09142C",
+          "border": "#3A4E78"
+        }
+      }
+    },
+    {
+      "id": "starbound-sprite",
+      "version": "1.0.0",
+      "pair": "starbound",
+      "variant": "chibi",
+      "name": {
+        "en": "Starbound Spirit",
+        "zh-CN": "星河灵童"
+      },
+      "description": {
+        "en": "An original star spirit rides a tiny comet across a deep, quiet sky.",
+        "zh-CN": "原创星灵坐着小彗星划过夜空，保留足够留白给工作区。"
+      },
+      "tags": ["xianxia", "chibi", "celestial", "original"],
+      "pattern": "stars",
+      "seed": 2202,
+      "art": {
+        "focusX": 0.79,
+        "focusY": 0.54,
+        "safeArea": "left",
+        "taskMode": "ambient"
+      },
+      "light": {
+        "skyTop": "#FFF1F6",
+        "skyBottom": "#D8C6EA",
+        "mist": "#FFF9FC",
+        "ridge": "#7B5D91",
+        "ink": "#392849",
+        "glow": "#FFD276",
+        "accentArt": "#A74D79",
+        "tokens": {
+          "background": "#FFF2F7",
+          "surface": "#FFFFFF",
+          "surfaceAlt": "#F2DEEB",
+          "text": "#332139",
+          "muted": "#70576F",
+          "accent": "#963C70",
+          "accentContrast": "#FFFFFF",
+          "border": "#C8A7BD"
+        }
+      },
+      "dark": {
+        "skyTop": "#160C1C",
+        "skyBottom": "#3D2454",
+        "mist": "#A98BC0",
+        "ridge": "#281534",
+        "ink": "#0D0711",
+        "glow": "#FFD06C",
+        "accentArt": "#ED7DB5",
+        "tokens": {
+          "background": "#160D1C",
+          "surface": "#26142F",
+          "surfaceAlt": "#382047",
+          "text": "#FFF3FC",
+          "muted": "#D1B4CF",
+          "accent": "#F28ABB",
+          "accentContrast": "#381024",
+          "border": "#6A4773"
+        }
+      }
+    },
+    {
+      "id": "mountain-sword",
+      "version": "1.0.0",
+      "pair": "mountain-sword",
+      "variant": "cinematic",
+      "name": {
+        "en": "Mountain Sword Intent",
+        "zh-CN": "山河剑意"
+      },
+      "description": {
+        "en": "Black-ink peaks and one vermilion sword line, composed like a modern book cover.",
+        "zh-CN": "黑墨山峰与一线朱砂剑光，构图更像现代书封，而不是游戏截图。"
+      },
+      "tags": ["xianxia", "cinematic", "sword", "original"],
+      "pattern": "sword",
+      "seed": 3301,
+      "art": {
+        "focusX": 0.75,
+        "focusY": 0.44,
+        "safeArea": "left",
+        "taskMode": "banner"
+      },
+      "light": {
+        "skyTop": "#F5F1E9",
+        "skyBottom": "#D8CDBE",
+        "mist": "#FFFEFA",
+        "ridge": "#5A4B3F",
+        "ink": "#201A16",
+        "glow": "#E9A08C",
+        "accentArt": "#9D302B",
+        "tokens": {
+          "background": "#F4F0E8",
+          "surface": "#FFFEFA",
+          "surfaceAlt": "#E8E1D5",
+          "text": "#241D17",
+          "muted": "#6C5F52",
+          "accent": "#8E302B",
+          "accentContrast": "#FFFFFF",
+          "border": "#B9AA98"
+        }
+      },
+      "dark": {
+        "skyTop": "#0F0908",
+        "skyBottom": "#35201A",
+        "mist": "#A98272",
+        "ridge": "#1D110E",
+        "ink": "#070403",
+        "glow": "#F28B76",
+        "accentArt": "#E74D43",
+        "tokens": {
+          "background": "#130C0B",
+          "surface": "#251512",
+          "surfaceAlt": "#35211C",
+          "text": "#FFF2E8",
+          "muted": "#C5AA9C",
+          "accent": "#EB7063",
+          "accentContrast": "#2D0D0A",
+          "border": "#67453A"
+        }
+      }
+    },
+    {
+      "id": "mountain-swordling",
+      "version": "1.0.0",
+      "pair": "mountain-sword",
+      "variant": "chibi",
+      "name": {
+        "en": "Little Sword Wanderer",
+        "zh-CN": "山河剑童"
+      },
+      "description": {
+        "en": "A tiny original swordling practices one careful stroke under a huge sunrise.",
+        "zh-CN": "原创剑童在巨大的日轮下练一笔剑式，稚气但不幼稚。"
+      },
+      "tags": ["xianxia", "chibi", "sword", "original"],
+      "pattern": "sword",
+      "seed": 3302,
+      "art": {
+        "focusX": 0.79,
+        "focusY": 0.58,
+        "safeArea": "left",
+        "taskMode": "ambient"
+      },
+      "light": {
+        "skyTop": "#FFF8E8",
+        "skyBottom": "#EAC07A",
+        "mist": "#FFFDF6",
+        "ridge": "#8B6339",
+        "ink": "#3C2918",
+        "glow": "#FFB83E",
+        "accentArt": "#B65420",
+        "tokens": {
+          "background": "#FFF7E7",
+          "surface": "#FFFFFF",
+          "surfaceAlt": "#F4E0B9",
+          "text": "#372513",
+          "muted": "#705A3E",
+          "accent": "#A2471F",
+          "accentContrast": "#FFFFFF",
+          "border": "#C8A66D"
+        }
+      },
+      "dark": {
+        "skyTop": "#181006",
+        "skyBottom": "#57330D",
+        "mist": "#C0924E",
+        "ridge": "#2D1C09",
+        "ink": "#0D0803",
+        "glow": "#FFBE4D",
+        "accentArt": "#F07A2F",
+        "tokens": {
+          "background": "#1B1208",
+          "surface": "#2C1D0D",
+          "surfaceAlt": "#422B11",
+          "text": "#FFF5DE",
+          "muted": "#D0B78B",
+          "accent": "#F1A64D",
+          "accentContrast": "#321A04",
+          "border": "#735025"
+        }
+      }
+    },
+    {
+      "id": "cloudsea-pact",
+      "version": "1.0.0",
+      "pair": "cloudsea",
+      "variant": "cinematic",
+      "name": {
+        "en": "Cloudsea Pact",
+        "zh-CN": "云海灵契"
+      },
+      "description": {
+        "en": "Floating islands meet a pale jade horizon in an original spirit-contract world.",
+        "zh-CN": "浮岛、玉色天际与原创灵契世界，整体清透，任务页也不会过分抢眼。"
+      },
+      "tags": ["xianxia", "cinematic", "clouds", "original"],
+      "pattern": "clouds",
+      "seed": 4401,
+      "art": {
+        "focusX": 0.74,
+        "focusY": 0.42,
+        "safeArea": "left",
+        "taskMode": "ambient"
+      },
+      "light": {
+        "skyTop": "#E9F8F8",
+        "skyBottom": "#A7D6D2",
+        "mist": "#FAFFFF",
+        "ridge": "#3E7772",
+        "ink": "#183C39",
+        "glow": "#D8F0B5",
+        "accentArt": "#2A8A7C",
+        "tokens": {
+          "background": "#ECF7F6",
+          "surface": "#FFFFFF",
+          "surfaceAlt": "#D8ECE9",
+          "text": "#173330",
+          "muted": "#4E6865",
+          "accent": "#167064",
+          "accentContrast": "#FFFFFF",
+          "border": "#8FB9B4"
+        }
+      },
+      "dark": {
+        "skyTop": "#061312",
+        "skyBottom": "#174640",
+        "mist": "#83B7AF",
+        "ridge": "#0E2C28",
+        "ink": "#03100E",
+        "glow": "#C2E79C",
+        "accentArt": "#3EC5AE",
+        "tokens": {
+          "background": "#071513",
+          "surface": "#102824",
+          "surfaceAlt": "#173A34",
+          "text": "#EEFBF8",
+          "muted": "#A1C1BA",
+          "accent": "#64D7C2",
+          "accentContrast": "#082820",
+          "border": "#35665E"
+        }
+      }
+    },
+    {
+      "id": "cloudsea-mochi",
+      "version": "1.0.0",
+      "pair": "cloudsea",
+      "variant": "chibi",
+      "name": {
+        "en": "Cloudsea Mochi",
+        "zh-CN": "云海团子"
+      },
+      "description": {
+        "en": "A soft original cloud creature naps on a floating leaf above the sea of mist.",
+        "zh-CN": "原创云团灵兽趴在浮叶上打盹，配色柔和，所有装饰都不可交互。"
+      },
+      "tags": ["xianxia", "chibi", "clouds", "original"],
+      "pattern": "clouds",
+      "seed": 4402,
+      "art": {
+        "focusX": 0.8,
+        "focusY": 0.57,
+        "safeArea": "left",
+        "taskMode": "ambient"
+      },
+      "light": {
+        "skyTop": "#F7F5FF",
+        "skyBottom": "#C8D6F0",
+        "mist": "#FFFFFF",
+        "ridge": "#6C79A1",
+        "ink": "#313B62",
+        "glow": "#FFDDA3",
+        "accentArt": "#4F6BB0",
+        "tokens": {
+          "background": "#F4F5FC",
+          "surface": "#FFFFFF",
+          "surfaceAlt": "#E1E6F5",
+          "text": "#252D4A",
+          "muted": "#5E6680",
+          "accent": "#405FA7",
+          "accentContrast": "#FFFFFF",
+          "border": "#AAB5D3"
+        }
+      },
+      "dark": {
+        "skyTop": "#0B1020",
+        "skyBottom": "#27365F",
+        "mist": "#95A4C9",
+        "ridge": "#172342",
+        "ink": "#060A14",
+        "glow": "#FFD17F",
+        "accentArt": "#7599EE",
+        "tokens": {
+          "background": "#0C1222",
+          "surface": "#151E36",
+          "surfaceAlt": "#202D4C",
+          "text": "#F3F5FF",
+          "muted": "#ADB8D3",
+          "accent": "#88A8F2",
+          "accentContrast": "#0D1A35",
+          "border": "#43577F"
+        }
+      }
+    }
+  ]
+}

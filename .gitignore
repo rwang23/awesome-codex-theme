@@ -1,0 +1,8 @@
+dist/
+node_modules/
+packages/
+themes/registry.json
+themes/*/
+.DS_Store
+Thumbs.db
+*.log

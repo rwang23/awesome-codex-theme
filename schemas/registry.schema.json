@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://awesome-codex-theme.dev/schemas/registry.schema.json",
+  "title": "Awesome Codex Theme Registry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "standard", "generatedBy", "themes"],
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "standard": {
+      "const": "act-theme-pack-v1"
+    },
+    "generatedBy": {
+      "type": "string"
+    },
+    "themes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "version",
+          "name",
+          "description",
+          "tags",
+          "license",
+          "motion",
+          "previews",
+          "package",
+          "exports"
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,275 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://awesome-codex-theme.dev/schemas/theme-pack.schema.json",
+  "title": "Awesome Codex Theme Pack",
+  "description": "A code-free, engine-neutral theme package manifest.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "id",
+    "version",
+    "name",
+    "description",
+    "author",
+    "license",
+    "provenance",
+    "compatibility",
+    "motion",
+    "modes"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "schemaVersion": {
+      "const": 1
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "maxLength": 80
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "name": {
+      "$ref": "#/$defs/localized"
+    },
+    "description": {
+      "$ref": "#/$defs/localized"
+    },
+    "author": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        }
+      }
+    },
+    "license": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["spdx", "scope"],
+      "properties": {
+        "spdx": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9.+-]+$"
+        },
+        "scope": {
+          "enum": ["artwork-and-manifest", "artwork-only"]
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "source", "generator", "aiGenerated", "rightsVerified"],
+      "properties": {
+        "type": {
+          "enum": ["procedural", "original", "licensed", "public-domain"]
+        },
+        "source": {
+          "type": "string",
+          "minLength": 1
+        },
+        "generator": {
+          "type": "string",
+          "minLength": 1
+        },
+        "aiGenerated": {
+          "type": "boolean"
+        },
+        "rightsVerified": {
+          "const": true
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
+      }
+    },
+    "compatibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["codexDesktopTested", "engines"],
+      "properties": {
+        "codexDesktopTested": {
+          "type": "string",
+          "minLength": 1
+        },
+        "engines": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "coverage"],
+            "properties": {
+              "id": {
+                "enum": ["codex-native", "dream-skin", "heige-skin-studio", "codedrobe"]
+              },
+              "coverage": {
+                "enum": ["appearance-only", "full", "source-export"]
+              },
+              "testedVersion": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "motion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["default", "animated"],
+      "properties": {
+        "default": {
+          "const": "reduced"
+        },
+        "animated": {
+          "const": false
+        }
+      }
+    },
+    "tags": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+      }
+    },
+    "modes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["light", "dark"],
+      "properties": {
+        "light": {
+          "$ref": "#/$defs/mode"
+        },
+        "dark": {
+          "$ref": "#/$defs/mode"
+        }
+      }
+    }
+  },
+  "$defs": {
+    "localized": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["en", "zh-CN"],
+      "properties": {
+        "en": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "zh-CN": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        }
+      }
+    },
+    "hex": {
+      "type": "string",
+      "pattern": "^#[0-9A-Fa-f]{6}$"
+    },
+    "mode": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["asset", "art", "tokens", "integrity"],
+      "properties": {
+        "asset": {
+          "type": "string",
+          "pattern": "^assets/[a-z0-9-]+\\.png$"
+        },
+        "art": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["focusX", "focusY", "safeArea", "taskMode"],
+          "properties": {
+            "focusX": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "focusY": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "safeArea": {
+              "enum": ["left", "right", "center", "none"]
+            },
+            "taskMode": {
+              "enum": ["ambient", "banner", "off"]
+            }
+          }
+        },
+        "tokens": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "background",
+            "surface",
+            "surfaceAlt",
+            "text",
+            "muted",
+            "accent",
+            "accentContrast",
+            "border"
+          ],
+          "properties": {
+            "background": { "$ref": "#/$defs/hex" },
+            "surface": { "$ref": "#/$defs/hex" },
+            "surfaceAlt": { "$ref": "#/$defs/hex" },
+            "text": { "$ref": "#/$defs/hex" },
+            "muted": { "$ref": "#/$defs/hex" },
+            "accent": { "$ref": "#/$defs/hex" },
+            "accentContrast": { "$ref": "#/$defs/hex" },
+            "border": { "$ref": "#/$defs/hex" }
+          }
+        },
+        "integrity": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["sha256", "bytes", "width", "height"],
+          "properties": {
+            "sha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "bytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 16777216
+            },
+            "width": {
+              "const": 2560
+            },
+            "height": {
+              "const": 1440
+            }
+          }
+        }
+      }
+    }
+  }
+}

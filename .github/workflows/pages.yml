@@ -1,0 +1,66 @@
+name: Validate and publish gallery
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+
+      - name: Generate, validate, test, and build
+        run: npm run check
+
+      - name: Capture gallery screenshot
+        shell: bash
+        run: |
+          node scripts/serve.mjs > server.log 2>&1 &
+          for attempt in {1..20}; do
+            if curl --fail --silent http://127.0.0.1:4173/ > /dev/null; then
+              break
+            fi
+            sleep 1
+          done
+          google-chrome --headless=new --disable-gpu --no-sandbox --hide-scrollbars --window-size=1440,1100 --screenshot=gallery-home.png http://127.0.0.1:4173/
+          test -s gallery-home.png
+
+      - name: Upload screenshot evidence
+        uses: actions/upload-artifact@v7
+        with:
+          name: gallery-screenshot
+          path: gallery-home.png
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: dist
+
+  deploy:
+    if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+    steps:
+      - name: Deploy GitHub Pages
+        uses: actions/deploy-pages@v5
