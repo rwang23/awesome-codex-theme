@@ -1,14 +1,17 @@
 # Awesome Codex Theme
 
 A free, community-run theme standard, registry, validator, and gallery for the
-Codex desktop app. The first release includes a dependency-free GitHub Pages
-site, eight original xianxia-inspired themes, reproducible assets, four adapter
-targets, and hash-verified Dream Skin installers.
+Codex desktop app. The first public release includes a dependency-free GitHub
+Pages site, 16 original themes across two collections, reproducible assets,
+four adapter targets, and hash-verified Dream Skin installers.
 
 中文简介：这是一个面向 Codex 桌面端的免费主题市场。它负责展示、筛选和安装
-主题，不修改官方安装包。首版包含四个原创国风修仙世界，每个世界各有原画感与
-Q 版两个版本。所有背景均可重复生成，不包含现有动漫人物、品牌角色或第三方版权
-素材。
+主题，不修改官方安装包。首版包含 8 套原创国风修仙主题和 8 套中国城市主题。
+所有背景均可重复生成，不包含现有动漫人物、品牌角色、城市标志或第三方版权素材。
+
+Public gallery: https://rwang23.github.io/awesome-codex-theme/
+
+GitHub repository: https://github.com/rwang23/awesome-codex-theme
 
 ## Why this project is different
 
@@ -72,6 +75,21 @@ likenesses, logos, signature costumes, and official artwork are intentionally
 excluded. A separately licensed IP collection can be added later without
 weakening the public registry's rights standard.
 
+## China City Atlas 01
+
+- Beijing Meridian / 北京·城轴晨光
+- Shanghai Afterglow / 上海·潮汐霓虹
+- Shenzhen Circuit Rain / 深圳·绿芯阵雨
+- Guangzhou Riverwind / 广州·珠水晚风
+- Chengdu Teahouse Rain / 成都·竹窗细雨
+- Hangzhou Lake Letter / 杭州·湖上来信
+- Chongqing Vertical Night / 重庆·山城夜航
+- Nanjing Wall Plum / 南京·城墙梅影
+
+The city collection uses weather, terrain, street rhythm, and broad
+architectural cues. It does not trace photographs or include city logos,
+official mascots, or a copied landmark illustration.
+
 ## Compatibility boundary
 
 Codex currently exposes a light, dark, or system appearance preference, not a
@@ -91,11 +109,11 @@ remain outside the canonical code-free theme package.
 - tests/: repository and build-contract checks
 - docs/: project routing and architecture notes
 
-## Status
+## Publishing
 
-This repository is local-only until a GitHub remote and Pages environment are
-explicitly authorized. The workflow is ready, but nothing has been pushed or
-published.
+Pushes to `main` run generation, validation, tests, a headless Gallery
+screenshot, and the GitHub Pages deployment. Generated packages stay out of
+Git history and are rebuilt from the committed catalog during CI.
 
 ## License
 

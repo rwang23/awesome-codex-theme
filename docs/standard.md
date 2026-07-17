@@ -23,6 +23,7 @@ The complete machine-readable contract is schemas/theme-pack.schema.json.
 The manifest declares:
 
 - stable id, semantic version, localized name, and localized description;
+- collection id, visual variant, and pair or standalone identity;
 - author and an SPDX-compatible asset license;
 - source, generator, AI-use disclosure, and a rightsVerified assertion;
 - tested Codex versions and named adapter targets;
@@ -33,8 +34,8 @@ The manifest declares:
 
 The validator rejects missing fields, unsafe relative paths, files outside the
 allowlist, mismatched hashes or sizes, oversized images, malformed dimensions,
-incomplete theme pairs, and color combinations below the project contrast
-thresholds.
+collection-policy violations, incomplete paired themes, and color combinations
+below the project contrast thresholds.
 
 ## Rights boundary
 

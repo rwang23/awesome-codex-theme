@@ -1,16 +1,51 @@
 {
   "schemaVersion": 1,
-  "collection": {
-    "name": "Original Xianxia Collection 01",
-    "nameZh": "原创国风修仙系列 01",
+  "defaults": {
     "author": "Awesome Codex Theme",
     "license": "CC0-1.0",
     "codexDesktopTested": "26.707.12708.0"
   },
+  "collections": [
+    {
+      "id": "original-xianxia-01",
+      "order": 1,
+      "pairing": "cinematic-chibi",
+      "name": {
+        "en": "Original Xianxia 01",
+        "zh-CN": "原创国风修仙 01"
+      },
+      "title": {
+        "en": "One world, two expressions.",
+        "zh-CN": "一方世界，两种表达。"
+      },
+      "description": {
+        "en": "Four original fantasy worlds, each drawn in cinematic and chibi form. The collection borrows a genre mood, never an existing character or franchise.",
+        "zh-CN": "四个原创幻想世界，每个都有原画感与 Q 版两个版本。借的是类型气韵，不借任何既有角色、造型或 IP。"
+      }
+    },
+    {
+      "id": "china-city-atlas-01",
+      "order": 2,
+      "pairing": "standalone",
+      "name": {
+        "en": "China City Atlas 01",
+        "zh-CN": "中国城市图鉴 01"
+      },
+      "title": {
+        "en": "Eight cities, drawn from atmosphere.",
+        "zh-CN": "八座城市，各有自己的光。"
+      },
+      "description": {
+        "en": "Original city studies built from weather, street rhythm, terrain, and broad architectural cues. No photograph, city logo, or official mascot is used.",
+        "zh-CN": "从天气、街道节奏、地形和建筑轮廓里提取城市气质，不使用照片、城市标志或官方吉祥物。"
+      }
+    }
+  ],
   "themes": [
     {
       "id": "qinglan-odyssey",
       "version": "1.0.0",
+      "collection": "original-xianxia-01",
       "pair": "qinglan",
       "variant": "cinematic",
       "name": {
@@ -72,6 +107,7 @@
     {
       "id": "qinglan-sprite",
       "version": "1.0.0",
+      "collection": "original-xianxia-01",
       "pair": "qinglan",
       "variant": "chibi",
       "name": {
@@ -133,6 +169,7 @@
     {
       "id": "starbound-rebel",
       "version": "1.0.0",
+      "collection": "original-xianxia-01",
       "pair": "starbound",
       "variant": "cinematic",
       "name": {
@@ -194,6 +231,7 @@
     {
       "id": "starbound-sprite",
       "version": "1.0.0",
+      "collection": "original-xianxia-01",
       "pair": "starbound",
       "variant": "chibi",
       "name": {
@@ -255,6 +293,7 @@
     {
       "id": "mountain-sword",
       "version": "1.0.0",
+      "collection": "original-xianxia-01",
       "pair": "mountain-sword",
       "variant": "cinematic",
       "name": {
@@ -316,6 +355,7 @@
     {
       "id": "mountain-swordling",
       "version": "1.0.0",
+      "collection": "original-xianxia-01",
       "pair": "mountain-sword",
       "variant": "chibi",
       "name": {
@@ -377,6 +417,7 @@
     {
       "id": "cloudsea-pact",
       "version": "1.0.0",
+      "collection": "original-xianxia-01",
       "pair": "cloudsea",
       "variant": "cinematic",
       "name": {
@@ -438,6 +479,7 @@
     {
       "id": "cloudsea-mochi",
       "version": "1.0.0",
+      "collection": "original-xianxia-01",
       "pair": "cloudsea",
       "variant": "chibi",
       "name": {
@@ -493,6 +535,502 @@
           "accent": "#88A8F2",
           "accentContrast": "#0D1A35",
           "border": "#43577F"
+        }
+      }
+    },
+    {
+      "id": "beijing-meridian",
+      "version": "1.0.0",
+      "collection": "china-city-atlas-01",
+      "pair": "beijing",
+      "variant": "cityscape",
+      "name": {
+        "en": "Beijing Meridian",
+        "zh-CN": "北京·城轴晨光"
+      },
+      "description": {
+        "en": "Winter-blue air, measured rooflines, and the first warm light along a long city axis.",
+        "zh-CN": "冬日蓝调、舒展屋脊和城轴上的第一束暖光，画面克制而端正。"
+      },
+      "tags": ["city", "beijing", "architecture", "morning", "original"],
+      "pattern": "city-axis",
+      "seed": 5101,
+      "art": {
+        "focusX": 0.76,
+        "focusY": 0.43,
+        "safeArea": "left",
+        "taskMode": "ambient"
+      },
+      "light": {
+        "skyTop": "#EEF3F5",
+        "skyBottom": "#D5BFA7",
+        "mist": "#FFF9EF",
+        "ridge": "#765B49",
+        "ink": "#2B2119",
+        "glow": "#F4B760",
+        "accentArt": "#A53B31",
+        "tokens": {
+          "background": "#F4EFE6",
+          "surface": "#FFFFFF",
+          "surfaceAlt": "#E6D7C4",
+          "text": "#2B2119",
+          "muted": "#66594B",
+          "accent": "#8A2F28",
+          "accentContrast": "#FFFFFF",
+          "border": "#B7A18C"
+        }
+      },
+      "dark": {
+        "skyTop": "#0B1318",
+        "skyBottom": "#3A2A23",
+        "mist": "#A99C8E",
+        "ridge": "#241B17",
+        "ink": "#090605",
+        "glow": "#F1A957",
+        "accentArt": "#E06453",
+        "tokens": {
+          "background": "#130F0D",
+          "surface": "#231A16",
+          "surfaceAlt": "#34251E",
+          "text": "#FFF4E8",
+          "muted": "#C7B5A6",
+          "accent": "#E37965",
+          "accentContrast": "#2A0D09",
+          "border": "#64473A"
+        }
+      }
+    },
+    {
+      "id": "shanghai-afterglow",
+      "version": "1.0.0",
+      "collection": "china-city-atlas-01",
+      "pair": "shanghai",
+      "variant": "cityscape",
+      "name": {
+        "en": "Shanghai Afterglow",
+        "zh-CN": "上海·潮汐霓虹"
+      },
+      "description": {
+        "en": "River lines, vertical glass, and restrained neon settling into evening haze.",
+        "zh-CN": "江面线条、玻璃立面与入夜前的克制霓虹，像一张会呼吸的城市唱片。"
+      },
+      "tags": ["city", "shanghai", "river", "neon", "original"],
+      "pattern": "city-tide",
+      "seed": 5201,
+      "art": {
+        "focusX": 0.78,
+        "focusY": 0.45,
+        "safeArea": "left",
+        "taskMode": "banner"
+      },
+      "light": {
+        "skyTop": "#EFF5F7",
+        "skyBottom": "#B7D2D8",
+        "mist": "#F9FCFD",
+        "ridge": "#4B7580",
+        "ink": "#17313A",
+        "glow": "#F7C67C",
+        "accentArt": "#D65362",
+        "tokens": {
+          "background": "#EDF2F4",
+          "surface": "#FFFFFF",
+          "surfaceAlt": "#DCE6EA",
+          "text": "#172A31",
+          "muted": "#4E626B",
+          "accent": "#00677B",
+          "accentContrast": "#FFFFFF",
+          "border": "#9BB2BA"
+        }
+      },
+      "dark": {
+        "skyTop": "#070F19",
+        "skyBottom": "#173B4A",
+        "mist": "#779AA4",
+        "ridge": "#102D38",
+        "ink": "#03080D",
+        "glow": "#F7B85B",
+        "accentArt": "#F16078",
+        "tokens": {
+          "background": "#08131A",
+          "surface": "#10242C",
+          "surfaceAlt": "#183642",
+          "text": "#F1FAFC",
+          "muted": "#A8C0C7",
+          "accent": "#63D1E1",
+          "accentContrast": "#082329",
+          "border": "#356170"
+        }
+      }
+    },
+    {
+      "id": "shenzhen-circuit-rain",
+      "version": "1.0.0",
+      "collection": "china-city-atlas-01",
+      "pair": "shenzhen",
+      "variant": "cityscape",
+      "name": {
+        "en": "Shenzhen Circuit Rain",
+        "zh-CN": "深圳·绿芯阵雨"
+      },
+      "description": {
+        "en": "Fast rain crosses a leaf-green grid while the towers hold a cool electric glow.",
+        "zh-CN": "阵雨穿过叶绿色网格，塔楼亮着冷静的电光，速度感留在画面右侧。"
+      },
+      "tags": ["city", "shenzhen", "technology", "rain", "original"],
+      "pattern": "city-circuit",
+      "seed": 5301,
+      "art": {
+        "focusX": 0.77,
+        "focusY": 0.44,
+        "safeArea": "left",
+        "taskMode": "banner"
+      },
+      "light": {
+        "skyTop": "#ECF7F3",
+        "skyBottom": "#A8D6CA",
+        "mist": "#F9FFFC",
+        "ridge": "#3E7164",
+        "ink": "#173B31",
+        "glow": "#C9F179",
+        "accentArt": "#1C9A73",
+        "tokens": {
+          "background": "#EDF6F2",
+          "surface": "#FFFFFF",
+          "surfaceAlt": "#D7EAE2",
+          "text": "#153229",
+          "muted": "#4D675E",
+          "accent": "#176A50",
+          "accentContrast": "#FFFFFF",
+          "border": "#91B6A8"
+        }
+      },
+      "dark": {
+        "skyTop": "#06130F",
+        "skyBottom": "#124B3D",
+        "mist": "#73A698",
+        "ridge": "#0C3027",
+        "ink": "#020A07",
+        "glow": "#BCEC68",
+        "accentArt": "#38D6A3",
+        "tokens": {
+          "background": "#071611",
+          "surface": "#0F2A21",
+          "surfaceAlt": "#173D31",
+          "text": "#EEFFF8",
+          "muted": "#9FC9B9",
+          "accent": "#57DBAE",
+          "accentContrast": "#08271D",
+          "border": "#326A57"
+        }
+      }
+    },
+    {
+      "id": "guangzhou-riverwind",
+      "version": "1.0.0",
+      "collection": "china-city-atlas-01",
+      "pair": "guangzhou",
+      "variant": "cityscape",
+      "name": {
+        "en": "Guangzhou Riverwind",
+        "zh-CN": "广州·珠水晚风"
+      },
+      "description": {
+        "en": "Warm river air moves between banyan shade, curved light, and a soft amber skyline.",
+        "zh-CN": "珠水晚风穿过榕荫、弧光与琥珀色天际线，温暖，却不黏腻。"
+      },
+      "tags": ["city", "guangzhou", "river", "banyan", "original"],
+      "pattern": "city-river",
+      "seed": 5401,
+      "art": {
+        "focusX": 0.79,
+        "focusY": 0.47,
+        "safeArea": "left",
+        "taskMode": "ambient"
+      },
+      "light": {
+        "skyTop": "#FFF4E9",
+        "skyBottom": "#E6B986",
+        "mist": "#FFF9F1",
+        "ridge": "#7F6C4B",
+        "ink": "#3A2D1E",
+        "glow": "#F7C45F",
+        "accentArt": "#C45A3B",
+        "tokens": {
+          "background": "#FFF3E5",
+          "surface": "#FFFFFF",
+          "surfaceAlt": "#F2DFC5",
+          "text": "#38281B",
+          "muted": "#6E5945",
+          "accent": "#9A482F",
+          "accentContrast": "#FFFFFF",
+          "border": "#C4A47D"
+        }
+      },
+      "dark": {
+        "skyTop": "#171008",
+        "skyBottom": "#543417",
+        "mist": "#B58E62",
+        "ridge": "#322112",
+        "ink": "#0C0703",
+        "glow": "#F3BD54",
+        "accentArt": "#E7794F",
+        "tokens": {
+          "background": "#1A120A",
+          "surface": "#2E2014",
+          "surfaceAlt": "#432E1A",
+          "text": "#FFF5E6",
+          "muted": "#D0B38F",
+          "accent": "#EE9564",
+          "accentContrast": "#351407",
+          "border": "#745132"
+        }
+      }
+    },
+    {
+      "id": "chengdu-teahouse-rain",
+      "version": "1.0.0",
+      "collection": "china-city-atlas-01",
+      "pair": "chengdu",
+      "variant": "cityscape",
+      "name": {
+        "en": "Chengdu Teahouse Rain",
+        "zh-CN": "成都·竹窗细雨"
+      },
+      "description": {
+        "en": "Fine rain, bamboo shadow, tiled eaves, and tea steam keep the afternoon unhurried.",
+        "zh-CN": "细雨、竹影、瓦檐和一缕茶汽，把下午放慢了一点。"
+      },
+      "tags": ["city", "chengdu", "bamboo", "rain", "original"],
+      "pattern": "city-bamboo",
+      "seed": 5501,
+      "art": {
+        "focusX": 0.78,
+        "focusY": 0.48,
+        "safeArea": "left",
+        "taskMode": "ambient"
+      },
+      "light": {
+        "skyTop": "#F0F4E9",
+        "skyBottom": "#B9C8A1",
+        "mist": "#FCFDF7",
+        "ridge": "#667455",
+        "ink": "#273021",
+        "glow": "#E8C982",
+        "accentArt": "#8B5A36",
+        "tokens": {
+          "background": "#F2F4EA",
+          "surface": "#FFFFFF",
+          "surfaceAlt": "#E0E7D4",
+          "text": "#273021",
+          "muted": "#596650",
+          "accent": "#526B3F",
+          "accentContrast": "#FFFFFF",
+          "border": "#A6B396"
+        }
+      },
+      "dark": {
+        "skyTop": "#0C120A",
+        "skyBottom": "#2E4125",
+        "mist": "#89977B",
+        "ridge": "#1B2B17",
+        "ink": "#050804",
+        "glow": "#DDBB73",
+        "accentArt": "#B77A4A",
+        "tokens": {
+          "background": "#0E160C",
+          "surface": "#1C2A18",
+          "surfaceAlt": "#293B23",
+          "text": "#F4F9ED",
+          "muted": "#B2C1A8",
+          "accent": "#9BC37E",
+          "accentContrast": "#14220F",
+          "border": "#4A6741"
+        }
+      }
+    },
+    {
+      "id": "hangzhou-lake-letter",
+      "version": "1.0.0",
+      "collection": "china-city-atlas-01",
+      "pair": "hangzhou",
+      "variant": "cityscape",
+      "name": {
+        "en": "Hangzhou Lake Letter",
+        "zh-CN": "杭州·湖上来信"
+      },
+      "description": {
+        "en": "A long causeway, lotus marks, and distant rain settle into pale lake light.",
+        "zh-CN": "长堤、莲影和远雨落进浅浅湖光里，适合把注意力留给正在做的事。"
+      },
+      "tags": ["city", "hangzhou", "lake", "lotus", "original"],
+      "pattern": "city-lake",
+      "seed": 5601,
+      "art": {
+        "focusX": 0.77,
+        "focusY": 0.44,
+        "safeArea": "left",
+        "taskMode": "ambient"
+      },
+      "light": {
+        "skyTop": "#EDF7F6",
+        "skyBottom": "#A9CFCA",
+        "mist": "#FBFFFF",
+        "ridge": "#527C76",
+        "ink": "#1E3C39",
+        "glow": "#E4E6A4",
+        "accentArt": "#4E8195",
+        "tokens": {
+          "background": "#EDF6F5",
+          "surface": "#FFFFFF",
+          "surfaceAlt": "#D8EAE7",
+          "text": "#1C3432",
+          "muted": "#506966",
+          "accent": "#286B68",
+          "accentContrast": "#FFFFFF",
+          "border": "#94B7B2"
+        }
+      },
+      "dark": {
+        "skyTop": "#071311",
+        "skyBottom": "#1A4541",
+        "mist": "#7AA7A1",
+        "ridge": "#12312E",
+        "ink": "#030C0B",
+        "glow": "#D8DF8E",
+        "accentArt": "#65AFC5",
+        "tokens": {
+          "background": "#081513",
+          "surface": "#112825",
+          "surfaceAlt": "#193A36",
+          "text": "#F0FBF9",
+          "muted": "#A4C2BD",
+          "accent": "#64C5BE",
+          "accentContrast": "#082622",
+          "border": "#37645F"
+        }
+      }
+    },
+    {
+      "id": "chongqing-vertical-night",
+      "version": "1.0.0",
+      "collection": "china-city-atlas-01",
+      "pair": "chongqing",
+      "variant": "cityscape",
+      "name": {
+        "en": "Chongqing Vertical Night",
+        "zh-CN": "重庆·山城夜航"
+      },
+      "description": {
+        "en": "Stacked slopes, river reflections, and one bright transit line turn depth into rhythm.",
+        "zh-CN": "层叠山坡、江面倒影和一条穿城光轨，把高低落差变成节奏。"
+      },
+      "tags": ["city", "chongqing", "mountain", "night", "original"],
+      "pattern": "city-vertical",
+      "seed": 5701,
+      "art": {
+        "focusX": 0.8,
+        "focusY": 0.46,
+        "safeArea": "left",
+        "taskMode": "banner"
+      },
+      "light": {
+        "skyTop": "#F2EEF4",
+        "skyBottom": "#B9A7C1",
+        "mist": "#FCF9FD",
+        "ridge": "#665771",
+        "ink": "#30263A",
+        "glow": "#F5B66B",
+        "accentArt": "#C64659",
+        "tokens": {
+          "background": "#F3EFF5",
+          "surface": "#FFFFFF",
+          "surfaceAlt": "#E5DDEA",
+          "text": "#30263A",
+          "muted": "#665A6E",
+          "accent": "#913047",
+          "accentContrast": "#FFFFFF",
+          "border": "#B6A7BD"
+        }
+      },
+      "dark": {
+        "skyTop": "#0D0913",
+        "skyBottom": "#3A1F43",
+        "mist": "#957E9C",
+        "ridge": "#291733",
+        "ink": "#050308",
+        "glow": "#FFB45D",
+        "accentArt": "#F35C75",
+        "tokens": {
+          "background": "#120C18",
+          "surface": "#25162D",
+          "surfaceAlt": "#392040",
+          "text": "#FFF2FF",
+          "muted": "#CEB5D0",
+          "accent": "#FF7890",
+          "accentContrast": "#35101A",
+          "border": "#68466E"
+        }
+      }
+    },
+    {
+      "id": "nanjing-wall-plum",
+      "version": "1.0.0",
+      "collection": "china-city-atlas-01",
+      "pair": "nanjing",
+      "variant": "cityscape",
+      "name": {
+        "en": "Nanjing Wall Plum",
+        "zh-CN": "南京·城墙梅影"
+      },
+      "description": {
+        "en": "Old wall courses, plum branches, and river mist hold a quiet red winter note.",
+        "zh-CN": "城墙砖线、梅枝和江雾留下一点冬日红色，安静，也有筋骨。"
+      },
+      "tags": ["city", "nanjing", "wall", "plum", "original"],
+      "pattern": "city-wall",
+      "seed": 5801,
+      "art": {
+        "focusX": 0.78,
+        "focusY": 0.45,
+        "safeArea": "left",
+        "taskMode": "ambient"
+      },
+      "light": {
+        "skyTop": "#F7F1EF",
+        "skyBottom": "#D4B8B0",
+        "mist": "#FFFDFB",
+        "ridge": "#765D59",
+        "ink": "#332321",
+        "glow": "#E9C48C",
+        "accentArt": "#A83A4A",
+        "tokens": {
+          "background": "#F7F1EE",
+          "surface": "#FFFFFF",
+          "surfaceAlt": "#EADDD8",
+          "text": "#332321",
+          "muted": "#6A5652",
+          "accent": "#913645",
+          "accentContrast": "#FFFFFF",
+          "border": "#BDA6A0"
+        }
+      },
+      "dark": {
+        "skyTop": "#130B0D",
+        "skyBottom": "#43252A",
+        "mist": "#A98A8A",
+        "ridge": "#2B191C",
+        "ink": "#080405",
+        "glow": "#E8BD7B",
+        "accentArt": "#DE566A",
+        "tokens": {
+          "background": "#170D10",
+          "surface": "#2B191D",
+          "surfaceAlt": "#3F242A",
+          "text": "#FFF1F2",
+          "muted": "#D2B3B6",
+          "accent": "#EA7182",
+          "accentContrast": "#360E15",
+          "border": "#71454D"
         }
       }
     }

@@ -28,14 +28,26 @@ async function exists(target) {
   }
 }
 
-test("repository validates eight dual-mode code-free themes", async function () {
+test("repository validates sixteen dual-mode code-free themes in two collections", async function () {
   const result = await validateRepository();
   assert.deepEqual(result, {
-    themes: 8,
-    modes: 16,
-    packages: 8,
-    adapterBundles: 16
+    themes: 16,
+    modes: 32,
+    packages: 16,
+    adapterBundles: 32
   });
+});
+
+test("registry exposes the paired xianxia and standalone city collections", async function () {
+  const registry = JSON.parse(await readFile(path.join(ROOT, "themes", "registry.json"), "utf8"));
+  assert.deepEqual(registry.collections.map(function (collection) {
+    return [collection.id, collection.pairing, collection.themeCount];
+  }), [
+    ["original-xianxia-01", "cinematic-chibi", 8],
+    ["china-city-atlas-01", "standalone", 8]
+  ]);
+  assert.equal(registry.themes.filter(function (theme) { return theme.variant === "cityscape"; }).length, 8);
+  assert.equal(registry.themes.every(function (theme) { return typeof theme.collection === "string"; }), true);
 });
 
 test("canonical archives contain only the manifest and two declared assets", async function () {
@@ -66,7 +78,7 @@ test("static gallery builds with every public contract artifact", async function
   const output = path.join(temporary, "site");
   try {
     const result = await buildSite(output);
-    assert.equal(result.themes, 8);
+    assert.equal(result.themes, 16);
     const required = [
       "index.html",
       "assets/app.js",

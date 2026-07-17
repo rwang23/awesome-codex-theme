@@ -10,7 +10,7 @@ const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(SCRIPT_DIR, "..");
 const CATALOG_PATH = path.join(ROOT, "themes", "catalog.json");
 const CHECK_MODE = process.argv.includes("--check");
-const GENERATOR_ID = "act-theme-generator-v1";
+const GENERATOR_ID = "act-theme-generator-v1.1";
 
 function sha256(buffer) {
   return createHash("sha256").update(buffer).digest("hex");
@@ -42,6 +42,9 @@ function manifestFor(theme, assets) {
     schemaVersion: 1,
     id: theme.id,
     version: theme.version,
+    collection: theme.collection,
+    variant: theme.variant,
+    pair: theme.pair,
     name: theme.name,
     description: theme.description,
     author: {
@@ -322,6 +325,7 @@ export async function buildGeneratedFiles() {
     registryThemes.push({
       id: theme.id,
       version: theme.version,
+      collection: theme.collection,
       pair: theme.pair,
       variant: theme.variant,
       name: theme.name,
@@ -372,6 +376,10 @@ export async function buildGeneratedFiles() {
     schemaVersion: 1,
     standard: "act-theme-pack-v1",
     generatedBy: GENERATOR_ID,
+    collections: catalog.collections.map((collection) => ({
+      ...collection,
+      themeCount: catalog.themes.filter((theme) => theme.collection === collection.id).length,
+    })),
     themes: registryThemes,
   };
   files.set("themes/registry.json", jsonBuffer(registry));

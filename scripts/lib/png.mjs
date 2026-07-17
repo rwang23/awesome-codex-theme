@@ -87,6 +87,146 @@ function triangleContains(x, y, ax, ay, bx, by, cx, cy) {
   return left >= 0 && right >= 0 && last >= 0;
 }
 
+function insideRect(x, y, left, top, right, bottom) {
+  return x >= left && x <= right && y >= top && y <= bottom;
+}
+
+function drawCityscape(color, theme, nx, ny, palette) {
+  if (!theme.pattern.startsWith("city-")) return color;
+
+  const seed = theme.seed;
+  const focusX = theme.art.focusX;
+  const horizon = 0.69 + Math.sin(nx * 7.4 + seed * 0.019) * 0.012;
+  const emphasis = smoothstep(0.31, 0.72, nx);
+  const waterPattern = ["city-tide", "city-river", "city-lake", "city-vertical"].includes(theme.pattern);
+
+  if (ny > horizon) {
+    color = overlay(color, waterPattern ? palette.ridge : palette.ink, 0.5 + emphasis * 0.28);
+    const reflection = Math.abs(Math.sin(nx * 92 + ny * 27 + seed * 0.03));
+    if (waterPattern && reflection < 0.06 && nx > 0.34) {
+      color = overlay(color, palette.glow, 0.22 * emphasis);
+    }
+  }
+
+  const skylineStart = 0.35;
+  const buildingIndex = Math.floor((nx - skylineStart) * 31);
+  if (buildingIndex >= 0) {
+    const localX = (nx - skylineStart) * 31 - buildingIndex;
+    const top = horizon - 0.1 - noise(buildingIndex, 17, seed) * 0.27;
+    const width = 0.53 + noise(buildingIndex, 29, seed) * 0.34;
+    const building = localX < width && ny > top && ny < horizon;
+    if (building) {
+      const depth = noise(buildingIndex, 41, seed);
+      color = overlay(color, depth > 0.54 ? palette.ink : palette.ridge, 0.48 + depth * 0.34);
+      const column = Math.floor(localX * 12);
+      const row = Math.floor((ny - top) * 48);
+      const lit = noise(buildingIndex * 19 + column, row, seed + 73) > 0.79;
+      if (lit && column % 2 === 0 && row % 2 === 0 && emphasis > 0.12) {
+        color = overlay(color, palette.glow, 0.38 + emphasis * 0.24);
+      }
+    }
+  }
+
+  if (theme.pattern === "city-axis") {
+    const axis = Math.abs(nx - focusX) < 0.012 && ny > 0.19 && ny < 0.79;
+    const hall = insideRect(nx, ny, focusX - 0.105, 0.48, focusX + 0.105, 0.7);
+    const roof = triangleContains(nx, ny, focusX - 0.145, 0.49, focusX + 0.145, 0.49, focusX, 0.39);
+    const eave = distanceToSegment(nx, ny, focusX - 0.18, 0.505, focusX + 0.18, 0.505) < 0.006;
+    if (hall || roof) color = overlay(color, palette.ink, 0.84);
+    if (eave) color = palette.accentArt;
+    if (axis) color = overlay(color, palette.glow, 0.24);
+  }
+
+  if (theme.pattern === "city-tide") {
+    const tower = insideRect(nx, ny, focusX - 0.022, 0.24, focusX + 0.022, horizon);
+    const crown = insideEllipse(nx, ny, focusX, 0.235, 0.045, 0.025);
+    if (tower || crown) color = overlay(color, palette.ink, 0.88);
+    const tide = Math.abs(Math.sin((ny - 0.7) * 86 + nx * 10.5));
+    if (ny > 0.71 && tide < 0.055 && nx > 0.29) color = overlay(color, palette.accentArt, 0.34);
+  }
+
+  if (theme.pattern === "city-circuit") {
+    const gridX = Math.abs(((nx - 0.39) * 28) % 1 - 0.5) < 0.035;
+    const gridY = Math.abs(((ny - 0.23) * 22) % 1 - 0.5) < 0.035;
+    if (nx > 0.39 && ny > 0.23 && ny < 0.78 && (gridX || gridY)) {
+      color = overlay(color, palette.glow, 0.2 * emphasis);
+    }
+    const rainLane = Math.floor(nx * 68 + seed) % 7 === 0;
+    const rain = Math.abs(((ny + nx * 0.18) * 37) % 1 - 0.5) < 0.08;
+    if (rainLane && rain && nx > 0.28) color = overlay(color, palette.mist, 0.34);
+  }
+
+  if (theme.pattern === "city-river") {
+    const canopy = insideEllipse(nx, ny, focusX + 0.07, 0.43, 0.13, 0.1)
+      || insideEllipse(nx, ny, focusX - 0.02, 0.46, 0.105, 0.08);
+    const trunk = insideRect(nx, ny, focusX + 0.025, 0.46, focusX + 0.047, 0.69);
+    if (canopy) color = overlay(color, palette.ridge, 0.78);
+    if (trunk) color = overlay(color, palette.ink, 0.82);
+    const riverArc = Math.abs(Math.hypot((nx - focusX) / 0.37, (ny - 0.78) / 0.14) - 1);
+    if (riverArc < 0.018 && nx > 0.34) color = overlay(color, palette.accentArt, 0.48);
+  }
+
+  if (theme.pattern === "city-bamboo") {
+    const stalkIndex = Math.floor((nx - 0.54) * 24);
+    if (stalkIndex >= 0) {
+      const stalkX = 0.54 + stalkIndex / 24 + noise(stalkIndex, 5, seed) * 0.012;
+      const stalk = Math.abs(nx - stalkX) < 0.005 && ny > 0.22 && ny < 0.79;
+      const leaf = insideEllipse(nx, ny, stalkX + (stalkIndex % 2 ? 0.035 : -0.035), 0.34 + (stalkIndex % 5) * 0.07, 0.048, 0.012);
+      if (stalk || leaf) color = overlay(color, palette.ink, 0.68);
+    }
+    const roof = triangleContains(nx, ny, 0.58, 0.62, 0.96, 0.62, 0.77, 0.5);
+    if (roof) color = overlay(color, palette.ridge, 0.72);
+  }
+
+  if (theme.pattern === "city-lake") {
+    const causeway = distanceToSegment(nx, ny, 0.43, 0.68, 0.96, 0.66) < 0.007;
+    const bridgeOuter = Math.abs(Math.hypot((nx - 0.75) / 0.13, (ny - 0.69) / 0.075) - 1) < 0.055 && ny < 0.69;
+    if (causeway || bridgeOuter) color = overlay(color, palette.ink, 0.72);
+    const lotusX = Math.floor(nx * 48);
+    const lotusY = Math.floor(ny * 41);
+    const lotusCell = noise(lotusX, lotusY, seed);
+    if (nx > 0.42 && ny > 0.72 && lotusCell > 0.965
+      && insideEllipse(nx, ny, (lotusX + 0.5) / 48, (lotusY + 0.5) / 41, 0.01, 0.004)) {
+      color = overlay(color, palette.glow, 0.46);
+    }
+  }
+
+  if (theme.pattern === "city-vertical") {
+    const slope = 0.79 - (nx - 0.39) * 0.33;
+    if (nx > 0.39 && ny > slope) color = overlay(color, palette.ink, 0.58);
+    const terraceY = Math.floor((ny - 0.31) * 17);
+    const terrace = terraceY >= 0 && Math.abs((ny - 0.31) * 17 - terraceY) < 0.08 && nx > 0.43;
+    if (terrace) color = overlay(color, palette.glow, 0.24);
+    const transit = distanceToSegment(nx, ny, 0.43, 0.73, 0.94, 0.35);
+    if (transit < 0.012) color = overlay(color, palette.accentArt, 0.62);
+    if (transit < 0.0035) color = palette.glow;
+  }
+
+  if (theme.pattern === "city-wall") {
+    if (nx > 0.43 && ny > 0.58 && ny < 0.79) {
+      color = overlay(color, palette.ink, 0.68);
+      const row = Math.floor((ny - 0.58) * 38);
+      const mortarX = Math.abs(((nx + (row % 2) * 0.025) * 20) % 1 - 0.5) < 0.035;
+      const mortarY = Math.abs((ny - 0.58) * 38 - row) < 0.055;
+      if (mortarX || mortarY) color = overlay(color, palette.mist, 0.2);
+    }
+    const branch = Math.min(
+      distanceToSegment(nx, ny, 0.61, 0.56, 0.91, 0.26),
+      distanceToSegment(nx, ny, 0.72, 0.44, 0.94, 0.48),
+    );
+    if (branch < 0.006) color = overlay(color, palette.ink, 0.88);
+    const blossomX = Math.floor(nx * 34);
+    const blossomY = Math.floor(ny * 34);
+    const blossom = noise(blossomX, blossomY, seed + 311) > 0.968
+      && nx > 0.62 && ny > 0.22 && ny < 0.54;
+    if (blossom && insideEllipse(nx, ny, (blossomX + 0.5) / 34, (blossomY + 0.5) / 34, 0.009, 0.009)) {
+      color = palette.accentArt;
+    }
+  }
+
+  return color;
+}
+
 function drawMascot(color, theme, nx, ny, palette) {
   if (theme.variant !== "chibi") return color;
 
@@ -250,6 +390,8 @@ export function renderThemePng(theme, mode, width, height) {
       );
       if (island || islandBase) color = overlay(color, palette.ink, 0.78);
     }
+
+    color = drawCityscape(color, theme, nx, ny, palette);
 
     color = drawMascot(color, theme, nx, ny, palette);
 

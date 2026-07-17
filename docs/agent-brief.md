@@ -14,9 +14,9 @@
 
 ## Current focus
 
-- Current phase: local MVP
+- Current phase: public launch
 - Most important task: keep the gallery, theme-pack contract, adapters, and install flow verifiable
-- Explicitly out of scope: native protocol handler, remote repository creation, package registry publishing
+- Explicitly out of scope: native protocol handler, package registry publishing, licensed franchise artwork
 - Active task pointer: none after the initial local release
 
 ## Read first

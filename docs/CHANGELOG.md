@@ -1,5 +1,17 @@
 # Changelog
 
+## 2026-07-16-01-00
+
+- Added China City Atlas 01 with eight original, dual-mode city themes.
+- Added collection metadata and pairing policies to the catalog, registry, and canonical manifests.
+- Added collection switching and a city-specific filter to the bilingual Gallery.
+- Added deterministic city motifs for Beijing, Shanghai, Shenzhen, Guangzhou,
+  Chengdu, Hangzhou, Chongqing, and Nanjing.
+- Added the Urban Palimpsest art direction and a seeded parameter studio for
+  developing later city themes.
+- Updated validation and tests for 16 themes, 32 modes, two collection
+  policies, and 32 adapter bundles.
+
 ## 2026-07-16-00-00
 
 - Created the local Awesome Codex Theme repository.

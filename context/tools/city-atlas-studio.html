@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<!--
+    Development viewer based on the algorithmic-art skill template.
+    It is not shipped in the public Gallery and does not affect theme packages.
+-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Urban Palimpsest Studio</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Lora:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --anthropic-dark: #141413;
+            --anthropic-light: #faf9f5;
+            --anthropic-mid-gray: #b0aea5;
+            --anthropic-light-gray: #e8e6dc;
+            --anthropic-orange: #d97757;
+            --anthropic-blue: #6a9bcc;
+            --anthropic-green: #788c5d;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--anthropic-light) 0%, #f5f3ee 100%);
+            min-height: 100vh;
+            color: var(--anthropic-dark);
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+            padding: 20px;
+            gap: 20px;
+        }
+
+        .sidebar {
+            width: 320px;
+            flex-shrink: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(20, 20, 19, 0.1);
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .sidebar h1 {
+            font-family: 'Lora', serif;
+            font-size: 24px;
+            font-weight: 500;
+            color: var(--anthropic-dark);
+            margin-bottom: 8px;
+        }
+
+        .sidebar .subtitle {
+            color: var(--anthropic-mid-gray);
+            font-size: 14px;
+            margin-bottom: 32px;
+            line-height: 1.4;
+        }
+
+        .control-section {
+            margin-bottom: 32px;
+        }
+
+        .control-section h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--anthropic-dark);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .control-section h3::before {
+            content: '•';
+            color: var(--anthropic-orange);
+            font-weight: bold;
+        }
+
+        .seed-input {
+            width: 100%;
+            background: var(--anthropic-light);
+            padding: 12px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            margin-bottom: 12px;
+            border: 1px solid var(--anthropic-light-gray);
+            text-align: center;
+        }
+
+        .seed-input:focus {
+            outline: none;
+            border-color: var(--anthropic-orange);
+            box-shadow: 0 0 0 2px rgba(217, 119, 87, 0.1);
+            background: white;
+        }
+
+        .seed-controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .regen-button {
+            margin-bottom: 0;
+        }
+
+        .control-group {
+            margin-bottom: 20px;
+        }
+
+        .control-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--anthropic-dark);
+            margin-bottom: 8px;
+        }
+
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .slider-container input[type="range"] {
+            flex: 1;
+            height: 4px;
+            background: var(--anthropic-light-gray);
+            border-radius: 2px;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .slider-container input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            background: var(--anthropic-orange);
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .value-display,
+        .color-value {
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            color: var(--anthropic-mid-gray);
+            min-width: 52px;
+            text-align: right;
+        }
+
+        .color-group {
+            margin-bottom: 16px;
+        }
+
+        .color-group label {
+            display: block;
+            font-size: 12px;
+            color: var(--anthropic-mid-gray);
+            margin-bottom: 4px;
+        }
+
+        .color-picker-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .color-picker-container input[type="color"] {
+            width: 32px;
+            height: 32px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            background: none;
+            padding: 0;
+        }
+
+        .button {
+            background: var(--anthropic-orange);
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            width: 100%;
+        }
+
+        .button:hover {
+            background: #c86641;
+            transform: translateY(-1px);
+        }
+
+        .button.secondary {
+            background: var(--anthropic-blue);
+        }
+
+        .button.tertiary {
+            background: var(--anthropic-green);
+        }
+
+        .button-row {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .button-row .button {
+            flex: 1 1 45%;
+        }
+
+        .canvas-area {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 0;
+        }
+
+        #canvas-container {
+            width: 100%;
+            max-width: 1000px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(20, 20, 19, 0.1);
+            background: white;
+        }
+
+        #canvas-container canvas {
+            display: block;
+            width: 100% !important;
+            height: auto !important;
+        }
+
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 300px;
+            font-size: 18px;
+            color: var(--anthropic-mid-gray);
+        }
+
+        @media (max-width: 600px) {
+            .container { flex-direction: column; }
+            .sidebar { width: 100%; }
+            .canvas-area { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <h1>Urban Palimpsest</h1>
+            <div class="subtitle">A seeded study of terrain, weather, density, and city light.</div>
+
+            <div class="control-section">
+                <h3>Seed</h3>
+                <input type="number" id="seed-input" class="seed-input" value="5101" onchange="updateSeed()">
+                <div class="seed-controls">
+                    <button class="button secondary" onclick="previousSeed()">← Prev</button>
+                    <button class="button secondary" onclick="nextSeed()">Next →</button>
+                </div>
+                <button class="button tertiary regen-button" onclick="randomSeedAndUpdate()">↻ Random</button>
+            </div>
+
+            <div class="control-section">
+                <h3>Parameters</h3>
+                <div class="control-group">
+                    <label>Urban density</label>
+                    <div class="slider-container">
+                        <input type="range" id="density" min="12" max="42" step="1" value="28" oninput="updateParam('density', this.value)">
+                        <span class="value-display" id="density-value">28</span>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label>Horizon</label>
+                    <div class="slider-container">
+                        <input type="range" id="horizon" min="0.52" max="0.78" step="0.01" value="0.68" oninput="updateParam('horizon', this.value)">
+                        <span class="value-display" id="horizon-value">0.68</span>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label>Window glow</label>
+                    <div class="slider-container">
+                        <input type="range" id="glow" min="0.1" max="0.9" step="0.05" value="0.55" oninput="updateParam('glow', this.value)">
+                        <span class="value-display" id="glow-value">0.55</span>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label>Weather field</label>
+                    <div class="slider-container">
+                        <input type="range" id="weather" min="0" max="1" step="0.05" value="0.4" oninput="updateParam('weather', this.value)">
+                        <span class="value-display" id="weather-value">0.4</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="control-section">
+                <h3>Colors</h3>
+                <div class="color-group">
+                    <label>Sky</label>
+                    <div class="color-picker-container">
+                        <input type="color" id="color1" value="#d7e7e8" onchange="updateColor('color1', this.value)">
+                        <span class="color-value" id="color1-value">#d7e7e8</span>
+                    </div>
+                </div>
+                <div class="color-group">
+                    <label>Structure</label>
+                    <div class="color-picker-container">
+                        <input type="color" id="color2" value="#18353d" onchange="updateColor('color2', this.value)">
+                        <span class="color-value" id="color2-value">#18353d</span>
+                    </div>
+                </div>
+                <div class="color-group">
+                    <label>City light</label>
+                    <div class="color-picker-container">
+                        <input type="color" id="color3" value="#f1a85f" onchange="updateColor('color3', this.value)">
+                        <span class="color-value" id="color3-value">#f1a85f</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="control-section">
+                <h3>Actions</h3>
+                <div class="button-row">
+                    <button class="button" onclick="regenerate()">Regenerate</button>
+                    <button class="button" onclick="resetParameters()">Reset</button>
+                    <button class="button tertiary" onclick="downloadArtwork()">Download PNG</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="canvas-area">
+            <div id="canvas-container">
+                <div class="loading">Initializing generative art...</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let params = {
+            seed: 5101,
+            density: 28,
+            horizon: 0.68,
+            glow: 0.55,
+            weather: 0.4,
+            colorPalette: ['#d7e7e8', '#18353d', '#f1a85f']
+        };
+        const defaultParams = JSON.parse(JSON.stringify(params));
+        let buildings = [];
+
+        function setup() {
+            const canvas = createCanvas(1200, 1200);
+            canvas.parent('canvas-container');
+            pixelDensity(1);
+            noLoop();
+            document.querySelector('.loading').style.display = 'none';
+            initializeSystem();
+        }
+
+        function initializeSystem() {
+            randomSeed(params.seed);
+            noiseSeed(params.seed);
+            buildings = [];
+            const usableWidth = width * 0.67;
+            for (let index = 0; index < params.density; index += 1) {
+                const slot = usableWidth / params.density;
+                const x = width * 0.33 + index * slot + random(-slot * 0.1, slot * 0.1);
+                buildings.push({
+                    x,
+                    width: slot * random(0.48, 0.92),
+                    height: height * random(0.08, 0.34),
+                    depth: random(0.35, 0.92),
+                    rows: floor(random(4, 13)),
+                    columns: floor(random(2, 6))
+                });
+            }
+            redraw();
+        }
+
+        function draw() {
+            randomSeed(params.seed);
+            noiseSeed(params.seed);
+            const sky = color(params.colorPalette[0]);
+            const structure = color(params.colorPalette[1]);
+            const light = color(params.colorPalette[2]);
+            const horizonY = height * params.horizon;
+
+            for (let y = 0; y < height; y += 3) {
+                const amount = y / height;
+                const row = lerpColor(sky, structure, amount * 0.34);
+                noStroke();
+                fill(row);
+                rect(0, y, width, 3);
+            }
+
+            noStroke();
+            fill(red(sky), green(sky), blue(sky), 72);
+            for (let band = 0; band < 7; band += 1) {
+                const y = horizonY - height * 0.18 + band * height * 0.055;
+                ellipse(width * (0.62 + noise(band, params.seed) * 0.18), y, width * 0.7, height * 0.11);
+            }
+
+            noStroke();
+            fill(red(structure), green(structure), blue(structure), 178);
+            rect(0, horizonY, width, height - horizonY);
+
+            for (const building of buildings) {
+                const top = horizonY - building.height;
+                fill(red(structure), green(structure), blue(structure), 145 + building.depth * 95);
+                rect(building.x, top, building.width, building.height);
+                const cellWidth = building.width / (building.columns + 1);
+                const cellHeight = building.height / (building.rows + 1);
+                for (let row = 1; row <= building.rows; row += 1) {
+                    for (let column = 1; column <= building.columns; column += 1) {
+                        if (random() > 0.46 + params.glow * 0.38) continue;
+                        fill(red(light), green(light), blue(light), 90 + params.glow * 140);
+                        rect(
+                            building.x + column * cellWidth - 2,
+                            top + row * cellHeight - 2,
+                            max(2, cellWidth * 0.16),
+                            max(2, cellHeight * 0.13)
+                        );
+                    }
+                }
+            }
+
+            const cityMode = params.seed % 8;
+            stroke(light);
+            strokeWeight(4);
+            noFill();
+            if (cityMode === 0) {
+                line(width * 0.77, height * 0.2, width * 0.77, height * 0.79);
+                triangle(width * 0.63, height * 0.5, width * 0.91, height * 0.5, width * 0.77, height * 0.38);
+            } else if (cityMode === 1 || cityMode === 3 || cityMode === 5) {
+                for (let wave = 0; wave < 5; wave += 1) {
+                    arc(width * 0.76, horizonY + wave * 34, width * 0.75, height * 0.16, PI, TWO_PI);
+                }
+            } else if (cityMode === 2) {
+                for (let lane = 0; lane < 11; lane += 1) {
+                    line(width * (0.42 + lane * 0.052), height * 0.27, width * (0.36 + lane * 0.052), height * 0.76);
+                }
+            } else if (cityMode === 4) {
+                for (let stalk = 0; stalk < 9; stalk += 1) {
+                    const x = width * (0.58 + stalk * 0.045);
+                    line(x, height * 0.25, x + random(-18, 18), height * 0.78);
+                }
+            } else if (cityMode === 6) {
+                line(width * 0.42, height * 0.76, width * 0.96, height * 0.34);
+                line(width * 0.42, height * 0.775, width * 0.96, height * 0.355);
+            } else {
+                for (let row = 0; row < 8; row += 1) {
+                    line(width * 0.44, horizonY - row * 24, width, horizonY - row * 24);
+                }
+            }
+
+            stroke(red(sky), green(sky), blue(sky), 50 + params.weather * 110);
+            strokeWeight(2);
+            const weatherMarks = floor(80 + params.weather * 320);
+            for (let mark = 0; mark < weatherMarks; mark += 1) {
+                const x = random(width * 0.27, width);
+                const y = random(height * 0.12, height * 0.82);
+                line(x, y, x - 11, y + 34);
+            }
+
+            noStroke();
+            fill(255, 255, 255, 12);
+            for (let grain = 0; grain < 2300; grain += 1) {
+                circle(random(width), random(height), random(0.5, 2.2));
+            }
+        }
+
+        function updateParam(paramName, value) {
+            params[paramName] = paramName === 'density' ? parseInt(value, 10) : parseFloat(value);
+            document.getElementById(paramName + '-value').textContent = value;
+            initializeSystem();
+        }
+
+        function updateColor(colorId, value) {
+            const index = Number(colorId.slice(-1)) - 1;
+            params.colorPalette[index] = value;
+            document.getElementById(colorId + '-value').textContent = value;
+            initializeSystem();
+        }
+
+        function updateSeedDisplay() {
+            document.getElementById('seed-input').value = params.seed;
+        }
+
+        function updateSeed() {
+            const input = document.getElementById('seed-input');
+            const next = parseInt(input.value, 10);
+            if (next && next > 0) {
+                params.seed = next;
+                initializeSystem();
+            } else {
+                updateSeedDisplay();
+            }
+        }
+
+        function previousSeed() {
+            params.seed = Math.max(1, params.seed - 1);
+            updateSeedDisplay();
+            initializeSystem();
+        }
+
+        function nextSeed() {
+            params.seed += 1;
+            updateSeedDisplay();
+            initializeSystem();
+        }
+
+        function randomSeedAndUpdate() {
+            params.seed = Math.floor(Math.random() * 999999) + 1;
+            updateSeedDisplay();
+            initializeSystem();
+        }
+
+        function regenerate() {
+            initializeSystem();
+        }
+
+        function resetParameters() {
+            params = JSON.parse(JSON.stringify(defaultParams));
+            for (const key of ['density', 'horizon', 'glow', 'weather']) {
+                document.getElementById(key).value = params[key];
+                document.getElementById(key + '-value').textContent = params[key];
+            }
+            params.colorPalette.forEach(function (value, index) {
+                const id = 'color' + (index + 1);
+                document.getElementById(id).value = value;
+                document.getElementById(id + '-value').textContent = value;
+            });
+            updateSeedDisplay();
+            initializeSystem();
+        }
+
+        function downloadArtwork() {
+            saveCanvas('urban-palimpsest-' + params.seed, 'png');
+        }
+
+        window.addEventListener('load', updateSeedDisplay);
+    </script>
+</body>
+</html>

@@ -171,20 +171,49 @@ export async function validateRepository() {
   check(themeSchema.$schema?.includes("2020-12"), "Theme schema is not JSON Schema 2020-12", errors);
   check(registrySchema.$schema?.includes("2020-12"), "Registry schema is not JSON Schema 2020-12", errors);
   check(registry.standard === "act-theme-pack-v1", "Registry standard id mismatch", errors);
-  check(catalog.themes.length >= 8 && catalog.themes.length <= 12, "Initial collection must contain 8 to 12 themes", errors);
+  check(Array.isArray(catalog.collections) && catalog.collections.length > 0, "Catalog must declare at least one collection", errors);
+  check(Array.isArray(registry.collections), "Registry collections are missing", errors);
   check(registry.themes.length === catalog.themes.length, "Registry/catalog theme count mismatch", errors);
 
   const ids = catalog.themes.map((theme) => theme.id);
   check(new Set(ids).size === ids.length, "Catalog contains duplicate ids", errors);
-  const pairCounts = new Map();
+  const collectionIds = catalog.collections.map((collection) => collection.id);
+  check(new Set(collectionIds).size === collectionIds.length, "Catalog contains duplicate collection ids", errors);
+  const collectionMap = new Map(catalog.collections.map((collection) => [collection.id, collection]));
+  check(registry.collections.length === catalog.collections.length, "Registry/catalog collection count mismatch", errors);
+
   for (const theme of catalog.themes) {
     check(THEME_ID.test(theme.id), "Invalid catalog id: " + theme.id, errors);
-    const variants = pairCounts.get(theme.pair) || new Set();
-    variants.add(theme.variant);
-    pairCounts.set(theme.pair, variants);
+    check(collectionMap.has(theme.collection), theme.id + " references an unknown collection", errors);
+    check(["cinematic", "chibi", "cityscape"].includes(theme.variant), theme.id + " has an unsupported variant", errors);
   }
-  for (const [pair, variants] of pairCounts) {
-    check(variants.has("cinematic") && variants.has("chibi") && variants.size === 2, pair + " must contain cinematic and chibi variants", errors);
+
+  for (const collection of catalog.collections) {
+    check(THEME_ID.test(collection.id), "Invalid collection id: " + collection.id, errors);
+    check(["cinematic-chibi", "standalone"].includes(collection.pairing), collection.id + " has an unsupported pairing policy", errors);
+    const collectionThemes = catalog.themes.filter((theme) => theme.collection === collection.id);
+    check(collectionThemes.length >= 4 && collectionThemes.length <= 12, collection.id + " must contain 4 to 12 themes", errors);
+    const registryCollection = registry.collections.find((candidate) => candidate.id === collection.id);
+    check(Boolean(registryCollection), "Missing registry collection: " + collection.id, errors);
+    check(registryCollection?.themeCount === collectionThemes.length, collection.id + " registry theme count mismatch", errors);
+
+    const pairCounts = new Map();
+    for (const theme of collectionThemes) {
+      const variants = pairCounts.get(theme.pair) || new Set();
+      variants.add(theme.variant);
+      pairCounts.set(theme.pair, variants);
+    }
+    for (const [pair, variants] of pairCounts) {
+      if (collection.pairing === "cinematic-chibi") {
+        check(
+          variants.has("cinematic") && variants.has("chibi") && variants.size === 2,
+          collection.id + "/" + pair + " must contain cinematic and chibi variants",
+          errors,
+        );
+      } else {
+        check(variants.size === 1, collection.id + "/" + pair + " must be a standalone theme", errors);
+      }
+    }
   }
 
   for (const catalogTheme of catalog.themes) {
@@ -208,6 +237,10 @@ export async function validateRepository() {
     check(sha256(packageBytes) === theme.package.sha256, theme.id + " package hash mismatch", errors);
     check(packageBytes.length === theme.package.bytes, theme.id + " package byte count mismatch", errors);
     check(manifest.schemaVersion === 1 && manifest.id === theme.id, theme.id + " canonical manifest identity mismatch", errors);
+    check(manifest.collection === catalogTheme.collection, theme.id + " canonical collection mismatch", errors);
+    check(manifest.variant === catalogTheme.variant, theme.id + " canonical variant mismatch", errors);
+    check(manifest.pair === catalogTheme.pair, theme.id + " canonical pair mismatch", errors);
+    check(theme.collection === catalogTheme.collection, theme.id + " registry collection mismatch", errors);
     check(manifest.provenance?.rightsVerified === true, theme.id + " canonical provenance is not rights-verified", errors);
     check(manifest.provenance?.aiGenerated === false, theme.id + " generated-art disclosure mismatch", errors);
     check(manifest.motion?.default === "reduced" && manifest.motion?.animated === false, theme.id + " canonical motion mismatch", errors);

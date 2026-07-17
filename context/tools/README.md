@@ -4,10 +4,11 @@
 
 | Tool | Role | Writes | Verification |
 | --- | --- | --- | --- |
-| scripts/generate-themes.mjs | Generate 8 deterministic dual-mode packs, previews, adapters, and registry | themes/<theme-id>/, packages/, themes/registry.json | npm run generate:check |
+| scripts/generate-themes.mjs | Generate 16 deterministic dual-mode packs across two collections, previews, adapters, and registry | themes/<theme-id>/, packages/, themes/registry.json | npm run generate:check |
 | scripts/validate.mjs | Validate ids, paths, dimensions, hashes, allowlists, contrast, and adapters | none | npm run validate |
 | scripts/build.mjs | Assemble the static Pages artifact | dist/ | npm run build |
 | scripts/serve.mjs | Serve dist/ on localhost | none | browser smoke |
+| context/tools/city-atlas-studio.html | Explore seeded city density, horizon, weather, and palette parameters before cataloging a theme | browser download only | open locally and test seed/parameter/reset/download controls |
 | scripts/install-theme.ps1 | Verify and install a Windows saved theme | Codex Dream Skin theme library | -DryRun |
 | scripts/install-theme.sh | Verify and install a macOS saved theme | Codex Dream Skin theme library | --dry-run |
 

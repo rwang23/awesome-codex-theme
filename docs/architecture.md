@@ -5,11 +5,12 @@
 The project has three deliberately separate layers.
 
 The gallery is a static GitHub Pages site. It reads themes/registry.json,
-renders localized cards, filters them in the browser, switches light and dark
-previews, and copies an explicit install command. It has no server, account
-system, analytics, or payment path.
+renders localized collection controls and cards, filters by collection or
+visual variant, switches light and dark previews, and copies an explicit
+install command. It has no server, account system, analytics, or payment path.
 
 The registry and canonical packages are generated from themes/catalog.json.
+The catalog declares collection metadata and per-collection pairing rules.
 Each .act-theme contains a versioned manifest and two declared PNG backgrounds.
 Every path, preview, package, and per-mode adapter bundle has recorded SHA-256
 and byte-count evidence.

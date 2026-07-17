@@ -1,6 +1,6 @@
 # Quiet Realms
 
-Quiet Realms is the generative philosophy behind Original Collection 01. A
+Quiet Realms is the generative philosophy behind Original Xianxia 01. A
 theme background should feel like a world continuing beyond the frame while
 remaining quiet enough for work. Layered ridgelines, orbital paths, cloud
 fields, sword vectors, moons, and small spirit forms emerge from mathematical
@@ -27,7 +27,7 @@ maintains hierarchy across both states, and the validator checks that functional
 colors retain readable contrast. Motion remains reduced by default; stillness
 is part of the movement, not an accessibility afterthought.
 
-The first release is intentionally a refined procedural starter collection.
+The xianxia release is intentionally a refined procedural starter collection.
 Its generator favors reproducibility, calm composition, and transparent
 craftsmanship over illustration-model spectacle. Future collections can add
 more sophisticated fields, particles, recursive brush systems, or licensed

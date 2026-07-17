@@ -15,7 +15,8 @@ locations are reserved for execution evidence or closed history when needed.
 
 - agent-brief.md: first-read project router
 - architecture.md: package, site, install, and trust boundaries
-- art-direction.md: seeded generative philosophy for original collections
+- art-direction.md: seeded generative philosophy for Original Xianxia 01
+- city-atlas-art-direction.md: city-specific generative philosophy and motif rules
 - standard.md: version 1 canonical manifest and package contract
 - adapters.md: compatibility matrix and export behavior
 - landscape.md: dated reference-project research and positioning
