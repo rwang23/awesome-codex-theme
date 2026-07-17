@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "themeId": "guangzhou-riverwind",
+  "workflow": "openai-image-job",
+  "model": "gpt-image-2",
+  "size": "1536x1024",
+  "quality": "high",
+  "jobId": "5a8a848e-c64a-472b-88d0-4a869df999b7",
+  "promptSha256": "516c116557761f4fa0e701d72682d3bda2d0e6f3cbe3e11c5071937346d3de18",
+  "sourceSha256": "ecf83c668dd4453ee94082ae9cc82196af474bac0bf4972060495490c7eb1f97",
+  "disclosure": "AI-generated original source art. Prompt and output were reviewed for third-party characters, logos, signatures, and text before release."
+}

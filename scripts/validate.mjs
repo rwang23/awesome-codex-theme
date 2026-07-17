@@ -11,7 +11,10 @@ const ROOT = path.resolve(SCRIPT_DIR, "..");
 const THEME_ID = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const SHA256 = /^[a-f0-9]{64}$/;
 const HEX = /^#[0-9A-Fa-f]{6}$/;
+const FORBIDDEN_PROMPT = /凡人修仙传|仙逆|剑来|studio\s+ghibli|makoto\s+shinkai|hayao\s+miyazaki|style\s+of/i;
 const MAX_IMAGE_BYTES = 16 * 1024 * 1024;
+const SOURCE_WIDTH = 1536;
+const SOURCE_HEIGHT = 1024;
 const CANONICAL_ENTRIES = [
   "assets/background-dark.png",
   "assets/background-light.png",
@@ -161,9 +164,10 @@ function validateAdapterZip(theme, mode, zip, modeRecord, errors) {
 
 export async function validateRepository() {
   const errors = [];
-  const [catalog, registry, themeSchema, registrySchema] = await Promise.all([
+  const [catalog, registry, sourceJobs, themeSchema, registrySchema] = await Promise.all([
     readJson("themes/catalog.json"),
     readJson("themes/registry.json"),
+    readJson("themes/source-art/jobs.json"),
     readJson("schemas/theme-pack.schema.json"),
     readJson("schemas/registry.schema.json"),
   ]);
@@ -171,12 +175,30 @@ export async function validateRepository() {
   check(themeSchema.$schema?.includes("2020-12"), "Theme schema is not JSON Schema 2020-12", errors);
   check(registrySchema.$schema?.includes("2020-12"), "Registry schema is not JSON Schema 2020-12", errors);
   check(registry.standard === "act-theme-pack-v1", "Registry standard id mismatch", errors);
+  check(sourceJobs.workflow?.runner === "openai-image-job", "Source-art workflow mismatch", errors);
+  check(sourceJobs.workflow?.size === SOURCE_WIDTH + "x" + SOURCE_HEIGHT, "Source-art dimensions mismatch", errors);
+  check(Array.isArray(sourceJobs.jobs), "Source-art jobs are missing", errors);
   check(Array.isArray(catalog.collections) && catalog.collections.length > 0, "Catalog must declare at least one collection", errors);
   check(Array.isArray(registry.collections), "Registry collections are missing", errors);
   check(registry.themes.length === catalog.themes.length, "Registry/catalog theme count mismatch", errors);
 
   const ids = catalog.themes.map((theme) => theme.id);
   check(new Set(ids).size === ids.length, "Catalog contains duplicate ids", errors);
+  const sourceJobRecords = Array.isArray(sourceJobs.jobs) ? sourceJobs.jobs : [];
+  const sourceJobIds = sourceJobRecords.map((job) => job.id);
+  check(new Set(sourceJobIds).size === sourceJobIds.length, "Source-art jobs contain duplicate ids", errors);
+  check(
+    JSON.stringify(sourceJobIds.slice().sort()) === JSON.stringify(ids.slice().sort()),
+    "Source-art jobs and catalog themes differ",
+    errors,
+  );
+  for (const sourceJob of sourceJobRecords) {
+    check(
+      !FORBIDDEN_PROMPT.test(sourceJob.prompt || ""),
+      sourceJob.id + " source prompt names a protected work, artist, or studio",
+      errors,
+    );
+  }
   const collectionIds = catalog.collections.map((collection) => collection.id);
   check(new Set(collectionIds).size === collectionIds.length, "Catalog contains duplicate collection ids", errors);
   const collectionMap = new Map(catalog.collections.map((collection) => [collection.id, collection]));
@@ -222,6 +244,49 @@ export async function validateRepository() {
       errors.push("Missing registry theme: " + catalogTheme.id);
       continue;
     }
+    const sourceJob = sourceJobRecords.find((candidate) => candidate.id === catalogTheme.id);
+    if (!sourceJob) {
+      errors.push("Missing source-art job: " + catalogTheme.id);
+      continue;
+    }
+    const sourcePath = "themes/source-art/" + catalogTheme.id + ".png";
+    const provenancePath = "themes/source-art/" + catalogTheme.id + ".provenance.json";
+    const [sourceArt, sourceProvenance] = await Promise.all([
+      readBytes(sourcePath),
+      readJson(provenancePath),
+    ]);
+    const sourceDimensions = readPngDimensions(sourceArt);
+    const completePrompt = sourceJobs.commonPrompt + "\n\nScene brief: " + sourceJob.prompt;
+    check(
+      sourceDimensions.width === SOURCE_WIDTH && sourceDimensions.height === SOURCE_HEIGHT,
+      catalogTheme.id + " source-art dimensions mismatch",
+      errors,
+    );
+    check(sourceArt.length > 0 && sourceArt.length <= MAX_IMAGE_BYTES, catalogTheme.id + " source-art size invalid", errors);
+    check(sourceProvenance.themeId === catalogTheme.id, catalogTheme.id + " source provenance identity mismatch", errors);
+    check(sourceProvenance.workflow === sourceJobs.workflow.runner, catalogTheme.id + " source workflow mismatch", errors);
+    check(sourceProvenance.model === sourceJobs.workflow.model, catalogTheme.id + " source model mismatch", errors);
+    check(sourceProvenance.size === sourceJobs.workflow.size, catalogTheme.id + " source size disclosure mismatch", errors);
+    check(sourceProvenance.quality === sourceJobs.workflow.quality, catalogTheme.id + " source quality disclosure mismatch", errors);
+    check(typeof sourceProvenance.jobId === "string" && sourceProvenance.jobId.length > 10, catalogTheme.id + " source job id missing", errors);
+    check(sourceProvenance.sourceSha256 === sha256(sourceArt), catalogTheme.id + " source image hash mismatch", errors);
+    check(
+      sourceProvenance.promptSha256 === sha256(Buffer.from(completePrompt, "utf8")),
+      catalogTheme.id + " source prompt hash mismatch",
+      errors,
+    );
+    check(
+      sourceProvenance.disclosure?.includes("AI-generated original source art"),
+      catalogTheme.id + " source AI disclosure missing",
+      errors,
+    );
+    check(theme.provenance?.aiGenerated === true, theme.id + " registry AI disclosure mismatch", errors);
+    check(theme.provenance?.rightsVerified === true, theme.id + " registry source rights proof missing", errors);
+    check(theme.provenance?.record === provenancePath, theme.id + " registry provenance record mismatch", errors);
+    check(theme.provenance?.sourceArt === sourcePath, theme.id + " registry source-art path mismatch", errors);
+    check(theme.provenance?.sourceSha256 === sourceProvenance.sourceSha256, theme.id + " registry source hash mismatch", errors);
+    check(theme.provenance?.promptSha256 === sourceProvenance.promptSha256, theme.id + " registry prompt hash mismatch", errors);
+    check(theme.provenance?.jobId === sourceProvenance.jobId, theme.id + " registry image job mismatch", errors);
     check(theme.license?.spdx === "CC0-1.0" && theme.license?.rightsVerified === true, theme.id + " license or rights proof missing", errors);
     check(theme.motion?.default === "reduced" && theme.motion?.animated === false, theme.id + " motion contract mismatch", errors);
     check(isSafeRelativePath(theme.package.path), theme.id + " package path is unsafe", errors);
@@ -242,7 +307,13 @@ export async function validateRepository() {
     check(manifest.pair === catalogTheme.pair, theme.id + " canonical pair mismatch", errors);
     check(theme.collection === catalogTheme.collection, theme.id + " registry collection mismatch", errors);
     check(manifest.provenance?.rightsVerified === true, theme.id + " canonical provenance is not rights-verified", errors);
-    check(manifest.provenance?.aiGenerated === false, theme.id + " generated-art disclosure mismatch", errors);
+    check(manifest.provenance?.aiGenerated === true, theme.id + " generated-art disclosure mismatch", errors);
+    check(manifest.provenance?.type === "original", theme.id + " generated-art provenance type mismatch", errors);
+    check(manifest.provenance?.source === provenancePath, theme.id + " source provenance path mismatch", errors);
+    check(manifest.provenance?.model === sourceProvenance.model, theme.id + " manifest source model mismatch", errors);
+    check(manifest.provenance?.jobId === sourceProvenance.jobId, theme.id + " manifest image job mismatch", errors);
+    check(manifest.provenance?.promptSha256 === sourceProvenance.promptSha256, theme.id + " manifest prompt hash mismatch", errors);
+    check(manifest.provenance?.sourceSha256 === sourceProvenance.sourceSha256, theme.id + " manifest source hash mismatch", errors);
     check(manifest.motion?.default === "reduced" && manifest.motion?.animated === false, theme.id + " canonical motion mismatch", errors);
     validateCanonicalZip(theme.id, packageBytes, manifestBytes, errors);
 
@@ -276,6 +347,7 @@ export async function validateRepository() {
     throw new Error("Validation failed:\n- " + errors.join("\n- "));
   }
   return {
+    sources: catalog.themes.length,
     themes: registry.themes.length,
     modes: registry.themes.length * 2,
     packages: registry.themes.length,
@@ -286,7 +358,7 @@ export async function validateRepository() {
 async function main() {
   const result = await validateRepository();
   console.log(
-    "Validated " + result.themes + " themes, " + result.modes + " modes, "
+    "Validated " + result.sources + " source images, " + result.themes + " themes, " + result.modes + " modes, "
     + result.packages + " code-free packages, and " + result.adapterBundles + " adapter bundles.",
   );
 }

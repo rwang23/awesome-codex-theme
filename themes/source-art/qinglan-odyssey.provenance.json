@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "themeId": "qinglan-odyssey",
+  "workflow": "openai-image-job",
+  "model": "gpt-image-2",
+  "size": "1536x1024",
+  "quality": "high",
+  "jobId": "279235c4-5cb2-4590-ba43-b6581e4dbbcc",
+  "promptSha256": "61354f6561ad23b3ead51611997cf569d6d2af379d00e5502204c2fc035acff0",
+  "sourceSha256": "a4aa321572bc6e0f7c0499ef5bee9604bec8ecb0f6118700ee6fb1140f390fad",
+  "disclosure": "AI-generated original source art. Prompt and output were reviewed for third-party characters, logos, signatures, and text before release."
+}

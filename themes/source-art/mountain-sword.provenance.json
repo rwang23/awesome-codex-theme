@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "themeId": "mountain-sword",
+  "workflow": "openai-image-job",
+  "model": "gpt-image-2",
+  "size": "1536x1024",
+  "quality": "high",
+  "jobId": "7bd3549c-f828-48e0-aabf-1b0af995b87d",
+  "promptSha256": "657dc8b6c1959f30d787ded778506c3790067c3369923722c9721ba5a7e569ba",
+  "sourceSha256": "8ebeaecf4cf56d5815f5848a0a3d29f8fac47cf2e50cf92ff1159609f92105bc",
+  "disclosure": "AI-generated original source art. Prompt and output were reviewed for third-party characters, logos, signatures, and text before release."
+}

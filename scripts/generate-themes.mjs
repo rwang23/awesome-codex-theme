@@ -3,14 +3,14 @@ import { mkdir, readFile, stat, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { renderThemePng } from "./lib/png.mjs";
+import { renderSourceArtPng } from "./lib/png.mjs";
 import { createZip } from "./lib/zip.mjs";
 
 const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(SCRIPT_DIR, "..");
 const CATALOG_PATH = path.join(ROOT, "themes", "catalog.json");
 const CHECK_MODE = process.argv.includes("--check");
-const GENERATOR_ID = "act-theme-generator-v1.1";
+const GENERATOR_ID = "act-theme-generator-v2.0";
 
 function sha256(buffer) {
   return createHash("sha256").update(buffer).digest("hex");
@@ -20,7 +20,7 @@ function jsonBuffer(value) {
   return Buffer.from(JSON.stringify(value, null, 2) + "\n", "utf8");
 }
 
-function manifestFor(theme, assets) {
+function manifestFor(theme, assets, sourceProvenance) {
   const mode = (name) => ({
     asset: "assets/background-" + name + ".png",
     art: {
@@ -56,12 +56,16 @@ function manifestFor(theme, assets) {
       url: "https://creativecommons.org/publicdomain/zero/1.0/",
     },
     provenance: {
-      type: "procedural",
-      source: "themes/catalog.json#" + theme.id,
-      generator: GENERATOR_ID,
-      aiGenerated: false,
+      type: "original",
+      source: "themes/source-art/" + theme.id + ".provenance.json",
+      generator: "openai-image-job + " + GENERATOR_ID,
+      aiGenerated: true,
       rightsVerified: true,
-      notes: "Original genre-inspired art. No third-party character, logo, screenshot, or franchise asset.",
+      model: sourceProvenance.model,
+      jobId: sourceProvenance.jobId,
+      promptSha256: sourceProvenance.promptSha256,
+      sourceSha256: sourceProvenance.sourceSha256,
+      notes: "Original AI-generated source art, reviewed for third-party characters, logos, signatures, text, screenshots, and franchise assets.",
     },
     compatibility: {
       codexDesktopTested: "26.707.12708.0",
@@ -279,15 +283,20 @@ export async function buildGeneratedFiles() {
 
   for (const theme of catalog.themes) {
     const themeRoot = "themes/" + theme.id;
+    const [sourceArt, sourceProvenance] = await Promise.all([
+      readFile(path.join(ROOT, "themes", "source-art", theme.id + ".png")),
+      readFile(path.join(ROOT, "themes", "source-art", theme.id + ".provenance.json"), "utf8")
+        .then(JSON.parse),
+    ]);
     const assets = {
-      light: renderThemePng(theme, "light", 2560, 1440),
-      dark: renderThemePng(theme, "dark", 2560, 1440),
+      light: renderSourceArtPng(sourceArt, theme, "light", 2560, 1440),
+      dark: renderSourceArtPng(sourceArt, theme, "dark", 2560, 1440),
     };
     const previews = {
-      light: renderThemePng(theme, "light", 960, 540),
-      dark: renderThemePng(theme, "dark", 960, 540),
+      light: renderSourceArtPng(sourceArt, theme, "light", 960, 540),
+      dark: renderSourceArtPng(sourceArt, theme, "dark", 960, 540),
     };
-    const manifest = manifestFor(theme, assets);
+    const manifest = manifestFor(theme, assets, sourceProvenance);
     const manifestBuffer = jsonBuffer(manifest);
 
     files.set(themeRoot + "/manifest.json", manifestBuffer);
@@ -334,6 +343,19 @@ export async function buildGeneratedFiles() {
       license: {
         spdx: "CC0-1.0",
         rightsVerified: true,
+      },
+      provenance: {
+        type: "original",
+        aiGenerated: true,
+        rightsVerified: true,
+        generator: "openai-image-job + " + GENERATOR_ID,
+        model: sourceProvenance.model,
+        jobId: sourceProvenance.jobId,
+        sourceArt: "themes/source-art/" + theme.id + ".png",
+        record: "themes/source-art/" + theme.id + ".provenance.json",
+        promptRecord: "themes/source-art/jobs.json#" + theme.id,
+        promptSha256: sourceProvenance.promptSha256,
+        sourceSha256: sourceProvenance.sourceSha256,
       },
       motion: {
         default: "reduced",

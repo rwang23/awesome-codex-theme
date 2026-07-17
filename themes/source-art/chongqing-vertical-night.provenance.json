@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "themeId": "chongqing-vertical-night",
+  "workflow": "openai-image-job",
+  "model": "gpt-image-2",
+  "size": "1536x1024",
+  "quality": "high",
+  "jobId": "156caa6c-0bd1-4c25-a5dc-e715471c8325",
+  "promptSha256": "3cb076e96bb88afb2f5a23c53345ca7f3da5ec87f3d481389a85474dd5cd6aa1",
+  "sourceSha256": "b4f069cd0b2d1faa05e11b185306526ee237325d0cc299f9f98479a2ce5ab853",
+  "disclosure": "AI-generated original source art. Prompt and output were reviewed for third-party characters, logos, signatures, and text before release."
+}

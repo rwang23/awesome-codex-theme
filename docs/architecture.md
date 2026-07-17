@@ -9,16 +9,19 @@ renders localized collection controls and cards, filters by collection or
 visual variant, switches light and dark previews, and copies an explicit
 install command. It has no server, account system, analytics, or payment path.
 
-The registry and canonical packages are generated from themes/catalog.json.
-The catalog declares collection metadata and per-collection pairing rules.
-Each .act-theme contains a versioned manifest and two declared PNG backgrounds.
-Every path, preview, package, and per-mode adapter bundle has recorded SHA-256
-and byte-count evidence.
+The registry and canonical packages are generated from themes/catalog.json and
+the reviewed PNG files in themes/source-art/. The catalog declares collection
+metadata and per-collection pairing rules. Source-art jobs and compact
+provenance records keep the model, prompt hash, job id, and source hash
+reviewable. Each .act-theme contains a versioned manifest and two derived PNG
+backgrounds. Every path, preview, package, and per-mode adapter bundle has
+recorded SHA-256 and byte-count evidence.
 
-Generated binaries are distribution outputs rather than Git history. A clean
-checkout runs the generator before validation and Pages assembly, keeping the
-repository small enough for repeated theme releases without hiding how any
-asset was made.
+Reviewed source art is part of Git history. Derived theme directories,
+packages, registry output, and Pages artifacts are generated distribution
+outputs. A clean checkout can therefore rebuild the same light and dark
+backgrounds without API access while keeping raw image-service responses and
+credentials out of the repository.
 
 Adapters are deterministic build outputs outside the canonical trust boundary.
 Each per-mode ZIP contains explicit Codex-native, Dream Skin, HeiGe, and

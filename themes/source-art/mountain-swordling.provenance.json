@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "themeId": "mountain-swordling",
+  "workflow": "openai-image-job",
+  "model": "gpt-image-2",
+  "size": "1536x1024",
+  "quality": "high",
+  "jobId": "8576ae01-93b7-4eba-8641-3156af4b8221",
+  "promptSha256": "abb60ddc1f0de34ae420d8d8755e02bb7345f14c9665bc77d1be2dc75f55ac9f",
+  "sourceSha256": "4c1aa94fc4d4c882134a7d8e560b1da454cd6b18066880174d39bdba58c37243",
+  "disclosure": "AI-generated original source art. Prompt and output were reviewed for third-party characters, logos, signatures, and text before release."
+}

@@ -15,18 +15,21 @@ locations are reserved for execution evidence or closed history when needed.
 
 - agent-brief.md: first-read project router
 - architecture.md: package, site, install, and trust boundaries
-- art-direction.md: seeded generative philosophy for Original Xianxia 01
-- city-atlas-art-direction.md: city-specific generative philosophy and motif rules
+- art-direction.md: reviewed image-job direction for Original Xianxia 01
+- city-atlas-art-direction.md: city identity, anti-landmark, and composition rules
+- gallery-design.md: redesign evidence and the independent Gallery visual system
 - standard.md: version 1 canonical manifest and package contract
 - adapters.md: compatibility matrix and export behavior
 - landscape.md: dated reference-project research and positioning
 - CHANGELOG.md: delivered project changes
-- ../README.md: public project overview and setup
+- ../README.md: Chinese-first public project overview and setup
+- ../README.en.md: full secondary English overview
+- ../.codex/skills/create-codex-theme/: project-local theme creation Skill
 - ../context/tools/README.md: script and execution-pack index
 
 Generated files belong under dist/, packages/, themes/<theme-id>/, and
-themes/registry.json. The editable sources are site/, themes/catalog.json, and
-scripts/.
+themes/registry.json. The editable sources are site/, themes/catalog.json,
+themes/source-art/, scripts/, and .codex/skills/.
 
 ## Maintenance
 

@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "themeId": "chengdu-teahouse-rain",
+  "workflow": "openai-image-job",
+  "model": "gpt-image-2",
+  "size": "1536x1024",
+  "quality": "high",
+  "jobId": "0bd036e4-ba1d-4b16-ab45-135ae7030021",
+  "promptSha256": "4f6084fbe0a3c91bf78f5e2f5cba359957cb4d222f769a78cee09f1dee3007df",
+  "sourceSha256": "1c0656af9a132a25e4dea60bebb1352309ae8167e655bc4a0fb7d553b145598b",
+  "disclosure": "AI-generated original source art. Prompt and output were reviewed for third-party characters, logos, signatures, and text before release."
+}

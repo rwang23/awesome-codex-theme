@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "themeId": "cloudsea-pact",
+  "workflow": "openai-image-job",
+  "model": "gpt-image-2",
+  "size": "1536x1024",
+  "quality": "high",
+  "jobId": "96a31e74-ddae-4209-8c05-3e861337a796",
+  "promptSha256": "53176f33fe28147c8fb7fbcef05c545f229588b1bc1d164d3dc385e722aa245d",
+  "sourceSha256": "dc7c3fc5de6d8b8b0a4651664f5eb56b9521e8d05c00c7cbc1c07539d9eb42c9",
+  "disclosure": "AI-generated original source art. Prompt and output were reviewed for third-party characters, logos, signatures, and text before release."
+}

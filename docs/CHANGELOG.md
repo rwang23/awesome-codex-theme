@@ -1,5 +1,20 @@
 # Changelog
 
+## 2026-07-16-03-00
+
+- Replaced the derivative editorial Gallery direction with an independent,
+  Chinese-first theme archive built around a live Codex workspace preview.
+- Rebuilt all 16 theme source images through OpenAI image jobs and added
+  compact, reviewable provenance for every source.
+- Added deterministic source-PNG decoding, 16:9 cropping, light and dark
+  grading, package generation, and hash validation.
+- Added the project-local `$create-codex-theme` Skill, brief template,
+  scaffolding script, image-job playbook, and originality checks.
+- Rewrote the primary README and contribution guide in Chinese, with a full
+  secondary English README.
+- Documented the Gallery redesign boundary and the updated xianxia and city
+  art direction.
+
 ## 2026-07-16-02-00
 
 - Fixed the install dialog so its trust note follows the selected adapter

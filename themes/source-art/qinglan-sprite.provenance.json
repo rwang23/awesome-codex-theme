@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "themeId": "qinglan-sprite",
+  "workflow": "openai-image-job",
+  "model": "gpt-image-2",
+  "size": "1536x1024",
+  "quality": "high",
+  "jobId": "e131b359-075b-40db-bb4d-610484553d26",
+  "promptSha256": "ec6ac1337640fd742f3e601ee3fa01c28e04858719be906961be52827fd8cd11",
+  "sourceSha256": "24914a9023a0ed9fbc0e91609b601ff28b1fb5b8e356cd9e362caa8c8b3dca25",
+  "disclosure": "AI-generated original source art. Prompt and output were reviewed for third-party characters, logos, signatures, and text before release."
+}

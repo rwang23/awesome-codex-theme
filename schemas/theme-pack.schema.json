@@ -93,7 +93,17 @@
     "provenance": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["type", "source", "generator", "aiGenerated", "rightsVerified"],
+      "required": [
+        "type",
+        "source",
+        "generator",
+        "aiGenerated",
+        "rightsVerified",
+        "model",
+        "jobId",
+        "promptSha256",
+        "sourceSha256"
+      ],
       "properties": {
         "type": {
           "enum": ["procedural", "original", "licensed", "public-domain"]
@@ -111,6 +121,22 @@
         },
         "rightsVerified": {
           "const": true
+        },
+        "model": {
+          "type": "string",
+          "minLength": 1
+        },
+        "jobId": {
+          "type": "string",
+          "minLength": 10
+        },
+        "promptSha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "sourceSha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
         },
         "notes": {
           "type": "string",

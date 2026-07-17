@@ -1,36 +1,26 @@
-# Urban Palimpsest
+# 中国城市图鉴 01：城市余光
 
-Urban Palimpsest is the generative philosophy behind China City Atlas 01. It
-draws a city from the things people remember after the landmark is gone: the
-angle of rain, the width of a river, a roofline at dusk, the rhythm of windows,
-or the way a slope changes a street. Each image is built from relationships
-between terrain, weather, light, and density. It never traces a photograph or
-depends on a logo to name the place.
+城市主题不靠地标猜城市。我们从天气、地形、街道尺度、水岸关系、树木与生活节奏里提取记忆，再组合成新的城市画面。
 
-The algorithm starts with a stable seed and a quiet left-hand work area. A
-bounded field of towers, walls, branches, water lines, and transit paths grows
-toward the right. Seeded noise changes height, spacing, illumination, and small
-surface marks, while the city pattern supplies stricter rules. Beijing favors
-an axis, Shanghai a tidal edge, Shenzhen a circuit grid, and Chongqing stacked
-vertical depth. The same approach lets each city feel specific without turning
-its best-known building into an icon.
+首发八座城市的识别线索：
 
-Time is expressed as a settled system state rather than an animation. Rain
-lanes, reflections, haze, and lit windows imply motion, but every exported
-frame remains still and works with reduced-motion preferences. Light and dark
-modes have separate palettes and atmosphere parameters. A carefully tuned
-implementation should keep the focal field legible in both states, even after
-the image is reduced to a gallery card.
+- 北京：冬日蓝空气、灰砖院落、旧街与普通城市天际线
+- 上海：近水视角、渡船尾流、石材街面与玻璃体量
+- 深圳：亚热带阵雨、层叠绿化、高架步道与冷色电光
+- 广州：榕树、骑楼阴影、暖湿河风与渡船
+- 成都：竹影、瓦檐、细雨、茶汽与缓慢庭院
+- 杭州：雨后湖光、长堤、荷叶与远山
+- 重庆：山城垂直层次、江面反射、阶梯与轨道线
+- 南京：旧城墙、梅枝、冬雾与安静的朱红
 
-Variation is useful only when it remains composed. Density, horizon, glow, and
-weather can move inside narrow ranges, but the safe area and visual hierarchy
-do not drift. The generator should feel as if its constants were tested across
-hundreds of seeds and adjusted by someone who notices one bad window rhythm.
-The work is in those limits: enough variation to keep the process alive, and
-enough control that every result still belongs to the collection.
+## 反地标原则
 
-The final implementation must stay reproducible, inspectable, and original.
-Every pixel should be explainable from a seed, a palette, and a small set of
-geometric rules. Adding a city means defining a new relationship between
-terrain and light, then tuning it with the same care as the existing patterns.
-That discipline matters more than visual noise or a larger pile of motifs.
+城市可以被认出，但不需要复制一张旅游宣传照。源图不能出现城市 Logo、官方吉祥物、品牌招牌或精确地标复刻。北京与上海的初稿曾因地标感和幻想建筑过强被退回，最终版本改成普通街区与近水城市材料，让城市身份来自关系而不是图标。
+
+## 构图与模式
+
+所有城市主题仍遵守左侧工作区安全区。右侧可以有街巷、建筑、树木、轨道或水岸，主体不能贴边。雨线、车灯、渡船和窗光可以暗示运动，但导出保持静态，并完整支持低动态偏好。
+
+一张经过审查的源图会稳定导出明暗两套背景。城市夜景在明亮模式中仍可作为背景，但界面 surface、文字与 accent 必须通过对比度门槛。
+
+English summary: City Atlas builds original city studies from weather, terrain, street scale, water, and everyday materials. It avoids logos, mascots, exact landmarks, tourist panoramas, and copied photographs.

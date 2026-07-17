@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "themeId": "starbound-sprite",
+  "workflow": "openai-image-job",
+  "model": "gpt-image-2",
+  "size": "1536x1024",
+  "quality": "high",
+  "jobId": "7e229bcd-15c1-401d-9311-ae8b5b637c08",
+  "promptSha256": "dd5fed3411f015684ec5c96827edbebfbd6cb45c4719ca93d9a4862d45d7746f",
+  "sourceSha256": "8b068fbe714747114e894384d38f99ea7e48988c1c2fd0452dcf27e89cd7e661",
+  "disclosure": "AI-generated original source art. Prompt and output were reviewed for third-party characters, logos, signatures, and text before release."
+}

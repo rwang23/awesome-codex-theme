@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "themeId": "cloudsea-mochi",
+  "workflow": "openai-image-job",
+  "model": "gpt-image-2",
+  "size": "1536x1024",
+  "quality": "high",
+  "jobId": "b592a2cf-6cdb-4034-bb18-befce5d50d70",
+  "promptSha256": "63589ab7a695a7db138a164007fe09e2eb576af23b8140b8b0f95ff2f6056516",
+  "sourceSha256": "f5ef9da3beb95c737147f933e3466be16e5708568fa20be1013eb33ca413bac1",
+  "disclosure": "AI-generated original source art. Prompt and output were reviewed for third-party characters, logos, signatures, and text before release."
+}

@@ -31,6 +31,7 @@ async function exists(target) {
 test("repository validates sixteen dual-mode code-free themes in two collections", async function () {
   const result = await validateRepository();
   assert.deepEqual(result, {
+    sources: 16,
     themes: 16,
     modes: 32,
     packages: 16,
@@ -48,6 +49,11 @@ test("registry exposes the paired xianxia and standalone city collections", asyn
   ]);
   assert.equal(registry.themes.filter(function (theme) { return theme.variant === "cityscape"; }).length, 8);
   assert.equal(registry.themes.every(function (theme) { return typeof theme.collection === "string"; }), true);
+  assert.equal(registry.themes.every(function (theme) {
+    return theme.provenance?.aiGenerated === true
+      && /^[a-f0-9]{64}$/.test(theme.provenance.sourceSha256)
+      && /^[a-f0-9]{64}$/.test(theme.provenance.promptSha256);
+  }), true);
 });
 
 test("canonical archives contain only the manifest and two declared assets", async function () {
@@ -84,6 +90,7 @@ test("static gallery builds with every public contract artifact", async function
       "assets/app.js",
       "assets/styles.css",
       "themes/registry.json",
+      "themes/source-art/jobs.json",
       "schemas/theme-pack.schema.json",
       "scripts/install-theme.ps1",
       "scripts/install-theme.sh",
@@ -104,6 +111,18 @@ test("static gallery builds with every public contract artifact", async function
       await rm(resolved, { recursive: true, force: true });
     }
   }
+});
+
+test("gallery keeps the independent Chinese-first visual system", async function () {
+  const [html, css] = await Promise.all([
+    readFile(path.join(ROOT, "site", "index.html"), "utf8"),
+    readFile(path.join(ROOT, "site", "assets", "styles.css"), "utf8")
+  ]);
+  assert.match(html, /<html lang="zh-CN">/);
+  assert.match(html, /id="heroMode"/);
+  assert.match(html, /\.codex\/skills\/create-codex-theme/);
+  assert.doesNotMatch(html, /reimagined|hero-accent|hero-orbit/i);
+  assert.doesNotMatch(css, /--acid|#d9ff43/i);
 });
 
 test("installer sources avoid dynamic evaluation and expose dry-run mode", async function () {

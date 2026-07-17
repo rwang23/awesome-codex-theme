@@ -1,4 +1,4 @@
-import { deflateSync } from "node:zlib";
+import { deflateSync, inflateSync } from "node:zlib";
 
 const PNG_SIGNATURE = Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]);
 const CRC_TABLE = new Uint32Array(256);
@@ -448,4 +448,170 @@ export function readPngDimensions(buffer) {
     width: buffer.readUInt32BE(16),
     height: buffer.readUInt32BE(20),
   };
+}
+
+function paethPredictor(left, above, upperLeft) {
+  const prediction = left + above - upperLeft;
+  const leftDistance = Math.abs(prediction - left);
+  const aboveDistance = Math.abs(prediction - above);
+  const upperLeftDistance = Math.abs(prediction - upperLeft);
+  if (leftDistance <= aboveDistance && leftDistance <= upperLeftDistance) return left;
+  if (aboveDistance <= upperLeftDistance) return above;
+  return upperLeft;
+}
+
+export function decodePng(buffer) {
+  if (buffer.length < 24 || !buffer.subarray(0, 8).equals(PNG_SIGNATURE)) {
+    throw new Error("Not a PNG file");
+  }
+
+  let offset = 8;
+  let header;
+  const dataChunks = [];
+  while (offset + 12 <= buffer.length) {
+    const length = buffer.readUInt32BE(offset);
+    const type = buffer.subarray(offset + 4, offset + 8).toString("ascii");
+    const data = buffer.subarray(offset + 8, offset + 8 + length);
+    if (type === "IHDR") header = data;
+    if (type === "IDAT") dataChunks.push(data);
+    offset += 12 + length;
+    if (type === "IEND") break;
+  }
+  if (!header || !dataChunks.length) throw new Error("PNG is missing IHDR or IDAT");
+
+  const width = header.readUInt32BE(0);
+  const height = header.readUInt32BE(4);
+  const bitDepth = header[8];
+  const colorType = header[9];
+  const interlace = header[12];
+  if (bitDepth !== 8 || ![2, 6].includes(colorType) || interlace !== 0) {
+    throw new Error(
+      "Unsupported PNG format: bitDepth=" + bitDepth
+      + " colorType=" + colorType + " interlace=" + interlace,
+    );
+  }
+
+  const channels = colorType === 6 ? 4 : 3;
+  const stride = width * channels;
+  const inflated = inflateSync(Buffer.concat(dataChunks));
+  if (inflated.length !== (stride + 1) * height) {
+    throw new Error("PNG scanline size does not match its header");
+  }
+
+  const decoded = Buffer.alloc(stride * height);
+  for (let y = 0; y < height; y += 1) {
+    const inputOffset = y * (stride + 1);
+    const outputOffset = y * stride;
+    const filter = inflated[inputOffset];
+    for (let x = 0; x < stride; x += 1) {
+      const value = inflated[inputOffset + 1 + x];
+      const left = x >= channels ? decoded[outputOffset + x - channels] : 0;
+      const above = y > 0 ? decoded[outputOffset + x - stride] : 0;
+      const upperLeft = y > 0 && x >= channels
+        ? decoded[outputOffset + x - stride - channels]
+        : 0;
+      let restored;
+      if (filter === 0) restored = value;
+      else if (filter === 1) restored = value + left;
+      else if (filter === 2) restored = value + above;
+      else if (filter === 3) restored = value + Math.floor((left + above) / 2);
+      else if (filter === 4) restored = value + paethPredictor(left, above, upperLeft);
+      else throw new Error("Unsupported PNG filter: " + filter);
+      decoded[outputOffset + x] = restored & 0xff;
+    }
+  }
+
+  const pixels = Buffer.alloc(width * height * 4);
+  for (let index = 0; index < width * height; index += 1) {
+    const sourceOffset = index * channels;
+    const targetOffset = index * 4;
+    pixels[targetOffset] = decoded[sourceOffset];
+    pixels[targetOffset + 1] = decoded[sourceOffset + 1];
+    pixels[targetOffset + 2] = decoded[sourceOffset + 2];
+    pixels[targetOffset + 3] = channels === 4 ? decoded[sourceOffset + 3] : 255;
+  }
+  return { width, height, pixels };
+}
+
+function sampleBilinear(image, x, y) {
+  const left = Math.max(0, Math.min(image.width - 1, Math.floor(x)));
+  const top = Math.max(0, Math.min(image.height - 1, Math.floor(y)));
+  const right = Math.min(image.width - 1, left + 1);
+  const bottom = Math.min(image.height - 1, top + 1);
+  const horizontal = Math.max(0, Math.min(1, x - left));
+  const vertical = Math.max(0, Math.min(1, y - top));
+
+  const result = [0, 0, 0, 255];
+  for (let channel = 0; channel < 3; channel += 1) {
+    const topLeft = image.pixels[(top * image.width + left) * 4 + channel];
+    const topRight = image.pixels[(top * image.width + right) * 4 + channel];
+    const bottomLeft = image.pixels[(bottom * image.width + left) * 4 + channel];
+    const bottomRight = image.pixels[(bottom * image.width + right) * 4 + channel];
+    const topValue = topLeft + (topRight - topLeft) * horizontal;
+    const bottomValue = bottomLeft + (bottomRight - bottomLeft) * horizontal;
+    result[channel] = topValue + (bottomValue - topValue) * vertical;
+  }
+  return result;
+}
+
+function gradeSourcePixel(pixel, theme, mode, normalizedX, normalizedY) {
+  const background = parseHex(theme[mode].tokens.background);
+  let color = pixel.slice(0, 3);
+
+  if (mode === "dark") {
+    color = color.map((value) => value * 0.76);
+    color = mix(color, background, 0.31);
+  } else {
+    color = mix(color, [255, 255, 255], 0.035);
+    color = mix(color, background, 0.07);
+  }
+
+  const quietEdge = 1 - smoothstep(0.08, 0.6, normalizedX);
+  const safeAreaOpacity = mode === "dark"
+    ? 0.12 + quietEdge * 0.46
+    : 0.05 + quietEdge * 0.35;
+  color = mix(color, background, safeAreaOpacity);
+
+  const topShade = smoothstep(0, 0.18, normalizedY);
+  const bottomShade = 1 - smoothstep(0.78, 1, normalizedY);
+  const edgeShade = Math.min(topShade, bottomShade);
+  if (mode === "dark") color = color.map((value) => value * (0.94 + edgeShade * 0.06));
+
+  return [
+    clampByte(color[0]),
+    clampByte(color[1]),
+    clampByte(color[2]),
+    255,
+  ];
+}
+
+export function renderSourceArtPng(sourceBuffer, theme, mode, width, height) {
+  const image = decodePng(sourceBuffer);
+  const targetAspect = width / height;
+  const sourceAspect = image.width / image.height;
+  let cropX = 0;
+  let cropY = 0;
+  let cropWidth = image.width;
+  let cropHeight = image.height;
+  if (sourceAspect > targetAspect) {
+    cropWidth = image.height * targetAspect;
+    cropX = (image.width - cropWidth) / 2;
+  } else {
+    cropHeight = image.width / targetAspect;
+    cropY = (image.height - cropHeight) / 2;
+  }
+
+  return encodePng(width, height, (x, y) => {
+    const normalizedX = x / Math.max(1, width - 1);
+    const normalizedY = y / Math.max(1, height - 1);
+    const sourceX = cropX + normalizedX * Math.max(1, cropWidth - 1);
+    const sourceY = cropY + normalizedY * Math.max(1, cropHeight - 1);
+    return gradeSourcePixel(
+      sampleBilinear(image, sourceX, sourceY),
+      theme,
+      mode,
+      normalizedX,
+      normalizedY,
+    );
+  });
 }

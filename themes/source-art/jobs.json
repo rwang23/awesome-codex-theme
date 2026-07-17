@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 1,
+  "workflow": {
+    "runner": "openai-image-job",
+    "model": "gpt-image-2",
+    "size": "1536x1024",
+    "quality": "high",
+    "responseFormat": "b64_json",
+    "outputFormat": "png"
+  },
+  "commonPrompt": "Create original premium key art for a desktop coding workspace theme. Use contemporary Chinese animation background painting, refined ink-wash atmosphere, mineral-pigment color, cinematic depth, and precise environmental detail. The result must be a new composition, not an imitation of any named artist, studio, series, game, film, character, or franchise. Keep the entire left 46 percent calm and low contrast for readable interface controls. Put the main visual story in the right third. Keep important content inside the middle 82 percent vertically because the source will be cropped to 16:9. No text, letters, numbers, logo, watermark, signature, interface, border, frame, mockup, diptych, or split panel. No photorealism. Landscape 3:2.",
+  "jobs": [
+    {
+      "id": "qinglan-odyssey",
+      "prompt": "A vast sea of ink-green mountain ridges at cool dawn. A circular moon gate is half hidden in cloud on a high terrace, with one tiny anonymous robed traveler following a winding pale path toward it. Layered atmospheric perspective, celadon mist, restrained jade light, quiet scale, sophisticated environmental storytelling."
+    },
+    {
+      "id": "qinglan-sprite",
+      "prompt": "An entirely original chibi mountain apprentice with a round expressive face, moss-green travel robe, tiny topknot, and warm paper lantern. The small figure waits beside a weathered stone path under oversized fern leaves and misty ridges. Charming but finely painted, natural pose, believable materials, no resemblance to an existing character."
+    },
+    {
+      "id": "starbound-rebel",
+      "prompt": "A cobalt celestial wilderness where a narrow red-lit route cuts across floating stone observatories and deep constellations. One tiny anonymous wanderer moves against the flow of luminous star trails. Grand cosmic scale, restrained vermilion accent, dark blue mineral pigments, elegant rather than neon-heavy."
+    },
+    {
+      "id": "starbound-sprite",
+      "prompt": "An entirely original chibi star spirit in a midnight-blue robe rides a small comet through a quiet indigo sky. The character has a simple round silhouette, curious expression, and a tiny cloth satchel filled with softly glowing star seeds. Fine painted cloud wisps and constellations, playful but not toy-like."
+    },
+    {
+      "id": "mountain-sword",
+      "prompt": "Monumental black-ink peaks emerge from pale warm mist while one clean vermilion sword-light arcs between cliffs. A tiny anonymous swordsman stands on a narrow right-side ridge, cloak moving in the wind. Modern book-cover restraint, forceful brush texture, negative space, dramatic scale, no calligraphy."
+    },
+    {
+      "id": "mountain-swordling",
+      "prompt": "An entirely original chibi sword apprentice practices one careful stroke on a quiet mountain platform at sunrise. The child wears a charcoal training robe with a muted red sash and holds a plain wooden practice sword. Huge sun, layered ink peaks, earnest expression, warm humor, refined animation background quality."
+    },
+    {
+      "id": "cloudsea-pact",
+      "prompt": "A pale jade cloud sea with floating islands, hanging gardens, and slender stone bridges. On the far-right island, an anonymous traveler meets an original translucent wind creature shaped from ribbons of light, with no familiar animal mascot design. Airy spiritual atmosphere, luminous mineral green, intricate architecture."
+    },
+    {
+      "id": "cloudsea-mochi",
+      "prompt": "An entirely original soft chibi cloud creature naps on a broad floating leaf above a deep sea of mist. It has a simple rounded body, tiny folded ears unlike any known mascot, sleepy expression, and a small jade bell. Floating seed pods and distant islands add depth. Cozy, polished, subtle, not plastic or sticker-like."
+    },
+    {
+      "id": "beijing-meridian",
+      "prompt": "A quiet invented northern city neighborhood at winter dawn, seen from a modest rooftop rather than a tourist viewpoint. A long pedestrian line passes low gray courtyard roofs, bare scholar trees, brick walls, bicycles, and a distant band of ordinary rectangular office buildings. Clear blue air and the first amber light. Evoke Beijing through climate, scale, and spatial order. Do not show any palace, gate tower, ceremonial monument, famous skyline building, CCTV Headquarters, China Zun, Tiananmen, Temple of Heaven, landmark, or tourist panorama."
+    },
+    {
+      "id": "shanghai-afterglow",
+      "prompt": "A contemporary invented river metropolis at blue hour, seen close to the water from a low embankment. Layered ferry wakes, restrained rose-gold reflections, Art Deco stone warehouse facades, brick lane-house textures, plane trees, and clean vertical glass slabs fill the right side. Urban animation background painting, grounded and contemporary, with no fantasy architecture and no traditional pagoda roofs. Evoke Shanghai through river rhythm, material contrast, and density. Do not show the Bund, Oriental Pearl Tower, Shanghai Tower, World Financial Center, Jin Mao Tower, or any exact skyline landmark."
+    },
+    {
+      "id": "shenzhen-circuit-rain",
+      "prompt": "A fast subtropical rainstorm crosses an invented high-tech city of terraced greenery, cool glass towers, elevated walkways, and a subtle leaf-like circuit pattern in reflected light. Electric cyan is controlled by deep forest green. Evoke Shenzhen through speed, rain, and new urban growth, with no corporate logo."
+    },
+    {
+      "id": "guangzhou-riverwind",
+      "prompt": "Warm evening air moves across an invented southern riverfront city. Banyan branches, arcade shadows, curved bridge light, ferry ripples, and a soft amber skyline form layered depth. Evoke Guangzhou through humid river atmosphere and Lingnan spatial cues without an exact landmark or city symbol."
+    },
+    {
+      "id": "chengdu-teahouse-rain",
+      "prompt": "Fine summer rain around an intimate Sichuan teahouse courtyard. Bamboo shadows cross tiled eaves, tea steam catches muted amber light, and a narrow garden path disappears into lush green. Evoke Chengdu through pace, weather, and teahouse culture. No panda, mascot, logo, or famous site."
+    },
+    {
+      "id": "hangzhou-lake-letter",
+      "prompt": "A pale lake after rain with a long causeway, distant wooded hills, lotus marks, small boats, and one folded paper letter resting beneath a waterside pavilion. Evoke Hangzhou through water, mist, and garden rhythm without copying a famous view. Pearl gray, celadon, and a restrained warm lantern."
+    },
+    {
+      "id": "chongqing-vertical-night",
+      "prompt": "An invented mountain city stacked across steep river slopes at night. Layers of stairs, bridges, cliffside windows, mist, and one bright transit line turn extreme depth into a clear visual rhythm. Evoke Chongqing through vertical movement and river reflection, without reproducing a famous building or viewpoint."
+    },
+    {
+      "id": "nanjing-wall-plum",
+      "prompt": "A quiet winter city edge with broad old brick wall courses, plum branches, river mist, and distant modern roofs. One restrained cinnabar blossom cluster holds the right side while cool gray masonry recedes into fog. Evoke Nanjing through history, winter, and river atmosphere without an exact monument."
+    }
+  ]
+}

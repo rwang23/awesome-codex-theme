@@ -38,6 +38,7 @@
           "description",
           "tags",
           "license",
+          "provenance",
           "motion",
           "previews",
           "package",

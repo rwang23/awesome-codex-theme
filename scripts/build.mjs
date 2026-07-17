@@ -31,6 +31,7 @@ export async function buildSite(outputPath = DEFAULT_OUTPUT) {
 
   await Promise.all([
     copyRelative("themes/registry.json", output),
+    copyRelative("themes/source-art/jobs.json", output),
     copyRelative("schemas/theme-pack.schema.json", output),
     copyRelative("schemas/registry.schema.json", output),
     copyRelative("scripts/install-theme.ps1", output),
@@ -44,6 +45,7 @@ export async function buildSite(outputPath = DEFAULT_OUTPUT) {
     const paths = [
       theme.package.path,
       theme.package.manifest,
+      theme.provenance.record,
       theme.previews.light.preview,
       theme.previews.dark.preview,
       theme.previews.light.adapterBundle.path,

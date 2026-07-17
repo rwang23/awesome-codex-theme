@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "themeId": "hangzhou-lake-letter",
+  "workflow": "openai-image-job",
+  "model": "gpt-image-2",
+  "size": "1536x1024",
+  "quality": "high",
+  "jobId": "5d6ecbf3-189f-4823-82fe-476e3d8afee4",
+  "promptSha256": "7918e6fc9bf5bef9f9c0b8a1ebad7a18f0f131f6202e6ffed2c433480859a8d7",
+  "sourceSha256": "4ebcd66aa81fd69d8741f08f8d32f6abb3b127a7ea606614bcb06bf55c136a9d",
+  "disclosure": "AI-generated original source art. Prompt and output were reviewed for third-party characters, logos, signatures, and text before release."
+}

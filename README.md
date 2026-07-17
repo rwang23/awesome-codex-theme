@@ -1,121 +1,124 @@
 # Awesome Codex Theme
 
-A free, community-run theme standard, registry, validator, and gallery for the
-Codex desktop app. The first public release includes a dependency-free GitHub
-Pages site, 16 original themes across two collections, reproducible assets,
-four adapter targets, and hash-verified Dream Skin installers.
+面向 Codex 的开放主题包标准、Registry、Validator 与原创主题 Gallery。
 
-中文简介：这是一个面向 Codex 桌面端的免费主题市场。它负责展示、筛选和安装
-主题，不修改官方安装包。首版包含 8 套原创国风修仙主题和 8 套中国城市主题。
-所有背景均可重复生成，不包含现有动漫人物、品牌角色、城市标志或第三方版权素材。
+[在线浏览 16 套主题](https://rwang23.github.io/awesome-codex-theme/) · [English README](README.en.md) · [主题包标准](docs/standard.md) · [贡献指南](CONTRIBUTING.md)
 
-Public gallery: https://rwang23.github.io/awesome-codex-theme/
+![青岚问道主题源图](themes/source-art/qinglan-odyssey.png)
 
-GitHub repository: https://github.com/rwang23/awesome-codex-theme
+## 这不是另一个“换背景”脚本
 
-## Why this project is different
+单纯注入 CSS 或替换背景，很容易做出一个能跑的 Demo，却很难回答几个长期问题：这张图能不能再分发，主题包里有没有代码，安装时如何确认文件没有被替换，同一套主题到了不同引擎究竟能还原多少。
 
-Codex Dream Skin solves the local runtime and reversible injection problem.
-Awesome Codex Theme sits one layer above it:
+Awesome Codex Theme 把这些问题放进同一套公开契约：
 
-1. an engine-neutral, code-free theme pack contract;
-2. a generated registry with rights, compatibility, provenance, and hashes;
-3. validators for package contents, dimensions, integrity, and contrast;
-4. a public catalog for discovering and previewing themes;
-5. explicit adapters for Codex native appearance, Dream Skin, HeiGe Skin
-   Studio, and CodeDrobe.
+- `theme.json` 与 manifest Schema 统一描述身份、素材、明暗模式、来源和兼容范围
+- 标准 `.act-theme` 包只允许声明式配置与图片，不含脚本或远程 CSS
+- Registry 记录 SHA-256、文件大小、尺寸、版权声明和适配能力
+- Validator 检查包内文件白名单、哈希、图片完整性与 WCAG 对比度
+- Adapter 在可信主题包之外导出 Codex 原生、Dream Skin、HeiGe Skin Studio 和 CodeDrobe 格式
+- GitHub Pages 提供预览、筛选、模式切换、下载和带哈希校验的安装命令
 
-The browser deliberately does not claim to perform a silent one-click install.
-Browsers cannot safely write into a desktop app's local data directory. The
-Install button copies an explicit command instead.
+## 首发主题
 
-## Local development
+当前有 16 套主题、32 个明暗模式。
 
-Requirements: Node.js 22 or newer. No package installation is required.
+| 系列 | 内容 | 数量 |
+| --- | --- | ---: |
+| 原创国风修仙 01 | 4 个原创世界，每个世界有原画版和 Q 版 | 8 |
+| 中国城市图鉴 01 | 北京、上海、深圳、广州、成都、杭州、重庆、南京 | 8 |
 
-    npm run generate
-    npm run check
-    npm run serve
+所有首发源图都通过 OpenAI image job 生成，再由人工检查安全留白、文字、水印、Logo、可识别 IP 和 16:9 裁切。仓库保存 prompt、模型、job ID 与输出哈希的精简 provenance，不保存密钥或带 base64 图片的原始服务响应。
 
-Open http://127.0.0.1:4173 after the server starts.
+这些主题借用的是“修仙”“城市雨夜”“Q 版角色”这样的题材，不复制《凡人修仙传》《仙逆》《剑来》或其他作品的角色、服装、场景与画风。
 
-Generated backgrounds, packages, adapter bundles, registry data, and dist/ are
-intentionally excluded from Git history. The catalog and deterministic
-generator are the reviewable source; local development and GitHub Actions
-rebuild the complete distribution.
+## 使用主题
 
-## Theme installation
+最直接的入口是 [在线 Gallery](https://rwang23.github.io/awesome-codex-theme/)：
 
-Install Codex Dream Skin first:
+1. 选择系列或搜索主题。
+2. 切换明亮、暗色预览。
+3. 打开“安装 / 导出”。
+4. 选择目标引擎。
+5. Dream Skin 可以复制带完整性校验的安装命令。其他引擎下载适配包后手动导入。
 
-https://github.com/Fei-Away/Codex-Dream-Skin
+浏览器本身不会直接写入 Codex。Codex 原生适配器目前只导出明暗外观偏好，不承诺背景图和自定义色板能够原生生效。详细能力见 [适配器说明](docs/adapters.md)。
 
-From a local clone on Windows:
+## 用 Codex 创建新主题
 
-    powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\install-theme.ps1 -Theme qinglan-odyssey -Mode dark -SourceRoot .
+仓库内置项目级 Skill：
 
-Validate without writing:
+```text
+.codex/skills/create-codex-theme/
+```
 
-    powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\install-theme.ps1 -Theme qinglan-odyssey -Mode dark -SourceRoot . -DryRun
+用 Codex 打开本仓库后，可以直接说：
 
-The deployed site generates commands from its own GitHub Pages base URL.
+```text
+使用 $create-codex-theme，为中国城市图鉴创建一套“苏州·运河晨雾”主题。
+要求左侧保留工作区安全区，提供明暗模式，并在完成后运行全部校验。
+```
 
-## Original collection 01
+Skill 会协助完成：
 
-- Qinglan Odyssey / Qinglan Little Cultivator
-- Starbound Rebel / Starbound Spirit
-- Mountain Sword Intent / Little Sword Wanderer
-- Cloudsea Pact / Cloudsea Mochi
+- 中文主文案与英文辅助文案
+- 原创性和素材授权检查
+- image job prompt 与源图审查
+- 明暗 token 与对比度门槛
+- `catalog.json` 和 image job 脚手架
+- 主题生成、Registry、Validator 与浏览器验收
 
-Chinese titles: 青岚问道 / 青岚小修, 星河逆旅 / 星河灵童, 山河剑意 /
-山河剑童, 云海灵契 / 云海团子.
+也可以先复制 [theme brief 模板](.codex/skills/create-codex-theme/assets/theme-brief.template.json)，然后运行：
 
-These are independent original worlds. Familiar anime or novel names, character
-likenesses, logos, signature costumes, and official artwork are intentionally
-excluded. A separately licensed IP collection can be added later without
-weakening the public registry's rights standard.
+```bash
+node .codex/skills/create-codex-theme/scripts/scaffold-theme.mjs \
+  --brief path/to/theme-brief.json
+```
 
-## China City Atlas 01
+dry run 没问题后加上 `--apply`。接着生成源图：
 
-- Beijing Meridian / 北京·城轴晨光
-- Shanghai Afterglow / 上海·潮汐霓虹
-- Shenzhen Circuit Rain / 深圳·绿芯阵雨
-- Guangzhou Riverwind / 广州·珠水晚风
-- Chengdu Teahouse Rain / 成都·竹窗细雨
-- Hangzhou Lake Letter / 杭州·湖上来信
-- Chongqing Vertical Night / 重庆·山城夜航
-- Nanjing Wall Plum / 南京·城墙梅影
+```bash
+npm run art:generate -- --ids=<theme-id>
+npm run check
+```
 
-The city collection uses weather, terrain, street rhythm, and broad
-architectural cues. It does not trace photographs or include city logos,
-official mascots, or a copied landmark illustration.
+## 本地开发
 
-## Compatibility boundary
+环境要求：Node.js 22 或更高版本。项目没有 npm 运行时或开发依赖。
 
-Codex currently exposes a light, dark, or system appearance preference, not a
-public full custom-theme package API. The Codex-native adapter is therefore
-marked appearance-only. Dream Skin and HeiGe exports include the visual asset;
-the CodeDrobe export includes a reviewable generated CSS target. Adapter files
-remain outside the canonical code-free theme package.
+```bash
+npm run check
+npm run serve
+```
 
-## Project map
+常用命令：
 
-- site/: public interface
-- themes/catalog.json: editable catalog and art-generation source
-- themes/registry.json: generated installer registry
-- themes/<theme-id>/: generated manifests, backgrounds, and previews
-- packages/: canonical theme packs and per-mode adapter bundles
-- scripts/: generator, validator, build, server, and installers
-- tests/: repository and build-contract checks
-- docs/: project routing and architecture notes
+```bash
+npm run art:generate          # 通过 image job 生成源图
+npm run generate              # 导出主题、预览、Registry 与适配器包
+npm run generate:check        # 检查生成产物是否漂移
+npm run validate              # 校验主题包和 Registry
+npm test                      # 运行仓库测试
+npm run build                 # 构建 GitHub Pages
+```
 
-## Publishing
+## 仓库结构
 
-Pushes to `main` run generation, validation, tests, a headless Gallery
-screenshot, and the GitHub Pages deployment. Generated packages stay out of
-Git history and are rebuilt from the committed catalog during CI.
+```text
+.codex/skills/               项目级主题创作 Skill
+schemas/                     主题包与 Registry JSON Schema
+themes/catalog.json          人工维护的主题目录
+themes/source-art/           image job 配置、源图与 provenance
+themes/registry.json         自动生成的公共 Registry
+scripts/                     生成器、校验器、构建和安装器
+site/                        无依赖 Gallery
+docs/                        标准、架构、适配器和设计说明
+```
 
-## License
+`themes/<id>/`、`packages/`、`themes/registry.json` 与 `dist/` 都由生成器维护。不要手工修改这些产物。
 
-Code is MIT. First-party generated artwork is CC0 1.0. See NOTICE.md for the
-interoperability and trademark notice.
+## 授权与 AI 披露
+
+项目代码采用 MIT。第一方 AI 原创素材在可适用的权利范围内采用 CC0 1.0。每套主题都明确标记 `aiGenerated: true`，并保留可核对的 prompt 哈希和源图哈希。
+
+AI 输出不等于自动通过版权审查。贡献者仍然需要确认输入素材的权利，并检查输出是否包含第三方角色、Logo、签名或受保护表达。完整说明见 [NOTICE.md](NOTICE.md)。

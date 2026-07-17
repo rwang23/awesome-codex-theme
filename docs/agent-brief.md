@@ -14,10 +14,10 @@
 
 ## Current focus
 
-- Current phase: public launch
-- Most important task: keep the gallery, theme-pack contract, adapters, and install flow verifiable
+- Current phase: independent visual-system and source-art release
+- Most important task: keep the Chinese-first Gallery, reviewed source art, theme-pack contract, adapters, and contribution Skill verifiable
 - Explicitly out of scope: native protocol handler, package registry publishing, licensed franchise artwork
-- Active task pointer: none after the initial local release
+- Active task pointer: local redesign is complete only after source generation, npm run check, browser QA, and a task-owned commit
 
 ## Read first
 
@@ -32,13 +32,14 @@ Avoid dist/, context/raw/, docs/archive/, and generated history unless required.
 
 - Small edits: edit directly and run the focused check.
 - Multi-file behavior: use a short plan, npm run check, then browser smoke.
-- Theme additions: edit themes/catalog.json, regenerate, validate, inspect art.
+- Theme additions: use $create-codex-theme, generate source art, inspect it, regenerate, and validate.
 - Adapter claims: update docs/adapters.md and prove the exact target behavior.
 - Publishing, remote creation, or Pages activation: ask first.
 - Never automate copyright clearance or authenticated publishing.
 
 ## Canonical commands
 
+    npm run art:generate
     npm run generate
     npm run generate:check
     npm run validate
@@ -49,7 +50,7 @@ Avoid dist/, context/raw/, docs/archive/, and generated history unless required.
 
 ## Verification bundles
 
-- Theme data or art: generate:check, validate, tests, focused visual inspection.
+- Theme data or art: source-art visual review, generate:check, validate, and tests.
 - Site behavior: check, local server, browser search/filter/dialog/copy checks.
 - Installer: local dry-run plus registry/hash validation.
 - Commit: inspect status, diff, staged paths, and committed tree.
@@ -77,6 +78,7 @@ docs/CHANGELOG.md. Do not create empty task, memory, or archive files.
 
 - A GitHub Pages button cannot execute a local installer.
 - Upstream theme screenshots must never be used as background packages.
+- Image-job output must be reviewed for text, logos, identifiable IP, safe-area drift, and 16:9 cropping.
 - Windows and macOS use different Codex Dream Skin state roots.
 - Codex native supports an appearance preference, not full visual parity.
 - A build proves files, not rendered interaction.

@@ -3,6 +3,8 @@ node_modules/
 packages/
 themes/registry.json
 themes/*/
+!themes/source-art/
+!themes/source-art/**
 .DS_Store
 Thumbs.db
 *.log

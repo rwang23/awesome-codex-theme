@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "themeId": "starbound-rebel",
+  "workflow": "openai-image-job",
+  "model": "gpt-image-2",
+  "size": "1536x1024",
+  "quality": "high",
+  "jobId": "6547d1c9-f9a9-4cdf-8e59-8a4b6720dd74",
+  "promptSha256": "deb5a0b7f4cb054c1ca679b9be0a77534ecbe5256856861bf2e879add3d2b016",
+  "sourceSha256": "dd68bf22d055224eb2c7f6b2acc17cdd7547d44d8480d0907db4deb15481cf6b",
+  "disclosure": "AI-generated original source art. Prompt and output were reviewed for third-party characters, logos, signatures, and text before release."
+}

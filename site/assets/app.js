@@ -3,18 +3,20 @@ const translations = {
     navThemes: "Themes",
     navStandard: "Standard",
     navAdapters: "Adapters",
-    heroKicker: "OPEN STANDARD · TWO ORIGINAL COLLECTIONS",
-    heroLineOne: "Codex,",
-    heroLineTwo: "reimagined.",
-    heroIntro: "Discover code-free theme packs with declared rights, reproducible assets, verified hashes, and honest compatibility labels.",
-    browseThemes: "Browse 16 original themes",
+    navCreator: "Creation Skill",
+    heroKicker: "Open theme library · 16 original launch themes",
+    heroLineOne: "Give Codex",
+    heroLineTwo: "a change of scenery.",
+    heroIntro: "This is more than a background swap. Every theme has recorded provenance, two color modes, integrity checks, and an honest compatibility label.",
+    browseThemes: "Browse 16 themes",
+    viewRepo: "View the GitHub repository",
     statThemes: "original themes",
-    statCode: "executable files per pack",
+    statCode: "executable files inside each pack",
     statAdapters: "adapter targets",
     statContrast: "contrast gate",
-    collectionEyebrow: "TWO COLLECTIONS / ONE OPEN STANDARD",
+    collectionEyebrow: "Theme library",
     collectionTitle: "Fantasy realms meet city light.",
-    collectionIntro: "Move between original xianxia worlds and eight atmospheric Chinese city studies. Every background is procedural, rights-safe, and quiet enough for work.",
+    collectionIntro: "The launch set pairs four original xianxia worlds with chibi companions, plus eight Chinese city studies. Every source image is generated through an image job and reviewed by hand.",
     searchLabel: "Search themes",
     searchPlaceholder: "Search worlds, moods, tags…",
     filterAll: "All styles",
@@ -22,8 +24,8 @@ const translations = {
     filterChibi: "Chibi 04",
     filterCityscape: "City 08",
     emptyState: "No themes match this view.",
-    standardEyebrow: "THE CONTRACT",
-    standardTitle: "A theme should be inspectable before it is beautiful.",
+    standardEyebrow: "ACT theme pack standard",
+    standardTitle: "Before a theme looks good, it should earn your trust.",
     standardIntro: "The canonical .act-theme file is a ZIP-compatible package with one manifest and declared assets. JavaScript, shell scripts, remote CSS, and hidden runtime behavior are not allowed inside it.",
     viewSchema: "View JSON Schema",
     stepDeclareTitle: "Declare",
@@ -32,8 +34,8 @@ const translations = {
     stepVerifyBody: "SHA-256, file size, dimensions, package allowlist, rights fields, and WCAG contrast.",
     stepExportTitle: "Export",
     stepExportBody: "Generate engine-specific adapters outside the trusted canonical package.",
-    compatibilityEyebrow: "COMPATIBILITY, WITHOUT THEATER",
-    compatibilityTitle: "Every export says what it can actually do.",
+    compatibilityEyebrow: "Compatibility",
+    compatibilityTitle: "Every export explains its real limits.",
     compatibilityIntro: "Codex currently exposes an appearance preference, not a public full-theme package API. We label that adapter as appearance-only instead of promising visual parity.",
     tableTarget: "Target",
     tableCoverage: "Coverage",
@@ -44,10 +46,14 @@ const translations = {
     deliveryProfile: "Profile export",
     deliveryVerified: "Verified installer",
     deliveryManual: "Manual import",
-    closingKicker: "FREE TO USE · OPEN TO REVIEW · BUILT TO INTEROPERATE",
-    closingTitle: "Your workspace deserves a world of its own.",
-    browseCollection: "Explore the collection",
-    footerRights: "Original starter artwork is CC0. Project code is MIT.",
+    creatorEyebrow: "Let Codex guide the creation workflow",
+    creatorTitle: "Turn one visual idea into a verifiable theme.",
+    creatorIntro: "The repository includes $create-codex-theme. It covers the brief, originality review, image job, light and dark tokens, Registry entry, and browser acceptance check.",
+    creatorCta: "Open the creation Skill",
+    closingKicker: "Free to use · Open to review · Ready for contributors",
+    closingTitle: "Choose a theme and give your workspace its own weather.",
+    browseCollection: "Open the theme library",
+    footerRights: "Original AI artwork is released under CC0. Project code is MIT.",
     installEyebrow: "INSTALL / EXPORT",
     chooseMode: "Mode",
     chooseTarget: "Target",
@@ -81,27 +87,29 @@ const translations = {
     navThemes: "主题",
     navStandard: "标准",
     navAdapters: "适配器",
-    heroKicker: "开放标准 · 两组原创系列",
-    heroLineOne: "Codex，",
-    heroLineTwo: "自成一境。",
-    heroIntro: "探索不含执行代码的主题包：版权声明清楚、素材可复现、哈希可验证，兼容能力也不夸大。",
-    browseThemes: "浏览 16 套原创主题",
+    navCreator: "创作 Skill",
+    heroKicker: "开放标准 · 16 套原创首发主题",
+    heroLineOne: "给 Codex，",
+    heroLineTwo: "换一片风景。",
+    heroIntro: "这里不只是换背景。每套主题都有清楚的来源、双模式色板、完整性校验和如实标注的适配范围。",
+    browseThemes: "浏览 16 套主题",
+    viewRepo: "查看 GitHub 仓库",
     statThemes: "套原创主题",
-    statCode: "个主题包可执行文件",
+    statCode: "个包内可执行文件",
     statAdapters: "个适配目标",
     statContrast: "对比度门槛",
-    collectionEyebrow: "两组系列 / 同一套开放标准",
+    collectionEyebrow: "主题馆藏",
     collectionTitle: "修仙世界，也有城市灯火。",
-    collectionIntro: "在原创国风修仙世界和八座中国城市之间切换。每张背景都由程序生成，来源清楚，也给工作区留足安静空间。",
+    collectionIntro: "首发包含四组原创修仙世界的原画版与 Q 版，以及八座中国城市的氛围图景。全部源图经过 image job 生成与人工审查。",
     searchLabel: "搜索主题",
-    searchPlaceholder: "搜索世界、氛围或标签…",
-    filterAll: "全部风格",
-    filterCinematic: "原画感 04",
+    searchPlaceholder: "搜索世界、城市或氛围",
+    filterAll: "全部",
+    filterCinematic: "原画 04",
     filterChibi: "Q 版 04",
     filterCityscape: "城市 08",
     emptyState: "当前条件下没有主题。",
-    standardEyebrow: "主题契约",
-    standardTitle: "一套主题，应该先能被检查，再谈好看。",
+    standardEyebrow: "ACT 主题包标准",
+    standardTitle: "好看之前，先让一套主题值得信任。",
     standardIntro: "标准 .act-theme 是兼容 ZIP 的纯声明包，只包含一份 manifest 和已声明素材。包内不允许 JavaScript、Shell 脚本、远程 CSS 或隐藏运行逻辑。",
     viewSchema: "查看 JSON Schema",
     stepDeclareTitle: "声明",
@@ -110,8 +118,8 @@ const translations = {
     stepVerifyBody: "自动检查 SHA-256、体积、尺寸、文件白名单、版权字段与 WCAG 对比度。",
     stepExportTitle: "导出",
     stepExportBody: "在可信主题包之外，生成各引擎需要的独立适配产物。",
-    compatibilityEyebrow: "兼容能力，如实标注",
-    compatibilityTitle: "每一种导出，都说清楚自己真正能做什么。",
+    compatibilityEyebrow: "兼容能力",
+    compatibilityTitle: "每一种导出，都把能力边界说清楚。",
     compatibilityIntro: "Codex 当前公开的是外观偏好，而不是完整的自定义主题包 API。因此原生适配器明确标为“仅外观模式”，不会假装背景和配色已经原生生效。",
     tableTarget: "目标",
     tableCoverage: "覆盖程度",
@@ -122,10 +130,14 @@ const translations = {
     deliveryProfile: "配置导出",
     deliveryVerified: "校验后安装",
     deliveryManual: "手动导入",
-    closingKicker: "免费使用 · 开放审查 · 为互操作而生",
-    closingTitle: "你的工作区，也值得拥有自己的世界。",
-    browseCollection: "进入原创系列",
-    footerRights: "首发原创素材采用 CC0，项目代码采用 MIT。",
+    creatorEyebrow: "把创作流程交给 Codex",
+    creatorTitle: "一句想法，也能变成一套可验证的主题。",
+    creatorIntro: "仓库自带 $create-codex-theme Skill。它会带你完成 brief、原创性检查、image job、明暗 token、Registry 写入和浏览器验收。",
+    creatorCta: "查看创作 Skill",
+    closingKicker: "免费使用 · 开放审查 · 欢迎共创",
+    closingTitle: "先选一套，让工作区有一点自己的气候。",
+    browseCollection: "进入主题馆藏",
+    footerRights: "首发 AI 原创素材采用 CC0，项目代码采用 MIT。",
     installEyebrow: "安装 / 导出",
     chooseMode: "模式",
     chooseTarget: "目标引擎",
@@ -172,13 +184,15 @@ const trustNoteKeys = {
 };
 
 const state = {
-  locale: window.localStorage.getItem("act-locale") || (navigator.language.toLowerCase().startsWith("zh") ? "zh-CN" : "en"),
+  locale: window.localStorage.getItem("act-locale") || "zh-CN",
   collection: "all",
   filter: "all",
   query: "",
   registry: null,
   cards: new Map(),
   cardModes: new Map(),
+  heroTheme: null,
+  heroMode: "light",
   currentTheme: null,
   dialogMode: window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark",
   engine: "dream-skin",
@@ -188,6 +202,10 @@ const state = {
 const elements = {
   languageButton: document.querySelector("#languageButton"),
   languageLabel: document.querySelector("#languageLabel"),
+  heroPreview: document.querySelector("#heroPreview"),
+  heroThemeName: document.querySelector("#heroThemeName"),
+  heroThemeMeta: document.querySelector("#heroThemeMeta"),
+  heroMode: document.querySelector("#heroMode"),
   search: document.querySelector("#themeSearch"),
   collectionGroup: document.querySelector("#collectionGroup"),
   filterGroup: document.querySelector("#filterGroup"),
@@ -283,6 +301,16 @@ function renderCollectionPicker() {
   elements.collectionGroup.replaceChildren(fragment);
 }
 
+function updateHero(theme = state.heroTheme) {
+  if (!theme) return;
+  state.heroTheme = theme;
+  elements.heroPreview.src = assetUrl(theme.previews[state.heroMode].preview);
+  elements.heroPreview.alt = localized(theme.name) + " · " + t(state.heroMode);
+  elements.heroThemeName.textContent = localized(theme.name);
+  elements.heroThemeMeta.textContent = localized(collectionFor(theme)?.name) + " · " + t(state.heroMode);
+  setActiveButton(elements.heroMode, "data-mode", state.heroMode);
+}
+
 function updateLanguage() {
   document.documentElement.lang = state.locale;
   elements.languageLabel.textContent = state.locale === "en" ? "中文" : "English";
@@ -306,10 +334,13 @@ function updateLanguage() {
     card.image.alt = localized(theme.name) + " · " + t(state.cardModes.get(id));
     card.lightButton.setAttribute("aria-label", t("light"));
     card.darkButton.setAttribute("aria-label", t("dark"));
+    card.lightButton.textContent = state.locale === "zh-CN" ? "日" : "L";
+    card.darkButton.textContent = state.locale === "zh-CN" ? "夜" : "D";
   });
   elements.dialogMode.querySelector('[data-mode="light"]').textContent = t("light");
   elements.dialogMode.querySelector('[data-mode="dark"]').textContent = t("dark");
   if (state.currentTheme) updateDialog();
+  if (state.heroTheme) updateHero();
   applyFilters();
 }
 
@@ -339,8 +370,8 @@ function createCard(theme, index) {
   toggle.className = "card-mode-toggle";
   toggle.setAttribute("role", "group");
   toggle.setAttribute("aria-label", "Preview mode");
-  const lightButton = makeButton("☀");
-  const darkButton = makeButton("◐");
+  const lightButton = makeButton(state.locale === "zh-CN" ? "日" : "L");
+  const darkButton = makeButton(state.locale === "zh-CN" ? "夜" : "D");
   lightButton.dataset.mode = "light";
   darkButton.dataset.mode = "dark";
   lightButton.setAttribute("aria-label", t("light"));
@@ -353,7 +384,7 @@ function createCard(theme, index) {
   number.textContent = String(index + 1).padStart(2, "0") + " / " + String(state.registry.themes.length).padStart(2, "0");
   const license = document.createElement("span");
   license.className = "card-license";
-  license.textContent = theme.license.spdx;
+  license.textContent = "AI · " + theme.license.spdx;
   visual.append(number, license);
 
   const body = document.createElement("div");
@@ -392,6 +423,12 @@ function createCard(theme, index) {
   });
   visual.addEventListener("dblclick", function () {
     openDialog(theme, state.cardModes.get(theme.id));
+  });
+  article.addEventListener("mouseenter", function () {
+    updateHero(theme);
+  });
+  article.addEventListener("focusin", function () {
+    updateHero(theme);
   });
 
   const refs = {
@@ -533,6 +570,13 @@ function bindEvents() {
     updateLanguage();
   });
 
+  elements.heroMode.addEventListener("click", function (event) {
+    const button = event.target.closest("button[data-mode]");
+    if (!button) return;
+    state.heroMode = button.dataset.mode;
+    updateHero();
+  });
+
   elements.search.addEventListener("input", function () {
     state.query = elements.search.value;
     applyFilters();
@@ -593,6 +637,7 @@ async function loadRegistry() {
       throw new Error("Unexpected registry contract");
     }
     state.registry = registry;
+    state.heroTheme = registry.themes[0] || null;
     renderCollectionPicker();
     const fragment = document.createDocumentFragment();
     registry.themes.forEach(function (theme, index) {
@@ -600,6 +645,7 @@ async function loadRegistry() {
     });
     elements.gallery.replaceChildren(fragment);
     elements.gallery.setAttribute("aria-busy", "false");
+    updateHero();
     updateLanguage();
   } catch (error) {
     elements.gallery.setAttribute("aria-busy", "false");

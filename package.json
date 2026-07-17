@@ -5,6 +5,7 @@
   "type": "module",
   "description": "A free, community-run gallery and installer registry for Codex desktop themes.",
   "scripts": {
+    "art:generate": "node scripts/run-image-jobs.mjs",
     "generate": "node scripts/generate-themes.mjs",
     "generate:check": "node scripts/generate-themes.mjs --check",
     "validate": "node scripts/validate.mjs",

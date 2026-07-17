@@ -1,143 +1,193 @@
 <!doctype html>
-<html lang="en">
+<html lang="zh-CN">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="A rights-safe, code-free theme pack standard, registry, validator, and gallery for Codex.">
-    <meta name="color-scheme" content="dark light">
-    <meta name="theme-color" content="#10110e">
-    <title>Awesome Codex Theme | Theme packs with a trust boundary</title>
+    <meta name="description" content="面向 Codex 的开放主题包标准、Registry、Validator 与原创主题 Gallery。">
+    <meta name="color-scheme" content="light">
+    <meta name="theme-color" content="#f4f3ee">
+    <title>Awesome Codex Theme | Codex 主题档案馆</title>
     <link rel="stylesheet" href="./assets/styles.css">
   </head>
   <body>
-    <a class="skip-link" href="#gallery">Skip to themes</a>
+    <a class="skip-link" href="#gallery">跳到主题列表</a>
 
     <header class="site-header">
-      <a class="wordmark" href="#top" aria-label="Awesome Codex Theme home">
-        <span class="wordmark-mark" aria-hidden="true">A/C</span>
-        <span>Awesome Codex Theme</span>
+      <a class="wordmark" href="#top" aria-label="Awesome Codex Theme 首页">
+        <span class="wordmark-mark" aria-hidden="true">境</span>
+        <span class="wordmark-copy">
+          <strong>Awesome Codex Theme</strong>
+          <small>开放主题档案馆</small>
+        </span>
       </a>
-      <nav class="primary-nav" aria-label="Primary navigation">
-        <a href="#gallery" data-i18n="navThemes">Themes</a>
-        <a href="#standard" data-i18n="navStandard">Standard</a>
-        <a href="#compatibility" data-i18n="navAdapters">Adapters</a>
+      <nav class="primary-nav" aria-label="主导航">
+        <a href="#gallery" data-i18n="navThemes">主题</a>
+        <a href="#standard" data-i18n="navStandard">标准</a>
+        <a href="#compatibility" data-i18n="navAdapters">适配器</a>
+        <a href="#creator" data-i18n="navCreator">创作 Skill</a>
       </nav>
-      <button class="language-button" id="languageButton" type="button" aria-label="Switch language">
-        <span aria-hidden="true">文/A</span>
-        <span id="languageLabel">中文</span>
+      <button class="language-button" id="languageButton" type="button" aria-label="切换语言">
+        <span class="language-glyph" aria-hidden="true">文</span>
+        <span id="languageLabel">English</span>
       </button>
     </header>
 
     <main id="top">
       <section class="hero" aria-labelledby="heroTitle">
-        <div class="hero-kicker">
-          <span class="status-dot" aria-hidden="true"></span>
-          <span data-i18n="heroKicker">OPEN STANDARD · TWO ORIGINAL COLLECTIONS</span>
-        </div>
-        <h1 id="heroTitle">
-          <span data-i18n="heroLineOne">Codex,</span>
-          <span class="hero-accent" data-i18n="heroLineTwo">reimagined.</span>
-        </h1>
-        <div class="hero-lower">
+        <div class="hero-copy">
+          <div class="hero-kicker">
+            <span class="signal" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span data-i18n="heroKicker">开放标准 · 16 套原创首发主题</span>
+          </div>
+          <h1 id="heroTitle">
+            <span data-i18n="heroLineOne">给 Codex，</span>
+            <span data-i18n="heroLineTwo">换一片风景。</span>
+          </h1>
           <p class="hero-intro" data-i18n="heroIntro">
-            Discover code-free theme packs with declared rights, reproducible assets,
-            verified hashes, and honest compatibility labels.
+            这里不只是换背景。每套主题都有清楚的来源、双模式色板、完整性校验和如实标注的适配范围。
           </p>
-          <a class="hero-cta" href="#gallery">
-            <span data-i18n="browseThemes">Browse 16 original themes</span>
-            <span aria-hidden="true">↘</span>
-          </a>
+          <div class="hero-actions">
+            <a class="hero-cta" href="#gallery">
+              <span data-i18n="browseThemes">浏览 16 套主题</span>
+              <span aria-hidden="true">↓</span>
+            </a>
+            <a class="hero-repo" href="https://github.com/rwang23/awesome-codex-theme">
+              <span data-i18n="viewRepo">查看 GitHub 仓库</span>
+              <span aria-hidden="true">↗</span>
+            </a>
+          </div>
         </div>
-        <div class="hero-orbit hero-orbit-one" aria-hidden="true"></div>
-        <div class="hero-orbit hero-orbit-two" aria-hidden="true"></div>
-        <span class="hero-seal" aria-hidden="true">ACT<br>02</span>
+
+        <div class="preview-theater" aria-label="主题实时预览">
+          <div class="theater-halo" aria-hidden="true"></div>
+          <div class="workspace-window">
+            <div class="workspace-bar">
+              <div class="window-dots" aria-hidden="true"><i></i><i></i><i></i></div>
+              <span>codex / theme-preview</span>
+              <div class="hero-mode-toggle" id="heroMode" role="group" aria-label="主题预览模式">
+                <button type="button" data-mode="light">日</button>
+                <button type="button" data-mode="dark">夜</button>
+              </div>
+            </div>
+            <div class="workspace-canvas">
+              <img id="heroPreview" src="./themes/qinglan-odyssey/previews/light.png" alt="">
+              <div class="workspace-ui" aria-hidden="true">
+                <div class="workspace-rail">
+                  <span></span><span></span><span></span><span></span>
+                </div>
+                <div class="workspace-thread">
+                  <div class="thread-line short"></div>
+                  <div class="thread-line"></div>
+                  <div class="thread-line medium"></div>
+                  <div class="thread-card"></div>
+                </div>
+              </div>
+            </div>
+            <div class="workspace-caption">
+              <div>
+                <span class="caption-dot" aria-hidden="true"></span>
+                <strong id="heroThemeName">青岚问道</strong>
+              </div>
+              <span id="heroThemeMeta">原创国风修仙 01 · 明亮</span>
+            </div>
+          </div>
+          <span class="theater-note note-one" aria-hidden="true">SHA-256</span>
+          <span class="theater-note note-two" aria-hidden="true">0 EXEC</span>
+        </div>
       </section>
 
-      <section class="proof-strip" aria-label="Project highlights">
+      <section class="proof-strip" aria-label="项目状态">
         <div>
+          <span class="proof-icon jade" aria-hidden="true"></span>
           <strong>16</strong>
-          <span data-i18n="statThemes">original themes</span>
+          <span data-i18n="statThemes">套原创主题</span>
         </div>
         <div>
+          <span class="proof-icon vermilion" aria-hidden="true"></span>
           <strong>00</strong>
-          <span data-i18n="statCode">executable files per pack</span>
+          <span data-i18n="statCode">个包内可执行文件</span>
         </div>
         <div>
+          <span class="proof-icon gold" aria-hidden="true"></span>
           <strong>04</strong>
-          <span data-i18n="statAdapters">adapter targets</span>
+          <span data-i18n="statAdapters">个适配目标</span>
         </div>
         <div>
+          <span class="proof-icon indigo" aria-hidden="true"></span>
           <strong>AA</strong>
-          <span data-i18n="statContrast">contrast gate</span>
+          <span data-i18n="statContrast">对比度门槛</span>
         </div>
       </section>
 
       <section class="collection" aria-labelledby="collectionTitle">
         <div class="section-heading">
           <div>
-            <p class="eyebrow" data-i18n="collectionEyebrow">TWO COLLECTIONS / ONE OPEN STANDARD</p>
-            <h2 id="collectionTitle" data-i18n="collectionTitle">Fantasy realms meet city light.</h2>
+            <p class="eyebrow" data-i18n="collectionEyebrow">主题馆藏</p>
+            <h2 id="collectionTitle" data-i18n="collectionTitle">修仙世界，也有城市灯火。</h2>
           </div>
           <p data-i18n="collectionIntro">
-            Move between original xianxia worlds and eight atmospheric Chinese city studies.
-            Every background is procedural, rights-safe, and quiet enough for work.
+            首发包含四组原创修仙世界的原画版与 Q 版，以及八座中国城市的氛围图景。全部源图经过 image job 生成与人工审查。
           </p>
         </div>
 
-        <div class="collection-picker" id="collectionGroup" role="group" aria-label="Theme collection"></div>
+        <div class="collection-picker" id="collectionGroup" role="group" aria-label="主题系列"></div>
 
-        <div class="gallery-controls" aria-label="Theme filters">
+        <div class="gallery-controls" aria-label="主题筛选">
           <label class="search-field" for="themeSearch">
-            <span aria-hidden="true">⌕</span>
-            <span class="sr-only" data-i18n="searchLabel">Search themes</span>
-            <input id="themeSearch" type="search" autocomplete="off" data-i18n-placeholder="searchPlaceholder" placeholder="Search worlds, moods, tags…">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="11" cy="11" r="6.5"></circle>
+              <path d="m16 16 4 4"></path>
+            </svg>
+            <span class="sr-only" data-i18n="searchLabel">搜索主题</span>
+            <input id="themeSearch" type="search" autocomplete="off" data-i18n-placeholder="searchPlaceholder" placeholder="搜索世界、城市或氛围">
           </label>
-          <div class="filter-group" id="filterGroup" role="group" aria-label="Theme style">
-            <button class="filter-button is-active" type="button" data-filter="all" aria-pressed="true" data-i18n="filterAll">All styles</button>
-            <button class="filter-button" type="button" data-filter="cinematic" aria-pressed="false" data-i18n="filterCinematic">Cinematic 04</button>
-            <button class="filter-button" type="button" data-filter="chibi" aria-pressed="false" data-i18n="filterChibi">Chibi 04</button>
-            <button class="filter-button" type="button" data-filter="cityscape" aria-pressed="false" data-i18n="filterCityscape">City 08</button>
+          <div class="filter-group" id="filterGroup" role="group" aria-label="主题风格">
+            <button class="filter-button is-active" type="button" data-filter="all" aria-pressed="true" data-i18n="filterAll">全部</button>
+            <button class="filter-button" type="button" data-filter="cinematic" aria-pressed="false" data-i18n="filterCinematic">原画 04</button>
+            <button class="filter-button" type="button" data-filter="chibi" aria-pressed="false" data-i18n="filterChibi">Q 版 04</button>
+            <button class="filter-button" type="button" data-filter="cityscape" aria-pressed="false" data-i18n="filterCityscape">城市 08</button>
           </div>
         </div>
 
         <div class="gallery-grid" id="gallery" aria-live="polite" aria-busy="true"></div>
-        <p class="empty-state" id="emptyState" hidden data-i18n="emptyState">No themes match this view.</p>
+        <p class="empty-state" id="emptyState" hidden data-i18n="emptyState">没有找到符合条件的主题。</p>
       </section>
 
       <section class="standard-section" id="standard" aria-labelledby="standardTitle">
         <div class="standard-lead">
-          <p class="eyebrow" data-i18n="standardEyebrow">THE CONTRACT</p>
-          <h2 id="standardTitle" data-i18n="standardTitle">A theme should be inspectable before it is beautiful.</h2>
+          <p class="eyebrow" data-i18n="standardEyebrow">ACT 主题包标准</p>
+          <h2 id="standardTitle" data-i18n="standardTitle">好看之前，先让一套主题值得信任。</h2>
           <p data-i18n="standardIntro">
-            The canonical .act-theme file is a ZIP-compatible package with one manifest
-            and declared assets. JavaScript, shell scripts, remote CSS, and hidden runtime
-            behavior are not allowed inside it.
+            标准 .act-theme 是兼容 ZIP 的声明式主题包，只包含 manifest 与已声明素材。包内不允许脚本、远程 CSS 或隐藏运行逻辑。
           </p>
           <a class="text-link" href="./schemas/theme-pack.schema.json">
-            <span data-i18n="viewSchema">View JSON Schema</span>
+            <span data-i18n="viewSchema">查看 JSON Schema</span>
             <span aria-hidden="true">↗</span>
           </a>
         </div>
         <ol class="standard-steps">
           <li>
-            <span>01</span>
+            <span class="step-glyph">宣</span>
             <div>
-              <h3 data-i18n="stepDeclareTitle">Declare</h3>
-              <p data-i18n="stepDeclareBody">Identity, localized copy, compatibility, motion, provenance, and every asset path.</p>
+              <small>01</small>
+              <h3 data-i18n="stepDeclareTitle">声明</h3>
+              <p data-i18n="stepDeclareBody">写明身份、多语言文案、兼容范围、素材来源和每一个路径。</p>
             </div>
           </li>
           <li>
-            <span>02</span>
+            <span class="step-glyph">验</span>
             <div>
-              <h3 data-i18n="stepVerifyTitle">Verify</h3>
-              <p data-i18n="stepVerifyBody">SHA-256, file size, dimensions, package allowlist, rights fields, and WCAG contrast.</p>
+              <small>02</small>
+              <h3 data-i18n="stepVerifyTitle">验证</h3>
+              <p data-i18n="stepVerifyBody">检查哈希、尺寸、文件白名单、版权字段和 WCAG 对比度。</p>
             </div>
           </li>
           <li>
-            <span>03</span>
+            <span class="step-glyph">出</span>
             <div>
-              <h3 data-i18n="stepExportTitle">Export</h3>
-              <p data-i18n="stepExportBody">Generate engine-specific adapters outside the trusted canonical package.</p>
+              <small>03</small>
+              <h3 data-i18n="stepExportTitle">导出</h3>
+              <p data-i18n="stepExportBody">在可信主题包之外，生成不同引擎需要的适配产物。</p>
             </div>
           </li>
         </ol>
@@ -146,49 +196,71 @@
       <section class="compatibility-section" id="compatibility" aria-labelledby="compatibilityTitle">
         <div class="section-heading compatibility-heading">
           <div>
-            <p class="eyebrow" data-i18n="compatibilityEyebrow">COMPATIBILITY, WITHOUT THEATER</p>
-            <h2 id="compatibilityTitle" data-i18n="compatibilityTitle">Every export says what it can actually do.</h2>
+            <p class="eyebrow" data-i18n="compatibilityEyebrow">兼容能力</p>
+            <h2 id="compatibilityTitle" data-i18n="compatibilityTitle">每一种导出，都把能力边界说清楚。</h2>
           </div>
           <p data-i18n="compatibilityIntro">
-            Codex currently exposes an appearance preference, not a public full-theme
-            package API. We label that adapter as appearance-only instead of promising
-            visual parity.
+            Codex 当前公开的是外观偏好，不是完整自定义主题 API。原生适配器因此明确标注为“仅外观模式”。
           </p>
         </div>
-        <div class="compatibility-table" role="table" aria-label="Adapter compatibility">
+        <div class="compatibility-table" role="table" aria-label="适配器兼容情况">
           <div class="compatibility-row compatibility-header" role="row">
-            <span role="columnheader" data-i18n="tableTarget">Target</span>
-            <span role="columnheader" data-i18n="tableCoverage">Coverage</span>
-            <span role="columnheader" data-i18n="tableDelivery">Delivery</span>
+            <span role="columnheader" data-i18n="tableTarget">目标</span>
+            <span role="columnheader" data-i18n="tableCoverage">覆盖程度</span>
+            <span role="columnheader" data-i18n="tableDelivery">交付方式</span>
           </div>
           <div class="compatibility-row" role="row">
             <strong role="cell">Codex native</strong>
-            <span role="cell"><i class="coverage-dot partial"></i><span data-i18n="coverageAppearance">Appearance only</span></span>
-            <span role="cell" data-i18n="deliveryProfile">Profile export</span>
+            <span role="cell"><i class="coverage-dot partial"></i><span data-i18n="coverageAppearance">仅外观模式</span></span>
+            <span role="cell" data-i18n="deliveryProfile">配置导出</span>
           </div>
           <div class="compatibility-row" role="row">
             <strong role="cell">Codex Dream Skin</strong>
-            <span role="cell"><i class="coverage-dot full"></i><span data-i18n="coverageFull">Full visual export</span></span>
-            <span role="cell" data-i18n="deliveryVerified">Verified installer</span>
+            <span role="cell"><i class="coverage-dot full"></i><span data-i18n="coverageFull">完整视觉导出</span></span>
+            <span role="cell" data-i18n="deliveryVerified">校验后安装</span>
           </div>
           <div class="compatibility-row" role="row">
             <strong role="cell">HeiGe Skin Studio</strong>
-            <span role="cell"><i class="coverage-dot full"></i><span data-i18n="coverageFull">Full visual export</span></span>
-            <span role="cell" data-i18n="deliveryManual">Manual import</span>
+            <span role="cell"><i class="coverage-dot full"></i><span data-i18n="coverageFull">完整视觉导出</span></span>
+            <span role="cell" data-i18n="deliveryManual">手动导入</span>
           </div>
           <div class="compatibility-row" role="row">
             <strong role="cell">CodeDrobe</strong>
-            <span role="cell"><i class="coverage-dot source"></i><span data-i18n="coverageSource">Source export</span></span>
-            <span role="cell" data-i18n="deliveryManual">Manual import</span>
+            <span role="cell"><i class="coverage-dot source"></i><span data-i18n="coverageSource">源码式导出</span></span>
+            <span role="cell" data-i18n="deliveryManual">手动导入</span>
           </div>
         </div>
       </section>
 
+      <section class="creator-section" id="creator" aria-labelledby="creatorTitle">
+        <div class="creator-orb" aria-hidden="true">
+          <span>theme.json</span>
+          <i></i>
+          <strong>$</strong>
+        </div>
+        <div>
+          <p class="eyebrow" data-i18n="creatorEyebrow">把创作流程交给 Codex</p>
+          <h2 id="creatorTitle" data-i18n="creatorTitle">一句想法，也能变成一套可验证的主题。</h2>
+          <p data-i18n="creatorIntro">
+            仓库自带 $create-codex-theme Skill。它会带你完成 brief、原创性检查、image job、明暗 token、Registry 写入和浏览器验收。
+          </p>
+          <a href="https://github.com/rwang23/awesome-codex-theme/tree/main/.codex/skills/create-codex-theme">
+            <span data-i18n="creatorCta">查看创作 Skill</span>
+            <span aria-hidden="true">↗</span>
+          </a>
+        </div>
+        <pre aria-label="Skill 调用示例"><code>Use $create-codex-theme
+to create an original
+city rain theme.</code></pre>
+      </section>
+
       <section class="closing-section">
-        <p data-i18n="closingKicker">FREE TO USE · OPEN TO REVIEW · BUILT TO INTEROPERATE</p>
-        <h2 data-i18n="closingTitle">Your workspace deserves a world of its own.</h2>
+        <div>
+          <p data-i18n="closingKicker">免费使用 · 开放审查 · 欢迎共创</p>
+          <h2 data-i18n="closingTitle">先选一套，让工作区有一点自己的气候。</h2>
+        </div>
         <a href="#gallery">
-          <span data-i18n="browseCollection">Explore the collection</span>
+          <span data-i18n="browseCollection">进入主题馆藏</span>
           <span aria-hidden="true">↑</span>
         </a>
       </section>
@@ -196,10 +268,13 @@
 
     <footer class="site-footer">
       <div class="wordmark footer-wordmark">
-        <span class="wordmark-mark" aria-hidden="true">A/C</span>
-        <span>Awesome Codex Theme</span>
+        <span class="wordmark-mark" aria-hidden="true">境</span>
+        <span class="wordmark-copy">
+          <strong>Awesome Codex Theme</strong>
+          <small>Theme Pack Standard + Registry</small>
+        </span>
       </div>
-      <p data-i18n="footerRights">Original starter artwork is CC0. Project code is MIT.</p>
+      <p data-i18n="footerRights">首发 AI 原创素材采用 CC0，项目代码采用 MIT。</p>
       <div>
         <a href="./NOTICE.md">Notice</a>
         <a href="./LICENSE">License</a>
@@ -209,32 +284,32 @@
 
     <dialog class="install-dialog" id="installDialog" aria-labelledby="dialogTitle">
       <form method="dialog">
-        <button class="dialog-close" value="close" aria-label="Close dialog">×</button>
+        <button class="dialog-close" value="close" aria-label="关闭弹窗">×</button>
       </form>
       <div class="dialog-art">
         <img id="dialogPreview" alt="">
         <span id="dialogVariant"></span>
       </div>
       <div class="dialog-content">
-        <p class="eyebrow" data-i18n="installEyebrow">INSTALL / EXPORT</p>
+        <p class="eyebrow" data-i18n="installEyebrow">安装 / 导出</p>
         <h2 id="dialogTitle"></h2>
         <p id="dialogDescription"></p>
 
         <div class="dialog-options">
           <fieldset>
-            <legend data-i18n="chooseMode">Mode</legend>
+            <legend data-i18n="chooseMode">模式</legend>
             <div class="segment-control" id="dialogMode">
-              <button type="button" data-mode="light">Light</button>
-              <button type="button" data-mode="dark">Dark</button>
+              <button type="button" data-mode="light">明亮</button>
+              <button type="button" data-mode="dark">暗色</button>
             </div>
           </fieldset>
           <label>
-            <span data-i18n="chooseTarget">Target</span>
+            <span data-i18n="chooseTarget">目标引擎</span>
             <select id="engineSelect">
-              <option value="dream-skin">Codex Dream Skin · Full</option>
-              <option value="codex-native">Codex native · Appearance only</option>
-              <option value="heige-skin-studio">HeiGe Skin Studio · Full export</option>
-              <option value="codedrobe">CodeDrobe · Source export</option>
+              <option value="dream-skin">Codex Dream Skin · 完整视觉</option>
+              <option value="codex-native">Codex 原生 · 仅外观模式</option>
+              <option value="heige-skin-studio">HeiGe Skin Studio · 完整导出</option>
+              <option value="codedrobe">CodeDrobe · 源码式导出</option>
             </select>
           </label>
         </div>
@@ -243,7 +318,7 @@
 
         <div class="command-panel" id="commandPanel">
           <div class="command-heading">
-            <span data-i18n="verifiedCommand">Verified install command</span>
+            <span data-i18n="verifiedCommand">带完整性校验的安装命令</span>
             <div class="os-switch" id="osSwitch">
               <button type="button" data-os="windows">Windows</button>
               <button type="button" data-os="macos">macOS</button>
@@ -251,23 +326,22 @@
           </div>
           <code id="installCommand"></code>
           <button class="copy-button" id="copyCommand" type="button">
-            <span data-i18n="copyCommand">Copy command</span>
+            <span data-i18n="copyCommand">复制命令</span>
             <span aria-hidden="true">↗</span>
           </button>
         </div>
 
         <div class="dialog-actions">
           <a class="primary-action" id="downloadAdapter" download>
-            <span data-i18n="downloadExport">Download adapter bundle</span>
+            <span data-i18n="downloadExport">下载适配器包</span>
             <span aria-hidden="true">↓</span>
           </a>
           <a class="secondary-action" id="downloadPackage" download>
-            <span data-i18n="downloadPackage">Canonical .act-theme</span>
+            <span data-i18n="downloadPackage">标准 .act-theme</span>
           </a>
         </div>
         <p class="trust-note" id="trustNote" data-i18n="trustNoteDream">
-          The browser never writes to Codex. The command downloads a reviewable installer,
-          verifies the selected adapter and image hashes, then writes to the Dream Skin library.
+          浏览器不会直接改写 Codex。命令会下载可审查的安装器，核对适配包与背景图哈希后，再写入 Dream Skin 主题库。
         </p>
       </div>
     </dialog>

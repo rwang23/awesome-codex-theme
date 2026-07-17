@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "themeId": "beijing-meridian",
+  "workflow": "openai-image-job",
+  "model": "gpt-image-2",
+  "size": "1536x1024",
+  "quality": "high",
+  "jobId": "4933a9a9-bb79-4d40-9b32-42898dd2232d",
+  "promptSha256": "e7ee63f50432850b4514f09f498aefcd22043646d2d9a0b21d6da54657f74691",
+  "sourceSha256": "f00b4f140e3956cb987b988d80e2c664f8f0caf01b3cca32affd5f8bfaea2ae3",
+  "disclosure": "AI-generated original source art. Prompt and output were reviewed for third-party characters, logos, signatures, and text before release."
+}

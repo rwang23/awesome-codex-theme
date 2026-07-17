@@ -1,0 +1,53 @@
+{
+  "id": "suzhou-canal-mist",
+  "version": "1.0.0",
+  "collection": "china-city-atlas-01",
+  "pair": "suzhou-canal-mist",
+  "variant": "cityscape",
+  "name": {
+    "zh-CN": "苏州·运河晨雾",
+    "en": "Suzhou Canal Mist"
+  },
+  "description": {
+    "zh-CN": "晨雾沿着运河与白墙铺开，右侧保留水巷叙事，左侧安静承载工作区。",
+    "en": "Morning mist follows the canal and whitewashed walls, keeping the story on the right and the workspace quiet on the left."
+  },
+  "tags": [
+    "city",
+    "cityscape",
+    "canal",
+    "original"
+  ],
+  "art": {
+    "focusX": 0.76,
+    "focusY": 0.48,
+    "safeArea": "left",
+    "taskMode": "ambient"
+  },
+  "imagePrompt": "An invented Jiangnan canal neighborhood at early morning, whitewashed walls, dark tiled roofs, plane trees, small stone bridges, quiet water, and one warm window on the right. Evoke Suzhou through canal rhythm without copying a famous garden or exact landmark.",
+  "rightsStatement": "Original city composition. No exact landmark, logo, official mascot, screenshot, photograph, or third-party artwork.",
+  "light": {
+    "tokens": {
+      "background": "#EEF3F0",
+      "surface": "#FFFFFF",
+      "surfaceAlt": "#DDE9E3",
+      "text": "#17241F",
+      "muted": "#52665D",
+      "accent": "#276A56",
+      "accentContrast": "#FFFFFF",
+      "border": "#9DB5A9"
+    }
+  },
+  "dark": {
+    "tokens": {
+      "background": "#08140F",
+      "surface": "#10231B",
+      "surfaceAlt": "#183328",
+      "text": "#F0F8F3",
+      "muted": "#A7BBB0",
+      "accent": "#75D5AE",
+      "accentContrast": "#082117",
+      "border": "#355F4D"
+    }
+  }
+}
