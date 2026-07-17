@@ -2,17 +2,17 @@ const translations = {
   en: {
     navThemes: "Themes",
     navStandard: "Standard",
-    navAdapters: "Adapters",
+    navNative: "Codex Native",
     navCreator: "Creation Skill",
     heroKicker: "Open standard · Original and unofficial fan-art collections",
     heroLineOne: "Give Codex",
     heroLineTwo: "a change of scenery.",
-    heroIntro: "This is more than a background swap. Every theme has recorded provenance, two color modes, integrity checks, and an honest compatibility label.",
+    heroIntro: "Each gallery cover leads to a real Codex Native palette with recorded provenance, two color modes, integrity checks, and a versioned import string.",
     browseThemes: "Browse every theme",
     viewRepo: "View the GitHub repository",
     statThemes: "themes",
     statCode: "executable files inside each pack",
-    statAdapters: "adapter targets",
+    statNative: "native target",
     statContrast: "contrast gate",
     collectionEyebrow: "Theme library",
     collectionTitle: "Original worlds, city light, and scenes fans remember.",
@@ -34,19 +34,15 @@ const translations = {
     stepVerifyTitle: "Verify",
     stepVerifyBody: "SHA-256, file size, dimensions, package allowlist, rights fields, and WCAG contrast.",
     stepExportTitle: "Export",
-    stepExportBody: "Generate engine-specific adapters outside the trusted canonical package.",
-    compatibilityEyebrow: "Compatibility",
-    compatibilityTitle: "Every export explains its real limits.",
-    compatibilityIntro: "Codex currently exposes an appearance preference, not a public full-theme package API. We label that adapter as appearance-only instead of promising visual parity.",
+    stepExportBody: "Generate a Codex Native v1 string that the desktop app can import directly.",
+    compatibilityEyebrow: "Codex Native",
+    compatibilityTitle: "One target, using the real Codex theme contract.",
+    compatibilityIntro: "Codex can import accent, background, foreground, contrast, fonts, syntax theme, and semantic colors. Gallery artwork remains cover art because the native contract does not accept background images.",
     tableTarget: "Target",
     tableCoverage: "Coverage",
     tableDelivery: "Delivery",
-    coverageAppearance: "Appearance only",
-    coverageFull: "Full visual export",
-    coverageSource: "Source export",
-    deliveryProfile: "Profile export",
-    deliveryVerified: "Verified installer",
-    deliveryManual: "Manual import",
+    coverageAppearance: "Native theme v1",
+    deliveryProfile: "Copy and import",
     creatorEyebrow: "Let Codex guide the creation workflow",
     creatorTitle: "Turn one visual idea into a verifiable theme.",
     creatorIntro: "The repository includes $create-codex-theme. It covers the brief, originality review, image job, light and dark tokens, Registry entry, and browser acceptance check.",
@@ -55,34 +51,31 @@ const translations = {
     closingTitle: "Choose a theme and give your workspace its own weather.",
     browseCollection: "Open the theme library",
     footerRights: "Original AI artwork is CC0. Unofficial fan art follows the separate fan-art notice. Project code is MIT.",
-    installEyebrow: "INSTALL / EXPORT",
+    installEyebrow: "USE IN CODEX",
     chooseMode: "Mode",
-    chooseTarget: "Target",
-    verifiedCommand: "Verified install command",
-    copyCommand: "Copy command",
-    downloadExport: "Download adapter bundle",
+    verifiedCommand: "Codex Native theme string",
+    copyCommand: "Copy theme",
+    openSettings: "Open Codex settings",
+    downloadExport: "Download native theme",
     downloadPackage: "Canonical .act-theme",
-    trustNoteDream: "The browser never writes to Codex. The command downloads a reviewable installer, verifies the selected adapter and image hashes, then writes to the Dream Skin library.",
-    trustNoteNative: "The browser never writes to Codex. The native export only records the light or dark appearance preference; it does not apply the background or custom palette.",
-    trustNoteManual: "The browser never launches the target app. Download and inspect the adapter bundle, then import the matching export manually.",
-    installTheme: "Install or export",
+    trustNoteNative: "Copy the string, open Codex Settings > Appearance, choose the matching Light or Dark theme, and select Import. The illustration is a gallery cover and is not applied as an app background.",
+    installTheme: "Use in Codex",
     original: "Original",
     fanArtBadge: "Unofficial fan art",
     fanArtLicense: "FAN ART",
     fanArtNotice: "Unofficial AI fan art. No official stills, logos, or promotional assets were used. No license or endorsement from the underlying rights holders is claimed; personal, non-commercial use only.",
+    coverArt: "GALLERY COVER",
+    coverBadge: "COVER",
     cinematic: "Cinematic",
     chibi: "Chibi",
     cityscape: "City study",
     scene: "Memory scene",
     light: "Light",
     dark: "Dark",
-    copied: "Install command copied.",
-    copyFailed: "Copy failed. Select the command manually.",
+    copied: "Codex Native theme copied.",
+    copyFailed: "Copy failed. Select the theme string manually.",
     loadFailed: "The registry could not be loaded. Run the build and serve this directory over HTTP.",
-    capabilityDream: "Full visual export. The installer verifies the adapter ZIP and background before adding the theme to the existing Dream Skin library.",
-    capabilityNative: "Appearance-only. Codex does not currently expose a public full custom-theme package API, so the background and palette cannot be applied natively.",
-    capabilityHeige: "Full visual source export for manual import. Awesome Codex Theme does not control or silently launch the target application.",
-    capabilityCodedrobe: "Source export with a generated CSS target. Review and import it through the CodeDrobe theme workflow.",
+    capabilityNative: "Tested with Codex desktop 26.715.2305.0. The import applies the palette, contrast, semantic colors, and built-in Codex syntax theme without CSS injection or executable code.",
     resultCount: "themes shown",
     allCollections: "All collections",
     allCollectionsCaption: "Original, city, and unofficial fan-art themes",
@@ -91,17 +84,17 @@ const translations = {
   "zh-CN": {
     navThemes: "主题",
     navStandard: "标准",
-    navAdapters: "适配器",
+    navNative: "Codex Native",
     navCreator: "创作 Skill",
     heroKicker: "开放标准 · 原创与非官方 Fan Art 双轨主题",
     heroLineOne: "给 Codex，",
     heroLineTwo: "换一片风景。",
-    heroIntro: "这里不只是换背景。每套主题都有清楚的来源、双模式色板、完整性校验和如实标注的适配范围。",
+    heroIntro: "每张馆藏封面都对应一套可由 Codex 原生导入的配色，包含明暗模式、来源记录、完整性校验和版本化主题字符串。",
     browseThemes: "浏览全部主题",
     viewRepo: "查看 GitHub 仓库",
     statThemes: "套主题",
     statCode: "个包内可执行文件",
-    statAdapters: "个适配目标",
+    statNative: "个原生目标",
     statContrast: "对比度门槛",
     collectionEyebrow: "主题馆藏",
     collectionTitle: "原创世界、城市灯火，也有一眼认出的名场面。",
@@ -123,19 +116,15 @@ const translations = {
     stepVerifyTitle: "验证",
     stepVerifyBody: "自动检查 SHA-256、体积、尺寸、文件白名单、版权字段与 WCAG 对比度。",
     stepExportTitle: "导出",
-    stepExportBody: "在可信主题包之外，生成各引擎需要的独立适配产物。",
-    compatibilityEyebrow: "兼容能力",
-    compatibilityTitle: "每一种导出，都把能力边界说清楚。",
-    compatibilityIntro: "Codex 当前公开的是外观偏好，而不是完整的自定义主题包 API。因此原生适配器明确标为“仅外观模式”，不会假装背景和配色已经原生生效。",
+    stepExportBody: "生成 Codex 桌面版能够直接导入的 Native v1 主题字符串。",
+    compatibilityEyebrow: "Codex Native",
+    compatibilityTitle: "只做一个目标，而且使用真实的 Codex 主题契约。",
+    compatibilityIntro: "Codex 原生支持强调色、背景色、前景色、对比度、字体、代码主题和语义色。原生契约不接受背景图片，因此 Gallery 插画会明确标为封面，而不是伪装成实机截图。",
     tableTarget: "目标",
     tableCoverage: "覆盖程度",
     tableDelivery: "交付方式",
-    coverageAppearance: "仅外观模式",
-    coverageFull: "完整视觉导出",
-    coverageSource: "源码式导出",
-    deliveryProfile: "配置导出",
-    deliveryVerified: "校验后安装",
-    deliveryManual: "手动导入",
+    coverageAppearance: "原生主题 v1",
+    deliveryProfile: "复制并导入",
     creatorEyebrow: "把创作流程交给 Codex",
     creatorTitle: "一句想法，也能变成一套可验证的主题。",
     creatorIntro: "仓库自带 $create-codex-theme Skill。它会带你完成 brief、原创性检查、image job、明暗 token、Registry 写入和浏览器验收。",
@@ -144,53 +133,36 @@ const translations = {
     closingTitle: "先选一套，让工作区有一点自己的气候。",
     browseCollection: "进入主题馆藏",
     footerRights: "AI 原创素材采用 CC0；非官方 Fan Art 适用独立声明；项目代码采用 MIT。",
-    installEyebrow: "安装 / 导出",
+    installEyebrow: "在 Codex 中使用",
     chooseMode: "模式",
-    chooseTarget: "目标引擎",
-    verifiedCommand: "带完整性校验的安装命令",
-    copyCommand: "复制命令",
-    downloadExport: "下载适配器包",
+    verifiedCommand: "Codex Native 主题字符串",
+    copyCommand: "复制主题",
+    openSettings: "打开 Codex 设置",
+    downloadExport: "下载原生主题",
     downloadPackage: "标准 .act-theme",
-    trustNoteDream: "浏览器不会直接改写 Codex。命令会下载可审查的安装器，核对适配包与背景图哈希后，再写入 Dream Skin 主题库。",
-    trustNoteNative: "浏览器不会直接改写 Codex。原生导出只记录明亮或暗色外观偏好，不会应用背景图或自定义色板。",
-    trustNoteManual: "浏览器不会启动目标应用。请下载并检查适配包，再在对应引擎中手动导入。",
-    installTheme: "安装或导出",
+    trustNoteNative: "复制字符串后，打开 Codex 设置 > 外观，在对应的明亮或暗色主题中选择“导入”。插画只是 Gallery 封面，不会作为应用背景写入 Codex。",
+    installTheme: "在 Codex 中使用",
     original: "原创",
     fanArtBadge: "非官方 Fan Art",
     fanArtLicense: "FAN ART",
     fanArtNotice: "这是非官方 AI Fan Art，未使用官方剧照、Logo 或宣传素材，也不声称获得权利方授权或背书，仅限个人非商业使用。",
+    coverArt: "馆藏封面",
+    coverBadge: "封面",
     cinematic: "原画感",
     chibi: "Q 版",
     cityscape: "城市图景",
     scene: "名场面",
     light: "明亮",
     dark: "暗色",
-    copied: "安装命令已复制。",
-    copyFailed: "复制失败，请手动选择命令。",
+    copied: "Codex Native 主题已复制。",
+    copyFailed: "复制失败，请手动选择主题字符串。",
     loadFailed: "无法读取 Registry。请先构建项目，并通过 HTTP 服务访问。",
-    capabilityDream: "完整视觉导出。安装器会先核对适配 ZIP 与背景图，再把主题写入已经安装好的 Dream Skin 主题库。",
-    capabilityNative: "仅外观模式。Codex 当前没有公开完整自定义主题包 API，因此背景图与自定义色板无法通过原生适配器应用。",
-    capabilityHeige: "供手动导入的完整视觉导出。本项目不会控制或静默启动目标应用。",
-    capabilityCodedrobe: "包含生成 CSS 的源码式导出，请在 CodeDrobe 主题工作流中审查后导入。",
+    capabilityNative: "已按 Codex 桌面版 26.715.2305.0 验证格式。导入会应用配色、对比度、语义色和内置 Codex 代码主题，不注入 CSS，也不执行脚本。",
     resultCount: "套主题",
     allCollections: "全部系列",
     allCollectionsCaption: "原创、城市与非官方 Fan Art 主题",
     themeCount: "套主题"
   }
-};
-
-const capabilityKeys = {
-  "dream-skin": "capabilityDream",
-  "codex-native": "capabilityNative",
-  "heige-skin-studio": "capabilityHeige",
-  codedrobe: "capabilityCodedrobe"
-};
-
-const trustNoteKeys = {
-  "dream-skin": "trustNoteDream",
-  "codex-native": "trustNoteNative",
-  "heige-skin-studio": "trustNoteManual",
-  codedrobe: "trustNoteManual"
 };
 
 const state = {
@@ -204,9 +176,7 @@ const state = {
   heroTheme: null,
   heroMode: "light",
   currentTheme: null,
-  dialogMode: window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark",
-  engine: "dream-skin",
-  os: navigator.userAgent.includes("Mac") ? "macos" : "windows"
+  dialogMode: window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark"
 };
 
 const elements = {
@@ -228,14 +198,11 @@ const elements = {
   dialogTitle: document.querySelector("#dialogTitle"),
   dialogDescription: document.querySelector("#dialogDescription"),
   dialogMode: document.querySelector("#dialogMode"),
-  engineSelect: document.querySelector("#engineSelect"),
   capabilityNote: document.querySelector("#capabilityNote"),
   dialogRights: document.querySelector("#dialogRights"),
-  commandPanel: document.querySelector("#commandPanel"),
-  installCommand: document.querySelector("#installCommand"),
-  copyCommand: document.querySelector("#copyCommand"),
-  osSwitch: document.querySelector("#osSwitch"),
-  downloadAdapter: document.querySelector("#downloadAdapter"),
+  nativeThemeString: document.querySelector("#nativeThemeString"),
+  copyTheme: document.querySelector("#copyTheme"),
+  downloadNativeTheme: document.querySelector("#downloadNativeTheme"),
   downloadPackage: document.querySelector("#downloadPackage"),
   trustNote: document.querySelector("#trustNote"),
   toast: document.querySelector("#toast")
@@ -258,10 +225,6 @@ function collectionFor(theme) {
 
 function assetUrl(relativePath) {
   return new URL("./" + relativePath, window.location.href).href;
-}
-
-function distributionBase() {
-  return new URL(".", window.location.href).href.replace(/\/$/, "");
 }
 
 function setActiveButton(container, attribute, value) {
@@ -335,9 +298,9 @@ function updateHero(theme = state.heroTheme) {
   if (!theme) return;
   state.heroTheme = theme;
   elements.heroPreview.src = assetUrl(theme.previews[state.heroMode].preview);
-  elements.heroPreview.alt = localized(theme.name) + " · " + t(state.heroMode);
+  elements.heroPreview.alt = localized(theme.name) + " · " + t("coverArt") + " · " + t(state.heroMode);
   elements.heroThemeName.textContent = localized(theme.name);
-  elements.heroThemeMeta.textContent = localized(collectionFor(theme)?.name) + " · " + t(state.heroMode);
+  elements.heroThemeMeta.textContent = t("coverArt") + " · " + localized(collectionFor(theme)?.name) + " · " + t(state.heroMode);
   setActiveButton(elements.heroMode, "data-mode", state.heroMode);
 }
 
@@ -360,10 +323,10 @@ function updateLanguage() {
     card.description.textContent = localized(theme.description);
     card.variant.textContent = t(theme.variant);
     card.original.textContent = theme.rightsProfile === "fan-art" ? t("fanArtBadge") : t("original");
-    card.license.textContent = "AI · " + (theme.rightsProfile === "fan-art" ? t("fanArtLicense") : theme.license.spdx);
+    card.license.textContent = t("coverBadge") + " · AI · " + (theme.rightsProfile === "fan-art" ? t("fanArtLicense") : theme.license.spdx);
     card.collection.textContent = localized(collectionFor(theme)?.name);
     card.install.setAttribute("aria-label", t("installTheme") + ": " + localized(theme.name));
-    card.image.alt = localized(theme.name) + " · " + t(state.cardModes.get(id));
+    card.image.alt = localized(theme.name) + " · " + t("coverArt") + " · " + t(state.cardModes.get(id));
     card.lightButton.setAttribute("aria-label", t("light"));
     card.darkButton.setAttribute("aria-label", t("dark"));
     card.lightButton.textContent = state.locale === "zh-CN" ? "日" : "L";
@@ -412,13 +375,10 @@ function createCard(theme, index) {
   toggle.append(lightButton, darkButton);
   visual.append(toggle);
 
-  const number = document.createElement("span");
-  number.className = "card-number";
-  number.textContent = String(index + 1).padStart(2, "0") + " / " + String(state.registry.themes.length).padStart(2, "0");
   const license = document.createElement("span");
   license.className = "card-license";
-  license.textContent = "AI · " + (theme.rightsProfile === "fan-art" ? t("fanArtLicense") : theme.license.spdx);
-  visual.append(number, license);
+  license.textContent = t("coverBadge") + " · AI · " + (theme.rightsProfile === "fan-art" ? t("fanArtLicense") : theme.license.spdx);
+  visual.append(license);
 
   const body = document.createElement("div");
   body.className = "card-body";
@@ -442,7 +402,7 @@ function createCard(theme, index) {
   function updateMode(mode) {
     state.cardModes.set(theme.id, mode);
     image.src = assetUrl(theme.previews[mode].preview);
-    image.alt = localized(theme.name) + " · " + t(mode);
+    image.alt = localized(theme.name) + " · " + t("coverArt") + " · " + t(mode);
     setActiveButton(toggle, "data-mode", mode);
   }
 
@@ -517,31 +477,6 @@ function applyFilters() {
   elements.gallery.setAttribute("aria-label", String(visible) + " " + t("resultCount"));
 }
 
-function updateEngineOptions() {
-  const labels = state.locale === "zh-CN" ? {
-    "dream-skin": "Codex Dream Skin · 完整视觉",
-    "codex-native": "Codex 原生 · 仅外观模式",
-    "heige-skin-studio": "HeiGe Skin Studio · 完整导出",
-    codedrobe: "CodeDrobe · 源码式导出"
-  } : {
-    "dream-skin": "Codex Dream Skin · Full",
-    "codex-native": "Codex native · Appearance only",
-    "heige-skin-studio": "HeiGe Skin Studio · Full export",
-    codedrobe: "CodeDrobe · Source export"
-  };
-  Array.from(elements.engineSelect.options).forEach(function (option) {
-    option.textContent = labels[option.value];
-  });
-}
-
-function installCommand(theme, mode, os) {
-  const base = distributionBase();
-  if (os === "macos") {
-    return "p=\"/tmp/awesome-codex-theme-install.sh\"; curl -fsSL \"" + base + "/scripts/install-theme.sh\" -o \"$p\" && sh \"$p\" --theme " + theme.id + " --mode " + mode + " --base-url \"" + base + "\"";
-  }
-  return "$u='" + base + "/scripts/install-theme.ps1'; $p=Join-Path $env:TEMP 'awesome-codex-theme-install.ps1'; Invoke-WebRequest -Uri $u -OutFile $p; powershell -NoProfile -ExecutionPolicy Bypass -File $p -Theme " + theme.id + " -Mode " + mode + " -BaseUrl '" + base + "'";
-}
-
 function updateDialog() {
   const theme = state.currentTheme;
   if (!theme) return;
@@ -549,30 +484,25 @@ function updateDialog() {
   elements.dialogTitle.textContent = localized(theme.name);
   elements.dialogDescription.textContent = localized(theme.description);
   elements.dialogPreview.src = assetUrl(modeRecord.preview);
-  elements.dialogPreview.alt = localized(theme.name) + " · " + t(state.dialogMode);
-  elements.dialogVariant.textContent = localized(collectionFor(theme)?.name) + " · " + t(theme.variant);
-  elements.capabilityNote.textContent = t(capabilityKeys[state.engine]);
+  elements.dialogPreview.alt = localized(theme.name) + " · " + t("coverArt") + " · " + t(state.dialogMode);
+  elements.dialogVariant.textContent = t("coverArt") + " · " + localized(collectionFor(theme)?.name) + " · " + t(theme.variant);
+  elements.capabilityNote.textContent = t("capabilityNative");
   elements.dialogRights.hidden = theme.rightsProfile !== "fan-art";
   elements.dialogRights.textContent = theme.rightsProfile === "fan-art"
     ? localized(theme.fanArt?.work) + " · " + t("fanArtNotice")
     : "";
-  elements.trustNote.textContent = t(trustNoteKeys[state.engine]);
-  elements.commandPanel.hidden = state.engine !== "dream-skin";
-  elements.installCommand.textContent = installCommand(theme, state.dialogMode, state.os);
-  elements.downloadAdapter.href = assetUrl(modeRecord.adapterBundle.path);
-  elements.downloadAdapter.download = theme.id + "-" + state.dialogMode + "-adapters.zip";
+  elements.trustNote.textContent = t("trustNoteNative");
+  elements.nativeThemeString.textContent = modeRecord.nativeTheme.value;
+  elements.downloadNativeTheme.href = assetUrl(modeRecord.nativeTheme.path);
+  elements.downloadNativeTheme.download = theme.id + "-" + state.dialogMode + ".codex-theme.txt";
   elements.downloadPackage.href = assetUrl(theme.package.path);
   elements.downloadPackage.download = theme.id + "-" + theme.version + ".act-theme";
   setActiveButton(elements.dialogMode, "data-mode", state.dialogMode);
-  setActiveButton(elements.osSwitch, "data-os", state.os);
-  updateEngineOptions();
 }
 
 function openDialog(theme, mode) {
   state.currentTheme = theme;
   state.dialogMode = mode;
-  state.engine = "dream-skin";
-  elements.engineSelect.value = state.engine;
   updateDialog();
   elements.dialog.showModal();
 }
@@ -587,8 +517,8 @@ function showToast(message) {
   }, 2600);
 }
 
-async function copyCommand() {
-  const value = elements.installCommand.textContent;
+async function copyNativeTheme() {
+  const value = elements.nativeThemeString.textContent;
   try {
     if (navigator.clipboard && window.isSecureContext) {
       await navigator.clipboard.writeText(value);
@@ -601,7 +531,7 @@ async function copyCommand() {
       textArea.select();
       const copied = document.execCommand("copy");
       textArea.remove();
-      if (!copied) throw new Error("copy command returned false");
+      if (!copied) throw new Error("copy theme returned false");
     }
     showToast(t("copied"));
   } catch {
@@ -653,19 +583,7 @@ function bindEvents() {
     updateDialog();
   });
 
-  elements.osSwitch.addEventListener("click", function (event) {
-    const button = event.target.closest("button[data-os]");
-    if (!button) return;
-    state.os = button.dataset.os;
-    updateDialog();
-  });
-
-  elements.engineSelect.addEventListener("change", function () {
-    state.engine = elements.engineSelect.value;
-    updateDialog();
-  });
-
-  elements.copyCommand.addEventListener("click", copyCommand);
+  elements.copyTheme.addEventListener("click", copyNativeTheme);
   elements.dialog.addEventListener("click", function (event) {
     if (event.target === elements.dialog) elements.dialog.close();
   });

@@ -11,10 +11,12 @@ A file ending in .act-theme is a ZIP-compatible archive with exactly:
     manifest.json
     assets/background-light.png
     assets/background-dark.png
+    native/light.codex-theme.txt
+    native/dark.codex-theme.txt
 
-Version 1 permits declared artwork and the manifest only. JavaScript, CSS,
-PowerShell, shell scripts, binaries, dynamic imports, and remote references are
-not canonical package content.
+Version 1 permits the manifest, declared artwork, and declarative Codex Native
+theme strings only. JavaScript, CSS, PowerShell, shell scripts, binaries,
+dynamic imports, and remote references are not canonical package content.
 
 The complete machine-readable contract is schemas/theme-pack.schema.json.
 
@@ -26,16 +28,23 @@ The manifest declares:
 - collection id, visual variant, and pair or standalone identity;
 - author and an SPDX-compatible asset license;
 - source, generator, AI-use disclosure, rights profile, and a rightsVerified assertion;
-- tested Codex versions and named adapter targets;
+- the tested Codex version and Codex Native contract;
 - reduced-motion behavior;
-- separate light and dark assets;
+- separate light and dark assets and Native theme strings;
 - UI color tokens, art focus, safe area, and task-page treatment;
 - SHA-256, byte count, dimensions, and media type for each asset.
 
 The validator rejects missing fields, unsafe relative paths, files outside the
 allowlist, mismatched hashes or sizes, oversized images, malformed dimensions,
 collection-policy violations, incomplete paired themes, and color combinations
-below the project contrast thresholds.
+below the project contrast thresholds. It also parses every
+`codex-theme-v1:` string and verifies that its mode, colors, semantic colors,
+format, hash, byte count, Registry value, and packaged copy agree.
+
+Background artwork is part of the ACT declaration and Gallery presentation. It
+is not a Codex Native background capability. Native compatibility covers the
+palette, contrast, font slots, built-in code theme, semantic colors, and window
+opacity declared by the import string.
 
 ## Rights boundary
 

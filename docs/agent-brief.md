@@ -4,38 +4,47 @@
 
 - Last reviewed: 2026-07-17
 - Project: Awesome Codex Theme
-- Project root: C:\projects\tools\awesome-codex-theme
-- Purpose: free Codex desktop theme gallery, registry, and safe installer layer
-- Primary users: Codex desktop users and theme contributors
-- Main tech stack: static HTML/CSS/JavaScript, Node.js built-ins, PowerShell, shell
+- Project root: `C:\projects\tools\awesome-codex-theme`
+- Purpose: free Codex Native theme standard, Registry, Validator, and Gallery
+- Primary users: Chinese-speaking Codex desktop users and theme contributors
+- Main stack: static HTML/CSS/JavaScript and Node.js built-ins
 - Canonical package manager: npm, with zero runtime or development dependencies
-- Deployment/runtime: GitHub Pages through GitHub Actions
-- Production/live-data sensitivity: no live data; publishing and remote creation require approval
+- Deployment: GitHub Pages through GitHub Actions
+- Production/live-data sensitivity: no live data; pushing, Pages changes, app installation, and real-app setting changes require exact authorization
 
 ## Current focus
 
-- Current phase: original and disclosed fan-art collection release
-- Most important task: keep the Chinese-first Gallery, real generated previews, rights profiles, theme-pack contract, adapters, and contribution Skill verifiable
-- Explicitly out of scope: native protocol handler, package registry publishing, official or licensed franchise assets, commercial fan-art licensing
-- Active task pointer: a collection is complete only after source generation, npm run check, browser QA, public Pages readback, and a task-owned commit
+- Current phase: Codex Native-only migration and real-app evidence design
+- Keep the Chinese-first Gallery, reviewed cover art, rights profiles, theme-pack contract, Native import strings, and contribution Skill verifiable
+- Gallery illustrations are covers, not Codex screenshots or installable backgrounds
+- Explicitly out of scope: CSS injection, executable installers, third-party skin engines, native protocol handlers, official franchise assets, and commercial fan-art licensing
+- A collection is complete only after source review, `npm run check`, browser QA, Native contract validation, and a task-owned commit
+- A "real screenshot verified" claim also requires a same-version Codex import and capture under `docs/native-testing.md`
 
 ## Read first
 
-1. AGENTS.md
-2. README.md
-3. docs/architecture.md
-4. context/tools/README.md
+1. `AGENTS.md`
+2. `README.md`
+3. `docs/architecture.md`
+4. `context/tools/README.md`
 
-Avoid dist/, context/raw/, docs/archive/, and generated history unless required.
+Avoid `dist/`, `context/raw/`, `docs/archive/`, and generated history unless required.
 
 ## Workflow routing
 
 - Small edits: edit directly and run the focused check.
-- Multi-file behavior: use a short plan, npm run check, then browser smoke.
-- Theme additions: use $create-codex-theme, select the original or fan-art rights profile, generate source art, inspect it, regenerate, and validate.
-- Adapter claims: update docs/adapters.md and prove the exact target behavior.
-- Publishing, remote creation, or Pages activation: require authorization bound to the exact repository.
+- Multi-file behavior: use a short plan, run `npm run check`, then browser smoke.
+- Theme additions: use `$create-codex-theme`, select the original or fan-art rights profile, generate source art, inspect it, regenerate, and validate.
+- Native compatibility claims: update `docs/adapters.md` and prove the exact import shape against the named Codex version.
+- Publishing, remote creation, Pages activation, app installation, and current-app setting changes require authorization bound to the exact target.
 - Never automate copyright clearance or authenticated publishing.
+
+## Live Operation Gates
+
+Creating or pushing a remote, changing Pages settings, installing another Codex
+package, or changing the current app's appearance is an external action. Bind
+approval to the exact repository, app package, or running instance before
+acting.
 
 ## Canonical commands
 
@@ -50,36 +59,31 @@ Avoid dist/, context/raw/, docs/archive/, and generated history unless required.
 
 ## Verification bundles
 
-- Theme data or art: source-art visual review, generate:check, validate, and tests.
-- Site behavior: check, local server, browser search/filter/dialog/copy checks.
-- Installer: local dry-run plus registry/hash validation.
+- Theme data or art: source-art visual review, `generate:check`, validation, and tests.
+- Native export: parser validation, Registry/package equality, and recorded tested version.
+- Site behavior: `npm run check`, local server, browser search/filter/dialog/copy checks.
+- Real screenshot: isolated Codex import, fixed fixture, version/hash evidence, and screenshot review.
 - Commit: inspect status, diff, staged paths, and committed tree.
 - Deployment: GitHub Actions success plus public Pages interaction.
-- P2 state path for initial MVP: user-level DecisionProof temporary state.
-
-## Live operation gates
-
-Creating a remote, pushing, enabling Pages, or changing repository settings is
-an external action. Bind approval to the exact repository before acting.
 
 ## Docs policy
 
-Keep docs/README.md and this brief current. Record delivered changes in
-docs/CHANGELOG.md. Do not create empty task, memory, or archive files.
+Keep `docs/README.md` and this brief current. Record delivered changes in
+`docs/CHANGELOG.md`. Do not create empty task, memory, or archive files.
 
 ## Tooling map
 
-- context/tools/README.md status: current
-- Canonical helper scripts: scripts/*.mjs and platform installers
-- Scripts that can write user state: install-theme.ps1 and install-theme.sh
-- Workflow lint: C:\Users\desre\.codex\tools\workflow-lint.ps1
+- Tool index: `context/tools/README.md`
+- Canonical helpers: `scripts/*.mjs`
+- Scripts that write user state: none
+- Workflow lint: `C:\Users\desre\.codex\tools\workflow-lint.ps1`
 
 ## Known pitfalls
 
-- A GitHub Pages button cannot execute a local installer.
-- Official screenshots, posters, promotional art, and upstream theme screenshots must never be used as background packages.
-- Image-job output must be reviewed for text, logos, undeclared IP, copied composition, safe-area drift, and 16:9 cropping.
-- Fan-art themes are unofficial, personal and non-commercial; they use a custom notice and cannot claim rights verification.
-- Windows and macOS use different Codex Dream Skin state roots.
-- Codex native supports an appearance preference, not full visual parity.
-- A build proves files, not rendered interaction.
+- A GitHub Pages button cannot import a theme into Codex.
+- `codex://settings` opens settings; it does not apply the selected theme.
+- Native v1 does not accept background images.
+- Official screenshots, posters, promotional art, and upstream theme screenshots must not enter theme packages.
+- Image-job output needs human review for text, logos, undeclared IP, copied composition, safe-area drift, and 16:9 cropping.
+- Fan-art themes are unofficial, personal, and non-commercial; they use a custom notice and cannot claim rights verification.
+- A valid build proves files, not rendered interaction or real-app behavior.

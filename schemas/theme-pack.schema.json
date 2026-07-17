@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://awesome-codex-theme.dev/schemas/theme-pack.schema.json",
   "title": "Awesome Codex Theme Pack",
-  "description": "A code-free, engine-neutral theme package manifest.",
+  "description": "A code-free Codex Native theme package manifest.",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -189,10 +189,10 @@
             "required": ["id", "coverage"],
             "properties": {
               "id": {
-                "enum": ["codex-native", "dream-skin", "heige-skin-studio", "codedrobe"]
+                "const": "codex-native"
               },
               "coverage": {
-                "enum": ["appearance-only", "full", "source-export"]
+                "const": "native-theme-v1"
               },
               "testedVersion": {
                 "type": "string"
@@ -303,7 +303,7 @@
     "mode": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["asset", "art", "tokens", "integrity"],
+      "required": ["asset", "art", "tokens", "integrity", "nativeTheme"],
       "properties": {
         "asset": {
           "type": "string",
@@ -375,6 +375,33 @@
             },
             "height": {
               "const": 1440
+            }
+          }
+        },
+        "nativeTheme": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["format", "path", "sha256", "bytes", "testedVersion"],
+          "properties": {
+            "format": {
+              "const": "codex-theme-v1"
+            },
+            "path": {
+              "type": "string",
+              "pattern": "^native/(light|dark)\\.codex-theme\\.txt$"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "bytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 4096
+            },
+            "testedVersion": {
+              "type": "string",
+              "minLength": 1
             }
           }
         }

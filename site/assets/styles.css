@@ -815,8 +815,7 @@ img {
 }
 
 .filter-group,
-.segment-control,
-.os-switch {
+.segment-control {
   display: flex;
   gap: 4px;
   padding: 4px;
@@ -825,8 +824,7 @@ img {
 }
 
 .filter-button,
-.segment-control button,
-.os-switch button {
+.segment-control button {
   padding: 8px 13px;
   border-radius: 11px;
   color: var(--ink-soft);
@@ -837,8 +835,7 @@ img {
 }
 
 .filter-button.is-active,
-.segment-control button.is-active,
-.os-switch button.is-active {
+.segment-control button.is-active {
   color: var(--ink);
   background: var(--paper-strong);
   box-shadow: 0 4px 12px rgba(21, 35, 31, 0.08);
@@ -926,10 +923,6 @@ img {
 .card-mode-toggle button.is-active {
   color: var(--night);
   background: #fff;
-}
-
-.card-number {
-  display: none;
 }
 
 .card-license {
@@ -1474,7 +1467,7 @@ img {
 }
 
 .dialog-options fieldset,
-.dialog-options label {
+.native-target {
   padding: 12px;
   border: 1px solid var(--line);
   border-radius: 16px;
@@ -1482,25 +1475,24 @@ img {
 }
 
 .dialog-options legend,
-.dialog-options label > span {
+.native-target > span {
   display: block;
   padding: 0 5px;
   color: var(--ink-soft);
   font-size: 10px;
 }
 
-.dialog-options label > span {
-  padding-bottom: 9px;
+.native-target {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 7px;
 }
 
-.dialog-options select {
-  width: 100%;
-  padding: 10px;
-  border: 0;
-  outline: 0;
-  border-radius: 10px;
-  background: var(--porcelain);
-  font-size: 11px;
+.native-target strong {
+  padding: 0 5px;
+  font-family: var(--mono);
+  font-size: 12px;
 }
 
 .capability-note,
@@ -1522,10 +1514,6 @@ img {
   margin-top: 16px;
   color: #dcebe5;
   background: var(--night);
-}
-
-.command-panel[hidden] {
-  display: none;
 }
 
 .command-heading {
@@ -1562,14 +1550,6 @@ img {
   font-size: 10px;
 }
 
-.os-switch button {
-  color: rgba(255, 255, 255, 0.55);
-}
-
-.os-switch button.is-active {
-  color: var(--night);
-}
-
 .dialog-actions {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -1597,6 +1577,13 @@ img {
 .secondary-action {
   border: 1px solid var(--line);
   background: var(--paper-strong);
+}
+
+.package-action {
+  grid-column: 1 / -1;
+  justify-content: center !important;
+  color: var(--ink-soft);
+  background: rgba(21, 35, 31, 0.04);
 }
 
 .trust-note {

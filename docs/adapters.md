@@ -1,42 +1,40 @@
-# Adapter compatibility
+# Codex Native compatibility
 
-Canonical theme packs are engine-neutral and code-free. Adapters are generated
-outside those packs because target applications expose different contracts.
+Awesome Codex Theme 只导出 Codex Native 格式，不再兼容第三方皮肤引擎。
 
-| Target | Registry coverage | Version 1 output | Install behavior |
-| --- | --- | --- | --- |
-| Codex native | appearance-only | profile.json and config.toml | manual preference merge |
-| Codex Dream Skin | full | schema 1 theme.json and background.png | verified installer |
-| HeiGe Skin Studio | full | schema 1 theme.json and hero.png | manual import |
-| CodeDrobe | source-export | schema 1 theme.json, hero.png, and generated codex.css | manual workflow |
+## 当前契约
 
-## Codex native
+每个明亮或暗色模式都会生成一段以 `codex-theme-v1:` 开头的主题字符串。其声明式 payload 包含：
 
-The observed desktop configuration accepts light, dark, or system appearance.
-No public contract for third-party background images, arbitrary palette tokens,
-or complete native theme packages was found. The adapter therefore exports only
-the mode preference and records unsupported capabilities as limitations.
+- `variant`: `light` 或 `dark`
+- `codeThemeId`: 当前使用 `codex`
+- `accent`、`surface` 与 `ink`
+- 0 到 100 的对比度
+- UI 与代码字体选择
+- diff added、diff removed 与 skill 三类语义色
+- 窗口透明度偏好
 
-## Dream Skin
+导入入口是 Codex 的“设置 > 外观”。先选择对应的明亮或暗色主题，再点“导入”并粘贴字符串。Gallery 也提供同内容的 `.codex-theme.txt` 下载。
 
-The adapter maps one light or dark mode to Dream Skin schemaVersion 1. The
-installer verifies the adapter ZIP, the selected background, manifest id,
-appearance, and image path before writing a saved theme. It does not install or
-activate the upstream runtime.
+当前导出格式已按 Codex 桌面版 `26.715.2305.0` 校验。应用版本变化后，需要重新确认导入 Schema，不能把旧版本验证自动延伸到新版本。
 
-## HeiGe Skin Studio
+## 明确不支持
 
-The adapter maps the selected background to hero.png and exports the observed
-schemaVersion 1 identity, palette, and copy fields. Import remains manual so the
-gallery never claims control over another desktop application.
+Codex Native v1 不接受背景图片。仓库中的国风、城市与 Fan Art 插画只用于 Gallery 封面和创作归档，不会成为 Codex 应用背景，也不能当作实机截图。
 
-## CodeDrobe
+项目不做以下事情：
 
-The adapter exports the observed schemaVersion 1 target shape plus deterministic
-CSS. The validator rejects remote URLs, imports, JavaScript references, and
-missing reduced-motion handling. Because CSS is code-like target material, it
-is never included in the canonical .act-theme archive.
+- 不注入 CSS 或 JavaScript
+- 不修改 Codex 安装目录或应用文件
+- 不导出 Dream Skin、HeiGe Skin Studio 或 CodeDrobe 格式
+- 不从网页自动写入用户设置
 
-Compatibility labels describe the tested export shape at release time. Upstream
-changes can require an adapter update even when the canonical standard remains
-stable.
+## 包与 Registry
+
+标准 `.act-theme` 包仍然是纯声明归档。它包含 manifest、两张已声明封面和两份 Native 主题字符串，不含可执行代码或远程资源。Registry 记录每份 Native 字符串的路径、SHA-256、字节数、格式和已测试 Codex 版本。
+
+真实应用截图的证据要求见 [native-testing.md](native-testing.md)。
+
+## English summary
+
+Awesome Codex Theme exports Codex Native only. Each light or dark mode provides a declarative `codex-theme-v1:` string for Settings > Appearance > Import. The contract supports colors, contrast, fonts, the built-in code theme, and semantic colors. It does not support background images. Gallery illustrations are cover art, not Codex screenshots.

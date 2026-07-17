@@ -19,6 +19,7 @@ const MIME = {
   ".ps1": "text/plain; charset=utf-8",
   ".sh": "text/plain; charset=utf-8",
   ".toml": "text/plain; charset=utf-8",
+  ".txt": "text/plain; charset=utf-8",
   ".zip": "application/zip",
   ".act-theme": "application/zip",
 };

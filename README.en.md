@@ -1,6 +1,6 @@
 # Awesome Codex Theme
 
-An open theme pack standard, Registry, Validator, and theme Gallery for Codex.
+An open Codex Native theme pack standard, Registry, Validator, and Gallery.
 
 [Browse 28 themes](https://rwang23.github.io/awesome-codex-theme/) · [中文 README](README.md) · [Theme pack standard](docs/standard.md) · [Fan Art policy](docs/fan-art-policy.md) · [Contributing](CONTRIBUTING.md)
 
@@ -8,20 +8,22 @@ An open theme pack standard, Registry, Validator, and theme Gallery for Codex.
 
 ## More than a background switcher
 
-A CSS injection demo can look convincing while leaving important questions unanswered. Can the artwork be redistributed? Does the package contain executable code? How does an installer prove that a downloaded file has not changed? How much of a theme can each engine reproduce?
+A CSS injection demo can look convincing while leaving important questions unanswered. Can the artwork be redistributed? Does the package contain executable code? How can an import be checked for tampering? Which theme fields can the current Codex desktop app accept natively?
 
 Awesome Codex Theme puts those answers into one public contract:
 
 - A shared manifest Schema describes identity, assets, modes, provenance, and compatibility.
 - A canonical `.act-theme` contains declarative configuration and images only.
-- The Registry records SHA-256 hashes, byte counts, dimensions, rights statements, and adapter coverage.
+- The Registry records SHA-256 hashes, byte counts, dimensions, rights statements, and the Native contract version.
 - The Validator checks the package allowlist, hashes, image integrity, and WCAG contrast.
-- Adapters export Codex native, Dream Skin, HeiGe Skin Studio, and CodeDrobe formats outside the trusted package.
-- GitHub Pages provides previews, filters, mode switching, downloads, and a verified install command.
+- Every mode exports a `codex-theme-v1:` string that Codex desktop can import.
+- GitHub Pages provides cover browsing, filters, mode switching, copying, and downloads.
+
+The project targets Codex Native only. It no longer exports Dream Skin, HeiGe Skin Studio, or CodeDrobe formats, and it does not inject CSS. The native contract supports colors, contrast, fonts, a code theme, and semantic colors, but not background images. Gallery illustrations are labeled as cover art. They are not Codex screenshots and are not applied as app backgrounds.
 
 ## Collections
 
-The repository contains 28 themes and 56 real light/dark previews. Gallery cards use the generated 960×540 PNG previews rather than concept placeholders.
+The repository contains 28 themes and 56 deterministic light/dark covers generated from reviewed source art. Gallery cards use those 960×540 PNG files rather than temporary placeholders. Native in-app screenshots must be captured after importing each palette in an isolated Codex test environment. See [Codex Native testing and screenshots](docs/native-testing.md).
 
 | Collection | Contents | Themes |
 | --- | --- | ---: |
@@ -36,11 +38,9 @@ The first two collections are first-party original artwork under CC0 1.0. The la
 
 ## Use a theme
 
-Open the [Gallery](https://rwang23.github.io/awesome-codex-theme/), choose a theme and mode, then open the install panel.
+Open the [Gallery](https://rwang23.github.io/awesome-codex-theme/), choose a theme and mode, then open the “Use in Codex” panel. Copy the `codex-theme-v1:` string. In Codex, open Settings > Appearance, choose the matching Light or Dark theme, select Import, and paste the string.
 
-Dream Skin offers a command that verifies hashes before writing to its theme library. Other targets provide adapter downloads for manual import. The browser never writes directly to Codex.
-
-The Codex native adapter currently exports the light or dark appearance preference only. It does not claim native support for custom backgrounds or palettes. See [adapter coverage](docs/adapters.md) for details.
+The browser never writes directly to Codex. Native files are declarative and contain no scripts, CSS, or remote resources. See [Codex Native compatibility](docs/adapters.md) for the exact boundary.
 
 ## Create a theme with Codex
 

@@ -34,8 +34,6 @@ export async function buildSite(outputPath = DEFAULT_OUTPUT) {
     copyRelative("themes/source-art/jobs.json", output),
     copyRelative("schemas/theme-pack.schema.json", output),
     copyRelative("schemas/registry.schema.json", output),
-    copyRelative("scripts/install-theme.ps1", output),
-    copyRelative("scripts/install-theme.sh", output),
     copyRelative("LICENSE", output),
     copyRelative("NOTICE.md", output),
   ]);
@@ -48,8 +46,8 @@ export async function buildSite(outputPath = DEFAULT_OUTPUT) {
       theme.provenance.record,
       theme.previews.light.preview,
       theme.previews.dark.preview,
-      theme.previews.light.adapterBundle.path,
-      theme.previews.dark.adapterBundle.path,
+      theme.previews.light.nativeTheme.path,
+      theme.previews.dark.nativeTheme.path,
     ];
     for (const relativePath of paths) {
       if (copied.has(relativePath)) continue;

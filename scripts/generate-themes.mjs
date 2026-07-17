@@ -5,12 +5,17 @@ import { fileURLToPath } from "node:url";
 
 import { renderSourceArtPng } from "./lib/png.mjs";
 import { createZip } from "./lib/zip.mjs";
+import {
+  CODEX_NATIVE_TESTED_VERSION,
+  createCodexNativeTheme,
+  serializeCodexNativeTheme,
+} from "./lib/codex-native-theme.mjs";
 
 const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(SCRIPT_DIR, "..");
 const CATALOG_PATH = path.join(ROOT, "themes", "catalog.json");
 const CHECK_MODE = process.argv.includes("--check");
-const GENERATOR_ID = "act-theme-generator-v2.0";
+const GENERATOR_ID = "act-theme-generator-v3.0";
 const FAN_ART_LICENSE_ID = "LicenseRef-ACT-Fan-Art-Notice";
 const FAN_ART_POLICY_URL = "https://github.com/rwang23/awesome-codex-theme/blob/main/docs/fan-art-policy.md";
 
@@ -49,7 +54,7 @@ function rightsFor(theme) {
       };
 }
 
-function manifestFor(theme, assets, sourceProvenance) {
+function manifestFor(theme, assets, nativeThemes, sourceProvenance) {
   const rights = rightsFor(theme);
   const mode = (name) => ({
     asset: "assets/background-" + name + ".png",
@@ -65,6 +70,13 @@ function manifestFor(theme, assets, sourceProvenance) {
       bytes: assets[name].length,
       width: 2560,
       height: 1440,
+    },
+    nativeTheme: {
+      format: "codex-theme-v1",
+      path: "native/" + name + ".codex-theme.txt",
+      sha256: sha256(nativeThemes[name]),
+      bytes: nativeThemes[name].length,
+      testedVersion: CODEX_NATIVE_TESTED_VERSION,
     },
   });
 
@@ -96,12 +108,9 @@ function manifestFor(theme, assets, sourceProvenance) {
       notes: rights.notes,
     },
     compatibility: {
-      codexDesktopTested: "26.707.12708.0",
+      codexDesktopTested: CODEX_NATIVE_TESTED_VERSION,
       engines: [
-        { id: "codex-native", coverage: "appearance-only", testedVersion: "26.707.12708.0" },
-        { id: "dream-skin", coverage: "full", testedVersion: "1.2.0-theme-schema-1" },
-        { id: "heige-skin-studio", coverage: "full", testedVersion: "theme-schema-1-observed-2026-07-16" },
-        { id: "codedrobe", coverage: "source-export", testedVersion: "theme-schema-1-observed-2026-07-16" },
+        { id: "codex-native", coverage: "native-theme-v1", testedVersion: CODEX_NATIVE_TESTED_VERSION },
       ],
     },
     motion: {
@@ -116,192 +125,11 @@ function manifestFor(theme, assets, sourceProvenance) {
   };
 }
 
-function dreamSkinFiles(theme, mode, background) {
-  const tokens = theme[mode].tokens;
-  const manifest = {
-    schemaVersion: 1,
-    id: "act-" + theme.id + "-" + mode,
-    name: theme.name["zh-CN"] + " · " + (mode === "light" ? "明" : "暗"),
-    brandSubtitle: "AWESOME CODEX THEME",
-    tagline: theme.description["zh-CN"],
-    projectPrefix: "选择项目 · ",
-    projectLabel: "◉  选择项目",
-    statusText: "ACT THEME ONLINE",
-    quote: "MAKE THE WORKSPACE YOURS",
-    image: "background.png",
-    appearance: mode,
-    colors: {
-      background: tokens.background,
-      panel: tokens.surface,
-      panelAlt: tokens.surfaceAlt,
-      accent: tokens.accent,
-      accentAlt: tokens.accent,
-      secondary: tokens.border,
-      highlight: tokens.accent,
-      text: tokens.text,
-      muted: tokens.muted,
-      line: tokens.border,
-    },
-    art: {
-      focusX: theme.art.focusX,
-      focusY: theme.art.focusY,
-      safeArea: theme.art.safeArea,
-      taskMode: theme.art.taskMode,
-    },
-  };
-  return [
-    { name: "dream-skin/theme.json", data: jsonBuffer(manifest) },
-    { name: "dream-skin/background.png", data: background },
-  ];
-}
-
-function nativeFiles(theme, mode) {
-  const profile = {
-    schemaVersion: 1,
-    adapter: "codex-native",
-    themeId: theme.id,
-    mode,
-    coverage: "appearance-only",
-    config: {
-      desktop: {
-        appearanceTheme: mode,
-      },
-    },
-    unsupported: ["custom-background", "custom-palette", "custom-copy"],
-    note: "The tested Codex native surface exposes light, dark, and system appearance. This profile does not claim full visual parity.",
-  };
-  const toml = "[desktop]\nappearanceTheme = \"" + mode + "\"\n";
-  return [
-    { name: "codex-native/profile.json", data: jsonBuffer(profile) },
-    { name: "codex-native/config.toml", data: Buffer.from(toml, "utf8") },
-  ];
-}
-
-function heigeFiles(theme, mode, background) {
-  const tokens = theme[mode].tokens;
-  const manifest = {
-    schemaVersion: 1,
-    id: "act-" + theme.id + "-" + mode,
-    name: theme.name["zh-CN"] + " · " + (mode === "light" ? "明" : "暗"),
-    hero: "hero.png",
-    colors: {
-      accent: tokens.accent,
-      secondary: tokens.border,
-      surface: tokens.surface,
-      text: tokens.text,
-    },
-    copy: {
-      brand: "Awesome Codex Theme",
-      headline: theme.name["zh-CN"],
-      tagline: theme.description["zh-CN"],
-    },
-  };
-  return [
-    { name: "heige-skin-studio/theme.json", data: jsonBuffer(manifest) },
-    { name: "heige-skin-studio/hero.png", data: background },
-  ];
-}
-
-function codedrobeCss(theme, mode) {
-  const tokens = theme[mode].tokens;
-  return [
-    "html.codedrobe-host-codex {",
-    "  --act-background: " + tokens.background + ";",
-    "  --act-surface: " + tokens.surface + ";",
-    "  --act-surface-alt: " + tokens.surfaceAlt + ";",
-    "  --act-text: " + tokens.text + ";",
-    "  --act-muted: " + tokens.muted + ";",
-    "  --act-accent: " + tokens.accent + ";",
-    "  --act-border: " + tokens.border + ";",
-    "  color-scheme: " + mode + ";",
-    "}",
-    "",
-    "html.codedrobe-host-codex body {",
-    "  color: var(--act-text);",
-    "  background-color: var(--act-background);",
-    "}",
-    "",
-    "html.codedrobe-host-codex [role='main']::before {",
-    "  content: '';",
-    "  position: fixed;",
-    "  inset: 0;",
-    "  z-index: -1;",
-    "  pointer-events: none;",
-    "  background-image: linear-gradient(90deg, color-mix(in srgb, var(--act-background) 82%, transparent), transparent 62%), var(--codedrobe-image-hero);",
-    "  background-size: cover;",
-    "  background-position: " + Math.round(theme.art.focusX * 100) + "% " + Math.round(theme.art.focusY * 100) + "%;",
-    "}",
-    "",
-    "html.codedrobe-host-codex :focus-visible {",
-    "  outline: 2px solid var(--act-accent);",
-    "  outline-offset: 2px;",
-    "}",
-    "",
-    "@media (prefers-reduced-motion: reduce) {",
-    "  html.codedrobe-host-codex *,",
-    "  html.codedrobe-host-codex *::before,",
-    "  html.codedrobe-host-codex *::after {",
-    "    animation-duration: 0.001ms !important;",
-    "    animation-iteration-count: 1 !important;",
-    "    scroll-behavior: auto !important;",
-    "    transition-duration: 0.001ms !important;",
-    "  }",
-    "}",
-    "",
-  ].join("\n");
-}
-
-function codedrobeFiles(theme, mode, background) {
-  const tokens = theme[mode].tokens;
-  const manifest = {
-    schemaVersion: 1,
-    id: "act-" + theme.id + "-" + mode,
-    displayName: theme.name.en + " · " + mode,
-    version: theme.version,
-    images: {
-      hero: "assets/hero.png",
-    },
-    copy: {
-      tagline: theme.description.en,
-    },
-    targets: {
-      codex: {
-        css: "codex.css",
-        options: {
-          rendererProfile: "codex-theme-v1",
-          baseTheme: {
-            mode,
-            accent: tokens.accent,
-            ink: tokens.text,
-            surface: tokens.surface,
-          },
-        },
-      },
-    },
-  };
-  return [
-    { name: "codedrobe/theme.json", data: jsonBuffer(manifest) },
-    { name: "codedrobe/codex.css", data: Buffer.from(codedrobeCss(theme, mode), "utf8") },
-    { name: "codedrobe/assets/hero.png", data: background },
-  ];
-}
-
-function adapterBundle(theme, mode, background) {
-  const files = [
-    ...nativeFiles(theme, mode),
-    ...dreamSkinFiles(theme, mode, background),
-    ...heigeFiles(theme, mode, background),
-    ...codedrobeFiles(theme, mode, background),
-    {
-      name: "README.txt",
-      data: Buffer.from(
-        "Generated adapters for " + theme.id + " (" + mode + ").\n"
-        + "The canonical .act-theme package remains code-free. Adapter outputs are deterministic build artifacts.\n",
-        "utf8",
-      ),
-    },
-  ];
-  return createZip(files);
+function nativeThemeBuffer(theme, mode) {
+  return Buffer.from(
+    serializeCodexNativeTheme(createCodexNativeTheme(theme, mode)) + "\n",
+    "utf8",
+  );
 }
 
 export async function buildGeneratedFiles() {
@@ -325,7 +153,11 @@ export async function buildGeneratedFiles() {
       light: renderSourceArtPng(sourceArt, theme, "light", 960, 540),
       dark: renderSourceArtPng(sourceArt, theme, "dark", 960, 540),
     };
-    const manifest = manifestFor(theme, assets, sourceProvenance);
+    const nativeThemes = {
+      light: nativeThemeBuffer(theme, "light"),
+      dark: nativeThemeBuffer(theme, "dark"),
+    };
+    const manifest = manifestFor(theme, assets, nativeThemes, sourceProvenance);
     const manifestBuffer = jsonBuffer(manifest);
 
     files.set(themeRoot + "/manifest.json", manifestBuffer);
@@ -338,24 +170,28 @@ export async function buildGeneratedFiles() {
       { name: "manifest.json", data: manifestBuffer },
       { name: "assets/background-light.png", data: assets.light },
       { name: "assets/background-dark.png", data: assets.dark },
+      { name: "native/light.codex-theme.txt", data: nativeThemes.light },
+      { name: "native/dark.codex-theme.txt", data: nativeThemes.dark },
     ]);
     const packagePath = "packages/" + theme.id + "-" + theme.version + ".act-theme";
     files.set(packagePath, canonicalPackage);
 
     const modeRecords = {};
     for (const mode of ["light", "dark"]) {
-      const bundle = adapterBundle(theme, mode, assets[mode]);
-      const bundlePath = "packages/adapters/" + theme.id + "-" + mode + ".zip";
-      files.set(bundlePath, bundle);
+      const nativeThemePath = "packages/native/" + theme.id + "-" + mode + ".codex-theme.txt";
+      files.set(nativeThemePath, nativeThemes[mode]);
       modeRecords[mode] = {
         preview: themeRoot + "/previews/" + mode + ".png",
         previewSha256: sha256(previews[mode]),
         assetSha256: sha256(assets[mode]),
         assetBytes: assets[mode].length,
-        adapterBundle: {
-          path: bundlePath,
-          sha256: sha256(bundle),
-          bytes: bundle.length,
+        nativeTheme: {
+          format: "codex-theme-v1",
+          path: nativeThemePath,
+          sha256: sha256(nativeThemes[mode]),
+          bytes: nativeThemes[mode].length,
+          testedVersion: CODEX_NATIVE_TESTED_VERSION,
+          value: nativeThemes[mode].toString("utf8").trim(),
         },
       };
     }
@@ -403,24 +239,11 @@ export async function buildGeneratedFiles() {
       },
       exports: {
         "codex-native": {
-          coverage: "appearance-only",
-          root: "codex-native",
-          limitations: ["custom-background", "custom-palette", "custom-copy"],
-        },
-        "dream-skin": {
-          coverage: "full",
-          root: "dream-skin",
-          installable: true,
-        },
-        "heige-skin-studio": {
-          coverage: "full",
-          root: "heige-skin-studio",
-          installable: false,
-        },
-        codedrobe: {
-          coverage: "source-export",
-          root: "codedrobe",
-          installable: false,
+          coverage: "native-theme-v1",
+          format: "codex-theme-v1",
+          testedVersion: CODEX_NATIVE_TESTED_VERSION,
+          importPath: "Settings > Appearance > Import",
+          limitations: ["background-image"],
         },
       },
     });

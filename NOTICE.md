@@ -5,14 +5,14 @@ with or endorsed by OpenAI.
 
 Codex and OpenAI names and marks belong to their respective owner.
 
-Adapter outputs are implemented for interoperability with
-Fei-Away/Codex-Dream-Skin, HeiGeAi/heige-codex-skin-studio, and
-CodeDrobe/skills. No upstream executable code or artwork is included. Engine
-names identify compatibility targets only and do not imply sponsorship.
+The project exports declarative `codex-theme-v1` strings for the native Codex
+desktop appearance importer. It does not include, wrap, or claim compatibility
+with third-party skin engines.
 
-The Codex-native adapter records only the public desktop appearance preference.
-It does not claim that Codex supports third-party backgrounds or a full native
-theme package.
+Codex Native themes can set colors, contrast, fonts, a code theme, and semantic
+colors. The native contract does not accept third-party background images.
+Illustrations shown by the Gallery are cover art, not application screenshots
+or installable app backgrounds.
 
 Repository code is available under MIT. First-party original AI-generated
 source artwork and derived theme backgrounds are dedicated under CC0 1.0 to

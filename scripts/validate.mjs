@@ -5,6 +5,10 @@ import { fileURLToPath } from "node:url";
 
 import { readPngDimensions } from "./lib/png.mjs";
 import { extractStoredEntry, listZipEntries } from "./lib/zip.mjs";
+import {
+  CODEX_NATIVE_TESTED_VERSION,
+  parseCodexNativeTheme,
+} from "./lib/codex-native-theme.mjs";
 
 const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(SCRIPT_DIR, "..");
@@ -20,18 +24,8 @@ const CANONICAL_ENTRIES = [
   "assets/background-dark.png",
   "assets/background-light.png",
   "manifest.json",
-];
-const ADAPTER_ENTRIES = [
-  "README.txt",
-  "codedrobe/assets/hero.png",
-  "codedrobe/codex.css",
-  "codedrobe/theme.json",
-  "codex-native/config.toml",
-  "codex-native/profile.json",
-  "dream-skin/background.png",
-  "dream-skin/theme.json",
-  "heige-skin-studio/hero.png",
-  "heige-skin-studio/theme.json",
+  "native/dark.codex-theme.txt",
+  "native/light.codex-theme.txt",
 ];
 
 function sha256(buffer) {
@@ -134,33 +128,37 @@ function validateCanonicalZip(themeId, zip, manifestBytes, errors) {
   check(packedManifest.equals(manifestBytes), themeId + " packed manifest differs from repository manifest", errors);
 }
 
-function validateAdapterZip(theme, mode, zip, modeRecord, errors) {
-  const names = listZipEntries(zip).map((entry) => entry.name).sort();
-  check(JSON.stringify(names) === JSON.stringify(ADAPTER_ENTRIES), theme.id + " " + mode + " adapter bundle is incomplete", errors);
+function validateNativeTheme(theme, mode, nativeBytes, modeRecord, manifestMode, packageBytes, errors) {
+  let payload;
+  try {
+    payload = parseCodexNativeTheme(nativeBytes.toString("utf8"));
+  } catch (error) {
+    errors.push(theme.id + " " + mode + " Codex native theme is invalid: " + error.message);
+    return;
+  }
 
-  const background = entryData(zip, "dream-skin/background.png");
-  check(sha256(background) === modeRecord.assetSha256, theme.id + " " + mode + " adapter image hash mismatch", errors);
-  check(background.length === modeRecord.assetBytes, theme.id + " " + mode + " adapter image byte count mismatch", errors);
+  const tokens = manifestMode.tokens;
+  check(payload.variant === mode, theme.id + " " + mode + " native variant mismatch", errors);
+  check(payload.codeThemeId === "codex", theme.id + " " + mode + " native code theme mismatch", errors);
+  check(payload.theme.accent === tokens.accent, theme.id + " " + mode + " native accent mismatch", errors);
+  check(payload.theme.ink === tokens.text, theme.id + " " + mode + " native foreground mismatch", errors);
+  check(payload.theme.surface === tokens.background, theme.id + " " + mode + " native background mismatch", errors);
+  check(
+    payload.theme.contrast === (mode === "light" ? 45 : 60),
+    theme.id + " " + mode + " native contrast mismatch",
+    errors,
+  );
+  check(payload.theme.semanticColors.skill === tokens.accent, theme.id + " " + mode + " native skill color mismatch", errors);
+  check(modeRecord.nativeTheme.format === "codex-theme-v1", theme.id + " " + mode + " native format mismatch", errors);
+  check(modeRecord.nativeTheme.testedVersion === CODEX_NATIVE_TESTED_VERSION, theme.id + " " + mode + " native tested version mismatch", errors);
+  check(modeRecord.nativeTheme.value === nativeBytes.toString("utf8").trim(), theme.id + " " + mode + " native registry value mismatch", errors);
+  check(manifestMode.nativeTheme.format === "codex-theme-v1", theme.id + " " + mode + " manifest native format mismatch", errors);
+  check(manifestMode.nativeTheme.testedVersion === CODEX_NATIVE_TESTED_VERSION, theme.id + " " + mode + " manifest native version mismatch", errors);
+  check(manifestMode.nativeTheme.sha256 === sha256(nativeBytes), theme.id + " " + mode + " manifest native hash mismatch", errors);
+  check(manifestMode.nativeTheme.bytes === nativeBytes.length, theme.id + " " + mode + " manifest native byte count mismatch", errors);
 
-  const dream = JSON.parse(entryData(zip, "dream-skin/theme.json").toString("utf8"));
-  check(dream.schemaVersion === 1, theme.id + " " + mode + " Dream Skin schema mismatch", errors);
-  check(dream.id === "act-" + theme.id + "-" + mode, theme.id + " " + mode + " Dream Skin id mismatch", errors);
-  check(dream.image === "background.png", theme.id + " " + mode + " Dream Skin image mismatch", errors);
-  check(dream.appearance === mode, theme.id + " " + mode + " Dream Skin appearance mismatch", errors);
-
-  const nativeProfile = JSON.parse(entryData(zip, "codex-native/profile.json").toString("utf8"));
-  check(nativeProfile.coverage === "appearance-only", theme.id + " native export must disclose partial coverage", errors);
-  check(nativeProfile.config?.desktop?.appearanceTheme === mode, theme.id + " native mode mismatch", errors);
-
-  const heige = JSON.parse(entryData(zip, "heige-skin-studio/theme.json").toString("utf8"));
-  check(heige.schemaVersion === 1 && heige.hero === "hero.png", theme.id + " HeiGe export mismatch", errors);
-
-  const codedrobe = JSON.parse(entryData(zip, "codedrobe/theme.json").toString("utf8"));
-  check(codedrobe.schemaVersion === 1, theme.id + " CodeDrobe export schema mismatch", errors);
-  check(codedrobe.targets?.codex?.css === "codex.css", theme.id + " CodeDrobe CSS target mismatch", errors);
-  const css = entryData(zip, "codedrobe/codex.css").toString("utf8");
-  check(!/@import|url\s*\(\s*['"]?https?:|javascript:/i.test(css), theme.id + " CodeDrobe CSS contains a remote or executable reference", errors);
-  check(css.includes("prefers-reduced-motion"), theme.id + " CodeDrobe CSS lacks reduced-motion handling", errors);
+  const packedNative = entryData(packageBytes, manifestMode.nativeTheme.path);
+  check(packedNative.equals(nativeBytes), theme.id + " " + mode + " packed native theme differs from public export", errors);
 }
 
 export async function validateRepository() {
@@ -379,17 +377,34 @@ export async function validateRepository() {
     check(manifest.provenance?.promptSha256 === sourceProvenance.promptSha256, theme.id + " manifest prompt hash mismatch", errors);
     check(manifest.provenance?.sourceSha256 === sourceProvenance.sourceSha256, theme.id + " manifest source hash mismatch", errors);
     check(manifest.motion?.default === "reduced" && manifest.motion?.animated === false, theme.id + " canonical motion mismatch", errors);
+    check(
+      JSON.stringify(manifest.compatibility?.engines) === JSON.stringify([{
+        id: "codex-native",
+        coverage: "native-theme-v1",
+        testedVersion: CODEX_NATIVE_TESTED_VERSION,
+      }]),
+      theme.id + " must declare Codex Native as its only compatibility target",
+      errors,
+    );
+    check(
+      JSON.stringify(Object.keys(theme.exports || {})) === JSON.stringify(["codex-native"]),
+      theme.id + " registry must expose only Codex Native",
+      errors,
+    );
+    check(theme.exports?.["codex-native"]?.coverage === "native-theme-v1", theme.id + " native registry coverage mismatch", errors);
+    check(theme.exports?.["codex-native"]?.testedVersion === CODEX_NATIVE_TESTED_VERSION, theme.id + " native registry version mismatch", errors);
     validateCanonicalZip(theme.id, packageBytes, manifestBytes, errors);
 
     for (const mode of ["light", "dark"]) {
       const modeRecord = theme.previews[mode];
       const manifestMode = manifest.modes[mode];
       check(isSafeRelativePath(modeRecord.preview), theme.id + " " + mode + " preview path is unsafe", errors);
-      check(isSafeRelativePath(modeRecord.adapterBundle.path), theme.id + " " + mode + " adapter path is unsafe", errors);
-      const [asset, preview, bundle] = await Promise.all([
+      check(isSafeRelativePath(modeRecord.nativeTheme.path), theme.id + " " + mode + " native theme path is unsafe", errors);
+      check(isSafeRelativePath(manifestMode.nativeTheme.path), theme.id + " " + mode + " packed native theme path is unsafe", errors);
+      const [asset, preview, nativeTheme] = await Promise.all([
         readBytes("themes/" + theme.id + "/" + manifestMode.asset),
         readBytes(modeRecord.preview),
-        readBytes(modeRecord.adapterBundle.path),
+        readBytes(modeRecord.nativeTheme.path),
       ]);
       const assetDimensions = readPngDimensions(asset);
       const previewDimensions = readPngDimensions(preview);
@@ -400,10 +415,10 @@ export async function validateRepository() {
       check(sha256(asset) === modeRecord.assetSha256, theme.id + " " + mode + " registry asset hash mismatch", errors);
       check(asset.length === manifestMode.integrity.bytes && asset.length === modeRecord.assetBytes, theme.id + " " + mode + " asset byte count mismatch", errors);
       check(sha256(preview) === modeRecord.previewSha256, theme.id + " " + mode + " preview hash mismatch", errors);
-      check(sha256(bundle) === modeRecord.adapterBundle.sha256, theme.id + " " + mode + " adapter bundle hash mismatch", errors);
-      check(bundle.length === modeRecord.adapterBundle.bytes, theme.id + " " + mode + " adapter bundle byte count mismatch", errors);
+      check(sha256(nativeTheme) === modeRecord.nativeTheme.sha256, theme.id + " " + mode + " native theme hash mismatch", errors);
+      check(nativeTheme.length === modeRecord.nativeTheme.bytes, theme.id + " " + mode + " native theme byte count mismatch", errors);
       validateTokens(theme.id, mode, manifestMode.tokens, errors);
-      validateAdapterZip(theme, mode, bundle, modeRecord, errors);
+      validateNativeTheme(theme, mode, nativeTheme, modeRecord, manifestMode, packageBytes, errors);
     }
   }
 
@@ -415,7 +430,7 @@ export async function validateRepository() {
     themes: registry.themes.length,
     modes: registry.themes.length * 2,
     packages: registry.themes.length,
-    adapterBundles: registry.themes.length * 2,
+    nativeExports: registry.themes.length * 2,
   };
 }
 
@@ -423,7 +438,7 @@ async function main() {
   const result = await validateRepository();
   console.log(
     "Validated " + result.sources + " source images, " + result.themes + " themes, " + result.modes + " modes, "
-    + result.packages + " code-free packages, and " + result.adapterBundles + " adapter bundles.",
+    + result.packages + " code-free packages, and " + result.nativeExports + " Codex Native exports.",
   );
 }
 

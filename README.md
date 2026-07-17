@@ -1,6 +1,6 @@
 # Awesome Codex Theme
 
-面向 Codex 的开放主题包标准、Registry、Validator 与主题 Gallery。
+面向 Codex Native 的开放主题包标准、Registry、Validator 与主题 Gallery。
 
 [在线浏览 28 套主题](https://rwang23.github.io/awesome-codex-theme/) · [English README](README.en.md) · [主题包标准](docs/standard.md) · [Fan Art 说明](docs/fan-art-policy.md) · [贡献指南](CONTRIBUTING.md)
 
@@ -8,20 +8,22 @@
 
 ## 这不是另一个“换背景”脚本
 
-单纯注入 CSS 或替换背景，很容易做出一个能跑的 Demo，却很难回答几个长期问题：这张图能不能再分发，主题包里有没有代码，安装时如何确认文件没有被替换，同一套主题到了不同引擎究竟能还原多少。
+单纯注入 CSS 或替换背景，很容易做出一个能跑的 Demo，却很难回答几个长期问题：这张图能不能再分发，主题包里有没有代码，导入时如何确认文件没有被替换，以及当前版本的 Codex 到底能原生接收哪些主题字段。
 
 Awesome Codex Theme 把这些问题放进同一套公开契约：
 
 - `theme.json` 与 manifest Schema 统一描述身份、素材、明暗模式、来源和兼容范围
 - 标准 `.act-theme` 包只允许声明式配置与图片，不含脚本或远程 CSS
-- Registry 记录 SHA-256、文件大小、尺寸、版权声明和适配能力
+- Registry 记录 SHA-256、文件大小、尺寸、版权声明和 Native 契约版本
 - Validator 检查包内文件白名单、哈希、图片完整性与 WCAG 对比度
-- Adapter 在可信主题包之外导出 Codex 原生、Dream Skin、HeiGe Skin Studio 和 CodeDrobe 格式
-- GitHub Pages 提供预览、筛选、模式切换、下载和带哈希校验的安装命令
+- 每个模式都导出 Codex 桌面版可直接导入的 `codex-theme-v1:` 字符串
+- GitHub Pages 提供封面浏览、筛选、模式切换、复制与下载
+
+项目只兼容 Codex Native，不再导出 Dream Skin、HeiGe Skin Studio 或 CodeDrobe 格式，也不注入 CSS。Codex 的原生主题契约支持配色、对比度、字体、代码主题和语义色，但不支持背景图片。Gallery 中的插画因此统一标为“馆藏封面”，不是 Codex 实机截图，也不会被写入应用背景。
 
 ## 主题收藏
 
-当前有 28 套主题、56 张真实明暗预览。Gallery 卡片直接读取生成器输出的 960×540 PNG，不使用概念占位图。
+当前有 28 套主题、56 张由源图确定性生成的明暗封面。Gallery 卡片直接读取 960×540 PNG，不使用临时占位图。原生配色的实机截图需要在隔离的 Codex 测试环境中导入后采集，不能用封面冒充。采集规范见 [Codex Native 测试与截图](docs/native-testing.md)。
 
 | 系列 | 内容 | 数量 |
 | --- | --- | ---: |
@@ -39,12 +41,12 @@ Awesome Codex Theme 把这些问题放进同一套公开契约：
 最直接的入口是 [在线 Gallery](https://rwang23.github.io/awesome-codex-theme/)：
 
 1. 选择系列或搜索主题。
-2. 切换明亮、暗色预览。
-3. 打开“安装 / 导出”。
-4. 选择目标引擎。
-5. Dream Skin 可以复制带完整性校验的安装命令。其他引擎下载适配包后手动导入。
+2. 切换明亮、暗色封面。
+3. 打开“在 Codex 中使用”。
+4. 复制 `codex-theme-v1:` 主题字符串。
+5. 打开 Codex 的“设置 > 外观”，选择对应的明亮或暗色主题，再点“导入”并粘贴。
 
-浏览器本身不会直接写入 Codex。Codex 原生适配器目前只导出明暗外观偏好，不承诺背景图和自定义色板能够原生生效。详细能力见 [适配器说明](docs/adapters.md)。
+浏览器不会直接改写 Codex。主题字符串只包含声明式配置，不含脚本、CSS 或远程资源。当前契约和能力边界见 [Codex Native 兼容说明](docs/adapters.md)。
 
 ## 用 Codex 创建新主题
 
@@ -68,7 +70,7 @@ Skill 会协助完成：
 - image job prompt 与源图审查
 - 明暗 token 与对比度门槛
 - `catalog.json` 和 image job 脚手架
-- 主题生成、Registry、Validator 与浏览器验收
+- Codex Native 字符串、Registry、Validator 与浏览器验收
 
 原创主题可以复制 [theme brief 模板](.codex/skills/create-codex-theme/assets/theme-brief.template.json)；明确的非官方同人主题使用 [fan-art brief 模板](.codex/skills/create-codex-theme/assets/fan-art-theme-brief.template.json)。然后运行：
 
@@ -97,7 +99,7 @@ npm run serve
 
 ```bash
 npm run art:generate          # 通过 image job 生成源图
-npm run generate              # 导出主题、预览、Registry 与适配器包
+npm run generate              # 导出主题、封面、Registry 与 Native 字符串
 npm run generate:check        # 检查生成产物是否漂移
 npm run validate              # 校验主题包和 Registry
 npm test                      # 运行仓库测试
@@ -112,9 +114,9 @@ schemas/                     主题包与 Registry JSON Schema
 themes/catalog.json          人工维护的主题目录
 themes/source-art/           image job 配置、源图与 provenance
 themes/registry.json         自动生成的公共 Registry
-scripts/                     生成器、校验器、构建和安装器
+scripts/                     生成器、校验器与站点构建
 site/                        无依赖 Gallery
-docs/                        标准、架构、适配器和设计说明
+docs/                        标准、架构、Native 兼容与测试说明
 ```
 
 `themes/<id>/`、`packages/`、`themes/registry.json` 与 `dist/` 都由生成器维护。不要手工修改这些产物。

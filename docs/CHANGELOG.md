@@ -1,5 +1,18 @@
 # Changelog
 
+## 2026-07-17-01-00
+
+- Narrowed compatibility to Codex Native and removed third-party adapter
+  bundles and executable installers.
+- Replaced the former appearance-only profile with validated
+  `codex-theme-v1:` import strings for every light and dark mode.
+- Added Native strings to canonical packages and bound their format, version,
+  hash, size, Registry value, and packaged copy to the Validator.
+- Reworked the Gallery import panel around copy, download, and Codex Appearance
+  settings.
+- Labeled all generated illustrations as Gallery covers and documented the
+  isolated real-app screenshot workflow.
+
 ## 2026-07-17-00-00
 
 - Added eight unofficial character-tribute themes covering cinematic and chibi

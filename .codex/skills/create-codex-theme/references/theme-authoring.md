@@ -14,7 +14,7 @@
 
 `cinematic-chibi` collection 要求同一 `pair` 同时有原画版和 Q 版。新增此类主题时准备两份 brief，并在运行完整校验前把两个 variant 都加入 catalog。`standalone` collection 可以一次加入一套。
 
-生成后的 `.act-theme` 包只含 `manifest.json` 与两张声明过的背景图。可执行脚本和引擎 CSS 只能放在包外的 adapter bundle。
+生成后的 `.act-theme` 包只含 `manifest.json`、两张声明过的封面和两份声明式 Codex Native 主题字符串。包内不能出现可执行脚本、CSS 或远程资源。
 
 ## 权利轨道
 
@@ -32,7 +32,7 @@
 
 ## 工作区构图
 
-源图不是海报。它需要给 Codex 控件留位置。
+源图不是实机截图，也不会成为 Codex Native 背景。安全区仍用于保持整套馆藏统一，并为 Gallery 的界面化构图留出呼吸空间。
 
 - `safeArea: left` 时，左侧约 46% 保持低对比、低细节。
 - 主体放在右侧三分之一，不能贴边。

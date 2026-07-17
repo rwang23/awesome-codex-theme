@@ -23,7 +23,7 @@ Sources:
 
 Another collection of background images plus injected CSS would have little
 defensible differentiation. Awesome Codex Theme treats gallery quality as the
-front door and the standard, registry, validator, provenance, adapters, and CI
+front door and the standard, registry, validator, provenance, Native exports, and CI
 evidence as the durable product.
 
 The first collection uses four independent original worlds in cinematic and

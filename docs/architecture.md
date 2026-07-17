@@ -2,67 +2,64 @@
 
 ## Layers
 
-The project has three deliberately separate layers.
+The project has three separate layers.
 
-The gallery is a static GitHub Pages site. It reads themes/registry.json,
-renders localized collection controls and cards, filters by collection or
-visual variant, switches light and dark previews, and copies an explicit
-install command. It has no server, account system, analytics, or payment path.
+The Gallery is a dependency-free GitHub Pages site. It reads
+`themes/registry.json`, renders the Chinese-first collection controls and
+cards, switches light and dark covers, and exposes the selected Codex Native
+theme string. It has no server, account system, analytics, payment path, or
+permission to change Codex settings.
 
-The registry and canonical packages are generated from themes/catalog.json and
-the reviewed PNG files in themes/source-art/. The catalog declares collection
-metadata and per-collection pairing rules. Source-art jobs and compact
+The Registry and canonical packages are generated from `themes/catalog.json`
+and reviewed PNG files in `themes/source-art/`. Source-art jobs and compact
 provenance records keep the model, prompt hash, job id, and source hash
-reviewable. Each .act-theme contains a versioned manifest and two derived PNG
-backgrounds. Every path, preview, package, and per-mode adapter bundle has
-recorded SHA-256 and byte-count evidence.
+reviewable. Each mode produces a `codex-theme-v1:` string from the declared
+tokens. Every package, preview, asset, and Native export has recorded SHA-256
+and byte-count evidence.
 
-Rights metadata follows the same source-of-truth path. Original themes and
-unofficial fan art use separate `rightsProfile` values. Fan-art records declare
-the underlying work and characters, prohibit commercial use, state that no
-official assets were used, and remain `rightsVerified: false`. The Gallery
-shows that status on cards and in the detail dialog instead of presenting all
-artwork as CC0.
+The Validator checks the package allowlist, declared paths, hashes, PNG
+dimensions, rights fields, collection rules, WCAG contrast, and the exact
+Codex Native payload shape. It also confirms that the public Native file, the
+Registry value, and the copy inside `.act-theme` are identical.
+
+## Artwork and screenshots
+
+Gallery cards render deterministic 960×540 light or dark cover PNGs. Those
+images describe a theme's visual world; Codex Native does not accept them as
+application backgrounds. The site labels them as cover art and must not call
+them screenshots.
+
+A real Codex screenshot is a separate evidence artifact. It requires importing
+the Native string into the named Codex desktop version, opening a fixed fixture,
+and capturing the rendered app. See `native-testing.md`.
+
+## Rights path
+
+Original themes and unofficial fan art use separate `rightsProfile` values.
+Fan-art records declare the underlying work and characters, prohibit
+commercial use, state that no official assets were used, and remain
+`rightsVerified: false`. The Gallery shows that status instead of presenting
+all artwork as CC0.
 
 Reviewed source art is part of Git history. Derived theme directories,
-packages, registry output, and Pages artifacts are generated distribution
-outputs. A clean checkout can therefore rebuild the same light and dark
-backgrounds without API access while keeping raw image-service responses and
-credentials out of the repository.
-
-Gallery cards render the generated 960×540 light or dark preview PNG for each
-theme. They do not reuse the source image as a CSS background and do not fall
-back to illustrative placeholders. The validator checks every preview path,
-PNG dimension, byte count, and SHA-256 before the site can build.
-
-Adapters are deterministic build outputs outside the canonical trust boundary.
-Each per-mode ZIP contains explicit Codex-native, Dream Skin, HeiGe, and
-CodeDrobe directories. This separation keeps a canonical theme declaration
-code-free even when a target engine needs generated CSS.
-
-The installers download or copy the declared adapter, verify the ZIP and
-background, validate the Dream Skin identity, and place it inside the existing
-saved-theme library. They do not install Dream Skin, alter the official Codex
-package, start a CDP session, or change model-provider configuration.
+packages, Registry output, and Pages artifacts are generated distribution
+outputs. A clean checkout can rebuild them without image-service access while
+keeping raw service responses and credentials out of the repository.
 
 ## Trust boundary
 
-GitHub Pages is a discovery and distribution surface. Local installation is a
-separate, explicit step. Visitors can inspect both the command and the script.
-Hash verification catches damaged or substituted package files relative to the
-registry, while repository review and release provenance establish who controls
-the registry itself. A compromised site and registry remain a common trust
-root, which is why packages are still constrained by file allowlists.
+The browser can copy or download a declarative theme string and open the Codex
+settings route. It does not apply the theme. Import remains an explicit user
+action inside Codex.
 
-## Compatibility
+Hash validation proves that generated files match the Registry. Repository
+review and release provenance establish who controls that Registry. A
+compromised site and Registry remain a common trust root, so canonical packages
+keep a strict file allowlist and contain no executable code.
 
-The initial implementation targets Codex Dream Skin schema 1, HeiGe Skin Studio
-schema 1, and the CodeDrobe schema 1 target shape observed during development.
-Codex native is appearance-only because no public full theme package API was
-found. Compatibility is a declared matrix, not a generic runtime plugin API.
+## Compatibility boundary
 
-## Future native manager
-
-A true one-click browser install would require a signed local application or a
-registered URL protocol. That is a separate security and distribution project.
-The static-site command flow is the correct first release.
+Version 1 targets Codex Native only. It does not implement third-party skin
+formats, CSS injection, or a generic plugin API. The tested desktop version is
+recorded in both manifests and Registry entries so a later app release can be
+revalidated explicitly.

@@ -23,7 +23,7 @@
       <nav class="primary-nav" aria-label="主导航">
         <a href="#gallery" data-i18n="navThemes">主题</a>
         <a href="#standard" data-i18n="navStandard">标准</a>
-        <a href="#compatibility" data-i18n="navAdapters">适配器</a>
+        <a href="#compatibility" data-i18n="navNative">Codex Native</a>
         <a href="#creator" data-i18n="navCreator">创作 Skill</a>
       </nav>
       <button class="language-button" id="languageButton" type="button" aria-label="切换语言">
@@ -44,7 +44,7 @@
             <span data-i18n="heroLineTwo">换一片风景。</span>
           </h1>
           <p class="hero-intro" data-i18n="heroIntro">
-            这里不只是换背景。每套主题都有清楚的来源、双模式色板、完整性校验和如实标注的适配范围。
+            每张馆藏封面都对应一套可由 Codex 原生导入的配色，包含明暗模式、来源记录、完整性校验和版本化主题字符串。
           </p>
           <div class="hero-actions">
             <a class="hero-cta" href="#gallery">
@@ -91,8 +91,8 @@
               <span id="heroThemeMeta">原创国风修仙 01 · 明亮</span>
             </div>
           </div>
-          <span class="theater-note note-one" aria-hidden="true">SHA-256</span>
-          <span class="theater-note note-two" aria-hidden="true">0 EXEC</span>
+          <span class="theater-note note-one" aria-hidden="true">NATIVE v1</span>
+          <span class="theater-note note-two" aria-hidden="true">COVER ART</span>
         </div>
       </section>
 
@@ -109,8 +109,8 @@
         </div>
         <div>
           <span class="proof-icon gold" aria-hidden="true"></span>
-          <strong>04</strong>
-          <span data-i18n="statAdapters">个适配目标</span>
+          <strong>01</strong>
+          <span data-i18n="statNative">个原生目标</span>
         </div>
         <div>
           <span class="proof-icon indigo" aria-hidden="true"></span>
@@ -188,7 +188,7 @@
             <div>
               <small>03</small>
               <h3 data-i18n="stepExportTitle">导出</h3>
-              <p data-i18n="stepExportBody">在可信主题包之外，生成不同引擎需要的适配产物。</p>
+              <p data-i18n="stepExportBody">生成 Codex 桌面版能够直接导入的 Native v1 主题字符串。</p>
             </div>
           </li>
         </ol>
@@ -197,14 +197,14 @@
       <section class="compatibility-section" id="compatibility" aria-labelledby="compatibilityTitle">
         <div class="section-heading compatibility-heading">
           <div>
-            <p class="eyebrow" data-i18n="compatibilityEyebrow">兼容能力</p>
-            <h2 id="compatibilityTitle" data-i18n="compatibilityTitle">每一种导出，都把能力边界说清楚。</h2>
+            <p class="eyebrow" data-i18n="compatibilityEyebrow">Codex Native</p>
+            <h2 id="compatibilityTitle" data-i18n="compatibilityTitle">只做一个目标，而且使用真实的 Codex 主题契约。</h2>
           </div>
           <p data-i18n="compatibilityIntro">
-            Codex 当前公开的是外观偏好，不是完整自定义主题 API。原生适配器因此明确标注为“仅外观模式”。
+            Codex 原生支持强调色、背景色、前景色、对比度、字体、代码主题和语义色。原生契约不接受背景图片，因此 Gallery 插画会明确标为封面。
           </p>
         </div>
-        <div class="compatibility-table" role="table" aria-label="适配器兼容情况">
+        <div class="compatibility-table" role="table" aria-label="Codex Native 兼容情况">
           <div class="compatibility-row compatibility-header" role="row">
             <span role="columnheader" data-i18n="tableTarget">目标</span>
             <span role="columnheader" data-i18n="tableCoverage">覆盖程度</span>
@@ -212,23 +212,8 @@
           </div>
           <div class="compatibility-row" role="row">
             <strong role="cell">Codex native</strong>
-            <span role="cell"><i class="coverage-dot partial"></i><span data-i18n="coverageAppearance">仅外观模式</span></span>
-            <span role="cell" data-i18n="deliveryProfile">配置导出</span>
-          </div>
-          <div class="compatibility-row" role="row">
-            <strong role="cell">Codex Dream Skin</strong>
-            <span role="cell"><i class="coverage-dot full"></i><span data-i18n="coverageFull">完整视觉导出</span></span>
-            <span role="cell" data-i18n="deliveryVerified">校验后安装</span>
-          </div>
-          <div class="compatibility-row" role="row">
-            <strong role="cell">HeiGe Skin Studio</strong>
-            <span role="cell"><i class="coverage-dot full"></i><span data-i18n="coverageFull">完整视觉导出</span></span>
-            <span role="cell" data-i18n="deliveryManual">手动导入</span>
-          </div>
-          <div class="compatibility-row" role="row">
-            <strong role="cell">CodeDrobe</strong>
-            <span role="cell"><i class="coverage-dot source"></i><span data-i18n="coverageSource">源码式导出</span></span>
-            <span role="cell" data-i18n="deliveryManual">手动导入</span>
+            <span role="cell"><i class="coverage-dot full"></i><span data-i18n="coverageAppearance">原生主题 v1</span></span>
+            <span role="cell" data-i18n="deliveryProfile">复制并导入</span>
           </div>
         </div>
       </section>
@@ -293,7 +278,7 @@ city rain theme.</code></pre>
         <span id="dialogVariant"></span>
       </div>
       <div class="dialog-content">
-        <p class="eyebrow" data-i18n="installEyebrow">安装 / 导出</p>
+        <p class="eyebrow" data-i18n="installEyebrow">在 Codex 中使用</p>
         <h2 id="dialogTitle"></h2>
         <p id="dialogDescription"></p>
         <p class="dialog-rights" id="dialogRights" hidden></p>
@@ -306,45 +291,41 @@ city rain theme.</code></pre>
               <button type="button" data-mode="dark">暗色</button>
             </div>
           </fieldset>
-          <label>
-            <span data-i18n="chooseTarget">目标引擎</span>
-            <select id="engineSelect">
-              <option value="dream-skin">Codex Dream Skin · 完整视觉</option>
-              <option value="codex-native">Codex 原生 · 仅外观模式</option>
-              <option value="heige-skin-studio">HeiGe Skin Studio · 完整导出</option>
-              <option value="codedrobe">CodeDrobe · 源码式导出</option>
-            </select>
-          </label>
+          <div class="native-target">
+            <span>Codex Native</span>
+            <strong>codex-theme-v1</strong>
+          </div>
         </div>
 
         <div class="capability-note" id="capabilityNote"></div>
 
-        <div class="command-panel" id="commandPanel">
+        <div class="command-panel">
           <div class="command-heading">
-            <span data-i18n="verifiedCommand">带完整性校验的安装命令</span>
-            <div class="os-switch" id="osSwitch">
-              <button type="button" data-os="windows">Windows</button>
-              <button type="button" data-os="macos">macOS</button>
-            </div>
+            <span data-i18n="verifiedCommand">Codex Native 主题字符串</span>
+            <span>v1</span>
           </div>
-          <code id="installCommand"></code>
-          <button class="copy-button" id="copyCommand" type="button">
-            <span data-i18n="copyCommand">复制命令</span>
+          <code id="nativeThemeString"></code>
+          <button class="copy-button" id="copyTheme" type="button">
+            <span data-i18n="copyCommand">复制主题</span>
             <span aria-hidden="true">↗</span>
           </button>
         </div>
 
         <div class="dialog-actions">
-          <a class="primary-action" id="downloadAdapter" download>
-            <span data-i18n="downloadExport">下载适配器包</span>
+          <a class="primary-action" href="codex://settings">
+            <span data-i18n="openSettings">打开 Codex 设置</span>
+            <span aria-hidden="true">↗</span>
+          </a>
+          <a class="secondary-action" id="downloadNativeTheme" download>
+            <span data-i18n="downloadExport">下载原生主题</span>
             <span aria-hidden="true">↓</span>
           </a>
-          <a class="secondary-action" id="downloadPackage" download>
+          <a class="package-action" id="downloadPackage" download>
             <span data-i18n="downloadPackage">标准 .act-theme</span>
           </a>
         </div>
-        <p class="trust-note" id="trustNote" data-i18n="trustNoteDream">
-          浏览器不会直接改写 Codex。命令会下载可审查的安装器，核对适配包与背景图哈希后，再写入 Dream Skin 主题库。
+        <p class="trust-note" id="trustNote" data-i18n="trustNoteNative">
+          复制字符串后，打开 Codex 设置 &gt; 外观，在对应的明亮或暗色主题中选择“导入”。插画只是 Gallery 封面，不会作为应用背景写入 Codex。
         </p>
       </div>
     </dialog>

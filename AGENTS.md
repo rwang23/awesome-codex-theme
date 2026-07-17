@@ -6,7 +6,8 @@ Read docs/agent-brief.md before broad exploration.
 - themes/catalog.json, themes/source-art/jobs.json, and reviewed source-art PNGs are the editable sources of truth. Generated theme packs and themes/registry.json must stay reproducible.
 - Do not copy third-party theme art into this repository without a documented redistribution license.
 - Use the project-local create-codex-theme Skill for new themes. Original work is the default; explicitly requested fan art must use the fan-art profile and policy. Review image-job output for text, logos, undeclared IP, copied official compositions, safe-area drift, and 16:9 cropping.
-- Installation must be explicit, reversible, hash-verified, and limited to the Codex Dream Skin theme library.
-- Run npm run check after changes to site behavior, theme metadata, generators, or installers.
+- Native delivery must use the versioned `codex-theme-v1` import string. Do not add CSS injection, executable installers, or third-party skin-engine exports.
+- Gallery artwork is cover art. Do not call it a Codex screenshot; real screenshot claims require an import in the named Codex version.
+- Run npm run check after changes to site behavior, theme metadata, generators, or Native exports.
 - Browser interaction is required before claiming a user-facing UI change is complete.
 - Create local commits for meaningful verified work. Do not push or create a remote repository without explicit authorization.

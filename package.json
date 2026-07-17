@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "A free, community-run gallery and installer registry for Codex desktop themes.",
+  "description": "A free Codex Native theme standard, registry, validator, and gallery.",
   "scripts": {
     "art:generate": "node scripts/run-image-jobs.mjs",
     "generate": "node scripts/generate-themes.mjs",

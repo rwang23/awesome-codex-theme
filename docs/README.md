@@ -6,6 +6,7 @@
 2. architecture.md
 3. standard.md
 4. adapters.md
+5. native-testing.md
 
 Read landscape.md when positioning or upstream compatibility changes. Do not
 use context/raw/, docs/archive/, or docs/report/ as first-read material; those
@@ -14,14 +15,15 @@ locations are reserved for execution evidence or closed history when needed.
 ## Current documents
 
 - agent-brief.md: first-read project router
-- architecture.md: package, site, install, and trust boundaries
+- architecture.md: package, site, Native delivery, and trust boundaries
 - art-direction.md: reviewed image-job direction for Original Xianxia 01
 - city-atlas-art-direction.md: city identity, anti-landmark, and composition rules
 - fan-art-direction.md: declared-character and remembered-scene art direction
 - fan-art-policy.md: public rights boundary, non-commercial terms, and takedown path
 - gallery-design.md: redesign evidence and the independent Gallery visual system
 - standard.md: version 1 canonical manifest and package contract
-- adapters.md: compatibility matrix and export behavior
+- adapters.md: Codex Native contract and unsupported capabilities
+- native-testing.md: isolated real-app validation and screenshot evidence
 - landscape.md: dated reference-project research and positioning
 - CHANGELOG.md: delivered project changes
 - ../README.md: Chinese-first public project overview and setup
