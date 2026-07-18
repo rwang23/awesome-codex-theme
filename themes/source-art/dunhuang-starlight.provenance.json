@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "themeId": "dunhuang-starlight",
+  "rightsProfile": "original",
+  "workflow": "openai-image-job",
+  "model": "gpt-image-2",
+  "size": "1536x1024",
+  "quality": "high",
+  "jobId": "8c280fe3-e0cb-4bac-96c2-0c25fa80bc2f",
+  "promptSha256": "dba1f4a57a15377c8fa48742c089e86a2a28743b9fd0805a2a96bb6772d15c55",
+  "sourceSha256": "62d5e1fdbdd6c5c0c739a7221086294d63a49d3e10b02b0a6c1c99e09ac2ed72",
+  "disclosure": "AI-generated original source art. Prompt and output were reviewed for third-party characters, logos, signatures, and text before release."
+}

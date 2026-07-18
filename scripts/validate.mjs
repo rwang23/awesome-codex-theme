@@ -195,6 +195,13 @@ export async function validateRepository() {
   check(themeSchema.$schema?.includes("2020-12"), "Theme schema is not JSON Schema 2020-12", errors);
   check(registrySchema.$schema?.includes("2020-12"), "Registry schema is not JSON Schema 2020-12", errors);
   check(registry.standard === "act-theme-pack-v1", "Registry standard id mismatch", errors);
+  check(
+    Number.isInteger(catalog.catalogRevision)
+      && catalog.catalogRevision > 0
+      && registry.catalogRevision === catalog.catalogRevision,
+    "Registry/catalog revision mismatch",
+    errors,
+  );
   check(sourceJobs.workflow?.runner === "openai-image-job", "Source-art workflow mismatch", errors);
   check(sourceJobs.workflow?.size === SOURCE_WIDTH + "x" + SOURCE_HEIGHT, "Source-art dimensions mismatch", errors);
   check(Array.isArray(sourceJobs.jobs), "Source-art jobs are missing", errors);
@@ -215,7 +222,8 @@ export async function validateRepository() {
   for (const sourceJob of sourceJobRecords) {
     const rightsProfile = sourceJob.rightsProfile || "original";
     check(
-      sourceJob.promptProfile == null || sourceJob.promptProfile === "city",
+      sourceJob.promptProfile == null
+        || ["city", "global", "tribute"].includes(sourceJob.promptProfile),
       sourceJob.id + " source prompt profile is unsupported",
       errors,
     );
@@ -247,6 +255,21 @@ export async function validateRepository() {
     check(["cinematic", "chibi", "cityscape", "scene"].includes(theme.variant), theme.id + " has an unsupported variant", errors);
     check(["original", "fan-art"].includes(rightsProfile), theme.id + " has an unsupported rights profile", errors);
     check(
+      theme.audience == null || ["global", "en", "zh-CN"].includes(theme.audience),
+      theme.id + " has an unsupported audience",
+      errors,
+    );
+    if (theme.featuredRank) {
+      check(
+        Number.isInteger(theme.featuredRank.en)
+          && theme.featuredRank.en >= 0
+          && Number.isInteger(theme.featuredRank["zh-CN"])
+          && theme.featuredRank["zh-CN"] >= 0,
+        theme.id + " has an invalid localized featured rank",
+        errors,
+      );
+    }
+    check(
       typeof theme.tagline?.en === "string"
         && theme.tagline.en.length > 0
         && theme.tagline.en.length <= 120
@@ -270,8 +293,13 @@ export async function validateRepository() {
   for (const collection of catalog.collections) {
     check(THEME_ID.test(collection.id), "Invalid collection id: " + collection.id, errors);
     check(["cinematic-chibi", "standalone"].includes(collection.pairing), collection.id + " has an unsupported pairing policy", errors);
+    check(
+      collection.audience == null || ["global", "en", "zh-CN"].includes(collection.audience),
+      collection.id + " has an unsupported audience",
+      errors,
+    );
     const collectionThemes = catalog.themes.filter((theme) => theme.collection === collection.id);
-    check(collectionThemes.length >= 4 && collectionThemes.length <= 12, collection.id + " must contain 4 to 12 themes", errors);
+    check(collectionThemes.length >= 2 && collectionThemes.length <= 12, collection.id + " must contain 2 to 12 themes", errors);
     const registryCollection = registry.collections.find((candidate) => candidate.id === collection.id);
     check(Boolean(registryCollection), "Missing registry collection: " + collection.id, errors);
     check(registryCollection?.themeCount === collectionThemes.length, collection.id + " registry theme count mismatch", errors);
@@ -320,11 +348,15 @@ export async function validateRepository() {
     const sourceDimensions = readPngDimensions(sourceArt);
     const rightsProfile = catalogTheme.rightsProfile || "original";
     const fanArt = rightsProfile === "fan-art";
-    const commonPrompt = fanArt
-      ? sourceJobs.fanArtPrompt
-      : sourceJob.promptProfile === "city"
-        ? sourceJobs.cityPrompt
-        : sourceJobs.commonPrompt;
+    const commonPrompt = sourceJob.promptProfile === "tribute"
+      ? sourceJobs.tributePrompt
+      : sourceJob.promptProfile === "global"
+        ? sourceJobs.globalPrompt
+        : fanArt
+          ? sourceJobs.fanArtPrompt
+          : sourceJob.promptProfile === "city"
+            ? sourceJobs.cityPrompt
+            : sourceJobs.commonPrompt;
     const completePrompt = commonPrompt + "\n\nScene brief: " + sourceJob.prompt;
     check(
       sourceDimensions.width === SOURCE_WIDTH && sourceDimensions.height === SOURCE_HEIGHT,
@@ -407,6 +439,12 @@ export async function validateRepository() {
     check(manifest.pair === catalogTheme.pair, theme.id + " canonical pair mismatch", errors);
     check(manifest.rightsProfile === rightsProfile, theme.id + " canonical rights-profile mismatch", errors);
     check(theme.collection === catalogTheme.collection, theme.id + " registry collection mismatch", errors);
+    check(theme.audience === (catalogTheme.audience || "global"), theme.id + " registry audience mismatch", errors);
+    check(
+      JSON.stringify(theme.featuredRank || null) === JSON.stringify(catalogTheme.featuredRank || null),
+      theme.id + " registry featured rank mismatch",
+      errors,
+    );
     check(manifest.provenance?.rightsVerified === !fanArt, theme.id + " canonical rights status mismatch", errors);
     check(manifest.provenance?.aiGenerated === true, theme.id + " generated-art disclosure mismatch", errors);
     check(manifest.provenance?.type === (fanArt ? "fan-art" : "original"), theme.id + " generated-art provenance type mismatch", errors);

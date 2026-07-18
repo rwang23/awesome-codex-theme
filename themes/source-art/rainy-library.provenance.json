@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "themeId": "rainy-library",
+  "rightsProfile": "original",
+  "workflow": "openai-image-job",
+  "model": "gpt-image-2",
+  "size": "1536x1024",
+  "quality": "high",
+  "jobId": "6049ccc9-0461-4dc1-a662-ee562fb2337a",
+  "promptSha256": "90d5ea62087dacbb62bfa41385ce257d2fb8be76bbc07704d1ae9d520dae8116",
+  "sourceSha256": "8fef3ada2a2a68e5b1e4b15bf286714f0368db0d1f2ced87a683a78c05f5f499",
+  "disclosure": "AI-generated original source art. Prompt and output were reviewed for third-party characters, logos, signatures, and text before release."
+}

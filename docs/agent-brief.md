@@ -7,7 +7,7 @@
 - Project root: `C:\projects\tools\awesome-codex-theme`
 - Purpose: free declarative Full Skin standard, Registry, Validator, Gallery,
   and cross-platform Theme Manager for Codex
-- Primary users: Chinese-speaking Codex desktop users and theme contributors
+- Primary users: international and Chinese-speaking Codex desktop users and theme contributors
 - Main stack: dependency-free static HTML/CSS/JavaScript, Node.js built-ins,
   and a Tauri 2 desktop app with a narrow Rust backend
 - Canonical package manager: npm; desktop dependencies live only under
@@ -50,7 +50,9 @@
   not enough
 - Windows opt-in persistence is implemented and verified against ChatGPT Beta
   `26.715.3651.0`. It is a durable user choice plus safe replay, never an app
-  patch. macOS persistence remains unverified on physical hardware.
+  patch. macOS persistence rejects mounted-DMG and invalid app-bundle paths,
+  binds target actions to Bundle ID plus executable path, and remains
+  unverified on physical hardware.
 - The hosted community Beta is a separate private service. Uploads remain
   quarantined and cannot enter the official Registry without this repository's
   review, CI, and real-app evidence.
@@ -105,7 +107,7 @@ must not interrupt a user's normal Stable session.
 
 - Theme data or art: source-art visual review, `generate:check`, validation, and tests.
 - Full Skin: asset hash and dimensions, Registry equality, exact app/listener
-  identity, runtime marker readback, 56-mode capture manifest, and restore.
+  identity, runtime marker readback, 82-mode capture manifest, and restore.
 - Native fallback: parser validation, Registry/package equality, unique payload,
   and recorded tested version.
 - Site behavior: `npm run check`, local server, browser search/filter/dialog/copy checks.

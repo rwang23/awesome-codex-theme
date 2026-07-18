@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "themeId": "tibo-reset-saint",
+  "rightsProfile": "fan-art",
+  "workflow": "openai-image-job",
+  "model": "gpt-image-2",
+  "size": "1536x1024",
+  "quality": "high",
+  "jobId": "6067df8a-9bb2-4a8e-aad6-c0606aa3bf1a",
+  "promptSha256": "029bfa6d6d1bb53bb6616e0eae6b048be048d8abbf0b2c58cc79fab4ca3c1b1f",
+  "sourceSha256": "4e8529db8c4607c7d8ebae85764c5b524f86434d3957c7781ff3ba623660af38",
+  "disclosure": "AI-generated unofficial fan art. No official image assets were used. Underlying character and franchise rights remain with their respective rights holders.",
+  "fanArt": {
+    "work": {
+      "en": "Codex Community Tribute",
+      "zh-CN": "Codex 社区致敬"
+    },
+    "characters": {
+      "en": [
+        "Tibo Sottiaux"
+      ],
+      "zh-CN": [
+        "Tibo Sottiaux"
+      ]
+    }
+  }
+}

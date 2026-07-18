@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "themeId": "deep-ocean-lab",
+  "rightsProfile": "original",
+  "workflow": "openai-image-job",
+  "model": "gpt-image-2",
+  "size": "1536x1024",
+  "quality": "high",
+  "jobId": "f597796c-768b-4d71-8e5d-9e88db463edb",
+  "promptSha256": "d7150b40dbb448465cd62e143151485c969862d838726a723947945514e476eb",
+  "sourceSha256": "04e7e503c417998108213dbca3e77778e08c024e351eab6d26e4f52d0df9f7de",
+  "disclosure": "AI-generated original source art. Prompt and output were reviewed for third-party characters, logos, signatures, and text before release."
+}

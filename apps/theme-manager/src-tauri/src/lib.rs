@@ -102,15 +102,16 @@ fn publish_catalog(
 
 fn initialize_catalog(app: &AppHandle, state: &DesktopState) -> Result<(), String> {
     let bundled = catalog::load_bundled(app)?;
+    let bundled_revision = catalog::revision(&bundled);
     let (catalog, status) = match catalog::load_cached(app) {
-        Ok(cached) => (
+        Ok(cached) if catalog::revision(&cached) > bundled_revision => (
             cached,
             CatalogStatus {
                 status: "cached".into(),
                 message: "已载入上次同步的主题目录".into(),
             },
         ),
-        Err(_) => (
+        _ => (
             bundled,
             CatalogStatus {
                 status: "bundled".into(),
@@ -171,9 +172,27 @@ async fn refresh_catalog(app: AppHandle, state: State<'_, DesktopState>) -> Resu
             message: "正在检查主题目录更新".into(),
         },
     )?;
-    let previous_hash = lock_catalog(&state)?.registry_sha256;
+    let current = lock_catalog(&state)?;
+    let current_revision = catalog::revision(&current);
+    let previous_hash = current.registry_sha256.clone();
     match catalog::load_remote().await {
         Ok((remote, registry_text)) => {
+            let remote_revision = catalog::revision(&remote);
+            if remote_revision < current_revision
+                || (remote_revision == current_revision && remote.registry_sha256 != previous_hash)
+            {
+                eprintln!(
+                    "Ignored remote catalog revision {remote_revision}; current revision is {current_revision}"
+                );
+                return publish_catalog(
+                    &app,
+                    &state,
+                    CatalogStatus {
+                        status: "current".into(),
+                        message: "远程主题目录较旧，继续使用本地较新版本".into(),
+                    },
+                );
+            }
             let changed = remote.registry_sha256 != previous_hash;
             if let Err(error) = catalog::save_cached(&app, &remote, &registry_text) {
                 eprintln!("{error}");
@@ -258,6 +277,11 @@ async fn restore_full_skin(
     state: State<'_, DesktopState>,
 ) -> Result<skin_runtime::SkinRuntimeView, String> {
     skin_runtime::restore(&state.skin_runtime).await
+}
+
+#[tauri::command]
+fn get_skin_state(state: State<'_, DesktopState>) -> skin_runtime::SkinRuntimeView {
+    state.skin_runtime.current()
 }
 
 #[tauri::command]
@@ -352,6 +376,7 @@ pub fn run() {
             open_codex,
             apply_full_skin,
             restore_full_skin,
+            get_skin_state,
             get_persistence_state,
             enable_persistent_theme,
             disable_persistent_theme,

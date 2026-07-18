@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "themeId": "synthwave-night-drive",
+  "rightsProfile": "original",
+  "workflow": "openai-image-job",
+  "model": "gpt-image-2",
+  "size": "1536x1024",
+  "quality": "high",
+  "jobId": "3c8b8881-79a5-4ec2-af3a-0c680940d778",
+  "promptSha256": "01179e8c4e07e476c12c81d0b81b4ce18e520d5283e3c8d402abf45b8a1b0031",
+  "sourceSha256": "4bd9a5625708adf0b9b33ecb4bf35fc1ea702f0087e2971aadffdc5b35c42a12",
+  "disclosure": "AI-generated original source art. Prompt and output were reviewed for third-party characters, logos, signatures, and text before release."
+}

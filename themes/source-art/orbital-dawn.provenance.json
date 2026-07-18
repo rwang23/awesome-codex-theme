@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "themeId": "orbital-dawn",
+  "rightsProfile": "original",
+  "workflow": "openai-image-job",
+  "model": "gpt-image-2",
+  "size": "1536x1024",
+  "quality": "high",
+  "jobId": "1d6b7ee5-531d-4845-97f3-c0f77a472180",
+  "promptSha256": "ee1bab7cedcca2f304f7962bc529bf94e2715a910c24789e6808f5b48dbeb298",
+  "sourceSha256": "24a646821c0b99903c4c3902d0aff750fe2a38414e9ce5785f6d23611338c77e",
+  "disclosure": "AI-generated original source art. Prompt and output were reviewed for third-party characters, logos, signatures, and text before release."
+}

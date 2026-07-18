@@ -24,7 +24,7 @@ locations are reserved for execution evidence or closed history when needed.
 - agent-brief.md: first-read project router
 - architecture.md: package, Gallery, Full Skin runtime, Native fallback, and
   trust boundaries
-- art-direction.md: reviewed image-job direction for Original Xianxia 01
+- art-direction.md: reviewed image-job direction for Xianxia 01
 - city-atlas-art-direction.md: city identity, anti-landmark, and composition rules
 - fan-art-direction.md: declared-character and remembered-scene art direction
 - fan-art-policy.md: public rights boundary, non-commercial terms, and takedown path

@@ -26,10 +26,14 @@ On Windows, the manager detects the exact Store package, checks whether its exec
 
 ```text
 --remote-debugging-address=127.0.0.1
---remote-debugging-port=<fixed channel port>
+--remote-debugging-port=<OS-selected loopback port>
 ```
 
-The Stable and Beta channels use different fixed ports. The manager accepts a listener only when the owning executable path and package full name match the selected target. It connects only to loopback WebSockets whose target URL starts with `app://`.
+The manager asks the operating system for an available loopback port for every
+new controlled session. This avoids collisions with Windows reserved-port
+ranges and other local software. The manager accepts the listener only when
+the owning executable path and package full name match the selected target. It
+connects only to loopback WebSockets whose target URL starts with `app://`.
 
 The runtime is evaluated in the current page and registered through `Page.addScriptToEvaluateOnNewDocument`, so it survives an internal page rebuild. Restore removes the registered script and calls the runtime cleanup function in every recorded target.
 

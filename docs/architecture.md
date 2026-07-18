@@ -98,7 +98,7 @@ Gallery cards use the Registry capture first and fall back to the reviewed previ
 
 ### Desktop application
 
-The manager ships a bundled Registry and verified screenshots for browsing. It checks the signed catalog descriptor before accepting a newer remote Registry. Full Skin PNGs are downloaded on demand and retained in the application cache only after hash verification.
+The manager ships a bundled Registry and verified screenshots for browsing. Every catalog carries a monotonically increasing `catalogRevision`; a stale cache or remote descriptor can never replace a newer bundled catalog. The manager also checks the fixed catalog URL, revision, byte count, theme count, and SHA-256 before accepting a remote Registry. Full Skin PNGs are downloaded on demand and retained in the application cache only after hash verification.
 
 ### Native fallback
 
@@ -111,7 +111,7 @@ The portable helper and Gallery can copy a strict `codex-theme-v1:` string. Fina
 3. Theme packages are data-only.
 4. Runtime code is manager-owned and versioned.
 5. Remote images are accepted only after exact path, size, PNG signature, and SHA-256 checks.
-6. CDP accepts loopback addresses, fixed ports, exact package ownership, and `app://` targets.
+6. CDP accepts only OS-selected loopback ports, exact package ownership, and `app://` targets.
 7. Screenshots are evidence only for the named Beta package.
 8. Signing, notarization, and updater keys are release gates, not documentation claims.
 

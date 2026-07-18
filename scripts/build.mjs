@@ -63,6 +63,7 @@ export async function buildSite(outputPath = DEFAULT_OUTPUT) {
         url: "https://rwang23.github.io/awesome-codex-theme/themes/registry.json",
         sha256: registrySha256,
         bytes: registryBuffer.length,
+        catalogRevision: registry.catalogRevision,
         themeCount: registry.themes.length,
         modeCount: registry.themes.length * 2,
       },

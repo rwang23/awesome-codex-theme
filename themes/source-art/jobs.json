@@ -11,6 +11,8 @@
   "commonPrompt": "Create original premium key art for a desktop coding workspace theme. Use contemporary Chinese animation background painting, refined ink-wash atmosphere, mineral-pigment color, cinematic depth, and precise environmental detail. The result must be a new composition, not an imitation of any named artist, studio, series, game, film, character, or franchise. Keep the entire left 46 percent calm and low contrast for readable interface controls. Put the main visual story in the right third. Keep important content inside the middle 82 percent vertically because the source will be cropped to 16:9. No text, letters, numbers, logo, watermark, signature, interface, border, frame, mockup, diptych, or split panel. No photorealism. Landscape 3:2.",
   "cityPrompt": "Create original premium key art for a desktop coding workspace theme. Use contemporary Chinese animation background painting, refined atmospheric perspective, cinematic depth, and precise environmental detail. The result must be a new composition, not an imitation of any named artist, studio, series, game, film, character, franchise, photograph, poster, or tourist campaign. For a city brief, preserve the real city's geography, urban morphology, climate, vegetation, and recognisable public skyline or landscape cues; stylise them into a new viewpoint instead of inventing fantasy architecture or copying a known photograph. Keep the entire left 46 percent calm and low contrast for readable interface controls. Put the main visual story in the right third. Keep important content inside the middle 82 percent vertically because the source will be cropped to 16:9. No text, letters, numbers, logo, watermark, signature, interface, border, frame, mockup, diptych, or split panel. No photorealism. Landscape 3:2.",
   "fanArtPrompt": "Create premium unofficial fan-art key art for a desktop coding workspace theme. Depict only the declared work and characters in the scene brief, with recognizable canonical identity and signature props, but make a completely new composition rather than copying any official still, poster, key visual, camera angle, or promotional asset. Use polished cinematic Chinese fantasy animation rendering with refined ink atmosphere, mineral-pigment color, dimensional lighting, and believable materials; do not imitate a named artist or studio's signature style. Keep the entire left 46 percent calm, low contrast, and mostly environmental for readable interface controls. Put the main characters or scene action in the right third. Keep faces, bodies, and important action inside the middle 82 percent vertically because the source will be cropped to 16:9. No text, title, letters, numbers, logo, watermark, signature, interface, border, frame, mockup, diptych, split panel, or copied franchise emblem. No photorealism. Landscape 3:2.",
+  "globalPrompt": "Create original premium key art for a desktop coding workspace theme. Use sophisticated editorial animation-background painting, cinematic lighting, believable materials, atmospheric depth, and a distinct visual identity suited to an international audience. Make a completely new composition rather than imitating a named artist, studio, game, film, character, brand, or franchise. Keep the entire left 46 percent calm and low contrast for readable interface controls. Put the main visual story in the right third. Keep important content inside the middle 82 percent vertically because the source will be cropped to 16:9. No text, letters, numbers, logo, watermark, signature, interface, border, frame, mockup, diptych, or split panel. Avoid generic stock illustration and excessive visual clutter. Landscape 3:2.",
+  "tributePrompt": "Create premium, clearly unofficial and affectionate parody key art for a desktop coding workspace theme. The scene brief may describe a real public technology leader; render him as a warm, stylized editorial caricature with recognizable broad features, never as a photograph or deceptive documentary image. Do not use or imply an OpenAI logo, official product art, endorsement, religious authority, or copied social-media artwork. Keep the entire left 46 percent calm and low contrast for readable interface controls, with the portrait and symbolic action in the right third. Keep the face, hands, and important objects inside the middle 82 percent vertically because the source will be cropped to 16:9. No readable text, letters, numbers, logo, watermark, signature, interface, border, frame, mockup, diptych, or split panel. Landscape 3:2.",
   "jobs": [
     {
       "id": "qinglan-odyssey",
@@ -263,6 +265,88 @@
         }
       },
       "prompt": "Unofficial fan-art memory scene for 《斗破苍穹》: 三年之约. Compose a fresh wide view of a high mountain arena rather than copying an official shot. Leave the left half as pale cloud, worn stone, and distant sect terraces. On the right, 萧炎 in a black-and-red martial robe stands with the massive dark Xuan Heavy Ruler and green-blue heavenly flame facing 纳兰嫣然 in a pale cyan-and-white sword robe with a long narrow sword and wind energy. Broken arena tiles lift between them, cloud bands cut across the mountain, and their opposing silhouettes carry the full weight of the promised duel. No sect logos, banners, or readable symbols."
+    },
+    {
+      "id": "tibo-reset-saint",
+      "rightsProfile": "fan-art",
+      "promptProfile": "tribute",
+      "fanArt": {
+        "work": {
+          "en": "Codex Community Tribute",
+          "zh-CN": "Codex 社区致敬"
+        },
+        "characters": {
+          "en": ["Tibo Sottiaux"],
+          "zh-CN": ["Tibo Sottiaux"]
+        }
+      },
+      "prompt": "Unofficial parody for Codex 社区致敬 featuring Tibo Sottiaux. Build a wide medieval illuminated-manuscript scene with aged parchment, restrained gold leaf, Romanesque arches, tiny hourglasses, and decorative token-like coins. On the right, show a stylized friendly caricature of Tibo: a fair-skinned European man in his thirties with short slightly tousled dark-brown hair, neat eyebrows, warm brown eyes, a broad approachable smile, and light stubble. He wears an invented cream-and-rust ceremonial coder robe, holding a stack of plain glowing brass tokens in one hand and a round amber reset symbol with a simple circular arrow icon in the other. A soft geometric halo reads as playful gratitude, not worship. Keep the left side mostly dark parchment texture and faint architecture. No readable Latin, words, product names, logos, religious symbols, OpenAI marks, or copied meme layout."
+    },
+    {
+      "id": "tibo-reset-immortal",
+      "rightsProfile": "fan-art",
+      "promptProfile": "tribute",
+      "fanArt": {
+        "work": {
+          "en": "Codex Community Tribute",
+          "zh-CN": "Codex 社区致敬"
+        },
+        "characters": {
+          "en": ["Tibo Sottiaux"],
+          "zh-CN": ["Tibo Sottiaux"]
+        }
+      },
+      "prompt": "Unofficial parody for Codex 社区致敬 featuring Tibo Sottiaux. Create a wide original Chinese mineral-pigment mural fantasy, not a copy of any historic cave painting. On the right, show a stylized friendly caricature of Tibo: a fair-skinned European man in his thirties with short tousled dark-brown hair, warm brown eyes, broad approachable smile, and light stubble. He wears an invented modern robe in ochre, cinnabar, and muted teal. Ribbon-like clouds orbit plain golden token discs while he presents a glowing circular reset motif made only from abstract arrows. Add sand-gold cliffs, lapis sky, tiny hourglasses, and one playful celestial blue code sprite with no brand resemblance. The mood is humorous gratitude, not literal divinity. Keep the left side as quiet cloud, mineral wash, and distant architecture. No Chinese characters, text, logo, product marks, OpenAI symbols, copied mural figures, or religious iconography."
+    },
+    {
+      "id": "retro-boss-2007",
+      "promptProfile": "global",
+      "prompt": "A joyful original 2007-era desktop-messenger dreamscape in glossy ice blue, made as environmental theme art rather than an interface screenshot. On the far right stands an entirely original tiny blue coding companion: a rounded cloud-like hood, dark navy face screen with two simple cyan eyes, stubby boots, and a small cable tail, clearly not a penguin or any existing mascot. Surround it with glassy bubbles, pixel-like stars, soft cloud panels, blue gradients, tiny status lights, and optimistic brushed-metal highlights. The left half should be a calm pale-blue glass field with only subtle panel rhythm. Nostalgic Windows-XP-era polish, playful chibi proportions, clean and premium. No UI controls, taskbars, chat windows, penguins, copied messenger layout, text, logos, brands, or product icons."
+    },
+    {
+      "id": "rainy-library",
+      "promptProfile": "global",
+      "prompt": "A sophisticated warm reading room during heavy evening rain. The left half is a quiet shadowed walnut wall, soft book silhouettes, and rain-streak reflections. On the right, a curved glasshouse window opens toward dark wet trees; a tactile wooden desk holds one amber lamp, a closed notebook without markings, a ceramic mug, and a small fern. Fine rain, worn leather, brass details, deep forest green and warm tobacco light, intimate but spacious, contemporary editorial animation-background quality. No people, readable book spines, text, logos, magical floating books, or generic stock-photo composition."
+    },
+    {
+      "id": "orbital-dawn",
+      "promptProfile": "global",
+      "prompt": "A quiet orbital observatory inspired by optimistic 1970s scientific illustration, with a completely original spacecraft interior. Keep the left half as low-contrast curved cream panels, muted switches without labels, and open negative space. On the right, broad circular windows frame Earth's blue limb at sunrise, one small research desk, warm orange instrument glow, delicate structural ribs, and distant solar panels. Restrained analog futurism, believable microgravity details, pale gray, teal, saffron, and deep space navy. No astronauts, text, agency logos, national flags, real spacecraft design, branded controls, or glossy modern sci-fi clichés."
+    },
+    {
+      "id": "deep-ocean-lab",
+      "promptProfile": "global",
+      "prompt": "An original deep-ocean research habitat eight hundred meters below the surface. The calm left half is dim steel-blue wall, condensation, soft cable shadows, and broad empty water beyond glass. On the right, a curved observation window reveals translucent jellyfish, fine marine snow, a distant whale silhouette, and volcanic rock lit by faint bioluminescence. A compact research table glows cyan with unlabeled analog instruments and one warm task lamp. Believable pressure-rated materials, quiet scientific awe, deep indigo and turquoise. No submarines from known films, text, logos, interface screens, monster imagery, or aquarium-tourism style."
+    },
+    {
+      "id": "synthwave-night-drive",
+      "promptProfile": "global",
+      "prompt": "An original restrained 1980s retro-future night drive across a wide desert basin. The left half is calm violet dusk, a simple dark road, and low mountain silhouettes. On the right, an angular but unbranded analog dashboard frames a coral sun sinking behind distant mesas, with sparse magenta lane reflections and a few telephone poles. Fine airbrush grain, cinematic perspective, plum, indigo, coral, and electric blue used with restraint. No car logo, readable gauges, grid floor, text, city skyline, copied album cover, or excessive neon clutter."
+    },
+    {
+      "id": "alpine-cabin-code",
+      "promptProfile": "global",
+      "prompt": "A tactile modern timber cabin at blue winter dawn. Keep the left half as calm dark wood grain, pale wall, soft shadow, and a broad empty window reflection. On the right, a simple desk with an unbranded closed laptop, ceramic coffee cup, wool blanket, and small amber lamp looks through tall glass toward snow-heavy pines and layered alpine peaks catching first peach light. Honest materials, frosted edges, quiet air, moss green, warm oak, slate blue, and winter white. No people, text, logos, resort styling, Christmas decorations, or postcard-perfect chalet cliché."
+    },
+    {
+      "id": "jiangnan-rain-courtyard",
+      "prompt": "An original Jiangnan waterside courtyard in steady spring rain. The entire left half is calm pearl-gray canal water, wet white wall, soft willow reflection, and fine mist. On the right, a modest black-tile courtyard opens through a moon-shaped doorway toward a small wooden table, one warm paper-shaded lamp with no writing, mossy stone, bamboo leaves, and rain spilling from deep eaves. Authentic whitewashed masonry, dark roof tiles, narrow water lane, restrained celadon and ink palette, lived-in rather than tourist-perfect. No famous garden, exact landmark, people, text, signs, logos, fantasy palace, or copied photograph."
+    },
+    {
+      "id": "changan-lanterns",
+      "prompt": "An original Tang-inspired capital avenue during an imagined lantern festival, presented as historical fantasy rather than reconstruction. The left half is quiet indigo night, distant roof silhouettes, soft dust, and open stone paving. On the right, layered timber gate towers, market eaves, silk canopies, riders and pedestrians as tiny indistinct silhouettes, and hundreds of warm lantern forms recede in deep perspective beneath a clear night sky. Rich cinnabar, amber, indigo, and muted jade; grand urban rhythm with believable timber structure. No readable characters, signs, banners, imperial emblems, exact heritage building, film set, famous drama costume, logo, or copied festival image."
+    },
+    {
+      "id": "dunhuang-starlight",
+      "prompt": "An original desert-night composition inspired only by the mineral color language and landscape atmosphere associated with Dunhuang. Keep the left half as broad matte sand-gold plaster texture, quiet cliff shadow, and lapis night gradient. On the right, entirely invented ribbon-like cloud currents and abstract wing-shaped silk forms flow from warm cave openings toward a dense star field above layered desert cliffs. Use azurite blue, malachite green, cinnabar, cream, and weathered gold with hand-painted mineral grain. No human deity, copied mural figure, lotus throne, historic pattern reproduction, readable script, religious icon, text, logo, or museum-photograph framing."
+    },
+    {
+      "id": "bamboo-tea-rain",
+      "prompt": "A modest original bamboo courtyard during a long summer rain. The left half is quiet dark bamboo shadow, pale rain haze, wet stone, and low-contrast lattice reflection. On the right, an open timber room holds a low clay stove, iron kettle, two plain tea cups, woven mat, and a small writing desk beside a half-open window; steam and roof runoff catch one soft amber light. Honest rural materials, moss, muted leaf green, clay brown, and cool rain gray, unhurried and tactile. No people, calligraphy, tea branding, luxury teahouse styling, fantasy architecture, text, or logo."
+    },
+    {
+      "id": "northeast-snow-train",
+      "prompt": "An original winter journey across the broad northeastern Chinese snowfields at blue hour. The calm left half is open snow, low wind-carved ridges, dark utility poles, and distant larch forest under a pale steel sky. On the right, an unbranded deep-green mid-century passenger train curves through the landscape, its warm carriage windows revealing only soft silhouettes and steam-fogged glass. Practical railway details, heavy cold air, muted green, indigo, cream, and amber, documentary warmth translated into refined animation-background painting. No railway logo, carriage number, text, station sign, flags, copied train photograph, holiday advertising, or fantasy locomotive."
     }
   ]
 }

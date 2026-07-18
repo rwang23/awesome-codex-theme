@@ -33,7 +33,7 @@ const translations = {
     managerScreenshotCaption: "Tauri Windows runtime · real ChatGPT Beta theme capture inside",
     collectionEyebrow: "Theme library",
     collectionTitle: "Original worlds, city light, and scenes fans remember.",
-    collectionIntro: "The library now includes 16 original themes and 12 clearly disclosed unofficial donghua fan-art tributes. Every source image is generated through an image job and reviewed by hand.",
+    collectionIntro: "The library now includes 27 original themes and 14 clearly disclosed unofficial fan-art tributes. Every source image is generated through an image job and reviewed by hand.",
     searchLabel: "Search themes",
     searchPlaceholder: "Search worlds, moods, tags…",
     facetRights: "Source and rights",
@@ -118,7 +118,7 @@ const translations = {
     copied: "Codex Native theme copied.",
     copyFailed: "Copy failed. Select the theme string manually.",
     loadFailed: "The registry could not be loaded. Run the build and serve this directory over HTTP.",
-    capabilityNative: "ACT Full Skin v1 is verified with ChatGPT Beta 26.715.3651.0 across all 56 theme modes. It applies the background, materials, colors, and theme copy; Native v1 remains a palette-only fallback.",
+    capabilityNative: "ACT Full Skin v1 is verified with ChatGPT Beta 26.715.3651.0 across all 82 theme modes. It applies the background, materials, colors, and theme copy; Native v1 remains a palette-only fallback.",
     resultCount: "themes shown",
     allCollections: "All collections",
     allCollectionsCaption: "Original, city, and unofficial fan-art themes",
@@ -159,7 +159,7 @@ const translations = {
     managerScreenshotCaption: "Tauri Windows 实机界面 · 内嵌 ChatGPT Beta 真实主题截图",
     collectionEyebrow: "主题馆藏",
     collectionTitle: "原创世界、城市灯火，也有一眼认出的名场面。",
-    collectionIntro: "馆藏现有 16 套原创主题，以及 12 套明确标注的非官方国漫 Fan Art。全部源图都通过 image job 生成并经过人工审查。",
+    collectionIntro: "馆藏现有 27 套原创主题，以及 14 套明确标注的非官方 Fan Art。全部源图都通过 image job 生成并经过人工审查。",
     searchLabel: "搜索主题",
     searchPlaceholder: "搜索世界、城市或氛围",
     facetRights: "来源与授权",
@@ -244,7 +244,7 @@ const translations = {
     copied: "Codex Native 主题已复制。",
     copyFailed: "复制失败，请手动选择主题字符串。",
     loadFailed: "无法读取 Registry。请先构建项目，并通过 HTTP 服务访问。",
-    capabilityNative: "ACT Full Skin v1 已在 ChatGPT Beta 26.715.3651.0 中完成全部 56 个模式的实机验证，可应用背景、材质、配色和主题文字；Native v1 只保留为配色回退。",
+    capabilityNative: "ACT Full Skin v1 已在 ChatGPT Beta 26.715.3651.0 中完成全部 82 个模式的实机验证，可应用背景、材质、配色和主题文字；Native v1 只保留为配色回退。",
     resultCount: "套主题",
     allCollections: "全部系列",
     allCollectionsCaption: "原创、城市与非官方 Fan Art 主题",
@@ -324,6 +324,46 @@ function localized(record) {
   return record[state.locale] || record.en || Object.values(record)[0] || "";
 }
 
+function audiencePriority(record) {
+  const audience = record?.audience || "global";
+  if (audience === state.locale) return 0;
+  if (audience === "global") return 1;
+  return 2;
+}
+
+function featuredPriority(record) {
+  const rank = record?.featuredRank?.[state.locale];
+  return Number.isInteger(rank) ? rank : Number.MAX_SAFE_INTEGER;
+}
+
+function compareCollectionPriority(left, right) {
+  return featuredPriority(left) - featuredPriority(right)
+    || audiencePriority(left) - audiencePriority(right)
+    || left.order - right.order;
+}
+
+function compareThemePriority(left, right) {
+  const leftCollection = collectionFor(left);
+  const rightCollection = collectionFor(right);
+  return featuredPriority(left) - featuredPriority(right)
+    || audiencePriority(left) - audiencePriority(right)
+    || compareCollectionPriority(leftCollection, rightCollection)
+    || state.registry.themes.indexOf(left) - state.registry.themes.indexOf(right);
+}
+
+function orderedThemes() {
+  return state.registry ? state.registry.themes.slice().sort(compareThemePriority) : [];
+}
+
+function reorderGalleryForLocale() {
+  const themes = orderedThemes();
+  themes.forEach(function (theme) {
+    const card = state.cards.get(theme.id);
+    if (card) elements.gallery.append(card.article);
+  });
+  state.heroTheme = themes[0] || null;
+}
+
 function visualFor(modeRecord) {
   if (modeRecord.capture) {
     return {
@@ -368,7 +408,7 @@ function renderCollectionPicker() {
       description: { en: t("allCollectionsCaption"), "zh-CN": t("allCollectionsCaption") },
       themeCount: state.registry.themes.length
     },
-    ...state.registry.collections.slice().sort(function (left, right) { return left.order - right.order; })
+    ...state.registry.collections.slice().sort(compareCollectionPriority)
   ];
 
   collections.forEach(function (collection, index) {
@@ -453,6 +493,7 @@ function updateLanguage() {
 
   renderCollectionPicker();
   renderFilterLabels();
+  reorderGalleryForLocale();
 
   state.cards.forEach(function (card, id) {
     const theme = state.registry.themes.find(function (item) { return item.id === id; });
@@ -773,7 +814,6 @@ async function loadRegistry() {
     }
     state.registry = registry;
     elements.themeStatValue.textContent = String(registry.themes.length).padStart(2, "0");
-    state.heroTheme = registry.themes[0] || null;
     renderCollectionPicker();
     const fragment = document.createDocumentFragment();
     registry.themes.forEach(function (theme, index) {

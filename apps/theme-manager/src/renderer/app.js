@@ -299,6 +299,32 @@ function currentCollection() {
   return state.catalog?.collections.find((collection) => collection.id === theme?.collection);
 }
 
+function audiencePriority(record) {
+  const audience = record?.audience || "global";
+  if (audience === state.locale) return 0;
+  if (audience === "global") return 1;
+  return 2;
+}
+
+function featuredPriority(record) {
+  const rank = record?.featuredRank?.[state.locale];
+  return Number.isInteger(rank) ? rank : Number.MAX_SAFE_INTEGER;
+}
+
+function compareCollectionPriority(left, right) {
+  return featuredPriority(left) - featuredPriority(right)
+    || audiencePriority(left) - audiencePriority(right)
+    || (left.order || 0) - (right.order || 0);
+}
+
+function compareThemePriority(left, right) {
+  const collection = (theme) => state.catalog.collections.find((record) => record.id === theme.collection);
+  return featuredPriority(left) - featuredPriority(right)
+    || audiencePriority(left) - audiencePriority(right)
+    || compareCollectionPriority(collection(left), collection(right))
+    || state.catalog.themes.indexOf(left) - state.catalog.themes.indexOf(right);
+}
+
 function shortHash(value) {
   return value ? value.slice(0, 8) + "…" + value.slice(-5) : "—";
 }
@@ -330,7 +356,7 @@ function renderCollectionTabs() {
   if (!state.catalog) return;
   const records = [
     { id: "all", name: { "zh-CN": t("allCollections"), en: t("allCollections") }, themeCount: state.catalog.themes.length },
-    ...state.catalog.collections,
+    ...state.catalog.collections.slice().sort(compareCollectionPriority),
   ];
   const fragment = document.createDocumentFragment();
   records.forEach((collection) => {
@@ -405,7 +431,7 @@ function filteredThemes() {
       theme.description?.en,
       ...(theme.tags || []),
     ].filter(Boolean).join(" ").toLocaleLowerCase(state.locale).includes(query);
-  });
+  }).sort(compareThemePriority);
 }
 
 function renderThemeList() {
@@ -632,9 +658,10 @@ function acceptCatalog(payload) {
   };
   if (payload.catalog) state.catalog = payload.catalog;
   if (!state.catalog) return;
+  const ordered = state.catalog.themes.slice().sort(compareThemePriority);
   state.themeId = state.catalog.themes.some((theme) => theme.id === previousTheme)
     ? previousTheme
-    : state.catalog.themes[0]?.id;
+    : ordered[0]?.id;
   renderCatalogStatus();
   renderCollectionTabs();
   renderFacetOptions();

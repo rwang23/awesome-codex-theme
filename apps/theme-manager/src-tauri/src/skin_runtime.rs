@@ -1,6 +1,6 @@
 use std::{
     fs,
-    net::TcpStream,
+    net::{TcpListener, TcpStream},
     path::PathBuf,
     sync::Mutex,
     time::{Duration, Instant},
@@ -87,7 +87,7 @@ impl SkinRuntime {
             tested_version: session.as_ref().map(|value| value.tested_version.clone()),
             port: session.as_ref().map(|value| value.port),
             security_note:
-                "Full Skin 使用仅限本机回环的调试端口；退出并正常重开 ChatGPT 后端口会关闭。".into(),
+                "Full Skin 使用系统临时分配、仅限本机回环的调试端口；退出并正常重开 ChatGPT 后端口会关闭。".into(),
         }
     }
 
@@ -126,12 +126,13 @@ fn sha256_hex(bytes: &[u8]) -> String {
     hex::encode(Sha256::digest(bytes))
 }
 
-pub fn port_for_channel(channel: &str) -> Result<u16, String> {
-    match channel {
-        "stable" => Ok(9465),
-        "beta" => Ok(9466),
-        _ => Err("未知的 ChatGPT 渠道".into()),
-    }
+fn select_loopback_port() -> Result<u16, String> {
+    let listener = TcpListener::bind(("127.0.0.1", 0))
+        .map_err(|error| format!("无法分配本机 Full Skin 端口：{error}"))?;
+    listener
+        .local_addr()
+        .map(|address| address.port())
+        .map_err(|error| format!("无法读取本机 Full Skin 端口：{error}"))
 }
 
 fn valid_loopback_websocket(value: &str, port: u16, target: Option<&str>) -> bool {
@@ -492,23 +493,31 @@ pub async fn apply(
     mode: &str,
     channel: &str,
 ) -> Result<SkinRuntimeView, String> {
+    let mut reusable_port = None;
     if let Some(previous) = runtime.take() {
+        let same_channel = previous.channel == channel;
+        let previous_port = previous.port;
         if let Err(error) = remove_session(previous.clone()).await {
             runtime.replace(previous);
             return Err(error);
+        }
+        if same_channel {
+            reusable_port = Some(previous_port);
         }
     }
 
     let skin = catalog::full_skin_for(catalog, theme_id, mode)?;
     let art = load_art(app, &skin).await?;
     let script = runtime_script(&skin, &art)?;
-    let port = port_for_channel(channel)?;
     let target = platform::find_target(channel)?;
     let running = platform::target_is_running(&target)?;
-    let listener_matches = platform::listener_belongs_to_target(port, &target).unwrap_or(false);
-    if running && !listener_matches {
-        return Err("所选 ChatGPT 已经在普通模式运行。请先关闭它，再应用完整皮肤。".into());
-    }
+    let port = if running {
+        reusable_port
+            .filter(|port| platform::listener_belongs_to_target(*port, &target).unwrap_or(false))
+            .ok_or("所选 ChatGPT 已经在普通模式运行。请先关闭它，再应用完整皮肤。")?
+    } else {
+        select_loopback_port()?
+    };
     if !running {
         platform::launch_target_with_arguments(
             channel,
@@ -583,19 +592,28 @@ mod tests {
     #[test]
     fn websocket_validation_rejects_non_loopback_targets() {
         assert!(valid_loopback_websocket(
-            "ws://127.0.0.1:9466/devtools/page/test",
-            9466,
+            "ws://127.0.0.1:49152/devtools/page/test",
+            49152,
             Some("test")
         ));
         assert!(!valid_loopback_websocket(
-            "ws://example.com:9466/devtools/page/test",
-            9466,
+            "ws://example.com:49152/devtools/page/test",
+            49152,
             Some("test")
         ));
         assert!(!valid_loopback_websocket(
-            "ws://127.0.0.1:9467/devtools/page/test",
-            9466,
+            "ws://127.0.0.1:49153/devtools/page/test",
+            49152,
             Some("test")
         ));
+    }
+
+    #[test]
+    fn selected_loopback_port_is_available() {
+        let port = select_loopback_port().expect("loopback port should be selected");
+        assert_ne!(port, 0);
+        let listener = TcpListener::bind(("127.0.0.1", port))
+            .expect("selected port should be available immediately after selection");
+        assert_eq!(listener.local_addr().expect("local address").port(), port);
     }
 }

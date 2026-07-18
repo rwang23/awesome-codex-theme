@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "themeId": "northeast-snow-train",
+  "rightsProfile": "original",
+  "workflow": "openai-image-job",
+  "model": "gpt-image-2",
+  "size": "1536x1024",
+  "quality": "high",
+  "jobId": "9b13fca9-97e2-4f06-ae06-ecb65c9f07c4",
+  "promptSha256": "a3a0ca685d27f130f587955c10e5cde465628209c45b70ad2014fdf43fcae869",
+  "sourceSha256": "d1b90373be709a954cc0136f4fb66a9f81e1baef2c5f14ea1f0fb877be6241a8",
+  "disclosure": "AI-generated original source art. Prompt and output were reviewed for third-party characters, logos, signatures, and text before release."
+}

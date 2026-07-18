@@ -84,11 +84,15 @@ async function runJob(job, config, runner, temporaryRoot, force) {
   }
 
   const rightsProfile = job.rightsProfile || "original";
-  const commonPrompt = rightsProfile === "fan-art"
-    ? config.fanArtPrompt
-    : job.promptProfile === "city"
-      ? config.cityPrompt
-      : config.commonPrompt;
+  const commonPrompt = job.promptProfile === "tribute"
+    ? config.tributePrompt
+    : job.promptProfile === "global"
+      ? config.globalPrompt
+      : rightsProfile === "fan-art"
+        ? config.fanArtPrompt
+        : job.promptProfile === "city"
+          ? config.cityPrompt
+          : config.commonPrompt;
   if (typeof commonPrompt !== "string" || !commonPrompt.trim()) {
     throw new Error(job.id + " is missing a common prompt for " + rightsProfile);
   }

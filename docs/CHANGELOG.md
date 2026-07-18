@@ -2,12 +2,36 @@
 
 ## 2026-07-18-00-00
 
+- Expanded the catalog from 28 to 41 themes with separate English and Chinese
+  Tibo tributes, an original 2007-style blue coding mascot, five
+  English-audience workspaces, and five Chinese-audience landscape themes.
+- Replaced the character-based brand mark with a language-neutral
+  frames-and-spark icon. Gallery and Theme Manager now follow browser or
+  system language, rank the matching Tibo tribute first, and keep an explicit
+  Chinese/English override.
+- Recaptured all 82 light and dark modes in the exact ChatGPT Beta
+  `26.715.3651.0` test bench. The fixed fixture now clears the selected project
+  through the native “Don't work in a project” control before every batch, so
+  public evidence does not contain local project names.
+- Replaced hard-coded Full Skin ports with operating-system-selected loopback
+  ports, while retaining exact executable/package ownership and `app://`
+  target checks. This avoids Windows reserved-port ranges without weakening
+  the local trust boundary.
+- Added a monotonic catalog revision gate so an older cached or remote Registry
+  cannot downgrade a newer catalog bundled with the Theme Manager.
+- Updated the persistence smoke harness to read the controller-selected port
+  from the exact pinned Beta root process and verify listener ownership instead
+  of trusting a stale Chromium `DevToolsActivePort` file.
+- Hardened macOS persistence around exact Bundle ID and executable identity,
+  and reject persistence when Theme Manager is running from a mounted DMG or
+  outside a valid `.app` bundle. Physical-Mac Full Skin, LaunchAgent,
+  Gatekeeper, and notarization evidence remains pending.
 - Regenerated all eight China City Atlas backgrounds with city-specific scenery,
   then captured all 16 light and dark modes in the exact ChatGPT Beta
   `26.715.3651.0` test bench.
 - Implemented the opt-in Windows persistence controller with Tauri autostart,
   exact app and version gates, bounded replay, atomic state, one-click disable,
-  and cleanup. Eight Rust tests and a real Beta persistence smoke pass; physical
+  and cleanup. Ten Rust tests and a real Beta persistence smoke pass; physical
   Mac persistence remains pending.
 - Deployed a separate private community Beta at
   `https://community.ecomstack.net/` with bilingual accounts, quarantined

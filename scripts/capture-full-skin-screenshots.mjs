@@ -10,7 +10,7 @@ const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(SCRIPT_DIR, "..");
 const APPLY = process.argv.includes("--apply");
 const DEBUG_LAYOUT = process.argv.includes("--debug-layout");
-const PORT = Number(argumentValue("--port") || "9466");
+let PORT = Number(argumentValue("--port") || "0");
 const REQUESTED_IDS = new Set(splitArgument("--ids"));
 const REQUESTED_MODES = new Set(splitArgument("--modes"));
 const WIDTH = 1440;
@@ -30,6 +30,25 @@ const TEST_BENCH = Object.freeze({
   executable: "ChatGPT (Beta).exe",
   targetUrlPrefix: "app://",
 });
+
+async function resolvePort() {
+  if (PORT) return PORT;
+  const localAppData = process.env.LOCALAPPDATA;
+  invariant(localAppData, "LOCALAPPDATA is required to discover the Beta CDP port");
+  const activePortPath = path.join(
+    localAppData,
+    "Packages",
+    TEST_BENCH.packageFamilyName,
+    "LocalCache",
+    "Roaming",
+    "Codex",
+    "web",
+    "Codex (Beta)",
+    "DevToolsActivePort",
+  );
+  const [firstLine] = (await readFile(activePortPath, "utf8")).trim().split(/\r?\n/);
+  return Number(firstLine);
+}
 
 function argumentValue(name) {
   const exact = process.argv.find((value) => value.startsWith(name + "="));
@@ -139,10 +158,14 @@ async function waitFor(client, expression, label, timeout = 15000) {
 }
 
 function ownerIdentity() {
+  const endpointPattern = String.raw`^\s*TCP\s+(127\.0\.0\.1|\[::1\]):${PORT}\s+\S+\s+LISTENING\s+\d+\s*$`;
   const command = [
-    "$connection = Get-NetTCPConnection -State Listen -LocalPort " + PORT + " -ErrorAction Stop | Select-Object -First 1",
-    "$process = Get-CimInstance Win32_Process -Filter \"ProcessId = $($connection.OwningProcess)\"",
-    "[PSCustomObject]@{ pid = $connection.OwningProcess; executablePath = $process.ExecutablePath; commandLine = $process.CommandLine } | ConvertTo-Json -Compress",
+    "$line = netstat -ano -p tcp | Select-String -Pattern '" + endpointPattern + "' | Select-Object -First 1",
+    "if (-not $line) { throw 'The expected loopback listener is unavailable' }",
+    "$parts = $line.ToString().Trim() -split '\\s+'",
+    "$ownerPid = [int]$parts[-1]",
+    "$process = Get-Process -Id $ownerPid -ErrorAction Stop",
+    "[PSCustomObject]@{ pid = $ownerPid; executablePath = $process.Path; processName = $process.ProcessName } | ConvertTo-Json -Compress",
   ].join("; ");
   const output = execFileSync(
     "powershell.exe",
@@ -201,6 +224,46 @@ async function preparePrivacySafeHome(client) {
   );
   invariant(result?.newTask || result?.home, "Could not navigate the pinned Beta app to a new-task home");
   await delay(900);
+  const projectState = await evaluate(
+    client,
+    `(() => {
+      const project = document.querySelector(
+        'button[data-composer-navigation-target="workspace-project"]'
+      );
+      if (!project) return { found: false, clear: false };
+      const label = (project.getAttribute("aria-label") || project.textContent || "")
+        .trim()
+        .toLocaleLowerCase();
+      const clear = ["choose project", "选择项目", "选取项目"].includes(label);
+      if (!clear) project.click();
+      return { found: true, clear };
+    })()`,
+  );
+  invariant(projectState?.found, "Could not identify the pinned Beta project selector");
+  if (!projectState.clear) {
+    await delay(350);
+    const cleared = await evaluate(
+      client,
+      `(() => {
+        const labels = [
+          "don't work in a project",
+          "do not work in a project",
+          "不在项目中工作",
+          "不使用项目",
+        ];
+        const clear = [...document.querySelectorAll("button, [role='menuitem']")]
+          .find((node) => labels.includes(
+            (node.getAttribute("aria-label") || node.textContent || "")
+              .trim()
+              .toLocaleLowerCase()
+          ));
+        clear?.click();
+        return Boolean(clear);
+      })()`,
+    );
+    invariant(cleared, "Could not clear the selected project before capture");
+    await delay(700);
+  }
   const hidden = await evaluate(
     client,
     `Boolean(document.querySelector(
@@ -208,15 +271,32 @@ async function preparePrivacySafeHome(client) {
     ))`,
   );
   invariant(hidden || result.sidebarHidden, "Could not establish a privacy-safe sidebar fixture");
+  const privacyState = await evaluate(
+    client,
+    `(() => {
+      const project = document.querySelector(
+        'button[data-composer-navigation-target="workspace-project"]'
+      );
+      const label = (project?.getAttribute("aria-label") || project?.textContent || "")
+        .trim()
+        .toLocaleLowerCase();
+      return {
+        projectLabel: label,
+        projectCleared: ["choose project", "选择项目", "选取项目"].includes(label),
+      };
+    })()`,
+  );
+  invariant(privacyState?.projectCleared, "Capture fixture still contains a selected project");
 }
 
 function buildRuntimeScript(runtimeJs, runtimeCss, theme, mode, manifest, image) {
   const modeRecord = manifest.modes[mode];
+  const locale = theme.audience === "zh-CN" ? "zh-CN" : "en";
   const payload = {
     id: theme.id,
     mode,
-    name: theme.name["zh-CN"] || theme.name.en,
-    tagline: theme.tagline["zh-CN"] || theme.tagline.en,
+    name: theme.name[locale] || theme.name.en || theme.name["zh-CN"],
+    tagline: theme.tagline[locale] || theme.tagline.en || theme.tagline["zh-CN"],
     art: modeRecord.art,
     tokens: modeRecord.tokens,
   };
@@ -329,6 +409,7 @@ async function writeManifest(value) {
 }
 
 async function main() {
+  PORT = await resolvePort();
   invariant(Number.isInteger(PORT) && PORT >= 1024 && PORT <= 65535, "Invalid CDP port");
   const owner = ownerIdentity();
   const target = await pageTarget();
@@ -508,6 +589,7 @@ async function main() {
       width: WIDTH,
       height: HEIGHT,
       sidebar: "hidden",
+      project: "none",
       privateContent: "excluded",
       nativeSettingsChanged: false,
     },

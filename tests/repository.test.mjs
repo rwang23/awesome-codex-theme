@@ -27,16 +27,16 @@ async function exists(target) {
   }
 }
 
-test("repository validates twenty-eight dual-mode code-free themes in four collections", async function () {
+test("repository validates forty-one dual-mode code-free themes in seven collections", async function () {
   const result = await validateRepository();
   assert.deepEqual(result, {
-    sources: 28,
-    themes: 28,
-    modes: 56,
-    packages: 28,
-    fullSkinExports: 56,
-    nativeExports: 56,
-    captures: 56
+    sources: 41,
+    themes: 41,
+    modes: 82,
+    packages: 41,
+    fullSkinExports: 82,
+    nativeExports: 82,
+    captures: 82
   });
 });
 
@@ -48,12 +48,19 @@ test("registry exposes original and disclosed fan-art collections", async functi
     ["original-xianxia-01", "cinematic-chibi", 8],
     ["china-city-atlas-01", "standalone", 8],
     ["donghua-character-tributes-01", "cinematic-chibi", 8],
-    ["donghua-memory-scenes-01", "standalone", 4]
+    ["donghua-memory-scenes-01", "standalone", 4],
+    ["codex-community-tributes-01", "standalone", 2],
+    ["global-workspace-favorites-01", "standalone", 6],
+    ["china-life-favorites-01", "standalone", 5]
   ]);
   assert.equal(registry.themes.filter(function (theme) { return theme.variant === "cityscape"; }).length, 8);
-  assert.equal(registry.themes.filter(function (theme) { return theme.variant === "scene"; }).length, 4);
-  assert.equal(registry.themes.filter(function (theme) { return theme.rightsProfile === "fan-art"; }).length, 12);
-  assert.equal(registry.themes.filter(function (theme) { return theme.rightsProfile === "original"; }).length, 16);
+  assert.equal(registry.themes.filter(function (theme) { return theme.variant === "scene"; }).length, 13);
+  assert.equal(registry.themes.filter(function (theme) { return theme.rightsProfile === "fan-art"; }).length, 14);
+  assert.equal(registry.themes.filter(function (theme) { return theme.rightsProfile === "original"; }).length, 27);
+  assert.equal(registry.themes.filter(function (theme) { return theme.audience === "en"; }).length, 6);
+  assert.equal(registry.themes.filter(function (theme) { return theme.audience === "zh-CN"; }).length, 6);
+  assert.equal(registry.themes.find(function (theme) { return theme.id === "tibo-reset-saint"; }).featuredRank.en, 1);
+  assert.equal(registry.themes.find(function (theme) { return theme.id === "tibo-reset-immortal"; }).featuredRank["zh-CN"], 1);
   assert.equal(registry.themes.every(function (theme) { return typeof theme.collection === "string"; }), true);
   assert.equal(registry.themes.every(function (theme) {
     return typeof theme.tagline?.en === "string"
@@ -140,7 +147,7 @@ test("registry exposes declarative full skins, Native fallbacks, and no third-pa
       assert.equal(payload.theme.opaqueWindows, true);
     }
   }
-  assert.equal(nativeValues.size, 56);
+  assert.equal(nativeValues.size, 82);
 });
 
 test("Codex Native parser rejects undeclared fields", function () {
@@ -180,7 +187,7 @@ test("static gallery builds with every public contract artifact", async function
   const output = path.join(temporary, "site");
   try {
     const result = await buildSite(output);
-    assert.equal(result.themes, 28);
+    assert.equal(result.themes, 41);
     const required = [
       "index.html",
       "assets/app.js",
@@ -201,6 +208,8 @@ test("static gallery builds with every public contract artifact", async function
     const html = await readFile(path.join(output, "index.html"), "utf8");
     const app = await readFile(path.join(output, "assets", "app.js"), "utf8");
     const registry = JSON.parse(await readFile(path.join(output, "themes", "registry.json"), "utf8"));
+    const catalogManifest = JSON.parse(await readFile(path.join(output, "downloads", "catalog.json"), "utf8"));
+    assert.equal(catalogManifest.registry.catalogRevision, registry.catalogRevision);
     for (const theme of registry.themes) {
       assert.equal(await exists(path.join(output, ...theme.package.path.split("/"))), true, theme.package.path);
       for (const mode of ["light", "dark"]) {
@@ -254,6 +263,7 @@ test("Tauri manager keeps theme values in Rust and limits desktop capabilities",
     capabilityText,
     cargo,
     appPackage,
+    smoke,
   ] = await Promise.all([
     readFile(path.join(ROOT, "apps", "theme-manager", "src-tauri", "src", "lib.rs"), "utf8"),
     readFile(path.join(ROOT, "apps", "theme-manager", "src-tauri", "src", "catalog.rs"), "utf8"),
@@ -265,6 +275,7 @@ test("Tauri manager keeps theme values in Rust and limits desktop capabilities",
     readFile(path.join(ROOT, "apps", "theme-manager", "src-tauri", "capabilities", "default.json"), "utf8"),
     readFile(path.join(ROOT, "apps", "theme-manager", "src-tauri", "Cargo.toml"), "utf8"),
     readFile(path.join(ROOT, "apps", "theme-manager", "package.json"), "utf8"),
+    readFile(path.join(ROOT, "scripts", "smoke-theme-manager.mjs"), "utf8"),
   ]);
   const config = JSON.parse(configText);
   const capability = JSON.parse(capabilityText);
@@ -283,11 +294,16 @@ test("Tauri manager keeps theme values in Rust and limits desktop capabilities",
   assert.match(backend, /native_value_for\(&catalog, &theme_id, &mode\)/);
   assert.match(backend, /apply_full_skin/);
   assert.match(backend, /restore_full_skin/);
+  assert.match(smoke, /Get-CimInstance Win32_Process/);
+  assert.match(smoke, /No pinned Beta root process owns a loopback CDP listener/);
+  assert.doesNotMatch(smoke, /DevToolsActivePort/);
   assert.match(runtime, /Page\.addScriptToEvaluateOnNewDocument/);
   assert.match(runtime, /Page\.removeScriptToEvaluateOnNewDocument/);
   assert.match(runtime, /app:\/\//);
   assert.match(runtime, /127\.0\.0\.1/);
   assert.match(runtime, /remote-debugging-port/);
+  assert.match(runtime, /TcpListener::bind\(\("127\.0\.0\.1", 0\)\)/);
+  assert.doesNotMatch(runtime, /port_for_channel|=> Ok\(946[56]\)/);
   assert.match(platform, /IApplicationActivationManager/);
   assert.doesNotMatch(bridge, /nativeTheme.*value|nativeValue/i);
   assert.match(updater, /ACT_UPDATER_PUBKEY/);
@@ -306,12 +322,13 @@ test("real screenshot evidence covers every mode and confirms Beta restoration",
   assert.equal(manifest.testBench.packageFullName, "OpenAI.CodexBeta_26.715.3651.0_x64__2p2nqsd0c76g0");
   assert.equal(manifest.fixture.id, "full-skin-home-v1");
   assert.equal(manifest.fixture.sidebar, "hidden");
+  assert.equal(manifest.fixture.project, "none");
   assert.equal(manifest.fixture.privateContent, "excluded");
   assert.equal(manifest.fixture.nativeSettingsChanged, false);
   assert.equal(manifest.runtime.format, "act-full-skin-v1");
   assert.equal(manifest.runtime.earlyInjection, true);
   assert.equal(manifest.runtime.removedAfterCapture, true);
-  assert.equal(manifest.captures.length, 56);
+  assert.equal(manifest.captures.length, 82);
   assert.equal(manifest.captures.every(function (capture) {
     return capture.runtimeSha256 === manifest.runtime.sha256
       && capture.markerVersion === "act-full-skin-v1"
@@ -320,7 +337,7 @@ test("real screenshot evidence covers every mode and confirms Beta restoration",
   }), true);
   assert.equal(new Set(manifest.captures.map(function (capture) {
     return capture.themeId + "|" + capture.mode;
-  })).size, 56);
+  })).size, 82);
 });
 
 test("Windows installer is a no-admin helper with a bundled Registry", async function () {
@@ -343,7 +360,7 @@ test("Windows installer is a no-admin helper with a bundled Registry", async fun
   assert.doesNotMatch(script, /WindowsApps.*(?:Write|Set-Content)|app\.asar|remote-debugging-port/i);
 });
 
-test("gallery keeps the independent Chinese-first visual system", async function () {
+test("gallery follows browser language, uses a language-neutral mark, and localizes featured ordering", async function () {
   const [html, css, app] = await Promise.all([
     readFile(path.join(ROOT, "site", "index.html"), "utf8"),
     readFile(path.join(ROOT, "site", "assets", "styles.css"), "utf8"),
@@ -356,7 +373,10 @@ test("gallery keeps the independent Chinese-first visual system", async function
   assert.match(html, /\.codex\/skills\/create-codex-theme/);
   assert.match(app, /navigator\.languages/);
   assert.match(app, /act-locale/);
+  assert.match(app, /featuredPriority/);
+  assert.match(app, /audiencePriority/);
   assert.match(app, /state\.rights/);
+  assert.doesNotMatch(html, />境</);
   assert.doesNotMatch(html, /reimagined|hero-accent|hero-orbit/i);
   assert.doesNotMatch(css, /--acid|#d9ff43/i);
 });
@@ -371,6 +391,9 @@ test("desktop manager localizes from the system and combines collection, rights,
   assert.match(html, /id="styleFilter"/);
   assert.match(app, /navigator\.languages/);
   assert.match(app, /act-manager-locale/);
+  assert.match(app, /featuredPriority/);
+  assert.match(app, /audiencePriority/);
+  assert.doesNotMatch(html, />境</);
   assert.match(app, /theme\.rightsProfile !== state\.rights/);
   assert.match(app, /theme\.variant !== state\.style/);
   assert.match(app, /theme\.name\?\.\["zh-CN"\]/);

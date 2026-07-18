@@ -44,6 +44,7 @@ window.act = Object.freeze({
   openCodex: (channel) => invoke("open_codex", { channel }),
   applyFullSkin: (themeId, mode, channel) => invoke("apply_full_skin", { themeId, mode, channel }),
   restoreFullSkin: () => invoke("restore_full_skin"),
+  getSkinState: () => invoke("get_skin_state"),
   getPersistenceState: () => invoke("get_persistence_state"),
   enablePersistentTheme: (themeId, mode, channel, consent) =>
     invoke("enable_persistent_theme", { themeId, mode, channel, consent }),

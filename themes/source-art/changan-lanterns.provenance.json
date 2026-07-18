@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "themeId": "changan-lanterns",
+  "rightsProfile": "original",
+  "workflow": "openai-image-job",
+  "model": "gpt-image-2",
+  "size": "1536x1024",
+  "quality": "high",
+  "jobId": "e8cab29b-d4ce-4acd-bc63-523958ebc409",
+  "promptSha256": "0199b7ebe344e7f2cbb08e5be6661832a6853941e5af6842c3cc6a14f75f31a6",
+  "sourceSha256": "07871b73b171ddccc9dae7cd5e200263ef9f775d198be7684c932ffa3a360900",
+  "disclosure": "AI-generated original source art. Prompt and output were reviewed for third-party characters, logos, signatures, and text before release."
+}

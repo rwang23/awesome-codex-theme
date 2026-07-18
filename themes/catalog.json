@@ -1,5 +1,6 @@
 {
   "schemaVersion": 1,
+  "catalogRevision": 2026071801,
   "defaults": {
     "author": "Awesome Codex Theme",
     "license": "CC0-1.0",
@@ -12,8 +13,8 @@
       "pairing": "cinematic-chibi",
       "rightsProfile": "original",
       "name": {
-        "en": "Original Xianxia 01",
-        "zh-CN": "原创国风修仙 01"
+        "en": "Xianxia 01",
+        "zh-CN": "国风修仙 01"
       },
       "title": {
         "en": "One world, two expressions.",
@@ -76,6 +77,67 @@
       "description": {
         "en": "Four newly composed unofficial fan-art scenes: the Void Hall, Wang Lin's wedding intervention, Chen Ping'an's confession, and the Three-Year Agreement. They recall story beats without copying official shots.",
         "zh-CN": "四幅重新构图的非官方 Fan Art：虚天殿、王林抢婚、陈平安告白与三年之约。保留剧情记忆点，但不照搬官方镜头。"
+      }
+    },
+    {
+      "id": "codex-community-tributes-01",
+      "order": 5,
+      "pairing": "standalone",
+      "rightsProfile": "fan-art",
+      "audience": "global",
+      "featuredRank": {
+        "en": 0,
+        "zh-CN": 0
+      },
+      "name": {
+        "en": "Codex Community Tributes 01",
+        "zh-CN": "Codex 社区致敬 01"
+      },
+      "title": {
+        "en": "A little gratitude, rendered with a wink.",
+        "zh-CN": "把感谢画得认真一点，也有趣一点。"
+      },
+      "description": {
+        "en": "Two clearly unofficial, non-commercial parody portraits celebrating the Codex community. No OpenAI logo, product artwork, or official asset is used, and no endorsement is implied.",
+        "zh-CN": "两套明确标注、仅限非商业使用的 Codex 社区趣味致敬主题。未使用 OpenAI Logo、产品视觉或官方素材，也不暗示任何官方背书。"
+      }
+    },
+    {
+      "id": "global-workspace-favorites-01",
+      "order": 6,
+      "pairing": "standalone",
+      "rightsProfile": "original",
+      "audience": "en",
+      "name": {
+        "en": "Global Workspace Favorites 01",
+        "zh-CN": "全球工作区灵感 01"
+      },
+      "title": {
+        "en": "Six moods built for long sessions.",
+        "zh-CN": "六种适合长时间工作的氛围。"
+      },
+      "description": {
+        "en": "Original themes shaped around cozy focus, exploration, retro computing, and quiet spectacle—including a playful 2007 messenger-era chibi workspace.",
+        "zh-CN": "围绕舒适专注、探索、复古计算机与安静奇景创作的原创主题，其中包括一套 2007 即时通讯时代的趣味 Q 版工作区。"
+      }
+    },
+    {
+      "id": "china-life-favorites-01",
+      "order": 7,
+      "pairing": "standalone",
+      "rightsProfile": "original",
+      "audience": "zh-CN",
+      "name": {
+        "en": "Chinese Everyday Poetry 01",
+        "zh-CN": "中国生活诗意 01"
+      },
+      "title": {
+        "en": "Five familiar places, held in a quieter light.",
+        "zh-CN": "五种熟悉风景，换一种更安静的光。"
+      },
+      "description": {
+        "en": "Five original scenes drawn from Jiangnan rain, Chang'an lantern light, Dunhuang color, bamboo tea, and a warm train crossing the northern snow.",
+        "zh-CN": "从江南雨巷、长安灯火、敦煌色彩、竹院清茶与北方雪原列车中提取的五套原创主题。"
       }
     }
   ],
@@ -1901,6 +1963,709 @@
           "accent": "#F1C458",
           "accentContrast": "#2C1D05",
           "border": "#705B23"
+        }
+      }
+    },
+    {
+      "id": "tibo-reset-saint",
+      "version": "1.0.0",
+      "collection": "codex-community-tributes-01",
+      "pair": "tibo-reset-saint",
+      "variant": "scene",
+      "rightsProfile": "fan-art",
+      "audience": "en",
+      "featuredRank": {
+        "en": 1,
+        "zh-CN": 2
+      },
+      "name": {
+        "en": "Saint Tibo · Reset of Limits",
+        "zh-CN": "提博圣像·额度重置"
+      },
+      "tagline": {
+        "en": "Tokens in one hand. The reset in the other.",
+        "zh-CN": "一手递 Token，一手按下重置。"
+      },
+      "description": {
+        "en": "An unofficial illuminated-manuscript parody thanking Tibo Sottiaux for leading Codex and keeping builders moving.",
+        "zh-CN": "一幅非官方手抄本式趣味致敬画，感谢 Tibo Sottiaux 带领 Codex，也感谢每一次让创作继续的重置。"
+      },
+      "tags": ["fan-art", "codex-community", "tibo", "parody", "illuminated-manuscript"],
+      "fanArt": {
+        "work": {
+          "en": "Codex Community Tribute",
+          "zh-CN": "Codex 社区致敬"
+        },
+        "characters": {
+          "en": ["Tibo Sottiaux"],
+          "zh-CN": ["Tibo Sottiaux"]
+        },
+        "unofficial": true,
+        "commercialUse": false,
+        "officialAssetsUsed": false
+      },
+      "art": {
+        "focusX": 0.77,
+        "focusY": 0.45,
+        "safeArea": "left",
+        "taskMode": "ambient"
+      },
+      "light": {
+        "tokens": {
+          "background": "#F3E7CA",
+          "surface": "#FFF9EC",
+          "surfaceAlt": "#E5D1A8",
+          "text": "#302313",
+          "muted": "#6C583C",
+          "accent": "#7A4B0C",
+          "accentContrast": "#FFFFFF",
+          "border": "#B99962"
+        }
+      },
+      "dark": {
+        "tokens": {
+          "background": "#160E07",
+          "surface": "#26180C",
+          "surfaceAlt": "#3B2815",
+          "text": "#FFF2D2",
+          "muted": "#CDB98E",
+          "accent": "#E6B557",
+          "accentContrast": "#281704",
+          "border": "#70502A"
+        }
+      }
+    },
+    {
+      "id": "tibo-reset-immortal",
+      "version": "1.0.0",
+      "collection": "codex-community-tributes-01",
+      "pair": "tibo-reset-immortal",
+      "variant": "scene",
+      "rightsProfile": "fan-art",
+      "audience": "zh-CN",
+      "featuredRank": {
+        "en": 2,
+        "zh-CN": 1
+      },
+      "name": {
+        "en": "Tibo · Keeper of the Reset",
+        "zh-CN": "提博大神·重置赐福"
+      },
+      "tagline": {
+        "en": "May the queue be short and the context be long.",
+        "zh-CN": "愿队列短一点，愿上下文长一点。"
+      },
+      "description": {
+        "en": "An unofficial Chinese mural-style parody portrait celebrating Tibo Sottiaux and the resets Codex users cheer for.",
+        "zh-CN": "一套非官方中式壁画趣味致敬主题，献给 Tibo Sottiaux，也献给 Codex 用户最喜欢看到的额度重置。"
+      },
+      "tags": ["fan-art", "codex-community", "tibo", "parody", "chinese-mural"],
+      "fanArt": {
+        "work": {
+          "en": "Codex Community Tribute",
+          "zh-CN": "Codex 社区致敬"
+        },
+        "characters": {
+          "en": ["Tibo Sottiaux"],
+          "zh-CN": ["Tibo Sottiaux"]
+        },
+        "unofficial": true,
+        "commercialUse": false,
+        "officialAssetsUsed": false
+      },
+      "art": {
+        "focusX": 0.76,
+        "focusY": 0.45,
+        "safeArea": "left",
+        "taskMode": "ambient"
+      },
+      "light": {
+        "tokens": {
+          "background": "#F3E5D0",
+          "surface": "#FFF9F0",
+          "surfaceAlt": "#E9CDA7",
+          "text": "#342116",
+          "muted": "#735744",
+          "accent": "#8A3524",
+          "accentContrast": "#FFFFFF",
+          "border": "#C39972"
+        }
+      },
+      "dark": {
+        "tokens": {
+          "background": "#190C08",
+          "surface": "#2B1510",
+          "surfaceAlt": "#462219",
+          "text": "#FFF1D7",
+          "muted": "#D6B598",
+          "accent": "#F08C62",
+          "accentContrast": "#321008",
+          "border": "#7F4430"
+        }
+      }
+    },
+    {
+      "id": "retro-boss-2007",
+      "version": "1.0.0",
+      "collection": "global-workspace-favorites-01",
+      "pair": "retro-boss-2007",
+      "variant": "chibi",
+      "audience": "global",
+      "featuredRank": {
+        "en": 3,
+        "zh-CN": 3
+      },
+      "name": {
+        "en": "Boss Mode 2007",
+        "zh-CN": "老板经典 Q 版"
+      },
+      "tagline": {
+        "en": "Your tiny blue coding buddy just came online.",
+        "zh-CN": "蓝色代码搭子上线，今天继续给老板打工。"
+      },
+      "description": {
+        "en": "A glossy blue chibi workspace inspired by the optimism of 2000s desktop messengers, rebuilt with an original mascot and no borrowed interface or brand assets.",
+        "zh-CN": "一套来自 2000 年代桌面即时通讯记忆的冰蓝 Q 版工作区，使用原创代码吉祥物，不复刻任何品牌、角色或界面。"
+      },
+      "tags": ["original", "retro", "chibi", "2000s", "messenger", "blue"],
+      "art": {
+        "focusX": 0.78,
+        "focusY": 0.48,
+        "safeArea": "left",
+        "taskMode": "ambient"
+      },
+      "light": {
+        "tokens": {
+          "background": "#EAF5FF",
+          "surface": "#FFFFFF",
+          "surfaceAlt": "#D8ECFF",
+          "text": "#162D46",
+          "muted": "#526B83",
+          "accent": "#1459A6",
+          "accentContrast": "#FFFFFF",
+          "border": "#92BCE5"
+        }
+      },
+      "dark": {
+        "tokens": {
+          "background": "#061525",
+          "surface": "#0D243B",
+          "surfaceAlt": "#153756",
+          "text": "#EFF8FF",
+          "muted": "#A8C3DA",
+          "accent": "#6DBBFF",
+          "accentContrast": "#08213A",
+          "border": "#2F628D"
+        }
+      }
+    },
+    {
+      "id": "rainy-library",
+      "version": "1.0.0",
+      "collection": "global-workspace-favorites-01",
+      "pair": "rainy-library",
+      "variant": "scene",
+      "audience": "en",
+      "name": {
+        "en": "Rainy Library",
+        "zh-CN": "雨夜图书馆"
+      },
+      "tagline": {
+        "en": "One lamp, one storm, and plenty of time.",
+        "zh-CN": "一盏灯，一场雨，时间刚刚好。"
+      },
+      "description": {
+        "en": "A warm reading room looking into a rain-soaked glasshouse, with walnut shelves and a quiet amber desk on the right.",
+        "zh-CN": "胡桃木书架与玻璃温室连成一间安静阅读室，雨水落在窗外，右侧书桌留着一盏暖灯。"
+      },
+      "tags": ["original", "cozy", "library", "rain", "warm"],
+      "art": {
+        "focusX": 0.78,
+        "focusY": 0.47,
+        "safeArea": "left",
+        "taskMode": "ambient"
+      },
+      "light": {
+        "tokens": {
+          "background": "#F0E9DD",
+          "surface": "#FFFDF8",
+          "surfaceAlt": "#E4D6C4",
+          "text": "#2B211A",
+          "muted": "#685A4D",
+          "accent": "#775025",
+          "accentContrast": "#FFFFFF",
+          "border": "#BBA38A"
+        }
+      },
+      "dark": {
+        "tokens": {
+          "background": "#0D1112",
+          "surface": "#171D1D",
+          "surfaceAlt": "#26302D",
+          "text": "#F7F0E5",
+          "muted": "#BDB3A4",
+          "accent": "#D7A45F",
+          "accentContrast": "#291A08",
+          "border": "#4E5D56"
+        }
+      }
+    },
+    {
+      "id": "orbital-dawn",
+      "version": "1.0.0",
+      "collection": "global-workspace-favorites-01",
+      "pair": "orbital-dawn",
+      "variant": "cinematic",
+      "audience": "en",
+      "name": {
+        "en": "Orbital Dawn",
+        "zh-CN": "轨道黎明"
+      },
+      "tagline": {
+        "en": "First light arrives sixteen times a day.",
+        "zh-CN": "每天十六次日出，这一轮刚刚开始。"
+      },
+      "description": {
+        "en": "A quiet 1970s-inspired orbital observatory watches sunrise roll over Earth through broad curved windows.",
+        "zh-CN": "带有 1970 年代科学想象气质的轨道观测站，从弧形舷窗望见晨光越过地球。"
+      },
+      "tags": ["original", "space", "retro-futurism", "earth", "cinematic"],
+      "art": {
+        "focusX": 0.77,
+        "focusY": 0.43,
+        "safeArea": "left",
+        "taskMode": "ambient"
+      },
+      "light": {
+        "tokens": {
+          "background": "#E9EEF0",
+          "surface": "#FAFCFC",
+          "surfaceAlt": "#D4DFE1",
+          "text": "#17272B",
+          "muted": "#52666B",
+          "accent": "#2C6170",
+          "accentContrast": "#FFFFFF",
+          "border": "#91ABB1"
+        }
+      },
+      "dark": {
+        "tokens": {
+          "background": "#050A11",
+          "surface": "#0D1620",
+          "surfaceAlt": "#162737",
+          "text": "#EFF8FF",
+          "muted": "#A5BBCB",
+          "accent": "#79C4DD",
+          "accentContrast": "#08212A",
+          "border": "#34566C"
+        }
+      }
+    },
+    {
+      "id": "deep-ocean-lab",
+      "version": "1.0.0",
+      "collection": "global-workspace-favorites-01",
+      "pair": "deep-ocean-lab",
+      "variant": "scene",
+      "audience": "en",
+      "name": {
+        "en": "Deep Ocean Lab",
+        "zh-CN": "深海观测站"
+      },
+      "tagline": {
+        "en": "The quietest stand-up is eight hundred meters down.",
+        "zh-CN": "八百米深处，今天的站会格外安静。"
+      },
+      "description": {
+        "en": "An underwater research window opens onto drifting jellyfish, distant whales, and a single pool of cyan instrument light.",
+        "zh-CN": "水下研究舱外漂着水母与远处鲸影，右侧仪器台只留一片克制的青色微光。"
+      },
+      "tags": ["original", "ocean", "science", "jellyfish", "blue"],
+      "art": {
+        "focusX": 0.78,
+        "focusY": 0.47,
+        "safeArea": "left",
+        "taskMode": "ambient"
+      },
+      "light": {
+        "tokens": {
+          "background": "#E5F1F2",
+          "surface": "#FAFFFF",
+          "surfaceAlt": "#CFE4E6",
+          "text": "#123037",
+          "muted": "#4D6870",
+          "accent": "#176777",
+          "accentContrast": "#FFFFFF",
+          "border": "#87B5BC"
+        }
+      },
+      "dark": {
+        "tokens": {
+          "background": "#031116",
+          "surface": "#082128",
+          "surfaceAlt": "#0D3540",
+          "text": "#E9FBFF",
+          "muted": "#9CC4CC",
+          "accent": "#5DD3E6",
+          "accentContrast": "#05272E",
+          "border": "#266270"
+        }
+      }
+    },
+    {
+      "id": "synthwave-night-drive",
+      "version": "1.0.0",
+      "collection": "global-workspace-favorites-01",
+      "pair": "synthwave-night-drive",
+      "variant": "scene",
+      "audience": "en",
+      "name": {
+        "en": "Synthwave Night Drive",
+        "zh-CN": "合成波夜航"
+      },
+      "tagline": {
+        "en": "Ship it before the neon horizon.",
+        "zh-CN": "在霓虹地平线之前，把这一版发出去。"
+      },
+      "description": {
+        "en": "A restrained retro-future highway crosses a violet desert toward a coral sun, with analog dashboard glow on the right.",
+        "zh-CN": "克制的复古未来公路穿过紫色荒漠驶向珊瑚色落日，右侧保留模拟仪表盘的柔光。"
+      },
+      "tags": ["original", "synthwave", "retro", "night-drive", "neon"],
+      "art": {
+        "focusX": 0.77,
+        "focusY": 0.49,
+        "safeArea": "left",
+        "taskMode": "ambient"
+      },
+      "light": {
+        "tokens": {
+          "background": "#F2E8F0",
+          "surface": "#FFF9FE",
+          "surfaceAlt": "#E4D1E2",
+          "text": "#35203A",
+          "muted": "#735A77",
+          "accent": "#8B2F72",
+          "accentContrast": "#FFFFFF",
+          "border": "#BB91B5"
+        }
+      },
+      "dark": {
+        "tokens": {
+          "background": "#10051C",
+          "surface": "#1C0C2C",
+          "surfaceAlt": "#311445",
+          "text": "#FFF0FF",
+          "muted": "#D1A9D6",
+          "accent": "#FF70C7",
+          "accentContrast": "#350929",
+          "border": "#713A7F"
+        }
+      }
+    },
+    {
+      "id": "alpine-cabin-code",
+      "version": "1.0.0",
+      "collection": "global-workspace-favorites-01",
+      "pair": "alpine-cabin-code",
+      "variant": "scene",
+      "audience": "en",
+      "name": {
+        "en": "Alpine Cabin",
+        "zh-CN": "高山木屋"
+      },
+      "tagline": {
+        "en": "Fresh snow. Warm coffee. Zero notifications.",
+        "zh-CN": "新雪、热咖啡，以及零条通知。"
+      },
+      "description": {
+        "en": "A timber cabin desk looks across snow-heavy pines toward a pale alpine sunrise, quiet and tactile rather than postcard-perfect.",
+        "zh-CN": "木屋书桌望向覆雪松林与浅色山间日出，保留真实木材和冬日空气的触感。"
+      },
+      "tags": ["original", "alpine", "cabin", "snow", "cozy"],
+      "art": {
+        "focusX": 0.77,
+        "focusY": 0.46,
+        "safeArea": "left",
+        "taskMode": "ambient"
+      },
+      "light": {
+        "tokens": {
+          "background": "#EDF1EE",
+          "surface": "#FCFEFC",
+          "surfaceAlt": "#DCE4DE",
+          "text": "#1E2B24",
+          "muted": "#59685F",
+          "accent": "#3C664F",
+          "accentContrast": "#FFFFFF",
+          "border": "#A1B2A7"
+        }
+      },
+      "dark": {
+        "tokens": {
+          "background": "#09100E",
+          "surface": "#131D19",
+          "surfaceAlt": "#213029",
+          "text": "#F0F7F2",
+          "muted": "#ADBCB2",
+          "accent": "#85C39D",
+          "accentContrast": "#102519",
+          "border": "#405D4C"
+        }
+      }
+    },
+    {
+      "id": "jiangnan-rain-courtyard",
+      "version": "1.0.0",
+      "collection": "china-life-favorites-01",
+      "pair": "jiangnan-rain-courtyard",
+      "variant": "scene",
+      "audience": "zh-CN",
+      "name": {
+        "en": "Jiangnan Rain Courtyard",
+        "zh-CN": "江南·雨落小院"
+      },
+      "tagline": {
+        "en": "Rain threads the lane; the courtyard keeps its light.",
+        "zh-CN": "雨把巷子拉长，小院还亮着一盏灯。"
+      },
+      "description": {
+        "en": "White walls, dark tiles, wet stone, and a small waterside courtyard settle into pearl-gray Jiangnan rain.",
+        "zh-CN": "白墙黛瓦、湿青石与临水小院落进珍珠灰的江南细雨里，右侧灯火很轻。"
+      },
+      "tags": ["original", "china", "jiangnan", "rain", "courtyard"],
+      "art": {
+        "focusX": 0.77,
+        "focusY": 0.47,
+        "safeArea": "left",
+        "taskMode": "ambient"
+      },
+      "light": {
+        "tokens": {
+          "background": "#EEF1EE",
+          "surface": "#FCFEFC",
+          "surfaceAlt": "#DCE4E0",
+          "text": "#1C2B27",
+          "muted": "#586A64",
+          "accent": "#35675B",
+          "accentContrast": "#FFFFFF",
+          "border": "#9FB4AD"
+        }
+      },
+      "dark": {
+        "tokens": {
+          "background": "#081210",
+          "surface": "#111E1A",
+          "surfaceAlt": "#1C302A",
+          "text": "#EEF7F3",
+          "muted": "#A8BBB4",
+          "accent": "#78C5AC",
+          "accentContrast": "#0B271F",
+          "border": "#385E52"
+        }
+      }
+    },
+    {
+      "id": "changan-lanterns",
+      "version": "1.0.0",
+      "collection": "china-life-favorites-01",
+      "pair": "changan-lanterns",
+      "variant": "cinematic",
+      "audience": "zh-CN",
+      "name": {
+        "en": "Chang'an Lantern Night",
+        "zh-CN": "长安·上元灯火"
+      },
+      "tagline": {
+        "en": "The avenue glows; one quiet desk remains.",
+        "zh-CN": "长街灯火正盛，案前只留一方安静。"
+      },
+      "description": {
+        "en": "A Tang-inspired avenue opens beneath layered lantern light and deep indigo sky, composed as original historical fantasy rather than a reconstruction.",
+        "zh-CN": "唐风长街在层层灯火与深靛夜色下展开，以原创历史想象构图，不复刻具体古建或影视场景。"
+      },
+      "tags": ["original", "china", "changan", "lanterns", "tang-inspired"],
+      "art": {
+        "focusX": 0.78,
+        "focusY": 0.43,
+        "safeArea": "left",
+        "taskMode": "ambient"
+      },
+      "light": {
+        "tokens": {
+          "background": "#F5E9D8",
+          "surface": "#FFF9EF",
+          "surfaceAlt": "#E9D0AD",
+          "text": "#392319",
+          "muted": "#755746",
+          "accent": "#913C28",
+          "accentContrast": "#FFFFFF",
+          "border": "#C39872"
+        }
+      },
+      "dark": {
+        "tokens": {
+          "background": "#110A18",
+          "surface": "#201126",
+          "surfaceAlt": "#351B35",
+          "text": "#FFF0DA",
+          "muted": "#D2AF99",
+          "accent": "#FF9268",
+          "accentContrast": "#351009",
+          "border": "#70405F"
+        }
+      }
+    },
+    {
+      "id": "dunhuang-starlight",
+      "version": "1.0.0",
+      "collection": "china-life-favorites-01",
+      "pair": "dunhuang-starlight",
+      "variant": "cinematic",
+      "audience": "zh-CN",
+      "name": {
+        "en": "Dunhuang Starlight",
+        "zh-CN": "敦煌·飞带星河"
+      },
+      "tagline": {
+        "en": "Mineral color drifts into a desert sky.",
+        "zh-CN": "矿物色从壁面醒来，飞进沙漠星河。"
+      },
+      "description": {
+        "en": "Original mineral-pigment ribbons, desert cliffs, and a lapis night sky evoke Dunhuang color without copying any historic mural figure.",
+        "zh-CN": "原创矿物色飘带、沙崖与青金石夜空借敦煌色彩起兴，不临摹任何具体壁画人物或纹样。"
+      },
+      "tags": ["original", "china", "dunhuang", "mineral-pigment", "stars"],
+      "art": {
+        "focusX": 0.77,
+        "focusY": 0.44,
+        "safeArea": "left",
+        "taskMode": "ambient"
+      },
+      "light": {
+        "tokens": {
+          "background": "#F0E5CE",
+          "surface": "#FFF9EC",
+          "surfaceAlt": "#DFC9A5",
+          "text": "#35271B",
+          "muted": "#716047",
+          "accent": "#405E79",
+          "accentContrast": "#FFFFFF",
+          "border": "#B49A75"
+        }
+      },
+      "dark": {
+        "tokens": {
+          "background": "#080C18",
+          "surface": "#10182A",
+          "surfaceAlt": "#1B2942",
+          "text": "#FFF1D5",
+          "muted": "#C5B493",
+          "accent": "#76A8D2",
+          "accentContrast": "#0A2238",
+          "border": "#3B5575"
+        }
+      }
+    },
+    {
+      "id": "bamboo-tea-rain",
+      "version": "1.0.0",
+      "collection": "china-life-favorites-01",
+      "pair": "bamboo-tea-rain",
+      "variant": "scene",
+      "audience": "zh-CN",
+      "name": {
+        "en": "Bamboo Tea Rain",
+        "zh-CN": "竹院·听雨煮茶"
+      },
+      "tagline": {
+        "en": "The kettle hums beneath a roof of rain.",
+        "zh-CN": "檐雨落得密，炉上的水刚刚响。"
+      },
+      "description": {
+        "en": "A modest bamboo courtyard, clay stove, and open lattice window make a tactile, unhurried workspace.",
+        "zh-CN": "竹院、泥炉与半开的格窗组成一间不赶时间的工作区，材质朴素，雨声很近。"
+      },
+      "tags": ["original", "china", "bamboo", "tea", "rain"],
+      "art": {
+        "focusX": 0.78,
+        "focusY": 0.48,
+        "safeArea": "left",
+        "taskMode": "ambient"
+      },
+      "light": {
+        "tokens": {
+          "background": "#ECF0E7",
+          "surface": "#FBFDF7",
+          "surfaceAlt": "#D8E2D1",
+          "text": "#1D2A1A",
+          "muted": "#596854",
+          "accent": "#42663B",
+          "accentContrast": "#FFFFFF",
+          "border": "#9EAF97"
+        }
+      },
+      "dark": {
+        "tokens": {
+          "background": "#091109",
+          "surface": "#131D12",
+          "surfaceAlt": "#223020",
+          "text": "#F0F5EC",
+          "muted": "#ADB9A7",
+          "accent": "#91C279",
+          "accentContrast": "#14260F",
+          "border": "#465D3E"
+        }
+      }
+    },
+    {
+      "id": "northeast-snow-train",
+      "version": "1.0.0",
+      "collection": "china-life-favorites-01",
+      "pair": "northeast-snow-train",
+      "variant": "scene",
+      "audience": "zh-CN",
+      "name": {
+        "en": "Northern Snow Train",
+        "zh-CN": "北方·雪原绿皮车"
+      },
+      "tagline": {
+        "en": "Warm carriage light crosses the blue hour.",
+        "zh-CN": "蓝调雪原很长，车厢里一直亮着暖灯。"
+      },
+      "description": {
+        "en": "An unbranded green passenger train moves through blue-hour snowfields and dark pines, with warm carriage windows on the right.",
+        "zh-CN": "没有标识的绿色客车穿过蓝调雪原与深色松林，右侧车窗留着一排真实而温暖的灯。"
+      },
+      "tags": ["original", "china", "northeast", "snow", "train"],
+      "art": {
+        "focusX": 0.77,
+        "focusY": 0.47,
+        "safeArea": "left",
+        "taskMode": "ambient"
+      },
+      "light": {
+        "tokens": {
+          "background": "#E9EFF2",
+          "surface": "#FAFCFD",
+          "surfaceAlt": "#D5E0E4",
+          "text": "#192A31",
+          "muted": "#536872",
+          "accent": "#3B6257",
+          "accentContrast": "#FFFFFF",
+          "border": "#98ADB5"
+        }
+      },
+      "dark": {
+        "tokens": {
+          "background": "#071018",
+          "surface": "#101C26",
+          "surfaceAlt": "#1A2D3A",
+          "text": "#EEF7FB",
+          "muted": "#A9BCC6",
+          "accent": "#8CC4AC",
+          "accentContrast": "#11291F",
+          "border": "#3D5C6B"
         }
       }
     }

@@ -4,7 +4,7 @@
   "title": "Awesome Codex Theme Registry",
   "type": "object",
   "additionalProperties": false,
-  "required": ["schemaVersion", "standard", "generatedBy", "collections", "themes"],
+  "required": ["schemaVersion", "standard", "generatedBy", "catalogRevision", "collections", "themes"],
   "properties": {
     "schemaVersion": {
       "const": 1
@@ -14,6 +14,10 @@
     },
     "generatedBy": {
       "type": "string"
+    },
+    "catalogRevision": {
+      "type": "integer",
+      "minimum": 1
     },
     "collections": {
       "type": "array",
@@ -47,6 +51,24 @@
           "exports"
         ],
         "properties": {
+          "audience": {
+            "enum": ["global", "en", "zh-CN"]
+          },
+          "featuredRank": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["en", "zh-CN"],
+            "properties": {
+              "en": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "zh-CN": {
+                "type": "integer",
+                "minimum": 0
+              }
+            }
+          },
           "tagline": {
             "$ref": "#/$defs/localizedShort"
           },

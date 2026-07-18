@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "themeId": "retro-boss-2007",
+  "rightsProfile": "original",
+  "workflow": "openai-image-job",
+  "model": "gpt-image-2",
+  "size": "1536x1024",
+  "quality": "high",
+  "jobId": "b877ee44-4d5a-4fd8-a459-c41814ffba99",
+  "promptSha256": "1e70acd386709228207ad31b3e6aa9fe6d2cc3b93fa0d6e8619571794ba5ef23",
+  "sourceSha256": "8eb319040e9ea259222f086fc9d6efa2e910e66020c719e809e597bffb007207",
+  "disclosure": "AI-generated original source art. Prompt and output were reviewed for third-party characters, logos, signatures, and text before release."
+}

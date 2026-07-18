@@ -75,15 +75,24 @@ select:focus-visible {
 }
 
 .brand-mark {
-  display: grid;
-  place-items: center;
   width: 30px;
   height: 30px;
+  box-sizing: border-box;
+  padding: 5px;
   border: 1px solid rgba(255, 255, 255, 0.28);
   border-radius: 9px;
   background: rgba(255, 255, 255, 0.08);
-  font-family: "STKaiti", "KaiTi", serif;
-  font-size: 17px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2.7;
+}
+
+.brand-mark .mark-spark {
+  fill: #d8ad62;
+  stroke: #d8ad62;
+  stroke-width: 1.4;
 }
 
 .brand > span:last-child {

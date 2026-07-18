@@ -18,7 +18,7 @@ pub struct TargetView {
     package_full_name: Option<String>,
     #[cfg(target_os = "macos")]
     #[serde(default, skip_serializing)]
-    app_name: Option<String>,
+    bundle_id: Option<String>,
     #[cfg(target_os = "macos")]
     #[serde(default, skip_serializing)]
     executable_path: Option<String>,
@@ -152,7 +152,7 @@ fn discover_platform_targets() -> Result<Vec<TargetView>, String> {
                 channel: channel.into(),
                 label: label.into(),
                 version: plist("CFBundleShortVersionString"),
-                app_name: Some(app_name.into()),
+                bundle_id: Some(expected_bundle.into()),
                 executable_path: Some(executable_path),
             })
         })
@@ -211,12 +211,9 @@ fn launch_platform_target(target: &TargetView) -> Result<(), String> {
 
 #[cfg(target_os = "macos")]
 fn launch_platform_target(target: &TargetView) -> Result<(), String> {
-    let app_name = target.app_name.as_deref().ok_or("macOS 应用名称缺失")?;
-    if !matches!(app_name, "ChatGPT" | "ChatGPT Beta") {
-        return Err("macOS 应用名称无效".into());
-    }
+    let bundle_id = macos_bundle_id(target)?;
     std::process::Command::new("/usr/bin/open")
-        .args(["-a", app_name])
+        .args(["-b", bundle_id])
         .spawn()
         .map(|_| ())
         .map_err(|error| format!("无法打开 ChatGPT：{error}"))
@@ -297,13 +294,10 @@ fn launch_platform_target_with_arguments(
     target: &TargetView,
     arguments: &str,
 ) -> Result<(), String> {
-    let app_name = target.app_name.as_deref().ok_or("macOS 应用名称缺失")?;
-    if !matches!(app_name, "ChatGPT" | "ChatGPT Beta") {
-        return Err("macOS 应用名称无效".into());
-    }
+    let bundle_id = macos_bundle_id(target)?;
     let arguments = arguments.split_ascii_whitespace().collect::<Vec<_>>();
     std::process::Command::new("/usr/bin/open")
-        .args(["-a", app_name, "--args"])
+        .args(["-b", bundle_id, "--args"])
         .args(arguments)
         .spawn()
         .map(|_| ())
@@ -351,16 +345,23 @@ pub fn target_is_running(target: &TargetView) -> Result<bool, String> {
         .executable_path
         .as_deref()
         .ok_or("macOS 可执行文件身份缺失")?;
-    let output = std::process::Command::new("/bin/ps")
-        .args(["-axo", "comm="])
+    let process_name = std::path::Path::new(executable)
+        .file_name()
+        .and_then(|name| name.to_str())
+        .ok_or("macOS 可执行文件名称无效")?;
+    let output = std::process::Command::new("/usr/bin/pgrep")
+        .args(["-x", process_name])
         .output()
         .map_err(|error| format!("无法检查 macOS ChatGPT 进程：{error}"))?;
     if !output.status.success() {
-        return Err("无法读取 macOS 进程列表".into());
+        return Ok(false);
     }
-    Ok(String::from_utf8_lossy(&output.stdout)
-        .lines()
-        .any(|process| process.trim() == executable))
+    for pid in String::from_utf8_lossy(&output.stdout).lines() {
+        if macos_process_matches_executable(pid.trim(), executable)? {
+            return Ok(true);
+        }
+    }
+    Ok(false)
 }
 
 #[cfg(not(any(target_os = "windows", target_os = "macos")))]
@@ -403,11 +404,8 @@ foreach ($match in $matches) {
 
 #[cfg(target_os = "macos")]
 pub fn stop_target(target: &TargetView) -> Result<(), String> {
-    let app_name = target.app_name.as_deref().ok_or("macOS 应用名称缺失")?;
-    if !matches!(app_name, "ChatGPT" | "ChatGPT Beta") {
-        return Err("macOS 应用名称无效".into());
-    }
-    let script = format!("tell application \"{app_name}\" to quit");
+    let bundle_id = macos_bundle_id(target)?;
+    let script = format!("tell application id \"{bundle_id}\" to quit");
     let output = std::process::Command::new("/usr/bin/osascript")
         .args(["-e", &script])
         .output()
@@ -468,19 +466,91 @@ pub fn listener_belongs_to_target(port: u16, target: &TargetView) -> Result<bool
         return Ok(false);
     }
     for pid in String::from_utf8_lossy(&output.stdout).lines() {
-        let process = std::process::Command::new("/bin/ps")
-            .args(["-p", pid.trim(), "-o", "comm="])
-            .output()
-            .map_err(|error| format!("无法读取 macOS CDP 进程身份：{error}"))?;
-        if process.status.success() && String::from_utf8_lossy(&process.stdout).trim() == executable
-        {
+        if macos_process_matches_executable(pid.trim(), executable)? {
             return Ok(true);
         }
     }
     Ok(false)
 }
 
+#[cfg(target_os = "macos")]
+fn macos_bundle_id(target: &TargetView) -> Result<&str, String> {
+    let bundle_id = target.bundle_id.as_deref().ok_or("macOS Bundle ID 缺失")?;
+    if !matches!(bundle_id, "com.openai.codex" | "com.openai.codex.beta") {
+        return Err("macOS Bundle ID 无效".into());
+    }
+    Ok(bundle_id)
+}
+
+#[cfg(target_os = "macos")]
+fn macos_process_matches_executable(pid: &str, executable: &str) -> Result<bool, String> {
+    if pid.is_empty() || !pid.chars().all(|character| character.is_ascii_digit()) {
+        return Ok(false);
+    }
+    let expected = std::fs::canonicalize(executable)
+        .map_err(|error| format!("无法解析 macOS ChatGPT 可执行文件：{error}"))?;
+    let output = std::process::Command::new("/usr/sbin/lsof")
+        .args(["-n", "-a", "-p", pid, "-d", "txt", "-Fn"])
+        .output()
+        .map_err(|error| format!("无法读取 macOS 进程可执行文件：{error}"))?;
+    if !output.status.success() {
+        return Ok(false);
+    }
+    for line in String::from_utf8_lossy(&output.stdout).lines() {
+        let Some(path) = line.strip_prefix('n') else {
+            continue;
+        };
+        if std::fs::canonicalize(path).is_ok_and(|candidate| candidate == expected) {
+            return Ok(true);
+        }
+    }
+    Ok(false)
+}
+
+#[cfg(any(target_os = "macos", test))]
+fn persistence_host_path_is_durable(path: &str) -> bool {
+    !path.starts_with("/Volumes/") && path.contains(".app/Contents/MacOS/")
+}
+
+#[cfg(target_os = "macos")]
+pub fn validate_persistence_host() -> Result<(), String> {
+    let executable = std::env::current_exe()
+        .and_then(std::fs::canonicalize)
+        .map_err(|error| format!("无法定位 Theme Manager 安装路径：{error}"))?;
+    let path = executable.to_string_lossy();
+    if !persistence_host_path_is_durable(&path) {
+        return Err("请先把 Awesome Codex Theme 拖入 Applications，再开启“始终应用”。".into());
+    }
+    Ok(())
+}
+
+#[cfg(not(target_os = "macos"))]
+pub fn validate_persistence_host() -> Result<(), String> {
+    Ok(())
+}
+
 #[cfg(not(any(target_os = "windows", target_os = "macos")))]
 pub fn listener_belongs_to_target(_port: u16, _target: &TargetView) -> Result<bool, String> {
     Ok(false)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn macos_persistence_rejects_transient_disk_images() {
+        assert!(!persistence_host_path_is_durable(
+            "/Volumes/Awesome Codex Theme/Awesome Codex Theme.app/Contents/MacOS/awesome-codex-theme",
+        ));
+        assert!(persistence_host_path_is_durable(
+            "/Applications/Awesome Codex Theme.app/Contents/MacOS/awesome-codex-theme",
+        ));
+        assert!(persistence_host_path_is_durable(
+            "/Users/test/Applications/Awesome Codex Theme.app/Contents/MacOS/awesome-codex-theme",
+        ));
+        assert!(!persistence_host_path_is_durable(
+            "/usr/local/bin/awesome-codex-theme"
+        ));
+    }
 }

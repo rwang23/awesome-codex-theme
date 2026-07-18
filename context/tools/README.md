@@ -5,11 +5,11 @@
 | Tool | Role | Writes | Verification |
 | --- | --- | --- | --- |
 | scripts/run-image-jobs.mjs | Generate reviewed 1536 x 1024 source art through the shared OpenAI image-job runner | themes/source-art/*.png and compact provenance | visual review plus source hashes |
-| scripts/generate-themes.mjs | Decode source art and generate 28 deterministic dual-mode packs, Full Skin backgrounds, Native fallbacks, and Registry | themes/<theme-id>/, packages/, themes/registry.json | npm run generate:check |
+| scripts/generate-themes.mjs | Decode source art and generate 41 deterministic dual-mode packs, Full Skin backgrounds, Native fallbacks, and Registry | themes/<theme-id>/, packages/, themes/registry.json | npm run generate:check |
 | scripts/validate.mjs | Validate ids, paths, dimensions, hashes, allowlists, contrast, rights rules, Full Skin records, Native fallbacks, and capture evidence | none | npm run validate |
 | scripts/build-installer.mjs | Build the no-admin Windows companion installer with a bundled Registry snapshot | dist/downloads/*.zip and installer manifest | npm run installer:validate |
-| scripts/capture-full-skin-screenshots.mjs | Apply the fixed runtime to the pinned Beta test bench, capture all 56 Full Skin modes, and prove cleanup | screenshots/codex-beta-26.715.3651.0/*.png and manifest | npm run screenshots:probe plus `npm run screenshots:capture` with explicit authorization |
-| scripts/smoke-theme-manager.mjs | Drive the real Tauri UI, apply one Full Skin, read back Beta markers, capture the manager, restore, and verify cleanup | docs/assets/theme-manager-windows.png | explicit `--apply`, exact Manager/Beta ports, and final marker readback |
+| scripts/capture-full-skin-screenshots.mjs | Apply the fixed runtime to the pinned Beta test bench, clear project context, capture all 82 Full Skin modes, and prove cleanup | screenshots/codex-beta-26.715.3651.0/*.png and manifest | npm run screenshots:probe plus `npm run screenshots:capture` with explicit authorization |
+| scripts/smoke-theme-manager.mjs | Drive the real Tauri UI, apply one Full Skin, discover the dynamic Beta endpoint, read back markers, capture the manager, restore, and verify cleanup | docs/assets/theme-manager-windows.png | explicit `--apply`, an OS-selected Manager port, exact process ownership, and final marker readback |
 | scripts/build.mjs | Assemble the static Pages artifact | dist/ | npm run build |
 | scripts/prepare-desktop.mjs | Generate the deterministic desktop icon and confirm the Registry is ready for packaging | apps/theme-manager/build/icon.png | npm run desktop:prepare |
 | scripts/serve.mjs | Serve dist/ on localhost | none | browser smoke |
@@ -24,7 +24,7 @@ The Tauri Theme Manager keeps its CLI dependency, Rust backend, and generated
 release output under `apps/theme-manager/`. It can cache a validated public
 Registry and hash-bound background in its own application data directory, copy
 the selected Native fallback, and launch an exact ChatGPT package with a
-loopback-only debugging port. It applies one fixed, manager-owned runtime and
+OS-selected, loopback-only debugging port. It applies one fixed, manager-owned runtime and
 does not modify ChatGPT application files, private data, or chats.
 
 ## Safety

@@ -37,22 +37,22 @@ function renderIcon(size = 1024) {
       52 + glow * 30,
       255,
     ];
-    const frame = insideStroke(nx, ny, 0.19, 0.19, 0.81, 0.81, 0.035);
-    const horizon = ny > 0.61 && ny < 0.66 && nx > 0.24 && nx < 0.76;
-    const mountainLeft = ny > (0.71 - Math.abs(nx - 0.37) * 0.78) && nx > 0.21 && nx < 0.55 && ny < 0.73;
-    const mountainRight = ny > (0.69 - Math.abs(nx - 0.62) * 0.62) && nx > 0.43 && nx < 0.81 && ny < 0.73;
-    const sun = Math.hypot(nx - 0.65, ny - 0.36) < 0.085;
-    if (frame) color = [230, 224, 207, 255];
-    if (sun) color = [205, 160, 77, 255];
-    if (mountainLeft || mountainRight) color = [235, 231, 217, 255];
-    if (horizon) color = [202, 83, 59, 255];
+    const backFrame = insideStroke(nx, ny, 0.34, 0.21, 0.79, 0.66, 0.035);
+    const frontFrame = insideStroke(nx, ny, 0.19, 0.34, 0.67, 0.81, 0.038);
+    const themeLine = ny > 0.66 && ny < 0.70 && nx > 0.28 && nx < 0.49;
+    const sparkleVertical = Math.abs(nx - 0.72) / 0.045 + Math.abs(ny - 0.72) / 0.13 <= 1;
+    const sparkleHorizontal = Math.abs(nx - 0.72) / 0.13 + Math.abs(ny - 0.72) / 0.045 <= 1;
+    if (backFrame) color = [205, 160, 77, 255];
+    if (frontFrame) color = [235, 231, 217, 255];
+    if (themeLine) color = [202, 83, 59, 255];
+    if (sparkleVertical || sparkleHorizontal) color = [222, 174, 82, 255];
     return color;
   });
 }
 
 async function main() {
   const registry = JSON.parse(await readFile(REGISTRY, "utf8"));
-  if (registry.standard !== "act-theme-pack-v1" || registry.themes?.length !== 28) {
+  if (registry.standard !== "act-theme-pack-v1" || registry.themes?.length !== 41) {
     throw new Error("Generate and validate themes before preparing the desktop app");
   }
   await mkdir(path.dirname(ICON), { recursive: true });

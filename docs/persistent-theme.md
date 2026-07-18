@@ -83,6 +83,10 @@ Theme Manager 提供三个清楚的状态：
 [`autostart` plugin](https://v2.tauri.app/plugin/autostart/) 注册当前用户级启动入口，
 而不是分别维护一套 PowerShell Scheduled Task 和一套手写 LaunchAgent。
 
+macOS 默认由插件注册当前用户的 LaunchAgent。注册前，管理器会确认自己位于真实
+`.app/Contents/MacOS/` 结构中，并拒绝从 `/Volumes/...` 挂载的 DMG 直接启用，
+避免把易失效的临时路径写入 LaunchAgent。
+
 后台控制器仍由 Rust 实现，负责：
 
 - 保存和原子读取持久选择；
@@ -94,6 +98,9 @@ Theme Manager 提供三个清楚的状态：
 - 应用固定 runtime；
 - 页面重载后重新验证；
 - 失败后停止，而不是无限重启。
+
+macOS 启动与退出使用准确 Bundle ID；端口所有者通过目标进程的真实 executable
+path 核对，不再依赖可能重复或变化的显示名称。
 
 不把任意文件系统或进程权限暴露给 WebView。前端只调用：
 
@@ -150,7 +157,7 @@ Windows 已完成：
 - x64 release EXE 与 NSIS 构建；
 - 当前用户 autostart 注册和注销读回；
 - 在准确的 ChatGPT Beta `26.715.3651.0` 上执行普通启动、受控重开、主题读回、关闭常驻和恢复；
-- 恢复后确认 Theme Manager、Beta 进程、启动项和固定 CDP 端口均无残留。
+- 恢复后确认 Theme Manager、Beta 进程、启动项和本次动态 CDP 端口均无残留。
 
 公开发布前仍要完成：
 
@@ -163,4 +170,4 @@ Windows 已完成：
 
 ## English summary
 
-Persistent theming means a durable user choice plus a per-user controller that safely replays the verified Full Skin on future launches. It never patches ChatGPT, `app.asar`, WindowsApps, or private data. The Tauri autostart plugin and Rust controller now pass an exact Windows Beta persistence and cleanup smoke test with app, port, startup-entry, and style readback. Physical-Mac validation and the remaining release-candidate gates are still pending.
+Persistent theming means a durable user choice plus a per-user controller that safely replays the verified Full Skin on future launches. It never patches ChatGPT, `app.asar`, WindowsApps, or private data. The Tauri autostart plugin and Rust controller now pass an exact Windows Beta persistence and cleanup smoke test with app, port, startup-entry, and style readback. On macOS, registration is rejected from mounted DMGs or invalid app-bundle paths, and target identity is bound to Bundle ID plus executable path. Physical-Mac validation and the remaining release-candidate gates are still pending.

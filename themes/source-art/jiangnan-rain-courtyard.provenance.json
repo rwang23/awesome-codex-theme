@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "themeId": "jiangnan-rain-courtyard",
+  "rightsProfile": "original",
+  "workflow": "openai-image-job",
+  "model": "gpt-image-2",
+  "size": "1536x1024",
+  "quality": "high",
+  "jobId": "5659f75f-36b4-46f8-9fa6-5a33085766c6",
+  "promptSha256": "a0f99a81af114898d61c32e32235c8c6ef41fa615f5bdad8058788f8971b7323",
+  "sourceSha256": "4f927db5183332d694185075714c6e52c9093e493e38369d5925d59a8ab7a6a1",
+  "disclosure": "AI-generated original source art. Prompt and output were reviewed for third-party characters, logos, signatures, and text before release."
+}

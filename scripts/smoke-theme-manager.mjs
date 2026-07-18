@@ -10,8 +10,8 @@ const APPLY = process.argv.includes("--apply");
 const DEBUG = process.argv.includes("--debug");
 const PERSISTENCE = process.argv.includes("--persistence");
 const SEED_LOCAL_ART = process.argv.includes("--seed-local-art");
-const MANAGER_PORT = Number(argumentValue("--manager-port") || "9470");
-const BETA_PORT = Number(argumentValue("--beta-port") || "9466");
+const MANAGER_PORT = Number(argumentValue("--manager-port") || process.env.ACT_MANAGER_CDP_PORT || "0");
+const REQUESTED_BETA_PORT = Number(argumentValue("--beta-port") || "0");
 const THEME_ID = argumentValue("--theme") || "qinglan-odyssey";
 const MODE = argumentValue("--mode") || "dark";
 const MANAGER_EXE = path.resolve(
@@ -106,6 +106,77 @@ function ownerChain(port) {
   return Array.isArray(parsed) ? parsed : [parsed];
 }
 
+function listenerOwner(port) {
+  const pattern = String.raw`^\s*TCP\s+(127\.0\.0\.1|\[::1\]):${port}\s+\S+\s+LISTENING\s+\d+\s*$`;
+  const command = [
+    "$line = netstat -ano -p tcp | Select-String -Pattern '" + pattern + "' | Select-Object -First 1",
+    "if (-not $line) { throw 'The expected loopback listener is unavailable' }",
+    "$parts = $line.ToString().Trim() -split '\\s+'",
+    "$ownerPid = [int]$parts[-1]",
+    "$process = Get-Process -Id $ownerPid -ErrorAction Stop",
+    "[PSCustomObject]@{ processId = $ownerPid; name = $process.ProcessName; executablePath = $process.Path } | ConvertTo-Json -Compress",
+  ].join("; ");
+  return JSON.parse(execFileSync(
+    "powershell.exe",
+    ["-NoProfile", "-NonInteractive", "-Command", command],
+    { encoding: "utf8", windowsHide: true },
+  ).trim());
+}
+
+function betaRuntimeCandidates() {
+  const command = [
+    "$items = Get-CimInstance Win32_Process |",
+    "  Where-Object { $_.Name -eq 'ChatGPT (Beta).exe' -and $_.ExecutablePath -and $_.CommandLine -and $_.CommandLine -notmatch '--type=' } |",
+    "  ForEach-Object { [PSCustomObject]@{ processId = $_.ProcessId; executablePath = $_.ExecutablePath; commandLine = $_.CommandLine } };",
+    "ConvertTo-Json -InputObject @($items) -Compress",
+  ].join(" ");
+  const output = execFileSync(
+    "powershell.exe",
+    ["-NoProfile", "-NonInteractive", "-Command", command],
+    { encoding: "utf8", windowsHide: true },
+  ).trim();
+  if (!output) return [];
+  const parsed = JSON.parse(output);
+  return Array.isArray(parsed) ? parsed : [parsed];
+}
+
+async function discoverBetaTarget(timeout = 60000) {
+  const startedAt = Date.now();
+  let lastError;
+  while (Date.now() - startedAt < timeout) {
+    try {
+      const candidates = REQUESTED_BETA_PORT
+        ? [{ commandLine: `--remote-debugging-port=${REQUESTED_BETA_PORT}` }]
+        : betaRuntimeCandidates();
+      for (const candidate of candidates) {
+        try {
+          const match = /--remote-debugging-port=(\d+)/.exec(candidate.commandLine || "");
+          if (!match) continue;
+          const port = Number(match[1]);
+          if (!Number.isInteger(port) || port < 1024 || port > 65535) continue;
+          const owner = listenerOwner(port);
+          const ownerPath = String(owner.executablePath || "").toLocaleLowerCase();
+          const expectedPackage = "\\" + BETA_PACKAGE.toLocaleLowerCase() + "\\";
+          if (!ownerPath.includes(expectedPackage)) continue;
+          if (candidate.processId && Number(candidate.processId) !== Number(owner.processId)) continue;
+          return {
+            port,
+            target: await pageTarget(port, "app://"),
+            owner,
+          };
+        } catch (error) {
+          lastError = error;
+        }
+      }
+      throw new Error("No pinned Beta root process owns a loopback CDP listener");
+    } catch (error) {
+      lastError = error;
+      await delay(250);
+    }
+  }
+  throw new Error(`Timed out discovering the controller-managed Beta CDP endpoint: ${lastError?.message || "unavailable"}`);
+}
+
 async function pageTarget(port, expectedUrlPrefix) {
   const response = await fetch("http://127.0.0.1:" + port + "/json/list");
   invariant(response.ok, "Could not read CDP targets on port " + port);
@@ -117,20 +188,6 @@ async function pageTarget(port, expectedUrlPrefix) {
   );
   invariant(target, "Expected page target was not found on port " + port);
   return target;
-}
-
-async function waitForPageTarget(port, expectedUrlPrefix, label, timeout = 45000) {
-  const startedAt = Date.now();
-  let lastError;
-  while (Date.now() - startedAt < timeout) {
-    try {
-      return await pageTarget(port, expectedUrlPrefix);
-    } catch (error) {
-      lastError = error;
-      await delay(250);
-    }
-  }
-  throw new Error(`Timed out waiting for ${label}: ${lastError?.message || "target unavailable"}`);
 }
 
 function launchBetaNormally() {
@@ -282,29 +339,15 @@ async function runPersistenceSmoke(managerTarget) {
     invariant(armed, "The persistence controller was not armed");
 
     launchBetaNormally();
-    let betaTarget;
+    let betaEndpoint;
     try {
-      betaTarget = await waitForPageTarget(
-        BETA_PORT,
-        "app://",
-        "controller-managed Beta relaunch",
-        60000,
-      );
+      betaEndpoint = await discoverBetaTarget(60000);
     } catch (error) {
       const diagnostic = await evaluate(manager, "window.act.getPersistenceState()");
       throw new Error(`${error.message}; persistence=${JSON.stringify(diagnostic)}`);
     }
-    const betaChain = ownerChain(BETA_PORT);
-    invariant(
-      betaChain.some((item) =>
-        String(item.executablePath || "").toLocaleLowerCase().includes(
-          "\\" + BETA_PACKAGE.toLocaleLowerCase() + "\\",
-        ),
-      ),
-      "Persistence controller Beta listener does not belong to the pinned package",
-    );
 
-    beta = new CdpClient(betaTarget.webSocketDebuggerUrl, BETA_PORT);
+    beta = new CdpClient(betaEndpoint.target.webSocketDebuggerUrl, betaEndpoint.port);
     await beta.connect();
     await beta.send("Runtime.enable");
     const betaState = await waitFor(
@@ -408,8 +451,17 @@ async function runPersistenceSmoke(managerTarget) {
 }
 
 async function main() {
-  invariant(Number.isInteger(MANAGER_PORT) && MANAGER_PORT >= 1024, "Invalid manager port");
-  invariant(Number.isInteger(BETA_PORT) && BETA_PORT >= 1024, "Invalid Beta port");
+  invariant(
+    Number.isInteger(MANAGER_PORT) && MANAGER_PORT >= 1024 && MANAGER_PORT <= 65535,
+    "Pass the OS-selected Theme Manager CDP port with --manager-port or ACT_MANAGER_CDP_PORT",
+  );
+  invariant(
+    REQUESTED_BETA_PORT === 0
+      || (Number.isInteger(REQUESTED_BETA_PORT)
+        && REQUESTED_BETA_PORT >= 1024
+        && REQUESTED_BETA_PORT <= 65535),
+    "Invalid Beta port",
+  );
   invariant(["light", "dark"].includes(MODE), "Mode must be light or dark");
 
   const managerChain = ownerChain(MANAGER_PORT);
@@ -427,20 +479,10 @@ async function main() {
     return;
   }
 
-  const betaChain = ownerChain(BETA_PORT);
-  invariant(
-    betaChain.some((item) =>
-      String(item.executablePath || "").toLocaleLowerCase().includes("\\" + BETA_PACKAGE.toLocaleLowerCase() + "\\"),
-    ),
-    "Beta CDP listener does not belong to the pinned Beta package",
-  );
-
-  const betaTarget = await pageTarget(BETA_PORT, "app://");
   if (!APPLY) {
     console.log(JSON.stringify({
       status: "READY",
       managerTarget: { title: managerTarget.title, url: managerTarget.url },
-      betaTarget: { title: betaTarget.title, url: betaTarget.url },
       themeId: THEME_ID,
       mode: MODE,
     }, null, 2));
@@ -448,13 +490,11 @@ async function main() {
   }
 
   const manager = new CdpClient(managerTarget.webSocketDebuggerUrl, MANAGER_PORT);
-  const beta = new CdpClient(betaTarget.webSocketDebuggerUrl, BETA_PORT);
+  let beta;
   const seededArt = await seedLocalArt();
   await manager.connect();
-  await beta.connect();
   await manager.send("Runtime.enable");
   await manager.send("Page.enable");
-  await beta.send("Runtime.enable");
 
   if (DEBUG) {
     await delay(1500);
@@ -475,7 +515,6 @@ async function main() {
       })`,
     ), null, 2));
     manager.close();
-    beta.close();
     return;
   }
 
@@ -523,6 +562,10 @@ async function main() {
     );
     invariant(!outcome.error, "Manager apply failed: " + outcome.error);
 
+    const betaEndpoint = await discoverBetaTarget(30000);
+    beta = new CdpClient(betaEndpoint.target.webSocketDebuggerUrl, betaEndpoint.port);
+    await beta.connect();
+    await beta.send("Runtime.enable");
     const betaState = await evaluate(
       beta,
       `({
@@ -589,7 +632,7 @@ async function main() {
       await rm(seededArt.destination, { force: true });
     }
     manager.close();
-    beta.close();
+    beta?.close();
   }
 }
 

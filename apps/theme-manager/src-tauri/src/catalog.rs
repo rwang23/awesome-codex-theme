@@ -325,6 +325,9 @@ pub fn validate_registry(bytes: &[u8]) -> Result<Value, String> {
     object(&registry, "Registry")?;
     if registry["schemaVersion"].as_u64() != Some(1)
         || registry["standard"].as_str() != Some("act-theme-pack-v1")
+        || !registry["catalogRevision"]
+            .as_u64()
+            .is_some_and(|revision| revision > 0)
     {
         return fail("Registry 标准不受支持");
     }
@@ -368,6 +371,10 @@ pub fn validate_registry(bytes: &[u8]) -> Result<Value, String> {
         }
     }
     Ok(registry)
+}
+
+pub fn revision(catalog: &Catalog) -> u64 {
+    catalog.registry["catalogRevision"].as_u64().unwrap_or(0)
 }
 
 fn bundled_registry_path(app: &AppHandle) -> Result<PathBuf, String> {
@@ -474,6 +481,10 @@ pub async fn load_remote() -> Result<(Catalog, String), String> {
     let expected_bytes = manifest["registry"]["bytes"]
         .as_u64()
         .ok_or("远程 Registry 字节数无效")? as usize;
+    let expected_revision = manifest["registry"]["catalogRevision"]
+        .as_u64()
+        .filter(|revision| *revision > 0)
+        .ok_or("远程 Registry 版本无效")?;
     let expected_themes = manifest["registry"]["themeCount"]
         .as_u64()
         .ok_or("远程 Registry 主题数无效")? as usize;
@@ -483,6 +494,9 @@ pub async fn load_remote() -> Result<(Catalog, String), String> {
         return fail("远程 Registry 大小或哈希不匹配");
     }
     let registry = validate_registry(&registry_bytes)?;
+    if registry["catalogRevision"].as_u64() != Some(expected_revision) {
+        return fail("远程 Registry 版本不匹配");
+    }
     if registry["themes"].as_array().map(Vec::len) != Some(expected_themes) {
         return fail("远程 Registry 主题数量不匹配");
     }
@@ -587,10 +601,16 @@ pub fn full_skin_for(
         .find(|theme| theme["id"].as_str() == Some(theme_id))
         .ok_or("Registry 中不存在该主题")?;
     let record = &theme["previews"][mode]["fullSkin"];
+    let preferred_locale = if theme["audience"].as_str() == Some("zh-CN") {
+        "zh-CN"
+    } else {
+        "en"
+    };
     let localized_text = |value: &Value| {
-        value["zh-CN"]
+        value[preferred_locale]
             .as_str()
             .or_else(|| value["en"].as_str())
+            .or_else(|| value["zh-CN"].as_str())
             .unwrap_or_default()
             .to_owned()
     };
@@ -644,9 +664,10 @@ mod tests {
     const REGISTRY: &[u8] = include_bytes!("../../../../themes/registry.json");
 
     #[test]
-    fn bundled_registry_has_twenty_eight_valid_dual_mode_themes() {
+    fn bundled_registry_has_forty_one_valid_dual_mode_themes() {
         let registry = validate_registry(REGISTRY).expect("registry should validate");
-        assert_eq!(registry["themes"].as_array().map(Vec::len), Some(28));
+        assert_eq!(registry["catalogRevision"].as_u64(), Some(2026071801));
+        assert_eq!(registry["themes"].as_array().map(Vec::len), Some(41));
     }
 
     #[test]

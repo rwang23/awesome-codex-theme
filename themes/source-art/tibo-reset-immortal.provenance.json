@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "themeId": "tibo-reset-immortal",
+  "rightsProfile": "fan-art",
+  "workflow": "openai-image-job",
+  "model": "gpt-image-2",
+  "size": "1536x1024",
+  "quality": "high",
+  "jobId": "094141cb-1483-49d1-9eeb-8df60a050a36",
+  "promptSha256": "fbb22b2989ee3078b8a72313f001fb01c36c1816d8417bd7abf981afc10f87cf",
+  "sourceSha256": "7c36af9cc7a00c08da236a447ab2524049a8eb0d7de674db5b89fb95395b6541",
+  "disclosure": "AI-generated unofficial fan art. No official image assets were used. Underlying character and franchise rights remain with their respective rights holders.",
+  "fanArt": {
+    "work": {
+      "en": "Codex Community Tribute",
+      "zh-CN": "Codex 社区致敬"
+    },
+    "characters": {
+      "en": [
+        "Tibo Sottiaux"
+      ],
+      "zh-CN": [
+        "Tibo Sottiaux"
+      ]
+    }
+  }
+}

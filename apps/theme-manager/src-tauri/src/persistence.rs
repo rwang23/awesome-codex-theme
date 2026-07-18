@@ -293,6 +293,7 @@ pub fn enable(
     if !consent {
         return Err("需要先确认常驻模式的受控重启与安全说明".into());
     }
+    platform::validate_persistence_host()?;
     let (target, skin) = validate_selection(catalog, theme_id, mode, channel)?;
     let root = persistence_root(app)?;
     let previous = read_state_from(&root)?;
@@ -496,10 +497,11 @@ async fn run_controller(app: AppHandle) -> Result<(), String> {
             continue;
         }
 
-        let port_matches =
-            platform::listener_belongs_to_target(skin_runtime::port_for_channel(channel)?, &target)
-                .unwrap_or(false);
         let runtime = state.skin_runtime.current();
+        let port_matches = runtime.channel.as_deref() == Some(channel)
+            && runtime.port.is_some_and(|port| {
+                platform::listener_belongs_to_target(port, &target).unwrap_or(false)
+            });
         let desired_active = runtime.active
             && runtime.theme_id.as_deref() == Some(theme_id)
             && runtime.mode.as_deref() == Some(mode)

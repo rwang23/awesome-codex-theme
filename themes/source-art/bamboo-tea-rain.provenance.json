@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "themeId": "bamboo-tea-rain",
+  "rightsProfile": "original",
+  "workflow": "openai-image-job",
+  "model": "gpt-image-2",
+  "size": "1536x1024",
+  "quality": "high",
+  "jobId": "a536c4ef-312a-4705-b0c1-f7d681697014",
+  "promptSha256": "d0b9379fde436566b56e6c63841f9c3e4502cb331c6b2582b2d2bf9af6c3debb",
+  "sourceSha256": "11d98c363d0302954874a7f01231075a4036c602dac4919b8873ce95e98017e7",
+  "disclosure": "AI-generated original source art. Prompt and output were reviewed for third-party characters, logos, signatures, and text before release."
+}

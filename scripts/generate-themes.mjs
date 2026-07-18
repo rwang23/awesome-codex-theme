@@ -313,6 +313,8 @@ export async function buildGeneratedFiles() {
       pair: theme.pair,
       variant: theme.variant,
       rightsProfile: theme.rightsProfile || "original",
+      audience: theme.audience || "global",
+      ...(theme.featuredRank ? { featuredRank: theme.featuredRank } : {}),
       name: theme.name,
       tagline: theme.tagline,
       description: theme.description,
@@ -371,6 +373,7 @@ export async function buildGeneratedFiles() {
     schemaVersion: 1,
     standard: "act-theme-pack-v1",
     generatedBy: GENERATOR_ID,
+    catalogRevision: catalog.catalogRevision,
     collections: catalog.collections.map((collection) => ({
       ...collection,
       themeCount: catalog.themes.filter((theme) => theme.collection === collection.id).length,

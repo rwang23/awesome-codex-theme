@@ -18,14 +18,14 @@
 
 <p align="center">
   <a href="LICENSE"><img alt="MIT License" src="https://img.shields.io/badge/code-MIT-111827"></a>
-  <img alt="28 themes" src="https://img.shields.io/badge/themes-28-7c3aed">
+  <img alt="41 themes" src="https://img.shields.io/badge/themes-41-7c3aed">
   <img alt="Windows and macOS" src="https://img.shields.io/badge/platform-Windows%20%7C%20macOS-2563eb">
   <img alt="Code-free packs" src="https://img.shields.io/badge/theme%20packs-code--free-059669">
 </p>
 
-![Awesome Codex Theme Manager on Windows, showing a real Full Skin capture from ChatGPT Beta](docs/assets/theme-manager-windows.png)
+![Saint Tibo theme running in the real ChatGPT Beta test bench](screenshots/codex-beta-26.715.3651.0/tibo-reset-saint-dark.png)
 
-The screenshot above is the real Tauri 2 Theme Manager. The skin shown inside it was applied to ChatGPT Beta `26.715.3651.0`, read back from the live renderer, and captured after verification. It is not a wallpaper pasted into an app mockup.
+The screenshot above comes from ChatGPT Beta `26.715.3651.0` after the skin was applied and read back from the live renderer. It is not a wallpaper pasted into an app mockup.
 
 > Desktop builds are published only on the official [GitHub Releases page](https://github.com/rwang23/awesome-codex-theme/releases). If that page has no asset compatible with your operating system and CPU, there is no supported public installer for that target.
 
@@ -46,26 +46,30 @@ Version 1 preserves the original Codex layout and controls. It changes the atmos
 
 ## See the real result
 
-| Mortal Journey | Beijing Meridian |
+| Saint Tibo · Reset of Limits | Boss Mode 2007 |
 | --- | --- |
-| ![Mortal Journey theme in real ChatGPT Beta](screenshots/codex-beta-26.715.3651.0/mortal-journey-duo-dark.png) | ![Beijing Meridian theme in real ChatGPT Beta](screenshots/codex-beta-26.715.3651.0/beijing-meridian-light.png) |
-| **Shanghai Afterglow** | **Cloudsea Mochi** |
-| ![Shanghai Afterglow theme in real ChatGPT Beta](screenshots/codex-beta-26.715.3651.0/shanghai-afterglow-dark.png) | ![Cloudsea Mochi theme in real ChatGPT Beta](screenshots/codex-beta-26.715.3651.0/cloudsea-mochi-light.png) |
+| ![Saint Tibo theme in real ChatGPT Beta](screenshots/codex-beta-26.715.3651.0/tibo-reset-saint-dark.png) | ![Boss Mode 2007 theme in real ChatGPT Beta](screenshots/codex-beta-26.715.3651.0/retro-boss-2007-light.png) |
+| **Rainy Library** | **Orbital Dawn** |
+| ![Rainy Library theme in real ChatGPT Beta](screenshots/codex-beta-26.715.3651.0/rainy-library-dark.png) | ![Orbital Dawn theme in real ChatGPT Beta](screenshots/codex-beta-26.715.3651.0/orbital-dawn-light.png) |
 
-The collection currently includes 28 themes and 56 light/dark modes:
+The collection currently includes 41 themes and 82 light/dark modes. The English experience highlights:
 
-- 8 original xianxia themes, with cinematic and chibi pairs;
-- 8 original China City Atlas themes;
-- 8 disclosed unofficial donghua character tributes;
-- 4 disclosed unofficial remembered-scene themes.
+- 6 original global workspace themes, from a rainy library to an orbital sunrise;
+- 1 original 2007 desktop-nostalgia theme with a new, non-franchise chibi mascot;
+- 2 disclosed, unofficial Codex community tributes;
+- the broader original and fan-art catalog, available through language-aware discovery in the Gallery.
 
 Every mode has a 1440×810 capture from the pinned Beta test bench. Registry records bind each capture to the exact app version, background hash, runtime hash, byte count, and renderer readback.
+
+“Saint Tibo” is an affectionate, unofficial community parody. It is not endorsed by OpenAI or by the person depicted, and no official product artwork is bundled.
 
 [Browse all themes in the Gallery](https://rwang23.github.io/awesome-codex-theme/)
 
 ## Get started
 
-### 1. Use the desktop app
+Choose one of the following three methods. They are alternatives, not sequential setup steps.
+
+### Method A — Install the desktop app (recommended)
 
 1. Download the build for your operating system and CPU from [GitHub Releases](https://github.com/rwang23/awesome-codex-theme/releases).
 2. Quit the ChatGPT Stable or Beta app you want to theme.
@@ -78,7 +82,7 @@ The Windows implementation of **Always apply** has passed an exact ChatGPT Beta 
 
 The public beta uses Tauri updater signatures so future updates can be verified. macOS bundles also carry an ad-hoc signature for package integrity, but Windows Authenticode, Apple Developer ID, and notarization are deferred. The operating system may still show an unknown-publisher warning; neither the updater signature nor the ad-hoc Mac signature removes SmartScreen or Gatekeeper warnings. See [release trust and signing](docs/release-signing.md).
 
-### 2. Give this to your coding agent
+### Method B — Ask a coding agent
 
 Copy the following request into Codex, Claude Code, or another local coding agent:
 
@@ -96,7 +100,7 @@ instead of building or downloading from another source.
 
 The complete agent contract, including expected checks and source-build instructions, is in [docs/agent-install.md](docs/agent-install.md).
 
-### 3. Build from source
+### Method C — Build from source
 
 For contributors, the base requirement is Node.js 22+. Desktop builds also need stable Rust and the platform toolchain.
 
@@ -109,7 +113,10 @@ npm run build
 
 ## Safe by design
 
-Full Skin uses a loopback-only Chromium DevTools Protocol session. Theme Manager accepts only fixed local ports, the exact selected Stable or Beta package, and `app://` renderer targets.
+Full Skin uses a loopback-only Chromium DevTools Protocol session. Theme
+Manager asks the operating system for an available local port, then accepts the
+listener only when it belongs to the exact selected Stable or Beta package and
+exposes an `app://` renderer target.
 
 It does not:
 
