@@ -2,6 +2,22 @@
 
 ## 2026-07-18-00-00
 
+- Made English the default public README, added a full Chinese edition, and
+  redesigned both around real captures, official downloads, consumer setup,
+  Agent-assisted installation, trust boundaries, creation, and community.
+- Added a copy-ready Agent installation contract that rejects unofficial
+  downloads, app-file patching, silent process termination, and security
+  protection bypasses.
+- Documented the reviewed no-patch persistence model: a durable user choice,
+  a per-user controller, bounded restart behavior, exact app identity, version
+  gating, and complete disable/uninstall semantics.
+- Added a staged custom-domain and community platform design covering GitHub
+  Pages, Cloudflare or Supabase backends, quarantined uploads, GitHub identity,
+  voting, moderation, and the threshold for leaving GitHub-native proposals.
+- Changed the first public desktop Beta gate to require only Tauri updater
+  signatures. Windows Authenticode and Apple signing/notarization are deferred
+  and must remain clearly disclosed in the Beta Release. The GitHub prerelease
+  flag stays false so the current `releases/latest` updater endpoint can find it.
 - Added operating-system language detection and a persistent Chinese/English
   switch to Theme Manager. Search indexes both languages.
 - Split Gallery and manager discovery into independent collection, rights, and

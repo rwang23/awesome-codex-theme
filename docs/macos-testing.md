@@ -5,7 +5,7 @@
 - Apple Silicon: `Awesome Codex Theme_0.3.0-alpha.1_aarch64.dmg`
 - Intel: `Awesome Codex Theme_0.3.0-alpha.1_x64.dmg`
 
-这证明 Tauri 应用能在两个 macOS 目标上编译和打包。它没有证明 Gatekeeper、ChatGPT 识别、Full Skin 应用和恢复在真实 Mac 上可用。当前 DMG 是未签名 CI 测试产物，不是正式 Release。
+这证明 Tauri 应用能在两个 macOS 目标上编译和打包。它没有证明 Gatekeeper、ChatGPT 识别、Full Skin 应用和恢复在真实 Mac 上可用。首个公开 Beta 允许使用同样未做 Apple 签名和公证的 DMG，但版本、标题和正文必须明确标成 Beta，并提示未知发布者。
 
 ## 测试机器
 
@@ -34,7 +34,7 @@ defaults read "/Applications/ChatGPT.app/Contents/Info" CFBundleShortVersionStri
 
 未签名 alpha 可能被 macOS 阻止。测试者可以在系统设置的 Privacy & Security 中对这一个应用选择 Open Anyway。不要关闭 Gatekeeper，也不要运行全局解除隔离的命令。Apple 的用户步骤见 [Open a Mac app from an unidentified developer](https://support.apple.com/guide/mac-help/open-a-mac-app-from-an-unidentified-developer-mh40616/mac)。
 
-签名候选版本不应出现这个手动放行步骤。正式候选必须通过：
+以后完成 Apple 签名的候选版本不应出现这个手动放行步骤。该候选必须通过：
 
 ```bash
 codesign --verify --deep --strict --verbose=2 "/Applications/Awesome Codex Theme.app"
@@ -91,8 +91,8 @@ lsof -nP -iTCP:9466 -sTCP:LISTEN
 
 Full Skin 不修改 ChatGPT 应用文件，所以更新不会破坏安装器或污染应用目录。它仍依赖当前版本的进程身份、CDP 行为和页面选择器。ChatGPT 更新后先做只读 probe，再做一次应用和恢复；未通过前不能沿用旧版本的兼容声明。
 
-完整皮肤也不会跨 ChatGPT 进程永久保存。关闭并正常重开 ChatGPT 会回到原生界面。用户需要再次从 Theme Manager 点击应用。这是当前安全模型，不是安装失败。
+当前完整皮肤不会跨 ChatGPT 进程永久保存。关闭并正常重开 ChatGPT 会回到原生界面。用户需要再次从 Theme Manager 点击应用。“保持主题常驻”已有不改应用文件的控制器设计，但在 Mac 真机闭环完成前不会作为已发布能力宣传。
 
 ## English summary
 
-The two CI-built DMGs prove that the application compiles and packages for Apple Silicon and Intel. They are unsigned test artifacts, not normal public downloads. A physical Mac test must verify system-language selection, catalog filtering, the exact ChatGPT bundle identity, Theme Manager launch, Full Skin apply and restore, loopback listener ownership, Gatekeeper behavior, and cleanup after a normal ChatGPT restart. A Full Skin is session-scoped and must be reapplied after ChatGPT exits.
+The two CI-built DMGs prove that the application compiles and packages for Apple Silicon and Intel. The first public beta may distribute the same unsigned OS-level format as a clearly disclosed Beta with Tauri updater signatures. A physical Mac test must verify system-language selection, catalog filtering, the exact ChatGPT bundle identity, Theme Manager launch, Full Skin apply and restore, loopback listener ownership, Gatekeeper behavior, and cleanup after a normal ChatGPT restart. A Full Skin remains session-scoped until the separately designed persistence controller passes physical-Mac validation.

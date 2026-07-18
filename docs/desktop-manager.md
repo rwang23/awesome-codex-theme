@@ -21,7 +21,7 @@ GitHub Actions
 GitHub Releases
 ```
 
-Windows 开发不需要 Xcode。macOS 构建由 GitHub Actions 的 macOS runner 完成；正式分发仍需要 Apple Developer 证书、公证和真机测试。
+Windows 开发不需要 Xcode。macOS 构建由 GitHub Actions 的 macOS runner 完成。首个公开 Beta 只要求 Tauri updater 签名，Windows Authenticode 与 Apple Developer 签名、公证延后；因此系统仍可能显示未知发布者。
 
 ## 界面
 
@@ -121,35 +121,25 @@ Theme Manager 再次应用。这样可以避免修改应用包；代价是它不
 
 ## 发布与签名
 
-正式 Windows Release 需要可信代码签名。当前 PFX 路径使用：
+首个公开 Beta 只要求：
 
-- `WINDOWS_CERTIFICATE`：Base64 编码的代码签名 PFX；
-- `WINDOWS_CERTIFICATE_PASSWORD`：PFX 导出密码；
-- `WINDOWS_TIMESTAMP_URL`：证书颁发方提供的时间戳地址；
-- 已部署 Pages 的无缓存端到端测试；
-- `TAURI_SIGNING_PRIVATE_KEY`、密码和
-  `TAURI_UPDATER_PUBKEY`，用于不可关闭的 updater 签名校验；
-- GitHub Release 元数据与签名。
+- `TAURI_SIGNING_PRIVATE_KEY`
+- `TAURI_SIGNING_PRIVATE_KEY_PASSWORD`
+- `TAURI_UPDATER_PUBKEY`
+- `DESKTOP_RELEASE_READY=true`
+- 通过 Windows 与 macOS 的现有构建和验证
 
-正式 macOS Release 还需要：
+版本 tag 会创建带 Tauri updater 签名的 draft Beta Release。Windows NSIS 没有
+Authenticode，macOS DMG 没有 Developer ID 或 notarization，所以发布说明必须
+标明未知发布者边界。Tauri `.sig` 用于以后更新，不会消除 SmartScreen 或
+Gatekeeper。
 
-- Developer ID Application 证书；
-- `APPLE_CERTIFICATE`、证书密码和签名身份；
-- `APPLE_ID`、app-specific password 与 `APPLE_TEAM_ID` 公证凭据；
-- Apple Silicon 与 Intel 构建；
-- 至少一台真实 Mac 的安装、启动、应用、恢复读回。
+GitHub 的 `releases/latest` 不返回 prerelease。当前 updater endpoint 依赖该
+路径，所以 GitHub `prerelease` 标志保持 `false`，Beta 身份由 alpha 版本、
+Release 标题和正文明确标注。
 
-仓库可以生成未签名测试包，但不会把它标成正式发行版。
-
-Windows 也可以改用 SignPath Foundation 或 Azure Artifact Signing。macOS
-账号、证书、GitHub Secrets 与 updater 密钥的逐项配置见
-[桌面发布签名配置](release-signing.md)。
-
-CI 只有在仓库变量 `DESKTOP_RELEASE_READY=true` 且推送版本 tag 时才会走
-签名发布路径。Windows runner 会把 PFX 临时导入当前用户证书库，检查私钥和
-有效期，再把准确 thumbprint 写进一次性 Tauri 配置；PFX 临时文件随后删除。
-macOS runner 会在构建前检查签名和公证字段。缺少任意门槛时，工作流只上传
-未签名的 CI 测试产物，不创建正式 Release。
+以后面向完全小白用户时，再分别接入 Windows 可信签名和 Apple Developer ID
+公证。配置、用户提示和发布步骤见[发布信任与签名](release-signing.md)。
 
 未签名 macOS CI 路径还会执行 `hdiutil verify`，挂载 DMG，并检查 Bundle ID、
 声明的可执行文件和目标 CPU 架构。它证明构建产物结构正确，但不能替代
@@ -161,10 +151,10 @@ Gatekeeper、公证、ChatGPT 识别与 Full Skin 真机读回。执行步骤见
 主题目录更新和应用更新是两条链路：
 
 - Registry 通过 GitHub Pages 更新，始终经过描述文件和 Schema 校验。
-- 应用通过 GitHub Releases 和 Tauri updater 更新，必须有发布签名。
+- 应用通过 GitHub Releases 和 Tauri updater 更新，必须有 updater 签名。
 
 应用可以下载更新，但安装发生在用户点击并重启后。没有 updater 公钥的构建会显示“签名通道尚未发布”，不会伪装成在线更新。
 
 ## English summary
 
-The manager uses Tauri 2 with a dependency-free bilingual frontend and a Rust security boundary. It selects language from the operating system, supports a manual override, and combines collection, rights, and visual-form facets. Rust validates the catalog, downloads hash-bound PNGs, launches the exact Stable or Beta package with a loopback-only CDP port, injects one fixed runtime, and records enough session state to restore it. Windows build and real-app apply/restore are verified. macOS CI verifies both DMG architectures, while public distribution remains gated on signing, notarization, and physical-device readback.
+The manager uses Tauri 2 with a dependency-free bilingual frontend and a Rust security boundary. It selects language from the operating system, supports a manual override, and combines collection, rights, and visual-form facets. Rust validates the catalog, downloads hash-bound PNGs, launches the exact Stable or Beta package with a loopback-only CDP port, injects one fixed runtime, and records enough session state to restore it. Windows build and real-app apply/restore are verified. The first public beta requires Tauri updater signatures while deferring Windows Authenticode and Apple notarization, so operating-system publisher warnings remain expected.

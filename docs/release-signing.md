@@ -1,111 +1,150 @@
-# 桌面发布签名配置
+# Beta 发布信任与签名
 
-桌面发布涉及三套彼此独立的凭据。它们不能混用，也不要发到聊天、Issue、Pull Request 或仓库文件中。
+首个公开 Beta 采用一个明确的临时边界：
 
-| 用途 | 是否需要开发者账号 | 当前项目中的配置 |
+- 必须使用 Tauri updater 签名；
+- 暂不要求 Windows Authenticode；
+- 暂不要求 Apple Developer ID 与 notarization；
+- Release 先创建为 draft，标题和版本明确标成 Beta；
+- README 和 Release Notes 必须说明系统仍可能显示未知发布者。
+
+这让项目可以先验证下载、安装、应用、恢复和自动更新链路，但不能把安装包描述成已经获得 Windows 或 macOS 的系统级信任。
+
+## 三类签名不能混用
+
+| 信任层 | 首个 Beta | 它解决的问题 |
 | --- | --- | --- |
-| Tauri 应用更新签名 | 不需要 | 本地生成一对密钥；私钥进入 GitHub Secret，公钥进入 GitHub Variable |
-| Windows 安装包签名 | 直接从 GitHub 分发不需要 Microsoft 开发者账号，但需要可信签名身份 | 当前工作流支持 PFX；如果选择 Azure Artifact Signing 或 SignPath，需要切换签名步骤 |
-| macOS 签名与公证 | 需要 Apple Developer Program | Developer ID Application 证书、导出的 P12、Apple 公证凭据 |
+| Tauri updater 签名 | 必须 | 已安装的 Theme Manager 验证后续更新是否来自同一密钥 |
+| Windows Authenticode | 延后 | 发布者身份、SmartScreen 与企业策略信任 |
+| Apple Developer ID + notarization | 延后 | Gatekeeper、公证与普通 Mac 下载体验 |
 
-## 先决定发布者身份
+Tauri updater 签名不会消除 SmartScreen 或 Gatekeeper 提示，也不会给初次下载的安装包增加系统发布者身份。
 
-Apple 的个人账号会显示账号持有人的法定姓名。若希望显示组织名称，需要以组织身份加入 Apple Developer Program，通常还要提供 D-U-N-S Number、组织域名和公开网站。个人开发者只需要符合年龄要求的 Apple Account、法定姓名和双重认证。
+## 生成 updater 密钥
 
-本项目当前由个人 GitHub 账号 `rwang23` 发布。首版用 Apple 个人账号最省步骤；如果以后成立正式组织，再迁移证书和发布流程。Apple Developer Program 当前是每年 99 美元，地区价格以注册页面为准。申请入口见 [Apple Developer Program enrollment](https://developer.apple.com/programs/enroll/)。
-
-## Tauri updater 密钥
-
-updater 密钥不需要购买，也不需要注册账号。它只证明后续更新与首次安装的应用来自同一个发布者。
-
-在安全的本机目录生成密钥，设置强密码，并做一份离线备份：
+updater 密钥不需要开发者账号，也不需要付费。请在安全的本机目录生成，使用强密码，并保留一份离线备份：
 
 ```powershell
 Set-Location C:\projects\tools\awesome-codex-theme\apps\theme-manager
 npm run tauri -- signer generate -- -w C:\Secure\awesome-codex-theme-updater.key
 ```
 
-生成后：
+不要把私钥、密码或完整密钥输出放进仓库、Issue、聊天、日志或截图。
 
-- 私钥内容保存为 GitHub Secret `TAURI_SIGNING_PRIVATE_KEY`
-- 私钥密码保存为 GitHub Secret `TAURI_SIGNING_PRIVATE_KEY_PASSWORD`
-- 公钥内容保存为 GitHub Variable `TAURI_UPDATER_PUBKEY`
+生成后配置：
 
-私钥丢失后，已经安装的应用无法验证新更新。不要只把它留在一台电脑上。Tauri updater 的签名校验不能关闭，具体格式见 [Tauri Updater: Signing updates](https://v2.tauri.app/plugin/updater/#signing-updates)。
+- GitHub Secret `TAURI_SIGNING_PRIVATE_KEY`
+- GitHub Secret `TAURI_SIGNING_PRIVATE_KEY_PASSWORD`
+- GitHub Variable `TAURI_UPDATER_PUBKEY`
 
-## Windows 签名怎么选
+私钥丢失后，已经安装的应用无法验证由新密钥签出的更新。至少保留一份离线备份，并记录由谁持有和如何恢复。Tauri 的更新签名要求见
+[Tauri Updater: Signing updates](https://v2.tauri.app/plugin/updater/#signing-updates)。
 
-直接发布 NSIS `setup.exe` 不要求 Microsoft 开发者账号。未签名程序仍可运行，但浏览器下载后会遇到 SmartScreen 或企业策略拦截，不适合面向普通用户的正式 Release。
+## GitHub Actions 设置
 
-建议按这个顺序选择：
-
-1. 先申请 [SignPath Foundation](https://signpath.org/) 的开源项目免费签名。是否通过取决于它的项目审核。
-2. 如果需要更快落地，并且发布者位于支持地区，使用 Microsoft Azure Artifact Signing。它需要 Azure 账号、订阅和身份验证，适合 CI，不需要导出硬件密钥。
-3. 最后再考虑传统 CA 的 OV 代码签名证书。现代 OV 证书通常要求硬件令牌或云 HSM，未必能导出成当前工作流使用的 PFX。
-
-Microsoft 的当前对比与费用范围见 [Code signing options for Windows app developers](https://learn.microsoft.com/en-us/windows/apps/package-and-deploy/code-signing-options)。Tauri 同时支持证书指纹和自定义签名命令，见 [Tauri Windows code signing](https://v2.tauri.app/distribute/sign/windows/)。
-
-当前 `.github/workflows/desktop.yml` 的 Windows 发布分支期待：
-
-- Secret `WINDOWS_CERTIFICATE`
-- Secret `WINDOWS_CERTIFICATE_PASSWORD`
-- Variable `WINDOWS_TIMESTAMP_URL`
-
-这条路径适合可导出的 PFX。选择 Azure Artifact Signing 或 SignPath 后，不要伪造这三个值；应先把工作流改成对应服务的签名方式。
-
-## macOS 账号与证书
-
-正式 GitHub 下载版使用 `Developer ID Application`，不是 App Store 的 `Apple Distribution` 证书。Apple 要求 Developer ID 应用同时完成公证。免费 Apple Developer 账号只能用于开发测试，不能完成面向公众的公证。
-
-准备步骤：
-
-1. 加入 Apple Developer Program。
-2. 在一台 Mac 上用 Keychain Access 创建 Certificate Signing Request。
-3. 由账号持有人在 Certificates, Identifiers & Profiles 创建 `Developer ID Application` 证书。
-4. 把证书和私钥从 Keychain 导出为带密码的 `.p12`。
-5. 把 `.p12` 转成 Base64，存入 GitHub Secret，不提交文件。
-6. 为 Apple Account 创建 app-specific password，用于公证；不要使用主账号密码。
-
-项目当前期待：
-
-- Secret `APPLE_CERTIFICATE`
-- Secret `APPLE_CERTIFICATE_PASSWORD`
-- Variable `APPLE_SIGNING_IDENTITY`
-- Secret `APPLE_ID`
-- Secret `APPLE_PASSWORD`
-- Variable `APPLE_TEAM_ID`
-
-证书创建与 CI 导出步骤见 [Apple Developer ID certificates](https://developer.apple.com/help/account/certificates/create-developer-id-certificates/) 和 [Tauri macOS code signing](https://v2.tauri.app/distribute/sign/macos/)。
-
-## GitHub 中放在哪里
-
-打开仓库：
+打开：
 
 ```text
-Settings
+Repository Settings
   -> Secrets and variables
   -> Actions
 ```
 
-敏感值放在 `Secrets`，可以公开的配置放在 `Variables`。GitHub 不会在保存后再次显示 Secret 内容。官方步骤见 [Using secrets in GitHub Actions](https://docs.github.com/en/actions/how-tos/write-workflows/choose-what-workflows-do/use-secrets)。
-
-最后才添加：
+先添加三个 updater 值。全部就绪并完成本地验证后，再添加：
 
 ```text
 DESKTOP_RELEASE_READY=true
 ```
 
-它是发布总开关。证书、updater 密钥和 Mac 真机测试都完成前，不要开启。开启后再推送版本 tag，工作流才会创建带签名更新文件的草稿 Release。
+这个变量只表示：
 
-## 当前最省事的行动顺序
+- updater 密钥已经配置；
+- 当前 commit 已通过校验；
+- 可以由版本 tag 创建 updater-signed draft Beta Release。
 
-1. 申请 Apple Developer Program。
-2. 同时提交 SignPath Foundation 申请；若等待时间不合适，再决定 Azure Artifact Signing。
-3. 找一台 Apple Silicon Mac 创建证书并执行真机测试。
-4. 在安全位置生成 updater 密钥并做离线备份。
-5. 只把凭据写入 GitHub Actions。
-6. 验证 Windows Authenticode、Apple `codesign`、`spctl` 与公证票据后，再打开 `DESKTOP_RELEASE_READY`。
+它不表示 Windows 或 Apple 平台签名已经完成。
+
+当前 `.github/workflows/desktop.yml` 在版本 tag 与该变量同时满足时：
+
+1. 生成并验证公共主题产物；
+2. 构建 Windows x64 NSIS；
+3. 构建 Apple Silicon 与 Intel DMG；
+4. 生成 Tauri updater 产物与 `.sig`；
+5. 创建 draft Beta Release。
+
+当前 updater endpoint 使用 GitHub 的
+`/releases/latest/download/latest.json`。[GitHub 官方规定](https://docs.github.com/en/rest/releases/releases#get-the-latest-release)
+`latest` 只返回非 draft、非 prerelease 的 Release，因此工作流把
+`prerelease` 标志设为 `false`。
+Beta 身份由 `0.x` alpha 版本号、Release 标题和正文明确表达。发布前仍保留
+draft，人工检查后才公开。若以后改用独立的 Beta 更新清单，再把 GitHub 的
+prerelease 标志恢复为 `true`。
+
+工作流不再要求 `WINDOWS_CERTIFICATE` 或 Apple 凭据。
+
+## 首个 Beta 的用户提示
+
+### Windows
+
+未做 Authenticode 的 NSIS 可以运行，但浏览器、SmartScreen 或企业策略可能显示未知发布者。文档只能告诉用户如何查看提示和确认来源，不能要求关闭 SmartScreen。
+
+### macOS
+
+未签名、未公证的 DMG 可能被 Gatekeeper 阻止。测试者只应在系统设置的 Privacy & Security 中对这一个应用选择 **Open Anyway**。不要关闭 Gatekeeper，也不要执行全局解除隔离命令。
+
+因此 macOS Beta 可以提供给明确知情的测试者，但还不是面向完全小白的无摩擦安装体验。
+
+## 发布步骤
+
+在创建版本 tag 前：
+
+1. `npm run check` 全部通过；
+2. Windows NSIS 本地构建通过；
+3. Stable/Beta 的应用与恢复结果没有回归；
+4. macOS 两个 DMG 的 CI 结构检查通过；
+5. updater 公钥已经进入 release 配置；
+6. GitHub Secrets 与 Variable 已配置；
+7. Release Notes 包含“无 Windows/Apple 系统签名”的醒目说明；
+8. `DESKTOP_RELEASE_READY=true`。
+
+推送 tag 后，先检查 draft Release：
+
+- 三个平台资产是否齐全；
+- updater `.sig` 是否存在；
+- `latest.json` 或平台更新元数据是否引用准确资产；
+- 文件名、架构、字节数和 SHA-256；
+- Release 标题、alpha 版本和正文是否明确写出 Beta；
+- GitHub `prerelease` 标志是否为 `false`，确保 updater 的 `latest` endpoint 可发现；
+- 警告文案是否可见。
+
+检查完成后才能手动发布 Beta Release；GitHub 的 `prerelease` 标志仍保持
+`false`，由版本号、标题与正文表达 Beta 身份。创建 tag、推送和发布 Release
+都是远端状态变更，需要单独执行。
+
+## 以后补齐平台签名
+
+### Windows
+
+优先评估 SignPath Foundation 或 Azure Artifact Signing，再考虑传统 OV 证书。接入后必须验证 Authenticode、时间戳和下载后的 SmartScreen 体验。
+
+参考：
+
+- [Microsoft code signing options](https://learn.microsoft.com/en-us/windows/apps/package-and-deploy/code-signing-options)
+- [Tauri Windows code signing](https://v2.tauri.app/distribute/sign/windows/)
+
+### macOS
+
+面向普通用户时仍需要 Apple Developer Program、Developer ID Application 证书和 notarization。证书必须在 Mac 上创建或导入，CI 还要保存 Apple 凭据并验证 `codesign`、`spctl` 和公证票据。
+
+参考：
+
+- [Apple Developer Program enrollment](https://developer.apple.com/programs/enroll/)
+- [Apple Developer ID certificates](https://developer.apple.com/help/account/certificates/create-developer-id-certificates/)
+- [Tauri macOS code signing](https://v2.tauri.app/distribute/sign/macos/)
+
+平台签名以后应使用独立变量重新设门禁，不要改变
+`DESKTOP_RELEASE_READY` 已经定义的 updater-signed Beta 语义。
 
 ## English summary
 
-The release uses three independent trust systems. Tauri updater keys are generated locally and require no developer account. Direct Windows distribution needs a trusted signing provider but not a Microsoft developer account; SignPath Foundation is the preferred free application for a qualifying open-source project, with Azure Artifact Signing as the practical fallback. Public macOS distribution requires a paid Apple Developer Program membership, a Developer ID Application certificate, and notarization. Store every private value in GitHub Actions Secrets and enable `DESKTOP_RELEASE_READY` only after signature and physical Mac checks pass.
+The first public beta requires Tauri updater signatures but intentionally defers Windows Authenticode and Apple Developer ID notarization. The updater signature authenticates future in-app updates; it does not establish operating-system trust for the initial installer. Tagged builds create a draft Beta Release only after updater keys and validation are ready. Because GitHub's `latest` route excludes prereleases, the GitHub prerelease flag remains false while the alpha version, title, and body clearly identify the build as Beta. Release notes must disclose the unsigned OS-level status, and agents must never disable SmartScreen or Gatekeeper on the user's behalf.

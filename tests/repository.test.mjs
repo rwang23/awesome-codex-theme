@@ -377,19 +377,20 @@ test("desktop manager localizes from the system and combines collection, rights,
   assert.match(app, /theme\.name\?\.en/);
 });
 
-test("desktop release workflow gates platform and updater signing", async function () {
+test("desktop beta release requires updater signing and discloses deferred platform trust", async function () {
   const workflow = await readFile(path.join(ROOT, ".github", "workflows", "desktop.yml"), "utf8");
   assert.match(workflow, /npm run generate && npm run validate && npm run desktop:prepare/);
   assert.match(workflow, /DESKTOP_RELEASE_READY/);
-  assert.match(workflow, /WINDOWS_CERTIFICATE/);
-  assert.match(workflow, /WINDOWS_CERTIFICATE_PASSWORD/);
-  assert.match(workflow, /WINDOWS_TIMESTAMP_URL/);
-  assert.match(workflow, /certificateThumbprint/);
-  assert.match(workflow, /APPLE_CERTIFICATE/);
-  assert.match(workflow, /APPLE_TEAM_ID/);
   assert.match(workflow, /TAURI_SIGNING_PRIVATE_KEY/);
+  assert.match(workflow, /TAURI_SIGNING_PRIVATE_KEY_PASSWORD/);
   assert.match(workflow, /TAURI_UPDATER_PUBKEY/);
-  assert.match(workflow, /tauri\.windows-signing\.conf\.json/);
+  assert.match(workflow, /Updater-signed Tauri Theme Manager beta/);
+  assert.match(workflow, /unknown-publisher warning/);
+  assert.match(workflow, /prerelease: false/);
+  assert.match(workflow, /releaseDraft: true/);
+  assert.doesNotMatch(workflow, /WINDOWS_CERTIFICATE/);
+  assert.doesNotMatch(workflow, /APPLE_CERTIFICATE/);
+  assert.doesNotMatch(workflow, /tauri\.windows-signing\.conf\.json/);
   assert.match(workflow, /hdiutil verify/);
   assert.match(workflow, /CFBundleIdentifier/);
   assert.match(workflow, /lipo -archs/);

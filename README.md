@@ -1,122 +1,101 @@
-# Awesome Codex Theme
+<h1 align="center">Awesome Codex Theme</h1>
 
-一个面向 Codex 桌面版的免费主题标准、Registry、Validator、Gallery 与跨平台主题管理器。
+<p align="center">
+  Full visual skins for Codex Desktop, backed by real app captures and code-free theme packs.
+</p>
 
-[在线 Gallery](https://rwang23.github.io/awesome-codex-theme/) · [English README](README.en.md) · [主题包标准](docs/standard.md) · [社区投稿路线](docs/community-registry.md) · [桌面签名配置](docs/release-signing.md)
+<p align="center">
+  <a href="https://rwang23.github.io/awesome-codex-theme/"><strong>Explore the Gallery</strong></a>
+  ·
+  <a href="https://github.com/rwang23/awesome-codex-theme/releases"><strong>Desktop Downloads</strong></a>
+  ·
+  <a href="docs/agent-install.md"><strong>Install with an Agent</strong></a>
+  ·
+  <a href="README.zh-CN.md"><strong>中文</strong></a>
+</p>
 
-![Awesome Codex Theme Manager Windows 实机界面，内嵌 ChatGPT Beta 的完整皮肤截图](docs/assets/theme-manager-windows.png)
+<p align="center">
+  <a href="LICENSE"><img alt="MIT License" src="https://img.shields.io/badge/code-MIT-111827"></a>
+  <img alt="28 themes" src="https://img.shields.io/badge/themes-28-7c3aed">
+  <img alt="Windows and macOS" src="https://img.shields.io/badge/platform-Windows%20%7C%20macOS-2563eb">
+  <img alt="Code-free packs" src="https://img.shields.io/badge/theme%20packs-code--free-059669">
+</p>
 
-上图来自真实的 Tauri 2 Windows 应用。画面中的主题也不是效果图：它由独立 ChatGPT Beta `26.715.3651.0` 实际加载，截图后又完成了运行时清理。
+![Awesome Codex Theme Manager on Windows, showing a real Full Skin capture from ChatGPT Beta](docs/assets/theme-manager-windows.png)
 
-## 现在安装的是一整套皮肤
+The screenshot above is the real Tauri 2 Theme Manager. The skin shown inside it was applied to ChatGPT Beta `26.715.3651.0`, read back from the live renderer, and captured after verification. It is not a wallpaper pasted into an app mockup.
 
-Codex Native 主题只能更换配色。Awesome Codex Theme 的主要交付目标是 `ACT Full Skin v1`，它会同时应用：
+> Desktop builds will be published only on the official [GitHub Releases page](https://github.com/rwang23/awesome-codex-theme/releases). The first public beta is still being prepared. If that page has no compatible asset, there is no public installer yet.
 
-- 2560×1440 背景图与构图焦点
-- 明亮、暗色两套颜色 token
-- 侧栏、建议卡片和输入框的半透明材质
-- 主题名称与短文案
-- 低动态模式
+## More than a color palette
 
-主题包仍然不带可执行代码。每个 `.act-theme` 只包含 manifest、两张图片和两份 Native 回退配色；CSS、注入逻辑和安全检查都属于开源 Theme Manager，主题作者不能随包附带脚本。
+Awesome Codex Theme combines the parts that make a desktop skin feel complete:
 
-当前 v1 保留 Codex 原来的页面结构，不移动导航、输入框或业务组件。它可以做到完整背景和统一材质，但不会把 Codex 改造成另一套产品界面。这样做少一些戏剧性，版本升级后却更容易验证和恢复。
+- a 2560×1440 background with a declared focal point and quiet work area;
+- separate light and dark color systems;
+- translucent materials for the sidebar, cards, and composer;
+- localized theme names and short copy;
+- reduced-motion support;
+- a Native palette fallback when a full background cannot be applied.
 
-## 主题收藏
+Theme packs are declarative and contain no executable code. A `.act-theme` archive carries a manifest, verified images, and Native fallback palettes. The open-source Theme Manager owns the CSS runtime, process checks, image verification, application, and cleanup.
 
-仓库现有 28 套主题、56 个明暗模式：
+Version 1 preserves the original Codex layout and controls. It changes the atmosphere without replacing navigation, moving the composer, or turning the app into a screenshot.
 
-| 系列 | 内容 | 数量 |
-| --- | --- | ---: |
-| 原创国风修仙 01 | 4 个原创世界，每个世界有原画版和 Q 版 | 8 |
-| 中国城市图鉴 01 | 北京、上海、深圳、广州、成都、杭州、重庆、南京 | 8 |
-| 国漫角色致意 01 | 4 部作品的男女主原画版与 Q 版 | 8 |
-| 国漫名场面 01 | 虚天殿、抢婚、雨巷告白、三年之约 | 4 |
+## See the real result
 
-全部 56 个模式都在独立 ChatGPT Beta `26.715.3651.0` 中生成了 1440×810 实机截图。Registry 会记录截图、背景图和运行时的 SHA-256、字节数、准确应用版本及选择器读回结果。Gallery 和 README 展示这些实机截图，不再拿一张源图冒充安装效果。
+| Mortal Journey | Beijing Meridian |
+| --- | --- |
+| ![Mortal Journey theme in real ChatGPT Beta](screenshots/codex-beta-26.715.3651.0/mortal-journey-duo-dark.png) | ![Beijing Meridian theme in real ChatGPT Beta](screenshots/codex-beta-26.715.3651.0/beijing-meridian-light.png) |
+| **Shanghai Afterglow** | **Cloudsea Mochi** |
+| ![Shanghai Afterglow theme in real ChatGPT Beta](screenshots/codex-beta-26.715.3651.0/shanghai-afterglow-dark.png) | ![Cloudsea Mochi theme in real ChatGPT Beta](screenshots/codex-beta-26.715.3651.0/cloudsea-mochi-light.png) |
 
-源图通过 OpenAI image job 生成，仓库保留 prompt 哈希、模型、job ID、源图哈希和人工审查结论，不保存 API 密钥或原始 base64 响应。
+The collection currently includes 28 themes and 56 light/dark modes:
 
-前两个系列是第一方原创素材，采用 CC0 1.0。后两个系列是明确披露的非官方 AI Fan Art，涉及《凡人修仙传》《仙逆》《剑来》和《斗破苍穹》。这些主题只面向个人、非商业的粉丝使用，不含官方截图、海报、Logo 或宣传素材，也不表示获得权利方授权。详情见 [Fan Art 政策](docs/fan-art-policy.md)。
+- 8 original xianxia themes, with cinematic and chibi pairs;
+- 8 original China City Atlas themes;
+- 8 disclosed unofficial donghua character tributes;
+- 4 disclosed unofficial remembered-scene themes.
 
-## 如何使用
+Every mode has a 1440×810 capture from the pinned Beta test bench. Registry records bind each capture to the exact app version, background hash, runtime hash, byte count, and renderer readback.
 
-首选入口是 Tauri Theme Manager：
+[Browse all themes in the Gallery](https://rwang23.github.io/awesome-codex-theme/)
 
-1. 关闭准备加载皮肤的 ChatGPT Stable 或 Beta。
-2. 打开 Theme Manager，选择主题、明暗模式和目标应用。
-3. 点击“应用完整皮肤”。
-4. 管理器校验 Registry、背景图哈希、包身份和本机端口，再以仅限回环地址的调试参数启动准确的 ChatGPT 应用。
-5. 需要恢复时点击“恢复原生”。退出并正常重开 ChatGPT 后，临时调试端口也会关闭。
+## Get started
 
-如果目标 ChatGPT 已经由 Theme Manager 启动，后续切换主题不必反复关闭。若它正在普通模式运行，管理器会停止操作并提示先退出，不会强制结束用户会话。
+### 1. Use the desktop app
 
-完整皮肤只在 Theme Manager 启动的当前 ChatGPT 进程中生效。关闭 ChatGPT
-再从系统正常打开会回到原生界面；要继续使用主题，需要重新点击“应用完整皮肤”。
-这是为了不修改应用文件，不是安装失败。
+1. Download the build for your operating system and CPU from [GitHub Releases](https://github.com/rwang23/awesome-codex-theme/releases).
+2. Quit the ChatGPT Stable or Beta app you want to theme.
+3. Open Theme Manager and choose a theme, light or dark mode, and the exact target app.
+4. Select **Apply Full Skin**.
+5. Select **Restore Native** whenever you want the original interface back.
 
-Gallery 仍提供 `codex-theme-v1:` 字符串和 Windows 便携助手，作为只更换配色的轻量回退。它们不会安装背景。
+The current alpha applies a skin to the ChatGPT process started by Theme Manager. Closing ChatGPT and opening it normally returns to the native interface. A safe next-launch controller is designed but not yet shipped; see [Keep My Theme On](docs/persistent-theme.md).
 
-## 安全边界
+The first beta uses Tauri updater signatures so future updates can be verified. Windows Authenticode and Apple notarization are deferred, which means the operating system may still show an unknown-publisher warning. The updater signature does not remove SmartScreen or Gatekeeper warnings. See [release trust and signing](docs/release-signing.md).
 
-Full Skin 使用标准 Chromium DevTools Protocol 在当前会话中添加管理器自带的样式和运行时标记。连接只接受：
+### 2. Give this to your coding agent
 
-- `127.0.0.1` 或 `::1`
-- 固定的 Stable/Beta 端口
-- 与所选 Store 包完全一致的监听进程
-- `app://` 页面目标
-
-管理器不会写入 WindowsApps、`app.asar`、ChatGPT 私有数据或聊天内容，也不会执行主题包中的代码。下载的背景图必须同时匹配 Registry 中的路径、字节数和 SHA-256。恢复操作会移除当前样式以及为后续页面加载注册的脚本。
-
-这不是 OpenAI 官方主题接口。Codex 升级可能改变页面选择器，所以兼容声明只绑定已测试版本；升级后要重新采集 56 张截图并通过 Validator。完整测试记录见 [Full Skin 测试与实机截图](docs/native-testing.md)。
-
-## 为什么是 Tauri
-
-Theme Manager 使用 Tauri 2、原生 HTML/CSS/JavaScript 和 Rust。Windows 与 macOS 共用界面和安装核心，不随应用打包 Chromium。Rust 负责 Registry 校验、图片缓存、包身份检查、CDP 连接、注入和恢复。
-
-Windows 已完成：
-
-- Rust 单元测试
-- x64 release 构建和 NSIS 打包
-- 真实 Theme Manager UI 的应用与恢复
-- ChatGPT Beta 页面运行时读回
-- 28 套主题、56 个模式的实机截图
-
-macOS 的 Apple Silicon 与 Intel DMG 已由 CI 构建，工作流还会校验磁盘映像、
-Bundle ID、可执行文件和 CPU 架构。它们目前仍是未签名的测试产物，不是普通用户
-可直接信任的正式 Release。公开发布前还需要 Apple Developer 签名、公证和真机
-应用、恢复读回。Windows 正式安装包也需要代码签名。详见
-[桌面主题管理器](docs/desktop-manager.md)、[macOS 测试清单](docs/macos-testing.md)
-和[桌面发布签名配置](docs/release-signing.md)。
-
-管理器与 Gallery 都会根据系统语言选择中文或英文，用户也可以手动切换。主题
-分类分成三个独立维度：馆藏、素材来源与授权、视觉表达。语言只决定界面和文案，
-不会把中文题材从英文用户面前隐藏。
-
-## 社区投稿与精选
-
-Gallery 已提供结构化主题提案入口。不会写代码的用户可以先提交中英文构想、
-预览与来源说明，社区在 Issue 中讨论并用 👍 表示兴趣。通过 Validator、权利审查
-与固定 Codex 版本实机验证后，主题才会进入 Verified。
-
-首阶段不在 GitHub Pages 上直接接收匿名文件或自建投票。Pages 没有可信身份、
-隔离上传、举报和防刷后端。等真实投稿量足够，再考虑 GitHub 登录、隔离存储、
-审核队列和排行服务。详情见[社区主题 Registry 路线](docs/community-registry.md)。
-
-## 用 Codex 创建新主题
-
-项目自带 `.codex/skills/create-codex-theme/`。在仓库中可以直接说：
+Copy the following request into Codex, Claude Code, or another local coding agent:
 
 ```text
-使用 $create-codex-theme，为中国城市图鉴创建一套“苏州·运河晨雾”主题。
-左侧保留工作区安全区，提供明暗模式，最后运行全部校验。
+Install Awesome Codex Theme Manager from the official repository:
+https://github.com/rwang23/awesome-codex-theme
+
+Detect my operating system and CPU architecture. Use only an installer published
+by rwang23 on the official GitHub Releases page. Do not modify WindowsApps,
+ChatGPT.app, app.asar, private app data, or conversations. Do not bypass an
+operating-system security warning or close a running ChatGPT/Codex session
+without asking me first. If no compatible release exists, stop and tell me
+instead of building or downloading from another source.
 ```
 
-Skill 会生成 brief 和 image job 脚手架，检查原创性或 Fan Art 披露，配置安全区、明暗 token 与对比度，再更新 Registry。主题完成后还要在固定 Beta 中采集真实 Full Skin 截图。
+The complete agent contract, including expected checks and source-build instructions, is in [docs/agent-install.md](docs/agent-install.md).
 
-## 本地开发
+### 3. Build from source
 
-基础环境是 Node.js 22+。桌面开发还需要 Rust stable；Windows 需要 Microsoft C++ Build Tools，macOS 构建需要 Xcode Command Line Tools。
+For contributors, the base requirement is Node.js 22+. Desktop builds also need stable Rust and the platform toolchain.
 
 ```bash
 npm run generate
@@ -125,39 +104,82 @@ npm test
 npm run build
 ```
 
-常用命令：
+## Safe by design
 
-```bash
-npm run art:generate          # 通过 image job 生成源图
-npm run generate              # 生成主题包、Registry、Full Skin 与 Native 记录
-npm run generate:check        # 检查生成产物漂移
-npm run validate              # 校验主题包、图片、截图和 Registry
-npm run screenshots:capture   # 在固定 Beta 中采集 56 张 Full Skin 截图
-npm run desktop:check         # Rust 格式检查与测试
-npm run desktop:start         # 启动 Tauri Theme Manager
-npm run desktop:build:win     # 构建 Windows NSIS
-npm run desktop:build:mac     # 在 macOS 构建 DMG
-```
+Full Skin uses a loopback-only Chromium DevTools Protocol session. Theme Manager accepts only fixed local ports, the exact selected Stable or Beta package, and `app://` renderer targets.
 
-仓库结构：
+It does not:
+
+- write to WindowsApps, `ChatGPT.app`, or `app.asar`;
+- read or modify conversations;
+- execute code from a theme pack;
+- trust an image whose path, size, PNG signature, and SHA-256 do not match the Registry;
+- silently close a normally running ChatGPT session.
+
+This is not an official OpenAI theme API. Codex updates can change internal selectors, so compatibility is tied to tested app versions. A new version must pass the validator, apply/restore checks, and real capture run before it is marked compatible.
+
+## Create a theme with Codex
+
+The repository includes the project-local `$create-codex-theme` Skill. From a checkout, ask:
 
 ```text
-.codex/skills/               项目级主题创作 Skill
-apps/theme-manager/          Tauri 2 Theme Manager
-packages/full-skin/          管理器自有的固定运行时
-schemas/                     Theme Pack 与 Registry Schema
-themes/catalog.json         人工维护的主题目录
-themes/source-art/          image job、源图与 provenance
-themes/registry.json        自动生成的公共 Registry
-screenshots/                固定 Beta 实机截图与清单
-scripts/                    生成、验证、截图和站点构建
-site/                       无依赖 Gallery
+Use $create-codex-theme to add an original "Suzhou Canal Mist" theme.
+Keep the left work area quiet, provide light and dark modes, and run every check.
 ```
 
-`themes/<id>/`、`packages/*.act-theme`、`themes/registry.json` 和 `dist/` 是生成产物，不要手工修改。
+The Skill prepares an art brief and image job, checks original or fan-art disclosure, configures safe areas and contrast, updates the Registry, and guides the real-app capture step.
 
-## 授权与 AI 披露
+## Join the community
 
-项目代码采用 MIT。第一方 AI 原创素材在可适用的权利范围内采用 CC0 1.0。Fan Art 使用 `LicenseRef-ACT-Fan-Art-Notice`，标记 `rightsVerified: false` 并限制为非商业粉丝使用。
+The first community layer is GitHub-native:
 
-AI 生成不等于版权许可。贡献者仍需确认输入权利，并检查输出是否含有未披露的第三方角色、Logo、签名或受保护表达。完整说明见 [NOTICE.md](NOTICE.md)。
+- [propose a theme](https://github.com/rwang23/awesome-codex-theme/issues/new?template=theme-proposal.yml);
+- discuss ideas and use reactions to show interest;
+- submit validated, code-free packs through Pull Requests;
+- enter the public Registry only after rights review and real-app verification.
+
+A custom domain can point to the Gallery immediately without running a server. Accounts, uploads, voting, moderation, and rankings need a real backend. The recommended staged design uses a branded Gallery first, then a quarantined community service only when submission volume justifies it. See [community platform architecture](docs/community-platform.md).
+
+## Project map
+
+<details>
+<summary>Repository layout and developer commands</summary>
+
+```text
+.codex/skills/               Theme creation Skill
+apps/theme-manager/          Tauri 2 Theme Manager
+packages/full-skin/          Reviewed, manager-owned runtime
+schemas/                     Theme Pack and Registry schemas
+themes/catalog.json          Hand-maintained theme catalog
+themes/source-art/           Image jobs, source art, and provenance
+themes/registry.json         Generated public Registry
+screenshots/                 Version-pinned real app captures
+scripts/                     Build, validation, capture, and site tooling
+site/                        Dependency-free Gallery
+```
+
+Useful commands:
+
+```bash
+npm run art:generate
+npm run generate
+npm run generate:check
+npm run validate
+npm run screenshots:capture
+npm run desktop:check
+npm run desktop:start
+npm run desktop:build:win
+npm run desktop:build:mac
+```
+
+Generated theme directories, `.act-theme` archives, the Registry, and `dist/` should not be edited by hand.
+
+</details>
+
+## License and artwork
+
+Project code is MIT. First-party AI-generated artwork is released under CC0 1.0 where applicable. Fan art uses `LicenseRef-ACT-Fan-Art-Notice`, sets `rightsVerified: false`, and is limited to personal, non-commercial fan use.
+
+AI generation does not clear copyright, character, likeness, trademark, or source-asset rights. Contributors must review every input and output. See [NOTICE.md](NOTICE.md) and the [Fan Art policy](docs/fan-art-policy.md).
+
+If this project gives your coding workspace a little more personality, [star the repository](https://github.com/rwang23/awesome-codex-theme) and share a privacy-safe screenshot.
