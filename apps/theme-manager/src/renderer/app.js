@@ -94,7 +94,8 @@ const translations = {
     targetMissingError: "The selected ChatGPT app was not found.",
     assetError: "The theme image failed integrity verification.",
     sessionError: "The verified local Full Skin session could not be opened.",
-    genericError: "The operation failed. Switch to Chinese to view the raw diagnostic."
+    genericError: "The operation failed. See the diagnostic reason below.",
+    errorReason: "Reason"
   },
   "zh-CN": {
     catalogLoading: "正在读取主题目录",
@@ -189,7 +190,8 @@ const translations = {
     targetMissingError: "没有检测到所选 ChatGPT 应用。",
     assetError: "主题图片未通过完整性校验。",
     sessionError: "无法打开经过验证的本机 Full Skin 会话。",
-    genericError: "操作失败，请重试。"
+    genericError: "操作失败，请重试。",
+    errorReason: "原因"
   }
 };
 
@@ -277,10 +279,14 @@ function localized(value) {
 function friendlyError(error, fallbackKey) {
   const raw = typeof error === "string" ? error : error?.message || "";
   if (state.locale === "zh-CN") return raw || t(fallbackKey);
-  if (/完全退出|正在普通模式运行|already running/i.test(raw)) return t("closeCodexError");
-  if (/没有检测到|not found/i.test(raw)) return t("targetMissingError");
-  if (/素材|哈希|PNG|integrity/i.test(raw)) return t("assetError");
-  if (/CDP|调试|Full Skin 会话|loopback/i.test(raw)) return t("sessionError");
+  const withReason = (key) => {
+    const reason = raw.replace(/\s+/gu, " ").trim().slice(0, 320);
+    return reason ? `${t(key)}\n${t("errorReason")}: ${reason}` : t(key);
+  };
+  if (/完全退出|正在普通模式运行|already running/i.test(raw)) return withReason("closeCodexError");
+  if (/没有检测到|not found/i.test(raw)) return withReason("targetMissingError");
+  if (/素材|哈希|PNG|integrity/i.test(raw)) return withReason("assetError");
+  if (/CDP|调试|Full Skin 会话|loopback|LaunchServices/i.test(raw)) return withReason("sessionError");
   return raw && !/[\u3400-\u9fff]/u.test(raw) ? raw : t(fallbackKey || "genericError");
 }
 

@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+## 0.3.0-alpha.2 - 2026-07-18
+
+- Fixed the macOS Full Skin launch path reported against the previous Beta.
+  Theme Manager now starts the exact validated ChatGPT app bundle as a new
+  instance, checks the LaunchServices result, and preserves the debugging
+  arguments instead of asking LaunchServices to reuse an existing instance.
+- Accept the verified CDP listener when it belongs to the exact ChatGPT process
+  or one of its bounded descendants. English UI errors now retain the localized
+  explanation and include the underlying diagnostic reason.
 - Added a separate twelve-theme World City Atlas covering New York, San
   Francisco, Chicago, Toronto, Vancouver, London, Paris, Berlin, Rome, Tokyo,
   Singapore, and Sydney.

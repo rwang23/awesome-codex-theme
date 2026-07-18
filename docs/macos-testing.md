@@ -2,8 +2,8 @@
 
 项目已经在 GitHub Actions 生成两份 DMG：
 
-- Apple Silicon: `Awesome Codex Theme_0.3.0-alpha.1_aarch64.dmg`
-- Intel: `Awesome Codex Theme_0.3.0-alpha.1_x64.dmg`
+- Apple Silicon: `Awesome Codex Theme_0.3.0-alpha.2_aarch64.dmg`
+- Intel: `Awesome Codex Theme_0.3.0-alpha.2_x64.dmg`
 
 这证明 Tauri 应用能在两个 macOS 目标上编译和打包。CI 还会验证 app bundle 的 ad-hoc 签名，但它不等于 Apple Developer ID 或公证，也没有证明 Gatekeeper、ChatGPT 识别、Full Skin 应用和恢复在真实 Mac 上可用。公开 Beta 的版本、标题和正文必须明确标成 Beta，并提示未知发布者。
 
@@ -72,8 +72,9 @@ spctl --assess --type execute --verbose=4 "/Applications/Awesome Codex Theme.app
 8. 点击 Restore native / 恢复原生。
 9. 退出 ChatGPT，再从系统正常打开，确认没有残留样式和调试端口。
 
-当前实现使用 Bundle ID 而不是应用显示名称执行启动和退出，并通过目标进程的
-实际 executable path 核对监听端口所有者。Stable 与 Beta 即使显示名称相近，
+当前实现先用 Bundle ID 验证目标身份，再使用准确的 `.app` 路径和 `open -n -a`
+启动新实例，避免系统复用旧进程时丢失调试参数。退出仍绑定 Bundle ID；监听端口
+必须属于准确的 executable path 或其有界子进程。Stable 与 Beta 即使显示名称相近，
 也不能互相冒充。
 
 检查端口时，先取目标 ChatGPT 的准确 PID，再查看该进程的监听；端口不是固定值：

@@ -21,6 +21,9 @@ pub struct TargetView {
     bundle_id: Option<String>,
     #[cfg(target_os = "macos")]
     #[serde(default, skip_serializing)]
+    bundle_path: Option<String>,
+    #[cfg(target_os = "macos")]
+    #[serde(default, skip_serializing)]
     executable_path: Option<String>,
 }
 
@@ -153,6 +156,7 @@ fn discover_platform_targets() -> Result<Vec<TargetView>, String> {
                 label: label.into(),
                 version: plist("CFBundleShortVersionString"),
                 bundle_id: Some(expected_bundle.into()),
+                bundle_path: Some(app_path.trim_end_matches('/').into()),
                 executable_path: Some(executable_path),
             })
         })
@@ -211,12 +215,9 @@ fn launch_platform_target(target: &TargetView) -> Result<(), String> {
 
 #[cfg(target_os = "macos")]
 fn launch_platform_target(target: &TargetView) -> Result<(), String> {
-    let bundle_id = macos_bundle_id(target)?;
-    std::process::Command::new("/usr/bin/open")
-        .args(["-b", bundle_id])
-        .spawn()
-        .map(|_| ())
-        .map_err(|error| format!("无法打开 ChatGPT：{error}"))
+    let bundle_path = macos_bundle_path(target)?;
+    let arguments = macos_open_arguments(bundle_path, None)?;
+    run_macos_open(&arguments, "无法打开 ChatGPT")
 }
 
 #[cfg(not(any(target_os = "windows", target_os = "macos")))]
@@ -294,14 +295,9 @@ fn launch_platform_target_with_arguments(
     target: &TargetView,
     arguments: &str,
 ) -> Result<(), String> {
-    let bundle_id = macos_bundle_id(target)?;
-    let arguments = arguments.split_ascii_whitespace().collect::<Vec<_>>();
-    std::process::Command::new("/usr/bin/open")
-        .args(["-b", bundle_id, "--args"])
-        .args(arguments)
-        .spawn()
-        .map(|_| ())
-        .map_err(|error| format!("无法以 Full Skin 模式打开 ChatGPT：{error}"))
+    let bundle_path = macos_bundle_path(target)?;
+    let arguments = macos_open_arguments(bundle_path, Some(arguments))?;
+    run_macos_open(&arguments, "无法以 Full Skin 模式打开 ChatGPT")
 }
 
 #[cfg(not(any(target_os = "windows", target_os = "macos")))]
@@ -465,12 +461,14 @@ pub fn listener_belongs_to_target(port: u16, target: &TargetView) -> Result<bool
     if !output.status.success() {
         return Ok(false);
     }
+    let mut found = false;
     for pid in String::from_utf8_lossy(&output.stdout).lines() {
-        if macos_process_matches_executable(pid.trim(), executable)? {
-            return Ok(true);
+        found = true;
+        if !macos_process_is_target_or_descendant(pid.trim(), executable)? {
+            return Ok(false);
         }
     }
-    Ok(false)
+    Ok(found)
 }
 
 #[cfg(target_os = "macos")]
@@ -480,6 +478,55 @@ fn macos_bundle_id(target: &TargetView) -> Result<&str, String> {
         return Err("macOS Bundle ID 无效".into());
     }
     Ok(bundle_id)
+}
+
+#[cfg(target_os = "macos")]
+fn macos_bundle_path(target: &TargetView) -> Result<&str, String> {
+    let bundle_path = target
+        .bundle_path
+        .as_deref()
+        .ok_or("macOS 应用包路径缺失")?;
+    macos_open_arguments(bundle_path, None)?;
+    Ok(bundle_path)
+}
+
+#[cfg(any(target_os = "macos", test))]
+fn macos_open_arguments(bundle_path: &str, arguments: Option<&str>) -> Result<Vec<String>, String> {
+    let bundle_path = bundle_path.trim_end_matches('/');
+    if !bundle_path.starts_with('/') || !bundle_path.ends_with(".app") || bundle_path.contains('\0')
+    {
+        return Err("macOS 应用包路径无效".into());
+    }
+    let mut command = vec!["-n".into(), "-a".into(), bundle_path.into()];
+    if let Some(arguments) = arguments {
+        let arguments = arguments
+            .split_ascii_whitespace()
+            .map(str::to_owned)
+            .collect::<Vec<_>>();
+        if arguments.is_empty() {
+            return Err("macOS Full Skin 启动参数缺失".into());
+        }
+        command.push("--args".into());
+        command.extend(arguments);
+    }
+    Ok(command)
+}
+
+#[cfg(target_os = "macos")]
+fn run_macos_open(arguments: &[String], context: &str) -> Result<(), String> {
+    let output = std::process::Command::new("/usr/bin/open")
+        .args(arguments)
+        .output()
+        .map_err(|error| format!("{context}：{error}"))?;
+    if output.status.success() {
+        return Ok(());
+    }
+    let detail = String::from_utf8_lossy(&output.stderr).trim().to_owned();
+    if detail.is_empty() {
+        Err(format!("{context}：LaunchServices 拒绝了启动请求"))
+    } else {
+        Err(format!("{context}：{detail}"))
+    }
 }
 
 #[cfg(target_os = "macos")]
@@ -503,6 +550,33 @@ fn macos_process_matches_executable(pid: &str, executable: &str) -> Result<bool,
         if std::fs::canonicalize(path).is_ok_and(|candidate| candidate == expected) {
             return Ok(true);
         }
+    }
+    Ok(false)
+}
+
+#[cfg(target_os = "macos")]
+fn macos_process_is_target_or_descendant(pid: &str, executable: &str) -> Result<bool, String> {
+    let mut current = pid.to_owned();
+    for _ in 0..32 {
+        if macos_process_matches_executable(&current, executable)? {
+            return Ok(true);
+        }
+        let output = std::process::Command::new("/bin/ps")
+            .args(["-p", &current, "-o", "ppid="])
+            .output()
+            .map_err(|error| format!("无法读取 macOS ChatGPT 父进程：{error}"))?;
+        if !output.status.success() {
+            return Ok(false);
+        }
+        let parent = String::from_utf8_lossy(&output.stdout).trim().to_owned();
+        if parent.is_empty()
+            || parent == current
+            || parent == "1"
+            || !parent.chars().all(|character| character.is_ascii_digit())
+        {
+            return Ok(false);
+        }
+        current = parent;
     }
     Ok(false)
 }
@@ -552,5 +626,30 @@ mod tests {
         assert!(!persistence_host_path_is_durable(
             "/usr/local/bin/awesome-codex-theme"
         ));
+    }
+
+    #[test]
+    fn macos_full_skin_launches_an_exact_bundle_as_a_new_instance() {
+        let arguments = macos_open_arguments(
+            "/Applications/ChatGPT.app/",
+            Some("--remote-debugging-address=127.0.0.1 --remote-debugging-port=49152"),
+        )
+        .expect("valid bundle launch arguments");
+        assert_eq!(
+            arguments,
+            vec![
+                "-n",
+                "-a",
+                "/Applications/ChatGPT.app",
+                "--args",
+                "--remote-debugging-address=127.0.0.1",
+                "--remote-debugging-port=49152",
+            ]
+        );
+    }
+
+    #[test]
+    fn macos_full_skin_rejects_a_bundle_identifier_as_a_path() {
+        assert!(macos_open_arguments("com.openai.codex", None).is_err());
     }
 }
