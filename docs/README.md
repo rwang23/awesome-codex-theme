@@ -7,7 +7,10 @@
 3. standard.md
 4. adapters.md
 5. desktop-manager.md
-6. native-testing.md
+6. release-signing.md
+7. macos-testing.md
+8. native-testing.md
+9. community-registry.md
 
 Read landscape.md when positioning or upstream compatibility changes. Do not
 use context/raw/, docs/archive/, or docs/report/ as first-read material; those
@@ -28,6 +31,12 @@ locations are reserved for execution evidence or closed history when needed.
   capabilities
 - desktop-manager.md: Tauri architecture, catalog refresh, signed app updates,
   measured package comparison, and macOS signing boundary
+- release-signing.md: updater keys, Windows signing choices, Apple developer
+  account, GitHub Secrets, and the release-ready gate
+- macos-testing.md: unsigned DMG boundary, real-Mac installation, Full Skin
+  apply/restore, Gatekeeper, and evidence checklist
+- community-registry.md: GitHub-native proposals, independent Gallery facets,
+  verified rankings, and the future hosted-upload threshold
 - native-testing.md: isolated Full Skin validation, Theme Manager smoke, and
   screenshot evidence
 - landscape.md: dated reference-project research and positioning

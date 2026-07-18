@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Contribution guide / 贡献指南
+    url: https://github.com/rwang23/awesome-codex-theme/blob/main/CONTRIBUTING.md
+    about: Read the package, rights, and validation requirements before preparing a pull request.
+  - name: Security report / 安全报告
+    url: https://github.com/rwang23/awesome-codex-theme/security/policy
+    about: Report installer, runtime, or supply-chain security issues privately.

@@ -217,6 +217,10 @@ test("static gallery builds with every public contract artifact", async function
     assert.match(html, /id="dialogRights"/);
     assert.match(html, /docs\/fan-art-policy\.md/);
     assert.match(html, /data-filter="scene"/);
+    assert.match(html, /id="rightsGroup"/);
+    assert.match(html, /id="community"/);
+    assert.match(html, /theme-proposal\.yml/);
+    assert.match(html, /docs\/community-registry\.md/);
     assert.doesNotMatch(html, /codex:\/\/settings/);
     assert.match(html, /awesome-codex-theme-installer-windows\.zip/);
     assert.match(html, /theme-manager-windows\.png/);
@@ -340,15 +344,37 @@ test("Windows installer is a no-admin helper with a bundled Registry", async fun
 });
 
 test("gallery keeps the independent Chinese-first visual system", async function () {
-  const [html, css] = await Promise.all([
+  const [html, css, app] = await Promise.all([
     readFile(path.join(ROOT, "site", "index.html"), "utf8"),
-    readFile(path.join(ROOT, "site", "assets", "styles.css"), "utf8")
+    readFile(path.join(ROOT, "site", "assets", "styles.css"), "utf8"),
+    readFile(path.join(ROOT, "site", "assets", "app.js"), "utf8")
   ]);
   assert.match(html, /<html lang="zh-CN">/);
   assert.match(html, /id="heroMode"/);
+  assert.match(html, /id="rightsGroup"/);
+  assert.match(html, /id="clearFilters"/);
   assert.match(html, /\.codex\/skills\/create-codex-theme/);
+  assert.match(app, /navigator\.languages/);
+  assert.match(app, /act-locale/);
+  assert.match(app, /state\.rights/);
   assert.doesNotMatch(html, /reimagined|hero-accent|hero-orbit/i);
   assert.doesNotMatch(css, /--acid|#d9ff43/i);
+});
+
+test("desktop manager localizes from the system and combines collection, rights, and style facets", async function () {
+  const [html, app] = await Promise.all([
+    readFile(path.join(ROOT, "apps", "theme-manager", "src", "renderer", "index.html"), "utf8"),
+    readFile(path.join(ROOT, "apps", "theme-manager", "src", "renderer", "app.js"), "utf8")
+  ]);
+  assert.match(html, /id="languageButton"/);
+  assert.match(html, /id="rightsFilter"/);
+  assert.match(html, /id="styleFilter"/);
+  assert.match(app, /navigator\.languages/);
+  assert.match(app, /act-manager-locale/);
+  assert.match(app, /theme\.rightsProfile !== state\.rights/);
+  assert.match(app, /theme\.variant !== state\.style/);
+  assert.match(app, /theme\.name\?\.\["zh-CN"\]/);
+  assert.match(app, /theme\.name\?\.en/);
 });
 
 test("desktop release workflow gates platform and updater signing", async function () {
@@ -364,6 +390,9 @@ test("desktop release workflow gates platform and updater signing", async functi
   assert.match(workflow, /TAURI_SIGNING_PRIVATE_KEY/);
   assert.match(workflow, /TAURI_UPDATER_PUBKEY/);
   assert.match(workflow, /tauri\.windows-signing\.conf\.json/);
+  assert.match(workflow, /hdiutil verify/);
+  assert.match(workflow, /CFBundleIdentifier/);
+  assert.match(workflow, /lipo -archs/);
 });
 
 test("desktop preparation derives compact thumbnails from verified captures", async function () {

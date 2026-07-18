@@ -2,6 +2,17 @@
 
 提交主题前，请确认你有权再分发每一份输入素材，也愿意让 Registry 公开记录来源、许可证和 AI 使用情况。
 
+## 先提交提案，不会做主题包也可以
+
+如果你只有一个想法、预览图或希望大家投票的方向，可以先填写
+[Theme proposal / 主题提案](https://github.com/rwang23/awesome-codex-theme/issues/new?template=theme-proposal.yml)。
+它会收集中英文文案、内容分类、视觉表达、素材轨道与来源说明。Issue 下的 👍
+只表示社区兴趣，不代表版权、安全或兼容性已经通过审核。
+
+准备进入 Gallery 时，再通过 Pull Request 提交主题包。只有通过 Validator、
+素材权利审查和固定 Codex 版本实机验证的主题，才会进入 Verified 分类与后续排行。
+完整社区路线见 [docs/community-registry.md](docs/community-registry.md)。
+
 推荐直接使用仓库内的 `$create-codex-theme` Skill：
 
 ```text
@@ -47,10 +58,10 @@ npm run check
 npm run serve
 ```
 
-在浏览器里检查系列筛选、搜索、明暗切换和 Native 导入弹窗。要声明某个主题“已实机验证”，还需要在对应版本的 Codex 中完成导入、读取和截图。Gallery 封面只能展示创作方向，不能代替实机截图。
+在浏览器里检查系列、来源、视觉表达筛选，搜索、明暗切换和 Native 导入弹窗。要声明某个主题“已实机验证”，还需要在对应版本的 Codex 中完成导入、读取和截图。Gallery 封面只能展示创作方向，不能代替实机截图。
 
 Validator 能检查结构、哈希与对比度，但不能替你确认版权。
 
 ## English summary
 
-The default contribution track is original or clearly redistributable artwork. A separate unofficial fan-art track requires declared works and characters, personal non-commercial use, no official assets or copied compositions, `LicenseRef-ACT-Fan-Art-Notice`, and `rightsVerified: false`. Every theme still needs reviewed source art, bilingual copy, dual-mode tokens, explicit provenance, and a code-free canonical package. Run `npm run check` and complete browser review before opening a contribution.
+Contributors can start with the bilingual Theme Proposal issue form before preparing a package. Reactions measure interest only. A theme enters Verified rankings only after rights review, Validator checks, and real-app evidence. The default contribution track is original or clearly redistributable artwork. A separate unofficial fan-art track requires declared works and characters, personal non-commercial use, no official assets or copied compositions, `LicenseRef-ACT-Fan-Art-Notice`, and `rightsVerified: false`.

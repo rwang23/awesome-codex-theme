@@ -126,6 +126,35 @@ select:focus-visible {
   white-space: nowrap;
 }
 
+.titlebar-language {
+  -webkit-app-region: no-drag;
+  display: flex;
+  height: 28px;
+  align-items: center;
+  gap: 6px;
+  padding: 0 9px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 8px;
+  margin-right: 9px;
+  color: rgba(255, 255, 255, 0.82);
+  background: rgba(255, 255, 255, 0.055);
+  cursor: pointer;
+}
+
+.titlebar-language:hover {
+  background: rgba(255, 255, 255, 0.11);
+}
+
+.titlebar-language span {
+  font-family: "STKaiti", "KaiTi", serif;
+  font-size: 13px;
+}
+
+.titlebar-language strong {
+  font-size: 9px;
+  font-weight: 650;
+}
+
 .window-controls {
   -webkit-app-region: no-drag;
   display: flex;
@@ -219,7 +248,7 @@ select:focus-visible {
 
 .catalog-panel {
   display: grid;
-  grid-template-rows: auto auto auto minmax(0, 1fr) auto;
+  grid-template-rows: auto auto auto auto minmax(0, 1fr) auto;
   min-height: 0;
   padding: 30px 20px 16px;
   border-right: 1px solid var(--line);
@@ -362,6 +391,41 @@ kbd {
   background: rgba(31, 105, 88, 0.09);
   color: var(--jade-deep);
   font-weight: 700;
+}
+
+.catalog-facets {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 7px;
+  padding: 0 0 10px;
+}
+
+.catalog-facets label {
+  display: grid;
+  min-width: 0;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 6px;
+}
+
+.catalog-facets label > span {
+  color: var(--muted);
+  font-size: 8px;
+  font-weight: 720;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.catalog-facets select {
+  width: 100%;
+  min-width: 0;
+  height: 28px;
+  padding: 0 24px 0 8px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  color: var(--ink);
+  background: var(--paper-strong);
+  font-size: 9px;
 }
 
 .theme-list {

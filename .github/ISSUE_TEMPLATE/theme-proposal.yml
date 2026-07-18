@@ -1,0 +1,113 @@
+name: Theme proposal / 主题提案
+description: Propose an original or clearly disclosed fan-art theme before preparing a package.
+title: "[Theme proposal] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        这里是主题提案入口，不是未经审核的公开上传区。请先提交构想、双语文案、预览和来源说明。社区可以讨论并用 👍 表示兴趣；是否进入 Registry 仍取决于素材权利、Validator 和实机验证。
+
+        This form starts a theme proposal. Community reactions show interest, but acceptance still requires rights review, package validation, and real-app verification.
+
+  - type: input
+    id: theme_name
+    attributes:
+      label: Theme name / 主题名称
+      description: Provide both Chinese and English names when possible.
+      placeholder: 苏州·运河晨雾 / Suzhou Canal Mist
+    validations:
+      required: true
+
+  - type: dropdown
+    id: theme_track
+    attributes:
+      label: Rights track / 素材轨道
+      description: Fan art is accepted only under the repository's separate non-commercial notice.
+      options:
+        - Original or clearly redistributable / 原创或明确可再分发
+        - Unofficial fan art / 非官方同人
+    validations:
+      required: true
+
+  - type: dropdown
+    id: theme_category
+    attributes:
+      label: Content category / 内容分类
+      options:
+        - Original world / 原创世界
+        - City study / 城市图鉴
+        - Character tribute / 角色致敬
+        - Memory scene / 名场面
+        - Nature or abstract / 自然或抽象
+        - Other / 其他
+    validations:
+      required: true
+
+  - type: dropdown
+    id: visual_form
+    attributes:
+      label: Visual form / 视觉表达
+      options:
+        - Cinematic / 原画感
+        - Chibi / Q 版
+        - Cityscape / 城市图景
+        - Scene / 场景
+        - Other / 其他
+    validations:
+      required: true
+
+  - type: textarea
+    id: concept
+    attributes:
+      label: Concept and workspace composition / 构想与工作区构图
+      description: Explain the mood, focal area, quiet workspace area, light/dark relationship, and reduced-motion behavior.
+      placeholder: 主体位于右侧三分之一；左侧为低信息安全区……
+    validations:
+      required: true
+
+  - type: textarea
+    id: localized_copy
+    attributes:
+      label: Localized copy / 中英文文案
+      description: Add a short name, tagline, and description in Chinese and English.
+      placeholder: |
+        zh-CN:
+        name:
+        tagline:
+        description:
+
+        en:
+        name:
+        tagline:
+        description:
+    validations:
+      required: true
+
+  - type: textarea
+    id: preview
+    attributes:
+      label: Preview / 预览
+      description: Drag a privacy-safe preview image here. Do not upload official stills, logos, watermarks, or another artist's work.
+      placeholder: Drag and drop a PNG here / 将 PNG 拖到这里
+    validations:
+      required: true
+
+  - type: textarea
+    id: provenance
+    attributes:
+      label: Source and provenance / 来源与生成记录
+      description: State who created the image, the source license, AI model or job record if used, and any third-party rights involved.
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: rights_confirmation
+    attributes:
+      label: Rights and safety confirmation / 权利与安全确认
+      options:
+        - label: I have the right to submit and redistribute every input asset. / 我有权提交并再分发所有输入素材。
+          required: true
+        - label: The preview contains no official still, poster, logo, watermark, copied composition, or undeclared character. / 预览不含官方剧照、海报、Logo、水印、照搬构图或未披露角色。
+          required: true
+        - label: I understand that a proposal and its votes do not guarantee acceptance. / 我理解提案和票数都不代表主题必然收录。
+          required: true

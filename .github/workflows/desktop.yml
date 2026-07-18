@@ -114,6 +114,60 @@ jobs:
         working-directory: apps/theme-manager
         run: npm run tauri -- build ${{ matrix.build-args }}
 
+      - name: Verify unsigned macOS disk image and bundle identity
+        if: ${{ (!startsWith(github.ref, 'refs/tags/v') || vars.DESKTOP_RELEASE_READY != 'true') && startsWith(matrix.os, 'macos-') }}
+        shell: bash
+        run: |
+          artifacts=( ${{ matrix.artifact-path }} )
+          if [ "${#artifacts[@]}" -ne 1 ]; then
+            echo "::error::Expected exactly one macOS DMG, found ${#artifacts[@]}."
+            exit 1
+          fi
+
+          dmg="${artifacts[0]}"
+          hdiutil verify "$dmg"
+          mount_dir="$(mktemp -d)"
+          cleanup() {
+            hdiutil detach "$mount_dir" >/dev/null 2>&1 || true
+            rm -rf "$mount_dir"
+          }
+          trap cleanup EXIT
+          hdiutil attach "$dmg" -nobrowse -readonly -mountpoint "$mount_dir"
+
+          app_path="$(find "$mount_dir" -maxdepth 1 -type d -name '*.app' -print -quit)"
+          if [ -z "$app_path" ]; then
+            echo "::error::The DMG does not contain a macOS application bundle."
+            exit 1
+          fi
+
+          info_plist="$app_path/Contents/Info.plist"
+          bundle_id="$(/usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' "$info_plist")"
+          executable_name="$(/usr/libexec/PlistBuddy -c 'Print :CFBundleExecutable' "$info_plist")"
+          if [ "$bundle_id" != "io.github.rwang23.awesomecodextheme" ]; then
+            echo "::error::Unexpected macOS bundle identifier: $bundle_id"
+            exit 1
+          fi
+
+          executable="$app_path/Contents/MacOS/$executable_name"
+          if [ ! -x "$executable" ]; then
+            echo "::error::The declared macOS executable is missing or not executable."
+            exit 1
+          fi
+
+          architectures="$(lipo -archs "$executable")"
+          case "${{ matrix.rust-target }}" in
+            aarch64-apple-darwin) expected_architecture="arm64" ;;
+            x86_64-apple-darwin) expected_architecture="x86_64" ;;
+            *)
+              echo "::error::Unexpected Rust target: ${{ matrix.rust-target }}"
+              exit 1
+              ;;
+          esac
+          if ! grep -qw "$expected_architecture" <<<"$architectures"; then
+            echo "::error::Expected $expected_architecture but found: $architectures"
+            exit 1
+          fi
+
       - name: Upload unsigned CI artifact
         if: ${{ !startsWith(github.ref, 'refs/tags/v') || vars.DESKTOP_RELEASE_READY != 'true' }}
         uses: actions/upload-artifact@v7

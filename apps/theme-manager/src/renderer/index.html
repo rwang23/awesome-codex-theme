@@ -22,8 +22,12 @@
         </div>
         <div class="titlebar-status">
           <span class="status-dot" id="catalogDot"></span>
-          <span id="catalogLabel">正在读取主题目录</span>
+          <span id="catalogLabel" data-i18n="catalogLoading">正在读取主题目录</span>
         </div>
+        <button class="titlebar-language" id="languageButton" type="button" aria-label="切换语言">
+          <span aria-hidden="true">文</span>
+          <strong id="languageLabel">English</strong>
+        </button>
         <div class="window-controls" aria-label="窗口控制">
           <button id="windowMinimize" type="button" aria-label="最小化">
             <span aria-hidden="true"></span>
@@ -41,8 +45,8 @@
         <aside class="catalog-panel">
           <div class="catalog-heading">
             <div>
-              <p class="eyebrow">主题馆藏 / ARCHIVE</p>
-              <h1>选择一种<br>工作气候。</h1>
+              <p class="eyebrow" data-i18n="archiveEyebrow">主题馆藏 / ARCHIVE</p>
+              <h1><span data-i18n="archiveTitleOne">选择一种</span><br><span data-i18n="archiveTitleTwo">工作气候。</span></h1>
             </div>
             <button class="icon-button" id="refreshCatalog" type="button" aria-label="刷新主题目录" title="刷新主题目录">
               <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -57,24 +61,34 @@
               <circle cx="10.5" cy="10.5" r="5.5"></circle>
               <path d="m15 15 5 5"></path>
             </svg>
-            <input id="search" type="search" placeholder="搜索主题、城市或氛围" autocomplete="off">
+            <input id="search" type="search" data-i18n-placeholder="searchPlaceholder" placeholder="搜索主题、城市或氛围" autocomplete="off">
             <kbd id="searchShortcut">Ctrl K</kbd>
           </label>
 
           <div class="collection-tabs" id="collectionTabs" role="tablist" aria-label="主题系列"></div>
+          <div class="catalog-facets">
+            <label>
+              <span data-i18n="rightsFacet">来源</span>
+              <select id="rightsFilter" aria-label="按来源筛选"></select>
+            </label>
+            <label>
+              <span data-i18n="styleFacet">风格</span>
+              <select id="styleFilter" aria-label="按风格筛选"></select>
+            </label>
+          </div>
           <div class="theme-list" id="themeList" role="listbox" aria-label="主题列表"></div>
-          <p class="empty-state" id="emptyState" hidden>没有找到符合条件的主题。</p>
+          <p class="empty-state" id="emptyState" hidden data-i18n="emptyState">没有找到符合条件的主题。</p>
         </aside>
 
         <section class="theme-stage" aria-live="polite">
           <div class="stage-toolbar">
             <div class="mode-switch" id="modeSwitch" role="group" aria-label="主题模式">
-              <button type="button" data-mode="light">明亮</button>
-              <button type="button" data-mode="dark">暗色</button>
+              <button type="button" data-mode="light" data-i18n="light">明亮</button>
+              <button type="button" data-mode="dark" data-i18n="dark">暗色</button>
             </div>
             <div class="verified-badge">
               <span aria-hidden="true">✓</span>
-              <strong>Beta 实机截图</strong>
+              <strong data-i18n="verifiedCapture">Beta 实机截图</strong>
               <small id="captureVersion"></small>
             </div>
           </div>
@@ -104,23 +118,23 @@
             <div class="action-card">
               <div class="action-card-heading">
                 <div>
-                  <small>01 / 应用</small>
-                  <strong>完整背景、材质与主题文字</strong>
+                  <small data-i18n="applyStep">01 / 应用</small>
+                  <strong data-i18n="applyDescription">完整背景、材质与主题文字</strong>
                 </div>
                 <span class="native-chip">FULL SKIN</span>
               </div>
               <button class="primary-action" id="applySkin" type="button">
-                <span id="applySkinLabel">应用完整皮肤</span>
+                <span id="applySkinLabel" data-i18n="applySkin">应用完整皮肤</span>
                 <kbd id="applyShortcut">Ctrl ↵</kbd>
               </button>
               <div class="launch-row">
                 <select id="targetSelect" aria-label="选择 ChatGPT 版本"></select>
-                <button id="restoreSkin" type="button">恢复原生</button>
+                <button id="restoreSkin" type="button" data-i18n="restoreSkin">恢复原生</button>
               </div>
               <button class="secondary-action" id="copyTheme" type="button">
-                只复制原生配色 <kbd id="copyShortcut">Ctrl C</kbd>
+                <span data-i18n="copyNative">只复制原生配色</span> <kbd id="copyShortcut">Ctrl C</kbd>
               </button>
-              <p id="skinStatus">主题包只含声明式配置与图片。管理器通过仅限本机回环的临时调试会话加载背景，不修改 WindowsApps、app.asar 或 ChatGPT 私有数据。</p>
+              <p id="skinStatus" data-i18n="skinIdle">主题包只含声明式配置与图片。管理器通过仅限本机回环的临时调试会话加载背景，不修改 WindowsApps、app.asar 或 ChatGPT 私有数据。</p>
             </div>
           </div>
         </section>
@@ -133,11 +147,11 @@
           <span id="themeCount">—</span>
         </div>
         <div class="footer-actions">
-          <button id="openGallery" type="button">在线 Gallery</button>
+          <button id="openGallery" type="button" data-i18n="onlineGallery">在线 Gallery</button>
           <button id="openRepository" type="button">GitHub</button>
           <button class="update-button" id="updateButton" type="button">
             <span class="update-dot" aria-hidden="true"></span>
-            <span id="updateLabel">检查应用更新</span>
+            <span id="updateLabel" data-i18n="checkUpdate">检查应用更新</span>
           </button>
         </div>
       </footer>

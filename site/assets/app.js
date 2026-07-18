@@ -5,6 +5,7 @@ const translations = {
     navStandard: "Standard",
     navNative: "Full Skin",
     navCreator: "Creation Skill",
+    navCommunity: "Community",
     heroKicker: "Open standard · Original and unofficial fan-art collections",
     heroLineOne: "Give Codex",
     heroLineTwo: "a change of scenery.",
@@ -35,11 +36,17 @@ const translations = {
     collectionIntro: "The library now includes 16 original themes and 12 clearly disclosed unofficial donghua fan-art tributes. Every source image is generated through an image job and reviewed by hand.",
     searchLabel: "Search themes",
     searchPlaceholder: "Search worlds, moods, tags…",
+    facetRights: "Source and rights",
+    filterRightsAll: "All sources",
+    filterOriginal: "Original",
+    filterFanArt: "Fan art",
+    facetStyle: "Visual form",
     filterAll: "All styles",
     filterCinematic: "Cinematic",
     filterChibi: "Chibi",
     filterCityscape: "City",
     filterScene: "Memory scene",
+    clearFilters: "Clear filters",
     emptyState: "No themes match this view.",
     standardEyebrow: "ACT theme pack standard",
     standardTitle: "Before a theme looks good, it should earn your trust.",
@@ -65,9 +72,23 @@ const translations = {
     creatorTitle: "Turn one visual idea into a verifiable theme.",
     creatorIntro: "The repository includes $create-codex-theme. It covers the brief, originality review, image job, light and dark tokens, Registry entry, and browser acceptance check.",
     creatorCta: "Open the creation Skill",
+    communityEyebrow: "COMMUNITY CONTRIBUTIONS",
+    communityTitle: "Make submissions trustworthy before making the community busy.",
+    communityIntro: "The first stage uses GitHub theme proposals, pull requests, and automated validation. Votes can measure interest, but they never replace rights review, package integrity, or real-app verification.",
+    communityPropose: "Propose a theme",
+    communityRoadmap: "Read the community plan",
+    communityStepOneTitle: "Proposal and preview",
+    communityStepOneBody: "Authors share bilingual copy, source evidence, and a preview. The community can discuss it and react.",
+    communityStepTwoTitle: "Package validation",
+    communityStepTwoBody: "A pull request adds the code-free pack. CI checks the schema, hashes, rights fields, and contrast.",
+    communityStepThreeTitle: "Real-app verification",
+    communityStepThreeBody: "Maintainers apply, capture, and restore the theme on a pinned Codex build before marking it Verified.",
+    communityStepFourTitle: "Rankings and picks",
+    communityStepFourBody: "Only Verified themes enter popularity views. Editorial picks still require review and are never automatic.",
     closingKicker: "Free to use · Open to review · Ready for contributors",
     closingTitle: "Choose a theme and give your workspace its own weather.",
     browseCollection: "Open the theme library",
+    footerContribute: "Contribute",
     footerRights: "Original AI artwork is CC0. Unofficial fan art follows the separate fan-art notice. Project code is MIT.",
     installEyebrow: "USE IN CODEX",
     chooseMode: "Mode",
@@ -101,7 +122,8 @@ const translations = {
     resultCount: "themes shown",
     allCollections: "All collections",
     allCollectionsCaption: "Original, city, and unofficial fan-art themes",
-    themeCount: "themes"
+    themeCount: "themes",
+    showingThemes: "themes shown"
   },
   "zh-CN": {
     navThemes: "主题",
@@ -109,6 +131,7 @@ const translations = {
     navStandard: "标准",
     navNative: "完整皮肤",
     navCreator: "创作 Skill",
+    navCommunity: "社区共创",
     heroKicker: "开放标准 · 原创与非官方 Fan Art 双轨主题",
     heroLineOne: "给 Codex，",
     heroLineTwo: "换一片风景。",
@@ -139,11 +162,17 @@ const translations = {
     collectionIntro: "馆藏现有 16 套原创主题，以及 12 套明确标注的非官方国漫 Fan Art。全部源图都通过 image job 生成并经过人工审查。",
     searchLabel: "搜索主题",
     searchPlaceholder: "搜索世界、城市或氛围",
+    facetRights: "来源与授权",
+    filterRightsAll: "全部来源",
+    filterOriginal: "原创",
+    filterFanArt: "Fan Art",
+    facetStyle: "视觉表达",
     filterAll: "全部",
     filterCinematic: "原画",
     filterChibi: "Q 版",
     filterCityscape: "城市",
     filterScene: "名场面",
+    clearFilters: "清除筛选",
     emptyState: "当前条件下没有主题。",
     standardEyebrow: "ACT 主题包标准",
     standardTitle: "好看之前，先让一套主题值得信任。",
@@ -169,9 +198,23 @@ const translations = {
     creatorTitle: "一句想法，也能变成一套可验证的主题。",
     creatorIntro: "仓库自带 $create-codex-theme Skill。它会带你完成 brief、原创性检查、image job、明暗 token、Registry 写入和浏览器验收。",
     creatorCta: "查看创作 Skill",
+    communityEyebrow: "社区共创 / COMMUNITY",
+    communityTitle: "先把投稿做得可信，再把它做成热闹的社区。",
+    communityIntro: "首阶段使用 GitHub 主题提案、Pull Request 和自动校验，不接收未经审核就公开的任意文件。点赞可以反映人气，但不会替代版权、完整性和实机验证。",
+    communityPropose: "提交主题提案",
+    communityRoadmap: "查看社区路线",
+    communityStepOneTitle: "提案与预览",
+    communityStepOneBody: "作者提交中英文说明、来源证据和预览图，社区可以讨论并点赞。",
+    communityStepTwoTitle: "数据包校验",
+    communityStepTwoBody: "通过 PR 提交无代码主题包，CI 检查 Schema、哈希、素材权利和对比度。",
+    communityStepThreeTitle: "实机验证",
+    communityStepThreeBody: "维护者在固定 Codex 版本中应用、截图、恢复，再加入 Verified 分类。",
+    communityStepFourTitle: "排行与精选",
+    communityStepFourBody: "Verified 主题才进入趋势榜；编辑精选仍需单独审核，不由票数自动决定。",
     closingKicker: "免费使用 · 开放审查 · 欢迎共创",
     closingTitle: "先选一套，让工作区有一点自己的气候。",
     browseCollection: "进入主题馆藏",
+    footerContribute: "投稿",
     footerRights: "AI 原创素材采用 CC0；非官方 Fan Art 适用独立声明；项目代码采用 MIT。",
     installEyebrow: "在 Codex 中使用",
     chooseMode: "模式",
@@ -205,22 +248,37 @@ const translations = {
     resultCount: "套主题",
     allCollections: "全部系列",
     allCollectionsCaption: "原创、城市与非官方 Fan Art 主题",
-    themeCount: "套主题"
+    themeCount: "套主题",
+    showingThemes: "套主题"
   }
 };
 
+function detectLocale() {
+  const stored = window.localStorage.getItem("act-locale");
+  if (stored === "zh-CN" || stored === "en") return stored;
+  const languages = Array.isArray(navigator.languages) && navigator.languages.length
+    ? navigator.languages
+    : [navigator.language || "en"];
+  return languages.some(function (language) {
+    return /^zh(?:-|$)/i.test(language);
+  }) ? "zh-CN" : "en";
+}
+
+const preferredMode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+
 const state = {
-  locale: window.localStorage.getItem("act-locale") || "zh-CN",
+  locale: detectLocale(),
   collection: "all",
+  rights: "all",
   filter: "all",
   query: "",
   registry: null,
   cards: new Map(),
   cardModes: new Map(),
   heroTheme: null,
-  heroMode: "light",
+  heroMode: preferredMode,
   currentTheme: null,
-  dialogMode: window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark"
+  dialogMode: preferredMode
 };
 
 const elements = {
@@ -234,7 +292,10 @@ const elements = {
   themeStatValue: document.querySelector("#themeStatValue"),
   search: document.querySelector("#themeSearch"),
   collectionGroup: document.querySelector("#collectionGroup"),
+  rightsGroup: document.querySelector("#rightsGroup"),
   filterGroup: document.querySelector("#filterGroup"),
+  resultSummary: document.querySelector("#resultSummary"),
+  clearFilters: document.querySelector("#clearFilters"),
   gallery: document.querySelector("#gallery"),
   empty: document.querySelector("#emptyState"),
   dialog: document.querySelector("#installDialog"),
@@ -352,6 +413,19 @@ function renderFilterLabels() {
       ? state.registry.themes.length
       : state.registry.themes.filter(function (theme) { return theme.variant === filter; }).length;
     button.textContent = t(labelKeys[filter]) + " " + String(count).padStart(2, "0");
+  });
+
+  const rightsKeys = {
+    all: "filterRightsAll",
+    original: "filterOriginal",
+    "fan-art": "filterFanArt"
+  };
+  elements.rightsGroup.querySelectorAll("button[data-rights]").forEach(function (button) {
+    const rights = button.dataset.rights;
+    const count = rights === "all"
+      ? state.registry.themes.length
+      : state.registry.themes.filter(function (theme) { return theme.rightsProfile === rights; }).length;
+    button.textContent = t(rightsKeys[rights]) + " " + String(count).padStart(2, "0");
   });
 }
 
@@ -538,14 +612,20 @@ function applyFilters() {
       theme.tags.join(" ")
     ].filter(Boolean).join(" ").toLocaleLowerCase(state.locale);
     const matchesCollection = state.collection === "all" || theme.collection === state.collection;
+    const matchesRights = state.rights === "all" || theme.rightsProfile === state.rights;
     const matchesFilter = state.filter === "all" || theme.variant === state.filter;
     const matchesQuery = !query || haystack.includes(query);
-    const show = matchesCollection && matchesFilter && matchesQuery;
+    const show = matchesCollection && matchesRights && matchesFilter && matchesQuery;
     record.article.hidden = !show;
     if (show) visible += 1;
   });
   elements.empty.hidden = visible !== 0;
   elements.gallery.setAttribute("aria-label", String(visible) + " " + t("resultCount"));
+  elements.resultSummary.textContent = String(visible).padStart(2, "0") + " " + t("showingThemes");
+  elements.clearFilters.hidden = state.collection === "all"
+    && state.rights === "all"
+    && state.filter === "all"
+    && !state.query.trim();
 }
 
 function updateDialog() {
@@ -635,9 +715,15 @@ function bindEvents() {
     const button = event.target.closest("button[data-collection]");
     if (!button) return;
     state.collection = button.dataset.collection;
-    state.filter = "all";
     setActiveButton(elements.collectionGroup, "data-collection", state.collection);
-    setActiveButton(elements.filterGroup, "data-filter", state.filter);
+    applyFilters();
+  });
+
+  elements.rightsGroup.addEventListener("click", function (event) {
+    const button = event.target.closest("button[data-rights]");
+    if (!button) return;
+    state.rights = button.dataset.rights;
+    setActiveButton(elements.rightsGroup, "data-rights", state.rights);
     applyFilters();
   });
 
@@ -645,6 +731,18 @@ function bindEvents() {
     const button = event.target.closest("button[data-filter]");
     if (!button) return;
     state.filter = button.dataset.filter;
+    setActiveButton(elements.filterGroup, "data-filter", state.filter);
+    applyFilters();
+  });
+
+  elements.clearFilters.addEventListener("click", function () {
+    state.collection = "all";
+    state.rights = "all";
+    state.filter = "all";
+    state.query = "";
+    elements.search.value = "";
+    setActiveButton(elements.collectionGroup, "data-collection", state.collection);
+    setActiveButton(elements.rightsGroup, "data-rights", state.rights);
     setActiveButton(elements.filterGroup, "data-filter", state.filter);
     applyFilters();
   });

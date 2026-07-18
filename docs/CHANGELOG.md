@@ -1,5 +1,22 @@
 # Changelog
 
+## 2026-07-18-00-00
+
+- Added operating-system language detection and a persistent Chinese/English
+  switch to Theme Manager. Search indexes both languages.
+- Split Gallery and manager discovery into independent collection, rights, and
+  visual-form facets, including combined filters and an explicit empty state.
+- Added a bilingual GitHub Theme Proposal form and a public community route
+  covering discussion, reactions, Pull Requests, Validator gates, real-app
+  verification, rankings, moderation, and the threshold for a hosted service.
+- Added exact updater, Windows, and Apple signing account and GitHub Actions
+  configuration guidance. The release-ready switch remains off until platform
+  signatures and Mac evidence exist.
+- Added a real-Mac acceptance checklist and clarified that Full Skin is
+  session-scoped: a normal ChatGPT restart returns to the native interface.
+- Strengthened macOS CI by verifying each unsigned DMG, bundle identifier,
+  declared executable, and target architecture before upload.
+
 ## 2026-07-17-04-00
 
 - Added `ACT Full Skin v1` as the primary target: verified 2560×1440

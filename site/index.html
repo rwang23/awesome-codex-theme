@@ -26,6 +26,7 @@
         <a href="#standard" data-i18n="navStandard">标准</a>
         <a href="#compatibility" data-i18n="navNative">完整皮肤</a>
         <a href="#creator" data-i18n="navCreator">创作 Skill</a>
+        <a href="#community" data-i18n="navCommunity">社区共创</a>
       </nav>
       <button class="language-button" id="languageButton" type="button" aria-label="切换语言">
         <span class="language-glyph" aria-hidden="true">文</span>
@@ -192,12 +193,29 @@
             <span class="sr-only" data-i18n="searchLabel">搜索主题</span>
             <input id="themeSearch" type="search" autocomplete="off" data-i18n-placeholder="searchPlaceholder" placeholder="搜索世界、城市或氛围">
           </label>
-          <div class="filter-group" id="filterGroup" role="group" aria-label="主题风格">
-            <button class="filter-button is-active" type="button" data-filter="all" aria-pressed="true" data-i18n="filterAll">全部</button>
-            <button class="filter-button" type="button" data-filter="cinematic" aria-pressed="false" data-i18n="filterCinematic">原画</button>
-            <button class="filter-button" type="button" data-filter="chibi" aria-pressed="false" data-i18n="filterChibi">Q 版</button>
-            <button class="filter-button" type="button" data-filter="cityscape" aria-pressed="false" data-i18n="filterCityscape">城市</button>
-            <button class="filter-button" type="button" data-filter="scene" aria-pressed="false" data-i18n="filterScene">名场面</button>
+          <div class="gallery-facets">
+            <div class="facet-cluster">
+              <span data-i18n="facetRights">来源与授权</span>
+              <div class="filter-group" id="rightsGroup" role="group" aria-label="来源与授权">
+                <button class="filter-button is-active" type="button" data-rights="all" aria-pressed="true" data-i18n="filterRightsAll">全部来源</button>
+                <button class="filter-button" type="button" data-rights="original" aria-pressed="false" data-i18n="filterOriginal">原创</button>
+                <button class="filter-button" type="button" data-rights="fan-art" aria-pressed="false" data-i18n="filterFanArt">Fan Art</button>
+              </div>
+            </div>
+            <div class="facet-cluster">
+              <span data-i18n="facetStyle">视觉表达</span>
+              <div class="filter-group" id="filterGroup" role="group" aria-label="主题风格">
+                <button class="filter-button is-active" type="button" data-filter="all" aria-pressed="true" data-i18n="filterAll">全部风格</button>
+                <button class="filter-button" type="button" data-filter="cinematic" aria-pressed="false" data-i18n="filterCinematic">原画</button>
+                <button class="filter-button" type="button" data-filter="chibi" aria-pressed="false" data-i18n="filterChibi">Q 版</button>
+                <button class="filter-button" type="button" data-filter="cityscape" aria-pressed="false" data-i18n="filterCityscape">城市</button>
+                <button class="filter-button" type="button" data-filter="scene" aria-pressed="false" data-i18n="filterScene">名场面</button>
+              </div>
+            </div>
+          </div>
+          <div class="filter-summary">
+            <span id="resultSummary">28 套主题</span>
+            <button id="clearFilters" type="button" data-i18n="clearFilters">清除筛选</button>
           </div>
         </div>
 
@@ -296,6 +314,48 @@ to create an original
 city rain theme.</code></pre>
       </section>
 
+      <section class="community-section" id="community" aria-labelledby="communityTitle">
+        <div class="community-copy">
+          <p class="eyebrow" data-i18n="communityEyebrow">社区共创 / COMMUNITY</p>
+          <h2 id="communityTitle" data-i18n="communityTitle">先把投稿做得可信，再把它做成热闹的社区。</h2>
+          <p data-i18n="communityIntro">
+            首阶段使用 GitHub 主题提案、Pull Request 和自动校验，不接收未经审核就公开的任意文件。点赞可以反映人气，但不会替代版权、完整性和实机验证。
+          </p>
+          <div class="community-actions">
+            <a class="community-primary" href="https://github.com/rwang23/awesome-codex-theme/issues/new?template=theme-proposal.yml">
+              <span data-i18n="communityPropose">提交主题提案</span>
+              <span aria-hidden="true">↗</span>
+            </a>
+            <a href="https://github.com/rwang23/awesome-codex-theme/blob/main/docs/community-registry.md">
+              <span data-i18n="communityRoadmap">查看社区路线</span>
+              <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+        </div>
+        <ol class="community-path">
+          <li>
+            <span>01</span>
+            <strong data-i18n="communityStepOneTitle">提案与预览</strong>
+            <p data-i18n="communityStepOneBody">作者提交中英文说明、来源证据和预览图，社区可以讨论并点赞。</p>
+          </li>
+          <li>
+            <span>02</span>
+            <strong data-i18n="communityStepTwoTitle">数据包校验</strong>
+            <p data-i18n="communityStepTwoBody">通过 PR 提交无代码主题包，CI 检查 Schema、哈希、素材权利和对比度。</p>
+          </li>
+          <li>
+            <span>03</span>
+            <strong data-i18n="communityStepThreeTitle">实机验证</strong>
+            <p data-i18n="communityStepThreeBody">维护者在固定 Codex 版本中应用、截图、恢复，再加入 Verified 分类。</p>
+          </li>
+          <li>
+            <span>04</span>
+            <strong data-i18n="communityStepFourTitle">排行与精选</strong>
+            <p data-i18n="communityStepFourBody">Verified 主题才进入趋势榜；编辑精选仍需单独审核，不由票数自动决定。</p>
+          </li>
+        </ol>
+      </section>
+
       <section class="closing-section">
         <div>
           <p data-i18n="closingKicker">免费使用 · 开放审查 · 欢迎共创</p>
@@ -322,6 +382,7 @@ city rain theme.</code></pre>
         <a href="https://github.com/rwang23/awesome-codex-theme/blob/main/docs/fan-art-policy.md" target="_blank" rel="noreferrer">Fan Art</a>
         <a href="./LICENSE">License</a>
         <a href="./themes/registry.json">Registry</a>
+        <a href="https://github.com/rwang23/awesome-codex-theme/issues/new?template=theme-proposal.yml" data-i18n="footerContribute">投稿</a>
       </div>
     </footer>
 
