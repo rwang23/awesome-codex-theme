@@ -687,10 +687,36 @@ kbd {
   cursor: pointer;
 }
 
+.primary-action:disabled {
+  cursor: wait;
+  opacity: 0.66;
+}
+
 .primary-action kbd {
   border-color: rgba(255, 255, 255, 0.28);
   background: rgba(255, 255, 255, 0.12);
   color: #fff;
+}
+
+.secondary-action {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 32px;
+  margin-top: 7px;
+  padding: 0 10px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 9px;
+  cursor: pointer;
+}
+
+.secondary-action:hover {
+  border-color: rgba(31, 105, 88, 0.35);
+  color: var(--ink);
 }
 
 .launch-row {

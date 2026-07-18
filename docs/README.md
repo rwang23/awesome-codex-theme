@@ -16,17 +16,20 @@ locations are reserved for execution evidence or closed history when needed.
 ## Current documents
 
 - agent-brief.md: first-read project router
-- architecture.md: package, site, Native delivery, and trust boundaries
+- architecture.md: package, Gallery, Full Skin runtime, Native fallback, and
+  trust boundaries
 - art-direction.md: reviewed image-job direction for Original Xianxia 01
 - city-atlas-art-direction.md: city identity, anti-landmark, and composition rules
 - fan-art-direction.md: declared-character and remembered-scene art direction
 - fan-art-policy.md: public rights boundary, non-commercial terms, and takedown path
 - gallery-design.md: redesign evidence and the independent Gallery visual system
 - standard.md: version 1 canonical manifest and package contract
-- adapters.md: Codex Native contract and unsupported capabilities
+- adapters.md: ACT Full Skin contract, Native fallback, and unsupported
+  capabilities
 - desktop-manager.md: Tauri architecture, catalog refresh, signed app updates,
   measured package comparison, and macOS signing boundary
-- native-testing.md: isolated real-app validation and screenshot evidence
+- native-testing.md: isolated Full Skin validation, Theme Manager smoke, and
+  screenshot evidence
 - landscape.md: dated reference-project research and positioning
 - CHANGELOG.md: delivered project changes
 - ../README.md: Chinese-first public project overview and setup

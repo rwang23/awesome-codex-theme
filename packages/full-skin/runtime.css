@@ -1,0 +1,246 @@
+html.act-full-skin {
+  color-scheme: var(--act-color-scheme);
+  background: var(--act-background) !important;
+}
+
+html.act-full-skin,
+html.act-full-skin body,
+html.act-full-skin #root,
+html.act-full-skin #root > div {
+  min-height: 100%;
+  background-color: transparent !important;
+}
+
+html.act-full-skin body {
+  background-color: var(--act-background) !important;
+  background-image:
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--act-background) 54%, transparent) 0%,
+      color-mix(in srgb, var(--act-background) 24%, transparent) 39%,
+      color-mix(in srgb, var(--act-background) 3%, transparent) 74%
+    ),
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--act-background) 8%, transparent) 0%,
+      transparent 34%,
+      color-mix(in srgb, var(--act-background) 18%, transparent) 100%
+    ),
+    var(--act-art) !important;
+  background-attachment: fixed !important;
+  background-position: center, center, var(--act-art-position) !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+  color: var(--act-text);
+}
+
+html.act-full-skin[data-act-mode="light"] body {
+  background-image:
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--act-background) 68%, transparent) 0%,
+      color-mix(in srgb, var(--act-background) 30%, transparent) 39%,
+      color-mix(in srgb, var(--act-background) 4%, transparent) 74%
+    ),
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, white 10%, transparent) 0%,
+      transparent 48%,
+      color-mix(in srgb, var(--act-background) 14%, transparent) 100%
+    ),
+    var(--act-art) !important;
+}
+
+html.act-full-skin .app-header-tint {
+  border-color: color-mix(in srgb, var(--act-border) 34%, transparent) !important;
+  background: color-mix(in srgb, var(--act-surface) 14%, transparent) !important;
+  box-shadow: none !important;
+  backdrop-filter: blur(12px) saturate(0.9);
+}
+
+html.act-full-skin aside.app-shell-left-panel {
+  border-color: color-mix(in srgb, var(--act-border) 48%, transparent) !important;
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--act-surface) 88%, transparent),
+      color-mix(in srgb, var(--act-surface) 72%, transparent)
+    ) !important;
+  box-shadow: 16px 0 44px color-mix(in srgb, var(--act-background) 22%, transparent);
+  backdrop-filter: blur(24px) saturate(0.92);
+}
+
+html.act-full-skin main.main-surface,
+html.act-full-skin [role="main"] {
+  background:
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--act-background) 30%, transparent) 0%,
+      color-mix(in srgb, var(--act-background) 10%, transparent) 44%,
+      transparent 100%
+    ) !important;
+}
+
+html.act-full-skin:not(.act-full-skin-home) main.main-surface,
+html.act-full-skin:not(.act-full-skin-home) [role="main"] {
+  background:
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--act-background) 88%, transparent) 0%,
+      color-mix(in srgb, var(--act-background) 72%, transparent) 100%
+    ) !important;
+  backdrop-filter: blur(8px);
+}
+
+html.act-full-skin .composer-surface-chrome,
+html.act-full-skin .composer-surface-chrome [class*="bg-token-side-bar-background"],
+html.act-full-skin .composer-surface-chrome [class*="bg-token-bg-fog"],
+html.act-full-skin.act-full-skin-home [role="main"] [class*="bg-token-side-bar-background"],
+html.act-full-skin.act-full-skin-home [role="main"] [class*="bg-token-bg-fog"] {
+  border-color: color-mix(in srgb, var(--act-border) 66%, transparent) !important;
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--act-surface) 76%, transparent),
+      color-mix(in srgb, var(--act-surface-alt) 66%, transparent)
+    ) !important;
+  box-shadow:
+    0 18px 55px color-mix(in srgb, var(--act-background) 32%, transparent),
+    inset 0 1px color-mix(in srgb, white 36%, transparent);
+  backdrop-filter: blur(26px) saturate(0.9);
+}
+
+html.act-full-skin .group\/home-suggestions button,
+html.act-full-skin [class*="home-suggestions"] button {
+  border-color: color-mix(in srgb, var(--act-border) 65%, transparent) !important;
+  background:
+    linear-gradient(
+      145deg,
+      color-mix(in srgb, var(--act-surface) 86%, transparent),
+      color-mix(in srgb, var(--act-surface-alt) 68%, transparent)
+    ) !important;
+  box-shadow: 0 18px 42px color-mix(in srgb, var(--act-background) 28%, transparent);
+  backdrop-filter: blur(18px) saturate(0.9);
+}
+
+html.act-full-skin aside.app-shell-left-panel button:hover,
+html.act-full-skin aside.app-shell-left-panel a:hover,
+html.act-full-skin .group\/home-suggestions button:hover,
+html.act-full-skin [class*="home-suggestions"] button:hover {
+  border-color: color-mix(in srgb, var(--act-accent) 55%, transparent) !important;
+  background-color: color-mix(in srgb, var(--act-accent) 12%, transparent) !important;
+}
+
+html.act-full-skin aside.app-shell-left-panel,
+html.act-full-skin aside.app-shell-left-panel button,
+html.act-full-skin aside.app-shell-left-panel a,
+html.act-full-skin .group\/home-suggestions button,
+html.act-full-skin [class*="home-suggestions"] button {
+  color: var(--act-text) !important;
+}
+
+html.act-full-skin [class*="text-token-foreground"],
+html.act-full-skin .group\/home-suggestions [class*="text-"],
+html.act-full-skin [class*="home-suggestions"] [class*="text-"],
+html.act-full-skin .composer-surface-chrome *,
+html.act-full-skin .composer-surface-chrome [class*="text-"],
+html.act-full-skin.act-full-skin-home [role="main"] [class*="bg-token-side-bar-background"] [class*="text-"],
+html.act-full-skin.act-full-skin-home [role="main"] [class*="bg-token-bg-fog"] [class*="text-"] {
+  color: var(--act-text) !important;
+}
+
+html.act-full-skin [class*="text-token-text-secondary"],
+html.act-full-skin [class*="text-token-text-tertiary"],
+html.act-full-skin [class*="text-token-foreground-secondary"],
+html.act-full-skin [class*="text-token-foreground-tertiary"],
+html.act-full-skin .composer-surface-chrome textarea::placeholder,
+html.act-full-skin .composer-surface-chrome input::placeholder,
+html.act-full-skin .composer-surface-chrome [data-placeholder]::before,
+html.act-full-skin .composer-surface-chrome .is-editor-empty::before,
+html.act-full-skin [role="main"] textarea::placeholder,
+html.act-full-skin [role="main"] input::placeholder {
+  color: var(--act-muted) !important;
+}
+
+html.act-full-skin aside.app-shell-left-panel svg,
+html.act-full-skin .group\/home-suggestions svg,
+html.act-full-skin [class*="home-suggestions"] svg,
+html.act-full-skin .composer-surface-chrome svg,
+html.act-full-skin.act-full-skin-home [role="main"] [class*="bg-token-side-bar-background"] svg,
+html.act-full-skin.act-full-skin-home [role="main"] [class*="bg-token-bg-fog"] svg {
+  color: var(--act-accent) !important;
+}
+
+#act-full-skin-caption {
+  position: fixed;
+  z-index: 2147483000;
+  top: clamp(102px, 16vh, 160px);
+  left: max(292px, 25vw);
+  display: grid;
+  width: min(360px, 31vw);
+  gap: 5px;
+  color: var(--act-text);
+  pointer-events: none;
+  text-shadow:
+    0 1px 1px color-mix(in srgb, var(--act-surface) 80%, transparent),
+    0 8px 28px color-mix(in srgb, var(--act-background) 35%, transparent);
+}
+
+#act-full-skin-caption[hidden] {
+  display: none;
+}
+
+#act-full-skin-caption small {
+  color: var(--act-accent);
+  font-size: 9px;
+  font-weight: 760;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+#act-full-skin-caption strong {
+  font-family: "STKaiti", "KaiTi", "Songti SC", "Segoe UI Variable", sans-serif;
+  font-size: clamp(22px, 2.5vw, 36px);
+  font-weight: 580;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+#act-full-skin-caption span {
+  max-width: 36em;
+  color: var(--act-muted);
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+html.act-full-skin[data-act-safe-area="right"] #act-full-skin-caption {
+  right: max(56px, 7vw);
+  left: auto;
+  text-align: right;
+}
+
+html.act-full-skin[data-act-safe-area="center"] #act-full-skin-caption {
+  left: 50%;
+  width: min(520px, 46vw);
+  text-align: center;
+  transform: translateX(-50%);
+}
+
+@media (max-width: 900px) {
+  #act-full-skin-caption {
+    top: 92px;
+    left: 42px;
+    width: min(420px, calc(100vw - 84px));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.act-full-skin *,
+  html.act-full-skin *::before,
+  html.act-full-skin *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}

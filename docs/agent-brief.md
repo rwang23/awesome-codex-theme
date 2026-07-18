@@ -2,10 +2,11 @@
 
 ## Project snapshot
 
-- Last reviewed: 2026-07-17
+- Last reviewed: 2026-07-18
 - Project: Awesome Codex Theme
 - Project root: `C:\projects\tools\awesome-codex-theme`
-- Purpose: free Codex Native theme standard, Registry, Validator, and Gallery
+- Purpose: free declarative Full Skin standard, Registry, Validator, Gallery,
+  and cross-platform Theme Manager for Codex
 - Primary users: Chinese-speaking Codex desktop users and theme contributors
 - Main stack: dependency-free static HTML/CSS/JavaScript, Node.js built-ins,
   and a Tauri 2 desktop app with a narrow Rust backend
@@ -16,13 +17,30 @@
 
 ## Current focus
 
-- Current phase: cross-platform Theme Manager, live catalog refresh, app update
-  delivery, and real-app screenshot evidence
-- Keep the Chinese-first Gallery, reviewed cover art, real Beta captures, rights profiles, theme-pack contract, Native import strings, and contribution Skill verifiable
-- Source illustrations are covers, not installable backgrounds. Gallery mode records prefer separately verified Beta captures and retain covers as fallback/source evidence.
-- Explicitly out of scope: CSS injection, app-file or private-data patching, automatic final import, third-party skin engines, native protocol handlers, official franchise assets, and commercial fan-art licensing
-- A collection is complete only after source review, `npm run check`, browser QA, Native contract validation, and a task-owned commit
-- A "real screenshot verified" claim requires a same-version import, semantic readback, fixed capture fixture, privacy review, and baseline restore under `docs/native-testing.md`
+- Current phase: ACT Full Skin v1, cross-platform Theme Manager, signed release
+  delivery, and version-bound real-app evidence
+- Full Skin is the primary target. It applies the declared 2560×1440
+  background, translucent materials, colors, and theme copy while preserving
+  Codex navigation and workflow structure.
+- Source art is installable Full Skin background material. Generated 960×540
+  previews are Gallery fallbacks; the public Gallery prefers verified real
+  Beta captures.
+- Theme packs remain code-free. The shared runtime under
+  `packages/full-skin/` is manager-owned, reviewed once, and never supplied by
+  theme authors.
+- Codex Native remains a palette-only fallback through the versioned
+  `codex-theme-v1:` string.
+- Explicitly out of scope: replacing or reordering Codex product surfaces,
+  patching application files or private data, third-party skin engines,
+  arbitrary remote registries, official franchise assets, and commercial
+  fan-art licensing.
+- A collection is complete only after source review, `npm run check`, browser
+  QA, Full Skin capture validation, Native fallback validation, and a
+  task-owned commit.
+- A "real screenshot verified" claim requires the same named app version,
+  exact package and listener ownership, action-after runtime markers, fixed
+  capture fixture, privacy review, and baseline restore under
+  `docs/native-testing.md`.
 - A "macOS auto-update ready" claim additionally requires signed, notarized
   artifacts and a macOS action-after readback; source compatibility alone is
   not enough
@@ -41,7 +59,9 @@ Avoid `dist/`, `context/raw/`, `docs/archive/`, and generated history unless req
 - Small edits: edit directly and run the focused check.
 - Multi-file behavior: use a short plan, run `npm run check`, then browser smoke.
 - Theme additions: use `$create-codex-theme`, select the original or fan-art rights profile, generate source art, inspect it, regenerate, and validate.
-- Native compatibility claims: update `docs/adapters.md` and prove the exact import shape against the named Codex version.
+- Full Skin compatibility claims: update `docs/adapters.md` and prove the
+  exact runtime against the named Codex package. Native claims still require
+  strict parser validation.
 - Publishing, remote creation, Pages activation, app installation, and current-app setting changes require authorization bound to the exact target.
 - Never automate copyright clearance or authenticated publishing.
 
@@ -50,7 +70,8 @@ Avoid `dist/`, `context/raw/`, `docs/archive/`, and generated history unless req
 Creating or pushing a remote, changing Pages settings, installing another Codex
 package, or changing the current app's appearance is an external action. Bind
 approval to the exact repository, app package, or running instance before
-acting.
+acting. Full Skin tests must use the isolated package selected for the run and
+must not interrupt a user's normal Stable session.
 
 ## Canonical commands
 
@@ -59,8 +80,11 @@ acting.
     npm run generate:check
     npm run validate
     npm test
+    npm run screenshots:probe
+    npm run screenshots:capture
     npm run desktop:test
     npm run desktop:check
+    npm run desktop:smoke
     npm run desktop:start
     npm run desktop:build:win
     npm run build
@@ -70,9 +94,13 @@ acting.
 ## Verification bundles
 
 - Theme data or art: source-art visual review, `generate:check`, validation, and tests.
-- Native export: parser validation, Registry/package equality, and recorded tested version.
+- Full Skin: asset hash and dimensions, Registry equality, exact app/listener
+  identity, runtime marker readback, 56-mode capture manifest, and restore.
+- Native fallback: parser validation, Registry/package equality, unique payload,
+  and recorded tested version.
 - Site behavior: `npm run check`, local server, browser search/filter/dialog/copy checks.
-- Real screenshot: isolated Codex import, fixed fixture, version/hash evidence, and screenshot review.
+- Real screenshot: isolated Codex Full Skin apply, fixed fixture, version/hash
+  evidence, screenshot review, and runtime cleanup.
 - Commit: inspect status, diff, staged paths, and committed tree.
 - Deployment: GitHub Actions success plus public Pages interaction.
 
@@ -85,18 +113,31 @@ Keep `docs/README.md` and this brief current. Record delivered changes in
 
 - Tool index: `context/tools/README.md`
 - Canonical helpers: `scripts/*.mjs`
-- Scripts that write ChatGPT state: none. The portable helper and Tauri
-  manager can copy a selected Native string and open an exact registered app;
-  the manager may cache a validated Registry in its own application data.
-  Final import remains a user action.
+- Authorized real-app helpers:
+  `scripts/capture-full-skin-screenshots.mjs` and
+  `scripts/smoke-theme-manager.mjs`. They may affect only the exact isolated
+  package and loopback port declared for the run, and they must prove cleanup.
+- The Theme Manager may cache a hash-verified background in its own application
+  data and apply its fixed runtime to an exact registered Stable or Beta
+  session. It must not write ChatGPT application files, private data, or chats.
+- The portable Windows helper only copies a Native fallback string.
 - Workflow lint: `C:\Users\desre\.codex\tools\workflow-lint.ps1`
 
 ## Known pitfalls
 
-- A GitHub Pages button cannot import a theme into Codex.
+- A GitHub Pages button cannot apply Full Skin by itself; the Theme Manager is
+  the trusted local runtime.
 - `codex://settings` opens settings; it does not apply the selected theme.
-- Native v1 does not accept background images.
+- Native v1 does not accept background images and must not be presented as the
+  primary Full Skin path.
+- A Full Skin claim is bound to a tested Codex version. A later version needs a
+  fresh capture and manager smoke run.
+- Version 1 skins the existing layout. It does not recreate the deeper custom
+  navigation/account/task redesign shown in concept mockups.
 - Official screenshots, posters, promotional art, and upstream theme screenshots must not enter theme packages.
 - Image-job output needs human review for text, logos, undeclared IP, copied composition, safe-area drift, and 16:9 cropping.
 - Fan-art themes are unofficial, personal, and non-commercial; they use a custom notice and cannot claim rights verification.
-- A valid build proves files, not rendered interaction or real-app behavior.
+- An unsigned package is a test artifact, not a production release. Windows
+  signing and macOS signing/notarization are separate evidence gates.
+- A valid build proves files, not rendered interaction, real-app behavior,
+  signing, or public deployment.

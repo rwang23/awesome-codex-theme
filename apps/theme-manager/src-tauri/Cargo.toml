@@ -1,7 +1,7 @@
 [package]
 name = "awesome-codex-theme"
-version = "0.2.0-alpha.1"
-description = "Cross-platform Codex Native theme manager"
+version = "0.3.0-alpha.1"
+description = "Cross-platform declarative full-skin manager for Codex"
 authors = ["Awesome Codex Theme contributors"]
 edition = "2024"
 
@@ -14,6 +14,7 @@ tauri-build = { version = "2.6.3", features = [] }
 
 [dependencies]
 arboard = "3.6.1"
+base64 = "0.22.1"
 hex = "0.4.3"
 reqwest = { version = "0.13.4", default-features = false, features = ["rustls-no-provider"] }
 rustls = { version = "0.23.42", default-features = false, features = ["ring", "std", "tls12"] }
@@ -23,6 +24,8 @@ sha2 = "0.10.9"
 tauri = { version = "2.11.5", features = ["protocol-asset"] }
 tauri-plugin-opener = "2.5.4"
 tauri-plugin-updater = "2.10.1"
+tokio = { version = "1.53.0", features = ["time"] }
+tungstenite = "0.30.0"
 
 [profile.release]
 codegen-units = 1

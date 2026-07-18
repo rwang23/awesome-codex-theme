@@ -1,0 +1,1073 @@
+{
+  "schemaVersion": "act-full-skin-capture-manifest-v1",
+  "status": "complete",
+  "capturedAt": "2026-07-18T02:21:52.568Z",
+  "testBench": {
+    "packageFamilyName": "OpenAI.CodexBeta_2p2nqsd0c76g0",
+    "packageFullName": "OpenAI.CodexBeta_26.715.3651.0_x64__2p2nqsd0c76g0",
+    "version": "26.715.3651.0",
+    "aumid": "OpenAI.CodexBeta_2p2nqsd0c76g0!App",
+    "executable": "ChatGPT (Beta).exe",
+    "targetUrlPrefix": "app://"
+  },
+  "fixture": {
+    "id": "full-skin-home-v1",
+    "width": 1440,
+    "height": 810,
+    "sidebar": "hidden",
+    "privateContent": "excluded",
+    "nativeSettingsChanged": false
+  },
+  "runtime": {
+    "format": "act-full-skin-v1",
+    "sha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+    "earlyInjection": true,
+    "removedAfterCapture": true
+  },
+  "scope": {
+    "themeIds": [
+      "qinglan-odyssey",
+      "qinglan-sprite",
+      "starbound-rebel",
+      "starbound-sprite",
+      "mountain-sword",
+      "mountain-swordling",
+      "cloudsea-pact",
+      "cloudsea-mochi",
+      "beijing-meridian",
+      "shanghai-afterglow",
+      "shenzhen-circuit-rain",
+      "guangzhou-riverwind",
+      "chengdu-teahouse-rain",
+      "hangzhou-lake-letter",
+      "chongqing-vertical-night",
+      "nanjing-wall-plum",
+      "mortal-journey-duo",
+      "mortal-journey-chibi",
+      "renegade-immortal-duo",
+      "renegade-immortal-chibi",
+      "sword-of-coming-duo",
+      "sword-of-coming-chibi",
+      "battle-through-duo",
+      "battle-through-chibi",
+      "mortal-void-hall",
+      "renegade-wedding-storm",
+      "sword-confession-alley",
+      "battle-three-year-pact"
+    ],
+    "modes": [
+      "light",
+      "dark"
+    ]
+  },
+  "captures": [
+    {
+      "themeId": "qinglan-odyssey",
+      "mode": "light",
+      "path": "screenshots/codex-beta-26.715.3651.0/qinglan-odyssey-light.png",
+      "sha256": "c2c9f5780439a36f442b79aa3f2c88a1187d814b62106a2a86c894bdc74a41ab",
+      "bytes": 1197425,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "70aac35419396548788840366a517efbda5cb51e859918b4e5472810adc045e6",
+      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "capturedAt": "2026-07-18T02:21:55.982Z"
+    },
+    {
+      "themeId": "qinglan-odyssey",
+      "mode": "dark",
+      "path": "screenshots/codex-beta-26.715.3651.0/qinglan-odyssey-dark.png",
+      "sha256": "4754df6af17766d8cf311a2636f2166bc55bb2cdbd11756fe66fd8a05079ca5b",
+      "bytes": 967910,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "f92d2eb762c017d1a040945344cbd4def90604ad20df95e54c9e1a3dccb4c48a",
+      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "capturedAt": "2026-07-18T02:21:58.225Z"
+    },
+    {
+      "themeId": "qinglan-sprite",
+      "mode": "light",
+      "path": "screenshots/codex-beta-26.715.3651.0/qinglan-sprite-light.png",
+      "sha256": "0ddb0072bcb57fdc70d66d6de8f3cc8ea92be47b1e5dac50643b767e6cb6486b",
+      "bytes": 1282395,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "f63e4691545e9d67a2cdd6983b2ab3d44cd4f591ee6f09feb2408b497f59e12b",
+      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "capturedAt": "2026-07-18T02:22:00.785Z"
+    },
+    {
+      "themeId": "qinglan-sprite",
+      "mode": "dark",
+      "path": "screenshots/codex-beta-26.715.3651.0/qinglan-sprite-dark.png",
+      "sha256": "3fdd0187e41506fd5ee99eaf9737bedd9031e936b03629cede1d89c3af791d8e",
+      "bytes": 1096121,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "2848b184e061fd6b8d181980e399791de199441d5212346254f0be3dc6852641",
+      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "capturedAt": "2026-07-18T02:22:03.202Z"
+    },
+    {
+      "themeId": "starbound-rebel",
+      "mode": "light",
+      "path": "screenshots/codex-beta-26.715.3651.0/starbound-rebel-light.png",
+      "sha256": "666097b196d553c5f9886a564d60f9065c7c8ad7f0d4efa511a7756b57b8c983",
+      "bytes": 1222023,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "2cba3222ca719a30735a45d1862a8ab9d42ceb751a7b71708742d9a5ea8ee55d",
+      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "capturedAt": "2026-07-18T02:22:05.726Z"
+    },
+    {
+      "themeId": "starbound-rebel",
+      "mode": "dark",
+      "path": "screenshots/codex-beta-26.715.3651.0/starbound-rebel-dark.png",
+      "sha256": "5185fe6a702880fccf20f7ccfcef59a5b83d3f9c4b91fff2e1d625dc42b0dec6",
+      "bytes": 962372,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "f11f5b51fca837dcb994460eaf9df7f01dccd71ad4f7a43c88445103e81f33a7",
+      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "capturedAt": "2026-07-18T02:22:08.020Z"
+    },
+    {
+      "themeId": "starbound-sprite",
+      "mode": "light",
+      "path": "screenshots/codex-beta-26.715.3651.0/starbound-sprite-light.png",
+      "sha256": "29482509f8bd057c37494a853b75510d6c90fa1e498c6f61784d4169f7cbf5bb",
+      "bytes": 1113452,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "d0c4dc986aa4a9fcde1768693ec5b03c855f42cc8881b582949a9f723abd276c",
+      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "capturedAt": "2026-07-18T02:22:10.430Z"
+    },
+    {
+      "themeId": "starbound-sprite",
+      "mode": "dark",
+      "path": "screenshots/codex-beta-26.715.3651.0/starbound-sprite-dark.png",
+      "sha256": "1e2eaaa1daea2dedaae41ffd4157322b16b4ca30452531f220b4fc1dd5897a11",
+      "bytes": 920894,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "aa7f7cb00342dc55e63bad442c23a073a5399fec311af6b3a8ae82b337ac6824",
+      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "capturedAt": "2026-07-18T02:22:12.654Z"
+    },
+    {
+      "themeId": "mountain-sword",
+      "mode": "light",
+      "path": "screenshots/codex-beta-26.715.3651.0/mountain-sword-light.png",
+      "sha256": "1518f5717c1e7098e4e7c98d7843cca245dbb0655a43b789b4d0ea5735498166",
+      "bytes": 1286098,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "f9714d1cb77ffa8c03e3f0611c0d33c39e3f5278580550d31c7aea6b6baa2769",
+      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "capturedAt": "2026-07-18T02:22:16.142Z"
+    },
+    {
+      "themeId": "mountain-sword",
+      "mode": "dark",
+      "path": "screenshots/codex-beta-26.715.3651.0/mountain-sword-dark.png",
+      "sha256": "f07c2a716915e8b0dddbbeb750e0a2c0cb2b2beeff440e21ad41e0c14640ae2d",
+      "bytes": 1055256,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "e1e6423cf15d6fd023f85e511576d67327d23c0c22da0aa6c1a9ccb02434333b",
+      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "capturedAt": "2026-07-18T02:22:18.471Z"
+    },
+    {
+      "themeId": "mountain-swordling",
+      "mode": "light",
+      "path": "screenshots/codex-beta-26.715.3651.0/mountain-swordling-light.png",
+      "sha256": "1d90e2b520410050410920e8f51e09bca74c08472898862a8dd411402ed84b22",
+      "bytes": 1202352,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "8c3efbb6a6528d3bd7b517c9b8429cd1c1085533c2f922d64257a2024a31fada",
+      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "capturedAt": "2026-07-18T02:22:20.903Z"
+    },
+    {
+      "themeId": "mountain-swordling",
+      "mode": "dark",
+      "path": "screenshots/codex-beta-26.715.3651.0/mountain-swordling-dark.png",
+      "sha256": "7b69d603c142d7fd842928a0cfc9d9ba48a141752850f33ed34bd9c33c3c9a50",
+      "bytes": 1023332,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "3bc4a5824c98867af736f5d1d8a9d47af48ab71990056f8676b95d106d4153b1",
+      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "capturedAt": "2026-07-18T02:22:24.195Z"
+    },
+    {
+      "themeId": "cloudsea-pact",
+      "mode": "light",
+      "path": "screenshots/codex-beta-26.715.3651.0/cloudsea-pact-light.png",
+      "sha256": "2fa4591c78cedc4e50c6bd0ac0186292b08ce26a907239c9c019f20763902c9e",
+      "bytes": 1306196,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "14832c4ab93a9e91869f52721b3a9a4f219d22deac9c754cdf6a1ed681f0a373",
+      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "capturedAt": "2026-07-18T02:22:27.757Z"
+    },
+    {
+      "themeId": "cloudsea-pact",
+      "mode": "dark",
+      "path": "screenshots/codex-beta-26.715.3651.0/cloudsea-pact-dark.png",
+      "sha256": "fbe8a24fe224fbb5d969abc4b1871b97815c914ef6e416c034a8b8a38dd0e8a9",
+      "bytes": 1083958,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "71d3bf142e788366aaea064db1f2f51b40573fa6be2d986af75dc0af249e45bd",
+      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "capturedAt": "2026-07-18T02:22:30.100Z"
+    },
+    {
+      "themeId": "cloudsea-mochi",
+      "mode": "light",
+      "path": "screenshots/codex-beta-26.715.3651.0/cloudsea-mochi-light.png",
+      "sha256": "654d2a6dc6c65a0c2b4baa389e0299bf4f6c624230ff83dd3621bbc218425d97",
+      "bytes": 1057063,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "d02d9ae98d2f80c4c75660b3c2a18ff33b0fdfb177a99a82e5a470695e41ac55",
+      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "capturedAt": "2026-07-18T02:22:32.429Z"
+    },
+    {
+      "themeId": "cloudsea-mochi",
+      "mode": "dark",
+      "path": "screenshots/codex-beta-26.715.3651.0/cloudsea-mochi-dark.png",
+      "sha256": "d0de9804b4a694e0f8121f12518a836fe41bc6369f1a27ac33b46b9db36f4a1e",
+      "bytes": 900610,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "751580d8d3d12673e6c99e023ab6b67603aec0358395fa440b8f6e57b450c6c9",
+      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "capturedAt": "2026-07-18T02:22:34.623Z"
+    },
+    {
+      "themeId": "beijing-meridian",
+      "mode": "light",
+      "path": "screenshots/codex-beta-26.715.3651.0/beijing-meridian-light.png",
+      "sha256": "3f45ec0f72df71e25c3e3823cd4241867aef65b132c92887f0d1e3a7c47e4747",
+      "bytes": 1380985,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "237a9b6a32d3a344db25a0c80a973ba2c017cce5f7dec2bf64e790489086cdcc",
+      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "capturedAt": "2026-07-18T02:22:38.159Z"
+    },
+    {
+      "themeId": "beijing-meridian",
+      "mode": "dark",
+      "path": "screenshots/codex-beta-26.715.3651.0/beijing-meridian-dark.png",
+      "sha256": "b254856db0b473a27bc0df4757993831cd3558a9e3776527b9b42d717c198666",
+      "bytes": 1139855,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "c543b70f14898c12fd463bfd99db611c93fb53c8a4c3212cea8c75754f785a5c",
+      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "capturedAt": "2026-07-18T02:22:40.536Z"
+    },
+    {
+      "themeId": "shanghai-afterglow",
+      "mode": "light",
+      "path": "screenshots/codex-beta-26.715.3651.0/shanghai-afterglow-light.png",
+      "sha256": "2ea14168104b290c198a7c4475d5f67dd37e21e031fcd97bf00b5950f80a3ecb",
+      "bytes": 1303658,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "bc741eb6ef36f4e0dce3691091fd67778d057c5c1a5573cf198b8eea40ce6991",
+      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "capturedAt": "2026-07-18T02:22:43.059Z"
+    },
+    {
+      "themeId": "shanghai-afterglow",
+      "mode": "dark",
+      "path": "screenshots/codex-beta-26.715.3651.0/shanghai-afterglow-dark.png",
+      "sha256": "0bdd7fe73de549a4a7ee835da99de16b4d5bbbd0165b9fbf279d590542ed3be4",
+      "bytes": 1097877,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "4a3556b3e1c5ad9113d908c68ed4372f7dab6e63b2b72c5911b16e9bd64fa46d",
+      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "capturedAt": "2026-07-18T02:22:44.485Z"
+    },
+    {
+      "themeId": "shenzhen-circuit-rain",
+      "mode": "light",
+      "path": "screenshots/codex-beta-26.715.3651.0/shenzhen-circuit-rain-light.png",
+      "sha256": "3130a9fccd28799810764726af2a12df68b33e531f27dc54816e8a06d371aa81",
+      "bytes": 1347276,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "0ce6cb41507d5c6a08765489a58ee56c9b5b066eefd1d4df7efefdabb888256c",
+      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "capturedAt": "2026-07-18T02:22:46.091Z"
+    },
+    {
+      "themeId": "shenzhen-circuit-rain",
+      "mode": "dark",
+      "path": "screenshots/codex-beta-26.715.3651.0/shenzhen-circuit-rain-dark.png",
+      "sha256": "649c181999e6607327a509624a764ffa0629d29c10c4a31b1742296069c172b9",
+      "bytes": 1095533,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "bc934f7d03365104be5d04cd4402629a1b407e0e622ad15c88a1b0ec56b244ec",
+      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "capturedAt": "2026-07-18T02:22:47.538Z"
+    },
+    {
+      "themeId": "guangzhou-riverwind",
+      "mode": "light",
+      "path": "screenshots/codex-beta-26.715.3651.0/guangzhou-riverwind-light.png",
+      "sha256": "a8e4f9bda2702bc6157c74e4948294252ab0fb48590c7b19e655c9a2eeb7afb2",
+      "bytes": 1263291,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "37cd7326d789d0ddcae221754ab15ed9b62cdf1709d15e2d6aa98a2eecfe06c8",
+      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "capturedAt": "2026-07-18T02:22:49.205Z"
+    },
+    {
+      "themeId": "guangzhou-riverwind",
+      "mode": "dark",
+      "path": "screenshots/codex-beta-26.715.3651.0/guangzhou-riverwind-dark.png",
+      "sha256": "0f943113159d14d700778e88417c16e2ee9721f66d846ab71bdd1abaa1592dbf",
+      "bytes": 1078889,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "e529a38adf0452b29672f67caed3f3563ba29dd33d0ef2a01c155a1d31473f06",
+      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "capturedAt": "2026-07-18T02:22:52.587Z"
+    },
+    {
+      "themeId": "chengdu-teahouse-rain",
+      "mode": "light",
+      "path": "screenshots/codex-beta-26.715.3651.0/chengdu-teahouse-rain-light.png",
+      "sha256": "16da84760de1f27ea0bd00ddd2f48cf5b247865ba0372166ab7f701fa330666a",
+      "bytes": 1295851,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "d7e46980629c4b9aa2a254597de749e859f2ab15621ca095cc8cf48a98e2ae9f",
+      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "capturedAt": "2026-07-18T02:22:55.145Z"
+    },
+    {
+      "themeId": "chengdu-teahouse-rain",
+      "mode": "dark",
+      "path": "screenshots/codex-beta-26.715.3651.0/chengdu-teahouse-rain-dark.png",
+      "sha256": "d5ae5c4f45b18c7ef73b6558991e169db2f8d7c94f4947c80647595166dc53a8",
+      "bytes": 1034633,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "d0a45cd8a5a33157fe6cc22c8e2df17b6f093e3706518aaacefa0aefda663ef7",
+      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "capturedAt": "2026-07-18T02:22:57.499Z"
+    },
+    {
+      "themeId": "hangzhou-lake-letter",
+      "mode": "light",
+      "path": "screenshots/codex-beta-26.715.3651.0/hangzhou-lake-letter-light.png",
+      "sha256": "e889f198d3e6862ff428b27a80e921f950729afa1a8f11e0b46bcfb4358c6596",
+      "bytes": 1328028,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "f191292063affc8d281def33dfc78911f27a7dd2fd2d3b496fbd674a9163ead9",
+      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "capturedAt": "2026-07-18T02:23:01.051Z"
+    },
+    {
+      "themeId": "hangzhou-lake-letter",
+      "mode": "dark",
+      "path": "screenshots/codex-beta-26.715.3651.0/hangzhou-lake-letter-dark.png",
+      "sha256": "fdf34089e2ec87d08d3076847a2ce70867a7d10905c4dbcfaa7b86415152d4f4",
+      "bytes": 1116658,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "6748eb317cb3f512a516d0ecfb2273f90330159fbece0f8840566a3a1a6bccb1",
+      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "capturedAt": "2026-07-18T02:23:03.419Z"
+    },
+    {
+      "themeId": "chongqing-vertical-night",
+      "mode": "light",
+      "path": "screenshots/codex-beta-26.715.3651.0/chongqing-vertical-night-light.png",
+      "sha256": "0748e4f70a5dd3ca794501d8e4079850b9d1890e43f7689b863e83271c403626",
+      "bytes": 1277462,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "fb241dfd349a00d2c7e06958a17e286cb2897b0b9971ff35f2dadf0b1b4067df",
+      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "capturedAt": "2026-07-18T02:23:05.955Z"
+    },
+    {
+      "themeId": "chongqing-vertical-night",
+      "mode": "dark",
+      "path": "screenshots/codex-beta-26.715.3651.0/chongqing-vertical-night-dark.png",
+      "sha256": "6611a3444bd7b5d882d31df02a03ab9ad0f19efde0706e3196b08a1927d153ee",
+      "bytes": 1020961,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "927c9f4aab99775b66318388becdfcfe06cc3ce59b956d020203e709769d2740",
+      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "capturedAt": "2026-07-18T02:23:07.256Z"
+    },
+    {
+      "themeId": "nanjing-wall-plum",
+      "mode": "light",
+      "path": "screenshots/codex-beta-26.715.3651.0/nanjing-wall-plum-light.png",
+      "sha256": "552453f424e4ea2cde0f2f5d55fc23ed32c465270f5f6f87d0e6da02e88b4e44",
+      "bytes": 1305491,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "961f3ce64354ae3f172a4af1db2a44ed5bc7f86d2f3975dab6e8871016444c67",
+      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "capturedAt": "2026-07-18T02:23:09.692Z"
+    },
+    {
+      "themeId": "nanjing-wall-plum",
+      "mode": "dark",
+      "path": "screenshots/codex-beta-26.715.3651.0/nanjing-wall-plum-dark.png",
+      "sha256": "e8809185568886531c7d3467826ee0bc0d5760dea5a9a505c24791e393c67c28",
+      "bytes": 1077531,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "85e8ae41bbe9bd1572695c409bac0e550961d514e0e13718e21f80c85e54422c",
+      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "capturedAt": "2026-07-18T02:23:12.974Z"
+    },
+    {
+      "themeId": "mortal-journey-duo",
+      "mode": "light",
+      "path": "screenshots/codex-beta-26.715.3651.0/mortal-journey-duo-light.png",
+      "sha256": "7e0e60a4a7ccb0c0fb2e28674a5dbde067d726ed87f1cf508cf76c9a31d608f0",
+      "bytes": 1361390,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "7b89ba9b357484ddf2e189da9307f053ed12bff9a62e07dd0bedc05a471359da",
+      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "capturedAt": "2026-07-18T02:23:15.752Z"
+    },
+    {
+      "themeId": "mortal-journey-duo",
+      "mode": "dark",
+      "path": "screenshots/codex-beta-26.715.3651.0/mortal-journey-duo-dark.png",
+      "sha256": "49a9ba20abef3eec873308079b5fe41cd2d427a1b08af8d68af17fee6b7e7e45",
+      "bytes": 1139846,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "93142c77baedde7b5818c438249fedd84b671608905ca0e48a20de809af9dcc5",
+      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "capturedAt": "2026-07-18T02:23:18.221Z"
+    },
+    {
+      "themeId": "mortal-journey-chibi",
+      "mode": "light",
+      "path": "screenshots/codex-beta-26.715.3651.0/mortal-journey-chibi-light.png",
+      "sha256": "6c2d932dd4261e6b72a1910d00451cff5b4e60ac83eb5abb0943d2814cab159e",
+      "bytes": 1340568,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "9359005d53760e64c59a1a0bd11aabf4945b9a00ae8f2d7eab49f39b531fa03d",
+      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "capturedAt": "2026-07-18T02:23:19.840Z"
+    },
+    {
+      "themeId": "mortal-journey-chibi",
+      "mode": "dark",
+      "path": "screenshots/codex-beta-26.715.3651.0/mortal-journey-chibi-dark.png",
+      "sha256": "b1fa4b306b3bfcc554855a5f4d66a704998dddbede2edf1966079ad6c96e6d91",
+      "bytes": 1151308,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "c1563c42f444e93a03328fdc95f48a50d6557e66f7487d8cfcc1a941c807c748",
+      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "capturedAt": "2026-07-18T02:23:22.289Z"
+    },
+    {
+      "themeId": "renegade-immortal-duo",
+      "mode": "light",
+      "path": "screenshots/codex-beta-26.715.3651.0/renegade-immortal-duo-light.png",
+      "sha256": "cd2a08eac254de5979768924085c5ee0d5e7adf909d9c031be8aa855d5018f8c",
+      "bytes": 1285587,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "9e77153459de658d05dd3c69bfa4a956b73eeb1496ad27151e98e27ab0414a05",
+      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "capturedAt": "2026-07-18T02:23:24.812Z"
+    },
+    {
+      "themeId": "renegade-immortal-duo",
+      "mode": "dark",
+      "path": "screenshots/codex-beta-26.715.3651.0/renegade-immortal-duo-dark.png",
+      "sha256": "3aeae785e35b35c729566c46a9c9c1a025abc922f9d68a167e00a8cd7edb0fad",
+      "bytes": 1085381,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "bfdf222278abf11dc5f5645640c739197174ad0062f67c2ed21b6e648bba7e07",
+      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "capturedAt": "2026-07-18T02:23:27.209Z"
+    },
+    {
+      "themeId": "renegade-immortal-chibi",
+      "mode": "light",
+      "path": "screenshots/codex-beta-26.715.3651.0/renegade-immortal-chibi-light.png",
+      "sha256": "fa3093caac9e20457d17c6ed448455cf3d32ef221c510cf23086acb528c4f145",
+      "bytes": 1263401,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "0c1fccc8d6cf1e0a3e840a8da6daaa1c8c48e28fbe5dbaf1f3874313f23ea87e",
+      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "capturedAt": "2026-07-18T02:23:29.806Z"
+    },
+    {
+      "themeId": "renegade-immortal-chibi",
+      "mode": "dark",
+      "path": "screenshots/codex-beta-26.715.3651.0/renegade-immortal-chibi-dark.png",
+      "sha256": "929582f077b7578cc6e8248e6f4e83c0492fdf603da2aa9024ef32813fae740a",
+      "bytes": 1045227,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "d39f0167b7926f9a5764794be13830499e0b42497c121d432a20f6a2a5ae86f7",
+      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "capturedAt": "2026-07-18T02:23:32.215Z"
+    },
+    {
+      "themeId": "sword-of-coming-duo",
+      "mode": "light",
+      "path": "screenshots/codex-beta-26.715.3651.0/sword-of-coming-duo-light.png",
+      "sha256": "65ec301f02f4311b7f3f069ddc368181b26ebec817977b69918c9a2460df5bfc",
+      "bytes": 1418297,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "bd5df1f3fab21ef194213bcfdb48562f4d0901937d7b1b4668d52e63a26d770f",
+      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "capturedAt": "2026-07-18T02:23:36.110Z"
+    },
+    {
+      "themeId": "sword-of-coming-duo",
+      "mode": "dark",
+      "path": "screenshots/codex-beta-26.715.3651.0/sword-of-coming-duo-dark.png",
+      "sha256": "06ae8e309de4894c0eff6f05de7fdb8fced741e83cec0df2e26ee5a1b8ecd466",
+      "bytes": 1254082,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "b62fdd4b124f5dee5034529664e86f043d4fe6dbb4712d2b79e99f9efee11b12",
+      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "capturedAt": "2026-07-18T02:23:38.659Z"
+    },
+    {
+      "themeId": "sword-of-coming-chibi",
+      "mode": "light",
+      "path": "screenshots/codex-beta-26.715.3651.0/sword-of-coming-chibi-light.png",
+      "sha256": "e5b13bdc9f98bca9cea313b4a285563fbb6eca83bca812b6635d446f4facbd55",
+      "bytes": 1345915,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "b98b14734af1b6d4ecd64c44a0a0783ef6a1de4e722c03450e72765af2b60c4a",
+      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "capturedAt": "2026-07-18T02:23:41.259Z"
+    },
+    {
+      "themeId": "sword-of-coming-chibi",
+      "mode": "dark",
+      "path": "screenshots/codex-beta-26.715.3651.0/sword-of-coming-chibi-dark.png",
+      "sha256": "8722f6a0941405b2912f30f30ee80d11452f062d42c75adebeaaf651627f09c5",
+      "bytes": 1168905,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "b3f9a1e1513561c61befade9813a66563d5fc60a06d731f0d812ccfbf1843976",
+      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "capturedAt": "2026-07-18T02:23:43.680Z"
+    },
+    {
+      "themeId": "battle-through-duo",
+      "mode": "light",
+      "path": "screenshots/codex-beta-26.715.3651.0/battle-through-duo-light.png",
+      "sha256": "48782866726321b68fe2c6b8b1006e216433d60df281e8a8af891b1cb33a5e3d",
+      "bytes": 1354569,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "7286af9f259704871a8c04216cc6fae6dd78fa46db9d769f6f5d19630e18daf5",
+      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "capturedAt": "2026-07-18T02:23:47.376Z"
+    },
+    {
+      "themeId": "battle-through-duo",
+      "mode": "dark",
+      "path": "screenshots/codex-beta-26.715.3651.0/battle-through-duo-dark.png",
+      "sha256": "db2b31da8297b336756b1d33d35eeb21addbd9404608b14f11ba6acc7167e221",
+      "bytes": 1139833,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "288771215fd4d206ca05726081cdcd66931dd8229fb0594b8acb744d19cf506b",
+      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "capturedAt": "2026-07-18T02:23:49.756Z"
+    },
+    {
+      "themeId": "battle-through-chibi",
+      "mode": "light",
+      "path": "screenshots/codex-beta-26.715.3651.0/battle-through-chibi-light.png",
+      "sha256": "9ea973c8e2c5d528e27b4068d7f4dd6feb7d6755daecd7ed04e089ded6ff4b32",
+      "bytes": 1351532,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "c44db704a06fe711fcf49724ef634198ab4f1811476c8413c90e12e5ab5e2c8e",
+      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "capturedAt": "2026-07-18T02:23:52.317Z"
+    },
+    {
+      "themeId": "battle-through-chibi",
+      "mode": "dark",
+      "path": "screenshots/codex-beta-26.715.3651.0/battle-through-chibi-dark.png",
+      "sha256": "837afc051ea36d8054df7a0f9099f7046a22a1a799d614ac8d93d252234fc839",
+      "bytes": 1171573,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "72e9f4be0a0773fbebbf38b115d7e4c1f360bf86e04bc4c2224e2d93695bd595",
+      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "capturedAt": "2026-07-18T02:23:54.727Z"
+    },
+    {
+      "themeId": "mortal-void-hall",
+      "mode": "light",
+      "path": "screenshots/codex-beta-26.715.3651.0/mortal-void-hall-light.png",
+      "sha256": "896f69bdd499278d2036bb14b8a99bb9f72c42049b85b0d7d45b756ce8401288",
+      "bytes": 1370275,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "7b7c48bd3a7b821dd914b26c3e40cbe2a85db691aa669dee37f69b90eb62c9bb",
+      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "capturedAt": "2026-07-18T02:23:57.314Z"
+    },
+    {
+      "themeId": "mortal-void-hall",
+      "mode": "dark",
+      "path": "screenshots/codex-beta-26.715.3651.0/mortal-void-hall-dark.png",
+      "sha256": "eb9cd60ed347710e6e4d7c0c6f7a0fde3e6454800540efd1ed4993dca0e5e3ae",
+      "bytes": 1155960,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "4787b2ca5d2be14a9329a59d5ad9edd5c288a7ea376691501351e9d9cd1ec3fc",
+      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "capturedAt": "2026-07-18T02:23:59.699Z"
+    },
+    {
+      "themeId": "renegade-wedding-storm",
+      "mode": "light",
+      "path": "screenshots/codex-beta-26.715.3651.0/renegade-wedding-storm-light.png",
+      "sha256": "85d4c2a7c173c1a2d6a6692285794cfc6cdf5126a8d4cc8ca460a293ac34dd87",
+      "bytes": 1322678,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "1400ac25217ff1023b483c13e0d67bca475e601a02c23dc8af4067d280f072b5",
+      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "capturedAt": "2026-07-18T02:24:01.269Z"
+    },
+    {
+      "themeId": "renegade-wedding-storm",
+      "mode": "dark",
+      "path": "screenshots/codex-beta-26.715.3651.0/renegade-wedding-storm-dark.png",
+      "sha256": "3251508fb9917d3d50ea61e8073ad319f753261e6afadc70b514216f7b35e836",
+      "bytes": 1133584,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "0b96186124ccaa161d8ea01bb114d54072a6c41caa95c4c4042556de8e0f4cbd",
+      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "capturedAt": "2026-07-18T02:24:02.649Z"
+    },
+    {
+      "themeId": "sword-confession-alley",
+      "mode": "light",
+      "path": "screenshots/codex-beta-26.715.3651.0/sword-confession-alley-light.png",
+      "sha256": "f61694f26f4666fab86c981c9e342fff0347f5dd920434d732e5ffc40dbd0ae2",
+      "bytes": 1239356,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "adcae78017295693d759c62203b5f897da77b52eef084ae22b979f33d15e6e38",
+      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "capturedAt": "2026-07-18T02:24:05.133Z"
+    },
+    {
+      "themeId": "sword-confession-alley",
+      "mode": "dark",
+      "path": "screenshots/codex-beta-26.715.3651.0/sword-confession-alley-dark.png",
+      "sha256": "a78bfe6c69c595f31d0b02047429094203317c9d48b03b4ec44195f4ef8b9312",
+      "bytes": 1038596,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "52b2eebc8d1fefdc44ff8fe3b18dda427f4b8fce5135198269ba1d280bb61052",
+      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "capturedAt": "2026-07-18T02:24:07.440Z"
+    },
+    {
+      "themeId": "battle-three-year-pact",
+      "mode": "light",
+      "path": "screenshots/codex-beta-26.715.3651.0/battle-three-year-pact-light.png",
+      "sha256": "6c09ada4212381723110decface4388fab13b76fbded491d1b036c4b5112dff8",
+      "bytes": 1351696,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "7e28c361acbbd2f6e537bbc0a9afd104083602c162db4fa69065c895a2ab33a0",
+      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "capturedAt": "2026-07-18T02:24:09.979Z"
+    },
+    {
+      "themeId": "battle-three-year-pact",
+      "mode": "dark",
+      "path": "screenshots/codex-beta-26.715.3651.0/battle-three-year-pact-dark.png",
+      "sha256": "dfa41a8140c2bb9a0833c906073567a6056de9323282e42c1f82618ca3307d35",
+      "bytes": 1127750,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "d1c0bce1e5fd5fbc01d2b15008b07ed618b088091f141aeadad577800e057235",
+      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "capturedAt": "2026-07-18T02:24:11.321Z"
+    }
+  ]
+}

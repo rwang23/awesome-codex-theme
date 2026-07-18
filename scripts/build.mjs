@@ -69,7 +69,7 @@ export async function buildSite(outputPath = DEFAULT_OUTPUT) {
       desktop: {
         repository: "https://github.com/rwang23/awesome-codex-theme",
         releases: "https://github.com/rwang23/awesome-codex-theme/releases",
-        currentVersion: "0.2.0-alpha.1",
+        currentVersion: "0.3.0-alpha.1",
       },
     }, null, 2) + "\n", "utf8"),
   );
@@ -82,6 +82,8 @@ export async function buildSite(outputPath = DEFAULT_OUTPUT) {
       theme.provenance.record,
       theme.previews.light.preview,
       theme.previews.dark.preview,
+      theme.previews.light.fullSkin?.asset,
+      theme.previews.dark.fullSkin?.asset,
       theme.previews.light.nativeTheme.path,
       theme.previews.dark.nativeTheme.path,
       theme.previews.light.capture?.path,

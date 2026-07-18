@@ -18,8 +18,10 @@ const HEX = /^#[0-9A-Fa-f]{6}$/;
 const FAN_ART_LICENSE_ID = "LicenseRef-ACT-Fan-Art-Notice";
 const FORBIDDEN_PROMPT = /凡人修仙传|仙逆|剑来|斗破苍穹|studio\s+ghibli|makoto\s+shinkai|hayao\s+miyazaki|style\s+of/i;
 const MAX_IMAGE_BYTES = 16 * 1024 * 1024;
-const CODEX_BETA_CAPTURE_VERSION = "26.707.3351.0";
-const CODEX_BETA_PACKAGE = "OpenAI.CodexBeta_26.707.3351.0_x64__2p2nqsd0c76g0";
+const CODEX_BETA_CAPTURE_VERSION = "26.715.3651.0";
+const CODEX_BETA_PACKAGE = "OpenAI.CodexBeta_26.715.3651.0_x64__2p2nqsd0c76g0";
+const FULL_SKIN_FORMAT = "act-full-skin-v1";
+const SOURCE_ART_RENDERER_ID = "act-source-art-renderer-v1";
 const SOURCE_WIDTH = 1536;
 const SOURCE_HEIGHT = 1024;
 const CANONICAL_ENTRIES = [
@@ -32,6 +34,17 @@ const CANONICAL_ENTRIES = [
 
 function sha256(buffer) {
   return createHash("sha256").update(buffer).digest("hex");
+}
+
+function renderFingerprint(theme, mode, sourceProvenance, width, height) {
+  return sha256(Buffer.from(JSON.stringify({
+    renderer: SOURCE_ART_RENDERER_ID,
+    sourceSha256: sourceProvenance.sourceSha256,
+    mode,
+    width,
+    height,
+    background: theme[mode].tokens.background,
+  }), "utf8"));
 }
 
 function check(condition, message, errors) {
@@ -166,14 +179,18 @@ function validateNativeTheme(theme, mode, nativeBytes, modeRecord, manifestMode,
 export async function validateRepository() {
   const errors = [];
   let captureCount = 0;
+  let fullSkinCount = 0;
   const nativeThemeOwners = new Map();
-  const [catalog, registry, sourceJobs, themeSchema, registrySchema] = await Promise.all([
+  const [catalog, registry, sourceJobs, themeSchema, registrySchema, runtimeCss, runtimeJs] = await Promise.all([
     readJson("themes/catalog.json"),
     readJson("themes/registry.json"),
     readJson("themes/source-art/jobs.json"),
     readJson("schemas/theme-pack.schema.json"),
     readJson("schemas/registry.schema.json"),
+    readFile(path.join(ROOT, "packages", "full-skin", "runtime.css"), "utf8"),
+    readFile(path.join(ROOT, "packages", "full-skin", "runtime.js"), "utf8"),
   ]);
+  const runtimeSha256 = sha256(Buffer.from(runtimeCss + "\n" + runtimeJs, "utf8"));
 
   check(themeSchema.$schema?.includes("2020-12"), "Theme schema is not JSON Schema 2020-12", errors);
   check(registrySchema.$schema?.includes("2020-12"), "Registry schema is not JSON Schema 2020-12", errors);
@@ -394,19 +411,29 @@ export async function validateRepository() {
     check(manifest.provenance?.sourceSha256 === sourceProvenance.sourceSha256, theme.id + " manifest source hash mismatch", errors);
     check(manifest.motion?.default === "reduced" && manifest.motion?.animated === false, theme.id + " canonical motion mismatch", errors);
     check(
-      JSON.stringify(manifest.compatibility?.engines) === JSON.stringify([{
-        id: "codex-native",
-        coverage: "native-theme-v1",
-        testedVersion: CODEX_NATIVE_TESTED_VERSION,
-      }]),
-      theme.id + " must declare Codex Native as its only compatibility target",
+      JSON.stringify(manifest.compatibility?.engines) === JSON.stringify([
+        {
+          id: "codex-full-skin",
+          coverage: "full-skin-v1",
+          testedVersion: CODEX_BETA_CAPTURE_VERSION,
+        },
+        {
+          id: "codex-native",
+          coverage: "native-theme-v1",
+          testedVersion: CODEX_NATIVE_TESTED_VERSION,
+        },
+      ]),
+      theme.id + " must declare the ACT full-skin runtime and Native fallback",
       errors,
     );
     check(
-      JSON.stringify(Object.keys(theme.exports || {})) === JSON.stringify(["codex-native"]),
-      theme.id + " registry must expose only Codex Native",
+      JSON.stringify(Object.keys(theme.exports || {})) === JSON.stringify(["codex-full-skin", "codex-native"]),
+      theme.id + " registry must expose the full-skin runtime and Native fallback",
       errors,
     );
+    check(theme.exports?.["codex-full-skin"]?.coverage === "full-skin-v1", theme.id + " full-skin registry coverage mismatch", errors);
+    check(theme.exports?.["codex-full-skin"]?.format === FULL_SKIN_FORMAT, theme.id + " full-skin registry format mismatch", errors);
+    check(theme.exports?.["codex-full-skin"]?.testedVersion === CODEX_BETA_CAPTURE_VERSION, theme.id + " full-skin registry version mismatch", errors);
     check(theme.exports?.["codex-native"]?.coverage === "native-theme-v1", theme.id + " native registry coverage mismatch", errors);
     check(theme.exports?.["codex-native"]?.testedVersion === CODEX_NATIVE_TESTED_VERSION, theme.id + " native registry version mismatch", errors);
     validateCanonicalZip(theme.id, packageBytes, manifestBytes, errors);
@@ -428,8 +455,22 @@ export async function validateRepository() {
       check(previewDimensions.width === 960 && previewDimensions.height === 540, theme.id + " " + mode + " preview dimensions mismatch", errors);
       check(asset.length > 0 && asset.length <= MAX_IMAGE_BYTES, theme.id + " " + mode + " asset size invalid", errors);
       check(sha256(asset) === manifestMode.integrity.sha256, theme.id + " " + mode + " manifest asset hash mismatch", errors);
+      check(
+        manifestMode.integrity.renderFingerprint
+          === renderFingerprint(catalogTheme, mode, sourceProvenance, 2560, 1440),
+        theme.id + " " + mode + " render fingerprint mismatch",
+        errors,
+      );
       check(sha256(asset) === modeRecord.assetSha256, theme.id + " " + mode + " registry asset hash mismatch", errors);
       check(asset.length === manifestMode.integrity.bytes && asset.length === modeRecord.assetBytes, theme.id + " " + mode + " asset byte count mismatch", errors);
+      check(modeRecord.fullSkin?.format === FULL_SKIN_FORMAT, theme.id + " " + mode + " full-skin format mismatch", errors);
+      check(modeRecord.fullSkin?.asset === "themes/" + theme.id + "/" + manifestMode.asset, theme.id + " " + mode + " full-skin asset path mismatch", errors);
+      check(modeRecord.fullSkin?.sha256 === sha256(asset), theme.id + " " + mode + " full-skin asset hash mismatch", errors);
+      check(modeRecord.fullSkin?.bytes === asset.length, theme.id + " " + mode + " full-skin asset byte count mismatch", errors);
+      check(JSON.stringify(modeRecord.fullSkin?.art) === JSON.stringify(manifestMode.art), theme.id + " " + mode + " full-skin art contract mismatch", errors);
+      check(JSON.stringify(modeRecord.fullSkin?.tokens) === JSON.stringify(manifestMode.tokens), theme.id + " " + mode + " full-skin token contract mismatch", errors);
+      check(modeRecord.fullSkin?.testedVersion === CODEX_BETA_CAPTURE_VERSION, theme.id + " " + mode + " full-skin tested version mismatch", errors);
+      fullSkinCount += 1;
       check(sha256(preview) === modeRecord.previewSha256, theme.id + " " + mode + " preview hash mismatch", errors);
       check(sha256(nativeTheme) === modeRecord.nativeTheme.sha256, theme.id + " " + mode + " native theme hash mismatch", errors);
       check(nativeTheme.length === modeRecord.nativeTheme.bytes, theme.id + " " + mode + " native theme byte count mismatch", errors);
@@ -457,12 +498,13 @@ export async function validateRepository() {
         check(capture.width === 1440 && capture.height === 810, theme.id + " " + mode + " capture metadata dimensions mismatch", errors);
         check(capture.bytes === captureBytes.length, theme.id + " " + mode + " capture byte count mismatch", errors);
         check(capture.sha256 === sha256(captureBytes), theme.id + " " + mode + " capture hash mismatch", errors);
-        check(capture.nativeSha256 === modeRecord.nativeTheme.sha256, theme.id + " " + mode + " capture Native hash mismatch", errors);
-        check(/^[a-f0-9]{64}$/.test(capture.readbackSha256 || ""), theme.id + " " + mode + " capture readback hash is invalid", errors);
-        check(capture.canonicalizedByApp === true, theme.id + " " + mode + " capture must disclose Beta hex canonicalization", errors);
+        check(capture.assetSha256 === modeRecord.fullSkin.sha256, theme.id + " " + mode + " capture asset hash mismatch", errors);
+        check(capture.runtimeSha256 === runtimeSha256, theme.id + " " + mode + " capture runtime hash mismatch", errors);
+        check(capture.markerVersion === FULL_SKIN_FORMAT, theme.id + " " + mode + " capture marker mismatch", errors);
+        check(capture.selectors?.main === true, theme.id + " " + mode + " capture main selector was not verified", errors);
         check(capture.appVersion === CODEX_BETA_CAPTURE_VERSION, theme.id + " " + mode + " capture app version mismatch", errors);
         check(capture.packageFullName === CODEX_BETA_PACKAGE, theme.id + " " + mode + " capture package identity mismatch", errors);
-        check(capture.fixture === "settings-appearance-v1", theme.id + " " + mode + " capture fixture mismatch", errors);
+        check(capture.fixture === "full-skin-home-v1", theme.id + " " + mode + " capture fixture mismatch", errors);
       }
       validateTokens(theme.id, mode, manifestMode.tokens, errors);
       validateNativeTheme(theme, mode, nativeTheme, modeRecord, manifestMode, packageBytes, errors);
@@ -470,6 +512,7 @@ export async function validateRepository() {
   }
 
   check(captureCount === registry.themes.length * 2, "Registry must expose one real capture for every theme mode", errors);
+  check(fullSkinCount === registry.themes.length * 2, "Registry must expose one full-skin record for every theme mode", errors);
   if (errors.length) {
     throw new Error("Validation failed:\n- " + errors.join("\n- "));
   }
@@ -478,6 +521,7 @@ export async function validateRepository() {
     themes: registry.themes.length,
     modes: registry.themes.length * 2,
     packages: registry.themes.length,
+    fullSkinExports: fullSkinCount,
     nativeExports: registry.themes.length * 2,
     captures: captureCount,
   };
@@ -487,7 +531,8 @@ async function main() {
   const result = await validateRepository();
   console.log(
     "Validated " + result.sources + " source images, " + result.themes + " themes, " + result.modes + " modes, "
-    + result.packages + " code-free packages, " + result.nativeExports + " Codex Native exports, and "
+    + result.packages + " code-free packages, " + result.fullSkinExports + " full-skin records, "
+    + result.nativeExports + " Codex Native fallbacks, and "
     + result.captures + " real Beta captures.",
   );
 }

@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="面向 Codex 的开放主题包标准、Registry、Validator 与原创主题 Gallery。">
+    <meta name="description" content="面向 Codex 的声明式 Full Skin 标准、Registry、Validator、真实截图 Gallery 与跨平台主题管理器。">
     <meta name="color-scheme" content="light">
     <meta name="theme-color" content="#f4f3ee">
     <title>Awesome Codex Theme | Codex 主题档案馆</title>
@@ -24,7 +24,7 @@
         <a href="#gallery" data-i18n="navThemes">主题</a>
         <a href="#manager" data-i18n="navManager">桌面管理器</a>
         <a href="#standard" data-i18n="navStandard">标准</a>
-        <a href="#compatibility" data-i18n="navNative">Codex Native</a>
+        <a href="#compatibility" data-i18n="navNative">完整皮肤</a>
         <a href="#creator" data-i18n="navCreator">创作 Skill</a>
       </nav>
       <button class="language-button" id="languageButton" type="button" aria-label="切换语言">
@@ -45,7 +45,7 @@
             <span data-i18n="heroLineTwo">换一片风景。</span>
           </h1>
           <p class="hero-intro" data-i18n="heroIntro">
-            每张馆藏封面都对应一套可由 Codex 原生导入的配色，包含明暗模式、来源记录、完整性校验和版本化主题字符串。
+            不只是换一组颜色。每套主题都会把背景、半透明材质、配色和主题文字一起带进 Codex，并保留来源、哈希与准确版本证据。
           </p>
           <div class="hero-actions">
             <a class="hero-cta" href="#gallery">
@@ -96,7 +96,7 @@
               <span id="heroThemeMeta">原创国风修仙 01 · 明亮</span>
             </div>
           </div>
-          <span class="theater-note note-one" aria-hidden="true">NATIVE v1</span>
+          <span class="theater-note note-one" aria-hidden="true">FULL SKIN v1</span>
           <span class="theater-note note-two" id="heroVisualKind" aria-hidden="true">BETA CAPTURE</span>
         </div>
       </section>
@@ -114,8 +114,8 @@
         </div>
         <div>
           <span class="proof-icon gold" aria-hidden="true"></span>
-          <strong>01</strong>
-          <span data-i18n="statNative">个原生目标</span>
+          <strong>02</strong>
+          <span data-i18n="statNative">个 Codex 目标</span>
         </div>
         <div>
           <span class="proof-icon indigo" aria-hidden="true"></span>
@@ -141,8 +141,8 @@
               <span data-i18n="managerFeatureTwoBody">Windows 与 macOS 共用安全的本地界面和同一份 Registry。</span>
             </li>
             <li>
-              <strong data-i18n="managerFeatureThreeTitle">更新与导入分开</strong>
-              <span data-i18n="managerFeatureThreeBody">目录可自动同步；最终导入仍由你在 ChatGPT 外观设置中确认。</span>
+              <strong data-i18n="managerFeatureThreeTitle">一键应用，随时恢复</strong>
+              <span data-i18n="managerFeatureThreeBody">管理器校验素材与应用身份，加载完整皮肤，也能干净移除运行时。</span>
             </li>
           </ul>
           <div class="manager-actions">
@@ -165,7 +165,7 @@
           </div>
           <figcaption>
             <span data-i18n="managerScreenshotCaption">Tauri Windows 实机界面 · 内嵌 ChatGPT Beta 真实主题截图</span>
-            <span>0.2.0-alpha.1</span>
+            <span>0.3.0-alpha.1</span>
           </figcaption>
         </figure>
       </section>
@@ -239,7 +239,7 @@
             <div>
               <small>03</small>
               <h3 data-i18n="stepExportTitle">导出</h3>
-              <p data-i18n="stepExportBody">生成 Codex 桌面版能够直接导入的 Native v1 主题字符串。</p>
+              <p data-i18n="stepExportBody">生成 Full Skin 记录、实机证据和 Native 配色回退。</p>
             </div>
           </li>
         </ol>
@@ -248,23 +248,28 @@
       <section class="compatibility-section" id="compatibility" aria-labelledby="compatibilityTitle">
         <div class="section-heading compatibility-heading">
           <div>
-            <p class="eyebrow" data-i18n="compatibilityEyebrow">Codex Native</p>
-            <h2 id="compatibilityTitle" data-i18n="compatibilityTitle">只做一个目标，而且使用真实的 Codex 主题契约。</h2>
+            <p class="eyebrow" data-i18n="compatibilityEyebrow">ACT Full Skin + Native</p>
+            <h2 id="compatibilityTitle" data-i18n="compatibilityTitle">完整皮肤是主交付，原生配色是轻量回退。</h2>
           </div>
           <p data-i18n="compatibilityIntro">
-            Codex 原生支持强调色、背景色、前景色、对比度、字体、代码主题和语义色。原生契约不接受背景图片，因此 Gallery 插画会明确标为封面。
+            Theme Manager 用固定、可审查的运行时加载已校验背景与材质，不修改应用文件或私有数据。Codex Native v1 仍可单独导入配色，但它不能安装背景。
           </p>
         </div>
-        <div class="compatibility-table" role="table" aria-label="Codex Native 兼容情况">
+        <div class="compatibility-table" role="table" aria-label="Codex 主题兼容情况">
           <div class="compatibility-row compatibility-header" role="row">
             <span role="columnheader" data-i18n="tableTarget">目标</span>
             <span role="columnheader" data-i18n="tableCoverage">覆盖程度</span>
             <span role="columnheader" data-i18n="tableDelivery">交付方式</span>
           </div>
           <div class="compatibility-row" role="row">
+            <strong role="cell">ACT Full Skin</strong>
+            <span role="cell"><i class="coverage-dot full"></i><span data-i18n="coverageFullSkin">背景 + 材质 + 配色 + 文案</span></span>
+            <span role="cell" data-i18n="deliveryManager">Tauri Theme Manager</span>
+          </div>
+          <div class="compatibility-row" role="row">
             <strong role="cell">Codex native</strong>
-            <span role="cell"><i class="coverage-dot full"></i><span data-i18n="coverageAppearance">原生主题 v1</span></span>
-            <span role="cell" data-i18n="deliveryProfile">复制并导入</span>
+            <span role="cell"><i class="coverage-dot partial"></i><span data-i18n="coverageAppearance">仅配色回退</span></span>
+            <span role="cell" data-i18n="deliveryProfile">复制后手动导入</span>
           </div>
         </div>
       </section>
@@ -344,8 +349,8 @@ city rain theme.</code></pre>
             </div>
           </fieldset>
           <div class="native-target">
-            <span>Codex Native</span>
-            <strong>codex-theme-v1</strong>
+            <span>ACT Full Skin</span>
+            <strong>act-full-skin-v1</strong>
           </div>
         </div>
 
@@ -354,15 +359,15 @@ city rain theme.</code></pre>
         <div class="installer-card">
           <span class="installer-mark" aria-hidden="true">ACT</span>
           <div>
-            <strong data-i18n="installerTitle">更稳妥的一步交接</strong>
-            <p data-i18n="installerBody">免管理员权限的安装助手会校验主题、识别准确的 Stable 或 Beta 应用、复制所选主题并打开对应版本。最后一步仍由你在 ChatGPT 中确认导入。</p>
+            <strong data-i18n="installerTitle">由 Theme Manager 安全应用</strong>
+            <p data-i18n="installerBody">管理器校验 Registry、背景哈希、准确应用包和本机回环端口，再加载固定 Full Skin 运行时；恢复时会移除样式和预加载脚本。</p>
           </div>
         </div>
 
         <div class="command-panel">
           <div class="command-heading">
-            <span data-i18n="verifiedCommand">Codex Native 主题字符串</span>
-            <span>v1</span>
+            <span data-i18n="verifiedCommand">Native 配色回退</span>
+            <span>fallback</span>
           </div>
           <code id="nativeThemeString"></code>
           <button class="copy-button" id="copyTheme" type="button">
@@ -372,9 +377,9 @@ city rain theme.</code></pre>
         </div>
 
         <div class="dialog-actions">
-          <a class="primary-action" href="./downloads/awesome-codex-theme-installer-windows.zip" download>
-            <span data-i18n="downloadInstaller">下载 Windows 安装助手</span>
-            <span aria-hidden="true">↓</span>
+          <a class="primary-action" href="https://github.com/rwang23/awesome-codex-theme/releases">
+            <span data-i18n="downloadInstaller">查看 Theme Manager 发布状态</span>
+            <span aria-hidden="true">↗</span>
           </a>
           <a class="secondary-action" id="downloadNativeTheme" download>
             <span data-i18n="downloadExport">下载原生主题</span>
@@ -385,7 +390,7 @@ city rain theme.</code></pre>
           </a>
         </div>
         <p class="trust-note" id="trustNote" data-i18n="trustNoteNative">
-          复制字符串后，打开 Codex 设置 &gt; 外观，在对应的明亮或暗色主题中选择“导入”。插画只是 Gallery 封面，不会作为应用背景写入 Codex。
+          Full Skin 只连接准确应用拥有的本机回环调试端口，不修改 WindowsApps、app.asar、聊天或 ChatGPT 私有数据。上面的 Native 字符串只是无背景的配色回退。
         </p>
       </div>
     </dialog>

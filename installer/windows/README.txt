@@ -1,4 +1,4 @@
-Awesome Codex Theme 安装助手
+Awesome Codex Theme Native 配色回退助手
 
 使用方法
 
@@ -15,7 +15,8 @@ Awesome Codex Theme 安装助手
 ChatGPT 数据目录或任何对话。主题包仍然只有声明式配置和素材，不含脚本。
 
 Codex Native 目前没有公开的无人值守安装接口，所以最后一次“导入”必须由你
-在 ChatGPT 内确认。Gallery 插画是馆藏封面，不会成为 ChatGPT 背景。
+在 ChatGPT 内确认。这条轻量路径只改变配色，不会安装 Full Skin 背景；需要
+背景、半透明材质和主题文字时，请使用 Tauri Theme Manager。
 
 安装助手不需要管理员权限。启动器中的 ExecutionPolicy Bypass 只作用于这一次
 用户主动打开的 PowerShell 进程，不会修改系统或企业策略。
@@ -29,6 +30,7 @@ English
 5. Choose Import for the matching Light or Dark theme, paste, and confirm.
 
 The helper validates the bundled Registry and copies a declarative
-codex-theme-v1 string. It never edits the ChatGPT package, private app data, or
+codex-theme-v1 string. It is a palette-only fallback and does not install a Full
+Skin background. It never edits the ChatGPT package, private app data, or
 conversation history. Codex Native does not expose an unattended install API,
 so the final import remains an explicit action inside ChatGPT.

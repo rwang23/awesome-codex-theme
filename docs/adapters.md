@@ -1,53 +1,84 @@
-# Codex Native compatibility
+# Codex Full Skin compatibility
 
-Awesome Codex Theme 只导出 Codex Native 格式，不再兼容第三方皮肤引擎。
+Awesome Codex Theme has two Codex targets:
 
-## 当前契约
+1. `codex-full-skin`: the primary runtime for background, materials, colors, and theme copy.
+2. `codex-native`: a palette-only fallback using `codex-theme-v1:`.
 
-每个明亮或暗色模式都会生成一段以 `codex-theme-v1:` 开头的主题字符串。其声明式 payload 包含：
+The project does not export Dream Skin, HeiGe Skin Studio, CodeDrobe, or other third-party formats.
 
-- `variant`: `light` 或 `dark`
-- `codeThemeId`: 当前使用 `codex`
-- `accent`、`surface` 与 `ink`
-- 0 到 100 的对比度
-- UI 与代码字体选择
-- diff added、diff removed 与 skill 三类语义色
-- 窗口透明度偏好
+## ACT Full Skin v1
 
-导入入口是 Codex 的“设置 > 外观”。先选择对应的明亮或暗色主题，再点“导入”并粘贴字符串。Gallery 也提供同内容的 `.codex-theme.txt` 下载。
+`act-full-skin-v1` is owned by Awesome Codex Theme Manager. A Registry mode record declares:
 
-当前导出格式已在 Stable `26.715.2305.0` 和 Beta `26.707.3351.0` 的“设置 > 外观”中校验。应用版本变化后，需要重新确认导入 Schema，不能把旧版本验证自动延伸到新版本。
+- one PNG path, SHA-256, byte count, width, and height;
+- `focusX`, `focusY`, `safeArea`, and `taskMode`;
+- background, surface, text, accent, muted, and border tokens;
+- the exact Codex version used for verification.
 
-## Windows 安装助手
+The manager downloads only the declared PNG, checks it against the Registry, and converts it to an in-memory blob URL. It then applies a fixed repository-owned CSS/JavaScript runtime to the current Codex session.
 
-Gallery 提供一个独立的 Windows 安装助手。它不是 Codex 插件，也不进入 `.act-theme`：
+Theme packages cannot override the runtime. They contain no CSS, JavaScript, shell commands, plugins, or remote URLs.
 
-- 校验内置 Registry、主题字符串、SHA-256 和体积
-- 识别准确的 Stable 或 Beta 包，而不是调用两者共用的 `codex://`
-- 复制用户选择的主题字符串
-- 通过已注册的 AUMID 打开用户选择的应用
+### Session lifecycle
 
-安装助手不需要管理员权限，不修改 WindowsApps、应用文件、私有数据或会话。用户仍需在 ChatGPT 的“设置 > 外观”中点击“导入”，这是刻意保留的信任边界。
+On Windows, the manager detects the exact Store package, checks whether its executable is already running, and starts it with:
 
-## 明确不支持
+```text
+--remote-debugging-address=127.0.0.1
+--remote-debugging-port=<fixed channel port>
+```
 
-Codex Native v1 不接受背景图片。仓库中的国风、城市与 Fan Art 插画只用于 Gallery 封面和创作归档，不会成为 Codex 应用背景，也不能当作实机截图。
+The Stable and Beta channels use different fixed ports. The manager accepts a listener only when the owning executable path and package full name match the selected target. It connects only to loopback WebSockets whose target URL starts with `app://`.
 
-项目不做以下事情：
+The runtime is evaluated in the current page and registered through `Page.addScriptToEvaluateOnNewDocument`, so it survives an internal page rebuild. Restore removes the registered script and calls the runtime cleanup function in every recorded target.
 
-- 不注入 CSS 或 JavaScript
-- 不修改 Codex 安装目录或应用文件
-- 不导出 Dream Skin、HeiGe Skin Studio 或 CodeDrobe 格式
-- 不从网页或安装助手自动写入用户设置
+Restoring the native look does not close the debugging listener. The port closes when the user exits and reopens ChatGPT normally.
 
-## 包与 Registry
+### Supported presentation
 
-标准 `.act-theme` 包仍然是纯声明归档。它包含 manifest、两张已声明封面和两份 Native 主题字符串，不含可执行代码或远程资源。Registry 记录每份 Native 字符串的路径、SHA-256、字节数、格式和已测试 Codex 版本。
+Version 1 covers:
 
-真实应用截图的证据要求见 [native-testing.md](native-testing.md)。
+- a full-window background image;
+- mode-specific color tokens;
+- translucent header, sidebar, home cards, and composer materials;
+- readable native text and controls;
+- theme title and tagline on the home screen;
+- reduced motion.
 
-当前 28 套主题的 56 个模式均已在独立 Beta `26.707.3351.0` 中完成导入、语义读回和实机截图。Registry 的 `capture` 字段将每张截图绑定到 Native 哈希、应用读回哈希、准确包身份、固定 fixture 和采集时间；Gallery 默认使用这些截图。
+Version 1 does not:
+
+- reorder or replace native navigation;
+- create new ChatGPT panels or task data;
+- change account details, projects, chats, or settings;
+- patch `app.asar`, WindowsApps, or the macOS app bundle;
+- promise compatibility beyond the tested app version.
+
+The first two reference screenshots supplied for this project fit the v1 target. A mockup that replaces the entire Codex information architecture does not.
+
+## Codex Native fallback
+
+Every mode also exports a strict `codex-theme-v1:` string for **Settings > Appearance > Import**. It contains:
+
+- `variant`;
+- `codeThemeId`;
+- `accent`, `surface`, and `ink`;
+- `contrast`;
+- UI and code font fields, left as `null`;
+- semantic colors;
+- `opaqueWindows`.
+
+Unknown fields are rejected. Native v1 does not accept a background image, so this path changes the palette only.
+
+## Verified versions
+
+| Target | Version | Evidence |
+| --- | --- | --- |
+| Full Skin | ChatGPT Beta `26.715.3651.0` | 56 real 1440×810 captures, runtime markers, selector readback, cleanup |
+| Native fallback | ChatGPT Stable `26.715.2305.0` | strict payload generation and parser validation |
+
+Compatibility is version-bound. A new Codex release must pass a fresh probe, all repository checks, and the full screenshot run before its version is written into the Registry.
 
 ## English summary
 
-Awesome Codex Theme exports Codex Native only. Each light or dark mode provides a declarative `codex-theme-v1:` string for Settings > Appearance > Import. The contract supports colors, contrast, fonts, the built-in code theme, and semantic colors. It does not support background images. Repository illustrations remain cover art; Gallery application views are separately verified Beta captures.
+ACT Full Skin v1 applies a verified PNG, materials, colors, and theme copy through a manager-owned loopback CDP runtime. Theme packs remain declarative and code-free. Codex Native v1 is retained as a palette-only fallback. The project does not export third-party skin-engine formats or modify ChatGPT application files and private data.

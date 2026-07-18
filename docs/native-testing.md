@@ -1,91 +1,94 @@
-# Codex Native 测试与实机截图
+# Full Skin 测试与实机截图
 
-这份流程把“格式可解析”“Codex 能导入”和“Gallery 有真实截图”分成三条证据，避免用生成封面代替实机结果。
+这个文件沿用原来的 `native-testing.md` 路径，避免旧链接失效。当前主要记录 Full Skin；Native 只作为配色回退。
 
-## 当前基线
+## 固定测试台
 
-- Stable：`OpenAI.Codex_26.715.2305.0_x64__2p2nqsd0c76g0`，版本 `26.715.2305.0`
-- 独立 Beta 测试台：`OpenAI.CodexBeta_26.707.3351.0_x64__2p2nqsd0c76g0`，版本 `26.707.3351.0`
-- Beta AUMID：`OpenAI.CodexBeta_2p2nqsd0c76g0!App`
-- Stable 与 Beta 使用不同 package family 和数据目录；本轮只修改 Beta 的测试主题，稳定版未触碰
-- Native 分享格式前缀为 `codex-theme-v1:`
-- 两个版本的“设置 > 外观”都提供明亮/暗色主题导入与复制
-- Native v1 没有背景图片字段
+- Stable：`OpenAI.Codex_26.715.2305.0_x64__2p2nqsd0c76g0`
+- Stable 版本：`26.715.2305.0`
+- Beta：`OpenAI.CodexBeta_26.715.3651.0_x64__2p2nqsd0c76g0`
+- Beta 版本：`26.715.3651.0`
+- Full Skin 端口：Stable `9465`，Beta `9466`
+- 截图尺寸：1440×810，DPR 1
+- fixture：`full-skin-home-v1`
 
-官方设置参考：[Codex settings and appearance](https://learn.chatgpt.com/docs/reference/settings)
+截图只使用独立 Beta。主 Codex 实例可以继续运行，两个 Store 包和端口互不混用。
 
-## 三层验证
+## 测试前提
 
-### 1. 仓库级
+1. Beta 必须由准确的 Store AUMID 启动，并带有仅限 `127.0.0.1` 的调试参数。
+2. 端口监听进程的可执行路径必须属于固定 Beta 包。
+3. CDP 目标必须是 `app://` 页面。
+4. 测试进入新任务首页并隐藏侧栏，避免把项目名、会话或私有内容写入公开截图。
+5. Native 外观设置不在 Full Skin 采集过程中改变。
 
-运行：
+任一身份检查失败，采集脚本立即停止。
 
-```bash
-npm run check
+## 每个模式的验证
+
+`scripts/capture-full-skin-screenshots.mjs` 对 28 套主题的明亮、暗色模式依次执行：
+
+1. 从 Registry 读取主题记录。
+2. 读取本地 PNG，复核字节数和 SHA-256。
+3. 切换模拟的 `prefers-color-scheme`，等待 Codex 页面稳定。
+4. 通过 `Page.addScriptToEvaluateOnNewDocument` 注册运行时。
+5. 在当前页面执行同一份运行时。
+6. 读回 `act-full-skin` 根标记、主题 ID、模式、主区域和 composer 选择器。
+7. 截取 1440×810 PNG，记录截图哈希、素材哈希和运行时哈希。
+8. 移除该模式的 early script。
+
+批量结束后，脚本调用 cleanup，并确认：
+
+- `window.__ACT_FULL_SKIN_STATE__` 不存在；
+- 根节点没有 `act-full-skin`；
+- style 与 caption 节点都已移除；
+- 设备尺寸模拟和媒体模拟已清空。
+
+当前清单位于：
+
+```text
+screenshots/codex-beta-26.715.3651.0/manifest.json
 ```
 
-Validator 会解析 56 份 Native 字符串，核对格式、明暗模式、颜色、语义色、哈希、体积、Registry 值和 `.act-theme` 内副本，并拒绝两个条目复用同一份可安装 Native 配色。这能证明生成结果自洽且每个展品的安装结果不同，但不能证明 Codex 已经渲染它。
+结果是 56/56 捕获成功，`runtime.earlyInjection` 为 `true`，`runtime.removedAfterCapture` 为 `true`。
 
-### 2. 实机导入
+## Theme Manager 端到端测试
 
-手动验证时：
+截图采集直接验证运行时；管理器还要单独验证 UI 到 Rust 的调用链。
 
-1. 记录 Codex 版本和待测 Native 文件 SHA-256。
-2. 打开“设置 > 外观”。
-3. 先选择对应的明亮或暗色主题。
-4. 点“导入”，粘贴完整 `codex-theme-v1:` 字符串。
-5. 重新打开外观设置，确认字段仍能读回。
-6. 打开固定测试任务，检查导航、正文、代码块、diff、Skill 标记和焦点状态。
-7. 恢复测试实例原设置。
+`scripts/smoke-theme-manager.mjs` 会：
 
-当前正在工作的 Codex 实例可以即时导入，不必退出应用，但设置会影响该实例的全局外观。除非用户明确同意，不应在正在工作的实例里做批量采集。
+1. 验证 Theme Manager WebView2 调试端口的进程祖先包含准确 release EXE。
+2. 验证 Beta 端口属于固定 Store 包。
+3. 在真实管理器 UI 中选择主题、模式和 Beta。
+4. 点击“应用完整皮肤”。
+5. 从 Beta 页面读回主题 ID、模式、根 class、style 和 caption。
+6. 为 README 与 Gallery 采集管理器实机截图。
+7. 点击“恢复原生”，再确认所有运行时标记消失。
 
-仓库的固定 Beta 流程使用：
+本地预发布测试可以用 `--seed-local-art` 把经过同一 Registry 哈希验证的图片放入应用缓存。它只绕过尚未部署的 Pages URL，不绕过管理器的素材哈希、进程身份、CDP 或恢复逻辑；脚本结束后会删除自己创建的缓存文件。正式发布前还要对已部署 Pages URL做一次不带 seed 的测试。
 
-```bash
-npm run screenshots:probe
-npm run screenshots:capture -- --expected-baseline=<approved-sha256>
-```
+## 视觉抽检
 
-`probe` 只读核对端口所有者、准确包路径、`app://-/index.html` 目标、Appearance 导入入口、当前明暗分享字符串和 shell 模式。`capture` 还会：
+56 张截图会按模式生成 contact sheet。抽检关注：
 
-1. 要求调用方提供已批准的基线指纹。
-2. 逐套导入 56 份 Native 字符串。
-3. 从应用的 Copy theme 读回 payload；Beta 会把十六进制颜色规范化为小写，比较时按语义字段核对。
-4. 隐藏含私人项目和任务名称的主侧栏。
-5. 在固定的 `settings-appearance-v1` fixture 以 1440×810 采集。
-6. 写入截图 SHA-256、Native 哈希、读回哈希、版本与时间。
-7. 在 finally 阶段恢复两份原始主题、System shell 和原始侧栏状态，再次读回基线指纹。
+- 原生标题、建议卡片和模型选择文字是否可读；
+- composer 是否仍有未主题化的纯白或纯黑块；
+- 背景主体是否落在声明的焦点区域；
+- 左侧工作区是否保留足够安静的区域；
+- 亮色和暗色是否属于同一主题；
+- 是否出现聊天内容、账号信息或本机路径。
 
-本轮结果在 `screenshots/codex-beta-26.707.3351.0/manifest.json`：56/56 唯一模式、错误日志为空，结束指纹与开始指纹一致。
+contact sheet 是临时 QA 文件，不进入公开 Registry。公开证据以单张截图和 manifest 为准。
 
-### 3. 截图证据
+## Native 回退
 
-每张实机截图至少绑定：
+Validator 仍解析 56 份 `codex-theme-v1:` 字符串，核对字段白名单、模式、颜色、哈希、Registry 路径和包内副本，并拒绝重复 payload。这个测试只证明回退配色自洽，不代表它能安装 Full Skin 背景。
 
-- theme id 与明暗模式
-- Codex 桌面版本
-- Native 文件 SHA-256
-- 采集日期
-- 固定窗口尺寸与固定测试任务版本
-- 导入成功后的应用画面
+## 版本升级
 
-封面与截图分开命名和记录。封面继续来自 `themes/<id>/previews/`；实机截图位于 `screenshots/codex-beta-26.707.3351.0/`，并在 Registry 的 `capture` 字段中绑定证据，不覆盖 `preview` 字段。Gallery 优先展示 capture，缺失时才回退到 cover。
-
-## 是否需要第二台电脑
-
-不需要物理第二台电脑。优先顺序是：
-
-1. **独立的 ChatGPT Beta 包**：本机已经安装并核对 package family、准确可执行文件和独立数据目录。本轮 56 次导入、截图和回滚均在该包完成。
-2. **Windows VM**：最稳妥。使用独立用户目录、固定分辨率和专门测试账号，适合后续接入自托管 Windows runner。
-3. **单独 Windows 用户**：成本低，但仍需确认应用包和登录态隔离是否满足批量截图要求。
-
-普通 GitHub 托管 runner 不适合自动安装 Microsoft Store 应用、完成登录并操作桌面 GUI。稳定的自动截图应使用预装并登录的自托管 Windows VM；GitHub Actions 只负责派发、收集和校验证据。
-
-## 后续版本更新
-
-截图证据只绑定 Beta `26.707.3351.0`，不能自动延伸到下一版本。应用升级后先运行 probe；包身份、Appearance 契约或基线任一变化，都要停止批量导入，重新核对脚本和批准新的基线。长期 CI 应迁移到预装、已登录、可回滚的自托管 Windows VM。
+截图证据只绑定 Beta `26.715.3651.0`。Codex 升级后先运行只读 probe，确认包身份、端口所有权、`app://` 目标和关键选择器。任何一项变化都要停止批量采集，修正运行时后重新生成全部 56 张截图。
 
 ## English summary
 
-Repository validation proves that Native strings are internally consistent. The current 56 real screenshots were captured from the separately identified ChatGPT Beta `26.707.3351.0` package after semantic import readback, with the private sidebar hidden and the original theme baseline restored. A second physical computer is unnecessary. A dedicated Windows VM remains the most reliable long-term automation target.
+The pinned Beta `26.715.3651.0` test bench produced 56 real Full Skin captures. Each record binds the screenshot to the theme asset, runtime hash, exact package, and selector readback. A separate manager smoke test applies a skin through the real Tauri UI, verifies runtime markers in Beta, captures the manager window, restores the native UI, and verifies cleanup. These claims do not carry forward to a later Codex version without a new run.

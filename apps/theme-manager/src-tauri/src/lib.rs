@@ -1,5 +1,6 @@
 mod catalog;
 mod platform;
+mod skin_runtime;
 mod updater;
 
 use std::sync::Mutex;
@@ -15,6 +16,7 @@ use updater::{UpdateRuntime, UpdateView};
 struct DesktopState {
     catalog: Mutex<Option<Catalog>>,
     catalog_status: Mutex<CatalogStatus>,
+    skin_runtime: skin_runtime::SkinRuntime,
     updater: UpdateRuntime,
 }
 
@@ -30,6 +32,7 @@ impl Default for DesktopState {
                 status: "loading".into(),
                 message: "正在读取内置主题目录".into(),
             }),
+            skin_runtime: skin_runtime::SkinRuntime::default(),
             updater: UpdateRuntime::default(),
         }
     }
@@ -43,6 +46,7 @@ struct BootstrapView {
     catalog: Value,
     catalog_state: CatalogStatus,
     targets: Vec<platform::TargetView>,
+    skin_state: skin_runtime::SkinRuntimeView,
     update_state: UpdateView,
 }
 
@@ -149,6 +153,7 @@ async fn bootstrap(
         catalog: catalog::present_catalog(&app, &catalog)?,
         catalog_state,
         targets: platform::discover_targets(),
+        skin_state: state.skin_runtime.current(),
         update_state: state.updater.current(),
     })
 }
@@ -226,6 +231,33 @@ fn open_codex(channel: String) -> Result<platform::TargetView, String> {
 }
 
 #[tauri::command]
+async fn apply_full_skin(
+    app: AppHandle,
+    state: State<'_, DesktopState>,
+    theme_id: String,
+    mode: String,
+    channel: String,
+) -> Result<skin_runtime::SkinRuntimeView, String> {
+    let catalog = lock_catalog(&state)?;
+    skin_runtime::apply(
+        &app,
+        &state.skin_runtime,
+        &catalog,
+        &theme_id,
+        &mode,
+        &channel,
+    )
+    .await
+}
+
+#[tauri::command]
+async fn restore_full_skin(
+    state: State<'_, DesktopState>,
+) -> Result<skin_runtime::SkinRuntimeView, String> {
+    skin_runtime::restore(&state.skin_runtime).await
+}
+
+#[tauri::command]
 fn open_external(app: AppHandle, target: String) -> Result<bool, String> {
     let url = match target.as_str() {
         "gallery" => "https://rwang23.github.io/awesome-codex-theme/",
@@ -271,6 +303,8 @@ pub fn run() {
             refresh_catalog,
             copy_theme,
             open_codex,
+            apply_full_skin,
+            restore_full_skin,
             open_external,
             check_for_app_update,
             install_app_update

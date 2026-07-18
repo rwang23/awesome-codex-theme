@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://awesome-codex-theme.dev/schemas/theme-pack.schema.json",
   "title": "Awesome Codex Theme Pack",
-  "description": "A code-free Codex Native theme package manifest.",
+  "description": "A code-free Codex full-skin package with a Native color fallback.",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -185,23 +185,46 @@
         },
         "engines": {
           "type": "array",
-          "minItems": 1,
+          "minItems": 2,
+          "maxItems": 2,
           "uniqueItems": true,
           "items": {
-            "type": "object",
-            "additionalProperties": false,
-            "required": ["id", "coverage"],
-            "properties": {
-              "id": {
-                "const": "codex-native"
+            "oneOf": [
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["id", "coverage", "testedVersion"],
+                "properties": {
+                  "id": {
+                    "const": "codex-full-skin"
+                  },
+                  "coverage": {
+                    "const": "full-skin-v1"
+                  },
+                  "testedVersion": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
               },
-              "coverage": {
-                "const": "native-theme-v1"
-              },
-              "testedVersion": {
-                "type": "string"
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["id", "coverage", "testedVersion"],
+                "properties": {
+                  "id": {
+                    "const": "codex-native"
+                  },
+                  "coverage": {
+                    "const": "native-theme-v1"
+                  },
+                  "testedVersion": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
               }
-            }
+            ]
           }
         }
       }
@@ -380,7 +403,7 @@
         "integrity": {
           "type": "object",
           "additionalProperties": false,
-          "required": ["sha256", "bytes", "width", "height"],
+          "required": ["sha256", "bytes", "width", "height", "renderFingerprint"],
           "properties": {
             "sha256": {
               "type": "string",
@@ -396,6 +419,10 @@
             },
             "height": {
               "const": 1440
+            },
+            "renderFingerprint": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
             }
           }
         },

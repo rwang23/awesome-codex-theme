@@ -66,8 +66,42 @@
           "exports": {
             "type": "object",
             "additionalProperties": false,
-            "required": ["codex-native"],
+            "required": ["codex-full-skin", "codex-native"],
             "properties": {
+              "codex-full-skin": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["coverage", "format", "testedVersion", "delivery", "limitations"],
+                "properties": {
+                  "coverage": {
+                    "const": "full-skin-v1"
+                  },
+                  "format": {
+                    "const": "act-full-skin-v1"
+                  },
+                  "testedVersion": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "delivery": {
+                    "const": "Awesome Codex Theme Manager"
+                  },
+                  "limitations": {
+                    "type": "array",
+                    "prefixItems": [
+                      {
+                        "const": "runtime-session"
+                      },
+                      {
+                        "const": "no-layout-replacement"
+                      }
+                    ],
+                    "items": false,
+                    "minItems": 2,
+                    "maxItems": 2
+                  }
+                }
+              },
               "codex-native": {
                 "type": "object",
                 "additionalProperties": false,
@@ -128,6 +162,7 @@
         "previewSha256",
         "assetSha256",
         "assetBytes",
+        "fullSkin",
         "nativeTheme"
       ],
       "properties": {
@@ -146,6 +181,87 @@
         "assetBytes": {
           "type": "integer",
           "minimum": 1
+        },
+        "fullSkin": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["format", "asset", "sha256", "bytes", "art", "tokens", "testedVersion"],
+          "properties": {
+            "format": {
+              "const": "act-full-skin-v1"
+            },
+            "asset": {
+              "type": "string",
+              "pattern": "^themes/[a-z0-9-]+/assets/background-(light|dark)\\.png$"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "bytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 16777216
+            },
+            "art": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["focusX", "focusY", "safeArea", "taskMode"],
+              "properties": {
+                "focusX": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                "focusY": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                "safeArea": {
+                  "enum": ["left", "right", "center", "none"]
+                },
+                "taskMode": {
+                  "enum": ["ambient", "banner", "off"]
+                }
+              }
+            },
+            "tokens": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["background", "surface", "surfaceAlt", "text", "muted", "accent", "accentContrast", "border"],
+              "properties": {
+                "background": {
+                  "$ref": "#/$defs/hex"
+                },
+                "surface": {
+                  "$ref": "#/$defs/hex"
+                },
+                "surfaceAlt": {
+                  "$ref": "#/$defs/hex"
+                },
+                "text": {
+                  "$ref": "#/$defs/hex"
+                },
+                "muted": {
+                  "$ref": "#/$defs/hex"
+                },
+                "accent": {
+                  "$ref": "#/$defs/hex"
+                },
+                "accentContrast": {
+                  "$ref": "#/$defs/hex"
+                },
+                "border": {
+                  "$ref": "#/$defs/hex"
+                }
+              }
+            },
+            "testedVersion": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
         },
         "nativeTheme": {
           "type": "object",
@@ -192,9 +308,10 @@
         "bytes",
         "width",
         "height",
-        "nativeSha256",
-        "readbackSha256",
-        "canonicalizedByApp",
+        "assetSha256",
+        "runtimeSha256",
+        "markerVersion",
+        "selectors",
         "appVersion",
         "packageFullName",
         "fixture",
@@ -220,16 +337,32 @@
         "height": {
           "const": 810
         },
-        "nativeSha256": {
+        "assetSha256": {
           "type": "string",
           "pattern": "^[a-f0-9]{64}$"
         },
-        "readbackSha256": {
+        "runtimeSha256": {
           "type": "string",
           "pattern": "^[a-f0-9]{64}$"
         },
-        "canonicalizedByApp": {
-          "type": "boolean"
+        "markerVersion": {
+          "const": "act-full-skin-v1"
+        },
+        "selectors": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["sidebar", "composer", "main"],
+          "properties": {
+            "sidebar": {
+              "type": "boolean"
+            },
+            "composer": {
+              "type": "boolean"
+            },
+            "main": {
+              "const": true
+            }
+          }
         },
         "appVersion": {
           "type": "string",
@@ -240,13 +373,17 @@
           "pattern": "^OpenAI\\.CodexBeta_"
         },
         "fixture": {
-          "const": "settings-appearance-v1"
+          "const": "full-skin-home-v1"
         },
         "capturedAt": {
           "type": "string",
           "format": "date-time"
         }
       }
+    },
+    "hex": {
+      "type": "string",
+      "pattern": "^#[0-9A-Fa-f]{6}$"
     }
   }
 }

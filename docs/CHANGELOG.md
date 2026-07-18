@@ -1,5 +1,33 @@
 # Changelog
 
+## 2026-07-17-04-00
+
+- Added `ACT Full Skin v1` as the primary target: verified 2560×1440
+  backgrounds, translucent materials, palette tokens, and localized theme copy
+  now apply together while the native Codex layout stays intact.
+- Kept every `.act-theme` declarative and code-free. The shared CSS and CDP
+  logic now live in one reviewed, manager-owned runtime with exact package,
+  loopback listener, `app://` target, hash, and cleanup checks.
+- Added the Tauri/Rust apply and restore path for exact ChatGPT Stable or Beta
+  packages without modifying WindowsApps, `app.asar`, private data, or chats.
+- Captured and reviewed 56 real Full Skin screenshots in ChatGPT Beta
+  `26.715.3651.0`, then bound every capture to its background, runtime hash,
+  app version, byte count, and selector readback.
+- Added a real Theme Manager UI smoke test that applies a skin, verifies Beta
+  runtime markers, captures the manager, restores the native UI, and confirms
+  all markers are gone.
+- Fixed the Pages build so all 56 Full Skin PNGs are published, and changed the
+  Gallery and bilingual docs to present Full Skin first with Native as a
+  palette-only fallback.
+- Kept the desktop bundle light by deriving 720×405 browsing thumbnails from
+  the verified captures at build time. The Windows NSIS test package dropped
+  from 67.67 MiB to 18.54 MiB while Pages retains the full 1440×810 evidence.
+- Removed the obsolete Electron spike, local Electron logs, old packaged
+  release directory, and repository-local Tauri toolchain from `context/raw/`.
+- Bumped the desktop manager to `0.3.0-alpha.1`. Unsigned local artifacts are
+  test builds; a public desktop Release remains gated on platform signing and
+  macOS notarization.
+
 ## 2026-07-17-03-00
 
 - Replaced the Electron candidate with a Tauri 2 Theme Manager that reuses the

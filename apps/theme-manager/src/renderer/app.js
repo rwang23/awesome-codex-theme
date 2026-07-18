@@ -6,6 +6,7 @@ const state = {
   catalog: null,
   catalogState: null,
   targets: [],
+  skinState: null,
   updateState: null,
   collection: "all",
   query: "",
@@ -32,10 +33,14 @@ const elements = {
   themeDescription: document.querySelector("#themeDescription"),
   rightsBadge: document.querySelector("#rightsBadge"),
   testedVersion: document.querySelector("#testedVersion"),
+  applySkin: document.querySelector("#applySkin"),
+  applySkinLabel: document.querySelector("#applySkinLabel"),
+  applyShortcut: document.querySelector("#applyShortcut"),
   copyTheme: document.querySelector("#copyTheme"),
   copyShortcut: document.querySelector("#copyShortcut"),
   targetSelect: document.querySelector("#targetSelect"),
-  openCodex: document.querySelector("#openCodex"),
+  restoreSkin: document.querySelector("#restoreSkin"),
+  skinStatus: document.querySelector("#skinStatus"),
   registryHash: document.querySelector("#registryHash"),
   themeCount: document.querySelector("#themeCount"),
   openGallery: document.querySelector("#openGallery"),
@@ -175,7 +180,7 @@ function renderSelectedTheme() {
   elements.themeDescription.textContent = zh(theme.description);
   elements.rightsBadge.textContent = theme.rightsProfile === "fan-art" ? "非官方 Fan Art · 非商业" : "原创 · CC0";
   elements.rightsBadge.dataset.rights = theme.rightsProfile;
-  elements.testedVersion.textContent = "Native " + preview.nativeTheme.testedVersion;
+  elements.testedVersion.textContent = "Full Skin " + preview.fullSkin.testedVersion;
   elements.modeSwitch.querySelectorAll("button").forEach((button) => {
     const active = button.dataset.mode === state.mode;
     button.classList.toggle("is-active", active);
@@ -186,6 +191,7 @@ function renderSelectedTheme() {
     button.classList.toggle("is-active", active);
     button.setAttribute("aria-selected", String(active));
   });
+  renderSkinState();
 }
 
 function renderTargets() {
@@ -204,7 +210,23 @@ function renderTargets() {
     });
   }
   elements.targetSelect.replaceChildren(fragment);
-  elements.openCodex.disabled = state.targets.length === 0;
+  elements.applySkin.disabled = state.targets.length === 0;
+  renderSkinState();
+}
+
+function renderSkinState() {
+  const skin = state.skinState || { active: false };
+  const sameSelection = skin.active
+    && skin.themeId === state.themeId
+    && skin.mode === state.mode
+    && skin.channel === elements.targetSelect.value;
+  elements.applySkinLabel.textContent = sameSelection ? "重新应用完整皮肤" : "应用完整皮肤";
+  elements.restoreSkin.disabled = !skin.active;
+  elements.skinStatus.textContent = skin.active
+    ? "正在 " + (skin.channel === "beta" ? "ChatGPT Beta" : "ChatGPT")
+      + " 使用 " + skin.themeId + " · " + skin.mode
+      + "。恢复后如需关闭调试端口，请退出并正常重开 ChatGPT。"
+    : "主题包只含声明式配置与图片。管理器通过仅限本机回环的临时调试会话加载背景，不修改 WindowsApps、app.asar 或 ChatGPT 私有数据。";
 }
 
 function renderUpdateState() {
@@ -228,6 +250,7 @@ function renderShortcuts() {
   const modifier = state.platform === "darwin" ? "⌘" : "Ctrl";
   elements.searchShortcut.textContent = modifier + " K";
   elements.copyShortcut.textContent = modifier + " C";
+  elements.applyShortcut.textContent = modifier + " ↵";
 }
 
 function acceptCatalog(payload) {
@@ -274,6 +297,8 @@ elements.search.addEventListener("input", () => {
   renderThemeList();
 });
 
+elements.targetSelect.addEventListener("change", renderSkinState);
+
 elements.refreshCatalog.addEventListener("click", async () => {
   try {
     acceptCatalog(await window.act.refreshCatalog());
@@ -285,20 +310,39 @@ elements.refreshCatalog.addEventListener("click", async () => {
 elements.copyTheme.addEventListener("click", async () => {
   try {
     await window.act.copyTheme(state.themeId, state.mode);
-    toast("主题字符串已复制。下一步：在 ChatGPT 外观设置中导入。");
+    toast("原生配色字符串已复制，可在 ChatGPT 外观设置中作为轻量回退导入。");
   } catch {
     toast("复制失败，请重试。", "error");
   }
 });
 
-elements.openCodex.addEventListener("click", async () => {
+elements.applySkin.addEventListener("click", async () => {
   const channel = elements.targetSelect.value;
   if (!channel) return;
+  elements.applySkin.disabled = true;
+  elements.applySkinLabel.textContent = "正在校验并应用…";
   try {
-    await window.act.openCodex(channel);
-    toast("已打开对应的 ChatGPT 应用。");
+    state.skinState = await window.act.applyFullSkin(state.themeId, state.mode, channel);
+    renderSkinState();
+    toast("完整皮肤已在独立 ChatGPT 会话中生效。");
   } catch (error) {
-    toast(typeof error === "string" ? error : error?.message || "无法打开 ChatGPT。", "error");
+    toast(typeof error === "string" ? error : error?.message || "无法应用完整皮肤。", "error");
+  } finally {
+    elements.applySkin.disabled = state.targets.length === 0;
+    renderSkinState();
+  }
+});
+
+elements.restoreSkin.addEventListener("click", async () => {
+  elements.restoreSkin.disabled = true;
+  try {
+    state.skinState = await window.act.restoreFullSkin();
+    renderSkinState();
+    toast("已移除完整皮肤。退出并正常重开 ChatGPT 可同时关闭调试端口。");
+  } catch (error) {
+    toast(typeof error === "string" ? error : error?.message || "无法恢复原生界面。", "error");
+  } finally {
+    renderSkinState();
   }
 });
 
@@ -328,6 +372,10 @@ document.addEventListener("keydown", (event) => {
     event.preventDefault();
     elements.copyTheme.click();
   }
+  if (command && event.key === "Enter") {
+    event.preventDefault();
+    elements.applySkin.click();
+  }
 });
 
 window.act.onCatalogState(acceptCatalog);
@@ -341,6 +389,7 @@ try {
   state.appVersion = bootstrap.appVersion;
   state.platform = bootstrap.platform;
   state.targets = bootstrap.targets;
+  state.skinState = bootstrap.skinState;
   state.updateState = bootstrap.updateState;
   acceptCatalog({
     ...bootstrap.catalogState,

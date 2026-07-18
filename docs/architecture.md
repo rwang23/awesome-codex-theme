@@ -1,96 +1,119 @@
 # Architecture
 
-## Layers
+Awesome Codex Theme separates untrusted theme data from trusted runtime code.
 
-The project has five separate layers.
+```text
+theme catalog + source art
+          |
+          v
+generator -> manifest / .act-theme / Registry / Native fallback
+          |
+          +----------> Validator
+          |
+          +----------> GitHub Pages Gallery
+          |
+          +----------> Tauri Theme Manager
+                            |
+                            v
+                    fixed Full Skin runtime
+                            |
+                            v
+                    verified Codex session
+```
 
-The Gallery is a dependency-free GitHub Pages site. It reads
-`themes/registry.json`, renders the Chinese-first collection controls and
-cards, switches light and dark covers, and exposes the selected Codex Native
-theme string. It has no server, account system, analytics, payment path, or
-permission to change Codex settings.
+## Theme data
 
-The Registry and canonical packages are generated from `themes/catalog.json`
-and reviewed PNG files in `themes/source-art/`. Source-art jobs and compact
-provenance records keep the model, prompt hash, job id, and source hash
-reviewable. Each mode produces a `codex-theme-v1:` string from the declared
-tokens. Every package, preview, asset, and Native export has recorded SHA-256
-and byte-count evidence.
+`themes/catalog.json` and source-art provenance are the maintained inputs. The generator creates:
 
-The Validator checks the package allowlist, declared paths, hashes, PNG
-dimensions, rights fields, collection rules, WCAG contrast, and the exact
-Codex Native payload shape. It also confirms that the public Native file, the
-Registry value, and the copy inside `.act-theme` are identical.
+- `themes/<id>/manifest.json`;
+- light and dark 2560×1440 PNGs;
+- preview images;
+- two Native fallback strings;
+- one code-free `.act-theme` archive;
+- `themes/registry.json`.
 
-The optional Windows companion installer is a separate distribution bundle,
-not part of any `.act-theme` package. It carries a validated Registry snapshot,
-lets the user choose a theme and mode, copies the exact Native string, and
-opens the selected registered Stable or Beta package by AUMID. It needs no
-administrator rights and does not patch WindowsApps, application files,
-private app data, or conversations. Import remains an explicit action inside
-ChatGPT.
+The Registry is the public index. Every path is repository-relative and paired with SHA-256 and byte count. A mode also contains Full Skin composition data and tokens.
 
-The cross-platform Tauri 2 Theme Manager is the primary interactive installer
-surface. Its local WebView shows real Beta captures; narrow Tauri commands ask
-the Rust backend to refresh the catalog, copy a theme by id and mode, discover
-an installed ChatGPT target, or check for a signed app update. The renderer
-cannot submit arbitrary clipboard text or load remote executable code. The
-Windows PowerShell companion remains a portable fallback.
+Canonical theme archives contain only:
 
-Catalog refresh and application update are intentionally separate. The catalog
-is checked at every launch against a hash-bound Pages manifest and falls back
-to a verified cache or bundled Registry. Release builds can use Tauri's
-mandatory-signature updater against GitHub Releases. The channel remains
-disabled when no updater public key is compiled in; production macOS updates
-also remain disabled until signed, notarized, real-device-verified artifacts
-exist.
+```text
+manifest.json
+assets/background-light.png
+assets/background-dark.png
+native/light.codex-theme.txt
+native/dark.codex-theme.txt
+```
 
-## Artwork and screenshots
+No theme package contains CSS or JavaScript.
 
-Every theme retains deterministic 960×540 light and dark cover PNGs. Those
-images describe its visual world; Codex Native does not accept them as
-application backgrounds. They remain source and fallback cover art.
+## Fixed runtime
 
-A real Codex screenshot is a separate evidence artifact. The current Registry
-binds all 56 mode records to 1440×810 captures from the isolated Beta
-`26.707.3351.0` Appearance fixture. Each record carries the Native hash, app
-readback hash, screenshot hash, exact package identity, dimensions, and
-capture time. The Gallery prefers these captures and labels them as real Beta
-screenshots. See `native-testing.md`.
+`packages/full-skin/runtime.css` and `runtime.js` belong to the manager source tree. They are reviewed, hashed, tested, and shared by every theme.
 
-## Rights path
+The runtime:
 
-Original themes and unofficial fan art use separate `rightsProfile` values.
-Fan-art records declare the underlying work and characters, prohibit
-commercial use, state that no official assets were used, and remain
-`rightsVerified: false`. The Gallery shows that status instead of presenting
-all artwork as CC0.
+- converts the verified PNG into an in-memory blob URL;
+- sets mode, focus, safe-area, and token variables;
+- styles native Codex surfaces without moving the DOM;
+- adds a small home-screen theme caption;
+- watches only for home/task context changes;
+- exposes one cleanup function.
 
-Reviewed source art is part of Git history. Derived theme directories,
-packages, Registry output, and Pages artifacts are generated distribution
-outputs. A clean checkout can rebuild them without image-service access while
-keeping raw service responses and credentials out of the repository.
+Theme data is serialized with `serde_json` before it is inserted into the template. There is no executable field in `act-theme-pack-v1`.
 
-## Trust boundary
+## Tauri manager
 
-The browser can copy or download a declarative theme string or download the
-companion installer. The installer validates its bundled Registry, copies the
-selected string, and can open an exact registered app package. Neither surface
-applies the theme. Import remains an explicit user action inside ChatGPT.
+The frontend is dependency-free HTML/CSS/JavaScript. It can browse, filter, and preview themes, but it does not receive raw file-system or process permissions. Its bridge exposes a small set of Tauri commands.
 
-Hash validation proves that generated files match the Registry. Repository
-review and release provenance establish who controls that Registry. A
-compromised site and Registry remain a common trust root, so canonical packages
-keep a strict file allowlist and contain no executable code.
+Rust owns:
 
-Executable installer files live only in the separate portable ZIP or desktop
-application distributions. They are never permitted inside canonical theme
-packages. The portable installer build records its own SHA-256 and byte count;
-signed Tauri releases carry platform update metadata and updater signatures.
+- bundled, cached, and remote Registry validation;
+- exact Stable/Beta discovery;
+- PNG download, cache, byte-count, signature, and SHA-256 checks;
+- loopback CDP session startup;
+- target and WebSocket validation;
+- early and current-page injection;
+- restore state;
+- Native fallback copy;
+- release-update state.
 
-## Compatibility boundary
+The runtime session is held in process memory. Closing Theme Manager does not silently mutate ChatGPT again. The user can restore before closing; quitting and reopening ChatGPT removes the temporary debugging listener.
 
-Version 1 targets Codex Native only. It does not implement third-party skin
-formats, CSS injection, or a generic plugin API. The tested desktop version is
-recorded in both manifests and Registry entries so a later app release can be
-revalidated explicitly.
+## Delivery surfaces
+
+### GitHub Pages
+
+The site build copies:
+
+- Registry and schemas;
+- theme packages and manifests;
+- Full Skin background assets;
+- Native fallback files;
+- real Beta screenshots;
+- manager screenshot;
+- portable Windows Native helper.
+
+Gallery cards use the Registry capture first and fall back to the reviewed preview only when capture evidence is absent.
+
+### Desktop application
+
+The manager ships a bundled Registry and verified screenshots for browsing. It checks the signed catalog descriptor before accepting a newer remote Registry. Full Skin PNGs are downloaded on demand and retained in the application cache only after hash verification.
+
+### Native fallback
+
+The portable helper and Gallery can copy a strict `codex-theme-v1:` string. Final Native import remains in ChatGPT Settings > Appearance. This path does not install background art.
+
+## Trust boundaries
+
+1. Source art is input, not proof of installed appearance.
+2. Generated files are accepted only when hashes and schemas match.
+3. Theme packages are data-only.
+4. Runtime code is manager-owned and versioned.
+5. Remote images are accepted only after exact path, size, PNG signature, and SHA-256 checks.
+6. CDP accepts loopback addresses, fixed ports, exact package ownership, and `app://` targets.
+7. Screenshots are evidence only for the named Beta package.
+8. Signing, notarization, and updater keys are release gates, not documentation claims.
+
+## Product boundary
+
+Version 1 themes background, materials, colors, and copy. It preserves Codex navigation, composer behavior, projects, tasks, and account surfaces. Replacing the full information architecture would require a fragile per-version DOM application and is intentionally outside this contract.

@@ -3,7 +3,7 @@ import { mkdir, readFile, stat, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { renderSourceArtPng } from "./lib/png.mjs";
+import { readPngDimensions, renderSourceArtPng } from "./lib/png.mjs";
 import { createZip } from "./lib/zip.mjs";
 import {
   CODEX_NATIVE_TESTED_VERSION,
@@ -17,11 +17,14 @@ const CATALOG_PATH = path.join(ROOT, "themes", "catalog.json");
 const CAPTURE_MANIFEST_PATH = path.join(
   ROOT,
   "screenshots",
-  "codex-beta-26.707.3351.0",
+  "codex-beta-26.715.3651.0",
   "manifest.json",
 );
 const CHECK_MODE = process.argv.includes("--check");
-const GENERATOR_ID = "act-theme-generator-v3.0";
+const GENERATOR_ID = "act-theme-generator-v4.0";
+const FULL_SKIN_FORMAT = "act-full-skin-v1";
+const FULL_SKIN_TESTED_VERSION = "26.715.3651.0";
+const SOURCE_ART_RENDERER_ID = "act-source-art-renderer-v1";
 const FAN_ART_LICENSE_ID = "LicenseRef-ACT-Fan-Art-Notice";
 const FAN_ART_POLICY_URL = "https://github.com/rwang23/awesome-codex-theme/blob/main/docs/fan-art-policy.md";
 
@@ -60,6 +63,45 @@ function rightsFor(theme) {
       };
 }
 
+function renderFingerprint(theme, mode, sourceProvenance, width, height) {
+  return sha256(Buffer.from(JSON.stringify({
+    renderer: SOURCE_ART_RENDERER_ID,
+    sourceSha256: sourceProvenance.sourceSha256,
+    mode,
+    width,
+    height,
+    background: theme[mode].tokens.background,
+  }), "utf8"));
+}
+
+async function reusableArt(theme, sourceProvenance, existingRegistryTheme) {
+  try {
+    const root = path.join(ROOT, "themes", theme.id);
+    const manifest = JSON.parse(await readFile(path.join(root, "manifest.json"), "utf8"));
+    if (manifest.provenance?.sourceSha256 !== sourceProvenance.sourceSha256) return null;
+    const result = { assets: {}, previews: {} };
+    for (const mode of ["light", "dark"]) {
+      if (manifest.modes?.[mode]?.tokens?.background !== theme[mode].tokens.background) return null;
+      const asset = await readFile(path.join(root, "assets", "background-" + mode + ".png"));
+      const preview = await readFile(path.join(root, "previews", mode + ".png"));
+      const assetDimensions = readPngDimensions(asset);
+      const previewDimensions = readPngDimensions(preview);
+      if (assetDimensions.width !== 2560 || assetDimensions.height !== 1440
+        || previewDimensions.width !== 960 || previewDimensions.height !== 540
+        || sha256(asset) !== manifest.modes[mode].integrity.sha256
+        || asset.length !== manifest.modes[mode].integrity.bytes
+        || sha256(preview) !== existingRegistryTheme?.previews?.[mode]?.previewSha256) {
+        return null;
+      }
+      result.assets[mode] = asset;
+      result.previews[mode] = preview;
+    }
+    return result;
+  } catch {
+    return null;
+  }
+}
+
 function manifestFor(theme, assets, nativeThemes, sourceProvenance) {
   const rights = rightsFor(theme);
   const mode = (name) => ({
@@ -76,6 +118,7 @@ function manifestFor(theme, assets, nativeThemes, sourceProvenance) {
       bytes: assets[name].length,
       width: 2560,
       height: 1440,
+      renderFingerprint: renderFingerprint(theme, name, sourceProvenance, 2560, 1440),
     },
     nativeTheme: {
       format: "codex-theme-v1",
@@ -115,8 +158,9 @@ function manifestFor(theme, assets, nativeThemes, sourceProvenance) {
       notes: rights.notes,
     },
     compatibility: {
-      codexDesktopTested: CODEX_NATIVE_TESTED_VERSION,
+      codexDesktopTested: FULL_SKIN_TESTED_VERSION,
       engines: [
+        { id: "codex-full-skin", coverage: "full-skin-v1", testedVersion: FULL_SKIN_TESTED_VERSION },
         { id: "codex-native", coverage: "native-theme-v1", testedVersion: CODEX_NATIVE_TESTED_VERSION },
       ],
     },
@@ -142,9 +186,10 @@ function nativeThemeBuffer(theme, mode) {
 async function loadCaptureContext() {
   try {
     const manifest = JSON.parse(await readFile(CAPTURE_MANIFEST_PATH, "utf8"));
-    if (manifest.schemaVersion !== "act-native-capture-manifest-v1"
+    if (manifest.schemaVersion !== "act-full-skin-capture-manifest-v1"
       || manifest.status !== "complete"
-      || manifest.baseline?.restored !== true) {
+      || manifest.runtime?.format !== FULL_SKIN_FORMAT
+      || manifest.runtime?.removedAfterCapture !== true) {
       return { manifest: null, index: new Map() };
     }
     return {
@@ -164,6 +209,12 @@ async function loadCaptureContext() {
 
 export async function buildGeneratedFiles() {
   const catalog = JSON.parse(await readFile(CATALOG_PATH, "utf8"));
+  const existingRegistry = await readFile(path.join(ROOT, "themes", "registry.json"), "utf8")
+    .then(JSON.parse)
+    .catch(() => ({ themes: [] }));
+  const existingRegistryIndex = new Map(
+    (existingRegistry.themes || []).map((theme) => [theme.id, theme]),
+  );
   const captureContext = await loadCaptureContext();
   const files = new Map();
   const registryThemes = [];
@@ -176,11 +227,12 @@ export async function buildGeneratedFiles() {
       readFile(path.join(ROOT, "themes", "source-art", theme.id + ".provenance.json"), "utf8")
         .then(JSON.parse),
     ]);
-    const assets = {
+    const reusable = await reusableArt(theme, sourceProvenance, existingRegistryIndex.get(theme.id));
+    const assets = reusable?.assets || {
       light: renderSourceArtPng(sourceArt, theme, "light", 2560, 1440),
       dark: renderSourceArtPng(sourceArt, theme, "dark", 2560, 1440),
     };
-    const previews = {
+    const previews = reusable?.previews || {
       light: renderSourceArtPng(sourceArt, theme, "light", 960, 540),
       dark: renderSourceArtPng(sourceArt, theme, "dark", 960, 540),
     };
@@ -217,6 +269,15 @@ export async function buildGeneratedFiles() {
         previewSha256: sha256(previews[mode]),
         assetSha256: sha256(assets[mode]),
         assetBytes: assets[mode].length,
+        fullSkin: {
+          format: FULL_SKIN_FORMAT,
+          asset: themeRoot + "/assets/background-" + mode + ".png",
+          sha256: sha256(assets[mode]),
+          bytes: assets[mode].length,
+          art: manifest.modes[mode].art,
+          tokens: manifest.modes[mode].tokens,
+          testedVersion: FULL_SKIN_TESTED_VERSION,
+        },
         nativeTheme: {
           format: "codex-theme-v1",
           path: nativeThemePath,
@@ -232,9 +293,10 @@ export async function buildGeneratedFiles() {
             bytes: capture.bytes,
             width: capture.width,
             height: capture.height,
-            nativeSha256: capture.nativeSha256,
-            readbackSha256: capture.readbackSha256,
-            canonicalizedByApp: capture.canonicalizedByApp,
+            assetSha256: capture.assetSha256,
+            runtimeSha256: capture.runtimeSha256,
+            markerVersion: capture.markerVersion,
+            selectors: capture.selectors,
             appVersion: captureContext.manifest.testBench.version,
             packageFullName: captureContext.manifest.testBench.packageFullName,
             fixture: captureContext.manifest.fixture.id,
@@ -287,6 +349,13 @@ export async function buildGeneratedFiles() {
         manifestSha256: sha256(manifestBuffer),
       },
       exports: {
+        "codex-full-skin": {
+          coverage: "full-skin-v1",
+          format: FULL_SKIN_FORMAT,
+          testedVersion: FULL_SKIN_TESTED_VERSION,
+          delivery: "Awesome Codex Theme Manager",
+          limitations: ["runtime-session", "no-layout-replacement"],
+        },
         "codex-native": {
           coverage: "native-theme-v1",
           format: "codex-theme-v1",

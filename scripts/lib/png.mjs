@@ -554,6 +554,17 @@ function sampleBilinear(image, x, y) {
   return result;
 }
 
+export function resizePng(buffer, width, height) {
+  const image = decodePng(buffer);
+  const scaleX = image.width / width;
+  const scaleY = image.height / height;
+  return encodePng(width, height, (x, y) => sampleBilinear(
+    image,
+    (x + 0.5) * scaleX - 0.5,
+    (y + 0.5) * scaleY - 0.5,
+  ));
+}
+
 function gradeSourcePixel(pixel, theme, mode, normalizedX, normalizedY) {
   const background = parseHex(theme[mode].tokens.background);
   let color = pixel.slice(0, 3);

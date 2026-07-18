@@ -96,7 +96,7 @@
               <p class="theme-description" id="themeDescription"></p>
               <div class="theme-metadata">
                 <span id="rightsBadge"></span>
-                <span>Codex Native v1</span>
+                <span>ACT Full Skin v1</span>
                 <span id="testedVersion"></span>
               </div>
             </div>
@@ -104,20 +104,23 @@
             <div class="action-card">
               <div class="action-card-heading">
                 <div>
-                  <small>01 / 复制</small>
-                  <strong>把主题交给 Codex</strong>
+                  <small>01 / 应用</small>
+                  <strong>完整背景、材质与主题文字</strong>
                 </div>
-                <span class="native-chip">NATIVE</span>
+                <span class="native-chip">FULL SKIN</span>
               </div>
-              <button class="primary-action" id="copyTheme" type="button">
-                <span>复制主题字符串</span>
-                <kbd id="copyShortcut">Ctrl C</kbd>
+              <button class="primary-action" id="applySkin" type="button">
+                <span id="applySkinLabel">应用完整皮肤</span>
+                <kbd id="applyShortcut">Ctrl ↵</kbd>
               </button>
               <div class="launch-row">
                 <select id="targetSelect" aria-label="选择 ChatGPT 版本"></select>
-                <button id="openCodex" type="button">打开应用 <span>↗</span></button>
+                <button id="restoreSkin" type="button">恢复原生</button>
               </div>
-              <p>在 ChatGPT「设置 → 外观」中选择对应模式，再点“导入”粘贴。管理器不会修改应用文件，也不会自动确认最后一步。</p>
+              <button class="secondary-action" id="copyTheme" type="button">
+                只复制原生配色 <kbd id="copyShortcut">Ctrl C</kbd>
+              </button>
+              <p id="skinStatus">主题包只含声明式配置与图片。管理器通过仅限本机回环的临时调试会话加载背景，不修改 WindowsApps、app.asar 或 ChatGPT 私有数据。</p>
             </div>
           </div>
         </section>

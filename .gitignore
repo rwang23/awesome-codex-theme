@@ -10,8 +10,12 @@ apps/theme-manager/src-tauri/icons/*
 !apps/theme-manager/src-tauri/icons/icon.ico
 apps/theme-manager/src-tauri/gen/
 apps/theme-manager/src-tauri/target/
-context/raw/
-packages/
+context/raw/*
+!context/raw/README.md
+packages/*
+!packages/full-skin/
+!packages/full-skin/runtime.css
+!packages/full-skin/runtime.js
 themes/registry.json
 themes/*/
 !themes/source-art/

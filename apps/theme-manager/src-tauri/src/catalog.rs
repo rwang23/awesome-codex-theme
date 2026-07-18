@@ -33,6 +33,43 @@ pub struct CatalogStatus {
     pub message: String,
 }
 
+#[derive(Clone, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct FullSkinArt {
+    pub focus_x: f64,
+    pub focus_y: f64,
+    pub safe_area: String,
+    pub task_mode: String,
+}
+
+#[derive(Clone, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct FullSkinTokens {
+    pub background: String,
+    pub surface: String,
+    pub surface_alt: String,
+    pub text: String,
+    pub muted: String,
+    pub accent: String,
+    pub accent_contrast: String,
+    pub border: String,
+}
+
+#[derive(Clone, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct FullSkinDescriptor {
+    pub theme_id: String,
+    pub mode: String,
+    pub name: String,
+    pub tagline: String,
+    pub asset: String,
+    pub sha256: String,
+    pub bytes: usize,
+    pub tested_version: String,
+    pub art: FullSkinArt,
+    pub tokens: FullSkinTokens,
+}
+
 #[derive(Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 struct CatalogCache {
@@ -204,14 +241,60 @@ fn validate_mode(
     if !safe_relative_path(capture_path)
         || !capture_path.starts_with("screenshots/")
         || !capture["sha256"].as_str().is_some_and(valid_sha256)
+        || !capture["assetSha256"].as_str().is_some_and(valid_sha256)
+        || !capture["runtimeSha256"].as_str().is_some_and(valid_sha256)
+        || capture["markerVersion"].as_str() != Some("act-full-skin-v1")
         || capture["width"].as_u64() != Some(1440)
         || capture["height"].as_u64() != Some(810)
+        || capture["fixture"].as_str() != Some("full-skin-home-v1")
         || capture["appVersion"]
             .as_str()
             .unwrap_or_default()
             .is_empty()
     {
         return fail(format!("{theme_id} {mode} 实机截图记录无效"));
+    }
+
+    let full_skin = &record["fullSkin"];
+    let full_skin_asset = full_skin["asset"].as_str().unwrap_or_default();
+    if full_skin["format"].as_str() != Some("act-full-skin-v1")
+        || !safe_relative_path(full_skin_asset)
+        || full_skin_asset != format!("themes/{theme_id}/assets/background-{mode}.png")
+        || !full_skin["sha256"].as_str().is_some_and(valid_sha256)
+        || full_skin["sha256"] != record["assetSha256"]
+        || full_skin["bytes"].as_u64().is_none()
+        || full_skin["bytes"] != record["assetBytes"]
+        || full_skin["testedVersion"]
+            .as_str()
+            .unwrap_or_default()
+            .is_empty()
+    {
+        return fail(format!("{theme_id} {mode} Full Skin 记录无效"));
+    }
+    let art: FullSkinArt = serde_json::from_value(full_skin["art"].clone())
+        .map_err(|error| format!("{theme_id} {mode} Full Skin 构图无效：{error}"))?;
+    if !(0.0..=1.0).contains(&art.focus_x)
+        || !(0.0..=1.0).contains(&art.focus_y)
+        || !matches!(art.safe_area.as_str(), "left" | "right" | "center" | "none")
+        || !matches!(art.task_mode.as_str(), "ambient" | "banner" | "off")
+    {
+        return fail(format!("{theme_id} {mode} Full Skin 构图超出边界"));
+    }
+    let tokens: FullSkinTokens = serde_json::from_value(full_skin["tokens"].clone())
+        .map_err(|error| format!("{theme_id} {mode} Full Skin 配色无效：{error}"))?;
+    for value in [
+        &tokens.background,
+        &tokens.surface,
+        &tokens.surface_alt,
+        &tokens.text,
+        &tokens.muted,
+        &tokens.accent,
+        &tokens.accent_contrast,
+        &tokens.border,
+    ] {
+        if !valid_hex_color(value) {
+            return fail(format!("{theme_id} {mode} Full Skin 颜色无效"));
+        }
     }
 
     let native = &record["nativeTheme"];
@@ -451,6 +534,13 @@ pub fn present_catalog(app: &AppHandle, catalog: &Catalog) -> Result<Value, Stri
                         }),
                     );
                     preview.insert(
+                        "fullSkin".into(),
+                        json!({
+                            "format": record["fullSkin"]["format"],
+                            "testedVersion": record["fullSkin"]["testedVersion"]
+                        }),
+                    );
+                    preview.insert(
                         "nativeTheme".into(),
                         json!({
                             "sha256": record["nativeTheme"]["sha256"],
@@ -482,6 +572,55 @@ pub fn present_catalog(app: &AppHandle, catalog: &Catalog) -> Result<Value, Stri
         "collections": collections,
         "themes": themes
     }))
+}
+
+pub fn full_skin_for(
+    catalog: &Catalog,
+    theme_id: &str,
+    mode: &str,
+) -> Result<FullSkinDescriptor, String> {
+    if !safe_id(theme_id) || !MODES.contains(&mode) {
+        return fail("主题 ID 或模式无效");
+    }
+    let theme = array(&catalog.registry["themes"], "themes")?
+        .iter()
+        .find(|theme| theme["id"].as_str() == Some(theme_id))
+        .ok_or("Registry 中不存在该主题")?;
+    let record = &theme["previews"][mode]["fullSkin"];
+    let localized_text = |value: &Value| {
+        value["zh-CN"]
+            .as_str()
+            .or_else(|| value["en"].as_str())
+            .unwrap_or_default()
+            .to_owned()
+    };
+    let bytes = record["bytes"]
+        .as_u64()
+        .and_then(|value| usize::try_from(value).ok())
+        .ok_or("Full Skin 字节数无效")?;
+    Ok(FullSkinDescriptor {
+        theme_id: theme_id.into(),
+        mode: mode.into(),
+        name: localized_text(&theme["name"]),
+        tagline: localized_text(&theme["tagline"]),
+        asset: record["asset"]
+            .as_str()
+            .ok_or("Full Skin 素材路径缺失")?
+            .into(),
+        sha256: record["sha256"]
+            .as_str()
+            .ok_or("Full Skin 素材哈希缺失")?
+            .into(),
+        bytes,
+        tested_version: record["testedVersion"]
+            .as_str()
+            .ok_or("Full Skin 测试版本缺失")?
+            .into(),
+        art: serde_json::from_value(record["art"].clone())
+            .map_err(|error| format!("Full Skin 构图无效：{error}"))?,
+        tokens: serde_json::from_value(record["tokens"].clone())
+            .map_err(|error| format!("Full Skin 配色无效：{error}"))?,
+    })
 }
 
 pub fn native_value_for(catalog: &Catalog, theme_id: &str, mode: &str) -> Result<String, String> {

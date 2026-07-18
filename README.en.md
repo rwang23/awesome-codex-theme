@@ -1,120 +1,117 @@
 # Awesome Codex Theme
 
-An open Codex Native theme pack standard, Registry, Validator, and Gallery.
+A free theme-pack standard, Registry, Validator, Gallery, and cross-platform theme manager for Codex desktop.
 
-[Browse 28 themes](https://rwang23.github.io/awesome-codex-theme/) · [中文 README](README.md) · [Theme pack standard](docs/standard.md) · [Fan Art policy](docs/fan-art-policy.md) · [Contributing](CONTRIBUTING.md)
+[Open the Gallery](https://rwang23.github.io/awesome-codex-theme/) · [中文 README](README.md) · [Theme-pack standard](docs/standard.md) · [Full Skin compatibility](docs/adapters.md) · [Fan Art notice](docs/fan-art-policy.md)
 
-![Awesome Codex Theme Manager running on Windows with a real ChatGPT Beta theme capture](docs/assets/theme-manager-windows.png)
+![The Awesome Codex Theme Manager on Windows with a real ChatGPT Beta full-skin capture](docs/assets/theme-manager-windows.png)
 
-This is the Tauri 2 Theme Manager running on Windows. Its preview comes from the isolated ChatGPT Beta `26.707.3351.0` test bench; it is not a concept mockup or source artwork pasted into a fake shell.
+This is the real Tauri 2 Windows app. The preview inside it was captured from ChatGPT Beta `26.715.3651.0` after the skin was applied and read back, not composited from source artwork.
 
-## More than a background switcher
+## Full skins, not palette cards
 
-A CSS injection demo can look convincing while leaving important questions unanswered. Can the artwork be redistributed? Does the package contain executable code? How can an import be checked for tampering? Which theme fields can the current Codex desktop app accept natively?
+Codex Native themes can change colors but cannot install a background. The primary target in this project is `ACT Full Skin v1`, which applies:
 
-Awesome Codex Theme puts those answers into one public contract:
+- a 2560×1440 background with declared focus and safe area;
+- separate light and dark tokens;
+- translucent sidebar, suggestion-card, and composer materials;
+- theme title and short copy;
+- reduced motion.
 
-- A shared manifest Schema describes identity, assets, modes, provenance, and compatibility.
-- A canonical `.act-theme` contains declarative configuration and images only.
-- The Registry records SHA-256 hashes, byte counts, dimensions, rights statements, and the Native contract version.
-- The Validator checks the package allowlist, hashes, image integrity, WCAG contrast, and duplicate Native palettes.
-- Every mode exports a `codex-theme-v1:` string that Codex desktop can import.
-- GitHub Pages and the cross-platform Theme Manager both use real Beta captures for browsing, filtering, copying, and downloads.
+Theme packs remain code-free. A `.act-theme` archive contains a manifest, two images, and two Native fallback palettes. CSS, CDP handling, process checks, and cleanup live in the open-source Theme Manager. Theme authors cannot ship scripts in a pack.
 
-The project targets Codex Native only. It no longer exports Dream Skin, HeiGe Skin Studio, or CodeDrobe formats, and it does not inject CSS. The native contract supports colors, contrast, fonts, a code theme, and semantic colors, but not background images. Repository illustrations remain cover art and are never applied as app backgrounds. The application views shown by the Gallery come from the separate Beta capture workflow.
+Version 1 preserves the native Codex layout. It does not move navigation, replace the composer, or rebuild application screens. That boundary keeps restoration predictable when Codex updates.
 
-## Collections
+## Collection
 
-The repository contains 28 themes with 56 distinct light/dark Native palettes, 56 deterministic covers, and 56 real 1440×810 screenshots captured after importing every mode into the isolated ChatGPT Beta `26.707.3351.0` test bench. The Gallery prefers the real captures and keeps the covers as reviewed source/fallback artwork. Each capture is bound to its Native hash, app readback hash, exact package version, fixed fixture, and baseline restoration evidence. See [Codex Native testing and screenshots](docs/native-testing.md).
+The repository contains 28 themes and 56 light/dark modes:
 
 | Collection | Contents | Themes |
 | --- | --- | ---: |
 | Original Xianxia 01 | Four original worlds, each with cinematic and chibi variants | 8 |
-| China City Atlas 01 | Beijing, Shanghai, Shenzhen, Guangzhou, Chengdu, Hangzhou, Chongqing, and Nanjing | 8 |
+| China City Atlas 01 | Beijing, Shanghai, Shenzhen, Guangzhou, Chengdu, Hangzhou, Chongqing, Nanjing | 8 |
 | Donghua Character Tributes 01 | Cinematic and chibi leads from four series | 8 |
-| Donghua Memory Scenes 01 | Void Hall, wedding rescue, rain-alley confession, and the Three-Year Agreement | 4 |
+| Donghua Memory Scenes 01 | Four remembered scenes | 4 |
 
-Each source image is generated through an OpenAI image job. A human then reviews workspace safe areas, text, watermarks, logos, character identity, and the 16:9 crop. The repository keeps a compact provenance record with the prompt hash, model, job ID, and output hash. It never stores keys or raw responses containing base64 images.
+All 56 modes have 1440×810 screenshots captured from the isolated ChatGPT Beta `26.715.3651.0` package. Each Registry record binds the capture to the background asset, runtime hash, exact app version, byte count, and selector readback. The Gallery and README use these real captures.
 
-The first two collections are first-party original artwork under CC0 1.0. The latter two are clearly disclosed unofficial AI fan art based on characters and scenes from *A Record of a Mortal's Journey to Immortality*, *Renegade Immortal*, *Sword of Coming*, and *Battle Through the Heavens*. They are offered for personal, non-commercial fan use only. No official stills, posters, logos, or promotional assets are used, and no license or endorsement is claimed. Underlying rights remain with their owners. See the [Fan Art policy](docs/fan-art-policy.md).
+Source art is created through OpenAI image jobs. The repository keeps prompt hashes, model names, job IDs, source hashes, and review notes without storing API keys or raw base64 responses.
 
-## Use a theme
+The first two collections are original and released under CC0 1.0. The other two are clearly disclosed unofficial AI fan art involving A Record of a Mortal's Journey to Immortality, Renegade Immortal, Sword of Coming, and Battle Through the Heavens. They are for personal, non-commercial fan use, contain no official screenshots or promotional assets, and claim no endorsement. See the [Fan Art policy](docs/fan-art-policy.md).
 
-Open the [Gallery](https://rwang23.github.io/awesome-codex-theme/) or use the Tauri Theme Manager. Before the first signed Release, the manager can be built from source. Choose a theme and mode, copy its `codex-theme-v1:` string, then confirm Import in ChatGPT under Settings > Appearance. The manager validates its catalog and opens the detected Stable or Beta app. The portable Windows helper remains available for users who do not want a desktop installation.
+## Using a theme
 
-The browser, manager, and portable helper never patch WindowsApps, application files, private data, or conversations. They deliberately leave the final import to the user. Canonical theme packages remain declarative and contain no scripts, CSS, or remote resources. See [Codex Native compatibility](docs/adapters.md) for the exact boundary.
+The Tauri Theme Manager is the main installation path:
 
-## Desktop manager and updates
+1. Quit the ChatGPT Stable or Beta app that will receive the skin.
+2. Choose a theme, mode, and target in Theme Manager.
+3. Select **Apply Full Skin**.
+4. The manager verifies the Registry, image hash, package identity, and loopback listener before launching the exact app with a local debugging port.
+5. Select **Restore Native** to remove the skin. Quit and reopen ChatGPT normally to close the temporary debugging port.
 
-The manager treats catalog and application updates as separate trust boundaries:
+Once ChatGPT is running in a manager-started session, themes can be switched without closing it again. If the target is already running normally, the manager stops and asks the user to quit rather than terminating the app.
 
-- On every launch, it reads `downloads/catalog.json` from GitHub Pages and accepts the Registry only after checking its SHA-256, byte count, Schema, and Native payload shape. A verified cache and the bundled Registry provide offline fallbacks.
-- Once release signing is configured, packaged builds check GitHub Releases. An available update downloads in the background, but installation waits for the user to restart. Development builds without a public updater key do not claim that the update channel is live.
+The Gallery still exposes `codex-theme-v1:` strings and a portable Windows helper as palette-only fallbacks. They do not install backgrounds.
 
-Windows and macOS share Tauri 2, the dependency-free HTML/CSS/JavaScript interface, and one Rust core instead of bundling Chromium. The current Windows NSIS package is 3.66 MiB; the equivalent Electron candidate was 97.45 MiB, a 96.2% reduction. The Windows runtime, exact-copy path, and NSIS package are verified locally. The macOS dual-architecture CI path is present, but production updates still require Apple Developer signing, notarization, and real-device readback. Unsigned artifacts are not presented as finished releases. See [Desktop Theme Manager](docs/desktop-manager.md).
+## Security boundary
 
-## Create a theme with Codex
+Full Skin uses the Chromium DevTools Protocol for the current app session. The manager accepts only:
 
-The repository includes a project skill at:
+- `127.0.0.1` or `::1`;
+- fixed Stable and Beta ports;
+- a listener owned by the exact selected Store package;
+- `app://` page targets.
+
+It does not modify WindowsApps, `app.asar`, ChatGPT private data, or conversations. It never executes code from a theme package. Every downloaded PNG must match its declared path, byte count, and SHA-256. Restore removes both the active styling and scripts registered for later page loads.
+
+This is not an official OpenAI theming API. Compatibility claims are version-bound because Codex updates can change internal selectors. A new app version must pass the validator and the 56-mode capture run. See [Full Skin testing](docs/native-testing.md).
+
+## Why Tauri
+
+Theme Manager uses Tauri 2, dependency-free HTML/CSS/JavaScript, and Rust. Windows and macOS share the same interface and installation core without bundling Chromium. Rust handles Registry validation, image caching, package identity, CDP injection, and cleanup.
+
+Windows verification covers the Rust tests, x64 release build, NSIS package, real manager apply/restore flow, Beta runtime readback, and all 56 captures. The macOS dual-architecture CI path exists, but a public build still needs Apple Developer signing, notarization, and physical-device readback. Windows also needs release code signing. Unsigned artifacts are not presented as finished releases.
+
+## Creating a theme with Codex
+
+The repository includes `.codex/skills/create-codex-theme/`. In Codex, a contributor can ask:
 
 ```text
-.codex/skills/create-codex-theme/
+Use $create-codex-theme to add an original Suzhou canal-mist theme.
+Keep the left work area quiet, provide light and dark modes, and run every check.
 ```
 
-Open this repository in Codex and ask:
-
-```text
-Use $create-codex-theme to create an original Suzhou canal mist theme.
-Keep the left workspace safe area quiet, add light and dark modes,
-and run the full validation when it is ready.
-```
-
-The Skill covers the bilingual brief, the original/fan-art rights track, image jobs, source-art review, color tokens, catalog scaffolding, Registry generation, validation, and browser acceptance testing.
-
-For original work, copy the [theme brief template](.codex/skills/create-codex-theme/assets/theme-brief.template.json). Explicit unofficial fan art uses the [fan-art brief template](.codex/skills/create-codex-theme/assets/fan-art-theme-brief.template.json). Then run:
-
-```bash
-node .codex/skills/create-codex-theme/scripts/scaffold-theme.mjs \
-  --brief path/to/theme-brief.json
-```
-
-Add `--apply` after reviewing the dry run, then generate and validate:
-
-```bash
-npm run art:generate -- --ids=<theme-id>
-npm run check
-```
+The Skill prepares the brief and image job, checks original or fan-art disclosure, configures safe areas and contrast, and updates the Registry. A finished contribution must also produce real Full Skin captures from the pinned Beta test bench.
 
 ## Local development
 
-Node.js 22 or newer is required. Desktop development also needs Rust stable; Windows needs Microsoft C++ Build Tools, and macOS builds need Xcode Command Line Tools. The Gallery, Registry, and Validator have no npm dependencies. The Tauri CLI lives only under `apps/theme-manager`.
+Node.js 22+ is required. Desktop work also needs stable Rust and the platform build tools.
 
 ```bash
-npm run check
-npm run serve
+npm run generate
+npm run validate
+npm test
+npm run build
 ```
 
-Key commands:
+Useful commands:
 
 ```bash
 npm run art:generate
 npm run generate
 npm run generate:check
 npm run validate
-npm run installer:build
-npm run installer:validate
-npm run screenshots:probe
-npm run desktop:test
+npm run screenshots:capture
 npm run desktop:check
 npm run desktop:start
 npm run desktop:build:win
 npm run desktop:build:mac
-npm test
-npm run build
 ```
 
-## License and AI disclosure
+Generated theme directories, `.act-theme` archives, the Registry, and `dist/` should not be edited by hand.
 
-Project code uses the MIT License. First-party AI-generated artwork is dedicated under CC0 1.0 to the extent applicable rights exist. Unofficial fan art uses `LicenseRef-ACT-Fan-Art-Notice`, declares `rightsVerified: false`, prohibits commercial use, and links to the [Fan Art policy](docs/fan-art-policy.md). Every theme declares `aiGenerated: true` and keeps reviewable prompt and source hashes.
+## Licensing and AI disclosure
 
-AI generation is not a copyright license and does not clear underlying character or franchise rights. Contributors remain responsible for inputs and for identifying any third-party characters, logos, signatures, or protected expression. See [NOTICE.md](NOTICE.md).
+Project code is MIT. First-party AI-generated artwork is CC0 1.0 where applicable. Fan art uses `LicenseRef-ACT-Fan-Art-Notice`, sets `rightsVerified: false`, and is limited to non-commercial fan use.
+
+AI generation does not clear copyright or character rights. Contributors must review inputs and outputs for undisclosed third-party characters, logos, signatures, and protected expression. See [NOTICE.md](NOTICE.md).

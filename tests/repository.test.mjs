@@ -34,6 +34,7 @@ test("repository validates twenty-eight dual-mode code-free themes in four colle
     themes: 28,
     modes: 56,
     packages: 28,
+    fullSkinExports: 56,
     nativeExports: 56,
     captures: 56
   });
@@ -63,11 +64,14 @@ test("registry exposes original and disclosed fan-art collections", async functi
   assert.equal(registry.themes.every(function (theme) {
     return ["light", "dark"].every(function (mode) {
       const capture = theme.previews[mode].capture;
-      return capture?.appVersion === "26.707.3351.0"
-        && capture.fixture === "settings-appearance-v1"
+      return capture?.appVersion === "26.715.3651.0"
+        && capture.fixture === "full-skin-home-v1"
         && capture.width === 1440
         && capture.height === 810
-        && capture.nativeSha256 === theme.previews[mode].nativeTheme.sha256;
+        && capture.assetSha256 === theme.previews[mode].fullSkin.sha256
+        && capture.markerVersion === "act-full-skin-v1"
+        && capture.selectors.main === true
+        && capture.selectors.composer === true;
     });
   }), true);
   assert.equal(registry.themes.every(function (theme) {
@@ -107,16 +111,24 @@ test("canonical archives contain only declared art, manifest, and Codex Native t
   }
 });
 
-test("registry exposes importable Codex Native v1 strings and no third-party adapters", async function () {
+test("registry exposes declarative full skins, Native fallbacks, and no third-party adapters", async function () {
   const registry = JSON.parse(await readFile(path.join(ROOT, "themes", "registry.json"), "utf8"));
   const nativeValues = new Set();
   for (const theme of registry.themes) {
     const manifest = JSON.parse(await readFile(path.join(ROOT, ...theme.package.manifest.split("/")), "utf8"));
-    assert.deepEqual(Object.keys(theme.exports), ["codex-native"]);
+    assert.deepEqual(Object.keys(theme.exports), ["codex-full-skin", "codex-native"]);
+    assert.equal(theme.exports["codex-full-skin"].coverage, "full-skin-v1");
+    assert.equal(theme.exports["codex-full-skin"].format, "act-full-skin-v1");
+    assert.equal(theme.exports["codex-full-skin"].delivery, "Awesome Codex Theme Manager");
     assert.equal(theme.exports["codex-native"].coverage, "native-theme-v1");
     for (const mode of ["light", "dark"]) {
+      const fullSkin = theme.previews[mode].fullSkin;
       const record = theme.previews[mode].nativeTheme;
       const value = await readFile(path.join(ROOT, ...record.path.split("/")), "utf8");
+      assert.equal(fullSkin.format, "act-full-skin-v1");
+      assert.equal(fullSkin.sha256, manifest.modes[mode].integrity.sha256);
+      assert.equal(fullSkin.bytes, manifest.modes[mode].integrity.bytes);
+      assert.deepEqual(fullSkin.tokens, manifest.modes[mode].tokens);
       assert.equal(nativeValues.has(value), false, theme.id + " " + mode + " must have a distinct Native payload");
       nativeValues.add(value);
       const payload = parseCodexNativeTheme(value);
@@ -192,8 +204,10 @@ test("static gallery builds with every public contract artifact", async function
     for (const theme of registry.themes) {
       assert.equal(await exists(path.join(output, ...theme.package.path.split("/"))), true, theme.package.path);
       for (const mode of ["light", "dark"]) {
+        const fullSkinPath = theme.previews[mode].fullSkin.asset;
         const nativePath = theme.previews[mode].nativeTheme.path;
         const capturePath = theme.previews[mode].capture.path;
+        assert.equal(await exists(path.join(output, ...fullSkinPath.split("/"))), true, fullSkinPath);
         assert.equal(await exists(path.join(output, ...nativePath.split("/"))), true, nativePath);
         assert.equal(await exists(path.join(output, ...capturePath.split("/"))), true, capturePath);
       }
@@ -206,8 +220,14 @@ test("static gallery builds with every public contract artifact", async function
     assert.doesNotMatch(html, /codex:\/\/settings/);
     assert.match(html, /awesome-codex-theme-installer-windows\.zip/);
     assert.match(html, /theme-manager-windows\.png/);
+    assert.match(html, /ACT Full Skin/);
+    assert.match(html, /act-full-skin-v1/);
+    assert.match(html, /github\.com\/rwang23\/awesome-codex-theme\/releases/);
+    assert.match(app, /Background \+ materials \+ colors \+ copy/);
+    assert.match(app, /背景 \+ 材质 \+ 配色 \+ 文案/);
     assert.match(app, /nativeTheme\.path/);
     assert.match(app, /modeRecord\.capture/);
+    assert.doesNotMatch(app, /Beta 26\.707\.3351\.0/);
     assert.doesNotMatch(app, /dream-skin|heige-skin-studio|codedrobe/i);
     assert.doesNotMatch(html, /TODO|preset-act/i);
   } finally {
@@ -222,6 +242,8 @@ test("Tauri manager keeps theme values in Rust and limits desktop capabilities",
   const [
     backend,
     catalog,
+    runtime,
+    platform,
     updater,
     bridge,
     configText,
@@ -231,6 +253,8 @@ test("Tauri manager keeps theme values in Rust and limits desktop capabilities",
   ] = await Promise.all([
     readFile(path.join(ROOT, "apps", "theme-manager", "src-tauri", "src", "lib.rs"), "utf8"),
     readFile(path.join(ROOT, "apps", "theme-manager", "src-tauri", "src", "catalog.rs"), "utf8"),
+    readFile(path.join(ROOT, "apps", "theme-manager", "src-tauri", "src", "skin_runtime.rs"), "utf8"),
+    readFile(path.join(ROOT, "apps", "theme-manager", "src-tauri", "src", "platform.rs"), "utf8"),
     readFile(path.join(ROOT, "apps", "theme-manager", "src-tauri", "src", "updater.rs"), "utf8"),
     readFile(path.join(ROOT, "apps", "theme-manager", "src", "renderer", "bridge.js"), "utf8"),
     readFile(path.join(ROOT, "apps", "theme-manager", "src-tauri", "tauri.conf.json"), "utf8"),
@@ -243,6 +267,7 @@ test("Tauri manager keeps theme values in Rust and limits desktop capabilities",
 
   assert.match(cargo, /features = \["protocol-asset"\]/);
   assert.deepEqual(config.app.security.assetProtocol.scope, ["$RESOURCE/catalog/screenshots/**"]);
+  assert.deepEqual(config.bundle.resources["../build/catalog/screenshots/"], "catalog/screenshots/");
   assert.deepEqual(capability.windows, ["main"]);
   assert.ok(capability.permissions.every(function (permission) {
     return permission.startsWith("core:");
@@ -252,27 +277,43 @@ test("Tauri manager keeps theme values in Rust and limits desktop capabilities",
   assert.match(catalog, /registry_bytes\.len\(\) != expected_bytes/);
   assert.match(backend, /copy_theme/);
   assert.match(backend, /native_value_for\(&catalog, &theme_id, &mode\)/);
+  assert.match(backend, /apply_full_skin/);
+  assert.match(backend, /restore_full_skin/);
+  assert.match(runtime, /Page\.addScriptToEvaluateOnNewDocument/);
+  assert.match(runtime, /Page\.removeScriptToEvaluateOnNewDocument/);
+  assert.match(runtime, /app:\/\//);
+  assert.match(runtime, /127\.0\.0\.1/);
+  assert.match(runtime, /remote-debugging-port/);
+  assert.match(platform, /IApplicationActivationManager/);
   assert.doesNotMatch(bridge, /nativeTheme.*value|nativeValue/i);
   assert.match(updater, /ACT_UPDATER_PUBKEY/);
   assert.match(config.plugins.updater.endpoints[0], /^https:\/\/github\.com\/rwang23\/awesome-codex-theme\/releases\//);
   assert.match(appPackage, /@tauri-apps\/cli/);
   assert.doesNotMatch(appPackage, /electron/i);
-  assert.doesNotMatch(backend + catalog, /WindowsApps.*(?:write|copy)|app\.asar.*(?:write|copy)/i);
+  assert.doesNotMatch(backend + catalog + runtime + platform, /WindowsApps.*(?:write|copy)|app\.asar.*(?:write|copy)/i);
 });
 
 test("real screenshot evidence covers every mode and confirms Beta restoration", async function () {
   const manifest = JSON.parse(await readFile(
-    path.join(ROOT, "screenshots", "codex-beta-26.707.3351.0", "manifest.json"),
+    path.join(ROOT, "screenshots", "codex-beta-26.715.3651.0", "manifest.json"),
     "utf8",
   ));
   assert.equal(manifest.status, "complete");
-  assert.equal(manifest.testBench.packageFullName, "OpenAI.CodexBeta_26.707.3351.0_x64__2p2nqsd0c76g0");
-  assert.equal(manifest.fixture.id, "settings-appearance-v1");
+  assert.equal(manifest.testBench.packageFullName, "OpenAI.CodexBeta_26.715.3651.0_x64__2p2nqsd0c76g0");
+  assert.equal(manifest.fixture.id, "full-skin-home-v1");
   assert.equal(manifest.fixture.sidebar, "hidden");
   assert.equal(manifest.fixture.privateContent, "excluded");
-  assert.equal(manifest.baseline.restored, true);
-  assert.equal(manifest.baseline.finalSha256, manifest.baseline.sha256);
+  assert.equal(manifest.fixture.nativeSettingsChanged, false);
+  assert.equal(manifest.runtime.format, "act-full-skin-v1");
+  assert.equal(manifest.runtime.earlyInjection, true);
+  assert.equal(manifest.runtime.removedAfterCapture, true);
   assert.equal(manifest.captures.length, 56);
+  assert.equal(manifest.captures.every(function (capture) {
+    return capture.runtimeSha256 === manifest.runtime.sha256
+      && capture.markerVersion === "act-full-skin-v1"
+      && capture.selectors.main === true
+      && capture.selectors.composer === true;
+  }), true);
   assert.equal(new Set(manifest.captures.map(function (capture) {
     return capture.themeId + "|" + capture.mode;
   })).size, 56);
@@ -308,4 +349,27 @@ test("gallery keeps the independent Chinese-first visual system", async function
   assert.match(html, /\.codex\/skills\/create-codex-theme/);
   assert.doesNotMatch(html, /reimagined|hero-accent|hero-orbit/i);
   assert.doesNotMatch(css, /--acid|#d9ff43/i);
+});
+
+test("desktop release workflow gates platform and updater signing", async function () {
+  const workflow = await readFile(path.join(ROOT, ".github", "workflows", "desktop.yml"), "utf8");
+  assert.match(workflow, /DESKTOP_RELEASE_READY/);
+  assert.match(workflow, /WINDOWS_CERTIFICATE/);
+  assert.match(workflow, /WINDOWS_CERTIFICATE_PASSWORD/);
+  assert.match(workflow, /WINDOWS_TIMESTAMP_URL/);
+  assert.match(workflow, /certificateThumbprint/);
+  assert.match(workflow, /APPLE_CERTIFICATE/);
+  assert.match(workflow, /APPLE_TEAM_ID/);
+  assert.match(workflow, /TAURI_SIGNING_PRIVATE_KEY/);
+  assert.match(workflow, /TAURI_UPDATER_PUBKEY/);
+  assert.match(workflow, /tauri\.windows-signing\.conf\.json/);
+});
+
+test("desktop preparation derives compact thumbnails from verified captures", async function () {
+  const prepare = await readFile(path.join(ROOT, "scripts", "prepare-desktop.mjs"), "utf8");
+  assert.match(prepare, /CAPTURE_WIDTH = 720/);
+  assert.match(prepare, /CAPTURE_HEIGHT = 405/);
+  assert.match(prepare, /resizePng/);
+  assert.match(prepare, /DESKTOP_CATALOG\.startsWith\(DESKTOP_BUILD \+ path\.sep\)/);
+  assert.match(prepare, /capture\?\.path/);
 });
