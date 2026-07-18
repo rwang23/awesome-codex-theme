@@ -99,8 +99,8 @@ jobs:
         with:
           workspaces: apps/theme-manager/src-tauri -> target
 
-      - name: Generate and validate the theme Registry
-        run: npm run generate && npm run validate
+      - name: Generate, validate, and prepare desktop assets
+        run: npm run generate && npm run validate && npm run desktop:prepare
 
       - name: Install desktop dependencies
         run: npm ci --prefix apps/theme-manager

@@ -353,6 +353,7 @@ test("gallery keeps the independent Chinese-first visual system", async function
 
 test("desktop release workflow gates platform and updater signing", async function () {
   const workflow = await readFile(path.join(ROOT, ".github", "workflows", "desktop.yml"), "utf8");
+  assert.match(workflow, /npm run generate && npm run validate && npm run desktop:prepare/);
   assert.match(workflow, /DESKTOP_RELEASE_READY/);
   assert.match(workflow, /WINDOWS_CERTIFICATE/);
   assert.match(workflow, /WINDOWS_CERTIFICATE_PASSWORD/);
