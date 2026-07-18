@@ -131,6 +131,14 @@
                 <select id="targetSelect" aria-label="选择 ChatGPT 版本"></select>
                 <button id="restoreSkin" type="button" data-i18n="restoreSkin">恢复原生</button>
               </div>
+              <label class="persistence-control" id="persistenceControl">
+                <input id="persistenceToggle" type="checkbox">
+                <span class="persistence-copy">
+                  <strong data-i18n="keepTheme">始终应用这套主题</strong>
+                  <small id="persistenceStatus" data-i18n="persistenceDisabled">已关闭，不会随登录运行</small>
+                </span>
+                <span class="switch-track" aria-hidden="true"><span></span></span>
+              </label>
               <button class="secondary-action" id="copyTheme" type="button">
                 <span data-i18n="copyNative">只复制原生配色</span> <kbd id="copyShortcut">Ctrl C</kbd>
               </button>

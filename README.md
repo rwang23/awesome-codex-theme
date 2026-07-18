@@ -9,6 +9,8 @@
   ·
   <a href="https://github.com/rwang23/awesome-codex-theme/releases"><strong>Desktop Downloads</strong></a>
   ·
+  <a href="https://community.ecomstack.net/"><strong>Theme Community</strong></a>
+  ·
   <a href="docs/agent-install.md"><strong>Install with an Agent</strong></a>
   ·
   <a href="README.zh-CN.md"><strong>中文</strong></a>
@@ -25,7 +27,7 @@
 
 The screenshot above is the real Tauri 2 Theme Manager. The skin shown inside it was applied to ChatGPT Beta `26.715.3651.0`, read back from the live renderer, and captured after verification. It is not a wallpaper pasted into an app mockup.
 
-> Desktop builds will be published only on the official [GitHub Releases page](https://github.com/rwang23/awesome-codex-theme/releases). The first public beta is still being prepared. If that page has no compatible asset, there is no public installer yet.
+> Desktop builds are published only on the official [GitHub Releases page](https://github.com/rwang23/awesome-codex-theme/releases). If that page has no asset compatible with your operating system and CPU, there is no supported public installer for that target.
 
 ## More than a color palette
 
@@ -69,11 +71,12 @@ Every mode has a 1440×810 capture from the pinned Beta test bench. Registry rec
 2. Quit the ChatGPT Stable or Beta app you want to theme.
 3. Open Theme Manager and choose a theme, light or dark mode, and the exact target app.
 4. Select **Apply Full Skin**.
-5. Select **Restore Native** whenever you want the original interface back.
+5. On Windows, optionally enable **Always apply this theme** for future verified launches.
+6. Select **Restore Native** whenever you want the original interface back. This also turns off Always apply.
 
-The current alpha applies a skin to the ChatGPT process started by Theme Manager. Closing ChatGPT and opening it normally returns to the native interface. A safe next-launch controller is designed but not yet shipped; see [Keep My Theme On](docs/persistent-theme.md).
+The Windows implementation of **Always apply** has passed an exact ChatGPT Beta `26.715.3651.0` persistence and cleanup smoke test. It stores a user-level choice and safely replays the verified Full Skin on future launches; it never patches ChatGPT files. Unknown versions stay native. Physical-Mac persistence testing is still pending, so the macOS build must not yet be treated as verified for this feature. See [Keep My Theme On](docs/persistent-theme.md).
 
-The first beta uses Tauri updater signatures so future updates can be verified. Windows Authenticode and Apple notarization are deferred, which means the operating system may still show an unknown-publisher warning. The updater signature does not remove SmartScreen or Gatekeeper warnings. See [release trust and signing](docs/release-signing.md).
+The public beta uses Tauri updater signatures so future updates can be verified. macOS bundles also carry an ad-hoc signature for package integrity, but Windows Authenticode, Apple Developer ID, and notarization are deferred. The operating system may still show an unknown-publisher warning; neither the updater signature nor the ad-hoc Mac signature removes SmartScreen or Gatekeeper warnings. See [release trust and signing](docs/release-signing.md).
 
 ### 2. Give this to your coding agent
 
@@ -131,14 +134,16 @@ The Skill prepares an art brief and image job, checks original or fan-art disclo
 
 ## Join the community
 
-The first community layer is GitHub-native:
+The hosted [Codex Theme Community](https://community.ecomstack.net/) is now available as a public beta. It supports accounts, code-free `.act-theme` uploads, server-side package validation, a quarantine and moderation queue, and one vote per account per theme.
 
-- [propose a theme](https://github.com/rwang23/awesome-codex-theme/issues/new?template=theme-proposal.yml);
-- discuss ideas and use reactions to show interest;
-- submit validated, code-free packs through Pull Requests;
-- enter the public Registry only after rights review and real-app verification.
+Community approval and votes do not publish a theme into the official Registry. Promotion still requires:
 
-A custom domain can point to the Gallery immediately without running a server. Accounts, uploads, voting, moderation, and rankings need a real backend. The recommended staged design uses a branded Gallery first, then a quarantined community service only when submission volume justifies it. See [community platform architecture](docs/community-platform.md).
+- a [structured GitHub proposal](https://github.com/rwang23/awesome-codex-theme/issues/new?template=theme-proposal.yml) or reviewed Pull Request;
+- rights and provenance review;
+- repository Validator and CI checks;
+- apply, capture, and restore evidence from a pinned Codex build.
+
+The hosted service is intentionally separate from this open-source runtime repository. See [community platform architecture](docs/community-platform.md) and the [Registry promotion route](docs/community-registry.md).
 
 ## Project map
 

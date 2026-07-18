@@ -1,12 +1,13 @@
 {
   "schemaVersion": 1,
   "themeId": "beijing-meridian",
+  "rightsProfile": "original",
   "workflow": "openai-image-job",
   "model": "gpt-image-2",
   "size": "1536x1024",
   "quality": "high",
-  "jobId": "4933a9a9-bb79-4d40-9b32-42898dd2232d",
-  "promptSha256": "e7ee63f50432850b4514f09f498aefcd22043646d2d9a0b21d6da54657f74691",
-  "sourceSha256": "f00b4f140e3956cb987b988d80e2c664f8f0caf01b3cca32affd5f8bfaea2ae3",
+  "jobId": "427b0d15-fea0-46f1-aadc-efce25f244ef",
+  "promptSha256": "676f3aeb591f7f4466240b4691495a31373b3549429e2b79d0faa4039ef20c22",
+  "sourceSha256": "b8142726fac12d7367e6e3ee4cc99da83ede3bdba954fd158564717131e4f5b4",
   "disclosure": "AI-generated original source art. Prompt and output were reviewed for third-party characters, logos, signatures, and text before release."
 }

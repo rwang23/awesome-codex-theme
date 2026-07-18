@@ -106,12 +106,12 @@ jobs:
         if: matrix.os == 'windows-latest'
         run: npm run desktop:check
 
-      - name: Build unsigned CI artifact
+      - name: Build platform-untrusted CI artifact
         if: ${{ !startsWith(github.ref, 'refs/tags/v') || vars.DESKTOP_RELEASE_READY != 'true' }}
         working-directory: apps/theme-manager
         run: npm run tauri -- build ${{ matrix.build-args }}
 
-      - name: Verify unsigned macOS disk image and bundle identity
+      - name: Verify macOS disk image, bundle identity, and ad-hoc signature
         if: ${{ (!startsWith(github.ref, 'refs/tags/v') || vars.DESKTOP_RELEASE_READY != 'true') && startsWith(matrix.os, 'macos-') }}
         shell: bash
         run: |
@@ -165,7 +165,15 @@ jobs:
             exit 1
           fi
 
-      - name: Upload unsigned CI artifact
+          codesign --verify --deep --strict --verbose=2 "$app_path"
+          signing_details="$(codesign --display --verbose=4 "$app_path" 2>&1)"
+          if ! grep -q "^Signature=adhoc$" <<<"$signing_details"; then
+            echo "::error::Expected an ad-hoc macOS signature."
+            echo "$signing_details"
+            exit 1
+          fi
+
+      - name: Upload platform-untrusted CI artifact
         if: ${{ !startsWith(github.ref, 'refs/tags/v') || vars.DESKTOP_RELEASE_READY != 'true' }}
         uses: actions/upload-artifact@v7
         with:
@@ -201,6 +209,39 @@ jobs:
           args: "--config src-tauri/tauri.release.conf.json ${{ matrix.build-args }}"
           tagName: ${{ github.ref_name }}
           releaseName: "Awesome Codex Theme ${{ github.ref_name }}"
-          releaseBody: "Updater-signed Tauri Theme Manager beta with ACT Full Skin v1. Windows Authenticode and Apple signing/notarization are not included in this beta, so the operating system may show an unknown-publisher warning. The app applies verified backgrounds, materials, colors, and theme copy without modifying ChatGPT application files."
+          releaseBody: "Updater-signed Tauri Theme Manager beta with ACT Full Skin v1. Windows Authenticode and Apple Developer ID signing/notarization are not included in this beta, so the operating system may show an unknown-publisher warning. macOS bundles carry an ad-hoc signature for package integrity only. The app applies verified backgrounds, materials, colors, and theme copy without modifying ChatGPT application files."
           prerelease: false
           releaseDraft: true
+
+      - name: Verify release macOS disk image and ad-hoc signature
+        if: startsWith(github.ref, 'refs/tags/v') && vars.DESKTOP_RELEASE_READY == 'true' && startsWith(matrix.os, 'macos-')
+        shell: bash
+        run: |
+          artifacts=( ${{ matrix.artifact-path }} )
+          if [ "${#artifacts[@]}" -ne 1 ]; then
+            echo "::error::Expected exactly one release DMG, found ${#artifacts[@]}."
+            exit 1
+          fi
+
+          dmg="${artifacts[0]}"
+          hdiutil verify "$dmg"
+          mount_dir="$(mktemp -d)"
+          cleanup() {
+            hdiutil detach "$mount_dir" >/dev/null 2>&1 || true
+            rm -rf "$mount_dir"
+          }
+          trap cleanup EXIT
+          hdiutil attach "$dmg" -nobrowse -readonly -mountpoint "$mount_dir"
+          app_path="$(find "$mount_dir" -maxdepth 1 -type d -name '*.app' -print -quit)"
+          if [ -z "$app_path" ]; then
+            echo "::error::The release DMG does not contain a macOS application bundle."
+            exit 1
+          fi
+
+          codesign --verify --deep --strict --verbose=2 "$app_path"
+          signing_details="$(codesign --display --verbose=4 "$app_path" 2>&1)"
+          if ! grep -q "^Signature=adhoc$" <<<"$signing_details"; then
+            echo "::error::Expected an ad-hoc macOS signature."
+            echo "$signing_details"
+            exit 1
+          fi

@@ -45,6 +45,16 @@ const translations = {
     reapplySkin: "Reapply Full Skin",
     applyingSkin: "Verifying and applying…",
     restoreSkin: "Restore native",
+    keepTheme: "Always apply this theme",
+    persistenceDisabled: "Off · no login task",
+    persistenceStarting: "Starting the per-user controller",
+    persistenceWaiting: "Ready · waiting for ChatGPT",
+    persistenceActive: "Kept on for this verified session",
+    persistenceRestarting: "Safely reopening the selected ChatGPT app",
+    persistenceBlocked: "Paused · the installed version is not verified",
+    persistenceError: "Paused after a bounded failure",
+    persistenceOther: "Always on: {theme} · {mode}",
+    persistenceConsent: "Keep this theme on across future ChatGPT launches?\n\nTheme Manager will start for your user account at sign-in. When you open the selected, verified ChatGPT version normally, it may close and relaunch that exact app once with a loopback-only debugging port. It never edits ChatGPT files, shortcuts, or chats. Unknown versions stay native. You can turn this off here at any time.",
     copyNative: "Copy Native palette only",
     skinIdle: "Theme packs contain only declarative data and images. The manager uses a temporary loopback-only debug session to load the background without modifying WindowsApps, app.asar, or ChatGPT private data.",
     skinActive: "Active in {target}: {theme} · {mode}. Restore the skin first; quit and reopen ChatGPT normally to close the debug port.",
@@ -71,6 +81,9 @@ const translations = {
     toastApplyFailed: "Could not apply the Full Skin.",
     toastSkinRestored: "Full Skin removed. Quit and reopen ChatGPT normally to close the debug port.",
     toastRestoreFailed: "Could not restore the native interface.",
+    toastPersistenceEnabled: "Always apply is on for this theme.",
+    toastPersistenceDisabled: "Always apply is off and the login task was removed.",
+    toastPersistenceFailed: "Could not change the always-apply setting.",
     toastUpdateFailed: "App update check failed.",
     startupFailed: "Theme Manager could not start.",
     closeCodexError: "Quit the selected ChatGPT app completely, then apply the theme again.",
@@ -123,6 +136,16 @@ const translations = {
     reapplySkin: "重新应用完整皮肤",
     applyingSkin: "正在校验并应用…",
     restoreSkin: "恢复原生",
+    keepTheme: "始终应用这套主题",
+    persistenceDisabled: "已关闭，不会随登录运行",
+    persistenceStarting: "正在启动当前用户级控制器",
+    persistenceWaiting: "已就绪，等待打开 ChatGPT",
+    persistenceActive: "正在守护这个已验证会话",
+    persistenceRestarting: "正在安全重开所选 ChatGPT",
+    persistenceBlocked: "已暂停，当前版本尚未验证",
+    persistenceError: "有限重试失败，已暂停",
+    persistenceOther: "当前常驻：{theme} · {mode}",
+    persistenceConsent: "要让这套主题在以后打开 ChatGPT 时继续生效吗？\n\nTheme Manager 会为当前用户注册登录启动项。当你正常打开所选且已验证的 ChatGPT 版本时，控制器可能先关闭并只重开这个应用一次，再通过仅限本机回环的调试端口加载主题。它不会修改 ChatGPT 文件、快捷方式或聊天；未知版本会保持原生界面。你可以随时在这里关闭。",
     copyNative: "只复制原生配色",
     skinIdle: "主题包只含声明式配置与图片。管理器通过仅限本机回环的临时调试会话加载背景，不修改 WindowsApps、app.asar 或 ChatGPT 私有数据。",
     skinActive: "正在 {target} 使用 {theme} · {mode}。恢复后如需关闭调试端口，请退出并正常重开 ChatGPT。",
@@ -149,6 +172,9 @@ const translations = {
     toastApplyFailed: "无法应用完整皮肤。",
     toastSkinRestored: "已移除完整皮肤。退出并正常重开 ChatGPT 可同时关闭调试端口。",
     toastRestoreFailed: "无法恢复原生界面。",
+    toastPersistenceEnabled: "已为这套主题开启始终应用。",
+    toastPersistenceDisabled: "已关闭始终应用并移除登录启动项。",
+    toastPersistenceFailed: "无法更改始终应用设置。",
     toastUpdateFailed: "应用更新检查失败。",
     startupFailed: "无法启动主题管理器。",
     closeCodexError: "请先完全退出所选 ChatGPT，再重新应用主题。",
@@ -182,6 +208,7 @@ const state = {
   catalogState: null,
   targets: [],
   skinState: null,
+  persistenceState: null,
   updateState: null,
   locale: detectLocale(),
   collection: "all",
@@ -222,6 +249,9 @@ const elements = {
   copyShortcut: document.querySelector("#copyShortcut"),
   targetSelect: document.querySelector("#targetSelect"),
   restoreSkin: document.querySelector("#restoreSkin"),
+  persistenceControl: document.querySelector("#persistenceControl"),
+  persistenceToggle: document.querySelector("#persistenceToggle"),
+  persistenceStatus: document.querySelector("#persistenceStatus"),
   skinStatus: document.querySelector("#skinStatus"),
   registryHash: document.querySelector("#registryHash"),
   themeCount: document.querySelector("#themeCount"),
@@ -459,6 +489,7 @@ function renderSelectedTheme() {
     button.setAttribute("aria-selected", String(active));
   });
   renderSkinState();
+  renderPersistenceState();
 }
 
 function renderTargets() {
@@ -479,6 +510,7 @@ function renderTargets() {
   elements.targetSelect.replaceChildren(fragment);
   elements.applySkin.disabled = state.targets.length === 0 || !state.themeId;
   renderSkinState();
+  renderPersistenceState();
 }
 
 function renderSkinState() {
@@ -488,7 +520,7 @@ function renderSkinState() {
     && skin.mode === state.mode
     && skin.channel === elements.targetSelect.value;
   elements.applySkinLabel.textContent = sameSelection ? t("reapplySkin") : t("applySkin");
-  elements.restoreSkin.disabled = !skin.active;
+  elements.restoreSkin.disabled = !skin.active && !state.persistenceState?.enabled;
   elements.skinStatus.textContent = skin.active
     ? t("skinActive", {
       target: skin.channel === "beta" ? "ChatGPT Beta" : "ChatGPT",
@@ -496,6 +528,43 @@ function renderSkinState() {
       mode: t(skin.mode),
     })
     : t("skinIdle");
+}
+
+function renderPersistenceState() {
+  const persistence = state.persistenceState || { enabled: false, phase: "disabled" };
+  const channel = elements.targetSelect.value;
+  const sameSelection = persistence.enabled
+    && persistence.themeId === state.themeId
+    && persistence.mode === state.mode
+    && persistence.channel === channel;
+  elements.persistenceToggle.checked = sameSelection;
+  elements.persistenceControl.dataset.phase = persistence.phase;
+
+  if (persistence.enabled && !sameSelection) {
+    elements.persistenceStatus.textContent = t("persistenceOther", {
+      theme: persistence.themeId || "—",
+      mode: persistence.mode ? t(persistence.mode) : "—",
+    });
+  } else {
+    const labels = {
+      disabled: "persistenceDisabled",
+      starting: "persistenceStarting",
+      waiting: "persistenceWaiting",
+      active: "persistenceActive",
+      restarting: "persistenceRestarting",
+      blocked: "persistenceBlocked",
+      "target-missing": "persistenceBlocked",
+      "version-blocked": "persistenceBlocked",
+      "retry-blocked": "persistenceError",
+      error: "persistenceError",
+    };
+    elements.persistenceStatus.textContent = t(labels[persistence.phase] || "persistenceDisabled");
+  }
+
+  const busy = ["starting", "restarting"].includes(persistence.phase);
+  elements.persistenceToggle.disabled = busy
+    || (!sameSelection && (state.targets.length === 0 || !state.themeId || !channel));
+  elements.restoreSkin.disabled = !(state.skinState?.active || persistence.enabled);
 }
 
 function renderUpdateState() {
@@ -550,6 +619,7 @@ function renderLanguage() {
   }
   renderTargets();
   renderSkinState();
+  renderPersistenceState();
   renderUpdateState();
 }
 
@@ -614,7 +684,10 @@ elements.search.addEventListener("input", () => {
   renderThemeList();
 });
 
-elements.targetSelect.addEventListener("change", renderSkinState);
+elements.targetSelect.addEventListener("change", () => {
+  renderSkinState();
+  renderPersistenceState();
+});
 
 elements.refreshCatalog.addEventListener("click", async () => {
   try {
@@ -653,6 +726,10 @@ elements.applySkin.addEventListener("click", async () => {
 elements.restoreSkin.addEventListener("click", async () => {
   elements.restoreSkin.disabled = true;
   try {
+    if (state.persistenceState?.enabled) {
+      state.persistenceState = await window.act.disablePersistentTheme();
+      renderPersistenceState();
+    }
     state.skinState = await window.act.restoreFullSkin();
     renderSkinState();
     toast(t("toastSkinRestored"));
@@ -660,6 +737,37 @@ elements.restoreSkin.addEventListener("click", async () => {
     toast(friendlyError(error, "toastRestoreFailed"), "error");
   } finally {
     renderSkinState();
+  }
+});
+
+elements.persistenceToggle.addEventListener("change", async () => {
+  const channel = elements.targetSelect.value;
+  const enable = elements.persistenceToggle.checked;
+  const previous = state.persistenceState || { enabled: false };
+  const sameSelection = previous.enabled
+    && previous.themeId === state.themeId
+    && previous.mode === state.mode
+    && previous.channel === channel;
+  if (!enable && !sameSelection) {
+    renderPersistenceState();
+    return;
+  }
+  if (enable && !window.confirm(t("persistenceConsent"))) {
+    renderPersistenceState();
+    return;
+  }
+
+  elements.persistenceToggle.disabled = true;
+  try {
+    state.persistenceState = enable
+      ? await window.act.enablePersistentTheme(state.themeId, state.mode, channel, true)
+      : await window.act.disablePersistentTheme();
+    renderPersistenceState();
+    toast(t(enable ? "toastPersistenceEnabled" : "toastPersistenceDisabled"));
+  } catch (error) {
+    state.persistenceState = previous;
+    renderPersistenceState();
+    toast(friendlyError(error, "toastPersistenceFailed"), "error");
   }
 });
 
@@ -709,6 +817,7 @@ try {
   state.platform = bootstrap.platform;
   state.targets = bootstrap.targets;
   state.skinState = bootstrap.skinState;
+  state.persistenceState = bootstrap.persistenceState;
   state.updateState = bootstrap.updateState;
   acceptCatalog({
     ...bootstrap.catalogState,
@@ -718,6 +827,14 @@ try {
   renderShortcuts();
   setTimeout(() => void window.act.refreshCatalog().catch(() => {}), 700);
   setTimeout(() => void window.act.checkForAppUpdate().catch(() => {}), 1800);
+  setInterval(async () => {
+    try {
+      state.persistenceState = await window.act.getPersistenceState();
+      renderPersistenceState();
+    } catch {
+      // Keep the last verified state; the next poll may recover.
+    }
+  }, 1800);
 } catch {
   elements.catalogLabel.textContent = t("startupFailed");
   toast(t("startupFailed"), "error");

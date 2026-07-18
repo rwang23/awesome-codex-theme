@@ -25,6 +25,7 @@ const RUNTIME_FORMAT: &str = "act-full-skin-v1";
 const MAX_ART_BYTES: usize = 16 * 1024 * 1024;
 const APPLY_TIMEOUT: Duration = Duration::from_secs(45);
 const CDP_CALL_TIMEOUT: Duration = Duration::from_secs(20);
+const CDP_CLEANUP_TIMEOUT: Duration = Duration::from_secs(5);
 
 #[derive(Clone, Serialize)]
 #[serde(rename_all = "camelCase")]
@@ -125,7 +126,7 @@ fn sha256_hex(bytes: &[u8]) -> String {
     hex::encode(Sha256::digest(bytes))
 }
 
-fn port_for(channel: &str) -> Result<u16, String> {
+pub fn port_for_channel(channel: &str) -> Result<u16, String> {
     match channel {
         "stable" => Ok(9465),
         "beta" => Ok(9466),
@@ -331,11 +332,11 @@ fn runtime_script(skin: &FullSkinDescriptor, art: &[u8]) -> Result<String, Strin
 
 type CdpSocket = WebSocket<MaybeTlsStream<TcpStream>>;
 
-fn set_socket_timeout(socket: &mut CdpSocket) -> Result<(), String> {
+fn set_socket_timeout(socket: &mut CdpSocket, timeout: Duration) -> Result<(), String> {
     if let MaybeTlsStream::Plain(stream) = socket.get_mut() {
         stream
-            .set_read_timeout(Some(CDP_CALL_TIMEOUT))
-            .and_then(|_| stream.set_write_timeout(Some(CDP_CALL_TIMEOUT)))
+            .set_read_timeout(Some(timeout))
+            .and_then(|_| stream.set_write_timeout(Some(timeout)))
             .map_err(|error| format!("无法设置 CDP 超时：{error}"))?;
     }
     Ok(())
@@ -369,9 +370,13 @@ fn cdp_call(socket: &mut CdpSocket, id: u64, method: &str, params: Value) -> Res
 }
 
 fn connect_target(target: &CdpTarget) -> Result<CdpSocket, String> {
+    connect_target_with_timeout(target, CDP_CALL_TIMEOUT)
+}
+
+fn connect_target_with_timeout(target: &CdpTarget, timeout: Duration) -> Result<CdpSocket, String> {
     let (mut socket, _) = connect(target.web_socket_debugger_url.as_str())
         .map_err(|error| format!("无法连接 ChatGPT 页面：{error}"))?;
-    set_socket_timeout(&mut socket)?;
+    set_socket_timeout(&mut socket, timeout)?;
     Ok(socket)
 }
 
@@ -426,18 +431,27 @@ fn remove_from_targets(targets: Vec<CdpTarget>, session: &SkinSession) -> Result
       document.documentElement.classList.remove("act-full-skin", "act-full-skin-home");
       return true;
     })()"#;
+    let mut errors = Vec::new();
     for record in &session.targets {
         let Some(target) = targets.iter().find(|target| target.id == record.id) else {
             continue;
         };
-        let mut socket = connect_target(target)?;
-        let _ = cdp_call(
+        let mut socket = match connect_target_with_timeout(target, CDP_CLEANUP_TIMEOUT) {
+            Ok(socket) => socket,
+            Err(error) => {
+                errors.push(format!("{}: {error}", record.id));
+                continue;
+            }
+        };
+        if let Err(error) = cdp_call(
             &mut socket,
             1,
             "Page.removeScriptToEvaluateOnNewDocument",
             json!({ "identifier": record.script_id }),
-        );
-        cdp_call(
+        ) {
+            errors.push(format!("{}: {error}", record.id));
+        }
+        if let Err(error) = cdp_call(
             &mut socket,
             2,
             "Runtime.evaluate",
@@ -446,7 +460,15 @@ fn remove_from_targets(targets: Vec<CdpTarget>, session: &SkinSession) -> Result
                 "awaitPromise": true,
                 "returnByValue": true
             }),
-        )?;
+        ) {
+            errors.push(format!("{}: {error}", record.id));
+        }
+    }
+    if !errors.is_empty() {
+        return Err(format!(
+            "部分 Full Skin 页面没有完成清理：{}",
+            errors.join("; ")
+        ));
     }
     Ok(())
 }
@@ -471,13 +493,16 @@ pub async fn apply(
     channel: &str,
 ) -> Result<SkinRuntimeView, String> {
     if let Some(previous) = runtime.take() {
-        remove_session(previous).await?;
+        if let Err(error) = remove_session(previous.clone()).await {
+            runtime.replace(previous);
+            return Err(error);
+        }
     }
 
     let skin = catalog::full_skin_for(catalog, theme_id, mode)?;
     let art = load_art(app, &skin).await?;
     let script = runtime_script(&skin, &art)?;
-    let port = port_for(channel)?;
+    let port = port_for_channel(channel)?;
     let target = platform::find_target(channel)?;
     let running = platform::target_is_running(&target)?;
     let listener_matches = platform::listener_belongs_to_target(port, &target).unwrap_or(false);
@@ -507,7 +532,10 @@ pub async fn apply(
 
 pub async fn restore(runtime: &SkinRuntime) -> Result<SkinRuntimeView, String> {
     if let Some(session) = runtime.take() {
-        remove_session(session).await?;
+        if let Err(error) = remove_session(session.clone()).await {
+            runtime.replace(session);
+            return Err(error);
+        }
     }
     Ok(runtime.current())
 }

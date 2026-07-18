@@ -9,6 +9,8 @@
   ·
   <a href="https://github.com/rwang23/awesome-codex-theme/releases"><strong>下载桌面应用</strong></a>
   ·
+  <a href="https://community.ecomstack.net/"><strong>主题社区</strong></a>
+  ·
   <a href="docs/agent-install.md"><strong>让 Agent 帮你安装</strong></a>
   ·
   <a href="README.md"><strong>English</strong></a>
@@ -25,7 +27,7 @@
 
 上图是实际运行的 Tauri 2 Theme Manager。内嵌皮肤由 ChatGPT Beta `26.715.3651.0` 真正加载，完成运行时读回后再截图，不是把壁纸贴进应用效果图。
 
-> 桌面安装包只会发布在官方 [GitHub Releases 页面](https://github.com/rwang23/awesome-codex-theme/releases)。首个公开 Beta 仍在准备中。如果页面上没有与你系统匹配的文件，就表示目前还没有公开安装包。
+> 桌面安装包只会发布在官方 [GitHub Releases 页面](https://github.com/rwang23/awesome-codex-theme/releases)。如果页面上没有与你的操作系统和 CPU 匹配的文件，就表示当前没有支持该目标的公开安装包。
 
 ## 它不只是换一组颜色
 
@@ -69,11 +71,12 @@ Awesome Codex Theme 会把一套皮肤需要的部分一起应用：
 2. 完全退出准备加载皮肤的 ChatGPT Stable 或 Beta。
 3. 打开 Theme Manager，选择主题、明暗模式和准确的目标应用。
 4. 点击“应用完整皮肤”。
-5. 想回到原生界面时，点击“恢复原生”。
+5. Windows 用户可以选择开启“始终应用这套主题”，让它在以后打开已验证版本时自动恢复。
+6. 想回到原生界面时，点击“恢复原生”。这也会关闭“始终应用”。
 
-当前 alpha 会把皮肤应用到 Theme Manager 启动的 ChatGPT 进程。关闭 ChatGPT 后再从系统正常打开，会回到原生界面。安全的“保持主题常驻”控制器已经完成设计，但还没有作为正式功能发布，详见[主题常驻方案](docs/persistent-theme.md)。
+Windows 版“始终应用”已经通过 ChatGPT Beta `26.715.3651.0` 的准确版本常驻与清理闭环测试。它保存的是当前用户级选择，并在以后打开已验证版本时安全重放 Full Skin，不会修改 ChatGPT 文件；未知版本会保持原生界面。macOS 仍缺少真机常驻闭环，暂时不能把这项能力视为已在 Mac 验证。详见[主题常驻方案](docs/persistent-theme.md)。
 
-首个 Beta 只使用 Tauri updater 签名，用来验证以后收到的应用更新。Windows Authenticode 与 Apple 公证暂时延后，所以系统仍可能显示未知发布者提示。Tauri updater 签名不能消除 SmartScreen 或 Gatekeeper 提示，详见[发布信任与签名](docs/release-signing.md)。
+公开 Beta 使用 Tauri updater 签名来验证以后收到的应用更新；macOS 应用包还带有只用于包完整性的 ad-hoc 签名。Windows Authenticode、Apple Developer ID 与公证暂时延后，所以系统仍可能显示未知发布者提示。Updater 与 ad-hoc 签名都不能消除 SmartScreen 或 Gatekeeper 提示，详见[发布信任与签名](docs/release-signing.md)。
 
 ### 2. 把这段话交给你的 Agent
 
@@ -130,14 +133,16 @@ Skill 会准备美术 brief 和 image job，检查原创或 Fan Art 披露，配
 
 ## 加入社区
 
-第一阶段先使用 GitHub 自己的社区能力：
+公开 Beta 版 [Codex Theme Community](https://community.ecomstack.net/) 已经上线。它支持账号、无代码 `.act-theme` 上传、服务端主题包校验、隔离审核队列，以及每个账号对每套主题一票。
 
-- [提交主题构想](https://github.com/rwang23/awesome-codex-theme/issues/new?template=theme-proposal.yml)；
-- 在 Issue 中讨论，用 reaction 表达兴趣；
-- 通过 Pull Request 提交经过验证、没有可执行代码的主题包；
-- 完成权利审查和实机验证后，才进入公共 Registry。
+社区审核通过或票数领先，都不会自动把主题写入官方 Registry。正式收录仍然需要：
 
-自定义域名现在就可以绑定到 Gallery，不需要先租服务器。账号、上传、投票、审核和排行则需要真正的后端。推荐先建立品牌站点，等投稿量出现后，再上线带隔离上传区的社区服务。完整方案见[社区平台架构](docs/community-platform.md)。
+- [结构化 GitHub 提案](https://github.com/rwang23/awesome-codex-theme/issues/new?template=theme-proposal.yml)或经过审查的 Pull Request；
+- 素材权利与来源审查；
+- 仓库 Validator 与 CI；
+- 在固定 Codex 版本中完成应用、截图和恢复证据。
+
+社区服务与这个开源运行时仓库保持独立。完整边界见[社区平台架构](docs/community-platform.md)与[Registry 收录路线](docs/community-registry.md)。
 
 ## 项目结构
 

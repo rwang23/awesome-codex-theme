@@ -1,12 +1,13 @@
 {
   "schemaVersion": 1,
   "themeId": "shenzhen-circuit-rain",
+  "rightsProfile": "original",
   "workflow": "openai-image-job",
   "model": "gpt-image-2",
   "size": "1536x1024",
   "quality": "high",
-  "jobId": "b03f6050-517a-4ecf-a39c-478e5c92965e",
-  "promptSha256": "973363e68801a0516f17fe5d2933b64d40ff8277156c1c914f52fd79ae14f2c6",
-  "sourceSha256": "fa6dae3a8ec09f4d8715402a8f7a051ee75160eeb7be440e04d86a6809791bf2",
+  "jobId": "19eb19a5-cf7d-407e-b3af-5fc9c293c864",
+  "promptSha256": "888e849de8406a9f0b47e3782bfd06b07fd825ec310bad703c830e9951baebb4",
+  "sourceSha256": "fe02957766cbcbae22966e86cd93e9dec90e00ba3af79c00bdc889ff4c3bebbe",
   "disclosure": "AI-generated original source art. Prompt and output were reviewed for third-party characters, logos, signatures, and text before release."
 }

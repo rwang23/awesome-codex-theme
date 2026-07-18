@@ -1,12 +1,13 @@
 {
   "schemaVersion": 1,
   "themeId": "shanghai-afterglow",
+  "rightsProfile": "original",
   "workflow": "openai-image-job",
   "model": "gpt-image-2",
   "size": "1536x1024",
   "quality": "high",
-  "jobId": "3cda4c72-8090-4a9d-b830-4f47d1b483fe",
-  "promptSha256": "3a7d1cce8931fe254f76e947bb7c6d332a1ca4483e5ab163a2e00b2d6aa6729f",
-  "sourceSha256": "c7cccf829809ae71c3eac1a95b1c47af5c7709b1df0028b9e9106a8841edeb5b",
+  "jobId": "a331576d-ade5-4d51-b6ba-e6f1e169d815",
+  "promptSha256": "b9f0b2c916c31b9f290a9040c1dc6bc013fba7e6219a4c28bf1793a568a20f25",
+  "sourceSha256": "fd0d2b8ff411bc53930590c97f102b14b3720f7a5382af0a87db0fc101b7f15b",
   "disclosure": "AI-generated original source art. Prompt and output were reviewed for third-party characters, logos, signatures, and text before release."
 }

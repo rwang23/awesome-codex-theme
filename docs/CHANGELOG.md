@@ -2,6 +2,17 @@
 
 ## 2026-07-18-00-00
 
+- Regenerated all eight China City Atlas backgrounds with city-specific scenery,
+  then captured all 16 light and dark modes in the exact ChatGPT Beta
+  `26.715.3651.0` test bench.
+- Implemented the opt-in Windows persistence controller with Tauri autostart,
+  exact app and version gates, bounded replay, atomic state, one-click disable,
+  and cleanup. Eight Rust tests and a real Beta persistence smoke pass; physical
+  Mac persistence remains pending.
+- Deployed a separate private community Beta at
+  `https://community.ecomstack.net/` with bilingual accounts, quarantined
+  code-free uploads, strict pack validation, moderation, and one vote per
+  account per theme. Community votes never bypass official Registry review.
 - Made English the default public README, added a full Chinese edition, and
   redesigned both around real captures, official downloads, consumer setup,
   Agent-assisted installation, trust boundaries, creation, and community.
@@ -14,10 +25,11 @@
 - Added a staged custom-domain and community platform design covering GitHub
   Pages, Cloudflare or Supabase backends, quarantined uploads, GitHub identity,
   voting, moderation, and the threshold for leaving GitHub-native proposals.
-- Changed the first public desktop Beta gate to require only Tauri updater
-  signatures. Windows Authenticode and Apple signing/notarization are deferred
-  and must remain clearly disclosed in the Beta Release. The GitHub prerelease
-  flag stays false so the current `releases/latest` updater endpoint can find it.
+- Changed the first public desktop Beta gate to require Tauri updater
+  signatures and an ad-hoc macOS bundle signature. Windows Authenticode and
+  Apple Developer ID signing/notarization are deferred and must remain clearly
+  disclosed in the Beta Release. The GitHub prerelease flag stays false so the
+  current `releases/latest` updater endpoint can find it.
 - Added operating-system language detection and a persistent Chinese/English
   switch to Theme Manager. Search indexes both languages.
 - Split Gallery and manager discovery into independent collection, rights, and
@@ -26,12 +38,12 @@
   covering discussion, reactions, Pull Requests, Validator gates, real-app
   verification, rankings, moderation, and the threshold for a hosted service.
 - Added exact updater, Windows, and Apple signing account and GitHub Actions
-  configuration guidance. The release-ready switch remains off until platform
-  signatures and Mac evidence exist.
-- Added a real-Mac acceptance checklist and clarified that Full Skin is
-  session-scoped: a normal ChatGPT restart returns to the native interface.
-- Strengthened macOS CI by verifying each unsigned DMG, bundle identifier,
-  declared executable, and target architecture before upload.
+  configuration guidance, then configured the updater signing key and
+  release-ready gate for the first public Beta.
+- Added a real-Mac acceptance checklist. macOS remains session-scoped until its
+  shared persistence-controller path passes physical-Mac validation.
+- Strengthened macOS CI by verifying each DMG, bundle identifier, declared
+  executable, target architecture, and ad-hoc code signature before upload.
 
 ## 2026-07-17-04-00
 

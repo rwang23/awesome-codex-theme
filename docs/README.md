@@ -36,16 +36,16 @@ locations are reserved for execution evidence or closed history when needed.
   measured package comparison, and macOS signing boundary
 - release-signing.md: updater keys, Windows signing choices, Apple developer
   account, the updater-signed Beta boundary, and the release-ready gate
-- macos-testing.md: unsigned DMG boundary, real-Mac installation, Full Skin
-  apply/restore, Gatekeeper, and evidence checklist
+- macos-testing.md: ad-hoc-signed DMG boundary, real-Mac installation, Full
+  Skin apply/restore, Gatekeeper, and evidence checklist
 - community-registry.md: GitHub-native proposals, independent Gallery facets,
-  verified rankings, and the future hosted-upload threshold
+  hosted-beta submissions, verified rankings, and official Registry promotion
 - persistent-theme.md: reviewed upstream persistence mechanisms and the
-  no-patch, per-user controller design
+  Windows-verified no-patch per-user controller
 - agent-install.md: copy-ready installation contract, trust checks, and
   explicit stop conditions for coding agents
 - community-platform.md: custom-domain, hosted submission, voting, storage,
-  moderation, and staged backend architecture
+  moderation, deployed private Beta, and staged backend architecture
 - native-testing.md: isolated Full Skin validation, Theme Manager smoke, and
   screenshot evidence
 - landscape.md: dated reference-project research and positioning

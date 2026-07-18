@@ -815,6 +815,94 @@ kbd {
   opacity: 0.45;
 }
 
+.persistence-control {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  min-height: 48px;
+  margin-top: 7px;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: rgba(31, 105, 88, 0.035);
+  cursor: pointer;
+}
+
+.persistence-control:has(input:checked) {
+  border-color: rgba(31, 105, 88, 0.3);
+  background: rgba(31, 105, 88, 0.075);
+}
+
+.persistence-control:has(input:focus-visible) {
+  outline: 2px solid var(--vermilion);
+  outline-offset: 2px;
+}
+
+.persistence-control:has(input:disabled) {
+  cursor: wait;
+  opacity: 0.65;
+}
+
+.persistence-control > input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.persistence-copy {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+}
+
+.persistence-copy strong {
+  font-size: 10px;
+  font-weight: 680;
+}
+
+.persistence-copy small {
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 8px;
+  line-height: 1.35;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.switch-track {
+  position: relative;
+  width: 30px;
+  height: 18px;
+  border: 1px solid rgba(23, 59, 52, 0.2);
+  border-radius: 999px;
+  background: rgba(23, 59, 52, 0.12);
+  transition: 160ms ease;
+}
+
+.switch-track span {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(23, 59, 52, 0.25);
+  transition: 160ms ease;
+}
+
+.persistence-control:has(input:checked) .switch-track {
+  border-color: var(--jade);
+  background: var(--jade);
+}
+
+.persistence-control:has(input:checked) .switch-track span {
+  transform: translateX(12px);
+}
+
 .action-card > p {
   margin: 10px 1px 0;
   color: var(--muted);

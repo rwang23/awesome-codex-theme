@@ -72,12 +72,13 @@ Rust owns:
 - PNG download, cache, byte-count, signature, and SHA-256 checks;
 - loopback CDP session startup;
 - target and WebSocket validation;
-- early and current-page injection;
-- restore state;
-- Native fallback copy;
+  - early and current-page injection;
+  - restore state;
+  - opt-in per-user persistence state, autostart, version gates, and bounded replay;
+  - Native fallback copy;
 - release-update state.
 
-The runtime session is held in process memory. Closing Theme Manager does not silently mutate ChatGPT again. The user can restore before closing; quitting and reopening ChatGPT removes the temporary debugging listener.
+By default, the runtime session is held in process memory. The user may explicitly enable the per-user persistence controller, which stores only a declarative choice and safely replays the verified session on future launches. Restore disables that controller, unregisters autostart, removes the current runtime, and leaves ChatGPT files untouched.
 
 ## Delivery surfaces
 

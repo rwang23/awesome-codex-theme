@@ -214,6 +214,11 @@ export async function validateRepository() {
   );
   for (const sourceJob of sourceJobRecords) {
     const rightsProfile = sourceJob.rightsProfile || "original";
+    check(
+      sourceJob.promptProfile == null || sourceJob.promptProfile === "city",
+      sourceJob.id + " source prompt profile is unsupported",
+      errors,
+    );
     if (rightsProfile === "fan-art") {
       check(Boolean(sourceJob.fanArt?.work?.["zh-CN"]), sourceJob.id + " fan-art job must declare its work", errors);
       check(Array.isArray(sourceJob.fanArt?.characters?.["zh-CN"]), sourceJob.id + " fan-art job must declare characters", errors);
@@ -315,7 +320,11 @@ export async function validateRepository() {
     const sourceDimensions = readPngDimensions(sourceArt);
     const rightsProfile = catalogTheme.rightsProfile || "original";
     const fanArt = rightsProfile === "fan-art";
-    const commonPrompt = fanArt ? sourceJobs.fanArtPrompt : sourceJobs.commonPrompt;
+    const commonPrompt = fanArt
+      ? sourceJobs.fanArtPrompt
+      : sourceJob.promptProfile === "city"
+        ? sourceJobs.cityPrompt
+        : sourceJobs.commonPrompt;
     const completePrompt = commonPrompt + "\n\nScene brief: " + sourceJob.prompt;
     check(
       sourceDimensions.width === SOURCE_WIDTH && sourceDimensions.height === SOURCE_HEIGHT,

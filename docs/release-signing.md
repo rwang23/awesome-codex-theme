@@ -5,20 +5,22 @@
 - 必须使用 Tauri updater 签名；
 - 暂不要求 Windows Authenticode；
 - 暂不要求 Apple Developer ID 与 notarization；
+- macOS app bundle 使用 Tauri 配置的 ad-hoc 签名，只验证包内完整性；
 - Release 先创建为 draft，标题和版本明确标成 Beta；
 - README 和 Release Notes 必须说明系统仍可能显示未知发布者。
 
 这让项目可以先验证下载、安装、应用、恢复和自动更新链路，但不能把安装包描述成已经获得 Windows 或 macOS 的系统级信任。
 
-## 三类签名不能混用
+## 四类签名不能混用
 
 | 信任层 | 首个 Beta | 它解决的问题 |
 | --- | --- | --- |
 | Tauri updater 签名 | 必须 | 已安装的 Theme Manager 验证后续更新是否来自同一密钥 |
 | Windows Authenticode | 延后 | 发布者身份、SmartScreen 与企业策略信任 |
+| macOS ad-hoc 签名 | 必须 | 验证 app bundle 内部完整性，不提供开发者身份 |
 | Apple Developer ID + notarization | 延后 | Gatekeeper、公证与普通 Mac 下载体验 |
 
-Tauri updater 签名不会消除 SmartScreen 或 Gatekeeper 提示，也不会给初次下载的安装包增加系统发布者身份。
+Tauri updater 与 macOS ad-hoc 签名都不会消除 SmartScreen 或 Gatekeeper 提示，也不会给初次下载的安装包增加系统发布者身份。
 
 ## 生成 updater 密钥
 
@@ -90,7 +92,7 @@ prerelease 标志恢复为 `true`。
 
 ### macOS
 
-未签名、未公证的 DMG 可能被 Gatekeeper 阻止。测试者只应在系统设置的 Privacy & Security 中对这一个应用选择 **Open Anyway**。不要关闭 Gatekeeper，也不要执行全局解除隔离命令。
+使用 ad-hoc 签名、但没有 Developer ID 和公证的 DMG 仍可能被 Gatekeeper 阻止。测试者只应在系统设置的 Privacy & Security 中对这一个应用选择 **Open Anyway**。不要关闭 Gatekeeper，也不要执行全局解除隔离命令。
 
 因此 macOS Beta 可以提供给明确知情的测试者，但还不是面向完全小白的无摩擦安装体验。
 
@@ -101,10 +103,10 @@ prerelease 标志恢复为 `true`。
 1. `npm run check` 全部通过；
 2. Windows NSIS 本地构建通过；
 3. Stable/Beta 的应用与恢复结果没有回归；
-4. macOS 两个 DMG 的 CI 结构检查通过；
+4. macOS 两个 DMG 的 CI 结构、架构与 ad-hoc `codesign` 检查通过；
 5. updater 公钥已经进入 release 配置；
 6. GitHub Secrets 与 Variable 已配置；
-7. Release Notes 包含“无 Windows/Apple 系统签名”的醒目说明；
+7. Release Notes 包含“无 Windows Authenticode、Apple Developer ID 和公证”的醒目说明；
 8. `DESKTOP_RELEASE_READY=true`。
 
 推送 tag 后，先检查 draft Release：
@@ -147,4 +149,4 @@ prerelease 标志恢复为 `true`。
 
 ## English summary
 
-The first public beta requires Tauri updater signatures but intentionally defers Windows Authenticode and Apple Developer ID notarization. The updater signature authenticates future in-app updates; it does not establish operating-system trust for the initial installer. Tagged builds create a draft Beta Release only after updater keys and validation are ready. Because GitHub's `latest` route excludes prereleases, the GitHub prerelease flag remains false while the alpha version, title, and body clearly identify the build as Beta. Release notes must disclose the unsigned OS-level status, and agents must never disable SmartScreen or Gatekeeper on the user's behalf.
+The public beta requires Tauri updater signatures and an ad-hoc macOS bundle signature, while intentionally deferring Windows Authenticode, Apple Developer ID, and notarization. The updater signature authenticates future in-app updates; the ad-hoc signature checks bundle integrity. Neither establishes operating-system publisher trust. Tagged builds create a draft Beta Release only after updater keys and validation are ready. Because GitHub's `latest` route excludes prereleases, the GitHub prerelease flag remains false while the alpha version, title, and body clearly identify the build as Beta. Release notes must disclose the platform-trust boundary, and agents must never disable SmartScreen or Gatekeeper on the user's behalf.

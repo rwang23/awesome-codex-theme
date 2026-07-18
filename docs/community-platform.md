@@ -1,6 +1,19 @@
 # 自定义域名与社区平台架构
 
-状态：可执行方案，尚未购买域名或部署后端。
+状态：独立私有社区 Beta 已部署，临时入口为 <https://community.ecomstack.net/>；品牌域名以后再迁移。
+
+## 已实施的 Beta
+
+社区服务与这个开源 Theme Standard、Registry 和 Manager 仓库保持分离。当前实现使用 Next.js、PostgreSQL、Docker Compose、Caddy 和 Cloudflare，运行在已有 Oracle VPS 上，提供：
+
+- 中英文界面与本地账号会话；
+- 声明式 `.act-theme` 上传；
+- ZIP 路径、manifest、PNG、大小与哈希校验；
+- 隔离状态和维护者审核队列；
+- 每个账号对每套主题一票；
+- 官方 Registry 的只读主题发现。
+
+社区审核与票数不会直接修改公共 Registry。主题仍须在开源仓库经过权利审查、Validator、CI 和真实 Codex 应用/恢复验证后，才能成为官方 Verified 主题。
 
 ## 域名能解决什么
 
@@ -14,9 +27,9 @@ assets.example.com   经过审核的主题素材
 
 域名本身不会自动带来账号、数据库、上传、投票或审核。把域名绑定到一台服务器以后，仍然要建设和维护认证、数据、对象存储、防刷、日志、备份、隐私政策和下架流程。
 
-第一阶段不需要购买云服务器。GitHub Pages 官方支持自定义域名，公共仓库可以继续免费托管静态 Gallery。建议同时配置 apex 与 `www`，把 `www` 作为稳定主入口。
+静态 Gallery 本身不需要应用服务器，仍由 GitHub Pages 承载。社区 Beta 复用了已有 Oracle VPS 和 `ecomstack.net` 临时子域名，因此没有新增云主机采购；未来购买品牌域名时再迁移入口。
 
-## 推荐的三阶段路线
+## 原始三阶段路线
 
 ### 阶段 1：品牌站点
 
@@ -113,9 +126,9 @@ Supabase 更适合最快做出账号、Postgres、Storage 和管理后台。2026
 
 如果团队更重视后台管理速度，可以选 Supabase。若更重视低固定成本和与静态 Gallery 分离，优先选 Cloudflare。
 
-### 暂不推荐：自管 VPS
+### 当前实施：复用现有 Oracle VPS
 
-VPS 看起来最自由，但首版要自行负责：
+本项目已经有成熟的 Oracle VPS、Docker、Caddy、Cloudflare 和部署工作流，因此首版选择复用现有平台。仍需持续负责：
 
 - 系统更新和防火墙；
 - 数据库升级与备份恢复；
@@ -124,7 +137,7 @@ VPS 看起来最自由，但首版要自行负责：
 - DDoS 与上传滥用；
 - 高可用和事故响应。
 
-这些工作不会让 Gallery 更好看，也不会让主题更安全。除非已经有成熟运维体系或平台能力超过 serverless 边界，否则不需要。
+这个选择适合当前试验规模，不代表 VPS 对所有新项目都优于 serverless。上传始终留在隔离区，数据库只绑定容器网络，Web 服务只监听 `127.0.0.1:3500`，公网 TLS 与安全头由 Caddy 和 Cloudflare 处理。规模或滥用成本上升后，可以再把隔离素材迁移到 R2，把边缘防刷迁移到 Turnstile。
 
 ## 身份与权限
 
@@ -147,27 +160,27 @@ reports
 
 `votes` 对 `(user_id, theme_submission_id)` 建唯一约束。Popular 使用固定窗口和时间衰减；Featured 始终由维护者决定，不能由票数自动升级。
 
-## 上线门槛
+## 原设计门槛与当前决定
 
-满足以下任一组合后再进入阶段 2：
+原设计建议满足以下任一组合后再进入阶段 2：
 
 - 连续两个月每月至少 20 个有效主题提案；
 - 非开发者提交者明显因为 GitHub 流程放弃；
 - 维护者每周花 4 小时以上整理附件和重复信息；
 - 社区确实需要独立投票，而不是只有少量 reaction。
 
-在此之前，优先把时间投入主题质量、Mac 真机验证、安装器和首个 Release。
+本次由项目所有者明确授权提前上线隔离 Beta，用真实使用验证流程，同时继续把主题质量、Mac 真机验证、安装器和首个 Release 放在主线。Beta 不会自动发布用户内容，也不会让社区服务获得公共仓库写权限。
 
-## 现在可以执行的动作
+## 接下来的动作
 
-1. 先确定 3 到 5 个域名候选并检查商标与可用性。
-2. 购买后只把它绑定到 GitHub Pages。
-3. 在仓库开启域名验证和 HTTPS。
-4. 继续用现有 Issue Form 与 PR 流程收集真实需求。
-5. 达到阶段 2 门槛后，再创建 Cloudflare 项目、GitHub OAuth/App 和隐私政策。
+1. 观察真实注册、投稿、审核和投票行为，不开放自动发布。
+2. 为数据库与隔离上传补充定期备份和恢复演练。
+3. 上线举报、下架、隐私与 DMCA 页面后再扩大推广。
+4. 继续使用现有 Issue Form 与 PR 作为官方 Registry 收录路线。
+5. 确定无商标冲突的品牌域名后，把临时子域名平滑迁移过去。
 
-购买域名、配置 DNS、创建云账号或部署服务都属于外部状态变更，需要在候选域名和账号归属确定后单独执行。
+购买新域名、接入第三方身份或给社区服务增加公共仓库写权限，仍然属于新的外部状态变更，需要单独评审。
 
 ## English summary
 
-A custom domain is useful branding, but it is not a community backend. Start by mapping a branded domain to the existing GitHub Pages Gallery. Keep proposals and validated theme packs in GitHub until real submission volume justifies accounts and uploads. The recommended second-stage stack is Cloudflare Workers, D1, R2, Turnstile, GitHub login, quarantined uploads, moderation, and PR-based publication. Supabase is the faster managed alternative; a self-managed VPS is unnecessary for the first community release.
+The community beta now runs separately from the open-source runtime repository at `community.ecomstack.net`. It uses Next.js, PostgreSQL, Docker Compose, Caddy, and Cloudflare on an existing Oracle VPS, with account sessions, quarantined code-free uploads, strict package validation, moderation, and one vote per account per theme. Community approval never writes directly to the official Registry; rights review, repository CI, and real-app evidence remain mandatory. A dedicated brand domain, stronger abuse controls, and backup drills are the next operating gates.

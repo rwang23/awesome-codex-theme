@@ -130,7 +130,7 @@
           <p class="eyebrow" data-i18n="managerEyebrow">Windows + macOS 桌面管理器</p>
           <h2 id="managerTitle" data-i18n="managerTitle">主题持续更新，管理器也要跟得上。</h2>
           <p data-i18n="managerIntro">
-            Tauri Theme Manager 每次启动都会校验远端 Registry；断网时继续使用上次验证通过的版本。签名发布通道启用后，应用更新也会通过 GitHub Releases 完成。
+            Tauri Theme Manager 会校验远端 Registry；Windows 还可由用户主动开启“始终应用”，在以后打开已验证版本时安全恢复主题，不修改应用文件。
           </p>
           <ul class="manager-features">
             <li>
@@ -142,8 +142,8 @@
               <span data-i18n="managerFeatureTwoBody">Windows 与 macOS 共用安全的本地界面和同一份 Registry。</span>
             </li>
             <li>
-              <strong data-i18n="managerFeatureThreeTitle">一键应用，随时恢复</strong>
-              <span data-i18n="managerFeatureThreeBody">管理器校验素材与应用身份，加载完整皮肤，也能干净移除运行时。</span>
+              <strong data-i18n="managerFeatureThreeTitle">一次选择，随时恢复</strong>
+              <span data-i18n="managerFeatureThreeBody">Windows 常驻控制器已完成真实 Beta 闭环；恢复会同时注销启动项和清理运行时。</span>
             </li>
           </ul>
           <div class="manager-actions">
@@ -317,17 +317,17 @@ city rain theme.</code></pre>
       <section class="community-section" id="community" aria-labelledby="communityTitle">
         <div class="community-copy">
           <p class="eyebrow" data-i18n="communityEyebrow">社区共创 / COMMUNITY</p>
-          <h2 id="communityTitle" data-i18n="communityTitle">先把投稿做得可信，再把它做成热闹的社区。</h2>
+          <h2 id="communityTitle" data-i18n="communityTitle">社区已经开放，Registry 门禁仍然保留。</h2>
           <p data-i18n="communityIntro">
-            首阶段使用 GitHub 主题提案、Pull Request 和自动校验，不接收未经审核就公开的任意文件。点赞可以反映人气，但不会替代版权、完整性和实机验证。
+            独立社区 Beta 支持账号、主题包上传、审核与投票。文件先隔离并校验；票数只表达兴趣，不会自动进入官方 Registry。
           </p>
           <div class="community-actions">
-            <a class="community-primary" href="https://github.com/rwang23/awesome-codex-theme/issues/new?template=theme-proposal.yml">
-              <span data-i18n="communityPropose">提交主题提案</span>
+            <a class="community-primary" href="https://community.ecomstack.net/" target="_blank" rel="noreferrer">
+              <span data-i18n="communityVisit">进入主题社区</span>
               <span aria-hidden="true">↗</span>
             </a>
             <a href="https://github.com/rwang23/awesome-codex-theme/blob/main/docs/community-registry.md">
-              <span data-i18n="communityRoadmap">查看社区路线</span>
+              <span data-i18n="communityRoadmap">查看官方收录路线</span>
               <span aria-hidden="true">↗</span>
             </a>
           </div>
@@ -335,23 +335,23 @@ city rain theme.</code></pre>
         <ol class="community-path">
           <li>
             <span>01</span>
-            <strong data-i18n="communityStepOneTitle">提案与预览</strong>
-            <p data-i18n="communityStepOneBody">作者提交中英文说明、来源证据和预览图，社区可以讨论并点赞。</p>
+            <strong data-i18n="communityStepOneTitle">账号与上传</strong>
+            <p data-i18n="communityStepOneBody">作者创建账号并上传声明式 .act-theme；主题包不能携带可执行代码。</p>
           </li>
           <li>
             <span>02</span>
-            <strong data-i18n="communityStepTwoTitle">数据包校验</strong>
-            <p data-i18n="communityStepTwoBody">通过 PR 提交无代码主题包，CI 检查 Schema、哈希、素材权利和对比度。</p>
+            <strong data-i18n="communityStepTwoTitle">隔离与校验</strong>
+            <p data-i18n="communityStepTwoBody">服务端先检查 ZIP 路径、manifest、图片、体积和哈希，失败内容不会公开。</p>
           </li>
           <li>
             <span>03</span>
-            <strong data-i18n="communityStepThreeTitle">实机验证</strong>
-            <p data-i18n="communityStepThreeBody">维护者在固定 Codex 版本中应用、截图、恢复，再加入 Verified 分类。</p>
+            <strong data-i18n="communityStepThreeTitle">审核与收录</strong>
+            <p data-i18n="communityStepThreeBody">社区审核通过后仍需走公开仓库的权利、CI 和实机验证，才可进入 Registry。</p>
           </li>
           <li>
             <span>04</span>
-            <strong data-i18n="communityStepFourTitle">排行与精选</strong>
-            <p data-i18n="communityStepFourBody">Verified 主题才进入趋势榜；编辑精选仍需单独审核，不由票数自动决定。</p>
+            <strong data-i18n="communityStepFourTitle">投票与精选</strong>
+            <p data-i18n="communityStepFourBody">每个账号对每套主题一票；高票不会自动成为 Verified 或编辑精选。</p>
           </li>
         </ol>
       </section>
@@ -421,7 +421,7 @@ city rain theme.</code></pre>
           <span class="installer-mark" aria-hidden="true">ACT</span>
           <div>
             <strong data-i18n="installerTitle">由 Theme Manager 安全应用</strong>
-            <p data-i18n="installerBody">管理器校验 Registry、背景哈希、准确应用包和本机回环端口，再加载固定 Full Skin 运行时；恢复时会移除样式和预加载脚本。</p>
+            <p data-i18n="installerBody">管理器校验 Registry、背景哈希、准确应用包和本机回环端口，再加载固定 Full Skin 运行时；Windows 可选择安全重放，恢复时会同时关闭常驻并移除运行时。</p>
           </div>
         </div>
 

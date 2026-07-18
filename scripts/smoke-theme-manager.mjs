@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto";
-import { execFileSync } from "node:child_process";
+import { execFileSync, spawnSync } from "node:child_process";
 import { mkdir, readFile, rm, stat, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -8,6 +8,7 @@ const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(SCRIPT_DIR, "..");
 const APPLY = process.argv.includes("--apply");
 const DEBUG = process.argv.includes("--debug");
+const PERSISTENCE = process.argv.includes("--persistence");
 const SEED_LOCAL_ART = process.argv.includes("--seed-local-art");
 const MANAGER_PORT = Number(argumentValue("--manager-port") || "9470");
 const BETA_PORT = Number(argumentValue("--beta-port") || "9466");
@@ -24,6 +25,7 @@ const MANAGER_EXE = path.resolve(
 );
 const SCREENSHOT_PATH = path.join(ROOT, "docs", "assets", "theme-manager-windows.png");
 const BETA_PACKAGE = "OpenAI.CodexBeta_26.715.3651.0_x64__2p2nqsd0c76g0";
+const BETA_AUMID = "OpenAI.CodexBeta_2p2nqsd0c76g0!App";
 
 function argumentValue(name) {
   const exact = process.argv.find((value) => value.startsWith(name + "="));
@@ -117,6 +119,34 @@ async function pageTarget(port, expectedUrlPrefix) {
   return target;
 }
 
+async function waitForPageTarget(port, expectedUrlPrefix, label, timeout = 45000) {
+  const startedAt = Date.now();
+  let lastError;
+  while (Date.now() - startedAt < timeout) {
+    try {
+      return await pageTarget(port, expectedUrlPrefix);
+    } catch (error) {
+      lastError = error;
+      await delay(250);
+    }
+  }
+  throw new Error(`Timed out waiting for ${label}: ${lastError?.message || "target unavailable"}`);
+}
+
+function launchBetaNormally() {
+  invariant(process.platform === "win32", "The persistence relaunch smoke currently requires Windows");
+  const launchEnvironment = { ...process.env };
+  delete launchEnvironment.WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS;
+  // Explorer hands the shell activation to the current interactive session and
+  // commonly returns status 1 even after a successful AppsFolder launch.
+  // The subsequent exact-process and CDP checks are the authoritative result.
+  spawnSync("explorer.exe", [`shell:AppsFolder\\${BETA_AUMID}`], {
+    env: launchEnvironment,
+    stdio: "ignore",
+    windowsHide: true,
+  });
+}
+
 class CdpClient {
   constructor(webSocketUrl, port) {
     const url = new URL(webSocketUrl);
@@ -197,13 +227,192 @@ async function waitFor(client, expression, label, timeout = 30000) {
   throw new Error("Timed out waiting for " + label);
 }
 
+async function runPersistenceSmoke(managerTarget) {
+  const manager = new CdpClient(managerTarget.webSocketDebuggerUrl, MANAGER_PORT);
+  const seededArt = await seedLocalArt();
+  let beta;
+  let persistenceDisabled = false;
+  await manager.connect();
+  await manager.send("Runtime.enable");
+  await manager.send("Page.enable");
+
+  try {
+    await waitFor(
+      manager,
+      `document.querySelectorAll("[data-theme-id]").length > 0
+        && [...document.querySelectorAll("#targetSelect option")].some((option) => option.value === "beta")`,
+      "manager bootstrap",
+    );
+    const initial = await evaluate(manager, "window.act.getPersistenceState()");
+    invariant(
+      initial && !initial.enabled && !initial.autostartEnabled,
+      "Persistence smoke requires an initially disabled user controller",
+    );
+
+    const selected = await evaluate(
+      manager,
+      `(() => {
+        document.querySelector('[data-collection="all"]')?.click();
+        const theme = document.querySelector(${JSON.stringify(`[data-theme-id="${THEME_ID}"]`)});
+        const mode = document.querySelector(${JSON.stringify(`[data-mode="${MODE}"]`)});
+        const target = document.querySelector("#targetSelect");
+        if (!theme || !mode || !target) return false;
+        theme.click();
+        mode.click();
+        target.value = "beta";
+        target.dispatchEvent(new Event("change", { bubbles: true }));
+        window.confirm = () => true;
+        const toggle = document.querySelector("#persistenceToggle");
+        toggle.checked = true;
+        toggle.dispatchEvent(new Event("change", { bubbles: true }));
+        return target.value === "beta";
+      })()`,
+    );
+    invariant(selected, "Could not select the persistence fixture");
+    const armed = await waitFor(
+      manager,
+      `window.act.getPersistenceState().then((value) =>
+        value.enabled
+        && value.autostartEnabled
+        && ["starting", "waiting"].includes(value.phase)
+      )`,
+      "per-user persistence registration",
+      30000,
+    );
+    invariant(armed, "The persistence controller was not armed");
+
+    launchBetaNormally();
+    let betaTarget;
+    try {
+      betaTarget = await waitForPageTarget(
+        BETA_PORT,
+        "app://",
+        "controller-managed Beta relaunch",
+        60000,
+      );
+    } catch (error) {
+      const diagnostic = await evaluate(manager, "window.act.getPersistenceState()");
+      throw new Error(`${error.message}; persistence=${JSON.stringify(diagnostic)}`);
+    }
+    const betaChain = ownerChain(BETA_PORT);
+    invariant(
+      betaChain.some((item) =>
+        String(item.executablePath || "").toLocaleLowerCase().includes(
+          "\\" + BETA_PACKAGE.toLocaleLowerCase() + "\\",
+        ),
+      ),
+      "Persistence controller Beta listener does not belong to the pinned package",
+    );
+
+    beta = new CdpClient(betaTarget.webSocketDebuggerUrl, BETA_PORT);
+    await beta.connect();
+    await beta.send("Runtime.enable");
+    const betaState = await waitFor(
+      beta,
+      `(() => {
+        const value = window.__ACT_FULL_SKIN_STATE__;
+        if (!value) return null;
+        return {
+          themeId: value.themeId,
+          mode: value.mode,
+          root: document.documentElement.classList.contains("act-full-skin"),
+          style: Boolean(document.getElementById("act-full-skin-style")),
+          caption: Boolean(document.getElementById("act-full-skin-caption"))
+        };
+      })()`,
+      "persistent Beta runtime markers",
+      45000,
+    );
+    invariant(
+      betaState.themeId === THEME_ID
+        && betaState.mode === MODE
+        && betaState.root
+        && betaState.style
+        && betaState.caption,
+      "Persistent Beta did not expose the expected full-skin runtime markers",
+    );
+    const active = await waitFor(
+      manager,
+      `window.act.getPersistenceState().then((value) =>
+        value.enabled && value.autostartEnabled && value.phase === "active"
+      )`,
+      "active persistence state",
+      30000,
+    );
+    invariant(active, "The persistence controller did not report active");
+
+    const screenshot = await manager.send("Page.captureScreenshot", {
+      format: "png",
+      fromSurface: true,
+      captureBeyondViewport: false,
+    });
+    const screenshotBytes = Buffer.from(screenshot.data, "base64");
+    await writeFile(SCREENSHOT_PATH, screenshotBytes);
+
+    const restoreAvailable = await waitFor(
+      manager,
+      `document.querySelector("#restoreSkin")?.disabled === false`,
+      "persistent restore control",
+      30000,
+    );
+    invariant(restoreAvailable, "Restore Native did not become available for the persistent session");
+    await evaluate(manager, "document.querySelector('#restoreSkin').click()");
+    const disabled = await waitFor(
+      manager,
+      `window.act.getPersistenceState().then((value) =>
+        !value.enabled && !value.autostartEnabled && value.phase === "disabled"
+      )`,
+      "persistence disable and login-task cleanup",
+      30000,
+    );
+    persistenceDisabled = Boolean(disabled);
+    invariant(persistenceDisabled, "Persistence did not disable cleanly");
+    await waitFor(
+      beta,
+      `!window.__ACT_FULL_SKIN_STATE__
+        && !document.documentElement.classList.contains("act-full-skin")
+        && !document.getElementById("act-full-skin-style")
+        && !document.getElementById("act-full-skin-caption")`,
+      "persistent Beta runtime cleanup",
+      60000,
+    );
+
+    const finalScreenshot = await readFile(SCREENSHOT_PATH);
+    console.log(JSON.stringify({
+      status: "COMPLETE",
+      scenario: "persistent-user-controller",
+      themeId: THEME_ID,
+      mode: MODE,
+      betaState,
+      persistenceDisabled,
+      seededLocalArt: Boolean(seededArt),
+      screenshot: path.relative(ROOT, SCREENSHOT_PATH).replaceAll("\\", "/"),
+      screenshotSha256: sha256(finalScreenshot),
+      screenshotBytes: finalScreenshot.length,
+    }, null, 2));
+  } finally {
+    if (!persistenceDisabled) {
+      try {
+        await evaluate(manager, "window.act.disablePersistentTheme()");
+      } catch {}
+    }
+    try {
+      await evaluate(manager, "window.act.restoreFullSkin()");
+    } catch {}
+    if (seededArt?.created) {
+      await rm(seededArt.destination, { force: true });
+    }
+    beta?.close();
+    manager.close();
+  }
+}
+
 async function main() {
   invariant(Number.isInteger(MANAGER_PORT) && MANAGER_PORT >= 1024, "Invalid manager port");
   invariant(Number.isInteger(BETA_PORT) && BETA_PORT >= 1024, "Invalid Beta port");
   invariant(["light", "dark"].includes(MODE), "Mode must be light or dark");
 
   const managerChain = ownerChain(MANAGER_PORT);
-  const betaChain = ownerChain(BETA_PORT);
   const normalizedManager = MANAGER_EXE.toLocaleLowerCase();
   invariant(
     managerChain.some((item) =>
@@ -211,6 +420,14 @@ async function main() {
     ),
     "Manager CDP listener does not descend from the pinned manager executable",
   );
+  const managerTarget = await pageTarget(MANAGER_PORT, "http://tauri.localhost/");
+  if (PERSISTENCE) {
+    invariant(APPLY, "--persistence requires --apply");
+    await runPersistenceSmoke(managerTarget);
+    return;
+  }
+
+  const betaChain = ownerChain(BETA_PORT);
   invariant(
     betaChain.some((item) =>
       String(item.executablePath || "").toLocaleLowerCase().includes("\\" + BETA_PACKAGE.toLocaleLowerCase() + "\\"),
@@ -218,7 +435,6 @@ async function main() {
     "Beta CDP listener does not belong to the pinned Beta package",
   );
 
-  const managerTarget = await pageTarget(MANAGER_PORT, "http://tauri.localhost/");
   const betaTarget = await pageTarget(BETA_PORT, "app://");
   if (!APPLY) {
     console.log(JSON.stringify({

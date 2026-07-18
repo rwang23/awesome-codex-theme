@@ -1,12 +1,13 @@
 {
   "schemaVersion": 1,
   "themeId": "nanjing-wall-plum",
+  "rightsProfile": "original",
   "workflow": "openai-image-job",
   "model": "gpt-image-2",
   "size": "1536x1024",
   "quality": "high",
-  "jobId": "ff4667b8-2f28-4be4-b59f-53c6589f58ec",
-  "promptSha256": "b04d21d96db4e151461d25a5ecae88bc8bf19ccbd7833d920ee77924fd40cd06",
-  "sourceSha256": "53147c197ec0057cf1a3b78d1f722fec53498049382bfacc94bddc68da5e74bb",
+  "jobId": "d3b1b625-e8bc-4a02-ad44-43274cb40b28",
+  "promptSha256": "7e2e3c4543a517f02e56c511b6a9d4756ce910208dcf429fbeff158477169c6d",
+  "sourceSha256": "813706847e3d95e722b3d31748a1c6b9a0b14481f72fbe496e411f70f89a5517",
   "disclosure": "AI-generated original source art. Prompt and output were reviewed for third-party characters, logos, signatures, and text before release."
 }

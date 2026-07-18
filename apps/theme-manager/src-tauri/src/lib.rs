@@ -1,4 +1,5 @@
 mod catalog;
+mod persistence;
 mod platform;
 mod skin_runtime;
 mod updater;
@@ -47,6 +48,7 @@ struct BootstrapView {
     catalog_state: CatalogStatus,
     targets: Vec<platform::TargetView>,
     skin_state: skin_runtime::SkinRuntimeView,
+    persistence_state: persistence::PersistenceView,
     update_state: UpdateView,
 }
 
@@ -154,6 +156,7 @@ async fn bootstrap(
         catalog_state,
         targets: platform::discover_targets(),
         skin_state: state.skin_runtime.current(),
+        persistence_state: persistence::current(&app)?,
         update_state: state.updater.current(),
     })
 }
@@ -258,6 +261,33 @@ async fn restore_full_skin(
 }
 
 #[tauri::command]
+fn get_persistence_state(app: AppHandle) -> Result<persistence::PersistenceView, String> {
+    persistence::current(&app)
+}
+
+#[tauri::command]
+fn enable_persistent_theme(
+    app: AppHandle,
+    state: State<'_, DesktopState>,
+    theme_id: String,
+    mode: String,
+    channel: String,
+    consent: bool,
+) -> Result<persistence::PersistenceView, String> {
+    let catalog = lock_catalog(&state)?;
+    persistence::enable(&app, &catalog, &theme_id, &mode, &channel, consent)
+}
+
+#[tauri::command]
+async fn disable_persistent_theme(
+    app: AppHandle,
+    state: State<'_, DesktopState>,
+) -> Result<persistence::PersistenceView, String> {
+    let _ = skin_runtime::restore(&state.skin_runtime).await;
+    persistence::disable(&app)
+}
+
+#[tauri::command]
 fn open_external(app: AppHandle, target: String) -> Result<bool, String> {
     let url = match target.as_str() {
         "gallery" => "https://rwang23.github.io/awesome-codex-theme/",
@@ -289,6 +319,11 @@ pub fn run() {
     install_crypto_provider();
     tauri::Builder::default()
         .manage(DesktopState::default())
+        .plugin(
+            tauri_plugin_autostart::Builder::new()
+                .arg("--persistence-controller")
+                .build(),
+        )
         .plugin(tauri_plugin_opener::init())
         .plugin(updater::updater_plugin())
         .setup(|app| {
@@ -296,6 +331,18 @@ pub fn run() {
             initialize_catalog(app.handle(), &state).map_err(|error| {
                 std::io::Error::other(format!("Theme Manager setup failed: {error}"))
             })?;
+            if persistence::is_controller_mode() {
+                if let Some(window) = app.get_webview_window("main") {
+                    window
+                        .hide()
+                        .map_err(|error| std::io::Error::other(error.to_string()))?;
+                }
+                persistence::start_controller(app.handle().clone());
+            } else if let Some(window) = app.get_webview_window("main") {
+                window
+                    .show()
+                    .map_err(|error| std::io::Error::other(error.to_string()))?;
+            }
             Ok(())
         })
         .invoke_handler(tauri::generate_handler![
@@ -305,6 +352,9 @@ pub fn run() {
             open_codex,
             apply_full_skin,
             restore_full_skin,
+            get_persistence_state,
+            enable_persistent_theme,
+            disable_persistent_theme,
             open_external,
             check_for_app_update,
             install_app_update

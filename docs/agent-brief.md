@@ -12,8 +12,12 @@
   and a Tauri 2 desktop app with a narrow Rust backend
 - Canonical package manager: npm; desktop dependencies live only under
   `apps/theme-manager`
-- Deployment: GitHub Pages through GitHub Actions
-- Production/live-data sensitivity: no live data; pushing, Pages changes, app installation, and real-app setting changes require exact authorization
+- Deployment: public Gallery through GitHub Pages; separate private community
+  service on Oracle VPS behind Cloudflare
+- Production/live-data sensitivity: the public repository has no user data; the
+  separate community has accounts, submissions, and votes. Pushing, Pages or
+  community deployment, app installation, and real-app setting changes require
+  exact authorization
 
 ## Current focus
 
@@ -44,6 +48,12 @@
 - A "macOS auto-update ready" claim additionally requires signed, notarized
   artifacts and a macOS action-after readback; source compatibility alone is
   not enough
+- Windows opt-in persistence is implemented and verified against ChatGPT Beta
+  `26.715.3651.0`. It is a durable user choice plus safe replay, never an app
+  patch. macOS persistence remains unverified on physical hardware.
+- The hosted community Beta is a separate private service. Uploads remain
+  quarantined and cannot enter the official Registry without this repository's
+  review, CI, and real-app evidence.
 
 ## Read first
 
@@ -101,6 +111,8 @@ must not interrupt a user's normal Stable session.
 - Site behavior: `npm run check`, local server, browser search/filter/dialog/copy checks.
 - Real screenshot: isolated Codex Full Skin apply, fixed fixture, version/hash
   evidence, screenshot review, and runtime cleanup.
+- Persistence: exact app identity, user consent, autostart readback, bounded
+  replay, runtime readback, disable, port cleanup, and startup-entry removal.
 - Commit: inspect status, diff, staged paths, and committed tree.
 - Deployment: GitHub Actions success plus public Pages interaction.
 
@@ -120,6 +132,8 @@ Keep `docs/README.md` and this brief current. Record delivered changes in
 - The Theme Manager may cache a hash-verified background in its own application
   data and apply its fixed runtime to an exact registered Stable or Beta
   session. It must not write ChatGPT application files, private data, or chats.
+- `apps/theme-manager/src-tauri/src/persistence.rs` owns the opt-in per-user
+  replay controller. Restore must disable it before cleaning the live runtime.
 - The portable Windows helper only copies a Native fallback string.
 - Workflow lint: `C:\Users\desre\.codex\tools\workflow-lint.ps1`
 
@@ -132,12 +146,15 @@ Keep `docs/README.md` and this brief current. Record delivered changes in
   primary Full Skin path.
 - A Full Skin claim is bound to a tested Codex version. A later version needs a
   fresh capture and manager smoke run.
+- Windows persistence evidence does not prove macOS persistence. Keep the Mac
+  claim session-scoped until a physical-Mac action-after test passes.
 - Version 1 skins the existing layout. It does not recreate the deeper custom
   navigation/account/task redesign shown in concept mockups.
 - Official screenshots, posters, promotional art, and upstream theme screenshots must not enter theme packages.
 - Image-job output needs human review for text, logos, undeclared IP, copied composition, safe-area drift, and 16:9 cropping.
 - Fan-art themes are unofficial, personal, and non-commercial; they use a custom notice and cannot claim rights verification.
-- An unsigned package is a test artifact, not a production release. Windows
-  signing and macOS signing/notarization are separate evidence gates.
+- An OS-unsigned package is not platform-trusted. Tauri updater signing,
+  Windows Authenticode, macOS ad-hoc bundle integrity, Developer ID, and
+  notarization remain separate evidence gates.
 - A valid build proves files, not rendered interaction, real-app behavior,
   signing, or public deployment.

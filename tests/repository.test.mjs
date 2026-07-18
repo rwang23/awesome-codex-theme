@@ -378,7 +378,11 @@ test("desktop manager localizes from the system and combines collection, rights,
 });
 
 test("desktop beta release requires updater signing and discloses deferred platform trust", async function () {
-  const workflow = await readFile(path.join(ROOT, ".github", "workflows", "desktop.yml"), "utf8");
+  const [workflow, tauriConfigText] = await Promise.all([
+    readFile(path.join(ROOT, ".github", "workflows", "desktop.yml"), "utf8"),
+    readFile(path.join(ROOT, "apps", "theme-manager", "src-tauri", "tauri.conf.json"), "utf8")
+  ]);
+  const tauriConfig = JSON.parse(tauriConfigText);
   assert.match(workflow, /npm run generate && npm run validate && npm run desktop:prepare/);
   assert.match(workflow, /DESKTOP_RELEASE_READY/);
   assert.match(workflow, /TAURI_SIGNING_PRIVATE_KEY/);
@@ -394,6 +398,10 @@ test("desktop beta release requires updater signing and discloses deferred platf
   assert.match(workflow, /hdiutil verify/);
   assert.match(workflow, /CFBundleIdentifier/);
   assert.match(workflow, /lipo -archs/);
+  assert.match(workflow, /codesign --verify --deep --strict/);
+  assert.match(workflow, /Signature=adhoc/);
+  assert.equal(tauriConfig.bundle.macOS.signingIdentity, "-");
+  assert.match(tauriConfig.plugins.updater.pubkey, /^[A-Za-z0-9+/=]{100,}$/);
 });
 
 test("desktop preparation derives compact thumbnails from verified captures", async function () {

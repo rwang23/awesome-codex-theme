@@ -337,6 +337,9 @@ async function main() {
     readFile(RUNTIME_CSS_PATH, "utf8"),
     readFile(RUNTIME_JS_PATH, "utf8"),
   ]);
+  const previousManifest = await readFile(MANIFEST_PATH, "utf8")
+    .then(JSON.parse)
+    .catch(() => null);
   const runtimeSha256 = sha256(Buffer.from(runtimeCss + "\n" + runtimeJs, "utf8"));
   const themes = registry.themes.filter((theme) => REQUESTED_IDS.size === 0 || REQUESTED_IDS.has(theme.id));
   const modes = ["light", "dark"].filter((mode) => REQUESTED_MODES.size === 0 || REQUESTED_MODES.has(mode));
@@ -473,6 +476,28 @@ async function main() {
     client.close();
   }
 
+  const selectedCaptureKeys = new Set(
+    themes.flatMap((theme) => modes.map((mode) => theme.id + "|" + mode)),
+  );
+  const canMergePrevious = previousManifest?.status === "complete"
+    && previousManifest?.testBench?.packageFullName === TEST_BENCH.packageFullName
+    && previousManifest?.runtime?.sha256 === runtimeSha256
+    && previousManifest?.runtime?.removedAfterCapture === true
+    && Array.isArray(previousManifest?.captures);
+  const mergedCaptures = [
+    ...(canMergePrevious
+      ? previousManifest.captures.filter(
+        (capture) => !selectedCaptureKeys.has(capture.themeId + "|" + capture.mode),
+      )
+      : []),
+    ...captures,
+  ];
+  const themeOrder = new Map(registry.themes.map((theme, index) => [theme.id, index]));
+  mergedCaptures.sort((left, right) => {
+    const themeDifference = (themeOrder.get(left.themeId) ?? Number.MAX_SAFE_INTEGER)
+      - (themeOrder.get(right.themeId) ?? Number.MAX_SAFE_INTEGER);
+    return themeDifference || ["light", "dark"].indexOf(left.mode) - ["light", "dark"].indexOf(right.mode);
+  });
   const manifest = {
     schemaVersion: "act-full-skin-capture-manifest-v1",
     status: !runError && runtimeRemoved ? "complete" : "failed",
@@ -493,10 +518,14 @@ async function main() {
       removedAfterCapture: runtimeRemoved,
     },
     scope: {
-      themeIds: themes.map((theme) => theme.id),
-      modes,
+      themeIds: registry.themes
+        .map((theme) => theme.id)
+        .filter((themeId) => mergedCaptures.some((capture) => capture.themeId === themeId)),
+      modes: ["light", "dark"].filter(
+        (mode) => mergedCaptures.some((capture) => capture.mode === mode),
+      ),
     },
-    captures,
+    captures: mergedCaptures,
     ...(runError ? { error: runError.message } : {}),
   };
   await writeManifest(manifest);

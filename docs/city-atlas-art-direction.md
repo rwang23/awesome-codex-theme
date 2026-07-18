@@ -1,21 +1,29 @@
 # 中国城市图鉴 01：城市余光
 
-城市主题不靠地标猜城市。我们从天气、地形、街道尺度、水岸关系、树木与生活节奏里提取记忆，再组合成新的城市画面。
+城市主题首先要让人认出城市。天气、地形、街道尺度、水岸关系、植被与
+生活节奏构成主体，公共天际线和地景线索负责校准身份。所有画面仍采用
+原创视点和重新组织的构图，不能复刻旅游照片、宣传海报或某位作者的作品。
 
 首发八座城市的识别线索：
 
-- 北京：冬日蓝空气、灰砖院落、旧街与普通城市天际线
-- 上海：近水视角、渡船尾流、石材街面与玻璃体量
-- 深圳：亚热带阵雨、层叠绿化、高架步道与冷色电光
-- 广州：榕树、骑楼阴影、暖湿河风与渡船
-- 成都：竹影、瓦檐、细雨、茶汽与缓慢庭院
-- 杭州：雨后湖光、长堤、荷叶与远山
-- 重庆：山城垂直层次、江面反射、阶梯与轨道线
-- 南京：旧城墙、梅枝、冬雾与安静的朱红
+- 北京：冬日蓝空气、胡同院落、中轴秩序与远处现代 CBD
+- 上海：黄浦江渡船尾流、外滩石材与陆家嘴高层的材料对照
+- 深圳：亚热带阵雨、城市绿道、市民中心与福田高密度天际线
+- 广州：榕树、骑楼、珠江渡船与新城塔群
+- 成都：竹椅盖碗茶、锦江、安顺廊桥与盆地雨雾
+- 杭州：西湖、苏堤、荷叶、雷峰塔与江南远山
+- 重庆：山城阶梯、跨江桥、轨道穿楼与吊脚楼层次
+- 南京：明城墙、玄武湖、紫金山、鸡鸣寺与冬梅
 
-## 反地标原则
+## 原创而非反地标
 
-城市可以被认出，但不需要复制一张旅游宣传照。源图不能出现城市 Logo、官方吉祥物、品牌招牌或精确地标复刻。北京与上海的初稿曾因地标感和幻想建筑过强被退回，最终版本改成普通街区与近水城市材料，让城市身份来自关系而不是图标。
+早期版本把“避开照片复制”误写成了“避开地标”，结果部分画面变成了
+无法辨认的泛国风风景。现在的原则是：
+
+- 可以使用公共建筑、天际线和自然地景作为上下文；
+- 不以单个地标充满画面，不复制经典机位、照片光影或宣传构图；
+- 不出现城市 Logo、官方吉祥物、品牌招牌和虚构的“赛博城市”；
+- 城市身份必须同时由真实地形、街道生活、气候和建筑关系支撑。
 
 ## 构图与模式
 
@@ -23,4 +31,7 @@
 
 一张经过审查的源图会稳定导出明暗两套背景。城市夜景在明亮模式中仍可作为背景，但界面 surface、文字与 accent 必须通过对比度门槛。
 
-English summary: City Atlas builds original city studies from weather, terrain, street scale, water, and everyday materials. It avoids logos, mascots, exact landmarks, tourist panoramas, and copied photographs.
+English summary: City Atlas builds recognisable, original city studies from real
+geography, climate, street scale, water, daily life, and restrained public
+skyline cues. It avoids logos, mascots, copied photographs, famous camera
+angles, promotional compositions, and invented fantasy cities.
