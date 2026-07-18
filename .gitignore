@@ -2,7 +2,12 @@ dist/
 node_modules/
 apps/theme-manager/build/
 apps/theme-manager/release/
-apps/theme-manager/src-tauri/icons/
+apps/theme-manager/src-tauri/icons/*
+!apps/theme-manager/src-tauri/icons/32x32.png
+!apps/theme-manager/src-tauri/icons/128x128.png
+!apps/theme-manager/src-tauri/icons/128x128@2x.png
+!apps/theme-manager/src-tauri/icons/icon.icns
+!apps/theme-manager/src-tauri/icons/icon.ico
 apps/theme-manager/src-tauri/gen/
 apps/theme-manager/src-tauri/target/
 context/raw/
