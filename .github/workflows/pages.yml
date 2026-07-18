@@ -29,7 +29,7 @@ jobs:
           node-version: 22
 
       - name: Generate, validate, test, and build
-        run: npm run check
+        run: npm run generate && npm run validate && npm test && npm run build
 
       - name: Capture gallery screenshot
         shell: bash
