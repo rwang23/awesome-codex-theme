@@ -400,6 +400,8 @@ test("desktop beta release requires updater signing and discloses deferred platf
   assert.match(workflow, /lipo -archs/);
   assert.match(workflow, /codesign --verify --deep --strict/);
   assert.match(workflow, /Signature=adhoc/);
+  assert.match(workflow, /--bundles app,dmg/);
+  assert.match(workflow, /\.app\.tar\.gz\.sig/);
   assert.equal(tauriConfig.bundle.macOS.signingIdentity, "-");
   assert.match(tauriConfig.plugins.updater.pubkey, /^[A-Za-z0-9+/=]{100,}$/);
 });

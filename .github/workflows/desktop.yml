@@ -66,12 +66,12 @@ jobs:
             artifact-path: apps/theme-manager/src-tauri/target/release/bundle/nsis/*.exe
           - os: macos-14
             rust-target: aarch64-apple-darwin
-            build-args: "--target aarch64-apple-darwin --bundles dmg"
+            build-args: "--target aarch64-apple-darwin --bundles app,dmg"
             artifact: desktop-macos-arm64
             artifact-path: apps/theme-manager/src-tauri/target/aarch64-apple-darwin/release/bundle/dmg/*.dmg
           - os: macos-14
             rust-target: x86_64-apple-darwin
-            build-args: "--target x86_64-apple-darwin --bundles dmg"
+            build-args: "--target x86_64-apple-darwin --bundles app,dmg"
             artifact: desktop-macos-x64
             artifact-path: apps/theme-manager/src-tauri/target/x86_64-apple-darwin/release/bundle/dmg/*.dmg
     runs-on: ${{ matrix.os }}
@@ -245,3 +245,12 @@ jobs:
             echo "$signing_details"
             exit 1
           fi
+
+          updater_archives=( apps/theme-manager/src-tauri/target/${{ matrix.rust-target }}/release/bundle/macos/*.app.tar.gz )
+          updater_signatures=( apps/theme-manager/src-tauri/target/${{ matrix.rust-target }}/release/bundle/macos/*.app.tar.gz.sig )
+          if [ "${#updater_archives[@]}" -ne 1 ] || [ "${#updater_signatures[@]}" -ne 1 ]; then
+            echo "::error::Expected one macOS updater archive and one signature."
+            exit 1
+          fi
+          test -s "${updater_archives[0]}"
+          test -s "${updater_signatures[0]}"

@@ -141,6 +141,9 @@ Authenticode；macOS 应用包有 ad-hoc 签名，但没有 Developer ID 或 not
 发布说明必须标明未知发布者边界。Tauri `.sig` 用于以后更新，ad-hoc 签名只证明
 应用包内部完整性，两者都不会消除 SmartScreen 或 Gatekeeper。
 
+macOS release 同时构建 `app,dmg`：DMG 供首次安装，`.app.tar.gz` 与对应 `.sig`
+供 Tauri updater 使用。CI 会在 draft 公开前检查两个架构都具备这组更新产物。
+
 GitHub 的 `releases/latest` 不返回 prerelease。当前 updater endpoint 依赖该
 路径，所以 GitHub `prerelease` 标志保持 `false`，Beta 身份由 alpha 版本、
 Release 标题和正文明确标注。

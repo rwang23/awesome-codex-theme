@@ -44,6 +44,8 @@
   shared persistence-controller path passes physical-Mac validation.
 - Strengthened macOS CI by verifying each DMG, bundle identifier, declared
   executable, target architecture, and ad-hoc code signature before upload.
+- Required both `app` and `dmg` macOS release targets so Apple Silicon and
+  Intel each publish a signed updater archive instead of an install-only DMG.
 
 ## 2026-07-17-04-00
 

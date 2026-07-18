@@ -70,7 +70,7 @@ DESKTOP_RELEASE_READY=true
 
 1. 生成并验证公共主题产物；
 2. 构建 Windows x64 NSIS；
-3. 构建 Apple Silicon 与 Intel DMG；
+3. 构建 Apple Silicon 与 Intel 的 app、DMG 和 updater archive；
 4. 生成 Tauri updater 产物与 `.sig`；
 5. 创建 draft Beta Release。
 
@@ -113,6 +113,7 @@ prerelease 标志恢复为 `true`。
 
 - 三个平台资产是否齐全；
 - updater `.sig` 是否存在；
+- Apple Silicon 与 Intel 是否都包含 `.app.tar.gz` 和对应 `.sig`；
 - `latest.json` 或平台更新元数据是否引用准确资产；
 - 文件名、架构、字节数和 SHA-256；
 - Release 标题、alpha 版本和正文是否明确写出 Beta；
