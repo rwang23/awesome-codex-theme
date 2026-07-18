@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "themeId": "vancouver-rain-harbour",
+  "rightsProfile": "original",
+  "workflow": "openai-image-job",
+  "model": "gpt-image-2",
+  "size": "1536x1024",
+  "quality": "high",
+  "jobId": "250c8f47-fbdb-4ed3-a4f5-961e86b9d817",
+  "promptSha256": "a77b1a36fb3fb1cae0e4a8cc644b8100ea4b6cc496cfa767e37de260ef5fc8b1",
+  "sourceSha256": "cef1bc1b5a7d5d73827e6668bfea27074e1db3ca3241a998f5b440990630927d",
+  "disclosure": "AI-generated original source art. Prompt and output were reviewed for third-party characters, logos, signatures, and text before release."
+}

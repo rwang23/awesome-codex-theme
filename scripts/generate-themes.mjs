@@ -300,6 +300,7 @@ export async function buildGeneratedFiles() {
             appVersion: captureContext.manifest.testBench.version,
             packageFullName: captureContext.manifest.testBench.packageFullName,
             fixture: captureContext.manifest.fixture.id,
+            modelLabel: capture.modelLabel,
             capturedAt: capture.capturedAt,
           },
         } : {}),

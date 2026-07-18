@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "themeId": "paris-rooftop-dawn",
+  "rightsProfile": "original",
+  "workflow": "openai-image-job",
+  "model": "gpt-image-2",
+  "size": "1536x1024",
+  "quality": "high",
+  "jobId": "64a26d54-8630-4c78-9f1b-5158fb6ab82a",
+  "promptSha256": "029ff35670375461c8c2fb6ccbf034e9bdf9b329d07168d0890289599df2f4d5",
+  "sourceSha256": "0e88d6e78ebd37089616560861fca879198372063056e1ca9bf337528e36cccb",
+  "disclosure": "AI-generated original source art. Prompt and output were reviewed for third-party characters, logos, signatures, and text before release."
+}

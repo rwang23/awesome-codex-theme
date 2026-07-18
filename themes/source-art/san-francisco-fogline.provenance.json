@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "themeId": "san-francisco-fogline",
+  "rightsProfile": "original",
+  "workflow": "openai-image-job",
+  "model": "gpt-image-2",
+  "size": "1536x1024",
+  "quality": "high",
+  "jobId": "802a3588-a604-43b9-a2c6-2486a9276a55",
+  "promptSha256": "56c82fb123c54cfcc62e352f918704df16e3924235d62baeed34686fe9393340",
+  "sourceSha256": "a0aa639ab2de1edb04a87b817589c7b5ad6bab74619116063a742dd9e4c88a08",
+  "disclosure": "AI-generated original source art. Prompt and output were reviewed for third-party characters, logos, signatures, and text before release."
+}

@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "themeId": "berlin-night-grid",
+  "rightsProfile": "original",
+  "workflow": "openai-image-job",
+  "model": "gpt-image-2",
+  "size": "1536x1024",
+  "quality": "high",
+  "jobId": "2931194c-6e70-4040-a14b-d2d9992aba15",
+  "promptSha256": "12b456235f3fb193cef9f908fe21bfcda02e3fee2fde0d65b634e3015fb18f09",
+  "sourceSha256": "e2ba597974ae373f18747ed2981471af70d3aba206b2455c2bd74115d8bb993a",
+  "disclosure": "AI-generated original source art. Prompt and output were reviewed for third-party characters, logos, signatures, and text before release."
+}

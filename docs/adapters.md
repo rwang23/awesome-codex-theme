@@ -78,7 +78,7 @@ Unknown fields are rejected. Native v1 does not accept a background image, so th
 
 | Target | Version | Evidence |
 | --- | --- | --- |
-| Full Skin | ChatGPT Beta `26.715.3651.0` | 56 real 1440×810 captures, runtime markers, selector readback, cleanup |
+| Full Skin | ChatGPT Beta `26.715.3651.0` | 106 real 1440×810 captures with `5.6 Sol Ultra`, runtime markers, selector readback, model restoration, cleanup |
 | Native fallback | ChatGPT Stable `26.715.2305.0` | strict payload generation and parser validation |
 
 Compatibility is version-bound. A new Codex release must pass a fresh probe, all repository checks, and the full screenshot run before its version is written into the Registry.

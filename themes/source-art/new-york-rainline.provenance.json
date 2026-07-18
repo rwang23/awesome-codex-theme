@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "themeId": "new-york-rainline",
+  "rightsProfile": "original",
+  "workflow": "openai-image-job",
+  "model": "gpt-image-2",
+  "size": "1536x1024",
+  "quality": "high",
+  "jobId": "ba0ca2a5-8108-4734-a96b-36be7b517e16",
+  "promptSha256": "2ee92926cccfb1b61e1bb30fb4296c9f2a8d9df63d7c7c1b6da72b8cd8bc0019",
+  "sourceSha256": "088f2a7d1bb1c174074903a93c5dc8ddef61ecb14ce66470b1267f6aae6ef76b",
+  "disclosure": "AI-generated original source art. Prompt and output were reviewed for third-party characters, logos, signatures, and text before release."
+}

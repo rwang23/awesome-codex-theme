@@ -87,6 +87,66 @@
       "prompt": "Nanjing on a quiet late-winter morning from an original path along the Ming city wall. The calm left side follows massive weathered gray-brick courses, dew-dark ramp stones, plane trees, and sparse plum branches. On the right, the wall turns toward Xuanwu Lake; Purple Mountain rises softly behind water and modern roofs, while Jiming Temple's warm yellow roofline appears small among the trees. Cool river-and-lake mist with restrained cinnabar blossoms, authentic southern masonry and layered historic-modern geography. No copied landmark photograph, no fantasy fortification, no text, flag, logo, or oversized temple."
     },
     {
+      "id": "new-york-rainline",
+      "promptProfile": "city",
+      "prompt": "LAYOUT CORRECTION — this rule overrides any later placement language: reserve the entire left 48 percent as an almost empty, low-contrast field of soft blue river haze and quiet sky. Put no buildings, trees, branches, poles, wires, rails, furniture, people, hard edges, bright reflections, or landmark details there. Start every city-defining structure and all visual detail only at or after the center line, and concentrate the identifying story in the right half.\n\nNew York City on a rainy blue-hour evening from an original Brooklyn waterfront and neighborhood-edge viewpoint. The calm left side holds wet brownstone stoops, iron fire escapes, a slice of elevated-track structure, plane-tree shadows, and broad pavement reflections with no readable signs. Across the right, the East River opens toward a recognisable but newly composed Manhattan skyline: water towers, stepped Art Deco crowns, the Empire State Building and One World Trade Center appear as restrained contextual silhouettes through rain. Yellow taxi color may appear only as tiny unbranded accents. Dense vertical energy, believable borough texture, no copied panorama, Times Square billboards, logos, readable text, or superhero imagery."
+    },
+    {
+      "id": "san-francisco-fogline",
+      "promptProfile": "city",
+      "prompt": "LAYOUT CORRECTION — this rule overrides any later placement language: reserve the entire left 48 percent as an almost empty, low-contrast field of pearl fog and calm bay water. Put no buildings, trees, branches, poles, wires, rails, furniture, people, hard edges, bright reflections, or landmark details there. Start every city-defining structure and all visual detail only at or after the center line, and concentrate the identifying story in the right half.\n\nSan Francisco as marine fog rolls over a steep residential hill at early morning, from a fresh street-level viewpoint. The calm left side contains wet cable-car rails, quiet pavement, wind-shaped cypress, and subdued Victorian facades climbing the slope. On the right, the hill breaks toward blue-gray bay water; a partial Golden Gate span and one distant downtown pyramid-like silhouette emerge and disappear inside fog, secondary to the street and weather. Muted coral house color, cool eucalyptus green, believable grades and coastal light. No copied Lombard Street or postcard angle, no branded transit, readable signs, logos, fantasy towers, or oversized bridge."
+    },
+    {
+      "id": "chicago-lakewind",
+      "promptProfile": "city",
+      "prompt": "LAYOUT CORRECTION — this rule overrides any later placement language: reserve the entire left 48 percent as an almost empty, low-contrast field of pale Lake Michigan water and overcast sky. Put no buildings, trees, branches, poles, wires, rails, furniture, people, hard edges, bright reflections, or landmark details there. Start every city-defining structure and all visual detail only at or after the center line, and concentrate the identifying story in the right half.\n\nChicago at a clear cold blue hour where downtown meets Lake Michigan. The calm left side passes under an unbranded elevated rail structure with riveted steel, pale stone walls, bare winter trees, and a glimpse of dark river water. The right opens toward the Loop's disciplined early-skyscraper canyon and lake horizon; the Willis Tower proportions and Marina City cylinders may appear as distant contextual cues, never as a centered postcard. Crisp lake wind, steel-blue atmosphere, warm window rhythm, believable flat Midwestern light. No readable signs, transit branding, sports logos, copied river-tour view, or futuristic skyline."
+    },
+    {
+      "id": "toronto-blue-hour",
+      "promptProfile": "city",
+      "prompt": "LAYOUT CORRECTION — this rule overrides any later placement language: reserve the entire left 48 percent as an almost empty, low-contrast field of smooth Lake Ontario water and cool haze. Put no buildings, trees, branches, poles, wires, rails, furniture, people, hard edges, bright reflections, or landmark details there. Start every city-defining structure and all visual detail only at or after the center line, and concentrate the identifying story in the right half.\n\nToronto after an autumn rain from an original west-end rail-and-lake approach. The calm left side holds red-brick warehouse walls, wet streetcar rails without vehicles or branding, maple leaves, and a dark green ravine edge. On the right, Lake Ontario haze opens behind the downtown skyline; the CN Tower is a slender unmistakable vertical, balanced by contemporary glass towers and low harbour structures rather than dominating the frame. Cool blue hour, warm brick and amber windows, believable flat shoreline and restrained Canadian autumn. No copied island postcard, readable TTC marks, team logos, corporate signage, fantasy architecture, or text."
+    },
+    {
+      "id": "vancouver-rain-harbour",
+      "promptProfile": "city",
+      "prompt": "Vancouver in steady coastal rain from an original seawall and forest-edge viewpoint. The calm left side sits beneath wet western red cedar and fern shadow, with dark stone, bicycle path curves, and silver harbour reflections. On the right, a compact glass downtown rises between Burrard Inlet and layered North Shore mountains; one small unbranded seaplane and the white sail-like harbour roof may appear as contextual cues. Deep evergreen, slate water, low cloud, and warm apartment lights express the city's closeness to rainforest and mountain. No copied Stanley Park postcard, logos, readable signs, cruise branding, fantasy peaks, or oversized landmark."
+    },
+    {
+      "id": "london-rainlight",
+      "promptProfile": "city",
+      "prompt": "LAYOUT CORRECTION — this rule overrides any later placement language: reserve the entire left 48 percent as an almost empty, low-contrast field of soft Thames mist and gray sky. Put no buildings, trees, branches, poles, wires, rails, furniture, people, hard edges, bright reflections, or landmark details there. Start every city-defining structure and all visual detail only at or after the center line, and concentrate the identifying story in the right half.\n\nLondon in fine rain from a new Thames-side lane and embankment viewpoint. The calm left side contains wet Georgian stone, black iron railings, plane trees, a quiet pub-window amber glow with no text, and reflected pavement. Across the right, the river carries layered civic silhouettes: the clock-tower profile, a partial Tower Bridge structure, older domes, and restrained contemporary glass sit inside pale mist rather than forming a tourist collage. Soft gray daylight, oxblood accents, believable river weather and accumulated history. No readable transport marks, royal insignia, flags, red-bus branding, copied postcard angle, logos, or fantasy skyline."
+    },
+    {
+      "id": "paris-rooftop-dawn",
+      "promptProfile": "city",
+      "prompt": "Paris just before sunrise from an original upper-floor atelier and rooftop viewpoint. The calm left side is close zinc roofing, pale limestone party walls, chimney pots, slate shadows, and one quiet interior lamp. On the right, layered Haussmann rooflines descend toward a narrow Seine glimpse; the Eiffel Tower appears far away as a thin iron silhouette, balanced by domes and mature plane trees rather than centered. Pearl-gray blue shifting to apricot, believable dense roofscape, intimate working-city scale. No copied Montmartre or postcard panorama, café logos, fashion branding, readable signs, fantasy spires, or text."
+    },
+    {
+      "id": "berlin-night-grid",
+      "promptProfile": "city",
+      "prompt": "LAYOUT CORRECTION — this rule overrides any later placement language: reserve the entire left 48 percent as an almost empty, low-contrast field of gently graded Spree water and rain haze. Put no buildings, trees, branches, poles, wires, rails, furniture, people, hard edges, bright reflections, or landmark details there. Start every city-defining structure and all visual detail only at or after the center line, and concentrate the identifying story in the right half.\n\nBerlin on a damp autumn night from an original Spree-side industrial courtyard. The calm left side holds honest red brick, concrete, bicycle shadows, rain-dark cobbles, and an unbranded rail viaduct. On the right, river reflections open toward layered postwar blocks, converted industrial structures, and the Fernsehturm's slender sphere-topped silhouette in the distance. Muted steel gray, amber windows, moss green, and restrained club-era color without neon clichés. No readable graffiti, political symbols, transit logos, copied East Side Gallery art, brand marks, fantasy towers, or text."
+    },
+    {
+      "id": "rome-terrace-gold",
+      "promptProfile": "city",
+      "prompt": "LAYOUT CORRECTION — this rule overrides any later placement language: reserve the entire left 48 percent as an almost empty, low-contrast field of warm cream atmosphere and open sky. Put no buildings, trees, branches, poles, wires, rails, furniture, people, hard edges, bright reflections, or landmark details there. Start every city-defining structure and all visual detail only at or after the center line, and concentrate the identifying story in the right half.\n\nRome at late golden hour from an original quiet terrace above a lived-in hill neighborhood. The calm left side contains weathered travertine, terracotta pots without labels, laundry shadow, umbrella pine trunks, and worn stone steps. On the right, layered ochre roofs descend through domes and campanili toward a partial ancient brick arcade or Colosseum curve used only as contextual texture, not a centered monument. Warm dust, pale blue sky, deep green pines, and believable accumulated urban history. No Vatican insignia, religious icon close-ups, copied overlook, tourist crowds, readable signs, logos, fantasy ruins, or text."
+    },
+    {
+      "id": "tokyo-rain-signal",
+      "promptProfile": "city",
+      "prompt": "LAYOUT CORRECTION — this rule overrides any later placement language: reserve the entire left 48 percent as an almost empty, low-contrast field of soft blue rain mist and out-of-focus pavement wash. Put no buildings, trees, branches, poles, wires, rails, furniture, people, hard edges, bright reflections, or landmark details there. Start every city-defining structure and all visual detail only at or after the center line, and concentrate the identifying story in the right half.\n\nTokyo during a gentle evening rain from an original low neighborhood rail-crossing viewpoint. The calm left side contains wet concrete, dark utility poles and wires, tiled eaves, bicycles, hydrangea leaves, and small warm windows with every sign face blank. On the right, an unbranded silver commuter train passes through compact rooftops; far beyond, a restrained Tokyo Skytree or red-white tower silhouette anchors the layered metropolis through rain haze. Cyan pavement reflections and muted magenta signal color, intimate everyday density rather than cyberpunk spectacle. No readable Japanese, anime characters, advertisements, logos, copied crossing photograph, giant neon, or fantasy city."
+    },
+    {
+      "id": "singapore-garden-rain",
+      "promptProfile": "city",
+      "prompt": "LAYOUT CORRECTION — this rule overrides any later placement language: reserve the entire left 48 percent as an almost empty, low-contrast field of soft jade rain haze and still bay water. Put no buildings, trees, branches, poles, wires, rails, furniture, people, hard edges, bright reflections, or landmark details there. Start every city-defining structure and all visual detail only at or after the center line, and concentrate the identifying story in the right half.\n\nSingapore just after a warm tropical downpour from an original shaded shophouse-and-park-connector viewpoint. The calm left side sits beneath a five-foot-way colonnade with blank shutters, wet terrazzo, rain chains, palms, ferns, and dense planted infrastructure. On the right, a canal or bay edge opens to a precise modern skyline through humid air; a restrained three-tower roofline and distant Supertree-like garden structures may appear as contextual public-landscape cues, secondary to the everyday green city. Jade foliage, silver rain, warm window light, believable equatorial atmosphere. No copied Marina Bay postcard, hotel logos, flags, readable signs, mascot imagery, fantasy eco-towers, or text."
+    },
+    {
+      "id": "sydney-harbour-morning",
+      "promptProfile": "city",
+      "prompt": "Sydney on a clear breezy morning from an original sandstone stair and harbour-park viewpoint. The calm left side contains warm Hawkesbury sandstone, eucalyptus shadow, native grass, quiet terrace roofs, and broad blue water. On the right, a small unbranded ferry wake leads toward the harbour bridge structure and the Opera House's white shell forms, seen obliquely and at modest scale within the working harbour rather than as a centered postcard. Bright coastal air, cobalt water, warm ochre stone, believable Australian vegetation and light. No copied Circular Quay panorama, flags, ferry logos, readable signs, beach clichés, fantasy skyline, or text."
+    },
+    {
       "id": "mortal-journey-duo",
       "rightsProfile": "fan-art",
       "fanArt": {
@@ -95,8 +155,14 @@
           "zh-CN": "凡人修仙传"
         },
         "characters": {
-          "en": ["Han Li", "Nangong Wan"],
-          "zh-CN": ["韩立", "南宫婉"]
+          "en": [
+            "Han Li",
+            "Nangong Wan"
+          ],
+          "zh-CN": [
+            "韩立",
+            "南宫婉"
+          ]
         }
       },
       "prompt": "Unofficial fan art for 《凡人修仙传》 featuring 韩立 and 南宫婉. Place both full-body characters on the far-right side of a high stone cultivation terrace at misty dawn. Han Li has a calm, restrained expression, long dark hair tied back, a practical deep-blue cultivation robe, a storage pouch, and a faintly glowing small green bottle at his belt. Nangong Wan wears an elegant pale ivory and cool-blue layered robe with subtle silver ornaments, long black hair, and a poised but warm gaze. They stand several steps apart, looking toward each other rather than posing for a poster. Distant green mountains, a quiet formation circle, drifting medicinal petals, restrained jade and moon-white light."
@@ -110,8 +176,14 @@
           "zh-CN": "凡人修仙传"
         },
         "characters": {
-          "en": ["Han Li", "Nangong Wan"],
-          "zh-CN": ["韩立", "南宫婉"]
+          "en": [
+            "Han Li",
+            "Nangong Wan"
+          ],
+          "zh-CN": [
+            "韩立",
+            "南宫婉"
+          ]
         }
       },
       "prompt": "Unofficial chibi fan art for 《凡人修仙传》 featuring Q-version 韩立 and 南宫婉 as two complete, polished miniature figures on the right. Han Li carefully protects a tiny luminous green bottle while checking a miniature herb garden; he wears a simplified deep-blue robe and storage pouches. Nangong Wan kneels beside him in a pale ivory-blue robe, holding a small spirit herb and smiling with composed amusement. Oversized leaves, tiny formation stones, soft mountain mist, jade and warm cream palette, expressive faces, refined 3D-animation materials, not sticker-like."
@@ -125,8 +197,14 @@
           "zh-CN": "仙逆"
         },
         "characters": {
-          "en": ["Wang Lin", "Li Muwan"],
-          "zh-CN": ["王林", "李慕婉"]
+          "en": [
+            "Wang Lin",
+            "Li Muwan"
+          ],
+          "zh-CN": [
+            "王林",
+            "李慕婉"
+          ]
         }
       },
       "prompt": "Unofficial fan art for 《仙逆》 featuring 王林 and 李慕婉. On the right side beneath a cold indigo sky, Wang Lin stands in a dark black-and-gray robe with long black hair, a severe quiet face, and a faint red spiritual light circling one hand. Li Muwan stands close but not touching, in a pale blue-white robe with delicate alchemist details, holding a small warm lantern shaped like a pill furnace. Wind moves their sleeves while a distant ruined cultivation city and bare branches fade into snow mist. The emotional contrast is relentless cold around one protected warm light."
@@ -140,8 +218,14 @@
           "zh-CN": "仙逆"
         },
         "characters": {
-          "en": ["Wang Lin", "Li Muwan"],
-          "zh-CN": ["王林", "李慕婉"]
+          "en": [
+            "Wang Lin",
+            "Li Muwan"
+          ],
+          "zh-CN": [
+            "王林",
+            "李慕婉"
+          ]
         }
       },
       "prompt": "Unofficial chibi fan art for 《仙逆》 featuring Q-version 王林 and 李慕婉 inside a tiny woodcarving shop on the right. Wang Lin, in a simplified charcoal robe and long dark hair, concentrates intensely on carving a small wooden figure. Li Muwan, in a pale blue-white robe, tends a round glowing pill furnace and places a cup of tea near him. A few finished woodcarvings, snow outside the window, indigo shadows, one amber pool of light, charming expressions but emotionally grounded, polished miniature materials."
@@ -155,8 +239,14 @@
           "zh-CN": "剑来"
         },
         "characters": {
-          "en": ["Chen Ping'an", "Ning Yao"],
-          "zh-CN": ["陈平安", "宁姚"]
+          "en": [
+            "Chen Ping'an",
+            "Ning Yao"
+          ],
+          "zh-CN": [
+            "陈平安",
+            "宁姚"
+          ]
         }
       },
       "prompt": "Unofficial fan art for 《剑来》 featuring 陈平安 and 宁姚. On the far-right of a rain-cleared small-town road, Chen Ping'an walks in simple dark-brown travel clothes and straw sandals, carrying a plain sword case and a cloth bundle, with a sincere steady expression. Ning Yao walks half a step ahead in a clean dark-red and black swordswoman outfit, long dark hair tied high, one hand resting near her sword as she turns back toward him. Whitewashed walls, wet bluestone, distant ink mountains, a road opening beyond the town, restrained cinnabar and parchment colors."
@@ -170,8 +260,14 @@
           "zh-CN": "剑来"
         },
         "characters": {
-          "en": ["Chen Ping'an", "Ning Yao"],
-          "zh-CN": ["陈平安", "宁姚"]
+          "en": [
+            "Chen Ping'an",
+            "Ning Yao"
+          ],
+          "zh-CN": [
+            "陈平安",
+            "宁姚"
+          ]
         }
       },
       "prompt": "Unofficial chibi fan art for 《剑来》 featuring Q-version 陈平安 and 宁姚 on the right side of a tiny bluestone town lane. Chen Ping'an leans forward under an oversized plain sword case, dressed in humble brown travel clothes and straw sandals, earnest and slightly flustered. Ning Yao, in a simplified dark-red swordswoman outfit with a high ponytail, points confidently toward the mountain road while holding her sword. Small white walls, a paper umbrella, puddle reflections, warm window light, polished chibi animation rendering."
@@ -185,8 +281,14 @@
           "zh-CN": "斗破苍穹"
         },
         "characters": {
-          "en": ["Xiao Yan", "Medusa (Cai Lin)"],
-          "zh-CN": ["萧炎", "美杜莎（彩鳞）"]
+          "en": [
+            "Xiao Yan",
+            "Medusa (Cai Lin)"
+          ],
+          "zh-CN": [
+            "萧炎",
+            "美杜莎（彩鳞）"
+          ]
         }
       },
       "prompt": "Unofficial fan art for 《斗破苍穹》 featuring 萧炎 and 美杜莎（彩鳞）. Place them on the right side of a desert ruin at twilight. Xiao Yan wears a fitted black martial robe with red accents, carries the massive dark Xuan Heavy Ruler behind one shoulder, and holds a controlled green-blue heavenly flame. Medusa stands beside him in an elegant violet-crimson queen's battle dress with gold serpent jewelry, long dark hair, commanding eyes, and a restrained translucent purple serpent aura. Windblown sand, broken stone, green flame versus violet energy, cinematic partnership rather than a promotional pose."
@@ -200,8 +302,14 @@
           "zh-CN": "斗破苍穹"
         },
         "characters": {
-          "en": ["Xiao Yan", "Medusa (Cai Lin)"],
-          "zh-CN": ["萧炎", "美杜莎（彩鳞）"]
+          "en": [
+            "Xiao Yan",
+            "Medusa (Cai Lin)"
+          ],
+          "zh-CN": [
+            "萧炎",
+            "美杜莎（彩鳞）"
+          ]
         }
       },
       "prompt": "Unofficial chibi fan art for 《斗破苍穹》 featuring Q-version 萧炎 and 美杜莎（彩鳞） on the right. Xiao Yan in a small black-and-red martial robe struggles to balance a glowing two-color fire lotus while an oversized dark heavy ruler lies behind him. Medusa, in a simplified violet-crimson queen outfit with gold serpent ornaments, watches with an unimpressed expression while a tiny purple serpent curls around her arm. Miniature desert stones, green and violet glow, highly polished chibi materials, complete figures, playful but not plastic."
@@ -215,8 +323,12 @@
           "zh-CN": "凡人修仙传"
         },
         "characters": {
-          "en": ["Han Li"],
-          "zh-CN": ["韩立"]
+          "en": [
+            "Han Li"
+          ],
+          "zh-CN": [
+            "韩立"
+          ]
         }
       },
       "prompt": "Unofficial fan-art memory scene for 《凡人修仙传》: 虚天殿. Compose a completely new wide view rather than recreating an official shot. The left half is quiet ice fog and monumental shadow. On the right, 韩立 in a practical deep-blue cultivation robe walks with several tiny distant cultivator silhouettes up immense translucent ice steps toward a colossal ancient hall door. Frozen chains, blue-white spiritual light, black stone, deep vertical scale, crisp architectural detail, mysterious danger, Han Li identifiable by his restrained robe, tied dark hair, storage pouch, and subtle green-bottle glow."
@@ -230,8 +342,14 @@
           "zh-CN": "仙逆"
         },
         "characters": {
-          "en": ["Wang Lin", "Li Muwan"],
-          "zh-CN": ["王林", "李慕婉"]
+          "en": [
+            "Wang Lin",
+            "Li Muwan"
+          ],
+          "zh-CN": [
+            "王林",
+            "李慕婉"
+          ]
         }
       },
       "prompt": "Unofficial fan-art memory scene for 《仙逆》: 王林抢婚. Create a new camera angle from outside a mountain wedding hall during a sudden snowstorm. The calm left side holds pale snow and distant dark roofs. On the right, red wedding silk and lanterns whip into the air as 王林 descends above the steps in a dark robe, long black hair and cold red spiritual light, while 李慕婉 in ceremonial red-and-white layers turns upward from the hall entrance. The image should feel like one uncompromising arrival splitting warm ceremony from cold sky, with no readable wedding characters or symbols."
@@ -245,8 +363,14 @@
           "zh-CN": "剑来"
         },
         "characters": {
-          "en": ["Chen Ping'an", "Ning Yao"],
-          "zh-CN": ["陈平安", "宁姚"]
+          "en": [
+            "Chen Ping'an",
+            "Ning Yao"
+          ],
+          "zh-CN": [
+            "陈平安",
+            "宁姚"
+          ]
         }
       },
       "prompt": "Unofficial fan-art memory scene for 《剑来》: 陈平安向宁姚告白. Make a new intimate composition in a quiet small-town lane after rain. Keep the left half as empty wet bluestone, soft wall shadows, and mist. On the right, 陈平安 in humble dark-brown clothes and straw sandals stands very straight, nervous but completely sincere, facing 宁姚. Ning Yao wears a dark-red swordswoman outfit, holds her sword against one shoulder, and looks back with surprised warmth. One amber window, pale rain light, white walls, restrained emotion, no text or romantic typography."
@@ -260,8 +384,14 @@
           "zh-CN": "斗破苍穹"
         },
         "characters": {
-          "en": ["Xiao Yan", "Nalan Yanran"],
-          "zh-CN": ["萧炎", "纳兰嫣然"]
+          "en": [
+            "Xiao Yan",
+            "Nalan Yanran"
+          ],
+          "zh-CN": [
+            "萧炎",
+            "纳兰嫣然"
+          ]
         }
       },
       "prompt": "Unofficial fan-art memory scene for 《斗破苍穹》: 三年之约. Compose a fresh wide view of a high mountain arena rather than copying an official shot. Leave the left half as pale cloud, worn stone, and distant sect terraces. On the right, 萧炎 in a black-and-red martial robe stands with the massive dark Xuan Heavy Ruler and green-blue heavenly flame facing 纳兰嫣然 in a pale cyan-and-white sword robe with a long narrow sword and wind energy. Broken arena tiles lift between them, cloud bands cut across the mountain, and their opposing silhouettes carry the full weight of the promised duel. No sect logos, banners, or readable symbols."
@@ -276,8 +406,12 @@
           "zh-CN": "Codex 社区致敬"
         },
         "characters": {
-          "en": ["Tibo Sottiaux"],
-          "zh-CN": ["Tibo Sottiaux"]
+          "en": [
+            "Tibo Sottiaux"
+          ],
+          "zh-CN": [
+            "Tibo Sottiaux"
+          ]
         }
       },
       "prompt": "Unofficial parody for Codex 社区致敬 featuring Tibo Sottiaux. Build a wide medieval illuminated-manuscript scene with aged parchment, restrained gold leaf, Romanesque arches, tiny hourglasses, and decorative token-like coins. On the right, show a stylized friendly caricature of Tibo: a fair-skinned European man in his thirties with short slightly tousled dark-brown hair, neat eyebrows, warm brown eyes, a broad approachable smile, and light stubble. He wears an invented cream-and-rust ceremonial coder robe, holding a stack of plain glowing brass tokens in one hand and a round amber reset symbol with a simple circular arrow icon in the other. A soft geometric halo reads as playful gratitude, not worship. Keep the left side mostly dark parchment texture and faint architecture. No readable Latin, words, product names, logos, religious symbols, OpenAI marks, or copied meme layout."
@@ -292,8 +426,12 @@
           "zh-CN": "Codex 社区致敬"
         },
         "characters": {
-          "en": ["Tibo Sottiaux"],
-          "zh-CN": ["Tibo Sottiaux"]
+          "en": [
+            "Tibo Sottiaux"
+          ],
+          "zh-CN": [
+            "Tibo Sottiaux"
+          ]
         }
       },
       "prompt": "Unofficial parody for Codex 社区致敬 featuring Tibo Sottiaux. Create a wide original Chinese mineral-pigment mural fantasy, not a copy of any historic cave painting. On the right, show a stylized friendly caricature of Tibo: a fair-skinned European man in his thirties with short tousled dark-brown hair, warm brown eyes, broad approachable smile, and light stubble. He wears an invented modern robe in ochre, cinnabar, and muted teal. Ribbon-like clouds orbit plain golden token discs while he presents a glowing circular reset motif made only from abstract arrows. Add sand-gold cliffs, lapis sky, tiny hourglasses, and one playful celestial blue code sprite with no brand resemblance. The mood is humorous gratitude, not literal divinity. Keep the left side as quiet cloud, mineral wash, and distant architecture. No Chinese characters, text, logo, product marks, OpenAI symbols, copied mural figures, or religious iconography."

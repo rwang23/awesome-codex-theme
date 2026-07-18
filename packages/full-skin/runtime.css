@@ -203,7 +203,9 @@ html.act-full-skin.act-full-skin-home [role="main"] [class*="bg-token-bg-fog"] s
   font-size: clamp(22px, 2.5vw, 36px);
   font-weight: 580;
   letter-spacing: -0.04em;
-  line-height: 1;
+  line-height: 1.04;
+  text-wrap: balance;
+  white-space: pre-line;
 }
 
 #act-full-skin-caption span {
@@ -211,6 +213,8 @@ html.act-full-skin.act-full-skin-home [role="main"] [class*="bg-token-bg-fog"] s
   color: var(--act-muted);
   font-size: 11px;
   line-height: 1.6;
+  text-wrap: balance;
+  white-space: pre-line;
 }
 
 html.act-full-skin[data-act-safe-area="right"] #act-full-skin-caption {

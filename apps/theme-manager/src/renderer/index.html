@@ -53,12 +53,18 @@
               <p class="eyebrow" data-i18n="archiveEyebrow">主题馆藏 / ARCHIVE</p>
               <h1><span data-i18n="archiveTitleOne">选择一种</span><br><span data-i18n="archiveTitleTwo">工作气候。</span></h1>
             </div>
-            <button class="icon-button" id="refreshCatalog" type="button" aria-label="刷新主题目录" title="刷新主题目录">
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M19 8a7 7 0 1 0 .7 6"></path>
-                <path d="M19 3v5h-5"></path>
-              </svg>
-            </button>
+            <div class="catalog-update-control">
+              <span class="catalog-update-copy">
+                <strong data-i18n="themeUpdateChannel">主题更新</strong>
+                <small data-i18n="themeUpdateNoRestart">自动获取 · 无需更新应用</small>
+              </span>
+              <button class="icon-button" id="refreshCatalog" type="button" aria-label="刷新主题目录" title="刷新主题目录">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M19 8a7 7 0 1 0 .7 6"></path>
+                  <path d="M19 3v5h-5"></path>
+                </svg>
+              </button>
+            </div>
           </div>
 
           <label class="search-field" for="search">
@@ -164,6 +170,7 @@
           <button id="openRepository" type="button">GitHub</button>
           <button class="update-button" id="updateButton" type="button">
             <span class="update-dot" aria-hidden="true"></span>
+            <small class="update-channel-prefix" data-i18n="appUpdateChannel">应用</small>
             <span id="updateLabel" data-i18n="checkUpdate">检查应用更新</span>
           </button>
         </div>

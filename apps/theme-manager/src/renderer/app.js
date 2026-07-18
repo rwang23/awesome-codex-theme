@@ -10,7 +10,10 @@ const translations = {
     catalogCurrent: "Theme catalog is current",
     catalogOffline: "Offline. Using a verified local catalog",
     switchLanguage: "Switch language",
-    refreshCatalog: "Refresh theme catalog",
+    refreshCatalog: "Refresh themes",
+    themeUpdateChannel: "Theme updates",
+    themeUpdateNoRestart: "Auto refresh · no app update",
+    appUpdateChannel: "App",
     themeSeries: "Theme collections",
     filterRightsAria: "Filter by source and rights",
     filterStyleAria: "Filter by visual form",
@@ -75,6 +78,7 @@ const translations = {
     updateUnreleased: "Signed desktop update channel is not published",
     updateError: "Unable to check for updates",
     toastCatalogFailed: "Could not refresh the theme catalog.",
+    toastCatalogUpdated: "New themes are ready now. No app update or restart needed.",
     toastNativeCopied: "Native palette copied. Import it from ChatGPT Appearance as a lightweight fallback.",
     toastCopyFailed: "Copy failed. Try again.",
     toastSkinApplied: "The Full Skin is active in the selected ChatGPT session.",
@@ -101,7 +105,10 @@ const translations = {
     catalogCurrent: "主题目录已是最新",
     catalogOffline: "网络暂不可用，继续使用已验证的本地目录",
     switchLanguage: "切换语言",
-    refreshCatalog: "刷新主题目录",
+    refreshCatalog: "刷新主题",
+    themeUpdateChannel: "主题更新",
+    themeUpdateNoRestart: "自动获取 · 无需更新应用",
+    appUpdateChannel: "应用",
     themeSeries: "主题系列",
     filterRightsAria: "按来源与授权筛选",
     filterStyleAria: "按视觉表达筛选",
@@ -166,6 +173,7 @@ const translations = {
     updateUnreleased: "桌面签名更新通道尚未发布",
     updateError: "暂时无法检查更新",
     toastCatalogFailed: "主题目录刷新失败。",
+    toastCatalogUpdated: "新主题已经可以直接使用，无需更新或重启应用。",
     toastNativeCopied: "原生配色字符串已复制，可在 ChatGPT 外观设置中作为轻量回退导入。",
     toastCopyFailed: "复制失败，请重试。",
     toastSkinApplied: "完整皮肤已在所选 ChatGPT 会话中生效。",
@@ -668,6 +676,21 @@ function acceptCatalog(payload) {
   renderThemeList();
 }
 
+async function refreshThemeCatalog(notify = false) {
+  const payload = await window.act.refreshCatalog();
+  acceptCatalog(payload);
+  if (notify && payload?.status === "updated") {
+    toast(t("toastCatalogUpdated"));
+  }
+  return payload;
+}
+
+async function refreshAppUpdateState() {
+  state.updateState = await window.act.checkForAppUpdate();
+  renderUpdateState();
+  return state.updateState;
+}
+
 elements.languageButton.addEventListener("click", () => {
   state.locale = state.locale === "en" ? "zh-CN" : "en";
   window.localStorage.setItem("act-manager-locale", state.locale);
@@ -718,7 +741,7 @@ elements.targetSelect.addEventListener("change", () => {
 
 elements.refreshCatalog.addEventListener("click", async () => {
   try {
-    acceptCatalog(await window.act.refreshCatalog());
+    await refreshThemeCatalog(true);
   } catch {
     toast(t("toastCatalogFailed"), "error");
   }
@@ -807,8 +830,7 @@ elements.updateButton.addEventListener("click", async () => {
       await window.act.installAppUpdate();
       return;
     }
-    state.updateState = await window.act.checkForAppUpdate();
-    renderUpdateState();
+    await refreshAppUpdateState();
   } catch {
     toast(t("toastUpdateFailed"), "error");
   }
@@ -852,8 +874,8 @@ try {
   });
   renderLanguage();
   renderShortcuts();
-  setTimeout(() => void window.act.refreshCatalog().catch(() => {}), 700);
-  setTimeout(() => void window.act.checkForAppUpdate().catch(() => {}), 1800);
+  setTimeout(() => void refreshThemeCatalog(true).catch(() => {}), 700);
+  setTimeout(() => void refreshAppUpdateState().catch(() => {}), 1800);
   setInterval(async () => {
     try {
       state.persistenceState = await window.act.getPersistenceState();

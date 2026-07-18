@@ -1214,6 +1214,9 @@ img {
   font-size: 24px;
   font-weight: 620;
   letter-spacing: -0.03em;
+  line-height: 1.12;
+  text-wrap: balance;
+  white-space: pre-line;
 }
 
 .card-body .card-tagline {
@@ -1222,6 +1225,8 @@ img {
   font-size: 13px;
   font-weight: 650;
   line-height: 1.6;
+  text-wrap: balance;
+  white-space: pre-line;
 }
 
 .card-body .card-description {
@@ -1759,6 +1764,9 @@ img {
   margin: 0;
   font-size: 38px;
   letter-spacing: -0.04em;
+  line-height: 1.08;
+  text-wrap: balance;
+  white-space: pre-line;
 }
 
 .dialog-tagline {
@@ -1767,6 +1775,8 @@ img {
   font-size: 16px;
   font-weight: 700;
   line-height: 1.55;
+  text-wrap: balance;
+  white-space: pre-line;
 }
 
 .dialog-description {

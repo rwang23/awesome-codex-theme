@@ -55,8 +55,8 @@ spctl --assess --type execute --verbose=4 "/Applications/Awesome Codex Theme.app
 3. 系列、来源和风格筛选可以组合；没有结果时不能应用一张隐藏的旧主题。
 4. 明暗模式、主题截图和目标 ChatGPT 列表正常显示。
 5. Registry 在线刷新失败时，应用继续使用已验证的内置或缓存目录。
-6. 中文界面优先显示“提博大神·重置赐福”，英文界面优先显示
-   “Saint Tibo · Reset of Limits”；手动切换语言后列表立即重新排序。
+6. 中文界面优先显示“提博大神 / 重置之神”，英文界面优先显示
+   “Saint Tibo / God of Reset”；手动切换语言后列表立即重新排序。
 
 ## Full Skin 真机流程
 

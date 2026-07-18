@@ -1,5 +1,20 @@
 # Changelog
 
+## Unreleased
+
+- Added a separate twelve-theme World City Atlas covering New York, San
+  Francisco, Chicago, Toronto, Vancouver, London, Paris, Berlin, Rome, Tokyo,
+  Singapore, and Sydney.
+- Split theme delivery from application delivery in the product surface:
+  verified Catalog and Registry updates refresh in place without reinstalling
+  or restarting the manager, while runtime and interface changes continue to
+  use the signed Tauri updater and a user-confirmed restart.
+- Renamed the two Tibo tribute taglines to `God of Reset` / `重置之神` and
+  added deliberate bilingual title and tagline wrapping.
+- Recaptured all 106 light and dark modes in the exact ChatGPT Beta
+  `26.715.3651.0` test bench with `5.6 Sol Ultra`, then restored the prior model
+  choice and removed the temporary Full Skin runtime.
+
 ## 2026-07-18-00-00
 
 - Expanded the catalog from 28 to 41 themes with separate English and Chinese

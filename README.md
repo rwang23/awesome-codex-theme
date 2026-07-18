@@ -18,7 +18,7 @@
 
 <p align="center">
   <a href="LICENSE"><img alt="MIT License" src="https://img.shields.io/badge/code-MIT-111827"></a>
-  <img alt="41 themes" src="https://img.shields.io/badge/themes-41-7c3aed">
+  <img alt="53 themes" src="https://img.shields.io/badge/themes-53-7c3aed">
   <img alt="Windows and macOS" src="https://img.shields.io/badge/platform-Windows%20%7C%20macOS-2563eb">
   <img alt="Code-free packs" src="https://img.shields.io/badge/theme%20packs-code--free-059669">
 </p>
@@ -46,14 +46,15 @@ Version 1 preserves the original Codex layout and controls. It changes the atmos
 
 ## See the real result
 
-| Saint Tibo · Reset of Limits | Boss Mode 2007 |
+| Saint Tibo<br>God of Reset | Boss Mode 2007 |
 | --- | --- |
 | ![Saint Tibo theme in real ChatGPT Beta](screenshots/codex-beta-26.715.3651.0/tibo-reset-saint-dark.png) | ![Boss Mode 2007 theme in real ChatGPT Beta](screenshots/codex-beta-26.715.3651.0/retro-boss-2007-light.png) |
 | **Rainy Library** | **Orbital Dawn** |
 | ![Rainy Library theme in real ChatGPT Beta](screenshots/codex-beta-26.715.3651.0/rainy-library-dark.png) | ![Orbital Dawn theme in real ChatGPT Beta](screenshots/codex-beta-26.715.3651.0/orbital-dawn-light.png) |
 
-The collection currently includes 41 themes and 82 light/dark modes. The English experience highlights:
+The collection currently includes 53 themes and 106 light/dark modes. The English experience highlights:
 
+- 12 original World City themes spanning New York, San Francisco, Chicago, Toronto, Vancouver, London, Paris, Berlin, Rome, Tokyo, Singapore, and Sydney;
 - 6 original global workspace themes, from a rainy library to an orbital sunrise;
 - 1 original 2007 desktop-nostalgia theme with a new, non-franchise chibi mascot;
 - 2 disclosed, unofficial Codex community tributes;
@@ -80,7 +81,9 @@ Choose one of the following three methods. They are alternatives, not sequential
 
 The Windows implementation of **Always apply** has passed an exact ChatGPT Beta `26.715.3651.0` persistence and cleanup smoke test. It stores a user-level choice and safely replays the verified Full Skin on future launches; it never patches ChatGPT files. Unknown versions stay native. Physical-Mac persistence testing is still pending, so the macOS build must not yet be treated as verified for this feature. See [Keep My Theme On](docs/persistent-theme.md).
 
-The public beta uses Tauri updater signatures so future updates can be verified. macOS bundles also carry an ad-hoc signature for package integrity, but Windows Authenticode, Apple Developer ID, and notarization are deferred. The operating system may still show an unknown-publisher warning; neither the updater signature nor the ad-hoc Mac signature removes SmartScreen or Gatekeeper warnings. See [release trust and signing](docs/release-signing.md).
+Theme updates and app updates are independent. The manager refreshes the verified Registry on startup, so newly published themes appear immediately without reinstalling or restarting the app. A signed app update is needed only when the manager itself changes—for example its runtime, compatibility rules, security boundary, platform integration, or interface.
+
+The public beta uses Tauri updater signatures so future app updates can be verified. macOS bundles also carry an ad-hoc signature for package integrity, but Windows Authenticode, Apple Developer ID, and notarization are deferred. The operating system may still show an unknown-publisher warning; neither the updater signature nor the ad-hoc Mac signature removes SmartScreen or Gatekeeper warnings. See [release trust and signing](docs/release-signing.md).
 
 ### Method B — Ask a coding agent
 

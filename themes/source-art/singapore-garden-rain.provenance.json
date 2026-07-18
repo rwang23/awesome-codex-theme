@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "themeId": "singapore-garden-rain",
+  "rightsProfile": "original",
+  "workflow": "openai-image-job",
+  "model": "gpt-image-2",
+  "size": "1536x1024",
+  "quality": "high",
+  "jobId": "8df30bd8-a295-44e4-bd03-2813c4ccb12a",
+  "promptSha256": "283082ef17d6c86dd2bdad0a02063fff467f27f9600280ca0e2f34652516073c",
+  "sourceSha256": "2b011ccb907494d14c11ca863aa440a32a122eaac650f5f6de0413e9b226616a",
+  "disclosure": "AI-generated original source art. Prompt and output were reviewed for third-party characters, logos, signatures, and text before release."
+}

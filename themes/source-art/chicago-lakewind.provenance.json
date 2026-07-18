@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "themeId": "chicago-lakewind",
+  "rightsProfile": "original",
+  "workflow": "openai-image-job",
+  "model": "gpt-image-2",
+  "size": "1536x1024",
+  "quality": "high",
+  "jobId": "d7f7f7c0-71d0-470c-8dcb-696e0c9143fd",
+  "promptSha256": "032d5f605bcc8de31e01cc8d4de87a9b7a33111ce8c74fbb91e342255b1f73d2",
+  "sourceSha256": "ead77a3bb826d123eb5622021eddaa2f434a1f1bc4e8ad58c3772de732b18853",
+  "disclosure": "AI-generated original source art. Prompt and output were reviewed for third-party characters, logos, signatures, and text before release."
+}

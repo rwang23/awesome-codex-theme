@@ -1,7 +1,7 @@
 {
   "schemaVersion": "act-full-skin-capture-manifest-v1",
   "status": "complete",
-  "capturedAt": "2026-07-18T16:35:04.605Z",
+  "capturedAt": "2026-07-18T22:23:17.954Z",
   "testBench": {
     "packageFamilyName": "OpenAI.CodexBeta_2p2nqsd0c76g0",
     "packageFullName": "OpenAI.CodexBeta_26.715.3651.0_x64__2p2nqsd0c76g0",
@@ -17,11 +17,13 @@
     "sidebar": "hidden",
     "project": "none",
     "privateContent": "excluded",
+    "modelLabel": "5.6 Sol Ultra",
+    "modelRestoredAfterCapture": true,
     "nativeSettingsChanged": false
   },
   "runtime": {
     "format": "act-full-skin-v1",
-    "sha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+    "sha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
     "earlyInjection": true,
     "removedAfterCapture": true
   },
@@ -43,6 +45,18 @@
       "hangzhou-lake-letter",
       "chongqing-vertical-night",
       "nanjing-wall-plum",
+      "new-york-rainline",
+      "san-francisco-fogline",
+      "chicago-lakewind",
+      "toronto-blue-hour",
+      "vancouver-rain-harbour",
+      "london-rainlight",
+      "paris-rooftop-dawn",
+      "berlin-night-grid",
+      "rome-terrace-gold",
+      "tokyo-rain-signal",
+      "singapore-garden-rain",
+      "sydney-harbour-morning",
       "mortal-journey-duo",
       "mortal-journey-chibi",
       "renegade-immortal-duo",
@@ -79,1477 +93,2015 @@
       "themeId": "qinglan-odyssey",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/qinglan-odyssey-light.png",
-      "sha256": "e2d4b1f20b08304d63ee5efdee1c3faa97a8c1e71cf34d5a78993fa4b020d2c5",
-      "bytes": 1194814,
+      "sha256": "ae22864987779e1f417823d3462324e8992996da9633f019c9859471851f4c77",
+      "bytes": 1197536,
       "width": 1440,
       "height": 810,
       "assetSha256": "70aac35419396548788840366a517efbda5cb51e859918b4e5472810adc045e6",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:35:07.186Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:23:29.651Z"
     },
     {
       "themeId": "qinglan-odyssey",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/qinglan-odyssey-dark.png",
-      "sha256": "61a40f90bd1cef79aaee4f170f63a9ca9370bbbd4e977c0f6f96ffb6581b42e0",
-      "bytes": 969546,
+      "sha256": "aae62d1fef1066fd61bc8542b0f9a9eefcd4014b89f10ec59c9f3db5d5c8fae7",
+      "bytes": 968356,
       "width": 1440,
       "height": 810,
       "assetSha256": "f92d2eb762c017d1a040945344cbd4def90604ad20df95e54c9e1a3dccb4c48a",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:35:08.702Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:23:30.998Z"
     },
     {
       "themeId": "qinglan-sprite",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/qinglan-sprite-light.png",
-      "sha256": "5e6d4d284dd8922c3f14f1b7bae5095a96811d033790ff4e0a88f8e6c17867bc",
-      "bytes": 1283677,
+      "sha256": "23a4d96bf9acace53630c677743f6f89ac70a18a9153a5a6c8edeeb8b90c4f66",
+      "bytes": 1284345,
       "width": 1440,
       "height": 810,
       "assetSha256": "f63e4691545e9d67a2cdd6983b2ab3d44cd4f591ee6f09feb2408b497f59e12b",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:35:10.534Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:23:32.779Z"
     },
     {
       "themeId": "qinglan-sprite",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/qinglan-sprite-dark.png",
-      "sha256": "44f4fe45f1c76b8b7ed338109d1e6e496da71c116f8e652ce3dcdaf3807bf8b7",
-      "bytes": 1098168,
+      "sha256": "8be9c4f60867950687ff6c468b59722710366df3cc7388461a8c2d0b7bcb4658",
+      "bytes": 1097971,
       "width": 1440,
       "height": 810,
       "assetSha256": "2848b184e061fd6b8d181980e399791de199441d5212346254f0be3dc6852641",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:35:12.124Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:23:34.414Z"
     },
     {
       "themeId": "starbound-rebel",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/starbound-rebel-light.png",
-      "sha256": "c2fc0092d565432ef3346547a83e73fddbb5dc71b809b494f8f2b0ad44f42e8c",
-      "bytes": 1221302,
+      "sha256": "b509adec45b4ecef1423c8f75f8175aa21fab71898d66189dfd8fd48281e137c",
+      "bytes": 1222536,
       "width": 1440,
       "height": 810,
       "assetSha256": "2cba3222ca719a30735a45d1862a8ab9d42ceb751a7b71708742d9a5ea8ee55d",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:35:13.864Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:23:36.048Z"
     },
     {
       "themeId": "starbound-rebel",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/starbound-rebel-dark.png",
-      "sha256": "44afd423a0dddf783bf2d20ddba6038a03901e75a0106c264cef4a4a8ffd9b31",
-      "bytes": 962987,
+      "sha256": "3d90677c4482a4c009c5699c0b87be8830daf7c8e5a5fee6aea7864186f4c041",
+      "bytes": 962319,
       "width": 1440,
       "height": 810,
       "assetSha256": "f11f5b51fca837dcb994460eaf9df7f01dccd71ad4f7a43c88445103e81f33a7",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:35:15.283Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:23:37.781Z"
     },
     {
       "themeId": "starbound-sprite",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/starbound-sprite-light.png",
-      "sha256": "f656894025302983f50aa1bb413aa7ae84b33c5b27cbceb45ee3a7a70e7ae43f",
-      "bytes": 1114072,
+      "sha256": "2cb2c13f3bcc38cf1613cef0fdd7fc995caa2b911c3d79384cd479a0987687c2",
+      "bytes": 1114964,
       "width": 1440,
       "height": 810,
       "assetSha256": "d0c4dc986aa4a9fcde1768693ec5b03c855f42cc8881b582949a9f723abd276c",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:35:16.961Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:23:39.488Z"
     },
     {
       "themeId": "starbound-sprite",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/starbound-sprite-dark.png",
-      "sha256": "17720d20e1fe8148b09a060f2f4ef10082cd31bd08925e459987310c24a3ae72",
-      "bytes": 923343,
+      "sha256": "24fa8d824460340c73f30081a6b37c27f8fbc1f7190407bfe9eb9e288a36e7e1",
+      "bytes": 922576,
       "width": 1440,
       "height": 810,
       "assetSha256": "aa7f7cb00342dc55e63bad442c23a073a5399fec311af6b3a8ae82b337ac6824",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:35:18.423Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:23:40.851Z"
     },
     {
       "themeId": "mountain-sword",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/mountain-sword-light.png",
-      "sha256": "ed29f2435b4b8ba36af4facd511739f7d6eaf405fcaea37d02281899e49e4e6a",
-      "bytes": 1287597,
+      "sha256": "0b66479339bdea71d8d9b32e6edb9a997a1f259c8221c9c54115919376a176fd",
+      "bytes": 1287443,
       "width": 1440,
       "height": 810,
       "assetSha256": "f9714d1cb77ffa8c03e3f0611c0d33c39e3f5278580550d31c7aea6b6baa2769",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:35:20.217Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:23:42.474Z"
     },
     {
       "themeId": "mountain-sword",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/mountain-sword-dark.png",
-      "sha256": "d8d40c337b38114ad3345ba5362a428b391e0c3a8e060caea2a82ec918bc7f48",
-      "bytes": 1058988,
+      "sha256": "717867bba8cbc3ebb7a33fbb07556a888d9f6481eb29251bc0bf4acbc445fdcd",
+      "bytes": 1058184,
       "width": 1440,
       "height": 810,
       "assetSha256": "e1e6423cf15d6fd023f85e511576d67327d23c0c22da0aa6c1a9ccb02434333b",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:35:21.734Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:23:43.836Z"
     },
     {
       "themeId": "mountain-swordling",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/mountain-swordling-light.png",
-      "sha256": "8c6714a1614c99621c1c3301099d47648b20b347a6220f009e1ccc1bc6483bca",
-      "bytes": 1203502,
+      "sha256": "69fa7f97cff1122ccb303cc1071231ef752b1e2e61a31b6db0f82e3c9ce38cfe",
+      "bytes": 1204108,
       "width": 1440,
       "height": 810,
       "assetSha256": "8c3efbb6a6528d3bd7b517c9b8429cd1c1085533c2f922d64257a2024a31fada",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:35:23.431Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:23:45.415Z"
     },
     {
       "themeId": "mountain-swordling",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/mountain-swordling-dark.png",
-      "sha256": "824485ec5e197092f04b8318c7f56d9945c6254fd564011acb5de0f7ce6e0504",
-      "bytes": 1027006,
+      "sha256": "c79507d7881c49483218bc0125f9407af0af9c77cfe7c75de6b8b69260e107e5",
+      "bytes": 1025909,
       "width": 1440,
       "height": 810,
       "assetSha256": "3bc4a5824c98867af736f5d1d8a9d47af48ab71990056f8676b95d106d4153b1",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:35:24.911Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:23:46.752Z"
     },
     {
       "themeId": "cloudsea-pact",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/cloudsea-pact-light.png",
-      "sha256": "cf9307553f16b7fd393b98deb1d827e34c0b2ef5d2a7beb5a0ffa484bf03a2d1",
-      "bytes": 1304627,
+      "sha256": "f93cbc0369765cd3156715369bf3e2eba073381064729b0df41d805ee59b3f2e",
+      "bytes": 1305148,
       "width": 1440,
       "height": 810,
       "assetSha256": "14832c4ab93a9e91869f52721b3a9a4f219d22deac9c754cdf6a1ed681f0a373",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:35:26.785Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:23:48.335Z"
     },
     {
       "themeId": "cloudsea-pact",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/cloudsea-pact-dark.png",
-      "sha256": "4b54cbbc56636cdfd7ab890a96693e5a522a970ee177299132ae32636261564e",
-      "bytes": 1083465,
+      "sha256": "f07a37638ab79b0a73cd40948ce6dd800b52903086a6e72c68526bb830e1c710",
+      "bytes": 1084151,
       "width": 1440,
       "height": 810,
       "assetSha256": "71d3bf142e788366aaea064db1f2f51b40573fa6be2d986af75dc0af249e45bd",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:35:28.408Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:23:49.750Z"
     },
     {
       "themeId": "cloudsea-mochi",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/cloudsea-mochi-light.png",
-      "sha256": "facab726ec66b313e5c1704cbb77d15cb98436fc96543705453dd36279e73100",
-      "bytes": 1057345,
+      "sha256": "d41a7a0fc82bc2d6a3f9de1660c5a03b2b53f4f72668d9f7329262b00f6e6ae0",
+      "bytes": 1057599,
       "width": 1440,
       "height": 810,
       "assetSha256": "d02d9ae98d2f80c4c75660b3c2a18ff33b0fdfb177a99a82e5a470695e41ac55",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:35:29.925Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:23:51.161Z"
     },
     {
       "themeId": "cloudsea-mochi",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/cloudsea-mochi-dark.png",
-      "sha256": "43754154859d35581912dc6190b26378bba08c08a3e165e427e370f43460f2f5",
-      "bytes": 901752,
+      "sha256": "f654371aa61525bf94af7d15161bea6d96d2ccae774e02ccf1c83d1edd25f383",
+      "bytes": 902285,
       "width": 1440,
       "height": 810,
       "assetSha256": "751580d8d3d12673e6c99e023ab6b67603aec0358395fa440b8f6e57b450c6c9",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:35:31.329Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:23:52.397Z"
     },
     {
       "themeId": "beijing-meridian",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/beijing-meridian-light.png",
-      "sha256": "e78659fd5d5f5742cbb19212d6666c2b966462915c64ffec7dcff2537f93f50a",
-      "bytes": 1218858,
+      "sha256": "857c1641284de5d412e8cdbcfcdb4ed4a9d207a00cd4868bb400d97f3112c1a2",
+      "bytes": 1219167,
       "width": 1440,
       "height": 810,
       "assetSha256": "5cc21cfbcd59870bc87e4e9154476b1a0e6b25775f15128cdf26404d0536d64a",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:35:33.088Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:23:53.907Z"
     },
     {
       "themeId": "beijing-meridian",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/beijing-meridian-dark.png",
-      "sha256": "370a54c9360f684c5baa74027f05b5c82c4a970baac3b81da7ea78c0c717a9d3",
-      "bytes": 998496,
+      "sha256": "ffec2655562fcbff9327a5882117fad2125c9c401b3e38cbef11190477529b79",
+      "bytes": 998686,
       "width": 1440,
       "height": 810,
       "assetSha256": "e23a4592084e27cac12e97c77bebd27dc4f3760e80911786dae2eddebf9abc9d",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:35:34.619Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:23:55.219Z"
     },
     {
       "themeId": "shanghai-afterglow",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/shanghai-afterglow-light.png",
-      "sha256": "cbb3f05f11d501932b6da4fc260fc152033552fb10cf6408567b482823430da4",
-      "bytes": 1297275,
+      "sha256": "229633b802a5693c0e2b7f48dbaf8a96fd651e67c5c2c5dbedb3b04952c3cf02",
+      "bytes": 1298248,
       "width": 1440,
       "height": 810,
       "assetSha256": "fa73f15ee9d3f8f4942bd775e4385ca13b1fbd9e9422054cd3356f1f80460717",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:35:36.464Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:23:56.757Z"
     },
     {
       "themeId": "shanghai-afterglow",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/shanghai-afterglow-dark.png",
-      "sha256": "05dcf465712b6e47e5b39d8e10d6d13f6790dd3a7b3298fea1dabf58a2f346a6",
-      "bytes": 1093233,
+      "sha256": "0591cbcee60e94b21b70129d74f046b454538fcc6e1bfda8c1a8ab354b2a7130",
+      "bytes": 1093926,
       "width": 1440,
       "height": 810,
       "assetSha256": "9efac99b9e14bf3b6b4fb4e46bfe82c3e9bc63a5489946647f2d4d543491aa9e",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:35:38.311Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:23:58.155Z"
     },
     {
       "themeId": "shenzhen-circuit-rain",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/shenzhen-circuit-rain-light.png",
-      "sha256": "869dfd2caed2a837fe1a8479e81a9818386c8d2fce07b789dbe8c4e2914e3175",
-      "bytes": 1422207,
+      "sha256": "4444e02f5b77bea7bdc3f2af57740987557adacd3a7b1ab0577246afcf4bee44",
+      "bytes": 1422631,
       "width": 1440,
       "height": 810,
       "assetSha256": "e87e4c66392436b5df59e2d490433dab39632cd7370af9a5876462053b782e96",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:35:40.239Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:23:59.865Z"
     },
     {
       "themeId": "shenzhen-circuit-rain",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/shenzhen-circuit-rain-dark.png",
-      "sha256": "07ac7c771af69bec2915a52ec13829153d6a32e814162c82b0159599558bb873",
-      "bytes": 1209571,
+      "sha256": "a4b308618a58ddf956ec527456ccd58f29df21ddabcddcd6768b190087054772",
+      "bytes": 1209338,
       "width": 1440,
       "height": 810,
       "assetSha256": "8f11f29b02d830af78df4276ada7801e7b6498e5bc5ac13a43aa85f670c55465",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:35:41.950Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:24:01.415Z"
     },
     {
       "themeId": "guangzhou-riverwind",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/guangzhou-riverwind-light.png",
-      "sha256": "3724fa3db61d60b16ab5f5f1f0afcfbae75dae18d1133b90c461481f8b06c500",
-      "bytes": 1358588,
+      "sha256": "52e33394d295fb16d2941960c11bf45a1487a8d86a6fc42023d67189dbc11691",
+      "bytes": 1358653,
       "width": 1440,
       "height": 810,
       "assetSha256": "49bc9ef9dc4388057062705db84b9ea067b0f8e1373023e7ff89b3b08aa7ac6c",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:35:43.957Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:24:03.114Z"
     },
     {
       "themeId": "guangzhou-riverwind",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/guangzhou-riverwind-dark.png",
-      "sha256": "82bec00de322fb689e05297233cb6ec5aa2c5cbf57766b64b55dc4bdee7cfcc2",
-      "bytes": 1155889,
+      "sha256": "030e26bc6fbc907542137ced7f63a566c4923d5fb0cf52a0303c7cd39296c15d",
+      "bytes": 1156682,
       "width": 1440,
       "height": 810,
       "assetSha256": "3ee3a4b1ae1fe8ec85d2eebea224ebb64402ad23d2dcfc82010f7190c261e27f",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:35:45.717Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:24:04.636Z"
     },
     {
       "themeId": "chengdu-teahouse-rain",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/chengdu-teahouse-rain-light.png",
-      "sha256": "a41029fb4f19e42a1a2934bb0a1d3f1f0c5e0c2dbcdf47664e76f6f138ea83be",
-      "bytes": 1378460,
+      "sha256": "36c1e10b3d72b94545e35615a621cf11232b5f37c9361ffec614f9b5f9eea118",
+      "bytes": 1379294,
       "width": 1440,
       "height": 810,
       "assetSha256": "1d4328fc4263e524340ea84f4ab22e1e8e83e37833c8279e5496f0bb11634d5d",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:35:47.673Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:24:06.425Z"
     },
     {
       "themeId": "chengdu-teahouse-rain",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/chengdu-teahouse-rain-dark.png",
-      "sha256": "28e8f38575fa14c1e1c04db1b7aa701a215f02f0f907f5b7cbb1555ccc41a013",
-      "bytes": 1151133,
+      "sha256": "91b3a96ef10ef731fd2fb89eb3a4102a4fe07f629e9c8c9d0642213a422dd22d",
+      "bytes": 1151544,
       "width": 1440,
       "height": 810,
       "assetSha256": "93f48b14535b5e73bb7bc54fa5cb7a2d7cac5a49ca97c97ce72579219ab923de",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:35:49.484Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:24:07.901Z"
     },
     {
       "themeId": "hangzhou-lake-letter",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/hangzhou-lake-letter-light.png",
-      "sha256": "68ef6aeffd4aba54b9e324dd5659d243c30207448d3ac9bc14f8210ded0f6596",
-      "bytes": 1371243,
+      "sha256": "957fd090682655abd84396f20cd7c40208dcfef12082a8ee5c3ddb5218b72838",
+      "bytes": 1371493,
       "width": 1440,
       "height": 810,
       "assetSha256": "ff8f72e9c9fd1edbd272cb7197994d13792bf3fc3914d5de8c6b365ad53f1c50",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:35:51.308Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:24:09.483Z"
     },
     {
       "themeId": "hangzhou-lake-letter",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/hangzhou-lake-letter-dark.png",
-      "sha256": "b0babfd2484f5c616f53049b2dcf34ba2325492499aeb16b6ead89e7f57fda2d",
-      "bytes": 1140955,
+      "sha256": "ac2b562a4bc81bc3f89fc9cdc57de653230c4635bba03e9f4e7b07cc8a512389",
+      "bytes": 1141582,
       "width": 1440,
       "height": 810,
       "assetSha256": "afb7f3a24b54cd9e3614a187d4c27d3f99fa6a395ab89b302381ea879038f432",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:35:52.921Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:24:10.913Z"
     },
     {
       "themeId": "chongqing-vertical-night",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/chongqing-vertical-night-light.png",
-      "sha256": "e771175f91dd605069ddcc7ef8652f0e2b7fe5731855228785e8bcf006ccd8b9",
-      "bytes": 1313232,
+      "sha256": "19ad06f69abd02a35a96289e7e636b47e88fda4f3d7dedd2e2d63864b59ef326",
+      "bytes": 1313541,
       "width": 1440,
       "height": 810,
       "assetSha256": "88511b6f1f2fd06fce3786016109cd2fa2d87d2c45afb0b62fc83d0bd27e9946",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:35:54.768Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:24:12.624Z"
     },
     {
       "themeId": "chongqing-vertical-night",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/chongqing-vertical-night-dark.png",
-      "sha256": "1c22ae5b2f1b8428559bab5572474054d44e94222401972fb64aafc1fbfed90a",
-      "bytes": 1110205,
+      "sha256": "894f1de4f49cf2e36276ae376ef459d2e6113108fa9398485992eff70a255dfa",
+      "bytes": 1108541,
       "width": 1440,
       "height": 810,
       "assetSha256": "59ffc290e1362e640bd46ebdd5e74589a4aa160b093f1a6d766314e78634f99e",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:35:56.448Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:24:14.100Z"
     },
     {
       "themeId": "nanjing-wall-plum",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/nanjing-wall-plum-light.png",
-      "sha256": "53e01678d9b630725e96a1f21954d444af8cdc1ef3e1268618e9d9f688f8515b",
-      "bytes": 1385702,
+      "sha256": "5da3078078207eec1795aed848e6063b5a8fd4385cdd345acbb6ffd71e5a48bf",
+      "bytes": 1386170,
       "width": 1440,
       "height": 810,
       "assetSha256": "0c63869d896460d5a4f56ec11831681e45038ae7c2c9b10edc7c159474752024",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:35:58.350Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:24:15.743Z"
     },
     {
       "themeId": "nanjing-wall-plum",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/nanjing-wall-plum-dark.png",
-      "sha256": "1f783e39d0965e9fb670075dce12effe19dda9dafdc86b8106e98eda6d08779d",
-      "bytes": 1166613,
+      "sha256": "29a884f82a61526329f2e8f728ee5db2a9c7184c21a60bb7f9f5eaaadef27b94",
+      "bytes": 1167225,
       "width": 1440,
       "height": 810,
       "assetSha256": "d53ffb8b6f370da0cb925c58dd73af7314c8ee33d41f4dbacf9cd53dd2274369",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:36:00.070Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:24:17.195Z"
+    },
+    {
+      "themeId": "new-york-rainline",
+      "mode": "light",
+      "path": "screenshots/codex-beta-26.715.3651.0/new-york-rainline-light.png",
+      "sha256": "80ec8dcce12dacb81f657ef8d004d7e1bc958990249689ae829189d30a5379c7",
+      "bytes": 1277549,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "571aee82103f8bc2e14debc1a3393cd93d0110f4e6f4dcc90aed4aade59c88d8",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:24:18.793Z"
+    },
+    {
+      "themeId": "new-york-rainline",
+      "mode": "dark",
+      "path": "screenshots/codex-beta-26.715.3651.0/new-york-rainline-dark.png",
+      "sha256": "6961fdbec86df49a692e541e09aefd037b426234befabdc2251c79288a130e0a",
+      "bytes": 1079876,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "c3aee1a47ac463e206438ae4920337d9391d6942d6aa9650712a1821a82ac59d",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:24:20.205Z"
+    },
+    {
+      "themeId": "san-francisco-fogline",
+      "mode": "light",
+      "path": "screenshots/codex-beta-26.715.3651.0/san-francisco-fogline-light.png",
+      "sha256": "359a72ded0e1de7ecbf5e5987f1baee759d8406a7b770120c7fa72fb9b14bab1",
+      "bytes": 1172082,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "58684fc92b6607710b97915e293bf70d76bb6919b010be400530490b1719b745",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:24:21.693Z"
+    },
+    {
+      "themeId": "san-francisco-fogline",
+      "mode": "dark",
+      "path": "screenshots/codex-beta-26.715.3651.0/san-francisco-fogline-dark.png",
+      "sha256": "613dcd20dceadd052fe2abfd5db7e39f84cf770835ba7bb6cad4677fd5539ad4",
+      "bytes": 938094,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "e8b816767e2e976f72e12f8963c77e7e250bca6311195e093aba883c6f9f43b2",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:24:23.003Z"
+    },
+    {
+      "themeId": "chicago-lakewind",
+      "mode": "light",
+      "path": "screenshots/codex-beta-26.715.3651.0/chicago-lakewind-light.png",
+      "sha256": "5a50b8dece72662560cc785055f2b0eea63765197f5b4a4eb2b51f80937d6c86",
+      "bytes": 1318478,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "ba453e5276f61280cd7e94945dd17b7d2979761047cb8a183dcc7badf454c6b2",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:24:24.585Z"
+    },
+    {
+      "themeId": "chicago-lakewind",
+      "mode": "dark",
+      "path": "screenshots/codex-beta-26.715.3651.0/chicago-lakewind-dark.png",
+      "sha256": "c694b6b233f5b7be38c14fc7ad8307198afd49bf8ae0537f4fb67a301a8cc3b5",
+      "bytes": 1128088,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "dc23f4745070bbe6b3c56f964a66b55294c5d4e106dc580ad086185eee710a5e",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:24:25.997Z"
+    },
+    {
+      "themeId": "toronto-blue-hour",
+      "mode": "light",
+      "path": "screenshots/codex-beta-26.715.3651.0/toronto-blue-hour-light.png",
+      "sha256": "abd551df79678212eb2bc71cdbf11cba22724c32a80fcb47409dcadd8661ed96",
+      "bytes": 1292575,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "022589a0e575adb385825304d926474b0a1b3fac6bd2a91ac0c3c359d0ef1819",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:24:27.565Z"
+    },
+    {
+      "themeId": "toronto-blue-hour",
+      "mode": "dark",
+      "path": "screenshots/codex-beta-26.715.3651.0/toronto-blue-hour-dark.png",
+      "sha256": "6fc75e2a33baed0adf170483657e308832db5f8761ea53e222e521435986d542",
+      "bytes": 1080450,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "d9a039030b5021e4e32a31ab78dcf038dec7738e95ea6e915aa26c8016fa8ebf",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:24:28.975Z"
+    },
+    {
+      "themeId": "vancouver-rain-harbour",
+      "mode": "light",
+      "path": "screenshots/codex-beta-26.715.3651.0/vancouver-rain-harbour-light.png",
+      "sha256": "f2c684d78880cc7e49359e1c3eb5237a4bf5aed0cf4e8054a5f85abebe021b50",
+      "bytes": 1320715,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "8aeaf9a707c4e588efd28f762ed315baeb2ed39682ab371f805d7b43f25af5ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:24:30.581Z"
+    },
+    {
+      "themeId": "vancouver-rain-harbour",
+      "mode": "dark",
+      "path": "screenshots/codex-beta-26.715.3651.0/vancouver-rain-harbour-dark.png",
+      "sha256": "c164269debbcc73223bb2c544afd46c704fbd524a81b22defcfa0b65b9e89cf2",
+      "bytes": 1089668,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "b6fbd81c7940544bcf9a3617dc39b273621a3ce2e0d9646130ba7716b8c5c20e",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:24:32.019Z"
+    },
+    {
+      "themeId": "london-rainlight",
+      "mode": "light",
+      "path": "screenshots/codex-beta-26.715.3651.0/london-rainlight-light.png",
+      "sha256": "75b020c906841fe8ede70e17de397a58e2f819a092395eedf8ff15ce1d30c8f6",
+      "bytes": 1285894,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "d5e4be91ef88b4e5bd1a718ebb0c9b78b92c7c009c00a42565c8145f20fb0e5b",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:24:33.623Z"
+    },
+    {
+      "themeId": "london-rainlight",
+      "mode": "dark",
+      "path": "screenshots/codex-beta-26.715.3651.0/london-rainlight-dark.png",
+      "sha256": "3d2349c1b61df44fee2194bbb998f62220920a7ffc8060c2023826d3e4b25068",
+      "bytes": 1081052,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "d77b6a3e4975c749b3ec7784c3350c80b6a2fd45e269e909f5cfedeba851c4ff",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:24:34.985Z"
+    },
+    {
+      "themeId": "paris-rooftop-dawn",
+      "mode": "light",
+      "path": "screenshots/codex-beta-26.715.3651.0/paris-rooftop-dawn-light.png",
+      "sha256": "85cdb4860628707ec59422e16e87052d3f0d5bbda1550ceec46c5134312d8665",
+      "bytes": 1270885,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "29b58465ef5c2a1720696dddabf985ec08a1d3fed322062a51134dc823b2b077",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:24:36.571Z"
+    },
+    {
+      "themeId": "paris-rooftop-dawn",
+      "mode": "dark",
+      "path": "screenshots/codex-beta-26.715.3651.0/paris-rooftop-dawn-dark.png",
+      "sha256": "0da499fd1619c88e95a995dfba7d69c0c3db2c162c5fa21a8702a85af72eab25",
+      "bytes": 1028190,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "2c9b6dd5bf3885ac8f3b650c5bb431aae49e897c31d9e1bc6927c94872e7c60b",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:24:37.894Z"
+    },
+    {
+      "themeId": "berlin-night-grid",
+      "mode": "light",
+      "path": "screenshots/codex-beta-26.715.3651.0/berlin-night-grid-light.png",
+      "sha256": "ed003c601f1f749b778b2142162e78d95ec110dbf5d73e2b3b16971728370621",
+      "bytes": 1231731,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "fe03ac97ef47db28cafebe23ec1df6864ddcb32968e9785ecffb363399fcd06e",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:24:39.549Z"
+    },
+    {
+      "themeId": "berlin-night-grid",
+      "mode": "dark",
+      "path": "screenshots/codex-beta-26.715.3651.0/berlin-night-grid-dark.png",
+      "sha256": "9083d012eb689d0f80fac0589c92ac727322e9e6503503e25c5a3e924f252641",
+      "bytes": 998327,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "92ac84e7a6833e6ff69295b276d224154301130be06b93945d1e19f71eaf8f25",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:24:40.939Z"
+    },
+    {
+      "themeId": "rome-terrace-gold",
+      "mode": "light",
+      "path": "screenshots/codex-beta-26.715.3651.0/rome-terrace-gold-light.png",
+      "sha256": "c6cdc7bf44ff33fad872154c04346440cfc467fae5ab7f8346956eb34fd2108f",
+      "bytes": 1303677,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "224e8417d1d9af0bec8dea77abdb021220a5bdf24d1580ca8e9ee76afe758a48",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:24:42.594Z"
+    },
+    {
+      "themeId": "rome-terrace-gold",
+      "mode": "dark",
+      "path": "screenshots/codex-beta-26.715.3651.0/rome-terrace-gold-dark.png",
+      "sha256": "6c81502cafae3966adfece282aacefb52267c0369a516ec1eccce1b945544f7c",
+      "bytes": 1092467,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "13f82c00db89e7dcef228a37b042c99eaa7938a01c01232beab3db0a04abac38",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:24:43.974Z"
+    },
+    {
+      "themeId": "tokyo-rain-signal",
+      "mode": "light",
+      "path": "screenshots/codex-beta-26.715.3651.0/tokyo-rain-signal-light.png",
+      "sha256": "ba04660223c416f3f830248969fcee630e927d3218529d64493cafab4d1b2fd0",
+      "bytes": 1319359,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "172c68804a9807a4b74726b483f6670dfa668ebfefe64728bd0b21828e03fa57",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:24:45.598Z"
+    },
+    {
+      "themeId": "tokyo-rain-signal",
+      "mode": "dark",
+      "path": "screenshots/codex-beta-26.715.3651.0/tokyo-rain-signal-dark.png",
+      "sha256": "7a6837dda3f7d257f7cd99d22938be7b38f3c5ecf25752e48df2bec3754cbd3e",
+      "bytes": 1092786,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "e58854b98dd5196501d98abc9fa04c80e4e0e6b48b595367ee18adb43047cfb1",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:24:47.033Z"
+    },
+    {
+      "themeId": "singapore-garden-rain",
+      "mode": "light",
+      "path": "screenshots/codex-beta-26.715.3651.0/singapore-garden-rain-light.png",
+      "sha256": "f4a26795e94c3ce2387c166be48e5dc9809f77ee436121bb425e0a5a865c3e2a",
+      "bytes": 1339154,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "6c5eccc1a6d19cfa0189e56e9941c79a276d0e425438e2749f930428ba4e12d3",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:24:48.672Z"
+    },
+    {
+      "themeId": "singapore-garden-rain",
+      "mode": "dark",
+      "path": "screenshots/codex-beta-26.715.3651.0/singapore-garden-rain-dark.png",
+      "sha256": "b48e98d83696fa1c326e7cd3998f45c0d684407bb3cb181f518f8a20f907d308",
+      "bytes": 1136713,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "b88aad48fac4762b6001f2e6ead4116ce5071cf66f25c83ffcb35165bf2356e6",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:24:50.122Z"
+    },
+    {
+      "themeId": "sydney-harbour-morning",
+      "mode": "light",
+      "path": "screenshots/codex-beta-26.715.3651.0/sydney-harbour-morning-light.png",
+      "sha256": "ed665a1d8c6de36e31b63b65a6a0ddabde5920002b2d35c0c204c4360e308e02",
+      "bytes": 1366596,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "3b6290f5e5394c260031987d690944178b81bb7394d74079c0fa83c8ab479793",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:24:51.806Z"
+    },
+    {
+      "themeId": "sydney-harbour-morning",
+      "mode": "dark",
+      "path": "screenshots/codex-beta-26.715.3651.0/sydney-harbour-morning-dark.png",
+      "sha256": "ab34b4246879a0162345882141d2072f0164ae406be3037db913dfffadd96daf",
+      "bytes": 1169559,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "ca1f02a96baecbf7a11866a6effe3106b3c6339d9ac7a95062602d91777a172d",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
+      "markerVersion": "act-full-skin-v1",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:24:53.300Z"
     },
     {
       "themeId": "mortal-journey-duo",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/mortal-journey-duo-light.png",
-      "sha256": "b13ec10ff092b8ff6585dec3d8a6e59ddd664daea22295673240b8759495bdff",
-      "bytes": 1363844,
+      "sha256": "90d0faffdf3f256758737460771f128e3dfb6d20f4b69b74eba07eb90b05ee7a",
+      "bytes": 1364496,
       "width": 1440,
       "height": 810,
       "assetSha256": "7b89ba9b357484ddf2e189da9307f053ed12bff9a62e07dd0bedc05a471359da",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:36:01.975Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:24:54.944Z"
     },
     {
       "themeId": "mortal-journey-duo",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/mortal-journey-duo-dark.png",
-      "sha256": "494685b3e3749f3c434e185b7648f103373fd78b031b16f95dda69a92dfab611",
-      "bytes": 1143370,
+      "sha256": "7c61fb9634956e53cedc0973a1a0438bb792345630676b44fd44319fbc769da0",
+      "bytes": 1144545,
       "width": 1440,
       "height": 810,
       "assetSha256": "93142c77baedde7b5818c438249fedd84b671608905ca0e48a20de809af9dcc5",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:36:03.642Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:24:56.406Z"
     },
     {
       "themeId": "mortal-journey-chibi",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/mortal-journey-chibi-light.png",
-      "sha256": "c0608b64774137bc7c6fb8a9958c9d3417a31cf6a87b72e26ce7ba51a1d274af",
-      "bytes": 1343077,
+      "sha256": "eb85b80d9ac1d1987eca2bdfd20f0eb17b45c20a5ccb1986165410af29e406d8",
+      "bytes": 1343574,
       "width": 1440,
       "height": 810,
       "assetSha256": "9359005d53760e64c59a1a0bd11aabf4945b9a00ae8f2d7eab49f39b531fa03d",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:36:05.473Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:24:57.922Z"
     },
     {
       "themeId": "mortal-journey-chibi",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/mortal-journey-chibi-dark.png",
-      "sha256": "e8d377c65a01b70e628c98e52e9d5fd17ce55a0d67f086d405c4eccf731804fb",
-      "bytes": 1156869,
+      "sha256": "5e7a74e6e2fc8effc387faddab770be547598a187b96b9ba69fb3f803bfbb953",
+      "bytes": 1155890,
       "width": 1440,
       "height": 810,
       "assetSha256": "c1563c42f444e93a03328fdc95f48a50d6557e66f7487d8cfcc1a941c807c748",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:36:07.185Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:24:59.301Z"
     },
     {
       "themeId": "renegade-immortal-duo",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/renegade-immortal-duo-light.png",
-      "sha256": "82a6bede1826e1b9d9fe4b430745c62c38cb4eed27824c28f0b8b2d20022fde8",
-      "bytes": 1290232,
+      "sha256": "d48fb09c8009ea4e022510a77667457cb516500fe19132bea8868b7773929b0d",
+      "bytes": 1290540,
       "width": 1440,
       "height": 810,
       "assetSha256": "9e77153459de658d05dd3c69bfa4a956b73eeb1496ad27151e98e27ab0414a05",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:36:08.966Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:25:00.839Z"
     },
     {
       "themeId": "renegade-immortal-duo",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/renegade-immortal-duo-dark.png",
-      "sha256": "7a2cede673dcb6a61dc3aa6df63693888e21e2a22f5665bd5fa55400a8f5575a",
-      "bytes": 1091144,
+      "sha256": "130d74734905c7259d40ca898ba7078848f68ee76d0ca2f2e38f89c3e2a6019b",
+      "bytes": 1091106,
       "width": 1440,
       "height": 810,
       "assetSha256": "bfdf222278abf11dc5f5645640c739197174ad0062f67c2ed21b6e648bba7e07",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:36:10.532Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:25:02.197Z"
     },
     {
       "themeId": "renegade-immortal-chibi",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/renegade-immortal-chibi-light.png",
-      "sha256": "24c968edda769d5f540d88fe399e74a96e619c8ee240497bf47eed17d9ccffef",
-      "bytes": 1270834,
+      "sha256": "ccba18d94a9691854aae364467972703c672e6cbd93cb2c4d4a03fdb5c4f95bf",
+      "bytes": 1271178,
       "width": 1440,
       "height": 810,
       "assetSha256": "0c1fccc8d6cf1e0a3e840a8da6daaa1c8c48e28fbe5dbaf1f3874313f23ea87e",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:36:12.488Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:25:03.725Z"
     },
     {
       "themeId": "renegade-immortal-chibi",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/renegade-immortal-chibi-dark.png",
-      "sha256": "5780f28f82050f128353a47bb03cf39ef9d6baca4a880cb4eeab9d4b1962773d",
-      "bytes": 1052665,
+      "sha256": "0ed62b07aa92120ccf14003f4e0fcc9d5439f52274d7afe8a22cabbed898a0e5",
+      "bytes": 1053287,
       "width": 1440,
       "height": 810,
       "assetSha256": "d39f0167b7926f9a5764794be13830499e0b42497c121d432a20f6a2a5ae86f7",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:36:14.080Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:25:05.135Z"
     },
     {
       "themeId": "sword-of-coming-duo",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/sword-of-coming-duo-light.png",
-      "sha256": "5f66af688f1be33f78bbb5ca9a50e00f66c10f38fa1ce495c70a4c08e557b163",
-      "bytes": 1421722,
+      "sha256": "f10c3ed2e1db6c976c6f7d99a106730e7cc6f0a9389ddb0b356f096b9a8f0bd0",
+      "bytes": 1422667,
       "width": 1440,
       "height": 810,
       "assetSha256": "bd5df1f3fab21ef194213bcfdb48562f4d0901937d7b1b4668d52e63a26d770f",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:36:16.201Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:25:07.016Z"
     },
     {
       "themeId": "sword-of-coming-duo",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/sword-of-coming-duo-dark.png",
-      "sha256": "3e605756f06878fa7ade87261ae5e9b9d0508dbea6577377876dae15010a4da9",
-      "bytes": 1259451,
+      "sha256": "ea76f472a4567425f547ac47ac4f482ed6bcca293acb0327652701840a9933be",
+      "bytes": 1259832,
       "width": 1440,
       "height": 810,
       "assetSha256": "b62fdd4b124f5dee5034529664e86f043d4fe6dbb4712d2b79e99f9efee11b12",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:36:18.015Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:25:08.634Z"
     },
     {
       "themeId": "sword-of-coming-chibi",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/sword-of-coming-chibi-light.png",
-      "sha256": "ff8c19614b6d99cc857c9d02b2ed9fd5b5210cc66ffdea60c4425adc0b0c8b89",
-      "bytes": 1353333,
+      "sha256": "f4fd98798a532258ebac3ecb3a998a99a4a5bfe46217eec9f3fd4dc47d460db2",
+      "bytes": 1353750,
       "width": 1440,
       "height": 810,
       "assetSha256": "b98b14734af1b6d4ecd64c44a0a0783ef6a1de4e722c03450e72765af2b60c4a",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:36:19.946Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:25:10.333Z"
     },
     {
       "themeId": "sword-of-coming-chibi",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/sword-of-coming-chibi-dark.png",
-      "sha256": "d877113530c9b2da5df2bcc841c82095ee3cbb8f8363734d750c8221e7b91d55",
-      "bytes": 1178085,
+      "sha256": "7d55610d976eeb1bcb9ca2fe1eecdc5f669047d2df5c9cd3bd4a7c1682c7a1be",
+      "bytes": 1178730,
       "width": 1440,
       "height": 810,
       "assetSha256": "b3f9a1e1513561c61befade9813a66563d5fc60a06d731f0d812ccfbf1843976",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:36:21.618Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:25:11.891Z"
     },
     {
       "themeId": "battle-through-duo",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/battle-through-duo-light.png",
-      "sha256": "2c5461d2ef26f2d8f4253e5247707ad320b4d8fa6dec2f112736a9730e600678",
-      "bytes": 1354881,
+      "sha256": "e87d57544f61d2eb3b03e49f1913113214b5f171be37cdda33c2114f30989c12",
+      "bytes": 1355703,
       "width": 1440,
       "height": 810,
       "assetSha256": "7286af9f259704871a8c04216cc6fae6dd78fa46db9d769f6f5d19630e18daf5",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:36:23.465Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:25:13.580Z"
     },
     {
       "themeId": "battle-through-duo",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/battle-through-duo-dark.png",
-      "sha256": "7b0597ce373f8eb9ec77e9da0017b14ac1cce65b98ef65fded8579d5f7f1b688",
-      "bytes": 1143574,
+      "sha256": "dc672bdab44090a6850b9f91eda0f8d54597f99a6fbf8bddfc618a815c650bf2",
+      "bytes": 1143044,
       "width": 1440,
       "height": 810,
       "assetSha256": "288771215fd4d206ca05726081cdcd66931dd8229fb0594b8acb744d19cf506b",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:36:25.105Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:25:15.078Z"
     },
     {
       "themeId": "battle-through-chibi",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/battle-through-chibi-light.png",
-      "sha256": "2536c4259bbc6fcd4ec2fce0dbd89574d06a29d2e81ff84733e7cfdebd633785",
-      "bytes": 1354767,
+      "sha256": "e260000a77a8970726ed2beeccbfde9af0de305d921865fee8474277876bc873",
+      "bytes": 1354815,
       "width": 1440,
       "height": 810,
       "assetSha256": "c44db704a06fe711fcf49724ef634198ab4f1811476c8413c90e12e5ab5e2c8e",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:36:26.918Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:25:16.719Z"
     },
     {
       "themeId": "battle-through-chibi",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/battle-through-chibi-dark.png",
-      "sha256": "708de24e0930b1d9e9420cd738ff5ccca0f5ea7b51b3d2efc2545b582525f8a5",
-      "bytes": 1177400,
+      "sha256": "6f11e29a25524f0895fe2352c48a6def24c4c84f351964060800981d0b777ac2",
+      "bytes": 1176498,
       "width": 1440,
       "height": 810,
       "assetSha256": "72e9f4be0a0773fbebbf38b115d7e4c1f360bf86e04bc4c2224e2d93695bd595",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:36:28.539Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:25:18.188Z"
     },
     {
       "themeId": "mortal-void-hall",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/mortal-void-hall-light.png",
-      "sha256": "dd265aa0c1b94202524337d6de488f2669987599872943b362d7e811b8b9a120",
-      "bytes": 1373698,
+      "sha256": "961ca4a5fa3a6182f8663d388ec942e29ebf89b918ddf9a54a390d5a58ccaae3",
+      "bytes": 1374061,
       "width": 1440,
       "height": 810,
       "assetSha256": "7b7c48bd3a7b821dd914b26c3e40cbe2a85db691aa669dee37f69b90eb62c9bb",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:36:30.388Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:25:19.884Z"
     },
     {
       "themeId": "mortal-void-hall",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/mortal-void-hall-dark.png",
-      "sha256": "209fdde924ff646a2d3ae437cf912e523c5a372d2c486a1bb6925c14ce497856",
-      "bytes": 1159717,
+      "sha256": "7fb32b2ff3c34f1e6536587856d9971b0f67d7f65b4c206ff102daf472f7cf40",
+      "bytes": 1160219,
       "width": 1440,
       "height": 810,
       "assetSha256": "4787b2ca5d2be14a9329a59d5ad9edd5c288a7ea376691501351e9d9cd1ec3fc",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:36:32.016Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:25:21.362Z"
     },
     {
       "themeId": "renegade-wedding-storm",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/renegade-wedding-storm-light.png",
-      "sha256": "645514ad816b06d114b5c0a400e82785fabda28f3c49552ef063ae02e705f657",
-      "bytes": 1325561,
+      "sha256": "e31fe481605f5a2a1c87b8cad4cd1b040d0c58145d005db466b640c99960c7fa",
+      "bytes": 1325930,
       "width": 1440,
       "height": 810,
       "assetSha256": "1400ac25217ff1023b483c13e0d67bca475e601a02c23dc8af4067d280f072b5",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:36:33.903Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:25:26.640Z"
     },
     {
       "themeId": "renegade-wedding-storm",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/renegade-wedding-storm-dark.png",
-      "sha256": "beb639a82026f3bba9bf2bdbf17c254a2f9722180c6500fd1586ebbd2048cf9c",
-      "bytes": 1137540,
+      "sha256": "fda526d71868353eb240be232a36f8e001b5ea2d4ce4904a5a87b2180791080f",
+      "bytes": 1138205,
       "width": 1440,
       "height": 810,
       "assetSha256": "0b96186124ccaa161d8ea01bb114d54072a6c41caa95c4c4042556de8e0f4cbd",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:36:35.490Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:25:33.854Z"
     },
     {
       "themeId": "sword-confession-alley",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/sword-confession-alley-light.png",
-      "sha256": "cde5c1fb5b6440e643782e239e96ba654260ab7344ab5a0e2c3c5b0cc60d1aac",
-      "bytes": 1244249,
+      "sha256": "830c3b3a972f4df98e7c93d5d75bf823a5831fc262d99992a6f2fdec621e1ea5",
+      "bytes": 1244917,
       "width": 1440,
       "height": 810,
       "assetSha256": "adcae78017295693d759c62203b5f897da77b52eef084ae22b979f33d15e6e38",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:36:37.255Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:25:55.123Z"
     },
     {
       "themeId": "sword-confession-alley",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/sword-confession-alley-dark.png",
-      "sha256": "522f34ecd8f732af7f358b431e07cc09a4696242ba40dfc86247c32df0dc0e70",
-      "bytes": 1044877,
+      "sha256": "4e45f3a01cc663735b2cce794e89a1a6bf1241b1f46e793e61ca6eabf6d3c949",
+      "bytes": 1044310,
       "width": 1440,
       "height": 810,
       "assetSha256": "52b2eebc8d1fefdc44ff8fe3b18dda427f4b8fce5135198269ba1d280bb61052",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:36:38.806Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:25:56.716Z"
     },
     {
       "themeId": "battle-three-year-pact",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/battle-three-year-pact-light.png",
-      "sha256": "da34aa6dfe0d00e09a5906194b7e0cf46e90cb2efd1b95f12f67f9d72bcb13ee",
-      "bytes": 1356247,
+      "sha256": "98c3e8fbcb421f6f8892ee7708c53d95552e543e4fe473fb3a22c055d5036ece",
+      "bytes": 1356795,
       "width": 1440,
       "height": 810,
       "assetSha256": "7e28c361acbbd2f6e537bbc0a9afd104083602c162db4fa69065c895a2ab33a0",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:36:40.872Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:25:59.446Z"
     },
     {
       "themeId": "battle-three-year-pact",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/battle-three-year-pact-dark.png",
-      "sha256": "773fccb48078b90c0db4c4fe6b36d5d53437aa5011528c6e326d74cbe95fdd02",
-      "bytes": 1135222,
+      "sha256": "4ad4ef542cf5b94855f89cb61f62911122a41205456a6b98459814c7b139f588",
+      "bytes": 1136498,
       "width": 1440,
       "height": 810,
       "assetSha256": "d1c0bce1e5fd5fbc01d2b15008b07ed618b088091f141aeadad577800e057235",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:36:42.484Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:26:02.787Z"
     },
     {
       "themeId": "tibo-reset-saint",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/tibo-reset-saint-light.png",
-      "sha256": "9c0abb68654f590b2f6ea65a8c344d76bd3afaf88be35db011ef44497154f53e",
-      "bytes": 1463692,
+      "sha256": "8f0feb0216d167501ef7c231a2373b3e8fc6f8be9ce87d8d496ed834fb3bbf5d",
+      "bytes": 1457207,
       "width": 1440,
       "height": 810,
       "assetSha256": "11b6a2ca351157517cb3f42d754ec7279e4be6dcabb603c9777f566fff4c107f",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:36:44.663Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:26:04.516Z"
     },
     {
       "themeId": "tibo-reset-saint",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/tibo-reset-saint-dark.png",
-      "sha256": "a721dec029387df2203fab1455dfd31148bdeeb12651166d756cfbe26aa2ab56",
-      "bytes": 1244394,
+      "sha256": "c1dc12cb176cd042a36e120f8f222d3adb13d9f4e94e676b6342d4751d93bc94",
+      "bytes": 1237530,
       "width": 1440,
       "height": 810,
       "assetSha256": "73c84e7524853444eb57cc9a3c16baa2c28902621bbc06aa515a7413b4eb8ee6",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:36:46.738Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:26:06.071Z"
     },
     {
       "themeId": "tibo-reset-immortal",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/tibo-reset-immortal-light.png",
-      "sha256": "7d72baa6e239cbea100e93ab7612f4bd6e560d5be526617b012da5fcaef8b37d",
-      "bytes": 1438906,
+      "sha256": "aac1d54d6fd83a50c7a2cd4d82a0f4088fd101a1dcbcddfa3a071ef88c3218e8",
+      "bytes": 1433253,
       "width": 1440,
       "height": 810,
       "assetSha256": "976594a32366ac3c2aee2a47b404e03d5a687f20e491d9df677b5e1b394cb855",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:36:48.905Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:26:08.504Z"
     },
     {
       "themeId": "tibo-reset-immortal",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/tibo-reset-immortal-dark.png",
-      "sha256": "ed06d21397f642b7197a8bdfd735e25ae81338023eecc3ed40ae41d86fb251ce",
-      "bytes": 1233476,
+      "sha256": "89aa76d37af1fbf0b0eb916d0094aae11362a0c0ede64179d5c43414c1889cd0",
+      "bytes": 1227613,
       "width": 1440,
       "height": 810,
       "assetSha256": "27c1ddfce317e70dafe18278006e51765274e9b9acb5f51b4c1c925eaafd654e",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:36:50.737Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:26:13.115Z"
     },
     {
       "themeId": "retro-boss-2007",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/retro-boss-2007-light.png",
-      "sha256": "c56cf58ca839fb059558bf9a843c3c894cf7514f0721a49eb311dee9d144348b",
-      "bytes": 1130352,
+      "sha256": "090b53085c59e2d78a1ec0de2bc9752cd9f8f54d2f62783d43c0a52e3624bb24",
+      "bytes": 1130845,
       "width": 1440,
       "height": 810,
       "assetSha256": "658ebf90f9634d4069abf42ee522731d90b1a64e83d384bb51384df1ec015cc9",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:36:52.421Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:26:14.778Z"
     },
     {
       "themeId": "retro-boss-2007",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/retro-boss-2007-dark.png",
-      "sha256": "4c5f142de0f64276e588b386a2e139c8b9cfe17df4b7ace3d7ed3c62ff12147e",
-      "bytes": 966072,
+      "sha256": "d33aa9298b1df3a50c25e0565ec42f1ad53309b9ca7a4811da73ca617cbef328",
+      "bytes": 965246,
       "width": 1440,
       "height": 810,
       "assetSha256": "e4edc595dc61b6b221326d5815e2ca7f94374c3d8259dd1cc95ad6aa49b11171",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:36:53.962Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:26:16.154Z"
     },
     {
       "themeId": "rainy-library",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/rainy-library-light.png",
-      "sha256": "9f958583be456d7cf1ecfe4a1ff309580a061f14bcb468e6211f16a15dd48a58",
-      "bytes": 1216713,
+      "sha256": "7ab8ed98c6667660236250ac62c7e717c03b7c597f2c4942f9f4b7d241768a58",
+      "bytes": 1217463,
       "width": 1440,
       "height": 810,
       "assetSha256": "6a3176fdd82e79176967a33fec256a913bf1a7c42d16c2aea8187fe5224740af",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:36:55.654Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:26:17.753Z"
     },
     {
       "themeId": "rainy-library",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/rainy-library-dark.png",
-      "sha256": "335d2861e28732b4726ce705f5de6dfbc9e924a0b4dcec6c445267c98fe22817",
-      "bytes": 910775,
+      "sha256": "2c141d82341a98f1ed9ff52a252516ba1eefb59bbfc1bebc10ffb4b6367b3c33",
+      "bytes": 909962,
       "width": 1440,
       "height": 810,
       "assetSha256": "38cffd42f5c7bd72eeb50ea8c40b7342d783c31fbd2eaac56db1660379860392",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:36:57.168Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:26:19.090Z"
     },
     {
       "themeId": "orbital-dawn",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/orbital-dawn-light.png",
-      "sha256": "1e93ffa40e23f49c7ec9577df75b21d1092535186f0e50353fd0f976e6cf2fe2",
-      "bytes": 1264415,
+      "sha256": "67a50191a0bcf179b478b7964077bcbf92df11dd01305aa1b84100c62881a0be",
+      "bytes": 1264991,
       "width": 1440,
       "height": 810,
       "assetSha256": "f28f35d550575577e252091f1fb6f87eb64e30ed360fec8c8998dc1a4cb2c219",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:36:58.937Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:26:20.737Z"
     },
     {
       "themeId": "orbital-dawn",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/orbital-dawn-dark.png",
-      "sha256": "10649049f476cd3c1695ada4a6f9ee8bf9cc96c8b013de61522221596c5bd7ab",
-      "bytes": 1020181,
+      "sha256": "b442f931de7f9bf74f853cd68dcd9c65f2c1a47e3f96692ff13720e8d3b6dd78",
+      "bytes": 1020835,
       "width": 1440,
       "height": 810,
       "assetSha256": "0ecb5a45cf1d1c78844987183b24e868a9ea3602456aea7b3f8192947af5aded",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:37:00.497Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:26:22.218Z"
     },
     {
       "themeId": "deep-ocean-lab",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/deep-ocean-lab-light.png",
-      "sha256": "a3609f4602c5d3a7dadc07676a3b46468a1b6b559b2d72fba571d5b724c89301",
-      "bytes": 1229930,
+      "sha256": "a3391fed1276a3dda5aadfef590483eb530f7e287fd7573eb90cdc6c7cd98f3b",
+      "bytes": 1230522,
       "width": 1440,
       "height": 810,
       "assetSha256": "48180005d5a520c7eea38a29d218b3d2b53df4eb750a4a13f26e368ad23c8770",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:37:02.279Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:26:23.767Z"
     },
     {
       "themeId": "deep-ocean-lab",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/deep-ocean-lab-dark.png",
-      "sha256": "bf1139e1bc7c5a459c14ceb1cce53ca07b525625f8c57cd481ecbe8ae6d9051f",
-      "bytes": 957400,
+      "sha256": "36d5a912d5356766f174589cb6380923baa0800738106d7d111d8af747b7f2ab",
+      "bytes": 957681,
       "width": 1440,
       "height": 810,
       "assetSha256": "62653797e7cd6fb64913c092d41262b9e22b3376c69ac1871b24f1b63626ec7f",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:37:03.862Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:26:25.097Z"
     },
     {
       "themeId": "synthwave-night-drive",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/synthwave-night-drive-light.png",
-      "sha256": "dfbc11016b834e72a67aee493defa0ea4daff559c1ad37b0f6a403c5117e817d",
-      "bytes": 1090564,
+      "sha256": "8152bf815bb9e5785ad0e50e27a6457ac88932389dc75a46a0596ca6aee3e61c",
+      "bytes": 1091279,
       "width": 1440,
       "height": 810,
       "assetSha256": "e74ea387c269f3e82518db28d5b20e32977472af085a826895d2e5f550bfba65",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:37:05.521Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:26:26.499Z"
     },
     {
       "themeId": "synthwave-night-drive",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/synthwave-night-drive-dark.png",
-      "sha256": "786f2b40372789663bf88f4ae58dc2a0476df247efc758f546471d2a9ed45976",
-      "bytes": 821871,
+      "sha256": "23744b6dad4d2e86c5115ef449fcd1f7413aa2216f6c2daa5d18968ada5cd30a",
+      "bytes": 822669,
       "width": 1440,
       "height": 810,
       "assetSha256": "5394f3d79c2d9d4a6da5f1a836b07cb41615709f02fe62d74b6bcec453a104e9",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:37:06.869Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:26:27.722Z"
     },
     {
       "themeId": "alpine-cabin-code",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/alpine-cabin-code-light.png",
-      "sha256": "c3ca90c9df68f44e6bff4eb81992150166d1884e7ff488328739546d0b259b47",
-      "bytes": 1310222,
+      "sha256": "f1e024bfc801fe9e47786140db3abc799b57b017122778e404a0914055ab75e6",
+      "bytes": 1310590,
       "width": 1440,
       "height": 810,
       "assetSha256": "004f33af98c48ed8ec3e4a0dd82fc9489f991900f3998fb4f1b6053f03302bee",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:37:08.722Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:26:29.311Z"
     },
     {
       "themeId": "alpine-cabin-code",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/alpine-cabin-code-dark.png",
-      "sha256": "2e00ca7309f75f289b1a1ef4fba6464afa05dbe59255c7dad9d0b8a466f3df69",
-      "bytes": 1070105,
+      "sha256": "6cd770fdfe9df93773ab8fc62977c44008f6fd0ad7104eb479bcc77839ebe953",
+      "bytes": 1070677,
       "width": 1440,
       "height": 810,
       "assetSha256": "6c59fc26ed0b33a99d41c09db777326cfda6cdefb5c251edf3e0a0cd11de2253",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:37:10.285Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:26:30.737Z"
     },
     {
       "themeId": "jiangnan-rain-courtyard",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/jiangnan-rain-courtyard-light.png",
-      "sha256": "023830819b0ff61e40722c9b1d53be33a38a2a316d1c5fd8d456384a8efbadc7",
-      "bytes": 1399750,
+      "sha256": "9bcd52dadc3f2bebc229805dd36d59478e9c2d219a743c40161f55607d440410",
+      "bytes": 1400051,
       "width": 1440,
       "height": 810,
       "assetSha256": "054b0201ab5b7c4e728f5d10923f1458efbeaa54490e4c6d8f8885d3926b33bb",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:37:12.194Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:26:32.436Z"
     },
     {
       "themeId": "jiangnan-rain-courtyard",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/jiangnan-rain-courtyard-dark.png",
-      "sha256": "3b1f172902dfcc53a388a1e084225d0f2d501cbf7100eeaab5d08d42241cb075",
-      "bytes": 1214097,
+      "sha256": "7b75a93468e8c034e54deb0ec678db667fdc196c81b73f4d69e29d663f51ab40",
+      "bytes": 1213625,
       "width": 1440,
       "height": 810,
       "assetSha256": "878efebc9fe6fa69b02d6d656a6dcdc752f4d321932a66716ddbe300a401e728",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:37:13.963Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:26:33.953Z"
     },
     {
       "themeId": "changan-lanterns",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/changan-lanterns-light.png",
-      "sha256": "99057f9a0b2ed905a1e249a39b1a084d7b2d05eb69f60356b4f69f6d766e6dba",
-      "bytes": 1338291,
+      "sha256": "0e2df38211b6a0b8648f06c0d0e3a163567199f7ba950914116247f8f78bf8e5",
+      "bytes": 1339006,
       "width": 1440,
       "height": 810,
       "assetSha256": "825e1b271146599e98894e629055129824a3ffffb6aa6f3e3de0184ffe2eee22",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:37:15.784Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:26:35.573Z"
     },
     {
       "themeId": "changan-lanterns",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/changan-lanterns-dark.png",
-      "sha256": "85929aa03cfc5a51b3d9fbc6489b99a084ab7e8c76df1b2edf8adbda94adc09d",
-      "bytes": 1092668,
+      "sha256": "f490812fb74627187565931cc835f9c6fd62126f1c0b87f7f2a69b47551c83fa",
+      "bytes": 1093226,
       "width": 1440,
       "height": 810,
       "assetSha256": "06192fdcb287d21aec5c0dc6861b97516789949a3e7fd7b91e543f8d5b95b889",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:37:17.465Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:26:37.024Z"
     },
     {
       "themeId": "dunhuang-starlight",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/dunhuang-starlight-light.png",
-      "sha256": "c93afd73fc7b7830d9e12a3fe71239a70355c24b270fcde28d1139ac379cdd0e",
-      "bytes": 1351939,
+      "sha256": "3929709da05060bb47086169014061de288332b0f01ff405e8ed2a18faa0d0bb",
+      "bytes": 1352709,
       "width": 1440,
       "height": 810,
       "assetSha256": "6c7e24a35e58075b03852b63917a9fb9fca1b06761512ed489fa915760604de4",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:37:19.380Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:26:38.670Z"
     },
     {
       "themeId": "dunhuang-starlight",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/dunhuang-starlight-dark.png",
-      "sha256": "85ec84a9e72ab00ecd27a268fcefbed5e77fa2b939f1d54046565178ae1dd6f5",
-      "bytes": 1143579,
+      "sha256": "fc0649ec0c031d291ced79d6170013f72041aa939b8839936f70fed380b63286",
+      "bytes": 1144096,
       "width": 1440,
       "height": 810,
       "assetSha256": "a2391cef9df611f048e62f71e9c01210e9962b9dbf69e024bc3b8eef9c8afcee",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:37:21.095Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:26:40.164Z"
     },
     {
       "themeId": "bamboo-tea-rain",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/bamboo-tea-rain-light.png",
-      "sha256": "e1351e727b63ff0c964adbf3e70fcc50dec4e7eff91cbb691559b3481e721169",
-      "bytes": 1303133,
+      "sha256": "8b716f277ab7b750f910b17ff1dd5e61ddb19d6e3116ca05b53513f6ac80dc59",
+      "bytes": 1303784,
       "width": 1440,
       "height": 810,
       "assetSha256": "41ebad5fc59ad4513a7cb928ad0d7f55a9b470fd71cb52872e662dadac0c791b",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:37:23.356Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:26:41.771Z"
     },
     {
       "themeId": "bamboo-tea-rain",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/bamboo-tea-rain-dark.png",
-      "sha256": "3a68149c08422f63fd7d76003bb80d4c430b958e47a076f694a9ec5f06fcfc32",
-      "bytes": 1060504,
+      "sha256": "f471f60c65ba1de150f2764f2afb475009e37f1f1b8c5cea2fca26affdaa555c",
+      "bytes": 1061155,
       "width": 1440,
       "height": 810,
       "assetSha256": "1c0c536a3ab2dc1172688aaa0ae25a5a12d54aef4401f0fa56097fad13708c10",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:37:25.074Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:26:43.176Z"
     },
     {
       "themeId": "northeast-snow-train",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/northeast-snow-train-light.png",
-      "sha256": "51dad0e8dc565cc278dec22576f5fce29c5665ac322817ae619d7ef91cf7c59e",
-      "bytes": 1282187,
+      "sha256": "8253b12ad716561cd131a4e599fdcf83ce275b8388c3ce1a42128666fb59c2e8",
+      "bytes": 1282432,
       "width": 1440,
       "height": 810,
       "assetSha256": "3378959e031a137ef15dce8b0c6781adcafc4425d7f0c6f4b855a74887a6e7aa",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:37:27.162Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:26:44.800Z"
     },
     {
       "themeId": "northeast-snow-train",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/northeast-snow-train-dark.png",
-      "sha256": "9e5e795e5c255fa9a486d9b6a050cc54026592b077e38cdc8eb5ada96d938061",
-      "bytes": 1078265,
+      "sha256": "4e041fdd2b1b783bd485ab0cbfaeadf472d1287e251425c6fb0337e86a80885c",
+      "bytes": 1078021,
       "width": 1440,
       "height": 810,
       "assetSha256": "763b9bc9bb97063483e45e6f4505fee5024f03359563fd47c724ae4421714a1e",
-      "runtimeSha256": "8ec93395ae449ba03476ba212383d091e84cecd27d1dbcd659ba4d7efc58b7ef",
+      "runtimeSha256": "ef71c8cab73909bc4c75f510ea7ef475e019d44660032bc83fb442a1b9a5cfe8",
       "markerVersion": "act-full-skin-v1",
       "selectors": {
         "sidebar": false,
         "composer": true,
         "main": true
       },
-      "capturedAt": "2026-07-18T16:37:28.818Z"
+      "modelLabel": "5.6 Sol Ultra",
+      "capturedAt": "2026-07-18T22:26:46.213Z"
     }
   ]
 }

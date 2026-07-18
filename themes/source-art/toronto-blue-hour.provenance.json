@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "themeId": "toronto-blue-hour",
+  "rightsProfile": "original",
+  "workflow": "openai-image-job",
+  "model": "gpt-image-2",
+  "size": "1536x1024",
+  "quality": "high",
+  "jobId": "754a4b8c-062e-42c0-bc56-31ee0456e751",
+  "promptSha256": "bcdb8a9c8adf5850dd4ab2a3bea62186e11d81f912716f477bc973a75a2a7d8d",
+  "sourceSha256": "430d32e58f85f92c90f60508860bc401e8ae67fd659194b32a79cacf35ad8136",
+  "disclosure": "AI-generated original source art. Prompt and output were reviewed for third-party characters, logos, signatures, and text before release."
+}

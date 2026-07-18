@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "themeId": "sydney-harbour-morning",
+  "rightsProfile": "original",
+  "workflow": "openai-image-job",
+  "model": "gpt-image-2",
+  "size": "1536x1024",
+  "quality": "high",
+  "jobId": "50eabc4a-2b1c-4d74-9c48-e7c975376248",
+  "promptSha256": "5fec1379be683f100495f341d9f25993fbbec421cbad5e8d7ab785b94b59e4ac",
+  "sourceSha256": "7088abbefd7b298722cf1f7d619cd8322d4082323a7967a442b840eada2cb9b4",
+  "disclosure": "AI-generated original source art. Prompt and output were reviewed for third-party characters, logos, signatures, and text before release."
+}

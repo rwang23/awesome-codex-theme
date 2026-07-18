@@ -16,6 +16,7 @@ const REQUESTED_MODES = new Set(splitArgument("--modes"));
 const WIDTH = 1440;
 const HEIGHT = 810;
 const CAPTURE_VERSION = "26.715.3651.0";
+const CAPTURE_MODEL_LABEL = "5.6 Sol Ultra";
 const CAPTURE_ROOT = "screenshots/codex-beta-" + CAPTURE_VERSION;
 const CAPTURE_DIR = path.join(ROOT, ...CAPTURE_ROOT.split("/"));
 const MANIFEST_PATH = path.join(CAPTURE_DIR, "manifest.json");
@@ -289,6 +290,171 @@ async function preparePrivacySafeHome(client) {
   invariant(privacyState?.projectCleared, "Capture fixture still contains a selected project");
 }
 
+function normalizeModelLabel(value) {
+  return String(value || "").replace(/\s+/g, " ").trim();
+}
+
+async function currentModelLabel(client) {
+  return evaluate(
+    client,
+    `(() => {
+      const normalize = (value) => String(value || "").replace(/\\s+/g, " ").trim();
+      const trigger = document.querySelector(
+        'button[data-codex-intelligence-trigger="true"][data-composer-navigation-target="reasoning"]'
+      );
+      if (!trigger) return null;
+      const rect = trigger.getBoundingClientRect();
+      if (!rect.width || !rect.height) return null;
+      const leafLabels = [...trigger.querySelectorAll("span")]
+        .filter((node) => !node.closest('[aria-hidden="true"]'))
+        .map((node) => normalize(node.textContent));
+      const family = leafLabels.find((label) => /^5\\.6\\s+(?:Sol|Terra)$/i.test(label));
+      const effort = leafLabels.find(
+        (label) => /^(?:Light|Medium|High|Extra High|Max|Ultra)$/i.test(label)
+      );
+      return family && effort ? normalize(family + " " + effort) : null;
+    })()`,
+  );
+}
+
+async function trustedMouseClick(client, expression, label) {
+  const point = await evaluate(
+    client,
+    `(() => {
+      const node = ${expression};
+      if (!node) return null;
+      const rect = node.getBoundingClientRect();
+      if (!rect.width || !rect.height) return null;
+      return { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 };
+    })()`,
+  );
+  invariant(point, "Could not locate " + label);
+  await client.send("Input.dispatchMouseEvent", {
+    type: "mousePressed",
+    x: point.x,
+    y: point.y,
+    button: "left",
+    clickCount: 1,
+  });
+  await client.send("Input.dispatchMouseEvent", {
+    type: "mouseReleased",
+    x: point.x,
+    y: point.y,
+    button: "left",
+    clickCount: 1,
+  });
+}
+
+async function openModelPicker(client) {
+  const selector = 'button[data-codex-intelligence-trigger="true"][data-composer-navigation-target="reasoning"]';
+  const state = await evaluate(client, `document.querySelector(${JSON.stringify(selector)})?.dataset.state`);
+  if (state !== "open") {
+    await trustedMouseClick(client, `document.querySelector(${JSON.stringify(selector)})`, "the Codex model picker");
+  }
+  await waitFor(
+    client,
+    `document.querySelector(${JSON.stringify(selector)})?.dataset.state === "open"`,
+    "the open Codex model picker",
+    5000,
+  );
+  return true;
+}
+
+async function closeModelPicker(client) {
+  const selector = 'button[data-codex-intelligence-trigger="true"][data-composer-navigation-target="reasoning"]';
+  for (let attempt = 0; attempt < 3; attempt += 1) {
+    const state = await evaluate(client, `document.querySelector(${JSON.stringify(selector)})?.dataset.state`);
+    if (state !== "open") return;
+    await client.send("Input.dispatchKeyEvent", {
+      type: "keyDown",
+      key: "Escape",
+      code: "Escape",
+      windowsVirtualKeyCode: 27,
+      nativeVirtualKeyCode: 27,
+    });
+    await client.send("Input.dispatchKeyEvent", {
+      type: "keyUp",
+      key: "Escape",
+      code: "Escape",
+      windowsVirtualKeyCode: 27,
+      nativeVirtualKeyCode: 27,
+    });
+    await delay(120);
+  }
+  await waitFor(
+    client,
+    `document.querySelector(${JSON.stringify(selector)})?.dataset.state !== "open"`,
+    "the closed Codex model picker",
+    3000,
+  );
+}
+
+async function waitForModelLabel(client, targetLabel, timeout = 8000) {
+  const startedAt = Date.now();
+  while (Date.now() - startedAt < timeout) {
+    if (await currentModelLabel(client) === targetLabel) return;
+    await delay(150);
+  }
+  throw new Error("Timed out waiting for model label " + targetLabel);
+}
+
+async function selectModelLabel(client, targetLabel) {
+  const normalizedTarget = normalizeModelLabel(targetLabel);
+  const effortPattern = /\s+(?:Light|Medium|High|Extra High|Max|Ultra)$/i;
+  const family = normalizedTarget.replace(effortPattern, "");
+  const level = normalizedTarget.slice(family.length).trim();
+  invariant(family !== normalizedTarget && level, "Unsupported model label " + normalizedTarget);
+
+  let current = await currentModelLabel(client);
+  if (current === normalizedTarget) {
+    await closeModelPicker(client);
+    return normalizedTarget;
+  }
+  if (!current || current.replace(effortPattern, "") !== family) {
+    await openModelPicker(client);
+    await trustedMouseClick(
+      client,
+      `[...document.querySelectorAll('[role="menuitem"]')].find((node) =>
+        String(node.getAttribute("aria-label") || "").startsWith("Model "))`,
+      "the model family menu",
+    );
+    await delay(350);
+    await trustedMouseClick(
+      client,
+      `[...document.querySelectorAll('[role="menuitem"]')].find((node) => {
+        const label = String(node.getAttribute("aria-label") || node.textContent || "").replace(/\\s+/g, " ").trim();
+        return label === ${JSON.stringify(family)} || label === "Model " + ${JSON.stringify(family)};
+      })`,
+      "model family " + family,
+    );
+    await delay(500);
+    current = await currentModelLabel(client);
+    invariant(current?.replace(effortPattern, "") === family, "Could not select model family " + family);
+  }
+
+  if (current !== normalizedTarget) {
+    await openModelPicker(client);
+    await trustedMouseClick(
+      client,
+      `[...document.querySelectorAll('[role="menuitem"]')].find((node) =>
+        String(node.getAttribute("aria-label") || "").startsWith("Effort "))`,
+      "the reasoning effort menu",
+    );
+    await delay(350);
+    await trustedMouseClick(
+      client,
+      `[...document.querySelectorAll('[role="menuitem"]')].find((node) => {
+        const label = String(node.textContent || node.getAttribute("aria-label") || "").replace(/\\s+/g, " ").trim();
+        return label === ${JSON.stringify(level)} || label.startsWith(${JSON.stringify(level)});
+      })`,
+      "reasoning effort " + level,
+    );
+  }
+  await waitForModelLabel(client, normalizedTarget);
+  await closeModelPicker(client);
+  return normalizedTarget;
+}
+
 function buildRuntimeScript(runtimeJs, runtimeCss, theme, mode, manifest, image) {
   const modeRecord = manifest.modes[mode];
   const locale = theme.audience === "zh-CN" ? "zh-CN" : "en";
@@ -456,11 +622,17 @@ async function main() {
   const captures = [];
   let runError = null;
   let runtimeRemoved = false;
+  let modelRestored = false;
+  let previousModelLabel = null;
+  let modelLabel = null;
   let earlyScriptIdentifier = null;
   const capturedAt = new Date().toISOString();
   try {
     await mkdir(CAPTURE_DIR, { recursive: true });
     await preparePrivacySafeHome(client);
+    previousModelLabel = await currentModelLabel(client);
+    invariant(previousModelLabel, "Could not read the current Codex model label");
+    modelLabel = await selectModelLabel(client, CAPTURE_MODEL_LABEL);
     for (const theme of themes) {
       const manifest = JSON.parse(await readFile(
         path.join(ROOT, "themes", theme.id, "manifest.json"),
@@ -500,6 +672,8 @@ async function main() {
           console.error(JSON.stringify(await inspectLayout(client), null, 2));
         }
 
+        const captureModelLabel = await currentModelLabel(client);
+        invariant(captureModelLabel === CAPTURE_MODEL_LABEL, theme.id + " " + mode + " model label changed");
         const screenshot = await capturePng(client);
         const dimensions = readPngDimensions(screenshot);
         invariant(dimensions.width === WIDTH && dimensions.height === HEIGHT, "Screenshot dimensions changed");
@@ -517,6 +691,7 @@ async function main() {
           runtimeSha256,
           markerVersion: applied.version,
           selectors: applied.selectors,
+          modelLabel: captureModelLabel,
           capturedAt: new Date().toISOString(),
         });
         console.log("Captured " + theme.id + " " + mode);
@@ -551,6 +726,17 @@ async function main() {
         : restoreError;
     }
     try {
+      if (previousModelLabel && previousModelLabel !== CAPTURE_MODEL_LABEL) {
+        await selectModelLabel(client, previousModelLabel);
+      }
+      modelRestored = !previousModelLabel || await currentModelLabel(client) === previousModelLabel;
+      invariant(modelRestored, "The original Codex model selection was not restored");
+    } catch (restoreModelError) {
+      runError = runError
+        ? new Error(runError.message + "; model restore failed: " + restoreModelError.message)
+        : restoreModelError;
+    }
+    try {
       await client.send("Emulation.clearDeviceMetricsOverride");
       await client.send("Emulation.setEmulatedMedia", {});
     } catch {}
@@ -564,6 +750,8 @@ async function main() {
     && previousManifest?.testBench?.packageFullName === TEST_BENCH.packageFullName
     && previousManifest?.runtime?.sha256 === runtimeSha256
     && previousManifest?.runtime?.removedAfterCapture === true
+    && previousManifest?.fixture?.modelLabel === CAPTURE_MODEL_LABEL
+    && previousManifest?.fixture?.modelRestoredAfterCapture === true
     && Array.isArray(previousManifest?.captures);
   const mergedCaptures = [
     ...(canMergePrevious
@@ -581,7 +769,7 @@ async function main() {
   });
   const manifest = {
     schemaVersion: "act-full-skin-capture-manifest-v1",
-    status: !runError && runtimeRemoved ? "complete" : "failed",
+    status: !runError && runtimeRemoved && modelRestored ? "complete" : "failed",
     capturedAt,
     testBench: TEST_BENCH,
     fixture: {
@@ -591,6 +779,8 @@ async function main() {
       sidebar: "hidden",
       project: "none",
       privateContent: "excluded",
+      modelLabel,
+      modelRestoredAfterCapture: modelRestored,
       nativeSettingsChanged: false,
     },
     runtime: {
@@ -613,11 +803,14 @@ async function main() {
   await writeManifest(manifest);
   invariant(!runError, runError?.message || "Full-skin capture failed");
   invariant(runtimeRemoved, "Full-skin runtime was not removed after capture");
+  invariant(modelRestored, "The original Codex model selection was not restored after capture");
   console.log(JSON.stringify({
     status: "COMPLETE",
     captures: captures.length,
     manifest: path.relative(ROOT, MANIFEST_PATH).replaceAll("\\", "/"),
     runtimeRemoved,
+    modelLabel,
+    modelRestored,
   }, null, 2));
 }
 

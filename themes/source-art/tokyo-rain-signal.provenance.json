@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "themeId": "tokyo-rain-signal",
+  "rightsProfile": "original",
+  "workflow": "openai-image-job",
+  "model": "gpt-image-2",
+  "size": "1536x1024",
+  "quality": "high",
+  "jobId": "6b2ddbd4-ed03-4257-b4a9-2998530ab2d0",
+  "promptSha256": "eac08b1afa26538dbda114fba8e11e889997934a69d219dd107ec90186a50b86",
+  "sourceSha256": "05e9dd74fab41b653ba092c16db8fda2db1c139879f3300e4045c0d892030e70",
+  "disclosure": "AI-generated original source art. Prompt and output were reviewed for third-party characters, logos, signatures, and text before release."
+}

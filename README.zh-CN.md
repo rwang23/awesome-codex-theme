@@ -18,7 +18,7 @@
 
 <p align="center">
   <a href="LICENSE"><img alt="MIT License" src="https://img.shields.io/badge/code-MIT-111827"></a>
-  <img alt="41 套主题" src="https://img.shields.io/badge/themes-41-7c3aed">
+  <img alt="53 套主题" src="https://img.shields.io/badge/themes-53-7c3aed">
   <img alt="Windows 与 macOS" src="https://img.shields.io/badge/platform-Windows%20%7C%20macOS-2563eb">
   <img alt="主题包不带代码" src="https://img.shields.io/badge/theme%20packs-code--free-059669">
 </p>
@@ -46,16 +46,17 @@ Awesome Codex Theme 会把一套皮肤需要的部分一起应用：
 
 ## 真实使用效果
 
-| 提博大神·重置赐福 | 老板经典 Q 版 |
+| 提博大神<br>重置之神 | 老板经典 Q 版 |
 | --- | --- |
 | ![提博大神主题在真实 ChatGPT Beta 中的效果](screenshots/codex-beta-26.715.3651.0/tibo-reset-immortal-light.png) | ![老板经典 Q 版主题在真实 ChatGPT Beta 中的效果](screenshots/codex-beta-26.715.3651.0/retro-boss-2007-light.png) |
 | **江南·雨落小院** | **长安·上元灯火** |
 | ![江南雨落小院主题在真实 ChatGPT Beta 中的效果](screenshots/codex-beta-26.715.3651.0/jiangnan-rain-courtyard-light.png) | ![长安上元灯火主题在真实 ChatGPT Beta 中的效果](screenshots/codex-beta-26.715.3651.0/changan-lanterns-dark.png) |
 
-目前共有 41 套主题、82 个明暗模式。中文体验会优先展示：
+目前共有 53 套主题、106 个明暗模式。中文体验会优先展示：
 
 - 8 套国风修仙主题，包含原画版与 Q 版；
 - 8 套原创中国城市图鉴；
+- 12 套覆盖北美、欧洲与亚太的原创世界城市图鉴；
 - 8 套明确披露的非官方国漫角色致意；
 - 4 套明确披露的非官方国漫记忆场景；
 - 5 套面向中文用户创作的山河与生活主题；
@@ -81,6 +82,8 @@ Awesome Codex Theme 会把一套皮肤需要的部分一起应用：
 6. 想回到原生界面时，点击“恢复原生”。这也会关闭“始终应用”。
 
 Windows 版“始终应用”已经通过 ChatGPT Beta `26.715.3651.0` 的准确版本常驻与清理闭环测试。它保存的是当前用户级选择，并在以后打开已验证版本时安全重放 Full Skin，不会修改 ChatGPT 文件；未知版本会保持原生界面。macOS 仍缺少真机常驻闭环，暂时不能把这项能力视为已在 Mac 验证。详见[主题常驻方案](docs/persistent-theme.md)。
+
+主题更新与应用更新彼此独立。管理器启动时会刷新经过验证的 Registry，所以新发布的主题无需重装或重启应用就会直接出现。只有管理器自身的运行时、兼容规则、安全边界、平台集成或界面发生变化时，才需要安装签名应用更新。
 
 公开 Beta 使用 Tauri updater 签名来验证以后收到的应用更新；macOS 应用包还带有只用于包完整性的 ad-hoc 签名。Windows Authenticode、Apple Developer ID 与公证暂时延后，所以系统仍可能显示未知发布者提示。Updater 与 ad-hoc 签名都不能消除 SmartScreen 或 Gatekeeper 提示，详见[发布信任与签名](docs/release-signing.md)。
 

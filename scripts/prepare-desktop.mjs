@@ -52,7 +52,7 @@ function renderIcon(size = 1024) {
 
 async function main() {
   const registry = JSON.parse(await readFile(REGISTRY, "utf8"));
-  if (registry.standard !== "act-theme-pack-v1" || registry.themes?.length !== 41) {
+  if (registry.standard !== "act-theme-pack-v1" || registry.themes?.length !== 53) {
     throw new Error("Generate and validate themes before preparing the desktop app");
   }
   await mkdir(path.dirname(ICON), { recursive: true });

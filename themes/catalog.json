@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "catalogRevision": 2026071801,
+  "catalogRevision": 2026071802,
   "defaults": {
     "author": "Awesome Codex Theme",
     "license": "CC0-1.0",
@@ -44,8 +44,27 @@
       }
     },
     {
-      "id": "donghua-character-tributes-01",
+      "id": "world-city-atlas-01",
       "order": 3,
+      "pairing": "standalone",
+      "rightsProfile": "original",
+      "audience": "en",
+      "name": {
+        "en": "World City Atlas 01",
+        "zh-CN": "世界城市图鉴 01"
+      },
+      "title": {
+        "en": "Twelve cities, each true to its own horizon.",
+        "zh-CN": "十二座城市，各有真实天际线。"
+      },
+      "description": {
+        "en": "Twelve original city studies across North America, Europe, and Asia-Pacific. Each scene is anchored in real geography, weather, vegetation, streets, and public skyline cues while using a newly composed, code-friendly viewpoint.",
+        "zh-CN": "覆盖北美、欧洲与亚太的十二套原创城市主题。每一幅都以真实地理、天气、植被、街道和公共天际线为依据，再重新组织成适合代码工作区的原创视角。"
+      }
+    },
+    {
+      "id": "donghua-character-tributes-01",
+      "order": 4,
       "pairing": "cinematic-chibi",
       "rightsProfile": "fan-art",
       "name": {
@@ -63,7 +82,7 @@
     },
     {
       "id": "donghua-memory-scenes-01",
-      "order": 4,
+      "order": 5,
       "pairing": "standalone",
       "rightsProfile": "fan-art",
       "name": {
@@ -81,7 +100,7 @@
     },
     {
       "id": "codex-community-tributes-01",
-      "order": 5,
+      "order": 6,
       "pairing": "standalone",
       "rightsProfile": "fan-art",
       "audience": "global",
@@ -104,7 +123,7 @@
     },
     {
       "id": "global-workspace-favorites-01",
-      "order": 6,
+      "order": 7,
       "pairing": "standalone",
       "rightsProfile": "original",
       "audience": "en",
@@ -123,7 +142,7 @@
     },
     {
       "id": "china-life-favorites-01",
-      "order": 7,
+      "order": 8,
       "pairing": "standalone",
       "rightsProfile": "original",
       "audience": "zh-CN",
@@ -1199,6 +1218,822 @@
       }
     },
     {
+      "id": "new-york-rainline",
+      "version": "1.0.0",
+      "collection": "world-city-atlas-01",
+      "pair": "new-york-rainline",
+      "variant": "cityscape",
+      "rightsProfile": "original",
+      "audience": "en",
+      "name": {
+        "en": "New York Rainline",
+        "zh-CN": "纽约·雨落曼哈顿"
+      },
+      "tagline": {
+        "en": "Rain keeps time beneath the skyline.",
+        "zh-CN": "雨落在街区里，天际线替城市计时。"
+      },
+      "description": {
+        "en": "Brownstone shadow, elevated-track rhythm, and a rain-softened Manhattan horizon make a focused metropolitan workspace.",
+        "zh-CN": "褐石街区的阴影、高架轨道的节奏与被雨雾收柔的曼哈顿天际线，组成一套利落的都市工作区。"
+      },
+      "tags": ["city", "new york", "manhattan", "rain", "brownstone", "original"],
+      "pattern": "city-rainline",
+      "seed": 6101,
+      "art": {
+        "focusX": 0.79,
+        "focusY": 0.44,
+        "safeArea": "left",
+        "taskMode": "ambient"
+      },
+      "light": {
+        "skyTop": "#E7EDF3",
+        "skyBottom": "#B4C1CF",
+        "mist": "#F7FAFC",
+        "ridge": "#566574",
+        "ink": "#1B252D",
+        "glow": "#F0B45C",
+        "accentArt": "#D96B4A",
+        "tokens": {
+          "background": "#F2F4F5",
+          "surface": "#FFFFFF",
+          "surfaceAlt": "#DCE3E8",
+          "text": "#1C252C",
+          "muted": "#59656E",
+          "accent": "#A4442F",
+          "accentContrast": "#FFFFFF",
+          "border": "#B4BEC5"
+        }
+      },
+      "dark": {
+        "skyTop": "#07111A",
+        "skyBottom": "#243342",
+        "mist": "#82909A",
+        "ridge": "#18242E",
+        "ink": "#05090D",
+        "glow": "#F1A859",
+        "accentArt": "#E97854",
+        "tokens": {
+          "background": "#0C1319",
+          "surface": "#17212A",
+          "surfaceAlt": "#22313D",
+          "text": "#F3F6F8",
+          "muted": "#AAB6BF",
+          "accent": "#F08A64",
+          "accentContrast": "#2B0C04",
+          "border": "#405564"
+        }
+      }
+    },
+    {
+      "id": "san-francisco-fogline",
+      "version": "1.0.0",
+      "collection": "world-city-atlas-01",
+      "pair": "san-francisco-fogline",
+      "variant": "cityscape",
+      "rightsProfile": "original",
+      "audience": "en",
+      "name": {
+        "en": "San Francisco Fogline",
+        "zh-CN": "旧金山·雾越山城"
+      },
+      "tagline": {
+        "en": "The hill rises; the fog edits the rest.",
+        "zh-CN": "坡道向上，雾把多余的部分轻轻删去。"
+      },
+      "description": {
+        "en": "A steep street, weathered Victorian color, bay fog, and one restrained bridge line capture San Francisco without becoming a postcard.",
+        "zh-CN": "陡坡、维多利亚式街屋、海湾雾气与一笔克制的桥影，让旧金山清晰可辨，却不落入明信片构图。"
+      },
+      "tags": ["city", "san francisco", "fog", "hills", "bay", "original"],
+      "pattern": "city-fogline",
+      "seed": 6102,
+      "art": {
+        "focusX": 0.78,
+        "focusY": 0.43,
+        "safeArea": "left",
+        "taskMode": "ambient"
+      },
+      "light": {
+        "skyTop": "#EEF2F0",
+        "skyBottom": "#C9D4CF",
+        "mist": "#FAFCFB",
+        "ridge": "#60706D",
+        "ink": "#24312F",
+        "glow": "#E9AD67",
+        "accentArt": "#C76555",
+        "tokens": {
+          "background": "#F3F4F0",
+          "surface": "#FFFFFF",
+          "surfaceAlt": "#DFE5DF",
+          "text": "#24302D",
+          "muted": "#5E6B67",
+          "accent": "#8C3E35",
+          "accentContrast": "#FFFFFF",
+          "border": "#B8C2BC"
+        }
+      },
+      "dark": {
+        "skyTop": "#081217",
+        "skyBottom": "#263638",
+        "mist": "#879591",
+        "ridge": "#1A2929",
+        "ink": "#060A0B",
+        "glow": "#F0B16F",
+        "accentArt": "#EE816C",
+        "tokens": {
+          "background": "#0C1515",
+          "surface": "#172322",
+          "surfaceAlt": "#243433",
+          "text": "#F2F7F4",
+          "muted": "#ACBBB5",
+          "accent": "#F08B73",
+          "accentContrast": "#2B0C07",
+          "border": "#425956"
+        }
+      }
+    },
+    {
+      "id": "chicago-lakewind",
+      "version": "1.0.0",
+      "collection": "world-city-atlas-01",
+      "pair": "chicago-lakewind",
+      "variant": "cityscape",
+      "rightsProfile": "original",
+      "audience": "en",
+      "name": {
+        "en": "Chicago Lakewind",
+        "zh-CN": "芝加哥·湖风高架"
+      },
+      "tagline": {
+        "en": "Steel, lake light, and one clean northern wind.",
+        "zh-CN": "钢架、湖光，还有一阵干净的北风。"
+      },
+      "description": {
+        "en": "Lake Michigan light meets elevated rail steel and the measured verticals of the Loop.",
+        "zh-CN": "密歇根湖的冷光、高架铁路的钢结构与 Loop 区克制的竖向线条相遇。"
+      },
+      "tags": ["city", "chicago", "lake michigan", "elevated rail", "architecture", "original"],
+      "pattern": "city-lake-grid",
+      "seed": 6103,
+      "art": {
+        "focusX": 0.78,
+        "focusY": 0.43,
+        "safeArea": "left",
+        "taskMode": "ambient"
+      },
+      "light": {
+        "skyTop": "#EAF2F7",
+        "skyBottom": "#B8D0DD",
+        "mist": "#F8FCFE",
+        "ridge": "#527181",
+        "ink": "#17313E",
+        "glow": "#E8B75F",
+        "accentArt": "#4E8AA5",
+        "tokens": {
+          "background": "#F0F5F7",
+          "surface": "#FFFFFF",
+          "surfaceAlt": "#D9E6EB",
+          "text": "#19313B",
+          "muted": "#586C75",
+          "accent": "#285E7A",
+          "accentContrast": "#FFFFFF",
+          "border": "#ACC1CA"
+        }
+      },
+      "dark": {
+        "skyTop": "#07121B",
+        "skyBottom": "#203B4B",
+        "mist": "#7795A3",
+        "ridge": "#172C37",
+        "ink": "#050A0E",
+        "glow": "#E8B96B",
+        "accentArt": "#70C0E1",
+        "tokens": {
+          "background": "#09151D",
+          "surface": "#132631",
+          "surfaceAlt": "#1D3947",
+          "text": "#EFF8FB",
+          "muted": "#A6C0CA",
+          "accent": "#72C6E8",
+          "accentContrast": "#08222F",
+          "border": "#385D6D"
+        }
+      }
+    },
+    {
+      "id": "toronto-blue-hour",
+      "version": "1.0.0",
+      "collection": "world-city-atlas-01",
+      "pair": "toronto-blue-hour",
+      "variant": "cityscape",
+      "rightsProfile": "original",
+      "audience": "en",
+      "name": {
+        "en": "Toronto Blue Hour",
+        "zh-CN": "多伦多·湖岸蓝调"
+      },
+      "tagline": {
+        "en": "Lake light holds the city after rain.",
+        "zh-CN": "雨停以后，湖光把城市留在蓝调里。"
+      },
+      "description": {
+        "en": "Brick warehouses, ravine-green edges, Lake Ontario haze, and a slender skyline mark Toronto's quiet confidence.",
+        "zh-CN": "砖仓、峡谷绿意、安大略湖雾气与一笔纤细天际线，写出多伦多安静而确定的城市气质。"
+      },
+      "tags": ["city", "toronto", "lake ontario", "cn tower", "autumn", "original"],
+      "pattern": "city-lake-blue",
+      "seed": 6104,
+      "art": {
+        "focusX": 0.8,
+        "focusY": 0.43,
+        "safeArea": "left",
+        "taskMode": "ambient"
+      },
+      "light": {
+        "skyTop": "#EEF3F5",
+        "skyBottom": "#C5D9E2",
+        "mist": "#FAFCFC",
+        "ridge": "#5C7882",
+        "ink": "#22343B",
+        "glow": "#E5AF67",
+        "accentArt": "#B75B42",
+        "tokens": {
+          "background": "#F3F5F4",
+          "surface": "#FFFFFF",
+          "surfaceAlt": "#DEE7E7",
+          "text": "#243238",
+          "muted": "#5D6B70",
+          "accent": "#8D3D2C",
+          "accentContrast": "#FFFFFF",
+          "border": "#B5C2C2"
+        }
+      },
+      "dark": {
+        "skyTop": "#0A131A",
+        "skyBottom": "#263A48",
+        "mist": "#83949C",
+        "ridge": "#192B34",
+        "ink": "#060A0D",
+        "glow": "#E8AD68",
+        "accentArt": "#E6875E",
+        "tokens": {
+          "background": "#0D151A",
+          "surface": "#18252B",
+          "surfaceAlt": "#26363E",
+          "text": "#F2F6F7",
+          "muted": "#AEBCC1",
+          "accent": "#F0A36D",
+          "accentContrast": "#2D1306",
+          "border": "#435A64"
+        }
+      }
+    },
+    {
+      "id": "vancouver-rain-harbour",
+      "version": "1.0.0",
+      "collection": "world-city-atlas-01",
+      "pair": "vancouver-rain-harbour",
+      "variant": "cityscape",
+      "rightsProfile": "original",
+      "audience": "en",
+      "name": {
+        "en": "Vancouver Rain Harbour",
+        "zh-CN": "温哥华·雨林港湾"
+      },
+      "tagline": {
+        "en": "Rainforest shadow meets harbour glass.",
+        "zh-CN": "雨林的深绿，在港湾玻璃上慢慢亮起。"
+      },
+      "description": {
+        "en": "Cedar rain, mountain layers, seawall reflections, and a compact glass skyline keep Vancouver close to its landscape.",
+        "zh-CN": "雪松细雨、山体层次、海堤倒影与紧凑玻璃天际线，让温哥华始终贴着自然生长。"
+      },
+      "tags": ["city", "vancouver", "rainforest", "harbour", "mountains", "original"],
+      "pattern": "city-rain-harbour",
+      "seed": 6105,
+      "art": {
+        "focusX": 0.79,
+        "focusY": 0.44,
+        "safeArea": "left",
+        "taskMode": "ambient"
+      },
+      "light": {
+        "skyTop": "#EDF4F0",
+        "skyBottom": "#BFD3C8",
+        "mist": "#F8FCFA",
+        "ridge": "#4E7364",
+        "ink": "#1B332B",
+        "glow": "#D8AE67",
+        "accentArt": "#4D947B",
+        "tokens": {
+          "background": "#F0F5F1",
+          "surface": "#FFFFFF",
+          "surfaceAlt": "#D8E7DE",
+          "text": "#1D322A",
+          "muted": "#586C64",
+          "accent": "#2F6D5E",
+          "accentContrast": "#FFFFFF",
+          "border": "#AFC5BA"
+        }
+      },
+      "dark": {
+        "skyTop": "#07130F",
+        "skyBottom": "#244037",
+        "mist": "#759488",
+        "ridge": "#162C25",
+        "ink": "#050A08",
+        "glow": "#DFAD67",
+        "accentArt": "#69B89A",
+        "tokens": {
+          "background": "#091610",
+          "surface": "#14271F",
+          "surfaceAlt": "#203A2F",
+          "text": "#EFF8F3",
+          "muted": "#A4BFB4",
+          "accent": "#74C9A7",
+          "accentContrast": "#08231A",
+          "border": "#3B6252"
+        }
+      }
+    },
+    {
+      "id": "london-rainlight",
+      "version": "1.0.0",
+      "collection": "world-city-atlas-01",
+      "pair": "london-rainlight",
+      "variant": "cityscape",
+      "rightsProfile": "original",
+      "audience": "en",
+      "name": {
+        "en": "London Rainlight",
+        "zh-CN": "伦敦·雨落泰晤士"
+      },
+      "tagline": {
+        "en": "Old stone, river rain, one amber window.",
+        "zh-CN": "旧石、河雨，还有一扇琥珀色的窗。"
+      },
+      "description": {
+        "en": "Wet Georgian stone, Thames haze, and layered civic silhouettes form a restrained London study.",
+        "zh-CN": "潮湿的乔治时代石材、泰晤士河雾与层叠公共建筑剪影，构成一幅克制的伦敦城市研究。"
+      },
+      "tags": ["city", "london", "thames", "rain", "georgian", "original"],
+      "pattern": "city-river-rain",
+      "seed": 6106,
+      "art": {
+        "focusX": 0.8,
+        "focusY": 0.43,
+        "safeArea": "left",
+        "taskMode": "ambient"
+      },
+      "light": {
+        "skyTop": "#F1EFE9",
+        "skyBottom": "#CBC6B9",
+        "mist": "#FBFAF6",
+        "ridge": "#67665F",
+        "ink": "#2D2D2B",
+        "glow": "#DDA95E",
+        "accentArt": "#9A4E61",
+        "tokens": {
+          "background": "#F4F2ED",
+          "surface": "#FFFFFF",
+          "surfaceAlt": "#E5E1D8",
+          "text": "#2B2B29",
+          "muted": "#66645F",
+          "accent": "#7E3044",
+          "accentContrast": "#FFFFFF",
+          "border": "#C0BBB0"
+        }
+      },
+      "dark": {
+        "skyTop": "#0F1216",
+        "skyBottom": "#2C3036",
+        "mist": "#83878A",
+        "ridge": "#20252A",
+        "ink": "#07090B",
+        "glow": "#E0A95F",
+        "accentArt": "#C8778B",
+        "tokens": {
+          "background": "#111419",
+          "surface": "#1D2228",
+          "surfaceAlt": "#2B323A",
+          "text": "#F5F2EC",
+          "muted": "#BAB7B1",
+          "accent": "#D88A9D",
+          "accentContrast": "#2B0B14",
+          "border": "#4E555E"
+        }
+      }
+    },
+    {
+      "id": "paris-rooftop-dawn",
+      "version": "1.0.0",
+      "collection": "world-city-atlas-01",
+      "pair": "paris-rooftop-dawn",
+      "variant": "cityscape",
+      "rightsProfile": "original",
+      "audience": "en",
+      "name": {
+        "en": "Paris Rooftop Dawn",
+        "zh-CN": "巴黎·屋顶晨光"
+      },
+      "tagline": {
+        "en": "Dawn moves softly across the zinc roofs.",
+        "zh-CN": "晨光越过锌皮屋顶，城市还没有完全醒来。"
+      },
+      "description": {
+        "en": "Zinc roofs, pale stone, chimney rhythm, and a distant iron silhouette make a quiet Paris morning.",
+        "zh-CN": "锌皮屋顶、浅色石墙、烟囱节奏与远处铁塔剪影，共同组成一段安静的巴黎清晨。"
+      },
+      "tags": ["city", "paris", "rooftops", "seine", "dawn", "original"],
+      "pattern": "city-rooftop-dawn",
+      "seed": 6107,
+      "art": {
+        "focusX": 0.79,
+        "focusY": 0.42,
+        "safeArea": "left",
+        "taskMode": "ambient"
+      },
+      "light": {
+        "skyTop": "#FBF4EA",
+        "skyBottom": "#E5C9B5",
+        "mist": "#FFF9F2",
+        "ridge": "#8A7165",
+        "ink": "#3A2B28",
+        "glow": "#F0B574",
+        "accentArt": "#B96A67",
+        "tokens": {
+          "background": "#F8F2EA",
+          "surface": "#FFFFFF",
+          "surfaceAlt": "#EDE0D5",
+          "text": "#392B28",
+          "muted": "#74615B",
+          "accent": "#8E4641",
+          "accentContrast": "#FFFFFF",
+          "border": "#CDB8AA"
+        }
+      },
+      "dark": {
+        "skyTop": "#171019",
+        "skyBottom": "#3D2531",
+        "mist": "#9A7D84",
+        "ridge": "#2A1B22",
+        "ink": "#090609",
+        "glow": "#EDAF72",
+        "accentArt": "#D98B86",
+        "tokens": {
+          "background": "#171116",
+          "surface": "#271C23",
+          "surfaceAlt": "#3B2932",
+          "text": "#FFF2E9",
+          "muted": "#CCB8B1",
+          "accent": "#EAA6A0",
+          "accentContrast": "#321012",
+          "border": "#674953"
+        }
+      }
+    },
+    {
+      "id": "berlin-night-grid",
+      "version": "1.0.0",
+      "collection": "world-city-atlas-01",
+      "pair": "berlin-night-grid",
+      "variant": "cityscape",
+      "rightsProfile": "original",
+      "audience": "en",
+      "name": {
+        "en": "Berlin Night Grid",
+        "zh-CN": "柏林·砖墙夜色"
+      },
+      "tagline": {
+        "en": "Brick, rail, and amber light stay honest.",
+        "zh-CN": "砖墙、轨道与琥珀灯光，保留城市真实的棱角。"
+      },
+      "description": {
+        "en": "Spree reflections, rail viaducts, brick industry, and a distant television tower shape Berlin's practical nocturne.",
+        "zh-CN": "施普雷河倒影、铁路高架、工业砖墙与远处电视塔，组成柏林务实而清醒的夜曲。"
+      },
+      "tags": ["city", "berlin", "spree", "rail", "brick", "original"],
+      "pattern": "city-brick-grid",
+      "seed": 6108,
+      "art": {
+        "focusX": 0.8,
+        "focusY": 0.43,
+        "safeArea": "left",
+        "taskMode": "ambient"
+      },
+      "light": {
+        "skyTop": "#EEF0EF",
+        "skyBottom": "#BEC6C4",
+        "mist": "#F8FAF9",
+        "ridge": "#5F6B68",
+        "ink": "#25302E",
+        "glow": "#D6A54E",
+        "accentArt": "#A76542",
+        "tokens": {
+          "background": "#F1F3F1",
+          "surface": "#FFFFFF",
+          "surfaceAlt": "#DDE3E0",
+          "text": "#27302E",
+          "muted": "#616C69",
+          "accent": "#3B6763",
+          "accentContrast": "#FFFFFF",
+          "border": "#B5C0BC"
+        }
+      },
+      "dark": {
+        "skyTop": "#0C1013",
+        "skyBottom": "#282D31",
+        "mist": "#7F8787",
+        "ridge": "#1D2426",
+        "ink": "#060809",
+        "glow": "#D8A956",
+        "accentArt": "#C6794C",
+        "tokens": {
+          "background": "#0E1214",
+          "surface": "#1A2023",
+          "surfaceAlt": "#293135",
+          "text": "#F2F4F2",
+          "muted": "#B0B7B4",
+          "accent": "#E1B85F",
+          "accentContrast": "#2A1A04",
+          "border": "#4B565A"
+        }
+      }
+    },
+    {
+      "id": "rome-terrace-gold",
+      "version": "1.0.0",
+      "collection": "world-city-atlas-01",
+      "pair": "rome-terrace-gold",
+      "variant": "cityscape",
+      "rightsProfile": "original",
+      "audience": "en",
+      "name": {
+        "en": "Rome Terrace Gold",
+        "zh-CN": "罗马·台地金光"
+      },
+      "tagline": {
+        "en": "Stone keeps the warmth after sunset.",
+        "zh-CN": "夕阳退去以后，石墙还留着温度。"
+      },
+      "description": {
+        "en": "Travertine, umbrella pines, terracotta roofs, and a layered hill-city horizon hold Rome's long afternoon.",
+        "zh-CN": "洞石、伞松、陶瓦屋顶与层叠台地天际线，留住罗马漫长午后的余温。"
+      },
+      "tags": ["city", "rome", "travertine", "umbrella pine", "golden hour", "original"],
+      "pattern": "city-stone-gold",
+      "seed": 6109,
+      "art": {
+        "focusX": 0.79,
+        "focusY": 0.42,
+        "safeArea": "left",
+        "taskMode": "ambient"
+      },
+      "light": {
+        "skyTop": "#FBF1DF",
+        "skyBottom": "#E2C49B",
+        "mist": "#FFF8EA",
+        "ridge": "#8B684A",
+        "ink": "#3B2A1F",
+        "glow": "#F0A75C",
+        "accentArt": "#B96839",
+        "tokens": {
+          "background": "#F7F0E4",
+          "surface": "#FFFFFF",
+          "surfaceAlt": "#EADBC5",
+          "text": "#3A2A20",
+          "muted": "#756354",
+          "accent": "#8E4D26",
+          "accentContrast": "#FFFFFF",
+          "border": "#C9B69D"
+        }
+      },
+      "dark": {
+        "skyTop": "#17100B",
+        "skyBottom": "#3B291A",
+        "mist": "#967C64",
+        "ridge": "#2A1D14",
+        "ink": "#090604",
+        "glow": "#EFA65D",
+        "accentArt": "#D98248",
+        "tokens": {
+          "background": "#17100C",
+          "surface": "#281C14",
+          "surfaceAlt": "#3D2B1D",
+          "text": "#FFF2DE",
+          "muted": "#CEB89F",
+          "accent": "#F1AE68",
+          "accentContrast": "#351504",
+          "border": "#6B4D33"
+        }
+      }
+    },
+    {
+      "id": "tokyo-rain-signal",
+      "version": "1.0.0",
+      "collection": "world-city-atlas-01",
+      "pair": "tokyo-rain-signal",
+      "variant": "cityscape",
+      "rightsProfile": "original",
+      "audience": "en",
+      "name": {
+        "en": "Tokyo Rain Signal",
+        "zh-CN": "东京·雨夜电车"
+      },
+      "tagline": {
+        "en": "The last train draws one line through the rain.",
+        "zh-CN": "末班电车穿过雨幕，只留下一道安静的光。"
+      },
+      "description": {
+        "en": "A neighborhood rail crossing, compact rooftops, rain reflections, and a distant tower keep Tokyo intimate and unmistakable.",
+        "zh-CN": "社区铁路道口、紧凑屋顶、雨中倒影与远处塔影，让东京既亲近又清晰可辨。"
+      },
+      "tags": ["city", "tokyo", "train", "rain", "neighborhood", "original"],
+      "pattern": "city-rain-signal",
+      "seed": 6110,
+      "art": {
+        "focusX": 0.8,
+        "focusY": 0.44,
+        "safeArea": "left",
+        "taskMode": "ambient"
+      },
+      "light": {
+        "skyTop": "#EEF4F7",
+        "skyBottom": "#B6D0D9",
+        "mist": "#F9FCFD",
+        "ridge": "#527582",
+        "ink": "#1B3038",
+        "glow": "#E8A861",
+        "accentArt": "#C6537B",
+        "tokens": {
+          "background": "#F1F5F6",
+          "surface": "#FFFFFF",
+          "surfaceAlt": "#D9E7EA",
+          "text": "#1D3037",
+          "muted": "#596D74",
+          "accent": "#8D2F50",
+          "accentContrast": "#FFFFFF",
+          "border": "#ADC3CA"
+        }
+      },
+      "dark": {
+        "skyTop": "#071116",
+        "skyBottom": "#1D3240",
+        "mist": "#718D98",
+        "ridge": "#142732",
+        "ink": "#05090C",
+        "glow": "#E9A85F",
+        "accentArt": "#E75F93",
+        "tokens": {
+          "background": "#09141A",
+          "surface": "#142630",
+          "surfaceAlt": "#1E3946",
+          "text": "#EFF8FB",
+          "muted": "#A3BEC8",
+          "accent": "#F079A8",
+          "accentContrast": "#2D0918",
+          "border": "#365E70"
+        }
+      }
+    },
+    {
+      "id": "singapore-garden-rain",
+      "version": "1.0.0",
+      "collection": "world-city-atlas-01",
+      "pair": "singapore-garden-rain",
+      "variant": "cityscape",
+      "rightsProfile": "original",
+      "audience": "en",
+      "name": {
+        "en": "Singapore Garden Rain",
+        "zh-CN": "新加坡·花园阵雨"
+      },
+      "tagline": {
+        "en": "Warm rain turns the whole city green.",
+        "zh-CN": "一场暖雨，把整座城市重新洗成绿色。"
+      },
+      "description": {
+        "en": "Shophouse shade, tropical rain, garden infrastructure, and a precise skyline express Singapore's cultivated density.",
+        "zh-CN": "骑楼阴影、热带阵雨、花园式基础设施与精确天际线，共同写出新加坡被细心维护的密度。"
+      },
+      "tags": ["city", "singapore", "tropical", "garden", "rain", "original"],
+      "pattern": "city-garden-rain",
+      "seed": 6111,
+      "art": {
+        "focusX": 0.79,
+        "focusY": 0.43,
+        "safeArea": "left",
+        "taskMode": "ambient"
+      },
+      "light": {
+        "skyTop": "#EFF6F1",
+        "skyBottom": "#BFD8C8",
+        "mist": "#F9FCFA",
+        "ridge": "#4B7561",
+        "ink": "#18372B",
+        "glow": "#E4B45F",
+        "accentArt": "#45A781",
+        "tokens": {
+          "background": "#F0F6F2",
+          "surface": "#FFFFFF",
+          "surfaceAlt": "#D7E9DE",
+          "text": "#1A3429",
+          "muted": "#566F63",
+          "accent": "#28705E",
+          "accentContrast": "#FFFFFF",
+          "border": "#A9C8B8"
+        }
+      },
+      "dark": {
+        "skyTop": "#071510",
+        "skyBottom": "#193B2E",
+        "mist": "#709583",
+        "ridge": "#122D23",
+        "ink": "#040A07",
+        "glow": "#E4B15B",
+        "accentArt": "#4FBD91",
+        "tokens": {
+          "background": "#081710",
+          "surface": "#122A20",
+          "surfaceAlt": "#1C3D2F",
+          "text": "#EEFAF3",
+          "muted": "#A0C4B2",
+          "accent": "#69D0AA",
+          "accentContrast": "#06241A",
+          "border": "#356650"
+        }
+      }
+    },
+    {
+      "id": "sydney-harbour-morning",
+      "version": "1.0.0",
+      "collection": "world-city-atlas-01",
+      "pair": "sydney-harbour-morning",
+      "variant": "cityscape",
+      "rightsProfile": "original",
+      "audience": "en",
+      "name": {
+        "en": "Sydney Harbour Morning",
+        "zh-CN": "悉尼·海湾晨风"
+      },
+      "tagline": {
+        "en": "Harbour wind arrives before the city wakes.",
+        "zh-CN": "城市醒来以前，海湾的风先到了。"
+      },
+      "description": {
+        "en": "Sandstone, eucalyptus shadow, ferry wakes, and harbour architecture give Sydney a bright, breathable workspace.",
+        "zh-CN": "砂岩、桉树阴影、渡轮尾波与海湾建筑，让悉尼主题明亮、开阔，也保留真实呼吸感。"
+      },
+      "tags": ["city", "sydney", "harbour", "sandstone", "eucalyptus", "original"],
+      "pattern": "city-harbour-wind",
+      "seed": 6112,
+      "art": {
+        "focusX": 0.8,
+        "focusY": 0.42,
+        "safeArea": "left",
+        "taskMode": "ambient"
+      },
+      "light": {
+        "skyTop": "#EFF7FA",
+        "skyBottom": "#B6D9E7",
+        "mist": "#FAFDFE",
+        "ridge": "#4D7B8C",
+        "ink": "#17333E",
+        "glow": "#F0B35D",
+        "accentArt": "#D98655",
+        "tokens": {
+          "background": "#F0F7F8",
+          "surface": "#FFFFFF",
+          "surfaceAlt": "#D8E9ED",
+          "text": "#19343D",
+          "muted": "#57717A",
+          "accent": "#2F6786",
+          "accentContrast": "#FFFFFF",
+          "border": "#AAC6CE"
+        }
+      },
+      "dark": {
+        "skyTop": "#07131A",
+        "skyBottom": "#193847",
+        "mist": "#6D909D",
+        "ridge": "#122A34",
+        "ink": "#040A0D",
+        "glow": "#EEB05E",
+        "accentArt": "#E6905D",
+        "tokens": {
+          "background": "#08161D",
+          "surface": "#122A34",
+          "surfaceAlt": "#1C3D49",
+          "text": "#EFF9FB",
+          "muted": "#A0C1C9",
+          "accent": "#6FC3EB",
+          "accentContrast": "#082332",
+          "border": "#356271"
+        }
+      }
+    },
+    {
       "id": "mortal-journey-duo",
       "version": "1.0.0",
       "collection": "donghua-character-tributes-01",
@@ -1224,8 +2059,14 @@
           "zh-CN": "凡人修仙传"
         },
         "characters": {
-          "en": ["Han Li", "Nangong Wan"],
-          "zh-CN": ["韩立", "南宫婉"]
+          "en": [
+            "Han Li",
+            "Nangong Wan"
+          ],
+          "zh-CN": [
+            "韩立",
+            "南宫婉"
+          ]
         },
         "unofficial": true,
         "commercialUse": false,
@@ -1288,8 +2129,14 @@
           "zh-CN": "凡人修仙传"
         },
         "characters": {
-          "en": ["Han Li", "Nangong Wan"],
-          "zh-CN": ["韩立", "南宫婉"]
+          "en": [
+            "Han Li",
+            "Nangong Wan"
+          ],
+          "zh-CN": [
+            "韩立",
+            "南宫婉"
+          ]
         },
         "unofficial": true,
         "commercialUse": false,
@@ -1352,8 +2199,14 @@
           "zh-CN": "仙逆"
         },
         "characters": {
-          "en": ["Wang Lin", "Li Muwan"],
-          "zh-CN": ["王林", "李慕婉"]
+          "en": [
+            "Wang Lin",
+            "Li Muwan"
+          ],
+          "zh-CN": [
+            "王林",
+            "李慕婉"
+          ]
         },
         "unofficial": true,
         "commercialUse": false,
@@ -1416,8 +2269,14 @@
           "zh-CN": "仙逆"
         },
         "characters": {
-          "en": ["Wang Lin", "Li Muwan"],
-          "zh-CN": ["王林", "李慕婉"]
+          "en": [
+            "Wang Lin",
+            "Li Muwan"
+          ],
+          "zh-CN": [
+            "王林",
+            "李慕婉"
+          ]
         },
         "unofficial": true,
         "commercialUse": false,
@@ -1480,8 +2339,14 @@
           "zh-CN": "剑来"
         },
         "characters": {
-          "en": ["Chen Ping'an", "Ning Yao"],
-          "zh-CN": ["陈平安", "宁姚"]
+          "en": [
+            "Chen Ping'an",
+            "Ning Yao"
+          ],
+          "zh-CN": [
+            "陈平安",
+            "宁姚"
+          ]
         },
         "unofficial": true,
         "commercialUse": false,
@@ -1544,8 +2409,14 @@
           "zh-CN": "剑来"
         },
         "characters": {
-          "en": ["Chen Ping'an", "Ning Yao"],
-          "zh-CN": ["陈平安", "宁姚"]
+          "en": [
+            "Chen Ping'an",
+            "Ning Yao"
+          ],
+          "zh-CN": [
+            "陈平安",
+            "宁姚"
+          ]
         },
         "unofficial": true,
         "commercialUse": false,
@@ -1608,8 +2479,14 @@
           "zh-CN": "斗破苍穹"
         },
         "characters": {
-          "en": ["Xiao Yan", "Medusa (Cai Lin)"],
-          "zh-CN": ["萧炎", "美杜莎（彩鳞）"]
+          "en": [
+            "Xiao Yan",
+            "Medusa (Cai Lin)"
+          ],
+          "zh-CN": [
+            "萧炎",
+            "美杜莎（彩鳞）"
+          ]
         },
         "unofficial": true,
         "commercialUse": false,
@@ -1672,8 +2549,14 @@
           "zh-CN": "斗破苍穹"
         },
         "characters": {
-          "en": ["Xiao Yan", "Medusa (Cai Lin)"],
-          "zh-CN": ["萧炎", "美杜莎（彩鳞）"]
+          "en": [
+            "Xiao Yan",
+            "Medusa (Cai Lin)"
+          ],
+          "zh-CN": [
+            "萧炎",
+            "美杜莎（彩鳞）"
+          ]
         },
         "unofficial": true,
         "commercialUse": false,
@@ -1736,8 +2619,12 @@
           "zh-CN": "凡人修仙传"
         },
         "characters": {
-          "en": ["Han Li"],
-          "zh-CN": ["韩立"]
+          "en": [
+            "Han Li"
+          ],
+          "zh-CN": [
+            "韩立"
+          ]
         },
         "unofficial": true,
         "commercialUse": false,
@@ -1800,8 +2687,14 @@
           "zh-CN": "仙逆"
         },
         "characters": {
-          "en": ["Wang Lin", "Li Muwan"],
-          "zh-CN": ["王林", "李慕婉"]
+          "en": [
+            "Wang Lin",
+            "Li Muwan"
+          ],
+          "zh-CN": [
+            "王林",
+            "李慕婉"
+          ]
         },
         "unofficial": true,
         "commercialUse": false,
@@ -1864,8 +2757,14 @@
           "zh-CN": "剑来"
         },
         "characters": {
-          "en": ["Chen Ping'an", "Ning Yao"],
-          "zh-CN": ["陈平安", "宁姚"]
+          "en": [
+            "Chen Ping'an",
+            "Ning Yao"
+          ],
+          "zh-CN": [
+            "陈平安",
+            "宁姚"
+          ]
         },
         "unofficial": true,
         "commercialUse": false,
@@ -1928,8 +2827,14 @@
           "zh-CN": "斗破苍穹"
         },
         "characters": {
-          "en": ["Xiao Yan", "Nalan Yanran"],
-          "zh-CN": ["萧炎", "纳兰嫣然"]
+          "en": [
+            "Xiao Yan",
+            "Nalan Yanran"
+          ],
+          "zh-CN": [
+            "萧炎",
+            "纳兰嫣然"
+          ]
         },
         "unofficial": true,
         "commercialUse": false,
@@ -1979,12 +2884,12 @@
         "zh-CN": 2
       },
       "name": {
-        "en": "Saint Tibo · Reset of Limits",
-        "zh-CN": "提博圣像·额度重置"
+        "en": "Saint Tibo",
+        "zh-CN": "提博圣像"
       },
       "tagline": {
-        "en": "Tokens in one hand. The reset in the other.",
-        "zh-CN": "一手递 Token，一手按下重置。"
+        "en": "God of Reset",
+        "zh-CN": "重置之神"
       },
       "description": {
         "en": "An unofficial illuminated-manuscript parody thanking Tibo Sottiaux for leading Codex and keeping builders moving.",
@@ -1997,8 +2902,12 @@
           "zh-CN": "Codex 社区致敬"
         },
         "characters": {
-          "en": ["Tibo Sottiaux"],
-          "zh-CN": ["Tibo Sottiaux"]
+          "en": [
+            "Tibo Sottiaux"
+          ],
+          "zh-CN": [
+            "Tibo Sottiaux"
+          ]
         },
         "unofficial": true,
         "commercialUse": false,
@@ -2048,12 +2957,12 @@
         "zh-CN": 1
       },
       "name": {
-        "en": "Tibo · Keeper of the Reset",
-        "zh-CN": "提博大神·重置赐福"
+        "en": "Tibo, Token Immortal",
+        "zh-CN": "提博大神"
       },
       "tagline": {
-        "en": "May the queue be short and the context be long.",
-        "zh-CN": "愿队列短一点，愿上下文长一点。"
+        "en": "God of Reset",
+        "zh-CN": "重置之神"
       },
       "description": {
         "en": "An unofficial Chinese mural-style parody portrait celebrating Tibo Sottiaux and the resets Codex users cheer for.",
@@ -2066,8 +2975,12 @@
           "zh-CN": "Codex 社区致敬"
         },
         "characters": {
-          "en": ["Tibo Sottiaux"],
-          "zh-CN": ["Tibo Sottiaux"]
+          "en": [
+            "Tibo Sottiaux"
+          ],
+          "zh-CN": [
+            "Tibo Sottiaux"
+          ]
         },
         "unofficial": true,
         "commercialUse": false,

@@ -337,6 +337,7 @@
         "appVersion",
         "packageFullName",
         "fixture",
+        "modelLabel",
         "capturedAt"
       ],
       "properties": {
@@ -396,6 +397,11 @@
         },
         "fixture": {
           "const": "full-skin-home-v1"
+        },
+        "modelLabel": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80
         },
         "capturedAt": {
           "type": "string",

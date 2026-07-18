@@ -27,16 +27,16 @@ async function exists(target) {
   }
 }
 
-test("repository validates forty-one dual-mode code-free themes in seven collections", async function () {
+test("repository validates fifty-three dual-mode code-free themes in eight collections", async function () {
   const result = await validateRepository();
   assert.deepEqual(result, {
-    sources: 41,
-    themes: 41,
-    modes: 82,
-    packages: 41,
-    fullSkinExports: 82,
-    nativeExports: 82,
-    captures: 82
+    sources: 53,
+    themes: 53,
+    modes: 106,
+    packages: 53,
+    fullSkinExports: 106,
+    nativeExports: 106,
+    captures: 106
   });
 });
 
@@ -47,17 +47,18 @@ test("registry exposes original and disclosed fan-art collections", async functi
   }), [
     ["original-xianxia-01", "cinematic-chibi", 8],
     ["china-city-atlas-01", "standalone", 8],
+    ["world-city-atlas-01", "standalone", 12],
     ["donghua-character-tributes-01", "cinematic-chibi", 8],
     ["donghua-memory-scenes-01", "standalone", 4],
     ["codex-community-tributes-01", "standalone", 2],
     ["global-workspace-favorites-01", "standalone", 6],
     ["china-life-favorites-01", "standalone", 5]
   ]);
-  assert.equal(registry.themes.filter(function (theme) { return theme.variant === "cityscape"; }).length, 8);
+  assert.equal(registry.themes.filter(function (theme) { return theme.variant === "cityscape"; }).length, 20);
   assert.equal(registry.themes.filter(function (theme) { return theme.variant === "scene"; }).length, 13);
   assert.equal(registry.themes.filter(function (theme) { return theme.rightsProfile === "fan-art"; }).length, 14);
-  assert.equal(registry.themes.filter(function (theme) { return theme.rightsProfile === "original"; }).length, 27);
-  assert.equal(registry.themes.filter(function (theme) { return theme.audience === "en"; }).length, 6);
+  assert.equal(registry.themes.filter(function (theme) { return theme.rightsProfile === "original"; }).length, 39);
+  assert.equal(registry.themes.filter(function (theme) { return theme.audience === "en"; }).length, 18);
   assert.equal(registry.themes.filter(function (theme) { return theme.audience === "zh-CN"; }).length, 6);
   assert.equal(registry.themes.find(function (theme) { return theme.id === "tibo-reset-saint"; }).featuredRank.en, 1);
   assert.equal(registry.themes.find(function (theme) { return theme.id === "tibo-reset-immortal"; }).featuredRank["zh-CN"], 1);
@@ -73,6 +74,7 @@ test("registry exposes original and disclosed fan-art collections", async functi
       const capture = theme.previews[mode].capture;
       return capture?.appVersion === "26.715.3651.0"
         && capture.fixture === "full-skin-home-v1"
+        && capture.modelLabel === "5.6 Sol Ultra"
         && capture.width === 1440
         && capture.height === 810
         && capture.assetSha256 === theme.previews[mode].fullSkin.sha256
@@ -147,7 +149,7 @@ test("registry exposes declarative full skins, Native fallbacks, and no third-pa
       assert.equal(payload.theme.opaqueWindows, true);
     }
   }
-  assert.equal(nativeValues.size, 82);
+  assert.equal(nativeValues.size, 106);
 });
 
 test("Codex Native parser rejects undeclared fields", function () {
@@ -187,7 +189,7 @@ test("static gallery builds with every public contract artifact", async function
   const output = path.join(temporary, "site");
   try {
     const result = await buildSite(output);
-    assert.equal(result.themes, 41);
+    assert.equal(result.themes, 53);
     const required = [
       "index.html",
       "assets/app.js",
@@ -324,20 +326,23 @@ test("real screenshot evidence covers every mode and confirms Beta restoration",
   assert.equal(manifest.fixture.sidebar, "hidden");
   assert.equal(manifest.fixture.project, "none");
   assert.equal(manifest.fixture.privateContent, "excluded");
+  assert.equal(manifest.fixture.modelLabel, "5.6 Sol Ultra");
+  assert.equal(manifest.fixture.modelRestoredAfterCapture, true);
   assert.equal(manifest.fixture.nativeSettingsChanged, false);
   assert.equal(manifest.runtime.format, "act-full-skin-v1");
   assert.equal(manifest.runtime.earlyInjection, true);
   assert.equal(manifest.runtime.removedAfterCapture, true);
-  assert.equal(manifest.captures.length, 82);
+  assert.equal(manifest.captures.length, 106);
   assert.equal(manifest.captures.every(function (capture) {
     return capture.runtimeSha256 === manifest.runtime.sha256
       && capture.markerVersion === "act-full-skin-v1"
+      && capture.modelLabel === "5.6 Sol Ultra"
       && capture.selectors.main === true
       && capture.selectors.composer === true;
   }), true);
   assert.equal(new Set(manifest.captures.map(function (capture) {
     return capture.themeId + "|" + capture.mode;
-  })).size, 82);
+  })).size, 106);
 });
 
 test("Windows installer is a no-admin helper with a bundled Registry", async function () {
@@ -398,6 +403,24 @@ test("desktop manager localizes from the system and combines collection, rights,
   assert.match(app, /theme\.variant !== state\.style/);
   assert.match(app, /theme\.name\?\.\["zh-CN"\]/);
   assert.match(app, /theme\.name\?\.en/);
+  assert.match(app, /async function refreshThemeCatalog/);
+  assert.match(app, /acceptCatalog\(payload\)/);
+  assert.match(app, /async function refreshAppUpdateState/);
+  assert.match(app, /state\.updateState = await window\.act\.checkForAppUpdate\(\)/);
+  assert.match(app, /refreshThemeCatalog\(true\)/);
+  assert.match(app, /refreshAppUpdateState\(\)/);
+  assert.match(html, /themeUpdateNoRestart/);
+  assert.match(html, /appUpdateChannel/);
+});
+
+test("Tibo copy uses a deliberate two-line God of Reset lockup", async function () {
+  const catalog = JSON.parse(await readFile(path.join(ROOT, "themes", "catalog.json"), "utf8"));
+  const saint = catalog.themes.find(function (theme) { return theme.id === "tibo-reset-saint"; });
+  const immortal = catalog.themes.find(function (theme) { return theme.id === "tibo-reset-immortal"; });
+  assert.deepEqual(saint.name, { en: "Saint Tibo", "zh-CN": "提博圣像" });
+  assert.deepEqual(saint.tagline, { en: "God of Reset", "zh-CN": "重置之神" });
+  assert.deepEqual(immortal.name, { en: "Tibo, Token Immortal", "zh-CN": "提博大神" });
+  assert.deepEqual(immortal.tagline, { en: "God of Reset", "zh-CN": "重置之神" });
 });
 
 test("desktop beta release requires updater signing and discloses deferred platform trust", async function () {

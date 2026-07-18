@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "themeId": "rome-terrace-gold",
+  "rightsProfile": "original",
+  "workflow": "openai-image-job",
+  "model": "gpt-image-2",
+  "size": "1536x1024",
+  "quality": "high",
+  "jobId": "9272e34e-9f26-499d-bc71-38497f6b6019",
+  "promptSha256": "d2fd09a260cdff8df393ed0aa696c0ac3dc3664ce9124d5926855438cb042a1f",
+  "sourceSha256": "d08bdc0c4afcad2a937caf72a28ae2f4eb06bb1582ecf907f6f618d61f3c1e15",
+  "disclosure": "AI-generated original source art. Prompt and output were reviewed for third-party characters, logos, signatures, and text before release."
+}

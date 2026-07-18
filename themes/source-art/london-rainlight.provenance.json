@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "themeId": "london-rainlight",
+  "rightsProfile": "original",
+  "workflow": "openai-image-job",
+  "model": "gpt-image-2",
+  "size": "1536x1024",
+  "quality": "high",
+  "jobId": "d46e20d9-2a1c-4b6e-9032-c2b6e9d97e01",
+  "promptSha256": "0583b29b9b7b0234282e7cdd890cb7524bf37f187c568da08756d2b2aea98769",
+  "sourceSha256": "4b6fec54dd3dcef09977b1b30e5a10d35d4c8b0fb1b1cc7fc50dd4afac03c001",
+  "disclosure": "AI-generated original source art. Prompt and output were reviewed for third-party characters, logos, signatures, and text before release."
+}
