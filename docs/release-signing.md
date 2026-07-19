@@ -27,7 +27,7 @@ Tauri updater 与 macOS ad-hoc 签名都不会消除 SmartScreen 或 Gatekeeper 
 updater 密钥不需要开发者账号，也不需要付费。请在安全的本机目录生成，使用强密码，并保留一份离线备份：
 
 ```powershell
-Set-Location C:\projects\tools\awesome-codex-theme\apps\theme-manager
+Set-Location C:\projects\50-developer\codex-tools\awesome-codex-theme\apps\theme-manager
 npm run tauri -- signer generate -- -w C:\Secure\awesome-codex-theme-updater.key
 ```
 
