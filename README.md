@@ -7,11 +7,11 @@
 <p align="center">
   <a href="https://rwang23.github.io/awesome-codex-theme/"><strong>Explore the Gallery</strong></a>
   ·
-  <a href="https://github.com/rwang23/awesome-codex-theme/releases"><strong>Desktop Downloads</strong></a>
+  <a href="docs/agent-install.md"><strong>Install with an Agent</strong></a>
   ·
   <a href="https://community.ecomstack.net/"><strong>Theme Community</strong></a>
   ·
-  <a href="docs/agent-install.md"><strong>Install with an Agent</strong></a>
+  <a href="https://github.com/rwang23/awesome-codex-theme/releases"><strong>Desktop Downloads</strong></a>
   ·
   <a href="README.zh-CN.md"><strong>中文</strong></a>
 </p>
@@ -70,22 +70,7 @@ Every mode has a 1440×810 capture from the pinned Beta test bench. Registry rec
 
 Choose one of the following three methods. They are alternatives, not sequential setup steps.
 
-### Method A — Install the desktop app (recommended)
-
-1. Download the build for your operating system and CPU from [GitHub Releases](https://github.com/rwang23/awesome-codex-theme/releases).
-2. Quit the ChatGPT Stable or Beta app you want to theme.
-3. Open Theme Manager and choose a theme, light or dark mode, and the exact target app.
-4. Select **Apply Full Skin**.
-5. On Windows, optionally enable **Always apply this theme** for future verified launches.
-6. Select **Restore Native** whenever you want the original interface back. This also turns off Always apply.
-
-The Windows implementation of **Always apply** has passed an exact ChatGPT Beta `26.715.3651.0` persistence and cleanup smoke test. It stores a user-level choice and safely replays the verified Full Skin on future launches; it never patches ChatGPT files. Unknown versions stay native. Physical-Mac persistence testing is still pending, so the macOS build must not yet be treated as verified for this feature. See [Keep My Theme On](docs/persistent-theme.md).
-
-Theme updates and app updates are independent. The manager refreshes the verified Registry on startup, so newly published themes appear immediately without reinstalling or restarting the app. A signed app update is needed only when the manager itself changes—for example its runtime, compatibility rules, security boundary, platform integration, or interface.
-
-The public beta uses Tauri updater signatures so future app updates can be verified. macOS bundles also carry an ad-hoc signature for package integrity, but Windows Authenticode, Apple Developer ID, and notarization are deferred. The operating system may still show an unknown-publisher warning; neither the updater signature nor the ad-hoc Mac signature removes SmartScreen or Gatekeeper warnings. See [release trust and signing](docs/release-signing.md).
-
-### Method B — Ask a coding agent
+### Method A: Ask a coding agent (recommended)
 
 Copy the following request into Codex, Claude Code, or another local coding agent:
 
@@ -103,7 +88,7 @@ instead of building or downloading from another source.
 
 The complete agent contract, including expected checks and source-build instructions, is in [docs/agent-install.md](docs/agent-install.md).
 
-### Method C — Build from source
+### Method B: Build from source
 
 For contributors, the base requirement is Node.js 22+. Desktop builds also need stable Rust and the platform toolchain.
 
@@ -113,6 +98,21 @@ npm run validate
 npm test
 npm run build
 ```
+
+### Method C: Install the desktop app manually
+
+1. Download the build for your operating system and CPU from [GitHub Releases](https://github.com/rwang23/awesome-codex-theme/releases).
+2. Quit the ChatGPT Stable or Beta app you want to theme.
+3. Open Theme Manager and choose a theme, light or dark mode, and the exact target app.
+4. Select **Apply Full Skin**.
+5. On Windows, optionally enable **Always apply this theme** for future verified launches.
+6. Select **Restore Native** whenever you want the original interface back. This also turns off Always apply.
+
+The Windows implementation of **Always apply** has passed an exact ChatGPT Beta `26.715.3651.0` persistence and cleanup smoke test. It stores a user-level choice and safely replays the verified Full Skin on future launches; it never patches ChatGPT files. Unknown versions stay native. Physical-Mac persistence testing is still pending, so the macOS build must not yet be treated as verified for this feature. See [Keep My Theme On](docs/persistent-theme.md).
+
+Theme updates and app updates are independent. The manager refreshes the verified Registry on startup, so newly published themes appear immediately without reinstalling or restarting the app. A signed app update is needed only when the manager itself changes, such as its runtime, compatibility rules, security boundary, platform integration, or interface.
+
+The public beta uses Tauri updater signatures so future app updates can be verified. macOS bundles also carry an ad-hoc signature for package integrity, but Windows Authenticode, Apple Developer ID, and notarization are deferred. The operating system may still show an unknown-publisher warning; neither the updater signature nor the ad-hoc Mac signature removes SmartScreen or Gatekeeper warnings. See [release trust and signing](docs/release-signing.md).
 
 ## Safe by design
 

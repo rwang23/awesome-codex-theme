@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Added a localized GitHub repository link to Theme Manager. The English and
+  Chinese READMEs now recommend Agent installation first, source builds second,
+  and manual desktop installation last.
+
 ## 0.3.0-alpha.2 - 2026-07-18
 
 - Fixed the macOS Full Skin launch path reported against the previous Beta.

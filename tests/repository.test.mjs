@@ -411,6 +411,27 @@ test("desktop manager localizes from the system and combines collection, rights,
   assert.match(app, /refreshAppUpdateState\(\)/);
   assert.match(html, /themeUpdateNoRestart/);
   assert.match(html, /appUpdateChannel/);
+  assert.match(html, /id=\"openRepository\"[^>]*data-i18n=\"githubRepository\"/);
+  assert.match(app, /githubRepository: \"GitHub repository\"/);
+  assert.match(app, /githubRepository: \"GitHub \u4ed3\u5e93\"/);
+  assert.match(app, /openExternal\(\"repository\"\)/);
+});
+
+test("READMEs recommend Agent installation first and manual desktop installation last", async function () {
+  const [english, chinese] = await Promise.all([
+    readFile(path.join(ROOT, "README.md"), "utf8"),
+    readFile(path.join(ROOT, "README.zh-CN.md"), "utf8")
+  ]);
+  const englishAgent = english.indexOf("### Method A: Ask a coding agent (recommended)");
+  const englishSource = english.indexOf("### Method B: Build from source");
+  const englishDesktop = english.indexOf("### Method C: Install the desktop app manually");
+  const chineseAgent = chinese.indexOf("### \u65b9\u5f0f A\uff1a\u8ba9 Coding Agent \u5e2e\u4f60\u5b89\u88c5\uff08\u63a8\u8350\uff09");
+  const chineseSource = chinese.indexOf("### \u65b9\u5f0f B\uff1a\u4ece\u6e90\u7801\u6784\u5efa");
+  const chineseDesktop = chinese.indexOf("### \u65b9\u5f0f C\uff1a\u624b\u52a8\u5b89\u88c5\u684c\u9762\u5e94\u7528");
+  assert.ok(englishAgent >= 0 && englishAgent < englishSource && englishSource < englishDesktop);
+  assert.ok(chineseAgent >= 0 && chineseAgent < chineseSource && chineseSource < chineseDesktop);
+  assert.ok(english.indexOf("Install with an Agent") < english.indexOf("Desktop Downloads"));
+  assert.ok(chinese.indexOf("\u8ba9 Agent \u5e2e\u4f60\u5b89\u88c5") < chinese.indexOf("\u4e0b\u8f7d\u684c\u9762\u5e94\u7528"));
 });
 
 test("Tibo copy uses a deliberate two-line God of Reset lockup", async function () {
