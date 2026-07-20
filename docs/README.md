@@ -36,6 +36,7 @@ locations are reserved for execution evidence or closed history when needed.
   measured package comparison, and macOS signing boundary
 - release-signing.md: updater keys, Windows signing choices, Apple developer
   account, the updater-signed Beta boundary, and the release-ready gate
+- release-notes/: bilingual source notes for published desktop Beta Releases
 - macos-testing.md: ad-hoc-signed DMG boundary, real-Mac installation, Full
   Skin apply/restore, Gatekeeper, and evidence checklist
 - community-registry.md: GitHub-native proposals, independent Gallery facets,

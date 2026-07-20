@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.3.0-alpha.3 - 2026-07-20
 
 - Repaired Full Skin startup without weakening the exact-app trust boundary:
   Windows launches only the verified Store-package executable with the two
