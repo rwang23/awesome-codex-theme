@@ -232,6 +232,7 @@ const state = {
 };
 
 const elements = {
+  appShell: document.querySelector(".app-shell"),
   languageButton: document.querySelector("#languageButton"),
   languageLabel: document.querySelector("#languageLabel"),
   catalogDot: document.querySelector("#catalogDot"),
@@ -635,6 +636,10 @@ function renderShortcuts() {
   elements.applyShortcut.textContent = modifier + " ↵";
 }
 
+function renderWindowChrome() {
+  elements.appShell.dataset.platform = state.platform === "darwin" ? "darwin" : "win32";
+}
+
 function renderLanguage() {
   document.documentElement.lang = state.locale;
   elements.languageLabel.textContent = state.locale === "en" ? "中文" : "English";
@@ -872,6 +877,7 @@ try {
   const bootstrap = await window.act.bootstrap();
   state.appVersion = bootstrap.appVersion;
   state.platform = bootstrap.platform;
+  renderWindowChrome();
   state.targets = bootstrap.targets;
   state.skinState = bootstrap.skinState;
   state.persistenceState = bootstrap.persistenceState;

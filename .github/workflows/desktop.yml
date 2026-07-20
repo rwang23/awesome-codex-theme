@@ -62,17 +62,20 @@ jobs:
           - os: windows-latest
             rust-target: ""
             build-args: "--bundles nsis"
-            artifact: desktop-windows-x64
+            artifact: Awesome-Codex-Theme-Windows-x64
+            release-asset-name: Awesome-Codex-Theme-[version]-Windows-x64[setup][ext]
             artifact-path: apps/theme-manager/src-tauri/target/release/bundle/nsis/*.exe
           - os: macos-14
             rust-target: aarch64-apple-darwin
             build-args: "--target aarch64-apple-darwin --bundles app,dmg"
-            artifact: desktop-macos-arm64
+            artifact: Awesome-Codex-Theme-macOS-Apple-Silicon
+            release-asset-name: Awesome-Codex-Theme-[version]-macOS-Apple-Silicon[ext]
             artifact-path: apps/theme-manager/src-tauri/target/aarch64-apple-darwin/release/bundle/dmg/*.dmg
           - os: macos-14
             rust-target: x86_64-apple-darwin
             build-args: "--target x86_64-apple-darwin --bundles app,dmg"
-            artifact: desktop-macos-x64
+            artifact: Awesome-Codex-Theme-macOS-Intel
+            release-asset-name: Awesome-Codex-Theme-[version]-macOS-Intel[ext]
             artifact-path: apps/theme-manager/src-tauri/target/x86_64-apple-darwin/release/bundle/dmg/*.dmg
     runs-on: ${{ matrix.os }}
     steps:
@@ -208,6 +211,7 @@ jobs:
           args: "--config src-tauri/tauri.release.conf.json ${{ matrix.build-args }}"
           tagName: ${{ github.ref_name }}
           releaseName: "Awesome Codex Theme ${{ github.ref_name }}"
+          releaseAssetNamePattern: ${{ matrix.release-asset-name }}
           releaseBody: "Updater-signed Tauri Theme Manager beta with ACT Full Skin v1. Windows Authenticode and Apple Developer ID signing/notarization are not included in this beta, so the operating system may show an unknown-publisher warning. macOS bundles carry an ad-hoc signature for package integrity only. The app applies verified backgrounds, materials, colors, and theme copy without modifying ChatGPT application files."
           prerelease: false
           releaseDraft: true

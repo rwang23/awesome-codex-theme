@@ -296,23 +296,53 @@ test("Tauri manager keeps theme values in Rust and limits desktop capabilities",
   assert.match(backend, /native_value_for\(&catalog, &theme_id, &mode\)/);
   assert.match(backend, /apply_full_skin/);
   assert.match(backend, /restore_full_skin/);
-  assert.match(smoke, /Get-CimInstance Win32_Process/);
+  assert.doesNotMatch(smoke, /Get-CimInstance|Get-NetTCPConnection/);
+  assert.match(smoke, /CreateToolhelp32Snapshot/);
+  assert.match(smoke, /netstat\.exe/);
   assert.match(smoke, /No pinned Beta root process owns a loopback CDP listener/);
+  assert.match(smoke, /window\.act\.getSkinState\(\)\.then/);
+  assert.match(smoke, /stdio: \["ignore", "pipe", "pipe"\]/);
+  assert.doesNotMatch(smoke, /skinStatus.*ChatGPT Beta|正在 ChatGPT Beta 使用/s);
   assert.doesNotMatch(smoke, /DevToolsActivePort/);
   assert.match(runtime, /Page\.addScriptToEvaluateOnNewDocument/);
   assert.match(runtime, /Page\.removeScriptToEvaluateOnNewDocument/);
+  assert.match(runtime, /missing_early_script_registration/);
+  assert.match(runtime, /DOMContentLoaded/);
   assert.match(runtime, /app:\/\//);
   assert.match(runtime, /127\.0\.0\.1/);
   assert.match(runtime, /remote-debugging-port/);
   assert.match(runtime, /TcpListener::bind\(\("127\.0\.0\.1", 0\)\)/);
   assert.doesNotMatch(runtime, /port_for_channel|=> Ok\(946[56]\)/);
-  assert.match(platform, /IApplicationActivationManager/);
+  assert.match(platform, /windows_full_skin_launch_arguments/);
+  assert.match(platform, /hidden_command\(executable\)/);
+  assert.doesNotMatch(platform, /IApplicationActivationManager/);
+  assert.match(platform, /windows_listener_owner_pid/);
+  assert.match(platform, /netstat\.exe/);
+  assert.match(platform, /Get-Process/);
+  assert.doesNotMatch(platform, /Get-CimInstance/);
+  assert.match(platform, /vec!\["-n"\.into\(\), bundle_path\.into\(\)\]/);
   assert.doesNotMatch(bridge, /nativeTheme.*value|nativeValue/i);
   assert.match(updater, /ACT_UPDATER_PUBKEY/);
   assert.match(config.plugins.updater.endpoints[0], /^https:\/\/github\.com\/rwang23\/awesome-codex-theme\/releases\//);
   assert.match(appPackage, /@tauri-apps\/cli/);
   assert.doesNotMatch(appPackage, /electron/i);
   assert.doesNotMatch(backend + catalog + runtime + platform, /WindowsApps.*(?:write|copy)|app\.asar.*(?:write|copy)/i);
+});
+
+test("Theme Manager renders a compact Copy action and macOS traffic-light chrome", async function () {
+  const [app, styles] = await Promise.all([
+    readFile(path.join(ROOT, "apps", "theme-manager", "src", "renderer", "app.js"), "utf8"),
+    readFile(path.join(ROOT, "apps", "theme-manager", "src", "renderer", "styles.css"), "utf8"),
+  ]);
+  assert.match(app, /function renderWindowChrome\(\)/);
+  assert.match(app, /elements\.appShell\.dataset\.platform = state\.platform === "darwin"/);
+  assert.match(styles, /\.app-shell\[data-platform="darwin"\] \.window-controls/);
+  assert.match(styles, /order: -1/);
+  assert.match(styles, /#windowClose \{\s*order: 1;\s*background: #ff5f57/s);
+  assert.match(styles, /#windowMinimize \{\s*order: 2;\s*background: #febc2e/s);
+  assert.match(styles, /#windowMaximize \{\s*order: 3;\s*background: #28c840/s);
+  assert.match(styles, /\.secondary-action \{[\s\S]*?height: 26px/);
+  assert.match(styles, /@media \(min-width: 1051px\) and \(max-height: 840px\)/);
 });
 
 test("real screenshot evidence covers every mode and confirms Beta restoration", async function () {
@@ -469,6 +499,11 @@ test("desktop beta release requires updater signing and discloses deferred platf
   assert.match(workflow, /Signature=adhoc/);
   assert.match(workflow, /--bundles app,dmg/);
   assert.match(workflow, /\.app\.tar\.gz\.sig/);
+  assert.match(workflow, /releaseAssetNamePattern:/);
+  assert.match(workflow, /Awesome-Codex-Theme-\[version\]-Windows-x64/);
+  assert.match(workflow, /Awesome-Codex-Theme-\[version\]-macOS-Apple-Silicon/);
+  assert.match(workflow, /Awesome-Codex-Theme-\[version\]-macOS-Intel/);
+  assert.doesNotMatch(workflow, /desktop-macos-(?:arm64|x64)/);
   assert.equal(tauriConfig.bundle.macOS.signingIdentity, "-");
   assert.match(tauriConfig.plugins.updater.pubkey, /^[A-Za-z0-9+/=]{100,}$/);
 });

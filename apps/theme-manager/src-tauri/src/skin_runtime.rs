@@ -303,7 +303,7 @@ fn runtime_script(skin: &FullSkinDescriptor, art: &[u8]) -> Result<String, Strin
         "tokens": skin.tokens,
     });
     let image = format!("data:image/png;base64,{}", BASE64.encode(art));
-    let script = RUNTIME_JS
+    let expanded = RUNTIME_JS
         .replacen(
             "__ACT_THEME_JSON__",
             &serde_json::to_string(&theme)
@@ -322,6 +322,14 @@ fn runtime_script(skin: &FullSkinDescriptor, art: &[u8]) -> Result<String, Strin
                 .map_err(|error| format!("无法编码 Full Skin 素材：{error}"))?,
             1,
         );
+    let script = expanded.replacen(
+        ";(async () => {",
+        ";(async () => {\n  if (!document.body) {\n    await new Promise((resolve) => {\n      document.addEventListener(\"DOMContentLoaded\", resolve, { once: true });\n    });\n  }\n",
+        1,
+    );
+    if script == expanded {
+        return Err("Full Skin 运行时模板缺少可等待的启动入口".into());
+    }
     if script.contains("__ACT_THEME_JSON__")
         || script.contains("__ACT_CSS_JSON__")
         || script.contains("__ACT_IMAGE_JSON__")
@@ -379,6 +387,10 @@ fn connect_target_with_timeout(target: &CdpTarget, timeout: Duration) -> Result<
         .map_err(|error| format!("无法连接 ChatGPT 页面：{error}"))?;
     set_socket_timeout(&mut socket, timeout)?;
     Ok(socket)
+}
+
+fn missing_early_script_registration(error: &str) -> bool {
+    error.contains("Script not found")
 }
 
 fn inject_targets(targets: Vec<CdpTarget>, script: String) -> Result<Vec<InjectedTarget>, String> {
@@ -450,7 +462,12 @@ fn remove_from_targets(targets: Vec<CdpTarget>, session: &SkinSession) -> Result
             "Page.removeScriptToEvaluateOnNewDocument",
             json!({ "identifier": record.script_id }),
         ) {
-            errors.push(format!("{}: {error}", record.id));
+            // A renderer may have navigated after the active CSS was removed.
+            // In that case CDP discards the old early-script registration; the
+            // runtime cleanup below remains the authoritative visible-state reset.
+            if !missing_early_script_registration(&error) {
+                errors.push(format!("{}: {error}", record.id));
+            }
         }
         if let Err(error) = cdp_call(
             &mut socket,
@@ -584,6 +601,7 @@ mod tests {
         let script = runtime_script(&skin, b"\x89PNG\r\n\x1a\n").expect("runtime should build");
         assert!(script.contains("act-full-skin-v1"));
         assert!(script.contains("test-theme"));
+        assert!(script.contains("DOMContentLoaded"));
         assert!(!script.contains("__ACT_THEME_JSON__"));
         assert!(!script.contains("__ACT_CSS_JSON__"));
         assert!(!script.contains("__ACT_IMAGE_JSON__"));
@@ -605,6 +623,16 @@ mod tests {
             "ws://127.0.0.1:49153/devtools/page/test",
             49152,
             Some("test")
+        ));
+    }
+
+    #[test]
+    fn missing_early_script_registration_is_safe_to_ignore_during_cleanup() {
+        assert!(missing_early_script_registration(
+            "CDP Page.removeScriptToEvaluateOnNewDocument 拒绝请求：{\"code\":-32000,\"message\":\"Script not found\"}"
+        ));
+        assert!(!missing_early_script_registration(
+            "CDP Page.removeScriptToEvaluateOnNewDocument 读取失败：connection reset"
         ));
     }
 

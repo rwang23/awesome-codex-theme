@@ -2,6 +2,21 @@
 
 ## Unreleased
 
+- Repaired Full Skin startup without weakening the exact-app trust boundary:
+  Windows launches only the verified Store-package executable with the two
+  pinned loopback flags (package activation could drop those flags), then
+  resolves the listener through `netstat` and its owning process path instead
+  of unreliable CIM queries. macOS opens the validated `.app` bundle path
+  directly with preserved debug arguments.
+- Made early Full Skin injection wait for a document body and made cleanup
+  tolerate a renderer's already-expired early-script registration. A fresh
+  isolated Windows Beta apply-and-restore smoke now verifies the theme marker,
+  style, caption, and clean restoration; `theme-manager-windows.png` was
+  refreshed from that real session.
+- Release downloads now identify Windows x64, macOS Apple Silicon, and macOS
+  Intel explicitly. Theme Manager also uses left-side macOS traffic-light
+  controls on macOS, while keeping a compact Copy Native action clear of the
+  preview at shorter window heights.
 - Added a localized GitHub repository link to Theme Manager. The English and
   Chinese READMEs now recommend Agent installation first, source builds second,
   and manual desktop installation last.

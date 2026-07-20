@@ -231,63 +231,53 @@ pub fn launch_target(channel: &str) -> Result<TargetView, String> {
     Ok(target)
 }
 
-#[cfg(target_os = "windows")]
-const WINDOWS_ACTIVATE_SCRIPT: &str = r#"
-Add-Type -TypeDefinition @'
-using System;
-using System.Runtime.InteropServices;
-
-[ComImport]
-[Guid("2e941141-7f97-4756-ba1d-9decde894a3d")]
-[InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-interface IApplicationActivationManager {
-  int ActivateApplication(
-    [MarshalAs(UnmanagedType.LPWStr)] string appUserModelId,
-    [MarshalAs(UnmanagedType.LPWStr)] string arguments,
-    uint options,
-    out uint processId);
-  int ActivateForFile(IntPtr appUserModelId, IntPtr itemArray, IntPtr verb, out uint processId);
-  int ActivateForProtocol(IntPtr appUserModelId, IntPtr itemArray, out uint processId);
+#[cfg(any(target_os = "windows", test))]
+fn windows_full_skin_launch_arguments(arguments: &str) -> Result<Vec<String>, String> {
+    let values = arguments
+        .split_ascii_whitespace()
+        .map(str::to_owned)
+        .collect::<Vec<_>>();
+    let has_valid_port = values
+        .get(1)
+        .and_then(|value| value.strip_prefix("--remote-debugging-port="))
+        .and_then(|value| value.parse::<u16>().ok())
+        .is_some_and(|port| port >= 1024);
+    if values.len() != 2
+        || values.first().map(String::as_str) != Some("--remote-debugging-address=127.0.0.1")
+        || !has_valid_port
+    {
+        return Err("Windows Full Skin 启动参数无效".into());
+    }
+    Ok(values)
 }
-
-public static class ActPackageLauncher {
-  public static uint Launch(string appUserModelId, string arguments) {
-    Type type = Type.GetTypeFromCLSID(new Guid("45BA127D-10A8-46EA-8AB7-56EA9078943C"));
-    IApplicationActivationManager manager =
-      (IApplicationActivationManager)Activator.CreateInstance(type);
-    uint processId;
-    int result = manager.ActivateApplication(appUserModelId, arguments, 0, out processId);
-    if (result < 0) Marshal.ThrowExceptionForHR(result);
-    return processId;
-  }
-}
-'@
-[ActPackageLauncher]::Launch($env:ACT_AUMID, $env:ACT_ARGUMENTS)
-"#;
 
 #[cfg(target_os = "windows")]
 fn launch_platform_target_with_arguments(
     target: &TargetView,
     arguments: &str,
 ) -> Result<(), String> {
-    let launch_id = target.launch_id.as_deref().ok_or("Windows 应用身份缺失")?;
-    let output = hidden_command("powershell.exe")
-        .args([
-            "-NoProfile",
-            "-NonInteractive",
-            "-ExecutionPolicy",
-            "Bypass",
-            "-Command",
-            WINDOWS_ACTIVATE_SCRIPT,
-        ])
-        .env("ACT_AUMID", launch_id)
-        .env("ACT_ARGUMENTS", arguments)
-        .output()
-        .map_err(|error| format!("无法以 Full Skin 模式启动 ChatGPT：{error}"))?;
-    if !output.status.success() {
-        return Err("Windows 无法激活所选 ChatGPT Full Skin 会话".into());
+    let executable = target
+        .executable_path
+        .as_deref()
+        .ok_or("Windows 可执行文件身份缺失")?;
+    let package = target
+        .package_full_name
+        .as_deref()
+        .ok_or("Windows 包身份缺失")?;
+    let expected_package_path = format!("\\{package}\\app\\").to_ascii_lowercase();
+    if !executable
+        .replace('/', "\\")
+        .to_ascii_lowercase()
+        .contains(&expected_package_path)
+    {
+        return Err("Windows Full Skin 目标可执行文件不属于所选 ChatGPT 包".into());
     }
-    Ok(())
+    let arguments = windows_full_skin_launch_arguments(arguments)?;
+    hidden_command(executable)
+        .args(arguments)
+        .spawn()
+        .map(|_| ())
+        .map_err(|error| format!("无法以 Full Skin 模式启动 ChatGPT：{error}"))
 }
 
 #[cfg(target_os = "macos")]
@@ -320,16 +310,26 @@ pub fn target_is_running(target: &TargetView) -> Result<bool, String> {
         .executable_path
         .as_deref()
         .ok_or("Windows 可执行文件身份缺失")?;
+    let package = target
+        .package_full_name
+        .as_deref()
+        .ok_or("Windows 包身份缺失")?;
     let script = r#"
-$target = $env:ACT_EXECUTABLE
-$match = Get-CimInstance Win32_Process -ErrorAction Stop |
-  Where-Object { $_.ExecutablePath -and $_.ExecutablePath -ieq $target } |
-  Select-Object -First 1
-if ($null -eq $match) { "false" } else { "true" }
+$ErrorActionPreference = "Stop"
+$matches = @(Get-Process | ForEach-Object {
+  try { $path = $_.Path } catch { $path = $null }
+  if ($path -and
+      $path -ieq $env:ACT_EXECUTABLE -and
+      $path -like ("*\" + $env:ACT_PACKAGE + "\*")) {
+    $_
+  }
+})
+if ($matches.Count -eq 0) { "false" } else { "true" }
 "#;
     let output = hidden_command("powershell.exe")
         .args(["-NoProfile", "-NonInteractive", "-Command", script])
         .env("ACT_EXECUTABLE", executable)
+        .env("ACT_PACKAGE", package)
         .output()
         .map_err(|error| format!("无法检查 ChatGPT 进程：{error}"))?;
     Ok(output.status.success() && String::from_utf8_lossy(&output.stdout).trim() == "true")
@@ -376,13 +376,17 @@ pub fn stop_target(target: &TargetView) -> Result<(), String> {
         .as_deref()
         .ok_or("Windows 包身份缺失")?;
     let script = r#"
-$matches = @(Get-CimInstance Win32_Process -ErrorAction Stop | Where-Object {
-  $_.ExecutablePath -and
-  $_.ExecutablePath -ieq $env:ACT_EXECUTABLE -and
-  $_.ExecutablePath -like ("*\" + $env:ACT_PACKAGE + "\*")
+$ErrorActionPreference = "Stop"
+$matches = @(Get-Process | ForEach-Object {
+  try { $path = $_.Path } catch { $path = $null }
+  if ($path -and
+      $path -ieq $env:ACT_EXECUTABLE -and
+      $path -like ("*\" + $env:ACT_PACKAGE + "\*")) {
+    $_
+  }
 })
 foreach ($match in $matches) {
-  Stop-Process -Id $match.ProcessId -Force -ErrorAction Stop
+  Stop-Process -Id $match.Id -Force -ErrorAction Stop
 }
 "true"
 "#;
@@ -417,6 +421,26 @@ pub fn stop_target(_target: &TargetView) -> Result<(), String> {
     Err("当前平台暂不支持受控重启".into())
 }
 
+#[cfg(any(target_os = "windows", test))]
+fn windows_listener_owner_pid(output: &str, port: u16) -> Option<u32> {
+    output.lines().find_map(|line| {
+        let fields = line.split_ascii_whitespace().collect::<Vec<_>>();
+        if fields.len() != 5
+            || !fields[0].eq_ignore_ascii_case("TCP")
+            || !fields[3].eq_ignore_ascii_case("LISTENING")
+        {
+            return None;
+        }
+        let (host, candidate_port) = fields[1].rsplit_once(":")?;
+        if !matches!(host, "127.0.0.1" | "::1" | "[::1]")
+            || candidate_port.parse::<u16>().ok()? != port
+        {
+            return None;
+        }
+        fields[4].parse::<u32>().ok()
+    })
+}
+
 #[cfg(target_os = "windows")]
 pub fn listener_belongs_to_target(port: u16, target: &TargetView) -> Result<bool, String> {
     let executable = target
@@ -427,25 +451,38 @@ pub fn listener_belongs_to_target(port: u16, target: &TargetView) -> Result<bool
         .package_full_name
         .as_deref()
         .ok_or("Windows 包身份缺失")?;
-    let script = r#"
-$connection = Get-NetTCPConnection -State Listen -LocalPort ([int]$env:ACT_PORT) -ErrorAction SilentlyContinue |
-  Where-Object { $_.LocalAddress -in @("127.0.0.1", "::1") } |
-  Select-Object -First 1
-if ($null -eq $connection) { "false"; exit 0 }
-$process = Get-CimInstance Win32_Process -Filter "ProcessId = $($connection.OwningProcess)" -ErrorAction Stop
-$matches = $process.ExecutablePath -and
-  $process.ExecutablePath -ieq $env:ACT_EXECUTABLE -and
-  $process.ExecutablePath -like ("*\" + $env:ACT_PACKAGE + "\*")
-if ($matches) { "true" } else { "false" }
-"#;
-    let output = hidden_command("powershell.exe")
-        .args(["-NoProfile", "-NonInteractive", "-Command", script])
-        .env("ACT_PORT", port.to_string())
-        .env("ACT_EXECUTABLE", executable)
-        .env("ACT_PACKAGE", package)
+    let listeners = hidden_command("netstat.exe")
+        .args(["-ano", "-p", "tcp"])
         .output()
-        .map_err(|error| format!("无法验证 CDP 监听进程：{error}"))?;
-    Ok(output.status.success() && String::from_utf8_lossy(&output.stdout).trim() == "true")
+        .map_err(|error| format!("无法检查 Windows CDP 监听：{error}"))?;
+    if !listeners.status.success() {
+        return Err("Windows CDP 监听检查失败".into());
+    }
+    let Some(owner_pid) =
+        windows_listener_owner_pid(&String::from_utf8_lossy(&listeners.stdout), port)
+    else {
+        return Ok(false);
+    };
+    let process = hidden_command("powershell.exe")
+        .args([
+            "-NoProfile",
+            "-NonInteractive",
+            "-Command",
+            "(Get-Process -Id ([int]$env:ACT_OWNER_PID) -ErrorAction Stop).Path",
+        ])
+        .env("ACT_OWNER_PID", owner_pid.to_string())
+        .output()
+        .map_err(|error| format!("无法检查 Windows CDP 所有者：{error}"))?;
+    if !process.status.success() {
+        return Ok(false);
+    }
+    let actual = String::from_utf8_lossy(&process.stdout)
+        .trim()
+        .replace("/", "\\");
+    let expected = executable.replace("/", "\\");
+    let package_fragment = format!("\\{package}\\").to_ascii_lowercase();
+    Ok(actual.eq_ignore_ascii_case(&expected)
+        && actual.to_ascii_lowercase().contains(&package_fragment))
 }
 
 #[cfg(target_os = "macos")]
@@ -497,7 +534,7 @@ fn macos_open_arguments(bundle_path: &str, arguments: Option<&str>) -> Result<Ve
     {
         return Err("macOS 应用包路径无效".into());
     }
-    let mut command = vec!["-n".into(), "-a".into(), bundle_path.into()];
+    let mut command = vec!["-n".into(), bundle_path.into()];
     if let Some(arguments) = arguments {
         let arguments = arguments
             .split_ascii_whitespace()
@@ -639,7 +676,6 @@ mod tests {
             arguments,
             vec![
                 "-n",
-                "-a",
                 "/Applications/ChatGPT.app",
                 "--args",
                 "--remote-debugging-address=127.0.0.1",
@@ -651,5 +687,41 @@ mod tests {
     #[test]
     fn macos_full_skin_rejects_a_bundle_identifier_as_a_path() {
         assert!(macos_open_arguments("com.openai.codex", None).is_err());
+    }
+
+    #[test]
+    fn windows_listener_owner_parser_requires_the_exact_loopback_port() {
+        let output = r#"
+  TCP    127.0.0.1:49152        0.0.0.0:0              LISTENING       4242
+  TCP    0.0.0.0:49153          0.0.0.0:0              LISTENING       5151
+"#;
+        assert_eq!(windows_listener_owner_pid(output, 49152), Some(4242));
+        assert_eq!(windows_listener_owner_pid(output, 49153), None);
+        assert_eq!(windows_listener_owner_pid(output, 49154), None);
+    }
+
+    #[test]
+    fn windows_full_skin_launch_forwards_only_the_pinned_loopback_flags() {
+        assert_eq!(
+            windows_full_skin_launch_arguments(
+                "--remote-debugging-address=127.0.0.1 --remote-debugging-port=49152",
+            ),
+            Ok(vec![
+                "--remote-debugging-address=127.0.0.1".into(),
+                "--remote-debugging-port=49152".into(),
+            ])
+        );
+        assert!(
+            windows_full_skin_launch_arguments(
+                "--remote-debugging-address=0.0.0.0 --remote-debugging-port=49152",
+            )
+            .is_err()
+        );
+        assert!(
+            windows_full_skin_launch_arguments(
+                "--remote-debugging-address=127.0.0.1 --remote-debugging-port=80",
+            )
+            .is_err()
+        );
     }
 }

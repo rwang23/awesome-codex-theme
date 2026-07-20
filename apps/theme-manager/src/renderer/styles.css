@@ -190,6 +190,95 @@ select:focus-visible {
   color: #fff;
 }
 
+.app-shell[data-platform="darwin"] .titlebar {
+  padding-left: 14px;
+}
+
+.app-shell[data-platform="darwin"] .window-controls {
+  order: -1;
+  align-self: center;
+  gap: 8px;
+  margin-right: 14px;
+}
+
+.app-shell[data-platform="darwin"] .window-controls button {
+  display: grid;
+  flex: 0 0 12px;
+  width: 12px;
+  height: 12px;
+  padding: 0;
+  border: 1px solid rgba(0, 0, 0, 0.16);
+  border-radius: 50%;
+  color: rgba(0, 0, 0, 0.58);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.app-shell[data-platform="darwin"] #windowClose {
+  order: 1;
+  background: #ff5f57;
+}
+
+.app-shell[data-platform="darwin"] #windowMinimize {
+  order: 2;
+  background: #febc2e;
+}
+
+.app-shell[data-platform="darwin"] #windowMaximize {
+  order: 3;
+  background: #28c840;
+}
+
+.app-shell[data-platform="darwin"] .window-controls button:hover,
+.app-shell[data-platform="darwin"] .window-controls .window-close:hover {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.28),
+    0 0 0 1px rgba(0, 0, 0, 0.08);
+}
+
+.app-shell[data-platform="darwin"] #windowClose:hover {
+  background-color: #ff5f57;
+}
+
+.app-shell[data-platform="darwin"] #windowMinimize:hover {
+  background-color: #febc2e;
+}
+
+.app-shell[data-platform="darwin"] #windowMaximize:hover {
+  background-color: #28c840;
+}
+
+.app-shell[data-platform="darwin"] .window-controls button span,
+.app-shell[data-platform="darwin"] .window-controls button span::before,
+.app-shell[data-platform="darwin"] .window-controls button span::after {
+  display: none;
+}
+
+.app-shell[data-platform="darwin"] .window-controls button::after {
+  font-family: "SF Pro Text", "Helvetica Neue", sans-serif;
+  font-size: 9px;
+  font-weight: 800;
+  line-height: 1;
+  opacity: 0;
+  transition: opacity 120ms ease;
+}
+
+.app-shell[data-platform="darwin"] #windowClose::after {
+  content: "×";
+}
+
+.app-shell[data-platform="darwin"] #windowMinimize::after {
+  content: "−";
+}
+
+.app-shell[data-platform="darwin"] #windowMaximize::after {
+  content: "+";
+}
+
+.app-shell[data-platform="darwin"] .window-controls button:hover::after,
+.app-shell[data-platform="darwin"] .window-controls button:focus-visible::after {
+  opacity: 1;
+}
+
 .window-controls button span {
   position: relative;
   display: block;
@@ -740,7 +829,7 @@ kbd {
 }
 
 .action-card {
-  padding: 16px;
+  padding: 12px;
   border: 1px solid var(--line);
   border-radius: 17px;
   background: rgba(251, 250, 246, 0.86);
@@ -752,7 +841,7 @@ kbd {
   align-items: flex-start;
   justify-content: space-between;
   gap: 14px;
-  margin-bottom: 13px;
+  margin-bottom: 9px;
 }
 
 .action-card-heading > div {
@@ -785,8 +874,8 @@ kbd {
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  height: 40px;
-  padding: 0 12px;
+  height: 36px;
+  padding: 0 11px;
   border: 0;
   border-radius: 10px;
   background: var(--vermilion);
@@ -813,11 +902,11 @@ kbd {
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  height: 32px;
-  margin-top: 7px;
-  padding: 0 10px;
+  height: 26px;
+  margin-top: 6px;
+  padding: 0 9px;
   border: 1px solid var(--line);
-  border-radius: 9px;
+  border-radius: 8px;
   background: transparent;
   color: var(--muted);
   font-size: 9px;
@@ -832,13 +921,13 @@ kbd {
 .launch-row {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
-  gap: 7px;
-  margin-top: 7px;
+  gap: 6px;
+  margin-top: 5px;
 }
 
 .launch-row select,
 .launch-row button {
-  height: 34px;
+  height: 30px;
   border: 1px solid var(--line);
   border-radius: 9px;
   background: transparent;
@@ -866,9 +955,9 @@ kbd {
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
   gap: 12px;
-  min-height: 48px;
-  margin-top: 7px;
-  padding: 8px 10px;
+  min-height: 42px;
+  margin-top: 5px;
+  padding: 6px 9px;
   border: 1px solid var(--line);
   border-radius: 10px;
   background: rgba(31, 105, 88, 0.035);
@@ -950,7 +1039,7 @@ kbd {
 }
 
 .action-card > p {
-  margin: 10px 1px 0;
+  margin: 8px 1px 0;
   color: var(--muted);
   font-size: 8px;
   line-height: 1.55;
@@ -1066,6 +1155,48 @@ kbd {
 
 @keyframes breathe {
   50% { opacity: 0.38; }
+}
+
+@media (min-width: 1051px) and (max-height: 840px) {
+  .capture-frame {
+    width: min(100%, 630px);
+  }
+
+  .action-card {
+    padding: 8px;
+  }
+
+  .action-card-heading {
+    margin-bottom: 5px;
+  }
+
+  .primary-action {
+    height: 32px;
+  }
+
+  .launch-row {
+    margin-top: 3px;
+  }
+
+  .launch-row select,
+  .launch-row button {
+    height: 28px;
+  }
+
+  .persistence-control {
+    min-height: 36px;
+    margin-top: 3px;
+    padding: 4px 8px;
+  }
+
+  .secondary-action {
+    height: 24px;
+    margin-top: 3px;
+  }
+
+  .action-card > p {
+    margin-top: 5px;
+  }
 }
 
 @media (max-width: 1050px) {

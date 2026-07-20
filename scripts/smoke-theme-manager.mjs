@@ -11,18 +11,21 @@ const DEBUG = process.argv.includes("--debug");
 const PERSISTENCE = process.argv.includes("--persistence");
 const SEED_LOCAL_ART = process.argv.includes("--seed-local-art");
 const MANAGER_PORT = Number(argumentValue("--manager-port") || process.env.ACT_MANAGER_CDP_PORT || "0");
+const MANAGER_EXECUTABLE = argumentValue("--manager-exe") || process.env.ACT_MANAGER_EXE;
 const REQUESTED_BETA_PORT = Number(argumentValue("--beta-port") || "0");
 const THEME_ID = argumentValue("--theme") || "qinglan-odyssey";
 const MODE = argumentValue("--mode") || "dark";
-const MANAGER_EXE = path.resolve(
-  ROOT,
-  "apps",
-  "theme-manager",
-  "src-tauri",
-  "target",
-  "release",
-  "awesome-codex-theme.exe",
-);
+const MANAGER_EXE = MANAGER_EXECUTABLE
+  ? path.resolve(MANAGER_EXECUTABLE)
+  : path.resolve(
+    ROOT,
+    "apps",
+    "theme-manager",
+    "src-tauri",
+    "target",
+    "release",
+    "awesome-codex-theme.exe",
+  );
 const SCREENSHOT_PATH = path.join(ROOT, "docs", "assets", "theme-manager-windows.png");
 const BETA_PACKAGE = "OpenAI.CodexBeta_26.715.3651.0_x64__2p2nqsd0c76g0";
 const BETA_AUMID = "OpenAI.CodexBeta_2p2nqsd0c76g0!App";
@@ -85,22 +88,51 @@ async function seedLocalArt() {
 }
 
 function ownerChain(port) {
+  const owner = listenerOwner(port);
   const command = [
-    "$connection = Get-NetTCPConnection -State Listen -LocalPort " + port + " -ErrorAction Stop | Select-Object -First 1",
+    "Add-Type -TypeDefinition @'",
+    "using System;",
+    "using System.Runtime.InteropServices;",
+    "public static class ActProcessSnapshot {",
+    "  const uint TH32CS_SNAPPROCESS = 0x00000002;",
+    "  [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]",
+    "  struct PROCESSENTRY32 { public uint dwSize; public uint cntUsage; public uint th32ProcessID; public IntPtr th32DefaultHeapID; public uint th32ModuleID; public uint cntThreads; public uint th32ParentProcessID; public int pcPriClassBase; public uint dwFlags; [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)] public string szExeFile; }",
+    "  [DllImport(\"kernel32.dll\", SetLastError = true)] static extern IntPtr CreateToolhelp32Snapshot(uint flags, uint processId);",
+    "  [DllImport(\"kernel32.dll\", CharSet = CharSet.Unicode, SetLastError = true)] static extern bool Process32FirstW(IntPtr snapshot, ref PROCESSENTRY32 entry);",
+    "  [DllImport(\"kernel32.dll\", CharSet = CharSet.Unicode, SetLastError = true)] static extern bool Process32NextW(IntPtr snapshot, ref PROCESSENTRY32 entry);",
+    "  [DllImport(\"kernel32.dll\")] static extern bool CloseHandle(IntPtr handle);",
+    "  public static int GetParent(int pid) {",
+    "    IntPtr snapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);",
+    "    if (snapshot == new IntPtr(-1)) return 0;",
+    "    try {",
+    "      PROCESSENTRY32 entry = new PROCESSENTRY32();",
+    "      entry.dwSize = (uint)Marshal.SizeOf(entry);",
+    "      if (!Process32FirstW(snapshot, ref entry)) return 0;",
+    "      do { if (entry.th32ProcessID == (uint)pid) return (int)entry.th32ParentProcessID; } while (Process32NextW(snapshot, ref entry));",
+    "      return 0;",
+    "    } finally { CloseHandle(snapshot); }",
+    "  }",
+    "}",
+    "'@",
     "$items = @()",
-    "$processId = [int]$connection.OwningProcess",
-    "for ($depth = 0; $depth -lt 6 -and $processId -gt 0; $depth += 1) {",
-    "  $process = Get-CimInstance Win32_Process -Filter \"ProcessId = $processId\"",
-    "  if (-not $process) { break }",
-    "  $items += [PSCustomObject]@{ processId = $process.ProcessId; parentProcessId = $process.ParentProcessId; name = $process.Name; executablePath = $process.ExecutablePath; commandLine = $process.CommandLine }",
-    "  $processId = [int]$process.ParentProcessId",
+    "$processId = [int]$env:ACT_OWNER_PID",
+    "for ($depth = 0; $depth -lt 8 -and $processId -gt 0; $depth += 1) {",
+    "  try { $process = Get-Process -Id $processId -ErrorAction Stop } catch { break }",
+    "  $parentId = [ActProcessSnapshot]::GetParent($processId)",
+    "  $items += [PSCustomObject]@{ processId = $process.Id; parentProcessId = $parentId; name = $process.ProcessName; executablePath = $process.Path }",
+    "  if ($parentId -eq $processId) { break }",
+    "  $processId = $parentId",
     "}",
     "ConvertTo-Json -InputObject @($items) -Compress",
-  ].join("; ");
+  ].join("\n");
   const output = execFileSync(
     "powershell.exe",
     ["-NoProfile", "-NonInteractive", "-Command", command],
-    { encoding: "utf8", windowsHide: true },
+    {
+      encoding: "utf8",
+      windowsHide: true,
+      env: { ...process.env, ACT_OWNER_PID: String(owner.processId) },
+    },
   ).trim();
   const parsed = JSON.parse(output);
   return Array.isArray(parsed) ? parsed : [parsed];
@@ -113,31 +145,40 @@ function listenerOwner(port) {
     "if (-not $line) { throw 'The expected loopback listener is unavailable' }",
     "$parts = $line.ToString().Trim() -split '\\s+'",
     "$ownerPid = [int]$parts[-1]",
-    "$process = Get-Process -Id $ownerPid -ErrorAction Stop",
+    "$process = Get-Process -Id $ownerPid -ErrorAction SilentlyContinue",
+    "if ($null -eq $process) { throw 'The listener owner exited before it could be inspected' }",
     "[PSCustomObject]@{ processId = $ownerPid; name = $process.ProcessName; executablePath = $process.Path } | ConvertTo-Json -Compress",
   ].join("; ");
   return JSON.parse(execFileSync(
     "powershell.exe",
     ["-NoProfile", "-NonInteractive", "-Command", command],
-    { encoding: "utf8", windowsHide: true },
+    { encoding: "utf8", windowsHide: true, stdio: ["ignore", "pipe", "pipe"] },
   ).trim());
 }
 
 function betaRuntimeCandidates() {
-  const command = [
-    "$items = Get-CimInstance Win32_Process |",
-    "  Where-Object { $_.Name -eq 'ChatGPT (Beta).exe' -and $_.ExecutablePath -and $_.CommandLine -and $_.CommandLine -notmatch '--type=' } |",
-    "  ForEach-Object { [PSCustomObject]@{ processId = $_.ProcessId; executablePath = $_.ExecutablePath; commandLine = $_.CommandLine } };",
-    "ConvertTo-Json -InputObject @($items) -Compress",
-  ].join(" ");
-  const output = execFileSync(
-    "powershell.exe",
-    ["-NoProfile", "-NonInteractive", "-Command", command],
-    { encoding: "utf8", windowsHide: true },
-  ).trim();
-  if (!output) return [];
-  const parsed = JSON.parse(output);
-  return Array.isArray(parsed) ? parsed : [parsed];
+  const output = execFileSync("netstat.exe", ["-ano", "-p", "tcp"], {
+    encoding: "utf8",
+    windowsHide: true,
+  });
+  const candidates = [];
+  const seen = new Set();
+  for (const line of output.split(/\r?\n/u)) {
+    const match = /^\s*TCP\s+127\.0\.0\.1:(\d+)\s+\S+\s+LISTENING\s+(\d+)\s*$/iu.exec(line);
+    if (!match) continue;
+    const port = Number(match[1]);
+    const processId = Number(match[2]);
+    if (!Number.isInteger(port) || port < 1024 || port > 65535 || seen.has(port)) continue;
+    seen.add(port);
+    try {
+      const owner = listenerOwner(port);
+      const ownerPath = String(owner.executablePath || "").toLocaleLowerCase();
+      const expectedPackage = "\\" + BETA_PACKAGE.toLocaleLowerCase() + "\\";
+      if (Number(owner.processId) !== processId || !ownerPath.includes(expectedPackage)) continue;
+      candidates.push({ port, processId, executablePath: owner.executablePath });
+    } catch {}
+  }
+  return candidates;
 }
 
 async function discoverBetaTarget(timeout = 60000) {
@@ -146,13 +187,11 @@ async function discoverBetaTarget(timeout = 60000) {
   while (Date.now() - startedAt < timeout) {
     try {
       const candidates = REQUESTED_BETA_PORT
-        ? [{ commandLine: `--remote-debugging-port=${REQUESTED_BETA_PORT}` }]
+        ? [{ port: REQUESTED_BETA_PORT }]
         : betaRuntimeCandidates();
       for (const candidate of candidates) {
         try {
-          const match = /--remote-debugging-port=(\d+)/.exec(candidate.commandLine || "");
-          if (!match) continue;
-          const port = Number(match[1]);
+          const port = Number(candidate.port);
           if (!Number.isInteger(port) || port < 1024 || port > 65535) continue;
           const owner = listenerOwner(port);
           const ownerPath = String(owner.executablePath || "").toLocaleLowerCase();
@@ -545,18 +584,19 @@ async function main() {
     await evaluate(manager, "document.querySelector('#applySkin').click()");
     const outcome = await waitFor(
       manager,
-      `(() => {
-        const status = document.querySelector("#skinStatus")?.textContent || "";
+      `window.act.getSkinState().then((skin) => {
         const toast = document.querySelector("#toast");
+        if (skin?.active
+          && skin.channel === "beta"
+          && skin.themeId === ${JSON.stringify(THEME_ID)}
+          && skin.mode === ${JSON.stringify(MODE)}) {
+          return { skin };
+        }
         if (toast?.dataset.tone === "error" && toast.classList.contains("is-visible")) {
           return { error: toast.textContent };
         }
-        if (status.includes("ChatGPT Beta") && status.includes(${JSON.stringify(THEME_ID)})
-          && status.includes(${JSON.stringify(MODE)})) {
-          return { status };
-        }
         return null;
-      })()`,
+      })`,
       "manager apply result",
       45000,
     );
@@ -596,7 +636,7 @@ async function main() {
     await evaluate(manager, "document.querySelector('#restoreSkin').click()");
     await waitFor(
       manager,
-      `!document.querySelector("#skinStatus")?.textContent.includes("正在 ChatGPT Beta 使用")`,
+      "window.act.getSkinState().then((skin) => !skin?.active)",
       "manager restore result",
     );
     const betaRestored = await waitFor(

@@ -165,7 +165,8 @@ function ownerIdentity() {
     "if (-not $line) { throw 'The expected loopback listener is unavailable' }",
     "$parts = $line.ToString().Trim() -split '\\s+'",
     "$ownerPid = [int]$parts[-1]",
-    "$process = Get-Process -Id $ownerPid -ErrorAction Stop",
+    "$process = Get-Process -Id $ownerPid -ErrorAction SilentlyContinue",
+    "if ($null -eq $process) { throw 'The listener owner exited before it could be inspected' }",
     "[PSCustomObject]@{ pid = $ownerPid; executablePath = $process.Path; processName = $process.ProcessName } | ConvertTo-Json -Compress",
   ].join("; ");
   const output = execFileSync(
