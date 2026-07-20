@@ -441,6 +441,7 @@ fn remove_from_targets(targets: Vec<CdpTarget>, session: &SkinSession) -> Result
       }
       document.getElementById("act-full-skin-style")?.remove();
       document.getElementById("act-full-skin-caption")?.remove();
+      document.getElementById("act-full-skin-art")?.remove();
       document.documentElement.classList.remove("act-full-skin", "act-full-skin-home");
       return true;
     })()"#;

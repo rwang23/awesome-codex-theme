@@ -16,7 +16,7 @@ const REQUESTED_MODES = new Set(splitArgument("--modes"));
 const WIDTH = 1440;
 const HEIGHT = 810;
 const CAPTURE_VERSION = "26.715.3651.0";
-const CAPTURE_MODEL_LABEL = "5.6 Sol Ultra";
+const CAPTURE_MODEL_LABEL = "5.6 Sol Max";
 const CAPTURE_ROOT = "screenshots/codex-beta-" + CAPTURE_VERSION;
 const CAPTURE_DIR = path.join(ROOT, ...CAPTURE_ROOT.split("/"));
 const MANIFEST_PATH = path.join(CAPTURE_DIR, "manifest.json");
@@ -200,8 +200,8 @@ async function preparePrivacySafeHome(client) {
     `(() => {
       const homeVisible = () => Boolean(
         document.querySelector(".group\\\\/home-suggestions, [class*='home-suggestions']")
-        || [...document.querySelectorAll("h1, h2")].some((node) =>
-          /what should we build|what should we code|let.?s build|我们应该构建什么|我们该构建什么/.test(
+        || [...document.querySelectorAll("h1, h2, [class*='title']")].some((node) =>
+          /what should we build|what should we code|what should we work on(?: in workspace)?|let.?s build|我们应该构建什么|我们该构建什么/.test(
             node.textContent.trim().toLocaleLowerCase()
           )
         )
@@ -309,9 +309,9 @@ async function currentModelLabel(client) {
       const leafLabels = [...trigger.querySelectorAll("span")]
         .filter((node) => !node.closest('[aria-hidden="true"]'))
         .map((node) => normalize(node.textContent));
-      const family = leafLabels.find((label) => /^5\\.6\\s+(?:Sol|Terra)$/i.test(label));
+      const family = leafLabels.find((label) => /^5\\.6\\s+(?:Sol|Terra|Luna)$/i.test(label));
       const effort = leafLabels.find(
-        (label) => /^(?:Light|Medium|High|Extra High|Max|Ultra)$/i.test(label)
+        (label) => /^(?:Light|Medium|High|Extra High|Max|Ultra|Standard)$/i.test(label)
       );
       return family && effort ? normalize(family + " " + effort) : null;
     })()`,
@@ -343,6 +343,33 @@ async function trustedMouseClick(client, expression, label) {
     y: point.y,
     button: "left",
     clickCount: 1,
+  });
+}
+
+async function trustedMenuSelect(client, expression, label) {
+  const focused = await evaluate(
+    client,
+    `(() => {
+      const node = ${expression};
+      if (!node) return false;
+      node.focus();
+      return document.activeElement === node;
+    })()`,
+  );
+  invariant(focused, "Could not focus " + label);
+  await client.send("Input.dispatchKeyEvent", {
+    type: "keyDown",
+    key: "Enter",
+    code: "Enter",
+    windowsVirtualKeyCode: 13,
+    nativeVirtualKeyCode: 13,
+  });
+  await client.send("Input.dispatchKeyEvent", {
+    type: "keyUp",
+    key: "Enter",
+    code: "Enter",
+    windowsVirtualKeyCode: 13,
+    nativeVirtualKeyCode: 13,
   });
 }
 
@@ -401,7 +428,7 @@ async function waitForModelLabel(client, targetLabel, timeout = 8000) {
 
 async function selectModelLabel(client, targetLabel) {
   const normalizedTarget = normalizeModelLabel(targetLabel);
-  const effortPattern = /\s+(?:Light|Medium|High|Extra High|Max|Ultra)$/i;
+  const effortPattern = /\s+(?:Light|Medium|High|Extra High|Max|Ultra|Standard)$/i;
   const family = normalizedTarget.replace(effortPattern, "");
   const level = normalizedTarget.slice(family.length).trim();
   invariant(family !== normalizedTarget && level, "Unsupported model label " + normalizedTarget);
@@ -419,13 +446,14 @@ async function selectModelLabel(client, targetLabel) {
         String(node.getAttribute("aria-label") || "").startsWith("Model "))`,
       "the model family menu",
     );
-    await delay(350);
-    await trustedMouseClick(
+    const familyOption = `[...document.querySelectorAll('[role="menuitem"]')].find((node) => {
+      const label = String(node.getAttribute("aria-label") || node.textContent || "").replace(/\\s+/g, " ").trim();
+      return label === ${JSON.stringify(family)} || label === "Model " + ${JSON.stringify(family)};
+    })`;
+    await waitFor(client, `Boolean(${familyOption})`, "model family options", 5000);
+    await trustedMenuSelect(
       client,
-      `[...document.querySelectorAll('[role="menuitem"]')].find((node) => {
-        const label = String(node.getAttribute("aria-label") || node.textContent || "").replace(/\\s+/g, " ").trim();
-        return label === ${JSON.stringify(family)} || label === "Model " + ${JSON.stringify(family)};
-      })`,
+      familyOption,
       "model family " + family,
     );
     await delay(500);
@@ -441,13 +469,14 @@ async function selectModelLabel(client, targetLabel) {
         String(node.getAttribute("aria-label") || "").startsWith("Effort "))`,
       "the reasoning effort menu",
     );
-    await delay(350);
-    await trustedMouseClick(
+    const effortOption = `[...document.querySelectorAll('[role="menuitem"]')].find((node) => {
+      const label = String(node.textContent || node.getAttribute("aria-label") || "").replace(/\\s+/g, " ").trim();
+      return label === ${JSON.stringify(level)} || label.startsWith(${JSON.stringify(level)});
+    })`;
+    await waitFor(client, `Boolean(${effortOption})`, "reasoning effort options", 5000);
+    await trustedMenuSelect(
       client,
-      `[...document.querySelectorAll('[role="menuitem"]')].find((node) => {
-        const label = String(node.textContent || node.getAttribute("aria-label") || "").replace(/\\s+/g, " ").trim();
-        return label === ${JSON.stringify(level)} || label.startsWith(${JSON.stringify(level)});
-      })`,
+      effortOption,
       "reasoning effort " + level,
     );
   }
@@ -483,6 +512,7 @@ async function removeRuntime(client) {
       }
       document.getElementById("act-full-skin-style")?.remove();
       document.getElementById("act-full-skin-caption")?.remove();
+      document.getElementById("act-full-skin-art")?.remove();
       document.documentElement.classList.remove("act-full-skin", "act-full-skin-home");
       return true;
     })()`,
@@ -668,6 +698,30 @@ async function main() {
           invariant(applied.selectors?.main, theme.id + " " + mode + " retry lost the main surface");
           await waitFor(client, skinState, theme.id + " " + mode + " retried skin state", 5000);
         }
+        const artwork = await evaluate(
+          client,
+          `(() => {
+            const image = document.getElementById("act-full-skin-art");
+            if (!(image instanceof HTMLImageElement)) return null;
+            return {
+              complete: image.complete,
+              width: image.naturalWidth,
+              height: image.naturalHeight,
+              parent: image.parentElement?.tagName,
+              position: getComputedStyle(image).position,
+              source: image.currentSrc.startsWith("data:image/png;base64,")
+            };
+          })()`,
+        );
+        invariant(
+          artwork?.complete
+            && artwork.width > 0
+            && artwork.height > 0
+            && artwork.parent === "BODY"
+            && artwork.position === "fixed"
+            && artwork.source,
+          theme.id + " " + mode + " artwork layer verification failed",
+        );
         await delay(350);
         if (DEBUG_LAYOUT) {
           console.error(JSON.stringify(await inspectLayout(client), null, 2));
@@ -692,6 +746,7 @@ async function main() {
           runtimeSha256,
           markerVersion: applied.version,
           selectors: applied.selectors,
+          artwork,
           modelLabel: captureModelLabel,
           capturedAt: new Date().toISOString(),
         });
@@ -719,6 +774,7 @@ async function main() {
         client,
         `!document.documentElement.classList.contains("act-full-skin")
           && !document.getElementById("act-full-skin-style")
+          && !document.getElementById("act-full-skin-art")
           && !window.__ACT_FULL_SKIN_STATE__`,
       );
     } catch (restoreError) {

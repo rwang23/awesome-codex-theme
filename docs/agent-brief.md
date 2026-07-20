@@ -108,7 +108,7 @@ must not interrupt a user's normal Stable session.
 - Theme data or art: source-art visual review, `generate:check`, validation, and tests.
 - Full Skin: asset hash and dimensions, Registry equality, exact app/listener
   identity, runtime marker readback, 106-mode capture manifest with
-  `5.6 Sol Ultra`, model restoration, and runtime restore.
+  `5.6 Sol Max`, model restoration, and runtime restore.
 - Native fallback: parser validation, Registry/package equality, unique payload,
   and recorded tested version.
 - Site behavior: `npm run check`, local server, browser search/filter/dialog/copy checks.

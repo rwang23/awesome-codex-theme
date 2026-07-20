@@ -1,5 +1,15 @@
 # Changelog
 
+## Unreleased
+
+- Replaced the fragile `app://` blob-based Full Skin image path with a
+  verified, fixed artwork element behind the app root. Background art now spans
+  the main workspace and translucent sidebar materials rather than degrading to
+  a palette-only wash.
+- Captures now select the strongest model label actually exposed by the exact
+  test bench: `5.6 Sol Max`. The harness records the visible label and restores
+  the previous choice; it does not claim an unavailable `Ultra` option.
+
 ## 0.3.0-alpha.3 - 2026-07-20
 
 - Repaired Full Skin startup without weakening the exact-app trust boundary:
@@ -40,7 +50,7 @@
 - Renamed the two Tibo tribute taglines to `God of Reset` / `重置之神` and
   added deliberate bilingual title and tagline wrapping.
 - Recaptured all 106 light and dark modes in the exact ChatGPT Beta
-  `26.715.3651.0` test bench with `5.6 Sol Ultra`, then restored the prior model
+  `26.715.3651.0` test bench with `5.6 Sol Max`, then restored the prior model
   choice and removed the temporary Full Skin runtime.
 
 ## 2026-07-18-00-00

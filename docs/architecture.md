@@ -52,7 +52,7 @@ No theme package contains CSS or JavaScript.
 
 The runtime:
 
-- converts the verified PNG into an in-memory blob URL;
+- creates a fixed, verified in-memory image element behind the Codex app root;
 - sets mode, focus, safe-area, and token variables;
 - styles native Codex surfaces without moving the DOM;
 - adds a small home-screen theme caption;

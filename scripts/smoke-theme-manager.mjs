@@ -399,7 +399,18 @@ async function runPersistenceSmoke(managerTarget) {
           mode: value.mode,
           root: document.documentElement.classList.contains("act-full-skin"),
           style: Boolean(document.getElementById("act-full-skin-style")),
-          caption: Boolean(document.getElementById("act-full-skin-caption"))
+          caption: Boolean(document.getElementById("act-full-skin-caption")),
+          artwork: (() => {
+            const artwork = document.getElementById("act-full-skin-art");
+            return artwork instanceof HTMLImageElement ? {
+              complete: artwork.complete,
+              width: artwork.naturalWidth,
+              height: artwork.naturalHeight,
+              parent: artwork.parentElement?.tagName,
+              position: getComputedStyle(artwork).position,
+              source: artwork.currentSrc.startsWith("data:image/png;base64,")
+            } : null;
+          })()
         };
       })()`,
       "persistent Beta runtime markers",
@@ -410,7 +421,13 @@ async function runPersistenceSmoke(managerTarget) {
         && betaState.mode === MODE
         && betaState.root
         && betaState.style
-        && betaState.caption,
+        && betaState.caption
+        && betaState.artwork?.complete
+        && betaState.artwork.width > 0
+        && betaState.artwork.height > 0
+        && betaState.artwork.parent === "BODY"
+        && betaState.artwork.position === "fixed"
+        && betaState.artwork.source,
       "Persistent Beta did not expose the expected full-skin runtime markers",
     );
     const active = await waitFor(
@@ -454,7 +471,8 @@ async function runPersistenceSmoke(managerTarget) {
       `!window.__ACT_FULL_SKIN_STATE__
         && !document.documentElement.classList.contains("act-full-skin")
         && !document.getElementById("act-full-skin-style")
-        && !document.getElementById("act-full-skin-caption")`,
+        && !document.getElementById("act-full-skin-caption")
+        && !document.getElementById("act-full-skin-art")`,
       "persistent Beta runtime cleanup",
       60000,
     );
@@ -613,7 +631,18 @@ async function main() {
         mode: window.__ACT_FULL_SKIN_STATE__?.mode,
         root: document.documentElement.classList.contains("act-full-skin"),
         style: Boolean(document.getElementById("act-full-skin-style")),
-        caption: Boolean(document.getElementById("act-full-skin-caption"))
+        caption: Boolean(document.getElementById("act-full-skin-caption")),
+        artwork: (() => {
+          const artwork = document.getElementById("act-full-skin-art");
+          return artwork instanceof HTMLImageElement ? {
+            complete: artwork.complete,
+            width: artwork.naturalWidth,
+            height: artwork.naturalHeight,
+            parent: artwork.parentElement?.tagName,
+            position: getComputedStyle(artwork).position,
+            source: artwork.currentSrc.startsWith("data:image/png;base64,")
+          } : null;
+        })()
       })`,
     );
     invariant(
@@ -621,7 +650,13 @@ async function main() {
         && betaState.mode === MODE
         && betaState.root
         && betaState.style
-        && betaState.caption,
+        && betaState.caption
+        && betaState.artwork?.complete
+        && betaState.artwork.width > 0
+        && betaState.artwork.height > 0
+        && betaState.artwork.parent === "BODY"
+        && betaState.artwork.position === "fixed"
+        && betaState.artwork.source,
       "Beta did not expose the expected full-skin runtime markers",
     );
 
@@ -644,7 +679,8 @@ async function main() {
       `!window.__ACT_FULL_SKIN_STATE__
         && !document.documentElement.classList.contains("act-full-skin")
         && !document.getElementById("act-full-skin-style")
-        && !document.getElementById("act-full-skin-caption")`,
+        && !document.getElementById("act-full-skin-caption")
+        && !document.getElementById("act-full-skin-art")`,
       "Beta runtime cleanup",
     );
     restored = Boolean(betaRestored);

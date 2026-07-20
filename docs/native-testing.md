@@ -30,7 +30,7 @@
 
 1. 从 Registry 读取主题记录。
 2. 读取本地 PNG，复核字节数和 SHA-256。
-3. 把模型选择切换到准确的 `5.6 Sol Ultra`，逐张读回可见标签，并在采集结束后恢复原模型选择。
+3. 把模型选择切换到当前测试台实际提供的 `5.6 Sol Max`，逐张读回可见标签，并在采集结束后恢复原模型选择；脚本不会伪造不存在的 Ultra 标签。
 4. 切换模拟的 `prefers-color-scheme`，等待 Codex 页面稳定。
 5. 通过 `Page.addScriptToEvaluateOnNewDocument` 注册运行时。
 6. 在当前页面执行同一份运行时。
@@ -42,7 +42,7 @@
 
 - `window.__ACT_FULL_SKIN_STATE__` 不存在；
 - 根节点没有 `act-full-skin`；
-- style 与 caption 节点都已移除；
+- style、caption 与 artwork 节点都已移除；
 - 设备尺寸模拟和媒体模拟已清空。
 
 当前清单位于：
@@ -64,7 +64,7 @@ screenshots/codex-beta-26.715.3651.0/manifest.json
 2. 从 Beta 的 `DevToolsActivePort` 发现动态端口，并验证监听属于固定 Store 包。
 3. 在真实管理器 UI 中选择主题、模式和 Beta。
 4. 点击“应用完整皮肤”。
-5. 从 Beta 页面读回主题 ID、模式、根 class、style 和 caption。
+5. 从 Beta 页面读回主题 ID、模式、根 class、style、caption 和 artwork。
 6. 为 README 与 Gallery 采集管理器实机截图。
 7. 点击“恢复原生”，再确认所有运行时标记消失。
 

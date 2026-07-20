@@ -74,7 +74,7 @@ test("registry exposes original and disclosed fan-art collections", async functi
       const capture = theme.previews[mode].capture;
       return capture?.appVersion === "26.715.3651.0"
         && capture.fixture === "full-skin-home-v1"
-        && capture.modelLabel === "5.6 Sol Ultra"
+        && capture.modelLabel === "5.6 Sol Max"
         && capture.width === 1440
         && capture.height === 810
         && capture.assetSha256 === theme.previews[mode].fullSkin.sha256
@@ -300,6 +300,10 @@ test("Tauri manager keeps theme values in Rust and limits desktop capabilities",
   assert.match(smoke, /CreateToolhelp32Snapshot/);
   assert.match(smoke, /netstat\.exe/);
   assert.match(smoke, /No pinned Beta root process owns a loopback CDP listener/);
+  const capture = await readFile(path.join(ROOT, "scripts", "capture-full-skin-screenshots.mjs"), "utf8");
+  assert.match(capture, /Sol\|Terra\|Luna/);
+  assert.match(capture, /Max\|Ultra\|Standard/);
+  assert.match(capture, /async function trustedMenuSelect/);
   assert.match(smoke, /window\.act\.getSkinState\(\)\.then/);
   assert.match(smoke, /stdio: \["ignore", "pipe", "pipe"\]/);
   assert.doesNotMatch(smoke, /skinStatus.*ChatGPT Beta|正在 ChatGPT Beta 使用/s);
@@ -313,6 +317,21 @@ test("Tauri manager keeps theme values in Rust and limits desktop capabilities",
   assert.match(runtime, /remote-debugging-port/);
   assert.match(runtime, /TcpListener::bind\(\("127\.0\.0\.1", 0\)\)/);
   assert.doesNotMatch(runtime, /port_for_channel|=> Ok\(946[56]\)/);
+  const fullSkinRuntime = await readFile(path.join(ROOT, "packages", "full-skin", "runtime.js"), "utf8");
+  const fullSkinCss = await readFile(path.join(ROOT, "packages", "full-skin", "runtime.css"), "utf8");
+  assert.match(fullSkinRuntime, /what should we work on\(\?: in workspace\)\?/);
+  assert.match(fullSkinRuntime, /h1, h2, \[class\*='title'\]/);
+  assert.doesNotMatch(fullSkinRuntime, /URL\.createObjectURL|URL\.revokeObjectURL/);
+  assert.match(fullSkinRuntime, /act-full-skin-art/);
+  assert.match(fullSkinRuntime, /art\.src = imageData/);
+  assert.match(fullSkinRuntime, /new MutationObserver\(\(\) =>/);
+  assert.match(fullSkinRuntime, /syncTimer = setTimeout/);
+  assert.match(fullSkinCss, /#act-full-skin-art/);
+  assert.match(fullSkinCss, /position: fixed !important/);
+  assert.match(fullSkinCss, /html\.act-full-skin #root/);
+  assert.doesNotMatch(fullSkinCss, /var\(--act-art\)/);
+  assert.match(smoke, /artwork\.parent === "BODY"/);
+  assert.match(smoke, /artwork\.currentSrc\.startsWith\("data:image\/png;base64,"\)/);
   assert.match(platform, /windows_full_skin_launch_arguments/);
   assert.match(platform, /hidden_command\(executable\)/);
   assert.doesNotMatch(platform, /IApplicationActivationManager/);
@@ -356,7 +375,7 @@ test("real screenshot evidence covers every mode and confirms Beta restoration",
   assert.equal(manifest.fixture.sidebar, "hidden");
   assert.equal(manifest.fixture.project, "none");
   assert.equal(manifest.fixture.privateContent, "excluded");
-  assert.equal(manifest.fixture.modelLabel, "5.6 Sol Ultra");
+  assert.equal(manifest.fixture.modelLabel, "5.6 Sol Max");
   assert.equal(manifest.fixture.modelRestoredAfterCapture, true);
   assert.equal(manifest.fixture.nativeSettingsChanged, false);
   assert.equal(manifest.runtime.format, "act-full-skin-v1");
@@ -366,9 +385,13 @@ test("real screenshot evidence covers every mode and confirms Beta restoration",
   assert.equal(manifest.captures.every(function (capture) {
     return capture.runtimeSha256 === manifest.runtime.sha256
       && capture.markerVersion === "act-full-skin-v1"
-      && capture.modelLabel === "5.6 Sol Ultra"
+      && capture.modelLabel === "5.6 Sol Max"
       && capture.selectors.main === true
-      && capture.selectors.composer === true;
+      && capture.selectors.composer === true
+      && capture.artwork?.complete === true
+      && capture.artwork.parent === "BODY"
+      && capture.artwork.position === "fixed"
+      && capture.artwork.source === true;
   }), true);
   assert.equal(new Set(manifest.captures.map(function (capture) {
     return capture.themeId + "|" + capture.mode;

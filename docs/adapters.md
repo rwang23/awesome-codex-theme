@@ -16,7 +16,7 @@ The project does not export Dream Skin, HeiGe Skin Studio, CodeDrobe, or other t
 - background, surface, text, accent, muted, and border tokens;
 - the exact Codex version used for verification.
 
-The manager downloads only the declared PNG, checks it against the Registry, and converts it to an in-memory blob URL. It then applies a fixed repository-owned CSS/JavaScript runtime to the current Codex session.
+The manager downloads only the declared PNG and checks it against the Registry. The fixed repository-owned runtime assigns that verified image to a manager-created, fixed `<img>` layer behind the app root, then applies the materials and tokens above it. It deliberately does not depend on an `app://` blob URL.
 
 Theme packages cannot override the runtime. They contain no CSS, JavaScript, shell commands, plugins, or remote URLs.
 
@@ -35,7 +35,7 @@ ranges and other local software. The manager accepts the listener only when
 the owning executable path and package full name match the selected target. It
 connects only to loopback WebSockets whose target URL starts with `app://`.
 
-The runtime is evaluated in the current page and registered through `Page.addScriptToEvaluateOnNewDocument`, so it survives an internal page rebuild. Restore removes the registered script and calls the runtime cleanup function in every recorded target.
+The runtime is evaluated in the current page and registered through `Page.addScriptToEvaluateOnNewDocument`, so it survives an internal page rebuild. Its small, debounced observer restores the managed artwork layer when the page shell changes. Restore removes the registered script and calls the runtime cleanup function in every recorded target.
 
 Restoring the native look does not close the debugging listener. The port closes when the user exits and reopens ChatGPT normally.
 
@@ -78,7 +78,7 @@ Unknown fields are rejected. Native v1 does not accept a background image, so th
 
 | Target | Version | Evidence |
 | --- | --- | --- |
-| Full Skin | ChatGPT Beta `26.715.3651.0` | 106 real 1440×810 captures with `5.6 Sol Ultra`, runtime markers, selector readback, model restoration, cleanup |
+| Full Skin | ChatGPT Beta `26.715.3651.0` | 106 real 1440×810 captures with `5.6 Sol Max`, runtime markers, selector readback, model restoration, cleanup |
 | Native fallback | ChatGPT Stable `26.715.2305.0` | strict payload generation and parser validation |
 
 Compatibility is version-bound. A new Codex release must pass a fresh probe, all repository checks, and the full screenshot run before its version is written into the Registry.
