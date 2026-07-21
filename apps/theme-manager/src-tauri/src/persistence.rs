@@ -32,6 +32,8 @@ struct PersistentState {
     phase: String,
     detail: Option<String>,
     target_version: Option<String>,
+    #[serde(default)]
+    verified_target_version: Option<String>,
     tested_version: Option<String>,
     attempts: u8,
     updated_at: u64,
@@ -49,6 +51,7 @@ impl Default for PersistentState {
             phase: "disabled".into(),
             detail: None,
             target_version: None,
+            verified_target_version: None,
             tested_version: None,
             attempts: 0,
             updated_at: now_epoch(),
@@ -68,6 +71,7 @@ pub struct PersistenceView {
     pub phase: String,
     pub detail: Option<String>,
     pub target_version: Option<String>,
+    pub verified_target_version: Option<String>,
     pub tested_version: Option<String>,
     pub attempts: u8,
     pub updated_at: u64,
@@ -216,6 +220,7 @@ fn to_view(app: &AppHandle, state: PersistentState) -> PersistenceView {
         phase: state.phase,
         detail: state.detail,
         target_version: state.target_version,
+        verified_target_version: state.verified_target_version,
         tested_version: state.tested_version,
         attempts: state.attempts,
         updated_at: state.updated_at,
@@ -238,7 +243,7 @@ fn validate_selection(
     }
     let skin = catalog::full_skin_for(catalog, theme_id, mode)?;
     let target = platform::find_target(channel)?;
-    platform::validate_full_skin_target(&target, &skin.tested_version)?;
+    platform::validate_full_skin_target(&target)?;
     Ok((target, skin))
 }
 
@@ -295,6 +300,7 @@ fn enable_with_phase(
         phase: phase.into(),
         detail: None,
         target_version: target.version,
+        verified_target_version: None,
         tested_version: Some(skin.tested_version),
         attempts: 0,
         updated_at: now_epoch(),
@@ -396,6 +402,72 @@ fn update_status(
         state.attempts = attempts;
         state.target_version = target_version;
         state.tested_version = tested_version;
+    })?;
+    Ok(())
+}
+
+fn known_version(value: Option<&str>) -> Option<&str> {
+    value.map(str::trim).filter(|value| !value.is_empty())
+}
+
+fn target_version_is_authorized(selection: &PersistentState, installed: Option<&str>) -> bool {
+    let Some(installed) = known_version(installed) else {
+        return false;
+    };
+    if known_version(selection.verified_target_version.as_deref()) == Some(installed) {
+        return true;
+    }
+    matches!(
+        selection.phase.as_str(),
+        APPLY_REQUESTED_PHASE | "starting" | "restarting" | "error"
+    ) && selection.verified_target_version.is_none()
+        && known_version(selection.target_version.as_deref()) == Some(installed)
+}
+
+fn waiting_phase(selection: &PersistentState) -> &'static str {
+    if selection.verified_target_version.is_none() && selection.phase == "starting" {
+        "starting"
+    } else {
+        "waiting"
+    }
+}
+
+fn version_block_detail(selection: &PersistentState, installed: Option<&str>) -> String {
+    let Some(installed) = known_version(installed) else {
+        return "无法读取所选 ChatGPT 的准确版本；已保持原生界面。".into();
+    };
+    if let Some(verified) = known_version(selection.verified_target_version.as_deref()) {
+        return format!(
+            "检测到 ChatGPT 已更新为 {installed}；上次完成本机 Full Skin 验证的是 {verified}。请在 Theme Manager 中选择“重新应用并保持完整皮肤”以进行受控兼容性探测。"
+        );
+    }
+    format!(
+        "所选 ChatGPT {installed} 尚未完成本机 Full Skin 兼容性探测。请在 Theme Manager 中选择“应用并保持完整皮肤”。"
+    )
+}
+
+fn mark_target_version_verified(
+    root: &Path,
+    theme_id: &str,
+    mode: &str,
+    channel: &str,
+    target_version: &str,
+    tested_version: &str,
+) -> Result<(), String> {
+    mutate_state(root, |state| {
+        if !state.enabled
+            || state.theme_id.as_deref() != Some(theme_id)
+            || state.mode.as_deref() != Some(mode)
+            || state.channel.as_deref() != Some(channel)
+            || state.target_version.as_deref() != Some(target_version)
+        {
+            return;
+        }
+        state.phase = "active".into();
+        state.detail = None;
+        state.attempts = 0;
+        state.verified_target_version = Some(target_version.into());
+        state.tested_version = Some(tested_version.into());
     })?;
     Ok(())
 }
@@ -517,11 +589,11 @@ async fn run_controller(app: AppHandle) -> Result<(), String> {
             }
         };
         let installed = target.version.clone();
-        if let Err(error) = platform::validate_full_skin_target(&target, &skin.tested_version) {
+        if !target_version_is_authorized(&selection, installed.as_deref()) {
             update_status(
                 &root,
                 "version-blocked",
-                Some(error),
+                Some(version_block_detail(&selection, installed.as_deref())),
                 attempts,
                 installed,
                 Some(skin.tested_version),
@@ -559,7 +631,7 @@ async fn run_controller(app: AppHandle) -> Result<(), String> {
                 next_retry = tokio::time::Instant::now();
                 update_status(
                     &root,
-                    "waiting",
+                    waiting_phase(&selection),
                     None,
                     attempts,
                     installed,
@@ -590,6 +662,14 @@ async fn run_controller(app: AppHandle) -> Result<(), String> {
                 {
                     Ok(_) => {
                         attempts = 0;
+                        mark_target_version_verified(
+                            &root,
+                            theme_id,
+                            mode,
+                            channel,
+                            installed.as_deref().ok_or("Full Skin 探测未返回目标版本")?,
+                            &skin.tested_version,
+                        )?;
                         update_status(
                             &root,
                             "active",
@@ -624,7 +704,17 @@ async fn run_controller(app: AppHandle) -> Result<(), String> {
                 )
                 .await
                 {
-                    Ok(_) => attempts = 0,
+                    Ok(_) => {
+                        attempts = 0;
+                        mark_target_version_verified(
+                            &root,
+                            theme_id,
+                            mode,
+                            channel,
+                            installed.as_deref().ok_or("Full Skin 探测未返回目标版本")?,
+                            &skin.tested_version,
+                        )?;
+                    }
                     Err(error) => {
                         attempts = attempts.saturating_add(1);
                         update_status(
@@ -719,6 +809,14 @@ async fn run_controller(app: AppHandle) -> Result<(), String> {
         {
             Ok(_) => {
                 attempts = 0;
+                mark_target_version_verified(
+                    &root,
+                    theme_id,
+                    mode,
+                    channel,
+                    installed.as_deref().ok_or("Full Skin 探测未返回目标版本")?,
+                    &skin.tested_version,
+                )?;
                 update_status(
                     &root,
                     "active",
@@ -787,6 +885,56 @@ mod tests {
         assert_eq!(loaded.theme_id.as_deref(), Some("beijing-meridian"));
         assert_eq!(loaded.consent_version, CONSENT_VERSION);
         fs::remove_dir_all(root).expect("test state should clean up");
+    }
+
+    #[test]
+    fn explicit_apply_can_probe_an_unverified_exact_version_once() {
+        let state = PersistentState {
+            enabled: true,
+            phase: APPLY_REQUESTED_PHASE.into(),
+            target_version: Some("26.715.7063.0".into()),
+            ..PersistentState::default()
+        };
+        assert!(target_version_is_authorized(&state, Some("26.715.7063.0")));
+        assert!(!target_version_is_authorized(&state, Some("26.715.7064.0")));
+    }
+
+    #[test]
+    fn automatic_replay_requires_the_same_locally_verified_version() {
+        let state = PersistentState {
+            enabled: true,
+            phase: "waiting".into(),
+            target_version: Some("26.715.7063.0".into()),
+            verified_target_version: Some("26.715.7063.0".into()),
+            ..PersistentState::default()
+        };
+        assert!(target_version_is_authorized(&state, Some("26.715.7063.0")));
+        assert!(!target_version_is_authorized(&state, Some("26.715.7064.0")));
+        assert_eq!(waiting_phase(&state), "waiting");
+    }
+
+    #[test]
+    fn legacy_unverified_selection_never_replays_automatically() {
+        let state = PersistentState {
+            enabled: true,
+            phase: "waiting".into(),
+            target_version: Some("26.715.7063.0".into()),
+            ..PersistentState::default()
+        };
+        assert!(!target_version_is_authorized(&state, Some("26.715.7063.0")));
+        assert_eq!(waiting_phase(&state), "waiting");
+    }
+
+    #[test]
+    fn initial_explicit_probe_remains_pending_while_the_target_is_closed() {
+        let state = PersistentState {
+            enabled: true,
+            phase: "starting".into(),
+            target_version: Some("26.715.7063.0".into()),
+            ..PersistentState::default()
+        };
+        assert!(target_version_is_authorized(&state, Some("26.715.7063.0")));
+        assert_eq!(waiting_phase(&state), "starting");
     }
 
     #[test]

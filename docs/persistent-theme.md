@@ -1,6 +1,6 @@
 # “保持主题常驻”方案
 
-状态：Windows 控制器已实现，并通过准确 ChatGPT Beta 版本的常驻与清理闭环；macOS 真机验证仍待完成。
+状态：Windows 控制器已实现，并通过准确 ChatGPT Beta 版本的常驻与清理闭环；其他检测到的 Stable/Beta 版本会在用户明确应用后进行本机探测；macOS 真机验证仍待完成。
 
 这里的“常驻”不是把 CSS 永久写进 ChatGPT，也不是修改 `app.asar`。它表示用户首次选择“应用并保持完整皮肤”并明确确认后，Theme Manager 记住选择，并由一个当前用户级控制器在以后的 ChatGPT 启动中重新建立经过验证的 Full Skin 会话。
 
@@ -19,9 +19,9 @@
         ↓
 必要时安全重启为 loopback CDP 会话
         ↓
-校验版本、进程、端口、页面和主题哈希
+校验准确版本、进程、端口、页面和主题哈希
         ↓
-应用主题并持续修复页面刷新
+应用主题、读回运行时标记，并将成功的准确版本用于后续重放
 ```
 
 它是“持久选择 + 每次安全重放”，不是“永久修改应用”。
@@ -72,7 +72,7 @@ Theme Manager 的默认 Full Skin 路径是常驻，而不是一次性会话：
 1. 以后直接打开 ChatGPT 时，控制器可能需要立即正常退出并重启它一次；
 2. 只处理用户选择的 Stable 或 Beta，不触碰另一个通道；
 3. 不修改应用文件；
-4. 遇到未验证版本时保持原生，不反复重启；
+4. 未经过本机探测的版本保持原生；只有用户再次选择“应用并保持完整皮肤”时才发起一次受控探测，失败后不反复重启；
 5. 可以随时一键关闭并恢复。
 
 用户确认后，后续启动不应重复弹窗。
@@ -122,7 +122,8 @@ restore_full_skin
   "themeId": "beijing-meridian",
   "mode": "dark",
   "channel": "beta",
-  "lastVerifiedAppVersion": "26.715.3651.0"
+  "targetVersion": "26.715.3651.0",
+  "verifiedTargetVersion": "26.715.3651.0"
 }
 ```
 
@@ -130,8 +131,8 @@ restore_full_skin
 
 Theme Manager 自身更新后保留这份选择。ChatGPT 更新则进入版本门禁：
 
-- 版本已经验证：正常恢复主题；
-- 版本未知：保持原生，显示“等待兼容验证”；
+- 准确版本已经在这台电脑上验证：正常恢复主题；
+- 检测到新版本：保持原生，提示用户选择“重新应用并保持完整皮肤”进行一次受控探测；
 - 页面读回失败：清理当前注入并停止重试。
 
 因此它不会被 ChatGPT 更新“永久破坏”，但也不能承诺所有未来版本无需适配。
@@ -170,4 +171,4 @@ Windows 已完成：
 
 ## English summary
 
-Persistent theming means a durable user choice plus a per-user controller that safely replays the verified Full Skin on future launches. It never patches ChatGPT, `app.asar`, WindowsApps, or private data. The Tauri autostart plugin and Rust controller now pass an exact Windows Beta persistence and cleanup smoke test with app, port, startup-entry, and style readback. On macOS, registration is rejected from mounted DMGs or invalid app-bundle paths, and target identity is bound to Bundle ID plus executable path. Physical-Mac validation and the remaining release-candidate gates are still pending.
+Persistent theming means a durable user choice plus a per-user controller that safely replays only an exact version which has passed a local Full Skin runtime probe. A detected Stable or Beta build can run that probe only after an explicit user Apply action; an updated build otherwise remains native until it is reapplied. It never patches ChatGPT, `app.asar`, WindowsApps, or private data. The Tauri autostart plugin and Rust controller now pass an exact Windows Beta persistence and cleanup smoke test with app, port, startup-entry, and style readback. On macOS, registration is rejected from mounted DMGs or invalid app-bundle paths, and target identity is bound to Bundle ID plus executable path. Physical-Mac validation and the remaining release-candidate gates are still pending.

@@ -231,27 +231,24 @@ pub fn find_target(channel: &str) -> Result<TargetView, String> {
         .ok_or_else(|| "没有检测到所选 ChatGPT 应用".into())
 }
 
-fn full_skin_target_has_exact_verified_version(
+fn full_skin_target_can_start_runtime_probe(
     channel: &str,
     installed_version: Option<&str>,
-    tested_version: &str,
 ) -> bool {
-    channel == "beta" && installed_version == Some(tested_version)
+    safe_channel(channel) && installed_version.is_some_and(|version| !version.trim().is_empty())
 }
 
-pub fn validate_full_skin_target(target: &TargetView, tested_version: &str) -> Result<(), String> {
-    if full_skin_target_has_exact_verified_version(
-        &target.channel,
-        target.version.as_deref(),
-        tested_version,
-    ) {
-        return Ok(());
+pub fn validate_full_skin_target(target: &TargetView) -> Result<(), String> {
+    if !safe_channel(&target.channel) {
+        return Err("未知的 ChatGPT 渠道".into());
     }
-    let installed_version = target.version.as_deref().unwrap_or("未知版本");
-    Err(format!(
-        "所选 {} {} 尚未通过 Full Skin 实机验证；当前仅验证 ChatGPT Beta {tested_version}。",
-        target.label, installed_version
-    ))
+    if !full_skin_target_can_start_runtime_probe(&target.channel, target.version.as_deref()) {
+        return Err(format!(
+            "无法读取所选 {} 的准确版本；Full Skin 无法把本机兼容性探测绑定到该应用。",
+            target.label
+        ));
+    }
+    Ok(())
 }
 
 #[cfg(target_os = "windows")]
@@ -827,26 +824,19 @@ mod tests {
     }
 
     #[test]
-    fn full_skin_requires_the_exact_verified_beta_build() {
-        assert!(full_skin_target_has_exact_verified_version(
-            "beta",
-            Some("26.715.3651.0"),
-            "26.715.3651.0",
-        ));
-        assert!(!full_skin_target_has_exact_verified_version(
-            "beta",
-            Some("26.715.72221"),
-            "26.715.3651.0",
-        ));
-        assert!(!full_skin_target_has_exact_verified_version(
+    fn full_skin_runtime_probe_accepts_any_detected_stable_or_beta_build() {
+        assert!(full_skin_target_can_start_runtime_probe(
             "stable",
-            Some("26.715.3651.0"),
-            "26.715.3651.0",
+            Some("26.715.7063.0"),
         ));
-        assert!(!full_skin_target_has_exact_verified_version(
+        assert!(full_skin_target_can_start_runtime_probe(
             "beta",
-            None,
-            "26.715.3651.0",
+            Some("26.716.1000.0"),
         ));
+        assert!(!full_skin_target_can_start_runtime_probe(
+            "preview",
+            Some("26.715.3651.0"),
+        ));
+        assert!(!full_skin_target_can_start_runtime_probe("beta", None));
     }
 }

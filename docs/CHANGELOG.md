@@ -2,10 +2,11 @@
 
 ## Unreleased
 
-- Tightened the Full Skin compatibility gate to the exact ChatGPT Beta build
-  with real apply-and-restore evidence. Other channels and adjacent build
-  numbers now remain native with a clear verification message instead of
-  attempting CDP injection.
+- Replaced the temporary Beta-only Full Skin gate with a per-device runtime
+  probe. Any detected Stable or Beta build with a known exact version can be
+  explicitly applied; only a successful loopback CDP session is recorded for
+  future automatic replay. After a ChatGPT update, the manager keeps the new
+  version native until the user explicitly reapplies and completes that probe.
 
 ## 0.3.0 - 2026-07-21
 

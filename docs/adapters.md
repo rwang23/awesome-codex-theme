@@ -56,7 +56,7 @@ Version 1 does not:
 - create new ChatGPT panels or task data;
 - change account details, projects, chats, or settings;
 - patch `app.asar`, WindowsApps, or the macOS app bundle;
-- promise compatibility beyond the tested app version.
+- claim public compatibility beyond the version captured in the Registry.
 
 The first two reference screenshots supplied for this project fit the v1 target. A mockup that replaces the entire Codex information architecture does not.
 
@@ -81,7 +81,7 @@ Unknown fields are rejected. Native v1 does not accept a background image, so th
 | Full Skin | ChatGPT Beta `26.715.3651.0` | 106 real 1440×810 captures with `5.6 Sol Max`, runtime markers, selector readback, model restoration, cleanup |
 | Native fallback | ChatGPT Stable `26.715.2305.0` | strict payload generation and parser validation |
 
-Compatibility is version-bound. A new Codex release must pass a fresh probe, all repository checks, and the full screenshot run before its version is written into the Registry.
+Public compatibility evidence is version-bound. A detected Stable or Beta build may run one user-requested, loopback-only local probe; the manager automatically replays it only after that exact version has passed. A new Codex release must still pass a fresh probe, all repository checks, and the full screenshot run before its version is written into the public Registry.
 
 ## English summary
 
