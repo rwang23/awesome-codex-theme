@@ -468,6 +468,12 @@ test("desktop manager localizes from the system and combines collection, rights,
   assert.match(app, /githubRepository: \"GitHub repository\"/);
   assert.match(app, /githubRepository: \"GitHub \u4ed3\u5e93\"/);
   assert.match(app, /openExternal\(\"repository\"\)/);
+  assert.match(app, /Apply & Keep Full Skin/);
+  assert.match(app, /应用并保持完整皮肤/);
+  assert.match(app, /window\.confirm\(t\("persistenceConsent"\)\)/);
+  assert.match(app, /await window\.act\.applyFullSkin\(state\.themeId, state\.mode, channel\)/);
+  assert.match(app, /await window\.act\.enablePersistentTheme\(/);
+  assert.match(app, /Do not report a session-only skin as a durable application/);
 });
 
 test("READMEs recommend Agent installation first and manual desktop installation last", async function () {

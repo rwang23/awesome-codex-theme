@@ -104,11 +104,11 @@ npm run build
 1. Download the build for your operating system and CPU from [GitHub Releases](https://github.com/rwang23/awesome-codex-theme/releases).
 2. Quit the ChatGPT Stable or Beta app you want to theme.
 3. Open Theme Manager and choose a theme, light or dark mode, and the exact target app.
-4. Select **Apply Full Skin**.
-5. On Windows, optionally enable **Always apply this theme** for future verified launches.
-6. Select **Restore Native** whenever you want the original interface back. This also turns off Always apply.
+4. Select **Apply & Keep Full Skin** and confirm the one-time persistence notice.
+5. The selected theme is now reapplied whenever you open that verified ChatGPT target. Later **Apply & Keep** actions replace the saved choice.
+6. Select **Restore Native** whenever you want the original interface back. This also turns off persistence.
 
-The Windows implementation of **Always apply** has passed an exact ChatGPT Beta `26.715.3651.0` persistence and cleanup smoke test. It stores a user-level choice and safely replays the verified Full Skin on future launches; it never patches ChatGPT files. Unknown versions stay native. Physical-Mac persistence testing is still pending, so the macOS build must not yet be treated as verified for this feature. See [Keep My Theme On](docs/persistent-theme.md).
+The Windows implementation of **Apply & Keep Full Skin** has passed an exact ChatGPT Beta `26.715.3651.0` persistence and cleanup smoke test. After the one-time consent, it stores a user-level choice and safely replays the verified Full Skin on future launches; it never patches ChatGPT files. Unknown versions stay native. Physical-Mac persistence testing is still pending, so the macOS build must not yet be treated as verified for this feature. See [Keep My Theme On](docs/persistent-theme.md).
 
 Theme updates and app updates are independent. The manager refreshes the verified Registry on startup, so newly published themes appear immediately without reinstalling or restarting the app. A signed app update is needed only when the manager itself changes, such as its runtime, compatibility rules, security boundary, platform integration, or interface.
 

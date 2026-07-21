@@ -48,9 +48,10 @@
 - A "macOS auto-update ready" claim additionally requires signed, notarized
   artifacts and a macOS action-after readback; source compatibility alone is
   not enough
-- Windows opt-in persistence is implemented and verified against ChatGPT Beta
-  `26.715.3651.0`. It is a durable user choice plus safe replay, never an app
-  patch. macOS persistence rejects mounted-DMG and invalid app-bundle paths,
+- Windows persistence is enabled by the main Full Skin action after one explicit
+  consent and is verified against ChatGPT Beta `26.715.3651.0`. Each later
+  Apply replaces the durable choice through safe replay, never an app patch.
+  macOS persistence rejects mounted-DMG and invalid app-bundle paths,
   binds target actions to Bundle ID plus executable path, and remains
   unverified on physical hardware.
 - The hosted community Beta is a separate private service. Uploads remain
@@ -135,8 +136,8 @@ Keep `docs/README.md` and this brief current. Record delivered changes in
 - The Theme Manager may cache a hash-verified background in its own application
   data and apply its fixed runtime to an exact registered Stable or Beta
   session. It must not write ChatGPT application files, private data, or chats.
-- `apps/theme-manager/src-tauri/src/persistence.rs` owns the opt-in per-user
-  replay controller. Restore must disable it before cleaning the live runtime.
+- `apps/theme-manager/src-tauri/src/persistence.rs` owns the consent-gated
+  per-user replay controller. Restore must disable it before cleaning the live runtime.
 - The portable Windows helper only copies a Native fallback string.
 - Workflow lint: `C:\Users\desre\.codex\tools\workflow-lint.ps1`
 

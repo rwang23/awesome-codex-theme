@@ -74,11 +74,11 @@ Rust owns:
 - target and WebSocket validation;
   - early and current-page injection;
   - restore state;
-  - opt-in per-user persistence state, autostart, version gates, and bounded replay;
+  - consent-gated per-user persistence state, autostart, version gates, and bounded replay;
   - Native fallback copy;
 - release-update state.
 
-By default, the runtime session is held in process memory. The user may explicitly enable the per-user persistence controller, which stores only a declarative choice and safely replays the verified session on future launches. Restore disables that controller, unregisters autostart, removes the current runtime, and leaves ChatGPT files untouched.
+The main **Apply & Keep Full Skin** action asks for explicit consent once, then stores the declarative selection in a per-user controller and safely replays the verified session on future launches. A later Apply replaces that saved theme choice. Restore disables the controller, unregisters autostart, removes the current runtime, and leaves ChatGPT files untouched. This is safe replay rather than a permanent application patch.
 
 ## Delivery surfaces
 

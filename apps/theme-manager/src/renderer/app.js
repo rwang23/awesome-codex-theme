@@ -42,13 +42,13 @@ const translations = {
     captureAlt: "real Beta capture",
     originalRights: "Original · CC0",
     fanArtRights: "Unofficial fan art · non-commercial",
-    applyStep: "01 / APPLY",
-    applyDescription: "Background, materials, and theme copy",
-    applySkin: "Apply Full Skin",
-    reapplySkin: "Reapply Full Skin",
+    applyStep: "01 / APPLY & KEEP",
+    applyDescription: "Background, materials, and persistent replay",
+    applySkin: "Apply & Keep Full Skin",
+    reapplySkin: "Reapply & Keep Full Skin",
     applyingSkin: "Verifying and applying…",
     restoreSkin: "Restore native",
-    keepTheme: "Always apply this theme",
+    keepTheme: "Keep this theme after ChatGPT restarts",
     persistenceDisabled: "Off · no login task",
     persistenceStarting: "Starting the per-user controller",
     persistenceWaiting: "Ready · waiting for ChatGPT",
@@ -57,7 +57,7 @@ const translations = {
     persistenceBlocked: "Paused · the installed version is not verified",
     persistenceError: "Paused after a bounded failure",
     persistenceOther: "Always on: {theme} · {mode}",
-    persistenceConsent: "Keep this theme on across future ChatGPT launches?\n\nTheme Manager will start for your user account at sign-in. When you open the selected, verified ChatGPT version normally, it may close and relaunch that exact app once with a loopback-only debugging port. It never edits ChatGPT files, shortcuts, or chats. Unknown versions stay native. You can turn this off here at any time.",
+    persistenceConsent: "Keep this theme after every future launch of the selected, verified ChatGPT version?\n\nThis is the normal result of Apply & Keep Full Skin. Theme Manager will start for your user account at sign-in. When you open ChatGPT normally, it may close and relaunch only that exact app once with a loopback-only debugging port. It never edits ChatGPT files, shortcuts, or chats. Unknown versions stay native. You can turn this off here at any time.",
     copyNative: "Copy Native palette only",
     skinIdle: "Theme packs contain only declarative data and images. The manager uses a temporary loopback-only debug session to load the background without modifying WindowsApps, app.asar, or ChatGPT private data.",
     skinActive: "Active in {target}: {theme} · {mode}. Restore the skin first; quit and reopen ChatGPT normally to close the debug port.",
@@ -82,7 +82,7 @@ const translations = {
     toastCatalogUpdated: "New themes are ready now. No app update or restart needed.",
     toastNativeCopied: "Native palette copied. Import it from ChatGPT Appearance as a lightweight fallback.",
     toastCopyFailed: "Copy failed. Try again.",
-    toastSkinApplied: "The Full Skin is active in the selected ChatGPT session.",
+    toastSkinApplied: "The Full Skin is active and will be reapplied on future verified launches.",
     toastApplyFailed: "Could not apply the Full Skin.",
     toastSkinRestored: "Full Skin removed. Quit and reopen ChatGPT normally to close the debug port.",
     toastRestoreFailed: "Could not restore the native interface.",
@@ -139,13 +139,13 @@ const translations = {
     captureAlt: "Beta 实机截图",
     originalRights: "原创 · CC0",
     fanArtRights: "非官方 Fan Art · 非商业",
-    applyStep: "01 / 应用",
-    applyDescription: "完整背景、材质与主题文字",
-    applySkin: "应用完整皮肤",
-    reapplySkin: "重新应用完整皮肤",
+    applyStep: "01 / 应用并保持",
+    applyDescription: "完整背景、材质与以后启动时的自动恢复",
+    applySkin: "应用并保持完整皮肤",
+    reapplySkin: "重新应用并保持完整皮肤",
     applyingSkin: "正在校验并应用…",
     restoreSkin: "恢复原生",
-    keepTheme: "始终应用这套主题",
+    keepTheme: "重启 ChatGPT 后继续使用这套主题",
     persistenceDisabled: "已关闭，不会随登录运行",
     persistenceStarting: "正在启动当前用户级控制器",
     persistenceWaiting: "已就绪，等待打开 ChatGPT",
@@ -154,7 +154,7 @@ const translations = {
     persistenceBlocked: "已暂停，当前版本尚未验证",
     persistenceError: "有限重试失败，已暂停",
     persistenceOther: "当前常驻：{theme} · {mode}",
-    persistenceConsent: "要让这套主题在以后打开 ChatGPT 时继续生效吗？\n\nTheme Manager 会为当前用户注册登录启动项。当你正常打开所选且已验证的 ChatGPT 版本时，控制器可能先关闭并只重开这个应用一次，再通过仅限本机回环的调试端口加载主题。它不会修改 ChatGPT 文件、快捷方式或聊天；未知版本会保持原生界面。你可以随时在这里关闭。",
+    persistenceConsent: "要让这套主题在以后每次打开所选且已验证的 ChatGPT 版本时继续生效吗？\n\n这也是“应用并保持完整皮肤”的默认结果。Theme Manager 会为当前用户注册登录启动项。当你正常打开 ChatGPT 时，控制器可能先关闭并只重开这一个准确应用一次，再通过仅限本机回环的调试端口加载主题。它不会修改 ChatGPT 文件、快捷方式或聊天；未知版本会保持原生界面。你可以随时在这里关闭。",
     copyNative: "只复制原生配色",
     skinIdle: "主题包只含声明式配置与图片。管理器通过仅限本机回环的临时调试会话加载背景，不修改 WindowsApps、app.asar 或 ChatGPT 私有数据。",
     skinActive: "正在 {target} 使用 {theme} · {mode}。恢复后如需关闭调试端口，请退出并正常重开 ChatGPT。",
@@ -179,7 +179,7 @@ const translations = {
     toastCatalogUpdated: "新主题已经可以直接使用，无需更新或重启应用。",
     toastNativeCopied: "原生配色字符串已复制，可在 ChatGPT 外观设置中作为轻量回退导入。",
     toastCopyFailed: "复制失败，请重试。",
-    toastSkinApplied: "完整皮肤已在所选 ChatGPT 会话中生效。",
+    toastSkinApplied: "完整皮肤已生效，并会在以后启动已验证版本时自动恢复。",
     toastApplyFailed: "无法应用完整皮肤。",
     toastSkinRestored: "已移除完整皮肤。退出并正常重开 ChatGPT 可同时关闭调试端口。",
     toastRestoreFailed: "无法恢复原生界面。",
@@ -573,13 +573,19 @@ function renderSkinState() {
     : t("skinIdle");
 }
 
+function persistenceMatchesSelection(persistence, channel = elements.targetSelect.value) {
+  return Boolean(
+    persistence?.enabled
+    && persistence.themeId === state.themeId
+    && persistence.mode === state.mode
+    && persistence.channel === channel,
+  );
+}
+
 function renderPersistenceState() {
   const persistence = state.persistenceState || { enabled: false, phase: "disabled" };
   const channel = elements.targetSelect.value;
-  const sameSelection = persistence.enabled
-    && persistence.themeId === state.themeId
-    && persistence.mode === state.mode
-    && persistence.channel === channel;
+  const sameSelection = persistenceMatchesSelection(persistence, channel);
   elements.persistenceToggle.checked = sameSelection;
   elements.persistenceControl.dataset.phase = persistence.phase;
 
@@ -772,13 +778,37 @@ elements.copyTheme.addEventListener("click", async () => {
 elements.applySkin.addEventListener("click", async () => {
   const channel = elements.targetSelect.value;
   if (!channel || !state.themeId) return;
+  const previousPersistence = state.persistenceState;
+  const persistenceReady = persistenceMatchesSelection(previousPersistence, channel)
+    && previousPersistence.autostartEnabled;
+  if (!previousPersistence?.enabled && !window.confirm(t("persistenceConsent"))) return;
   elements.applySkin.disabled = true;
   elements.applySkinLabel.textContent = t("applyingSkin");
+  let skinApplied = false;
   try {
     state.skinState = await window.act.applyFullSkin(state.themeId, state.mode, channel);
+    skinApplied = true;
+    if (!persistenceReady) {
+      state.persistenceState = await window.act.enablePersistentTheme(
+        state.themeId,
+        state.mode,
+        channel,
+        true,
+      );
+    }
     renderSkinState();
+    renderPersistenceState();
     toast(t("toastSkinApplied"));
   } catch (error) {
+    if (skinApplied) {
+      try {
+        state.skinState = await window.act.restoreFullSkin();
+      } catch {
+        // Do not report a session-only skin as a durable application.
+      }
+    }
+    state.persistenceState = previousPersistence;
+    renderPersistenceState();
     toast(friendlyError(error, "toastApplyFailed"), "error");
   } finally {
     elements.applySkin.disabled = state.targets.length === 0 || !state.themeId;

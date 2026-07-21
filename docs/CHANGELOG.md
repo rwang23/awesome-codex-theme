@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Changed the main Full Skin action from session-only application to
+  consent-gated **Apply & Keep** behavior. Once confirmed, later Apply actions
+  replace the durable selection; Restore Native disables it.
 - Replaced the fragile `app://` blob-based Full Skin image path with a
   verified, fixed artwork element behind the app root. Background art now spans
   the main workspace and translucent sidebar materials rather than degrading to
