@@ -1,4 +1,5 @@
 use std::{
+    collections::HashSet,
     fs,
     net::{TcpListener, TcpStream},
     path::PathBuf,
@@ -25,11 +26,13 @@ use crate::{
 const RUNTIME_CSS: &str = include_str!("../../../../packages/full-skin/runtime.css");
 const RUNTIME_JS: &str = include_str!("../../../../packages/full-skin/runtime.js");
 const RUNTIME_FORMAT: &str = "act-full-skin-v1";
+const RUNTIME_IMPLEMENTATION: &str = "act-full-skin-runtime-v2";
 const MAX_ART_BYTES: usize = 16 * 1024 * 1024;
 const APPLY_TIMEOUT: Duration = Duration::from_secs(45);
 const CDP_CALL_TIMEOUT: Duration = Duration::from_secs(20);
 const CDP_CLEANUP_TIMEOUT: Duration = Duration::from_secs(5);
-const TARGET_MONITOR_INTERVAL: Duration = Duration::from_millis(600);
+const TARGET_DISCOVERY_INTERVAL: Duration = Duration::from_millis(1200);
+const TARGET_HEALTH_INTERVAL: Duration = Duration::from_secs(5);
 const TARGET_MONITOR_MAX_ERRORS: u8 = 12;
 const TARGET_MONITOR_STOP_TIMEOUT: Duration = Duration::from_secs(8);
 const TARGET_RUNTIME_STATE_TEMPLATE: &str = r#"(() => {
@@ -37,22 +40,24 @@ const TARGET_RUNTIME_STATE_TEMPLATE: &str = r#"(() => {
   if (document.readyState === "loading" || !document.body) {
     return { ready: false, healthy: false };
   }
-  const art = document.getElementById("act-full-skin-art");
+  const root = document.documentElement;
   const state = window.__ACT_FULL_SKIN_STATE__;
+  const artValue = root.style.getPropertyValue("--act-art-image");
+  const bodyBackground = getComputedStyle(document.body).backgroundImage;
   return {
     ready: true,
     healthy: Boolean(
-      document.documentElement.classList.contains("act-full-skin")
+      root.classList.contains("act-full-skin")
       && state?.version === "act-full-skin-v1"
+      && state?.implementationVersion === "act-full-skin-runtime-v2"
       && state?.themeId === expected.themeId
       && state?.mode === expected.mode
-      && art instanceof HTMLImageElement
-      && art.parentElement === document.body
-      && art.complete
-      && art.naturalWidth > 0
-      && art.naturalHeight > 0
-      && art.currentSrc.startsWith("data:image/png;base64,")
-      && getComputedStyle(art).position === "fixed"
+      && state?.artwork?.loaded === true
+      && typeof state?.ensure === "function"
+      && typeof state?.artUrl === "string"
+      && state.artUrl.startsWith("blob:")
+      && artValue.includes(state.artUrl)
+      && bodyBackground.includes(state.artUrl)
     ),
   };
 })()"#;
@@ -78,6 +83,7 @@ pub struct SkinRuntimeView {
 struct InjectedTarget {
     id: String,
     script_id: String,
+    last_health_check: Instant,
 }
 
 #[derive(Clone)]
@@ -458,6 +464,32 @@ fn target_runtime_state(
     ))
 }
 
+fn evaluate_target_runtime(
+    socket: &mut CdpSocket,
+    request_id: u64,
+    target_id: &str,
+    script: &str,
+) -> Result<(), String> {
+    let result = cdp_call(
+        socket,
+        request_id,
+        "Runtime.evaluate",
+        json!({
+            "expression": script,
+            "awaitPromise": true,
+            "returnByValue": true
+        }),
+    )?;
+    let value = &result["result"]["value"];
+    if value["pass"].as_bool() != Some(true)
+        || value["version"].as_str() != Some(RUNTIME_FORMAT)
+        || value["implementationVersion"].as_str() != Some(RUNTIME_IMPLEMENTATION)
+    {
+        return Err(format!("{target_id} Full Skin 运行时验证失败"));
+    }
+    Ok(())
+}
+
 fn inject_target(target: CdpTarget, script: &str) -> Result<InjectedTarget, String> {
     let mut socket = connect_target(&target)?;
     let early = cdp_call(
@@ -470,24 +502,17 @@ fn inject_target(target: CdpTarget, script: &str) -> Result<InjectedTarget, Stri
         .as_str()
         .ok_or("CDP 没有返回早期注入标识")?
         .to_owned();
-    let result = cdp_call(
-        &mut socket,
-        2,
-        "Runtime.evaluate",
-        json!({
-            "expression": script,
-            "awaitPromise": true,
-            "returnByValue": true
-        }),
-    )?;
-    let value = &result["result"]["value"];
-    if value["pass"].as_bool() != Some(true) || value["version"].as_str() != Some(RUNTIME_FORMAT) {
-        return Err(format!("{} Full Skin 运行时验证失败", target.id));
-    }
+    evaluate_target_runtime(&mut socket, 2, &target.id, script)?;
     Ok(InjectedTarget {
         id: target.id,
         script_id,
+        last_health_check: Instant::now(),
     })
+}
+
+fn refresh_target(target: &CdpTarget, script: &str) -> Result<(), String> {
+    let mut socket = connect_target(target)?;
+    evaluate_target_runtime(&mut socket, 1, &target.id, script)
 }
 
 fn inject_targets(targets: Vec<CdpTarget>, script: String) -> Result<Vec<InjectedTarget>, String> {
@@ -516,6 +541,28 @@ fn replace_injected_target(targets: &Arc<Mutex<Vec<InjectedTarget>>>, replacemen
     targets.push(replacement);
 }
 
+fn retain_active_targets(targets: &Arc<Mutex<Vec<InjectedTarget>>>, active_ids: &HashSet<String>) {
+    targets
+        .lock()
+        .unwrap_or_else(|poisoned| poisoned.into_inner())
+        .retain(|target| active_ids.contains(&target.id));
+}
+
+fn mark_target_health_checked(targets: &Arc<Mutex<Vec<InjectedTarget>>>, target_id: &str) {
+    if let Some(target) = targets
+        .lock()
+        .unwrap_or_else(|poisoned| poisoned.into_inner())
+        .iter_mut()
+        .find(|target| target.id == target_id)
+    {
+        target.last_health_check = Instant::now();
+    }
+}
+
+fn health_check_due(target: &InjectedTarget, now: Instant) -> bool {
+    now.saturating_duration_since(target.last_health_check) >= TARGET_HEALTH_INTERVAL
+}
+
 fn remove_from_targets(
     targets: Vec<CdpTarget>,
     injected_targets: Vec<InjectedTarget>,
@@ -527,7 +574,11 @@ fn remove_from_targets(
       document.getElementById("act-full-skin-style")?.remove();
       document.getElementById("act-full-skin-caption")?.remove();
       document.getElementById("act-full-skin-art")?.remove();
-      document.documentElement.classList.remove("act-full-skin", "act-full-skin-home");
+      const root = document.documentElement;
+      root.classList.remove("act-full-skin", "act-full-skin-home", "act-full-skin-task");
+      for (const property of [...root.style]) {
+        if (property.startsWith("--act-")) root.style.removeProperty(property);
+      }
       return true;
     })()"#;
     let mut errors = Vec::new();
@@ -608,11 +659,30 @@ async fn recover_target_runtime(
     if !listener_matches_session_target(session).await? {
         return Ok(false);
     }
+    let target_to_refresh = target.clone();
+    tauri::async_runtime::spawn_blocking(move || refresh_target(&target_to_refresh, &script))
+        .await
+        .map_err(|error| format!("Full Skin 页面恢复任务失败：{error}"))??;
+    mark_target_health_checked(&session.targets, &target.id);
+    Ok(true)
+}
+
+async fn register_target_runtime(
+    session: &SkinSession,
+    target: CdpTarget,
+    script: String,
+) -> Result<bool, String> {
+    if session.monitor_stop.load(Ordering::Acquire) {
+        return Ok(true);
+    }
+    if !listener_matches_session_target(session).await? {
+        return Ok(false);
+    }
     let injected_target = target.clone();
     let injected =
         tauri::async_runtime::spawn_blocking(move || inject_target(injected_target, &script))
             .await
-            .map_err(|error| format!("Full Skin 重新注入任务失败：{error}"))??;
+            .map_err(|error| format!("Full Skin 新页面注入任务失败：{error}"))??;
     replace_injected_target(&session.targets, injected);
     Ok(true)
 }
@@ -631,9 +701,28 @@ async fn monitor_skin_session(session: SkinSession, script: String) {
         match cdp_targets(session.port).await {
             Ok((_, targets)) => {
                 let mut had_error = false;
+                let active_ids: HashSet<String> =
+                    targets.iter().map(|target| target.id.clone()).collect();
+                retain_active_targets(&session.targets, &active_ids);
+                let injected = injected_targets_snapshot(&session.targets);
+                let now = Instant::now();
                 for target in targets {
                     if session.monitor_stop.load(Ordering::Acquire) {
                         break;
+                    }
+                    let Some(record) = injected.iter().find(|record| record.id == target.id) else {
+                        match register_target_runtime(&session, target, script.clone()).await {
+                            Ok(true) => {}
+                            Ok(false) => {
+                                keep_monitoring = false;
+                                break;
+                            }
+                            Err(_) => had_error = true,
+                        }
+                        continue;
+                    };
+                    if !health_check_due(record, now) {
+                        continue;
                     }
                     let health = target_runtime_health(
                         target.clone(),
@@ -642,7 +731,9 @@ async fn monitor_skin_session(session: SkinSession, script: String) {
                     )
                     .await;
                     match health {
-                        Ok((false, _)) | Ok((true, true)) => {}
+                        Ok((false, _)) | Ok((true, true)) => {
+                            mark_target_health_checked(&session.targets, &target.id);
+                        }
                         Ok((true, false)) => {
                             match recover_target_runtime(&session, target, script.clone()).await {
                                 Ok(true) => {}
@@ -669,7 +760,7 @@ async fn monitor_skin_session(session: SkinSession, script: String) {
         if !keep_monitoring || consecutive_errors >= TARGET_MONITOR_MAX_ERRORS {
             break;
         }
-        tokio::time::sleep(TARGET_MONITOR_INTERVAL).await;
+        tokio::time::sleep(TARGET_DISCOVERY_INTERVAL).await;
     }
     session.monitor_running.store(false, Ordering::Release);
 }
@@ -805,6 +896,7 @@ mod tests {
         };
         let script = runtime_script(&skin, b"\x89PNG\r\n\x1a\n").expect("runtime should build");
         assert!(script.contains("act-full-skin-v1"));
+        assert!(script.contains("act-full-skin-runtime-v2"));
         assert!(script.contains("test-theme"));
         assert!(script.contains("DOMContentLoaded"));
         assert!(!script.contains("__ACT_THEME_JSON__"));
@@ -842,14 +934,35 @@ mod tests {
     }
 
     #[test]
-    fn runtime_health_check_requires_the_fixed_data_image_layer() {
+    fn runtime_health_check_requires_the_blob_backed_document_layer() {
         let expression = target_runtime_state_expression("test-theme", "dark")
             .expect("runtime health check should build");
         assert!(expression.contains("test-theme"));
         assert!(expression.contains("state?.version === \"act-full-skin-v1\""));
-        assert!(expression.contains("art.parentElement === document.body"));
-        assert!(expression.contains("art.currentSrc.startsWith(\"data:image/png;base64,\")"));
-        assert!(expression.contains("getComputedStyle(art).position === \"fixed\""));
+        assert!(
+            expression.contains("state?.implementationVersion === \"act-full-skin-runtime-v2\"")
+        );
+        assert!(expression.contains("state.artUrl.startsWith(\"blob:\")"));
+        assert!(expression.contains("artValue.includes(state.artUrl)"));
+        assert!(expression.contains("bodyBackground.includes(state.artUrl)"));
+    }
+
+    #[test]
+    fn health_checks_run_less_often_than_target_discovery() {
+        let now = Instant::now();
+        let recent = InjectedTarget {
+            id: "recent".into(),
+            script_id: "script-recent".into(),
+            last_health_check: now,
+        };
+        let due = InjectedTarget {
+            id: "due".into(),
+            script_id: "script-due".into(),
+            last_health_check: now - TARGET_HEALTH_INTERVAL,
+        };
+        assert!(!health_check_due(&recent, now));
+        assert!(health_check_due(&due, now));
+        assert!(TARGET_HEALTH_INTERVAL > TARGET_DISCOVERY_INTERVAL * 3);
     }
 
     #[test]

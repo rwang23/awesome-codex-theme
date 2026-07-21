@@ -314,8 +314,11 @@ test("Tauri manager keeps theme values in Rust and limits desktop capabilities",
   assert.match(runtime, /DOMContentLoaded/);
   assert.match(runtime, /monitor_skin_session/);
   assert.match(runtime, /recover_target_runtime/);
+  assert.match(runtime, /register_target_runtime/);
+  assert.match(runtime, /refresh_target/);
   assert.match(runtime, /target_runtime_state/);
-  assert.match(runtime, /TARGET_MONITOR_INTERVAL/);
+  assert.match(runtime, /TARGET_DISCOVERY_INTERVAL/);
+  assert.match(runtime, /TARGET_HEALTH_INTERVAL/);
   assert.match(runtime, /monitor_stop/);
   assert.match(runtime, /app:\/\//);
   assert.match(runtime, /127\.0\.0\.1/);
@@ -326,20 +329,28 @@ test("Tauri manager keeps theme values in Rust and limits desktop capabilities",
   const fullSkinCss = await readFile(path.join(ROOT, "packages", "full-skin", "runtime.css"), "utf8");
   assert.match(fullSkinRuntime, /what should we work on\(\?: in workspace\)\?/);
   assert.match(fullSkinRuntime, /h1, h2, \[class\*='title'\]/);
-  assert.doesNotMatch(fullSkinRuntime, /URL\.createObjectURL|URL\.revokeObjectURL/);
-  assert.match(fullSkinRuntime, /act-full-skin-art/);
-  assert.match(fullSkinRuntime, /art\.src = imageData/);
+  assert.match(fullSkinRuntime, /URL\.createObjectURL/);
+  assert.match(fullSkinRuntime, /URL\.revokeObjectURL/);
+  assert.match(fullSkinRuntime, /--act-art-image/);
+  assert.doesNotMatch(fullSkinRuntime, /createElement\("img"\)|art\.src = imageData/);
+  assert.match(fullSkinRuntime, /installToken/);
+  assert.match(fullSkinRuntime, /metrics/);
   assert.match(fullSkinRuntime, /new MutationObserver\(\(\) =>/);
-  assert.match(fullSkinRuntime, /syncTimer = setTimeout/);
-  assert.match(fullSkinCss, /#act-full-skin-art/);
-  assert.match(fullSkinCss, /position: fixed !important/);
-  assert.match(fullSkinCss, /html\.act-full-skin #root/);
-  assert.doesNotMatch(fullSkinCss, /var\(--act-art\)/);
-  assert.match(smoke, /artwork\.parent === "BODY"/);
-  assert.match(smoke, /artwork\.currentSrc\.startsWith\("data:image\/png;base64,"\)/);
+  assert.match(fullSkinRuntime, /clearTimeout\(ensureTimer\)/);
+  assert.match(fullSkinRuntime, /}, 180\)/);
+  assert.match(fullSkinRuntime, /}, 5000\)/);
+  assert.match(fullSkinCss, /background-image: var\(--act-art-image\)/);
+  assert.match(fullSkinCss, /bg-token-main-surface-primary/);
+  assert.match(fullSkinCss, /app-shell-main-content-top-fade/);
+  assert.doesNotMatch(fullSkinCss, /#act-full-skin-art/);
+  assert.match(smoke, /documentBackground/);
+  assert.match(smoke, /exercisePublicBetaRoute/);
+  assert.match(smoke, /privacy-safe SPA route navigation/);
+  assert.doesNotMatch(smoke, /artwork\.currentSrc\.startsWith\("data:image\/png;base64,"\)/);
   assert.match(smoke, /Page\.reload/);
   assert.match(smoke, /Beta Full Skin after document navigation/);
   assert.match(smoke, /reloadedBetaState/);
+  assert.match(capture, /documentBackground/);
   assert.match(platform, /windows_full_skin_launch_arguments/);
   assert.match(platform, /hidden_command\(executable\)/);
   assert.doesNotMatch(platform, /IApplicationActivationManager/);
@@ -393,19 +404,22 @@ test("real screenshot evidence covers every mode and confirms Beta restoration",
   assert.equal(manifest.fixture.modelRestoredAfterCapture, true);
   assert.equal(manifest.fixture.nativeSettingsChanged, false);
   assert.equal(manifest.runtime.format, "act-full-skin-v1");
+  assert.equal(manifest.runtime.implementationVersion, "act-full-skin-runtime-v2");
   assert.equal(manifest.runtime.earlyInjection, true);
   assert.equal(manifest.runtime.removedAfterCapture, true);
   assert.equal(manifest.captures.length, 106);
   assert.equal(manifest.captures.every(function (capture) {
     return capture.runtimeSha256 === manifest.runtime.sha256
       && capture.markerVersion === "act-full-skin-v1"
+      && capture.implementationVersion === "act-full-skin-runtime-v2"
       && capture.modelLabel === "5.6 Sol Max"
       && capture.selectors.main === true
       && capture.selectors.composer === true
       && capture.artwork?.complete === true
-      && capture.artwork.parent === "BODY"
-      && capture.artwork.position === "fixed"
-      && capture.artwork.source === true;
+      && capture.artwork.width > 0
+      && capture.artwork.height > 0
+      && capture.artwork.source === true
+      && capture.artwork.documentBackground === true;
   }), true);
   assert.equal(new Set(manifest.captures.map(function (capture) {
     return capture.themeId + "|" + capture.mode;

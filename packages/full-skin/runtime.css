@@ -12,16 +12,18 @@ html.act-full-skin #root > div {
 }
 
 html.act-full-skin body {
-  position: relative !important;
   min-height: 100vh !important;
-  isolation: isolate;
-  background: transparent !important;
+  background-color: var(--act-background) !important;
+  background-image: var(--act-art-image) !important;
+  background-position: var(--act-art-position) !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+  background-attachment: fixed !important;
   color: var(--act-text);
 }
 
 html.act-full-skin #root {
-  position: relative !important;
-  z-index: 1 !important;
+  background: transparent !important;
 }
 
 html.act-full-skin .app-header-tint {
@@ -54,18 +56,6 @@ html.act-full-skin [role="main"] {
     ) !important;
 }
 
-#act-full-skin-art {
-  position: fixed !important;
-  z-index: 0 !important;
-  inset: 0 !important;
-  width: 100% !important;
-  height: 100% !important;
-  object-fit: cover !important;
-  object-position: var(--act-art-position) !important;
-  pointer-events: none !important;
-  user-select: none !important;
-}
-
 html.act-full-skin:not(.act-full-skin-home) main.main-surface,
 html.act-full-skin:not(.act-full-skin-home) [role="main"] {
   background:
@@ -75,6 +65,17 @@ html.act-full-skin:not(.act-full-skin-home) [role="main"] {
       color-mix(in srgb, var(--act-background) 28%, transparent) 58%,
       color-mix(in srgb, var(--act-background) 8%, transparent) 100%
     ) !important;
+}
+
+html.act-full-skin main.main-surface [class~="bg-token-main-surface-primary"][class~="h-full"][class~="w-full"],
+html.act-full-skin main.main-surface .app-shell-main-content-frame,
+html.act-full-skin main.main-surface .thread-scroll-container .bg-gradient-to-t.from-token-main-surface-primary {
+  background: transparent !important;
+}
+
+html.act-full-skin main.main-surface .app-shell-main-content-top-fade {
+  display: none !important;
+  background: transparent !important;
 }
 
 html.act-full-skin .composer-surface-chrome,

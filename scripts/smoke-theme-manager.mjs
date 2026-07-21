@@ -9,10 +9,14 @@ const ROOT = path.resolve(SCRIPT_DIR, "..");
 const APPLY = process.argv.includes("--apply");
 const DEBUG = process.argv.includes("--debug");
 const PERSISTENCE = process.argv.includes("--persistence");
+const ACTIVE_RUNTIME = process.argv.includes("--active-runtime");
 const SEED_LOCAL_ART = process.argv.includes("--seed-local-art");
 const MANAGER_PORT = Number(argumentValue("--manager-port") || process.env.ACT_MANAGER_CDP_PORT || "0");
 const MANAGER_EXECUTABLE = argumentValue("--manager-exe") || process.env.ACT_MANAGER_EXE;
 const REQUESTED_BETA_PORT = Number(argumentValue("--beta-port") || "0");
+const BETA_SCREENSHOT = argumentValue("--beta-screenshot");
+const CONVERSATION_LABEL = argumentValue("--conversation-label");
+const CONVERSATION_SCREENSHOT = argumentValue("--conversation-screenshot");
 const THEME_ID = argumentValue("--theme") || "qinglan-odyssey";
 const MODE = argumentValue("--mode") || "dark";
 const MANAGER_EXE = MANAGER_EXECUTABLE
@@ -181,13 +185,13 @@ function betaRuntimeCandidates() {
   return candidates;
 }
 
-async function discoverBetaTarget(timeout = 60000) {
+async function discoverBetaTarget(timeout = 60000, preferredPort = REQUESTED_BETA_PORT) {
   const startedAt = Date.now();
   let lastError;
   while (Date.now() - startedAt < timeout) {
     try {
-      const candidates = REQUESTED_BETA_PORT
-        ? [{ port: REQUESTED_BETA_PORT }]
+      const candidates = preferredPort
+        ? [{ port: preferredPort }]
         : betaRuntimeCandidates();
       for (const candidate of candidates) {
         try {
@@ -325,34 +329,262 @@ async function waitFor(client, expression, label, timeout = 30000) {
 
 function expectedFullSkinStateExpression() {
   return `(() => {
-    const artwork = document.getElementById("act-full-skin-art");
+    const runtime = window.__ACT_FULL_SKIN_STATE__;
+    const artValue = document.documentElement.style.getPropertyValue("--act-art-image");
+    const bodyBackground = document.body ? getComputedStyle(document.body).backgroundImage : "";
     const state = {
-      themeId: window.__ACT_FULL_SKIN_STATE__?.themeId,
-      mode: window.__ACT_FULL_SKIN_STATE__?.mode,
+      version: runtime?.version,
+      implementationVersion: runtime?.implementationVersion,
+      themeId: runtime?.themeId,
+      mode: runtime?.mode,
       root: document.documentElement.classList.contains("act-full-skin"),
+      home: document.documentElement.classList.contains("act-full-skin-home"),
+      task: document.documentElement.classList.contains("act-full-skin-task"),
       style: Boolean(document.getElementById("act-full-skin-style")),
       caption: Boolean(document.getElementById("act-full-skin-caption")),
-      artwork: artwork instanceof HTMLImageElement ? {
-        complete: artwork.complete,
-        width: artwork.naturalWidth,
-        height: artwork.naturalHeight,
-        parent: artwork.parentElement?.tagName,
-        position: getComputedStyle(artwork).position,
-        source: artwork.currentSrc.startsWith("data:image/png;base64,")
-      } : null
+      artwork: runtime?.artwork,
+      metrics: runtime?.metrics ? { ...runtime.metrics } : null,
+      source: runtime?.artUrl?.startsWith("blob:") === true,
+      documentBackground: Boolean(runtime?.artUrl)
+        && artValue.includes(runtime.artUrl)
+        && bodyBackground.includes(runtime.artUrl)
     };
-    return state.themeId === ${JSON.stringify(THEME_ID)}
+    return state.version === "act-full-skin-v1"
+      && state.implementationVersion === "act-full-skin-runtime-v2"
+      && state.themeId === ${JSON.stringify(THEME_ID)}
       && state.mode === ${JSON.stringify(MODE)}
       && state.root
       && state.style
       && state.caption
-      && state.artwork?.complete
+      && state.artwork?.loaded
       && state.artwork.width > 0
       && state.artwork.height > 0
-      && state.artwork.parent === "BODY"
-      && state.artwork.position === "fixed"
-      && state.artwork.source ? state : null;
+      && state.source
+      && state.documentBackground ? state : null;
   })()`;
+}
+
+async function captureClientScreenshot(client, destination) {
+  if (!destination) return null;
+  const screenshot = await client.send("Page.captureScreenshot", {
+    format: "png",
+    fromSurface: true,
+    captureBeyondViewport: false,
+    optimizeForSpeed: true,
+  }, 90000);
+  const bytes = Buffer.from(screenshot.data, "base64");
+  await writeFile(path.resolve(destination), bytes);
+  return {
+    path: path.resolve(destination),
+    sha256: sha256(bytes),
+    bytes: bytes.length,
+  };
+}
+
+async function exercisePublicBetaRoute(beta, taskScreenshotPath) {
+  const publicRoute = await evaluate(beta, `(() => {
+    const labels = ["plugins", "scheduled", "pull requests", "sites", "插件", "已安排", "拉取请求", "站点"];
+    const controls = [...document.querySelectorAll("a, button, [role='button']")];
+    const target = controls.find((control) => {
+      const label = (control.textContent || "").trim().replace(/\\s+/g, " ").toLocaleLowerCase();
+      return labels.some((candidate) => label === candidate || label.startsWith(candidate + " "));
+    });
+    if (!target) return null;
+    const label = (target.textContent || "").trim().replace(/\\s+/g, " ");
+    target.click();
+    return { label, tagName: target.tagName };
+  })()`);
+  invariant(publicRoute, "No privacy-safe built-in Beta route was available for SPA navigation");
+
+  const taskState = await waitFor(
+    beta,
+    `(() => {
+      const state = ${expectedFullSkinStateExpression()};
+      return state && state.task && !state.home ? state : null;
+    })()`,
+    "Beta Full Skin after privacy-safe SPA route navigation",
+    30000,
+  );
+  const baseline = taskState.metrics;
+  await delay(1200);
+  const settled = await evaluate(beta, expectedFullSkinStateExpression());
+  invariant(settled, "Full Skin became unhealthy while the SPA route was settled");
+  invariant(
+    settled.metrics.ensureCalls - baseline.ensureCalls <= 2,
+    "Full Skin performed excessive renderer repair work on a settled route",
+  );
+  const taskScreenshot = await captureClientScreenshot(beta, taskScreenshotPath);
+
+  const returnedHome = await evaluate(beta, `(() => {
+    const labels = ["new chat", "new task", "新聊天", "新任务"];
+    const controls = [...document.querySelectorAll("a, button, [role='button']")];
+    const target = controls.find((control) => {
+      const label = (control.textContent || "").trim().replace(/\\s+/g, " ").toLocaleLowerCase();
+      return labels.some((candidate) => label === candidate || label.startsWith(candidate + " "));
+    });
+    if (!target) return false;
+    target.click();
+    return true;
+  })()`);
+  invariant(returnedHome, "Could not return the Beta fixture to New chat after SPA navigation");
+  const homeState = await waitFor(
+    beta,
+    `(() => {
+      const state = ${expectedFullSkinStateExpression()};
+      return state && state.home ? state : null;
+    })()`,
+    "Beta Full Skin after returning from SPA route navigation",
+    30000,
+  );
+  return { publicRoute, taskState, settled, homeState, taskScreenshot };
+}
+
+async function exerciseNamedBetaConversation(beta, label, screenshotPath) {
+  const opened = await evaluate(beta, `(() => {
+    const expected = ${JSON.stringify(label)}.trim().replace(/\\s+/g, " ").toLocaleLowerCase();
+    const controls = [...document.querySelectorAll("[data-app-action-sidebar-thread-title], a, button, [role='button']")];
+    const matches = controls.filter((control) => {
+      const value = (control.textContent || "").trim().replace(/\\s+/g, " ").toLocaleLowerCase();
+      const title = (control.getAttribute("data-app-action-sidebar-thread-title") || "")
+        .trim().replace(/\\s+/g, " ").toLocaleLowerCase();
+      return title === expected || value === expected;
+    });
+    const target = matches.find((control) =>
+      control.getAttribute("data-app-action-sidebar-thread-title")
+    ) || matches.sort((left, right) =>
+      (left.textContent || "").length - (right.textContent || "").length
+    )[0];
+    if (!target) return null;
+    const rect = target.getBoundingClientRect();
+    return {
+      label: target.getAttribute("data-app-action-sidebar-thread-title")
+        || (target.textContent || "").trim(),
+      tagName: target.tagName,
+      x: rect.left + Math.min(rect.width * 0.42, 180),
+      y: rect.top + rect.height / 2
+    };
+  })()`);
+  invariant(opened, `Could not find the requested Beta conversation: ${label}`);
+  await beta.send("Input.dispatchMouseEvent", {
+    type: "mousePressed",
+    x: opened.x,
+    y: opened.y,
+    button: "left",
+    clickCount: 1,
+  });
+  await beta.send("Input.dispatchMouseEvent", {
+    type: "mouseReleased",
+    x: opened.x,
+    y: opened.y,
+    button: "left",
+    clickCount: 1,
+  });
+
+  const taskState = await waitFor(
+    beta,
+    `(() => {
+      const state = ${expectedFullSkinStateExpression()};
+      return state && state.task && !state.home ? state : null;
+    })()`,
+    `Beta Full Skin after opening conversation ${label}`,
+    30000,
+  );
+  const baseline = taskState.metrics;
+  await delay(1200);
+  const settled = await evaluate(beta, expectedFullSkinStateExpression());
+  invariant(settled, "Full Skin became unhealthy while the conversation route was settled");
+  invariant(
+    settled.metrics.ensureCalls - baseline.ensureCalls <= 2,
+    "Full Skin performed excessive renderer repair work on a settled conversation route",
+  );
+  const surfaceProbe = await evaluate(beta, `(() => {
+    const points = [
+      [Math.round(innerWidth * 0.45), Math.round(innerHeight * 0.34)],
+      [Math.round(innerWidth * 0.68), Math.round(innerHeight * 0.34)],
+      [Math.round(innerWidth * 0.82), Math.round(innerHeight * 0.58)]
+    ];
+    return points.map(([x, y]) => ({
+      x,
+      y,
+      stack: document.elementsFromPoint(x, y).slice(0, 7).map((element) => {
+        const style = getComputedStyle(element);
+        const rect = element.getBoundingClientRect();
+        return {
+          tag: element.tagName,
+          id: element.id || null,
+          classes: String(element.className || "").slice(0, 240),
+          backgroundColor: style.backgroundColor,
+          backgroundImage: style.backgroundImage,
+          opacity: style.opacity,
+          rect: [Math.round(rect.x), Math.round(rect.y), Math.round(rect.width), Math.round(rect.height)]
+        };
+      })
+    }));
+  })()`);
+  const screenshot = await captureClientScreenshot(beta, screenshotPath);
+
+  const returnedHome = await evaluate(beta, `(() => {
+    const labels = ["new chat", "new task", "新聊天", "新任务"];
+    const controls = [...document.querySelectorAll("a, button, [role='button']")];
+    const target = controls.find((control) => {
+      const value = (control.textContent || "").trim().replace(/\\s+/g, " ").toLocaleLowerCase();
+      return labels.some((candidate) => value === candidate || value.startsWith(candidate + " "));
+    });
+    if (!target) return false;
+    target.click();
+    return true;
+  })()`);
+  invariant(returnedHome, "Could not return the Beta fixture to New chat after conversation navigation");
+  const homeState = await waitFor(
+    beta,
+    `(() => {
+      const state = ${expectedFullSkinStateExpression()};
+      return state && state.home ? state : null;
+    })()`,
+    "Beta Full Skin after returning from conversation navigation",
+    30000,
+  );
+  return { opened, taskState, settled, surfaceProbe, screenshot, homeState };
+}
+
+async function runActiveRuntimeSmoke() {
+  const endpoint = await discoverBetaTarget(60000, REQUESTED_BETA_PORT);
+  const beta = new CdpClient(endpoint.target.webSocketDebuggerUrl, endpoint.port);
+  await beta.connect();
+  await beta.send("Runtime.enable");
+  await beta.send("Page.enable");
+  try {
+    const initialState = await waitFor(
+      beta,
+      expectedFullSkinStateExpression(),
+      "already-active Beta Full Skin runtime",
+      45000,
+    );
+    const spaNavigation = await exercisePublicBetaRoute(beta, BETA_SCREENSHOT);
+    const conversationNavigation = CONVERSATION_LABEL
+      ? await exerciseNamedBetaConversation(
+        beta,
+        CONVERSATION_LABEL,
+        CONVERSATION_SCREENSHOT,
+      )
+      : null;
+    const finalState = await evaluate(beta, expectedFullSkinStateExpression());
+    invariant(finalState, "Full Skin was not healthy after the active-runtime route round-trip");
+    console.log(JSON.stringify({
+      status: "COMPLETE",
+      scenario: "already-active-persistent-runtime",
+      themeId: THEME_ID,
+      mode: MODE,
+      betaPort: endpoint.port,
+      initialState,
+      spaNavigation,
+      conversationNavigation,
+      finalState,
+      persistencePreserved: true,
+    }, null, 2));
+  } finally {
+    beta.close();
+  }
 }
 
 async function runPersistenceSmoke(managerTarget) {
@@ -423,28 +655,7 @@ async function runPersistenceSmoke(managerTarget) {
     await beta.send("Runtime.enable");
     const betaState = await waitFor(
       beta,
-      `(() => {
-        const value = window.__ACT_FULL_SKIN_STATE__;
-        if (!value) return null;
-        return {
-          themeId: value.themeId,
-          mode: value.mode,
-          root: document.documentElement.classList.contains("act-full-skin"),
-          style: Boolean(document.getElementById("act-full-skin-style")),
-          caption: Boolean(document.getElementById("act-full-skin-caption")),
-          artwork: (() => {
-            const artwork = document.getElementById("act-full-skin-art");
-            return artwork instanceof HTMLImageElement ? {
-              complete: artwork.complete,
-              width: artwork.naturalWidth,
-              height: artwork.naturalHeight,
-              parent: artwork.parentElement?.tagName,
-              position: getComputedStyle(artwork).position,
-              source: artwork.currentSrc.startsWith("data:image/png;base64,")
-            } : null;
-          })()
-        };
-      })()`,
+      expectedFullSkinStateExpression(),
       "persistent Beta runtime markers",
       45000,
     );
@@ -454,12 +665,11 @@ async function runPersistenceSmoke(managerTarget) {
         && betaState.root
         && betaState.style
         && betaState.caption
-        && betaState.artwork?.complete
+        && betaState.artwork?.loaded
         && betaState.artwork.width > 0
         && betaState.artwork.height > 0
-        && betaState.artwork.parent === "BODY"
-        && betaState.artwork.position === "fixed"
-        && betaState.artwork.source,
+        && betaState.source
+        && betaState.documentBackground,
       "Persistent Beta did not expose the expected full-skin runtime markers",
     );
     const active = await waitFor(
@@ -471,6 +681,7 @@ async function runPersistenceSmoke(managerTarget) {
       30000,
     );
     invariant(active, "The persistence controller did not report active");
+    const spaNavigation = await exercisePublicBetaRoute(beta);
 
     const screenshot = await manager.send("Page.captureScreenshot", {
       format: "png",
@@ -504,7 +715,8 @@ async function runPersistenceSmoke(managerTarget) {
         && !document.documentElement.classList.contains("act-full-skin")
         && !document.getElementById("act-full-skin-style")
         && !document.getElementById("act-full-skin-caption")
-        && !document.getElementById("act-full-skin-art")`,
+        && !document.getElementById("act-full-skin-art")
+        && !document.documentElement.style.getPropertyValue("--act-art-image")`,
       "persistent Beta runtime cleanup",
       60000,
     );
@@ -516,6 +728,7 @@ async function runPersistenceSmoke(managerTarget) {
       themeId: THEME_ID,
       mode: MODE,
       betaState,
+      spaNavigation,
       persistenceDisabled,
       seededLocalArt: Boolean(seededArt),
       screenshot: path.relative(ROOT, SCREENSHOT_PATH).replaceAll("\\", "/"),
@@ -541,7 +754,8 @@ async function runPersistenceSmoke(managerTarget) {
 
 async function main() {
   invariant(
-    Number.isInteger(MANAGER_PORT) && MANAGER_PORT >= 1024 && MANAGER_PORT <= 65535,
+    ACTIVE_RUNTIME
+      || (Number.isInteger(MANAGER_PORT) && MANAGER_PORT >= 1024 && MANAGER_PORT <= 65535),
     "Pass the OS-selected Theme Manager CDP port with --manager-port or ACT_MANAGER_CDP_PORT",
   );
   invariant(
@@ -552,6 +766,11 @@ async function main() {
     "Invalid Beta port",
   );
   invariant(["light", "dark"].includes(MODE), "Mode must be light or dark");
+
+  if (ACTIVE_RUNTIME) {
+    await runActiveRuntimeSmoke();
+    return;
+  }
 
   const managerChain = ownerChain(MANAGER_PORT);
   const normalizedManager = MANAGER_EXE.toLocaleLowerCase();
@@ -652,7 +871,7 @@ async function main() {
     );
     invariant(!outcome.error, "Manager apply failed: " + outcome.error);
 
-    const betaEndpoint = await discoverBetaTarget(30000);
+    const betaEndpoint = await discoverBetaTarget(30000, outcome.skin.port);
     beta = new CdpClient(betaEndpoint.target.webSocketDebuggerUrl, betaEndpoint.port);
     await beta.connect();
     await beta.send("Runtime.enable");
@@ -670,6 +889,7 @@ async function main() {
       "Beta Full Skin after document navigation",
       45000,
     );
+    const spaNavigation = await exercisePublicBetaRoute(beta);
 
     const screenshot = await manager.send("Page.captureScreenshot", {
       format: "png",
@@ -691,7 +911,8 @@ async function main() {
         && !document.documentElement.classList.contains("act-full-skin")
         && !document.getElementById("act-full-skin-style")
         && !document.getElementById("act-full-skin-caption")
-        && !document.getElementById("act-full-skin-art")`,
+        && !document.getElementById("act-full-skin-art")
+        && !document.documentElement.style.getPropertyValue("--act-art-image")`,
       "Beta runtime cleanup",
     );
     restored = Boolean(betaRestored);
@@ -704,6 +925,7 @@ async function main() {
       managerVersion: await evaluate(manager, "window.__TAURI_INTERNALS__ ? 'tauri-v2' : 'unknown'"),
       betaState,
       reloadedBetaState,
+      spaNavigation,
       restored,
       seededLocalArt: Boolean(seededArt),
       screenshot: path.relative(ROOT, SCREENSHOT_PATH).replaceAll("\\", "/"),

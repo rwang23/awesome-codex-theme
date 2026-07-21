@@ -17,6 +17,7 @@ const WIDTH = 1440;
 const HEIGHT = 810;
 const CAPTURE_VERSION = "26.715.3651.0";
 const CAPTURE_MODEL_LABEL = "5.6 Sol Max";
+const RUNTIME_IMPLEMENTATION = "act-full-skin-runtime-v2";
 const CAPTURE_ROOT = "screenshots/codex-beta-" + CAPTURE_VERSION;
 const CAPTURE_DIR = path.join(ROOT, ...CAPTURE_ROOT.split("/"));
 const MANIFEST_PATH = path.join(CAPTURE_DIR, "manifest.json");
@@ -513,7 +514,11 @@ async function removeRuntime(client) {
       document.getElementById("act-full-skin-style")?.remove();
       document.getElementById("act-full-skin-caption")?.remove();
       document.getElementById("act-full-skin-art")?.remove();
-      document.documentElement.classList.remove("act-full-skin", "act-full-skin-home");
+      const root = document.documentElement;
+      root.classList.remove("act-full-skin", "act-full-skin-home", "act-full-skin-task");
+      for (const property of [...root.style]) {
+        if (property.startsWith("--act-")) root.style.removeProperty(property);
+      }
       return true;
     })()`,
   );
@@ -686,6 +691,10 @@ async function main() {
         earlyScriptIdentifier = earlyScript.identifier;
         let applied = await evaluate(client, script);
         invariant(applied?.pass, theme.id + " " + mode + " runtime marker failed");
+        invariant(
+          applied.implementationVersion === RUNTIME_IMPLEMENTATION,
+          theme.id + " " + mode + " runtime implementation marker failed",
+        );
         invariant(applied.selectors?.main, theme.id + " " + mode + " main surface selector is missing");
         const skinState = `window.__ACT_FULL_SKIN_STATE__?.themeId === ${JSON.stringify(theme.id)}
           && window.__ACT_FULL_SKIN_STATE__?.mode === ${JSON.stringify(mode)}`;
@@ -701,15 +710,17 @@ async function main() {
         const artwork = await evaluate(
           client,
           `(() => {
-            const image = document.getElementById("act-full-skin-art");
-            if (!(image instanceof HTMLImageElement)) return null;
+            const state = window.__ACT_FULL_SKIN_STATE__;
+            if (!state?.artwork || !state?.artUrl) return null;
+            const artValue = document.documentElement.style.getPropertyValue("--act-art-image");
+            const bodyBackground = getComputedStyle(document.body).backgroundImage;
             return {
-              complete: image.complete,
-              width: image.naturalWidth,
-              height: image.naturalHeight,
-              parent: image.parentElement?.tagName,
-              position: getComputedStyle(image).position,
-              source: image.currentSrc.startsWith("data:image/png;base64,")
+              complete: state.artwork.loaded,
+              width: state.artwork.width,
+              height: state.artwork.height,
+              source: state.artUrl.startsWith("blob:"),
+              documentBackground: artValue.includes(state.artUrl)
+                && bodyBackground.includes(state.artUrl)
             };
           })()`,
         );
@@ -717,9 +728,8 @@ async function main() {
           artwork?.complete
             && artwork.width > 0
             && artwork.height > 0
-            && artwork.parent === "BODY"
-            && artwork.position === "fixed"
-            && artwork.source,
+            && artwork.source
+            && artwork.documentBackground,
           theme.id + " " + mode + " artwork layer verification failed",
         );
         await delay(350);
@@ -745,6 +755,7 @@ async function main() {
           assetSha256: modeRecord.integrity.sha256,
           runtimeSha256,
           markerVersion: applied.version,
+          implementationVersion: applied.implementationVersion,
           selectors: applied.selectors,
           artwork,
           modelLabel: captureModelLabel,
@@ -775,6 +786,7 @@ async function main() {
         `!document.documentElement.classList.contains("act-full-skin")
           && !document.getElementById("act-full-skin-style")
           && !document.getElementById("act-full-skin-art")
+          && !document.documentElement.style.getPropertyValue("--act-art-image")
           && !window.__ACT_FULL_SKIN_STATE__`,
       );
     } catch (restoreError) {
@@ -842,6 +854,7 @@ async function main() {
     },
     runtime: {
       format: "act-full-skin-v1",
+      implementationVersion: RUNTIME_IMPLEMENTATION,
       sha256: runtimeSha256,
       earlyInjection: true,
       removedAfterCapture: runtimeRemoved,
