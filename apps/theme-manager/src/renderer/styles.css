@@ -1249,6 +1249,8 @@ kbd {
   background: rgba(251, 250, 246, 0.82);
 }
 
+.footer-metadata,
+.app-version,
 .catalog-version,
 .footer-actions {
   display: flex;
@@ -1257,6 +1259,11 @@ kbd {
   min-width: 0;
 }
 
+.footer-metadata {
+  gap: 18px;
+}
+
+.app-version > span,
 .catalog-version > span:first-child {
   color: var(--jade);
   font-size: 8px;
@@ -1264,6 +1271,7 @@ kbd {
   letter-spacing: 0.12em;
 }
 
+.app-version code,
 .catalog-version code,
 .catalog-version > span:last-child {
   overflow: hidden;

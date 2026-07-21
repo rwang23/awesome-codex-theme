@@ -278,6 +278,7 @@ const elements = {
   persistenceToggle: document.querySelector("#persistenceToggle"),
   persistenceStatus: document.querySelector("#persistenceStatus"),
   skinStatus: document.querySelector("#skinStatus"),
+  appVersion: document.querySelector("#appVersion"),
   registryHash: document.querySelector("#registryHash"),
   themeCount: document.querySelector("#themeCount"),
   openGallery: document.querySelector("#openGallery"),
@@ -379,6 +380,10 @@ function renderCatalogStatus() {
       source: t(state.catalog.source === "remote" ? "sourceRemote" : "sourceLocal"),
     })
     : "—";
+}
+
+function renderAppVersion() {
+  elements.appVersion.textContent = state.appVersion ? `v${state.appVersion}` : "—";
 }
 
 const styleDefinitions = [
@@ -976,6 +981,7 @@ renderLanguage();
 try {
   const bootstrap = await window.act.bootstrap();
   state.appVersion = bootstrap.appVersion;
+  renderAppVersion();
   state.platform = bootstrap.platform;
   renderWindowChrome();
   state.targets = bootstrap.targets;

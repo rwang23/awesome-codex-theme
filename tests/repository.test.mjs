@@ -356,11 +356,17 @@ test("Tauri manager keeps theme values in Rust and limits desktop capabilities",
   assert.doesNotMatch(backend + catalog + runtime + platform, /WindowsApps.*(?:write|copy)|app\.asar.*(?:write|copy)/i);
 });
 
-test("Theme Manager renders a compact Copy action and macOS traffic-light chrome", async function () {
-  const [app, styles] = await Promise.all([
+test("Theme Manager renders a compact Copy action, footer version, and macOS traffic-light chrome", async function () {
+  const [html, app, styles] = await Promise.all([
+    readFile(path.join(ROOT, "apps", "theme-manager", "src", "renderer", "index.html"), "utf8"),
     readFile(path.join(ROOT, "apps", "theme-manager", "src", "renderer", "app.js"), "utf8"),
     readFile(path.join(ROOT, "apps", "theme-manager", "src", "renderer", "styles.css"), "utf8"),
   ]);
+  assert.match(html, /id="appVersion"/);
+  assert.match(app, /appVersion: document\.querySelector\("#appVersion"\)/);
+  assert.match(app, /function renderAppVersion\(\)/);
+  assert.match(app, /elements\.appVersion\.textContent = state\.appVersion \? `v\$\{state\.appVersion\}` : "—"/);
+  assert.match(styles, /\.footer-metadata,/);
   assert.match(app, /function renderWindowChrome\(\)/);
   assert.match(app, /elements\.appShell\.dataset\.platform = state\.platform === "darwin"/);
   assert.match(styles, /\.app-shell\[data-platform="darwin"\] \.window-controls/);
