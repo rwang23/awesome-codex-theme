@@ -323,6 +323,38 @@ async function waitFor(client, expression, label, timeout = 30000) {
   throw new Error("Timed out waiting for " + label);
 }
 
+function expectedFullSkinStateExpression() {
+  return `(() => {
+    const artwork = document.getElementById("act-full-skin-art");
+    const state = {
+      themeId: window.__ACT_FULL_SKIN_STATE__?.themeId,
+      mode: window.__ACT_FULL_SKIN_STATE__?.mode,
+      root: document.documentElement.classList.contains("act-full-skin"),
+      style: Boolean(document.getElementById("act-full-skin-style")),
+      caption: Boolean(document.getElementById("act-full-skin-caption")),
+      artwork: artwork instanceof HTMLImageElement ? {
+        complete: artwork.complete,
+        width: artwork.naturalWidth,
+        height: artwork.naturalHeight,
+        parent: artwork.parentElement?.tagName,
+        position: getComputedStyle(artwork).position,
+        source: artwork.currentSrc.startsWith("data:image/png;base64,")
+      } : null
+    };
+    return state.themeId === ${JSON.stringify(THEME_ID)}
+      && state.mode === ${JSON.stringify(MODE)}
+      && state.root
+      && state.style
+      && state.caption
+      && state.artwork?.complete
+      && state.artwork.width > 0
+      && state.artwork.height > 0
+      && state.artwork.parent === "BODY"
+      && state.artwork.position === "fixed"
+      && state.artwork.source ? state : null;
+  })()`;
+}
+
 async function runPersistenceSmoke(managerTarget) {
   const manager = new CdpClient(managerTarget.webSocketDebuggerUrl, MANAGER_PORT);
   const seededArt = await seedLocalArt();
@@ -624,40 +656,19 @@ async function main() {
     beta = new CdpClient(betaEndpoint.target.webSocketDebuggerUrl, betaEndpoint.port);
     await beta.connect();
     await beta.send("Runtime.enable");
-    const betaState = await evaluate(
+    await beta.send("Page.enable");
+    const betaState = await waitFor(
       beta,
-      `({
-        themeId: window.__ACT_FULL_SKIN_STATE__?.themeId,
-        mode: window.__ACT_FULL_SKIN_STATE__?.mode,
-        root: document.documentElement.classList.contains("act-full-skin"),
-        style: Boolean(document.getElementById("act-full-skin-style")),
-        caption: Boolean(document.getElementById("act-full-skin-caption")),
-        artwork: (() => {
-          const artwork = document.getElementById("act-full-skin-art");
-          return artwork instanceof HTMLImageElement ? {
-            complete: artwork.complete,
-            width: artwork.naturalWidth,
-            height: artwork.naturalHeight,
-            parent: artwork.parentElement?.tagName,
-            position: getComputedStyle(artwork).position,
-            source: artwork.currentSrc.startsWith("data:image/png;base64,")
-          } : null;
-        })()
-      })`,
+      expectedFullSkinStateExpression(),
+      "Beta Full Skin runtime markers",
+      45000,
     );
-    invariant(
-      betaState.themeId === THEME_ID
-        && betaState.mode === MODE
-        && betaState.root
-        && betaState.style
-        && betaState.caption
-        && betaState.artwork?.complete
-        && betaState.artwork.width > 0
-        && betaState.artwork.height > 0
-        && betaState.artwork.parent === "BODY"
-        && betaState.artwork.position === "fixed"
-        && betaState.artwork.source,
-      "Beta did not expose the expected full-skin runtime markers",
+    await beta.send("Page.reload", { ignoreCache: true });
+    const reloadedBetaState = await waitFor(
+      beta,
+      expectedFullSkinStateExpression(),
+      "Beta Full Skin after document navigation",
+      45000,
     );
 
     const screenshot = await manager.send("Page.captureScreenshot", {
@@ -692,6 +703,7 @@ async function main() {
       mode: MODE,
       managerVersion: await evaluate(manager, "window.__TAURI_INTERNALS__ ? 'tauri-v2' : 'unknown'"),
       betaState,
+      reloadedBetaState,
       restored,
       seededLocalArt: Boolean(seededArt),
       screenshot: path.relative(ROOT, SCREENSHOT_PATH).replaceAll("\\", "/"),

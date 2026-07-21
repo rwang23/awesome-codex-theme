@@ -2,7 +2,10 @@ use std::{
     fs,
     net::{TcpListener, TcpStream},
     path::PathBuf,
-    sync::Mutex,
+    sync::{
+        Arc, Mutex,
+        atomic::{AtomicBool, Ordering},
+    },
     time::{Duration, Instant},
 };
 
@@ -26,6 +29,33 @@ const MAX_ART_BYTES: usize = 16 * 1024 * 1024;
 const APPLY_TIMEOUT: Duration = Duration::from_secs(45);
 const CDP_CALL_TIMEOUT: Duration = Duration::from_secs(20);
 const CDP_CLEANUP_TIMEOUT: Duration = Duration::from_secs(5);
+const TARGET_MONITOR_INTERVAL: Duration = Duration::from_millis(600);
+const TARGET_MONITOR_MAX_ERRORS: u8 = 12;
+const TARGET_MONITOR_STOP_TIMEOUT: Duration = Duration::from_secs(8);
+const TARGET_RUNTIME_STATE_TEMPLATE: &str = r#"(() => {
+  const expected = __ACT_EXPECTED_RUNTIME__;
+  if (document.readyState === "loading" || !document.body) {
+    return { ready: false, healthy: false };
+  }
+  const art = document.getElementById("act-full-skin-art");
+  const state = window.__ACT_FULL_SKIN_STATE__;
+  return {
+    ready: true,
+    healthy: Boolean(
+      document.documentElement.classList.contains("act-full-skin")
+      && state?.version === "act-full-skin-v1"
+      && state?.themeId === expected.themeId
+      && state?.mode === expected.mode
+      && art instanceof HTMLImageElement
+      && art.parentElement === document.body
+      && art.complete
+      && art.naturalWidth > 0
+      && art.naturalHeight > 0
+      && art.currentSrc.startsWith("data:image/png;base64,")
+      && getComputedStyle(art).position === "fixed"
+    ),
+  };
+})()"#;
 
 #[derive(Clone, Serialize)]
 #[serde(rename_all = "camelCase")]
@@ -57,7 +87,10 @@ struct SkinSession {
     channel: String,
     tested_version: String,
     port: u16,
-    targets: Vec<InjectedTarget>,
+    target: platform::TargetView,
+    targets: Arc<Mutex<Vec<InjectedTarget>>>,
+    monitor_stop: Arc<AtomicBool>,
+    monitor_running: Arc<AtomicBool>,
 }
 
 pub struct SkinRuntime {
@@ -393,40 +426,74 @@ fn missing_early_script_registration(error: &str) -> bool {
     error.contains("Script not found")
 }
 
+fn target_runtime_state_expression(theme_id: &str, mode: &str) -> Result<String, String> {
+    let expected = serde_json::to_string(&json!({
+        "themeId": theme_id,
+        "mode": mode,
+    }))
+    .map_err(|error| format!("无法编码 Full Skin 运行时状态：{error}"))?;
+    Ok(TARGET_RUNTIME_STATE_TEMPLATE.replace("__ACT_EXPECTED_RUNTIME__", &expected))
+}
+
+fn target_runtime_state(
+    target: &CdpTarget,
+    theme_id: &str,
+    mode: &str,
+) -> Result<(bool, bool), String> {
+    let expression = target_runtime_state_expression(theme_id, mode)?;
+    let mut socket = connect_target_with_timeout(target, CDP_CLEANUP_TIMEOUT)?;
+    let result = cdp_call(
+        &mut socket,
+        1,
+        "Runtime.evaluate",
+        json!({
+            "expression": expression,
+            "returnByValue": true
+        }),
+    )?;
+    let value = &result["result"]["value"];
+    Ok((
+        value["ready"].as_bool().unwrap_or(false),
+        value["healthy"].as_bool().unwrap_or(false),
+    ))
+}
+
+fn inject_target(target: CdpTarget, script: &str) -> Result<InjectedTarget, String> {
+    let mut socket = connect_target(&target)?;
+    let early = cdp_call(
+        &mut socket,
+        1,
+        "Page.addScriptToEvaluateOnNewDocument",
+        json!({ "source": script }),
+    )?;
+    let script_id = early["identifier"]
+        .as_str()
+        .ok_or("CDP 没有返回早期注入标识")?
+        .to_owned();
+    let result = cdp_call(
+        &mut socket,
+        2,
+        "Runtime.evaluate",
+        json!({
+            "expression": script,
+            "awaitPromise": true,
+            "returnByValue": true
+        }),
+    )?;
+    let value = &result["result"]["value"];
+    if value["pass"].as_bool() != Some(true) || value["version"].as_str() != Some(RUNTIME_FORMAT) {
+        return Err(format!("{} Full Skin 运行时验证失败", target.id));
+    }
+    Ok(InjectedTarget {
+        id: target.id,
+        script_id,
+    })
+}
+
 fn inject_targets(targets: Vec<CdpTarget>, script: String) -> Result<Vec<InjectedTarget>, String> {
     let mut injected = Vec::new();
     for target in targets {
-        let mut socket = connect_target(&target)?;
-        let early = cdp_call(
-            &mut socket,
-            1,
-            "Page.addScriptToEvaluateOnNewDocument",
-            json!({ "source": script }),
-        )?;
-        let script_id = early["identifier"]
-            .as_str()
-            .ok_or("CDP 没有返回早期注入标识")?
-            .to_owned();
-        let result = cdp_call(
-            &mut socket,
-            2,
-            "Runtime.evaluate",
-            json!({
-                "expression": script,
-                "awaitPromise": true,
-                "returnByValue": true
-            }),
-        )?;
-        let value = &result["result"]["value"];
-        if value["pass"].as_bool() != Some(true)
-            || value["version"].as_str() != Some(RUNTIME_FORMAT)
-        {
-            return Err(format!("{} Full Skin 运行时验证失败", target.id));
-        }
-        injected.push(InjectedTarget {
-            id: target.id,
-            script_id,
-        });
+        injected.push(inject_target(target, &script)?);
     }
     if injected.is_empty() {
         return Err("没有 ChatGPT 页面接受 Full Skin".into());
@@ -434,7 +501,25 @@ fn inject_targets(targets: Vec<CdpTarget>, script: String) -> Result<Vec<Injecte
     Ok(injected)
 }
 
-fn remove_from_targets(targets: Vec<CdpTarget>, session: &SkinSession) -> Result<(), String> {
+fn injected_targets_snapshot(targets: &Arc<Mutex<Vec<InjectedTarget>>>) -> Vec<InjectedTarget> {
+    targets
+        .lock()
+        .unwrap_or_else(|poisoned| poisoned.into_inner())
+        .clone()
+}
+
+fn replace_injected_target(targets: &Arc<Mutex<Vec<InjectedTarget>>>, replacement: InjectedTarget) {
+    let mut targets = targets
+        .lock()
+        .unwrap_or_else(|poisoned| poisoned.into_inner());
+    targets.retain(|target| target.id != replacement.id);
+    targets.push(replacement);
+}
+
+fn remove_from_targets(
+    targets: Vec<CdpTarget>,
+    injected_targets: Vec<InjectedTarget>,
+) -> Result<(), String> {
     let cleanup = r#"(() => {
       if (window.__ACT_FULL_SKIN_STATE__?.cleanup) {
         return window.__ACT_FULL_SKIN_STATE__.cleanup();
@@ -446,7 +531,7 @@ fn remove_from_targets(targets: Vec<CdpTarget>, session: &SkinSession) -> Result
       return true;
     })()"#;
     let mut errors = Vec::new();
-    for record in &session.targets {
+    for record in &injected_targets {
         let Some(target) = targets.iter().find(|target| target.id == record.id) else {
             continue;
         };
@@ -492,13 +577,123 @@ fn remove_from_targets(targets: Vec<CdpTarget>, session: &SkinSession) -> Result
     Ok(())
 }
 
+async fn listener_matches_session_target(session: &SkinSession) -> Result<bool, String> {
+    let port = session.port;
+    let target = session.target.clone();
+    tauri::async_runtime::spawn_blocking(move || {
+        platform::listener_belongs_to_target(port, &target)
+    })
+    .await
+    .map_err(|error| format!("Full Skin 目标验证任务失败：{error}"))?
+}
+
+async fn target_runtime_health(
+    target: CdpTarget,
+    theme_id: String,
+    mode: String,
+) -> Result<(bool, bool), String> {
+    tauri::async_runtime::spawn_blocking(move || target_runtime_state(&target, &theme_id, &mode))
+        .await
+        .map_err(|error| format!("Full Skin 页面状态检查失败：{error}"))?
+}
+
+async fn recover_target_runtime(
+    session: &SkinSession,
+    target: CdpTarget,
+    script: String,
+) -> Result<bool, String> {
+    if session.monitor_stop.load(Ordering::Acquire) {
+        return Ok(true);
+    }
+    if !listener_matches_session_target(session).await? {
+        return Ok(false);
+    }
+    let injected_target = target.clone();
+    let injected =
+        tauri::async_runtime::spawn_blocking(move || inject_target(injected_target, &script))
+            .await
+            .map_err(|error| format!("Full Skin 重新注入任务失败：{error}"))??;
+    replace_injected_target(&session.targets, injected);
+    Ok(true)
+}
+
+async fn monitor_skin_session(session: SkinSession, script: String) {
+    if session.monitor_stop.load(Ordering::Acquire) {
+        return;
+    }
+    session.monitor_running.store(true, Ordering::Release);
+    let mut consecutive_errors = 0_u8;
+    loop {
+        if session.monitor_stop.load(Ordering::Acquire) {
+            break;
+        }
+        let mut keep_monitoring = true;
+        match cdp_targets(session.port).await {
+            Ok((_, targets)) => {
+                let mut had_error = false;
+                for target in targets {
+                    if session.monitor_stop.load(Ordering::Acquire) {
+                        break;
+                    }
+                    let health = target_runtime_health(
+                        target.clone(),
+                        session.theme_id.clone(),
+                        session.mode.clone(),
+                    )
+                    .await;
+                    match health {
+                        Ok((false, _)) | Ok((true, true)) => {}
+                        Ok((true, false)) => {
+                            match recover_target_runtime(&session, target, script.clone()).await {
+                                Ok(true) => {}
+                                Ok(false) => {
+                                    keep_monitoring = false;
+                                    break;
+                                }
+                                Err(_) => had_error = true,
+                            }
+                        }
+                        Err(_) => had_error = true,
+                    }
+                }
+                if had_error {
+                    consecutive_errors = consecutive_errors.saturating_add(1);
+                } else {
+                    consecutive_errors = 0;
+                }
+            }
+            Err(_) => {
+                consecutive_errors = consecutive_errors.saturating_add(1);
+            }
+        }
+        if !keep_monitoring || consecutive_errors >= TARGET_MONITOR_MAX_ERRORS {
+            break;
+        }
+        tokio::time::sleep(TARGET_MONITOR_INTERVAL).await;
+    }
+    session.monitor_running.store(false, Ordering::Release);
+}
+
+async fn stop_session_monitor(session: &SkinSession) -> Result<(), String> {
+    session.monitor_stop.store(true, Ordering::Release);
+    let deadline = Instant::now() + TARGET_MONITOR_STOP_TIMEOUT;
+    while session.monitor_running.load(Ordering::Acquire) {
+        if Instant::now() >= deadline {
+            return Err("Full Skin 页面监控没有在安全等待时间内停止".into());
+        }
+        tokio::time::sleep(Duration::from_millis(25)).await;
+    }
+    Ok(())
+}
+
 async fn remove_session(session: SkinSession) -> Result<(), String> {
-    let target = platform::find_target(&session.channel)?;
-    if !platform::listener_belongs_to_target(session.port, &target)? {
+    stop_session_monitor(&session).await?;
+    if !listener_matches_session_target(&session).await? {
         return Ok(());
     }
     let (_, targets) = cdp_targets(session.port).await?;
-    tauri::async_runtime::spawn_blocking(move || remove_from_targets(targets, &session))
+    let injected_targets = injected_targets_snapshot(&session.targets);
+    tauri::async_runtime::spawn_blocking(move || remove_from_targets(targets, injected_targets))
         .await
         .map_err(|error| format!("Full Skin 清理任务失败：{error}"))?
 }
@@ -543,16 +738,25 @@ pub async fn apply(
         )?;
     }
     let (_, targets) = wait_for_targets(port, &target).await?;
-    let injected = tauri::async_runtime::spawn_blocking(move || inject_targets(targets, script))
-        .await
-        .map_err(|error| format!("Full Skin 注入任务失败：{error}"))??;
-    runtime.replace(SkinSession {
+    let initial_script = script.clone();
+    let injected =
+        tauri::async_runtime::spawn_blocking(move || inject_targets(targets, initial_script))
+            .await
+            .map_err(|error| format!("Full Skin 注入任务失败：{error}"))??;
+    let session = SkinSession {
         theme_id: skin.theme_id,
         mode: skin.mode,
         channel: channel.into(),
         tested_version: skin.tested_version,
         port,
-        targets: injected,
+        target,
+        targets: Arc::new(Mutex::new(injected)),
+        monitor_stop: Arc::new(AtomicBool::new(false)),
+        monitor_running: Arc::new(AtomicBool::new(false)),
+    };
+    runtime.replace(session.clone());
+    let _ = tauri::async_runtime::spawn(async move {
+        monitor_skin_session(session, script).await;
     });
     Ok(runtime.current())
 }
@@ -635,6 +839,17 @@ mod tests {
         assert!(!missing_early_script_registration(
             "CDP Page.removeScriptToEvaluateOnNewDocument 读取失败：connection reset"
         ));
+    }
+
+    #[test]
+    fn runtime_health_check_requires_the_fixed_data_image_layer() {
+        let expression = target_runtime_state_expression("test-theme", "dark")
+            .expect("runtime health check should build");
+        assert!(expression.contains("test-theme"));
+        assert!(expression.contains("state?.version === \"act-full-skin-v1\""));
+        assert!(expression.contains("art.parentElement === document.body"));
+        assert!(expression.contains("art.currentSrc.startsWith(\"data:image/png;base64,\")"));
+        assert!(expression.contains("getComputedStyle(art).position === \"fixed\""));
     }
 
     #[test]

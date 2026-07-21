@@ -312,6 +312,11 @@ test("Tauri manager keeps theme values in Rust and limits desktop capabilities",
   assert.match(runtime, /Page\.removeScriptToEvaluateOnNewDocument/);
   assert.match(runtime, /missing_early_script_registration/);
   assert.match(runtime, /DOMContentLoaded/);
+  assert.match(runtime, /monitor_skin_session/);
+  assert.match(runtime, /recover_target_runtime/);
+  assert.match(runtime, /target_runtime_state/);
+  assert.match(runtime, /TARGET_MONITOR_INTERVAL/);
+  assert.match(runtime, /monitor_stop/);
   assert.match(runtime, /app:\/\//);
   assert.match(runtime, /127\.0\.0\.1/);
   assert.match(runtime, /remote-debugging-port/);
@@ -332,6 +337,9 @@ test("Tauri manager keeps theme values in Rust and limits desktop capabilities",
   assert.doesNotMatch(fullSkinCss, /var\(--act-art\)/);
   assert.match(smoke, /artwork\.parent === "BODY"/);
   assert.match(smoke, /artwork\.currentSrc\.startsWith\("data:image\/png;base64,"\)/);
+  assert.match(smoke, /Page\.reload/);
+  assert.match(smoke, /Beta Full Skin after document navigation/);
+  assert.match(smoke, /reloadedBetaState/);
   assert.match(platform, /windows_full_skin_launch_arguments/);
   assert.match(platform, /hidden_command\(executable\)/);
   assert.doesNotMatch(platform, /IApplicationActivationManager/);
