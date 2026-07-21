@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.3.0 - 2026-07-21
 
 - Changed the primary Apply action to register the durable selection first. The
   per-user controller now owns the initial launch or controlled restart, and the
