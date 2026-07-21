@@ -41,7 +41,18 @@ test("repository validates fifty-three dual-mode code-free themes in eight colle
 });
 
 test("registry exposes original and disclosed fan-art collections", async function () {
-  const registry = JSON.parse(await readFile(path.join(ROOT, "themes", "registry.json"), "utf8"));
+  const [catalog, registry, captureManifest] = await Promise.all([
+    readFile(path.join(ROOT, "themes", "catalog.json"), "utf8").then(JSON.parse),
+    readFile(path.join(ROOT, "themes", "registry.json"), "utf8").then(JSON.parse),
+    readFile(path.join(ROOT, "screenshots", "codex-beta-26.715.3651.0", "manifest.json"), "utf8").then(JSON.parse),
+  ]);
+  assert.equal(catalog.catalogRevision, 2026072101);
+  assert.equal(registry.catalogRevision, catalog.catalogRevision);
+  assert.ok(
+    String(catalog.catalogRevision).slice(0, 8)
+      >= captureManifest.capturedAt.slice(0, 10).replaceAll("-", ""),
+    "Catalog revision must not predate its screenshot evidence",
+  );
   assert.deepEqual(registry.collections.map(function (collection) {
     return [collection.id, collection.pairing, collection.themeCount];
   }), [
@@ -340,6 +351,11 @@ test("Tauri manager keeps theme values in Rust and limits desktop capabilities",
   assert.match(fullSkinRuntime, /}, 180\)/);
   assert.match(fullSkinRuntime, /}, 5000\)/);
   assert.match(fullSkinCss, /background-image: var\(--act-art-image\)/);
+  assert.match(fullSkinCss, /aside\.app-shell-left-panel[\s\S]*?var\(--act-surface-alt\)/);
+  const mainSurfaceRule = /html\.act-full-skin main\.main-surface,\s*html\.act-full-skin \[role="main"\] \{([^}]+)\}/u.exec(fullSkinCss);
+  assert.ok(mainSurfaceRule, "Full Skin must explicitly clear the route-sized main surface");
+  assert.match(mainSurfaceRule[1], /background: transparent !important/);
+  assert.doesNotMatch(mainSurfaceRule[1], /linear-gradient/);
   assert.match(fullSkinCss, /bg-token-main-surface-primary/);
   assert.match(fullSkinCss, /app-shell-main-content-top-fade/);
   assert.doesNotMatch(fullSkinCss, /#act-full-skin-art/);
@@ -386,6 +402,9 @@ test("Theme Manager renders a compact Copy action, footer version, and macOS tra
   assert.match(styles, /#windowMinimize \{\s*order: 2;\s*background: #febc2e/s);
   assert.match(styles, /#windowMaximize \{\s*order: 3;\s*background: #28c840/s);
   assert.match(styles, /\.secondary-action \{[\s\S]*?height: 26px/);
+  assert.match(styles, /\.workspace \{[\s\S]*?grid-template-columns: minmax\(350px, 390px\) minmax\(0, 1fr\)/);
+  assert.match(styles, /\.theme-list \{[\s\S]*?grid-template-columns: repeat\(2, minmax\(0, 1fr\)\)/);
+  assert.match(styles, /\.theme-list \{[\s\S]*?overflow-x: hidden;[\s\S]*?overflow-y: auto/);
   assert.match(styles, /@media \(min-width: 1051px\) and \(max-height: 840px\)/);
 });
 

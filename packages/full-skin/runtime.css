@@ -34,37 +34,27 @@ html.act-full-skin .app-header-tint {
 }
 
 html.act-full-skin aside.app-shell-left-panel {
-  border-color: color-mix(in srgb, var(--act-border) 48%, transparent) !important;
+  border-color: color-mix(in srgb, var(--act-border) 58%, transparent) !important;
   background:
     linear-gradient(
       180deg,
-      color-mix(in srgb, var(--act-surface) 76%, transparent),
-      color-mix(in srgb, var(--act-surface) 58%, transparent)
+      color-mix(in srgb, var(--act-surface-alt) 88%, transparent),
+      color-mix(in srgb, var(--act-surface-alt) 72%, transparent)
+    ),
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--act-background) 72%, var(--act-surface-alt) 28%),
+      color-mix(in srgb, var(--act-surface) 58%, var(--act-surface-alt) 42%)
     ) !important;
-  box-shadow: 16px 0 44px color-mix(in srgb, var(--act-background) 22%, transparent);
-  backdrop-filter: blur(24px) saturate(0.92);
+  box-shadow:
+    16px 0 44px color-mix(in srgb, var(--act-background) 20%, transparent),
+    inset -1px 0 color-mix(in srgb, var(--act-accent) 10%, transparent);
+  backdrop-filter: blur(24px) saturate(0.96);
 }
 
 html.act-full-skin main.main-surface,
 html.act-full-skin [role="main"] {
-  background:
-    linear-gradient(
-      90deg,
-      color-mix(in srgb, var(--act-background) 30%, transparent) 0%,
-      color-mix(in srgb, var(--act-background) 10%, transparent) 44%,
-      transparent 100%
-    ) !important;
-}
-
-html.act-full-skin:not(.act-full-skin-home) main.main-surface,
-html.act-full-skin:not(.act-full-skin-home) [role="main"] {
-  background:
-    linear-gradient(
-      90deg,
-      color-mix(in srgb, var(--act-background) 58%, transparent) 0%,
-      color-mix(in srgb, var(--act-background) 28%, transparent) 58%,
-      color-mix(in srgb, var(--act-background) 8%, transparent) 100%
-    ) !important;
+  background: transparent !important;
 }
 
 html.act-full-skin main.main-surface [class~="bg-token-main-surface-primary"][class~="h-full"][class~="w-full"],

@@ -181,10 +181,11 @@ export async function validateRepository() {
   let captureCount = 0;
   let fullSkinCount = 0;
   const nativeThemeOwners = new Map();
-  const [catalog, registry, sourceJobs, themeSchema, registrySchema, runtimeCss, runtimeJs] = await Promise.all([
+  const [catalog, registry, sourceJobs, captureManifest, themeSchema, registrySchema, runtimeCss, runtimeJs] = await Promise.all([
     readJson("themes/catalog.json"),
     readJson("themes/registry.json"),
     readJson("themes/source-art/jobs.json"),
+    readJson("screenshots/codex-beta-26.715.3651.0/manifest.json"),
     readJson("schemas/theme-pack.schema.json"),
     readJson("schemas/registry.schema.json"),
     readFile(path.join(ROOT, "packages", "full-skin", "runtime.css"), "utf8"),
@@ -200,6 +201,15 @@ export async function validateRepository() {
       && catalog.catalogRevision > 0
       && registry.catalogRevision === catalog.catalogRevision,
     "Registry/catalog revision mismatch",
+    errors,
+  );
+  const catalogRevisionDate = String(catalog.catalogRevision).slice(0, 8);
+  const captureDate = String(captureManifest.capturedAt || "").slice(0, 10).replaceAll("-", "");
+  check(
+    /^\d{8}$/u.test(catalogRevisionDate)
+      && /^\d{8}$/u.test(captureDate)
+      && catalogRevisionDate >= captureDate,
+    "Catalog revision predates the latest verified screenshot capture",
     errors,
   );
   check(sourceJobs.workflow?.runner === "openai-image-job", "Source-art workflow mismatch", errors);

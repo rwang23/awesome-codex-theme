@@ -70,7 +70,7 @@ export async function buildSite(outputPath = DEFAULT_OUTPUT) {
       desktop: {
         repository: "https://github.com/rwang23/awesome-codex-theme",
         releases: "https://github.com/rwang23/awesome-codex-theme/releases",
-        currentVersion: "0.3.0-alpha.3",
+        currentVersion: "0.3.0-alpha.4",
       },
     }, null, 2) + "\n", "utf8"),
   );

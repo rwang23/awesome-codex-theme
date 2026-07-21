@@ -8,6 +8,7 @@ const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(SCRIPT_DIR, "..");
 const APPLY = process.argv.includes("--apply");
 const DEBUG = process.argv.includes("--debug");
+const UI_ONLY = process.argv.includes("--ui-only");
 const PERSISTENCE = process.argv.includes("--persistence");
 const ACTIVE_RUNTIME = process.argv.includes("--active-runtime");
 const SEED_LOCAL_ART = process.argv.includes("--seed-local-art");
@@ -560,6 +561,35 @@ async function runActiveRuntimeSmoke() {
       "already-active Beta Full Skin runtime",
       45000,
     );
+    const initialSurfaces = await evaluate(beta, `(() => {
+      const main = document.querySelector("main.main-surface") || document.querySelector('[role="main"]');
+      const sidebar = document.querySelector("aside.app-shell-left-panel");
+      const mainStyle = main ? getComputedStyle(main) : null;
+      const sidebarStyle = sidebar ? getComputedStyle(sidebar) : null;
+      return {
+        main: main ? {
+          backgroundColor: mainStyle.backgroundColor,
+          backgroundImage: mainStyle.backgroundImage
+        } : null,
+        sidebar: sidebar ? {
+          backgroundColor: sidebarStyle.backgroundColor,
+          backgroundImage: sidebarStyle.backgroundImage,
+          surfaceAlt: getComputedStyle(document.documentElement).getPropertyValue("--act-surface-alt").trim()
+        } : null
+      };
+    })()`);
+    invariant(initialSurfaces.main, "The active Beta main surface was not found");
+    invariant(
+      initialSurfaces.main.backgroundImage === "none"
+        && ["rgba(0, 0, 0, 0)", "transparent"].includes(initialSurfaces.main.backgroundColor),
+      "The active Beta main surface still paints a color block over the artwork",
+    );
+    invariant(initialSurfaces.sidebar, "The active Beta sidebar was not found");
+    invariant(
+      initialSurfaces.sidebar.backgroundImage.includes("linear-gradient")
+        && Boolean(initialSurfaces.sidebar.surfaceAlt),
+      "The active Beta sidebar is not using the selected theme material",
+    );
     const spaNavigation = await exercisePublicBetaRoute(beta, BETA_SCREENSHOT);
     const conversationNavigation = CONVERSATION_LABEL
       ? await exerciseNamedBetaConversation(
@@ -577,6 +607,7 @@ async function runActiveRuntimeSmoke() {
       mode: MODE,
       betaPort: endpoint.port,
       initialState,
+      initialSurfaces,
       spaNavigation,
       conversationNavigation,
       finalState,
@@ -584,6 +615,135 @@ async function runActiveRuntimeSmoke() {
     }, null, 2));
   } finally {
     beta.close();
+  }
+}
+
+async function runUiOnlySmoke(managerTarget) {
+  const manager = new CdpClient(managerTarget.webSocketDebuggerUrl, MANAGER_PORT);
+  await manager.connect();
+  await manager.send("Runtime.enable");
+  await manager.send("Page.enable");
+  let originalLanguage;
+  try {
+    await waitFor(
+      manager,
+      `document.querySelectorAll("[data-theme-id]").length > 0
+        && document.querySelector("#themeCapture")?.complete
+        && document.querySelector("#themeCapture")?.naturalWidth > 0`,
+      "manager visual catalog",
+      30000,
+    );
+    originalLanguage = await evaluate(manager, "document.documentElement.lang");
+    const interactions = await evaluate(manager, `(() => {
+      const city = document.querySelector('[data-style="cityscape"]');
+      city?.click();
+      const cityCount = document.querySelectorAll("[data-theme-id]").length;
+      const firstCollection = [...document.querySelectorAll("[data-collection]")]
+        .find((button) => button.dataset.collection !== "all");
+      firstCollection?.click();
+      const collectionCount = document.querySelectorAll("[data-theme-id]").length;
+      document.querySelector('[data-style="all"]')?.click();
+      document.querySelector('[data-collection="all"]')?.click();
+      if (document.documentElement.lang !== "en") document.querySelector("#languageButton")?.click();
+      document.querySelector(${JSON.stringify(`[data-theme-id="${THEME_ID}"]`)})?.click();
+      document.querySelector(${JSON.stringify(`[data-mode="${MODE}"]`)})?.click();
+      return { cityCount, collectionCount };
+    })()`);
+    invariant(interactions.cityCount > 0, "The visual-style tab produced no themes");
+    invariant(interactions.collectionCount > 0, "The collection tab produced no themes");
+    await waitFor(
+      manager,
+      `document.documentElement.lang === "en"
+        && document.querySelector(${JSON.stringify(`[data-theme-id="${THEME_ID}"]`)})?.classList.contains("is-active")
+        && document.querySelector(${JSON.stringify(`[data-mode="${MODE}"]`)})?.classList.contains("is-active")
+        && document.querySelector("#themeCapture")?.complete
+        && document.querySelector("#themeCapture")?.naturalWidth > 0`,
+      "manager selection and language state",
+      15000,
+    );
+    const layout = await evaluate(manager, `(() => {
+      const rect = (selector) => {
+        const node = document.querySelector(selector);
+        if (!node) return null;
+        const value = node.getBoundingClientRect();
+        return {
+          left: Math.round(value.left),
+          top: Math.round(value.top),
+          right: Math.round(value.right),
+          bottom: Math.round(value.bottom),
+          width: Math.round(value.width),
+          height: Math.round(value.height)
+        };
+      };
+      const list = document.querySelector("#themeList");
+      const regions = {
+        titlebar: rect(".titlebar"),
+        catalog: rect(".catalog-panel"),
+        stage: rect(".theme-stage"),
+        capture: rect(".capture-frame"),
+        action: rect(".action-card")
+      };
+      const inViewport = Object.values(regions).every((value) => value
+        && value.left >= 0
+        && value.top >= 0
+        && value.right <= innerWidth + 1
+        && value.bottom <= innerHeight + 1);
+      return {
+        viewport: { width: innerWidth, height: innerHeight },
+        document: {
+          clientWidth: document.documentElement.clientWidth,
+          scrollWidth: document.documentElement.scrollWidth,
+          clientHeight: document.documentElement.clientHeight,
+          scrollHeight: document.documentElement.scrollHeight
+        },
+        list: {
+          clientWidth: list?.clientWidth || 0,
+          scrollWidth: list?.scrollWidth || 0,
+          clientHeight: list?.clientHeight || 0,
+          scrollHeight: list?.scrollHeight || 0
+        },
+        regions,
+        inViewport
+      };
+    })()`);
+    invariant(
+      layout.document.scrollWidth <= layout.document.clientWidth + 1,
+      "The Theme Manager still has page-level horizontal overflow",
+    );
+    invariant(
+      layout.list.scrollWidth <= layout.list.clientWidth + 1,
+      "The Theme Manager theme shelf still scrolls horizontally",
+    );
+    invariant(layout.list.scrollHeight > layout.list.clientHeight, "The theme shelf is not vertically scrollable");
+    invariant(layout.inViewport, "A primary Theme Manager region is outside the viewport");
+
+    const screenshot = await manager.send("Page.captureScreenshot", {
+      format: "png",
+      fromSurface: true,
+      captureBeyondViewport: false,
+    });
+    const screenshotBytes = Buffer.from(screenshot.data, "base64");
+    await writeFile(SCREENSHOT_PATH, screenshotBytes);
+    console.log(JSON.stringify({
+      status: "COMPLETE",
+      scenario: "manager-ui-only",
+      themeId: THEME_ID,
+      mode: MODE,
+      interactions,
+      layout,
+      screenshot: path.relative(ROOT, SCREENSHOT_PATH).replaceAll("\\", "/"),
+      screenshotSha256: sha256(screenshotBytes),
+      screenshotBytes: screenshotBytes.length,
+    }, null, 2));
+  } finally {
+    if (originalLanguage && originalLanguage !== "en") {
+      try {
+        await evaluate(manager, `document.documentElement.lang === "en"
+          ? (document.querySelector("#languageButton")?.click(), true)
+          : true`);
+      } catch {}
+    }
+    manager.close();
   }
 }
 
@@ -781,6 +941,10 @@ async function main() {
     "Manager CDP listener does not descend from the pinned manager executable",
   );
   const managerTarget = await pageTarget(MANAGER_PORT, "http://tauri.localhost/");
+  if (UI_ONLY) {
+    await runUiOnlySmoke(managerTarget);
+    return;
+  }
   if (PERSISTENCE) {
     invariant(APPLY, "--persistence requires --apply");
     await runPersistenceSmoke(managerTarget);

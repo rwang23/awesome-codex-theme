@@ -666,7 +666,7 @@ mod tests {
     #[test]
     fn bundled_registry_has_fifty_three_valid_dual_mode_themes() {
         let registry = validate_registry(REGISTRY).expect("registry should validate");
-        assert_eq!(registry["catalogRevision"].as_u64(), Some(2026071802));
+        assert_eq!(registry["catalogRevision"].as_u64(), Some(2026072101));
         assert_eq!(registry["themes"].as_array().map(Vec::len), Some(53));
     }
 

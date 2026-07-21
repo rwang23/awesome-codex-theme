@@ -1,25 +1,28 @@
 # Changelog
 
-## Unreleased
+## 0.3.0-alpha.4 - 2026-07-21
 
-- Rebuilt Theme Manager discovery around visible **Visual Style** tabs, then
-  collection tabs and real-capture theme cards. The new flow makes the full
-  catalog legible before a user enters search or secondary filters, and keeps
-  collection counts honest for the chosen visual form.
-- Replaced the old mirror-like product mark with a language-independent
-  terminal-window and color-orbit symbol across the manager, Gallery, and the
-  regenerated desktop icon source. Rewrote the awkward workspace-climate copy
-  in both Chinese and English.
-- Changed the main Full Skin action from session-only application to
-  consent-gated **Apply & Keep** behavior. Once confirmed, later Apply actions
-  replace the durable selection; Restore Native disables it.
-- Replaced the fragile `app://` blob-based Full Skin image path with a
-  verified, fixed artwork element behind the app root. Background art now spans
-  the main workspace and translucent sidebar materials rather than degrading to
-  a palette-only wash.
-- Captures now select the strongest model label actually exposed by the exact
-  test bench: `5.6 Sol Max`. The harness records the visible label and restores
-  the previous choice; it does not claim an unavailable `Ultra` option.
+- Redesigned Theme Manager as a compact two-column browser: visual-style tabs,
+  wrapped collection filters, a vertically scrolling theme library, real Beta
+  preview, and apply controls now remain visible together at the default
+  1240×820 window size.
+- Removed route-sized gradients that could cover Full Skin artwork with color
+  bands. The verified image now stays on the document background while the
+  main route surface remains transparent; the Codex project sidebar derives a
+  light or dark tinted material from each theme's own `surfaceAlt` palette.
+- Recaptured all 106 light and dark screenshots in the pinned ChatGPT Beta
+  `26.715.3651.0` test bench and raised the catalog revision so installed
+  managers cannot retain the older color-only evidence. Every capture records
+  a decoded Blob image, matching document background, runtime hash, and
+  restored `5.6 Sol Max` model selection.
+- Extended the capture harness for both split and combined model-label DOMs.
+  A persistent Windows smoke test kept Qinglan Odyssey across Home → Pull
+  requests → Home, with transparent main surfaces, theme-tinted sidebar, and
+  bounded renderer repair work.
+- Kept consent-gated **Apply & Keep Full Skin**, durable replacement, and
+  Restore Native behavior. The manager, Gallery, and regenerated desktop icons
+  use the language-neutral terminal-window and color-orbit mark, with revised
+  Chinese and English workspace copy.
 
 ## 0.3.0-alpha.3 - 2026-07-20
 

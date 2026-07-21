@@ -307,9 +307,16 @@ async function currentModelLabel(client) {
       if (!trigger) return null;
       const rect = trigger.getBoundingClientRect();
       if (!rect.width || !rect.height) return null;
+      const fullLabelPattern = /5\\.6\\s+(?:Sol|Terra|Luna)\\s+(?:Light|Medium|High|Extra High|Max|Ultra|Standard)/i;
       const leafLabels = [...trigger.querySelectorAll("span")]
         .filter((node) => !node.closest('[aria-hidden="true"]'))
         .map((node) => normalize(node.textContent));
+      const combined = [
+        normalize(trigger.getAttribute("aria-label")),
+        normalize(trigger.textContent),
+        ...leafLabels,
+      ].map((label) => label.match(fullLabelPattern)?.[0]).find(Boolean);
+      if (combined) return normalize(combined);
       const family = leafLabels.find((label) => /^5\\.6\\s+(?:Sol|Terra|Luna)$/i.test(label));
       const effort = leafLabels.find(
         (label) => /^(?:Light|Medium|High|Extra High|Max|Ultra|Standard)$/i.test(label)

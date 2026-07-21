@@ -1,7 +1,7 @@
 {
   "schemaVersion": "act-full-skin-capture-manifest-v1",
   "status": "complete",
-  "capturedAt": "2026-07-21T06:44:53.773Z",
+  "capturedAt": "2026-07-21T08:59:54.135Z",
   "testBench": {
     "packageFamilyName": "OpenAI.CodexBeta_2p2nqsd0c76g0",
     "packageFullName": "OpenAI.CodexBeta_26.715.3651.0_x64__2p2nqsd0c76g0",
@@ -24,7 +24,7 @@
   "runtime": {
     "format": "act-full-skin-v1",
     "implementationVersion": "act-full-skin-runtime-v2",
-    "sha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+    "sha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
     "earlyInjection": true,
     "removedAfterCapture": true
   },
@@ -94,12 +94,12 @@
       "themeId": "qinglan-odyssey",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/qinglan-odyssey-light.png",
-      "sha256": "ff2069baef0ed41996473d43c6d6a05e70188cdf475d901738d91ae93737ccc2",
-      "bytes": 1176972,
+      "sha256": "8cf5d22bfd6ad33e6fffd813ef70fd5ce9a5c4d75fb83687e0d172b2617fb0af",
+      "bytes": 932484,
       "width": 1440,
       "height": 810,
       "assetSha256": "70aac35419396548788840366a517efbda5cb51e859918b4e5472810adc045e6",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -115,18 +115,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:44:58.377Z"
+      "capturedAt": "2026-07-21T09:00:03.816Z"
     },
     {
       "themeId": "qinglan-odyssey",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/qinglan-odyssey-dark.png",
-      "sha256": "7028e5f8a421eea77037ffa69ebcff58890d819335de9c7e16bcd86a4b855e7d",
-      "bytes": 889919,
+      "sha256": "5acdb00c5f54a781932999f69ec2949d736edd2a3ff3dfa4d0eef65710a81a5e",
+      "bytes": 700862,
       "width": 1440,
       "height": 810,
       "assetSha256": "f92d2eb762c017d1a040945344cbd4def90604ad20df95e54c9e1a3dccb4c48a",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -142,18 +142,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:45:03.392Z"
+      "capturedAt": "2026-07-21T09:00:05.025Z"
     },
     {
       "themeId": "qinglan-sprite",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/qinglan-sprite-light.png",
-      "sha256": "4fa6b9e8b8eb5961d3ba257376e6f5ee8518f6d75f04cfc97a1b0f643f5eb4f3",
-      "bytes": 1265162,
+      "sha256": "81fdc3ae2030b756a2dd72afe7d08130a4422f91452d639acb557c584c96bbd3",
+      "bytes": 1051823,
       "width": 1440,
       "height": 810,
       "assetSha256": "f63e4691545e9d67a2cdd6983b2ab3d44cd4f591ee6f09feb2408b497f59e12b",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -169,18 +169,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:45:08.098Z"
+      "capturedAt": "2026-07-21T09:00:09.799Z"
     },
     {
       "themeId": "qinglan-sprite",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/qinglan-sprite-dark.png",
-      "sha256": "d1fc5bf3eba0c5ddb1c3b83465f8fd09141c05a22c7b5b582bfc804886109251",
-      "bytes": 1044948,
+      "sha256": "642ecb33a86b17811712368cd7cad3f435d1a0c1799973a333d9a36eb07d7928",
+      "bytes": 806699,
       "width": 1440,
       "height": 810,
       "assetSha256": "2848b184e061fd6b8d181980e399791de199441d5212346254f0be3dc6852641",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -196,18 +196,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:45:12.634Z"
+      "capturedAt": "2026-07-21T09:00:13.459Z"
     },
     {
       "themeId": "starbound-rebel",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/starbound-rebel-light.png",
-      "sha256": "32edc088e4cf3935a05746e7d08aadb76024a9d460b494331fec2964ae761859",
-      "bytes": 1210031,
+      "sha256": "8377eae3cba2f4be26eb2b08df18e1969d468130b7630943a707e011b0d81e78",
+      "bytes": 1001710,
       "width": 1440,
       "height": 810,
       "assetSha256": "2cba3222ca719a30735a45d1862a8ab9d42ceb751a7b71708742d9a5ea8ee55d",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -223,18 +223,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:45:15.360Z"
+      "capturedAt": "2026-07-21T09:00:20.065Z"
     },
     {
       "themeId": "starbound-rebel",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/starbound-rebel-dark.png",
-      "sha256": "efb130ef7f8feca168e37adfc4c637c368edfe8aab077a16eb5692765f69ec16",
-      "bytes": 914506,
+      "sha256": "4cb654349af28c01541e4c4735c103a6e9e161d9d0aff4aa9b2f04a1d7119f75",
+      "bytes": 739483,
       "width": 1440,
       "height": 810,
       "assetSha256": "f11f5b51fca837dcb994460eaf9df7f01dccd71ad4f7a43c88445103e81f33a7",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -250,18 +250,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:45:16.800Z"
+      "capturedAt": "2026-07-21T09:00:21.476Z"
     },
     {
       "themeId": "starbound-sprite",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/starbound-sprite-light.png",
-      "sha256": "57613d79c49e9c85cac74bdbdb508510bf826069ad5a6e5d7540b042d5b90110",
-      "bytes": 1105821,
+      "sha256": "95687e06dc522c2032097f314f1acbb851ec931d88fb392df465d633df8eb11a",
+      "bytes": 928169,
       "width": 1440,
       "height": 810,
       "assetSha256": "d0c4dc986aa4a9fcde1768693ec5b03c855f42cc8881b582949a9f723abd276c",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -277,18 +277,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:45:18.457Z"
+      "capturedAt": "2026-07-21T09:00:23.066Z"
     },
     {
       "themeId": "starbound-sprite",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/starbound-sprite-dark.png",
-      "sha256": "ea2528a2598dfd04d967cb427026c35660a59364e3f03cd97b8ec50830940fbb",
-      "bytes": 858198,
+      "sha256": "2234fd6663409292a56e2b90846526ec2438bddfab9de83e6d768c2bb12958c3",
+      "bytes": 681425,
       "width": 1440,
       "height": 810,
       "assetSha256": "aa7f7cb00342dc55e63bad442c23a073a5399fec311af6b3a8ae82b337ac6824",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -304,18 +304,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:45:20.903Z"
+      "capturedAt": "2026-07-21T09:00:24.516Z"
     },
     {
       "themeId": "mountain-sword",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/mountain-sword-light.png",
-      "sha256": "ea2029cf8e6b64166ad40e81746d5b343a1f3fdcc30551688dffebbaadd857e6",
-      "bytes": 1261851,
+      "sha256": "4d7950a6ff7bcb51f6265328b9a286f85b9d55ec164348eb1f9fe4b8f88885d4",
+      "bytes": 1034291,
       "width": 1440,
       "height": 810,
       "assetSha256": "f9714d1cb77ffa8c03e3f0611c0d33c39e3f5278580550d31c7aea6b6baa2769",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -331,18 +331,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:45:25.568Z"
+      "capturedAt": "2026-07-21T09:00:26.423Z"
     },
     {
       "themeId": "mountain-sword",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/mountain-sword-dark.png",
-      "sha256": "df0fa56619449ed25356e461a3ebe0bbfa35867e6da7bc0f8c3d99f8c4d4778a",
-      "bytes": 1007073,
+      "sha256": "69ef3f7f3240a09d445cb91425d0e1acbaed8585a775e5d570aeb20a4c32a3a0",
+      "bytes": 796897,
       "width": 1440,
       "height": 810,
       "assetSha256": "e1e6423cf15d6fd023f85e511576d67327d23c0c22da0aa6c1a9ccb02434333b",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -358,18 +358,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:45:29.982Z"
+      "capturedAt": "2026-07-21T09:00:27.759Z"
     },
     {
       "themeId": "mountain-swordling",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/mountain-swordling-light.png",
-      "sha256": "f391a02047c7cf8a6dc6774c82a627aba0de143d2400fb55a6b80e15f7ca1898",
-      "bytes": 1193046,
+      "sha256": "1ddc49d9364e2cabaf62e4b0ce8f5784f391b862b7e4f82f4ce2d52d10f4ff62",
+      "bytes": 998916,
       "width": 1440,
       "height": 810,
       "assetSha256": "8c3efbb6a6528d3bd7b517c9b8429cd1c1085533c2f922d64257a2024a31fada",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -385,18 +385,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:45:32.604Z"
+      "capturedAt": "2026-07-21T09:00:29.323Z"
     },
     {
       "themeId": "mountain-swordling",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/mountain-swordling-dark.png",
-      "sha256": "a3a11af26600cb6fffcac9544e1ecd2aa6bc87edbca8e1c802d2c86ad3033272",
-      "bytes": 961628,
+      "sha256": "bfc0a7a252a4e0c91e99f6063a710d7aa67db28aaba1a51e13fa7aa10572eecb",
+      "bytes": 770553,
       "width": 1440,
       "height": 810,
       "assetSha256": "3bc4a5824c98867af736f5d1d8a9d47af48ab71990056f8676b95d106d4153b1",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -412,18 +412,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:45:36.969Z"
+      "capturedAt": "2026-07-21T09:00:30.641Z"
     },
     {
       "themeId": "cloudsea-pact",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/cloudsea-pact-light.png",
-      "sha256": "1a7746ddfbb7cf15badcc9bc5b1c9889ab174121bf18dbf89ada13857b23177b",
-      "bytes": 1305496,
+      "sha256": "9353495d0af267ae5a30e344459d4ac01aae39b4532591e0b0eb9024050ef177",
+      "bytes": 1102005,
       "width": 1440,
       "height": 810,
       "assetSha256": "14832c4ab93a9e91869f52721b3a9a4f219d22deac9c754cdf6a1ed681f0a373",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -439,18 +439,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:45:39.649Z"
+      "capturedAt": "2026-07-21T09:00:32.382Z"
     },
     {
       "themeId": "cloudsea-pact",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/cloudsea-pact-dark.png",
-      "sha256": "560d3b124710d4d424256fa72f7b2b3221bb7ba36da5adc9fbd26e4150efd315",
-      "bytes": 1058786,
+      "sha256": "e6abb7ed6186d5e0282991ac9ba461fda997d378f214d86daff0e57a112d701b",
+      "bytes": 852205,
       "width": 1440,
       "height": 810,
       "assetSha256": "71d3bf142e788366aaea064db1f2f51b40573fa6be2d986af75dc0af249e45bd",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -466,18 +466,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:45:41.106Z"
+      "capturedAt": "2026-07-21T09:00:33.775Z"
     },
     {
       "themeId": "cloudsea-mochi",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/cloudsea-mochi-light.png",
-      "sha256": "e1b36eac97956bf97432ce079dd44143976c7ae1039b2b7b30c8a2457fe8ffc5",
-      "bytes": 1019415,
+      "sha256": "9d921ec440361cf763003c852c7db2454547b63a780ba82aedb471c1e54dbfe3",
+      "bytes": 813761,
       "width": 1440,
       "height": 810,
       "assetSha256": "d02d9ae98d2f80c4c75660b3c2a18ff33b0fdfb177a99a82e5a470695e41ac55",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -493,18 +493,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:45:45.771Z"
+      "capturedAt": "2026-07-21T09:00:35.137Z"
     },
     {
       "themeId": "cloudsea-mochi",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/cloudsea-mochi-dark.png",
-      "sha256": "151aa3a76e1c4e32f6cf1e3c3bc8c2d08cb94a158dbb5f1ccc216a413f818654",
-      "bytes": 811588,
+      "sha256": "71cbc089b46bce901e7704247f36f62bbc34da381710f1206bdef1968c878dbe",
+      "bytes": 616557,
       "width": 1440,
       "height": 810,
       "assetSha256": "751580d8d3d12673e6c99e023ab6b67603aec0358395fa440b8f6e57b450c6c9",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -520,18 +520,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:45:50.396Z"
+      "capturedAt": "2026-07-21T09:00:39.204Z"
     },
     {
       "themeId": "beijing-meridian",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/beijing-meridian-light.png",
-      "sha256": "b7337658fb597276902bd34703e71524c1999bcc43d95a65fbfb13e5ce069d81",
-      "bytes": 1190635,
+      "sha256": "772a8c3c8617590f01de53048b2ad69154d7aea8e919ca7f382cdd9522a2ac15",
+      "bytes": 1003101,
       "width": 1440,
       "height": 810,
       "assetSha256": "5cc21cfbcd59870bc87e4e9154476b1a0e6b25775f15128cdf26404d0536d64a",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -547,18 +547,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:45:55.032Z"
+      "capturedAt": "2026-07-21T09:00:42.157Z"
     },
     {
       "themeId": "beijing-meridian",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/beijing-meridian-dark.png",
-      "sha256": "f46bd1148f9999b192d83985d9d2e8cbd65cd1b82b0982440b30407983637bf6",
-      "bytes": 936024,
+      "sha256": "cdc3ddce50cfd5c7063496b33a57d679306f697ef0df7f86f6548aa8a54c14c5",
+      "bytes": 762494,
       "width": 1440,
       "height": 810,
       "assetSha256": "e23a4592084e27cac12e97c77bebd27dc4f3760e80911786dae2eddebf9abc9d",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -574,18 +574,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:45:57.660Z"
+      "capturedAt": "2026-07-21T09:00:44.559Z"
     },
     {
       "themeId": "shanghai-afterglow",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/shanghai-afterglow-light.png",
-      "sha256": "7da1e9873a1aec41c80698c9a8a51a7420be4c598ed937a69395721cdaa38464",
-      "bytes": 1330386,
+      "sha256": "18ab791a9fdd8769962aa5c7a34446bd676a8b1eaf1417b75f1475333e150849",
+      "bytes": 1184113,
       "width": 1440,
       "height": 810,
       "assetSha256": "fa73f15ee9d3f8f4942bd775e4385ca13b1fbd9e9422054cd3356f1f80460717",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -601,18 +601,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:46:02.371Z"
+      "capturedAt": "2026-07-21T09:00:46.237Z"
     },
     {
       "themeId": "shanghai-afterglow",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/shanghai-afterglow-dark.png",
-      "sha256": "22eccd02127be563bb946a8d28e225e8bea95344662a2e12ce819c2f4abdd981",
-      "bytes": 1096300,
+      "sha256": "30f13af74e45b5e64e78ee417f4a2d10d8056b251e7a18ec04ee0679da449079",
+      "bytes": 911824,
       "width": 1440,
       "height": 810,
       "assetSha256": "9efac99b9e14bf3b6b4fb4e46bfe82c3e9bc63a5489946647f2d4d543491aa9e",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -628,18 +628,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:46:04.860Z"
+      "capturedAt": "2026-07-21T09:00:47.715Z"
     },
     {
       "themeId": "shenzhen-circuit-rain",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/shenzhen-circuit-rain-light.png",
-      "sha256": "d28a7c6259af6657cd431dc1c82c7fc321c20d2e008f0c6441145ef66c77aebf",
-      "bytes": 1491689,
+      "sha256": "4ac49d33b77853ee9b49a8b493f503655b839605f6321a06b18e437860354bbc",
+      "bytes": 1357529,
       "width": 1440,
       "height": 810,
       "assetSha256": "e87e4c66392436b5df59e2d490433dab39632cd7370af9a5876462053b782e96",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -655,18 +655,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:46:10.695Z"
+      "capturedAt": "2026-07-21T09:00:49.497Z"
     },
     {
       "themeId": "shenzhen-circuit-rain",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/shenzhen-circuit-rain-dark.png",
-      "sha256": "af67a67c9721e9460cf372f5d263c04e8dcded8e895d4a3410b7b4f05ccbd422",
-      "bytes": 1245980,
+      "sha256": "e80a0744fc8a9b718038550f584a40369e48964d88a2881a6607acd47052025c",
+      "bytes": 1065780,
       "width": 1440,
       "height": 810,
       "assetSha256": "8f11f29b02d830af78df4276ada7801e7b6498e5bc5ac13a43aa85f670c55465",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -682,18 +682,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:46:15.391Z"
+      "capturedAt": "2026-07-21T09:00:51.064Z"
     },
     {
       "themeId": "guangzhou-riverwind",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/guangzhou-riverwind-light.png",
-      "sha256": "fee6d61de6f3a2e08380a6241cdad3fb2b53c54c964457a3d28c5ff21602cdb1",
-      "bytes": 1399764,
+      "sha256": "eec5c500a0c57d95a3943169c3466c30844986ec93aa8d8dadfc3cf497802a27",
+      "bytes": 1257677,
       "width": 1440,
       "height": 810,
       "assetSha256": "49bc9ef9dc4388057062705db84b9ea067b0f8e1373023e7ff89b3b08aa7ac6c",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -709,18 +709,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:46:20.954Z"
+      "capturedAt": "2026-07-21T09:00:52.766Z"
     },
     {
       "themeId": "guangzhou-riverwind",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/guangzhou-riverwind-dark.png",
-      "sha256": "62c7a472cb5285a9e58b56dd53f941ecb1babaab844dfa0f9b1437f674a289d9",
-      "bytes": 1159958,
+      "sha256": "14f24e80b03acf6afb5975c25844f13a7f636c9d0d463105c95e05a6329959a6",
+      "bytes": 976007,
       "width": 1440,
       "height": 810,
       "assetSha256": "3ee3a4b1ae1fe8ec85d2eebea224ebb64402ad23d2dcfc82010f7190c261e27f",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -736,18 +736,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:46:25.859Z"
+      "capturedAt": "2026-07-21T09:00:54.234Z"
     },
     {
       "themeId": "chengdu-teahouse-rain",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/chengdu-teahouse-rain-light.png",
-      "sha256": "bd387cad805734b8f1908586c8936493041a615f025c32974055be4bfde507e3",
-      "bytes": 1433466,
+      "sha256": "b763f24e1f7f82f47c47c3410821e5fb796ad3bc06cf18af62bc4a0c3a22312d",
+      "bytes": 1298500,
       "width": 1440,
       "height": 810,
       "assetSha256": "1d4328fc4263e524340ea84f4ab22e1e8e83e37833c8279e5496f0bb11634d5d",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -763,18 +763,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:46:28.736Z"
+      "capturedAt": "2026-07-21T09:00:55.931Z"
     },
     {
       "themeId": "chengdu-teahouse-rain",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/chengdu-teahouse-rain-dark.png",
-      "sha256": "c1be94a81fb0e6a76b7060f68d29c56e434abb073e9ef2a779e600b7b0c1f2d3",
-      "bytes": 1174581,
+      "sha256": "f035f20a32ed4ed45721c01f2b8361457f10a2ddd43889a6d539d9076ec891e8",
+      "bytes": 1005230,
       "width": 1440,
       "height": 810,
       "assetSha256": "93f48b14535b5e73bb7bc54fa5cb7a2d7cac5a49ca97c97ce72579219ab923de",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -790,18 +790,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:46:32.576Z"
+      "capturedAt": "2026-07-21T09:00:57.345Z"
     },
     {
       "themeId": "hangzhou-lake-letter",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/hangzhou-lake-letter-light.png",
-      "sha256": "39b2db889708345d6f1075b7e5656d16392a2762c9612afe62237b8cf403ae3f",
-      "bytes": 1377154,
+      "sha256": "750795fae3f9f19d0fad0c577347736bf08eb4d78e74e43de1e4c1d0f1e9a24a",
+      "bytes": 1184895,
       "width": 1440,
       "height": 810,
       "assetSha256": "ff8f72e9c9fd1edbd272cb7197994d13792bf3fc3914d5de8c6b365ad53f1c50",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -817,18 +817,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:46:37.558Z"
+      "capturedAt": "2026-07-21T09:00:58.927Z"
     },
     {
       "themeId": "hangzhou-lake-letter",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/hangzhou-lake-letter-dark.png",
-      "sha256": "3c10c0bc3efba58679d4c67970b00156a3de3144d9beaf2965222aa4de7cf2eb",
-      "bytes": 1117655,
+      "sha256": "f45a0e8bfe2ae5cb39ec36e7971579bdc0a939510476323628611f66d769c1de",
+      "bytes": 912302,
       "width": 1440,
       "height": 810,
       "assetSha256": "afb7f3a24b54cd9e3614a187d4c27d3f99fa6a395ab89b302381ea879038f432",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -844,18 +844,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:46:40.231Z"
+      "capturedAt": "2026-07-21T09:01:00.241Z"
     },
     {
       "themeId": "chongqing-vertical-night",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/chongqing-vertical-night-light.png",
-      "sha256": "b49ad8a55292c9efb8205f0d5b374c99fc4dc6c48a010565a8daca0b9636d4ab",
-      "bytes": 1332137,
+      "sha256": "4720fdf6a88e0536c06aa50d3b6d1cc9967dec4782f5e25d99a1ff17e3b8cd61",
+      "bytes": 1187040,
       "width": 1440,
       "height": 810,
       "assetSha256": "88511b6f1f2fd06fce3786016109cd2fa2d87d2c45afb0b62fc83d0bd27e9946",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -871,18 +871,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:46:45.106Z"
+      "capturedAt": "2026-07-21T09:01:01.944Z"
     },
     {
       "themeId": "chongqing-vertical-night",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/chongqing-vertical-night-dark.png",
-      "sha256": "2bedc29ba487a3f4803c02c6dcc8e52a824c30faf402f3da42d4011a39dfdfff",
-      "bytes": 1104317,
+      "sha256": "cddf52b2ce640d5c58f22f64166aca85b059e89c95fa6b8a8663fa438d847df9",
+      "bytes": 917154,
       "width": 1440,
       "height": 810,
       "assetSha256": "59ffc290e1362e640bd46ebdd5e74589a4aa160b093f1a6d766314e78634f99e",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -898,18 +898,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:46:47.706Z"
+      "capturedAt": "2026-07-21T09:01:03.465Z"
     },
     {
       "themeId": "nanjing-wall-plum",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/nanjing-wall-plum-light.png",
-      "sha256": "cd0d11ee18957b1ec920e2ff40711b3b8c6fb14d7a181494f71f03376646049d",
-      "bytes": 1410237,
+      "sha256": "75c1b12f9c14881c4043bdb263a7b929ea1d0f99060215f55f168e07f3f5c049",
+      "bytes": 1232734,
       "width": 1440,
       "height": 810,
       "assetSha256": "0c63869d896460d5a4f56ec11831681e45038ae7c2c9b10edc7c159474752024",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -925,18 +925,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:46:50.609Z"
+      "capturedAt": "2026-07-21T09:01:08.820Z"
     },
     {
       "themeId": "nanjing-wall-plum",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/nanjing-wall-plum-dark.png",
-      "sha256": "38fb559e9dce6e34a3ccaeedcb5f32266dd18f675179eb840bf43c999d112168",
-      "bytes": 1154893,
+      "sha256": "11b40b650766707ac8916b3a39cbf2288309d6cad0ee53a3c014e9c328a2b1af",
+      "bytes": 952134,
       "width": 1440,
       "height": 810,
       "assetSha256": "d53ffb8b6f370da0cb925c58dd73af7314c8ee33d41f4dbacf9cd53dd2274369",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -952,18 +952,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:46:53.128Z"
+      "capturedAt": "2026-07-21T09:01:10.514Z"
     },
     {
       "themeId": "new-york-rainline",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/new-york-rainline-light.png",
-      "sha256": "b8fcb6d8417cf2d2262a5a07347dd5c9cc7703b23e9fcdd4a885b25cf503a2a5",
-      "bytes": 1259148,
+      "sha256": "b0b75462a6cfd79f2f1619a4647dc0462606fbe89fa78d23cc1e69762a539e3d",
+      "bytes": 1076298,
       "width": 1440,
       "height": 810,
       "assetSha256": "571aee82103f8bc2e14debc1a3393cd93d0110f4e6f4dcc90aed4aade59c88d8",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -979,18 +979,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:46:57.786Z"
+      "capturedAt": "2026-07-21T09:01:12.173Z"
     },
     {
       "themeId": "new-york-rainline",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/new-york-rainline-dark.png",
-      "sha256": "3600096956b5e772f33f90b7337b18f5d5852fe7997d68e25ba64b84488d91b4",
-      "bytes": 1042862,
+      "sha256": "76a774dca2a77f041c9a2986db6d049c0fcaa9c6d3d80897215ac0818d7cb14f",
+      "bytes": 823581,
       "width": 1440,
       "height": 810,
       "assetSha256": "c3aee1a47ac463e206438ae4920337d9391d6942d6aa9650712a1821a82ac59d",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -1006,18 +1006,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:47:11.290Z"
+      "capturedAt": "2026-07-21T09:01:13.638Z"
     },
     {
       "themeId": "san-francisco-fogline",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/san-francisco-fogline-light.png",
-      "sha256": "4322b18d54408c2a0cd5897d682d6e29749dfe52adfc8b0909f2171d827be4f5",
-      "bytes": 1140690,
+      "sha256": "6c70d5b0379607a049d1b1f8163bbd4ab34cdc68d7d2f2292cc37a6ad71df72a",
+      "bytes": 934916,
       "width": 1440,
       "height": 810,
       "assetSha256": "58684fc92b6607710b97915e293bf70d76bb6919b010be400530490b1719b745",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -1033,18 +1033,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:47:13.855Z"
+      "capturedAt": "2026-07-21T09:01:15.086Z"
     },
     {
       "themeId": "san-francisco-fogline",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/san-francisco-fogline-dark.png",
-      "sha256": "66d9eebb25c44c8095572c576543fcef338ce2cbd014b7b6c3d78736ed1ec5c6",
-      "bytes": 881093,
+      "sha256": "f8f463940b1a5fea98407849886f921cce1b0d156ed3c32912ba9acaa469b99d",
+      "bytes": 704018,
       "width": 1440,
       "height": 810,
       "assetSha256": "e8b816767e2e976f72e12f8963c77e7e250bca6311195e093aba883c6f9f43b2",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -1060,18 +1060,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:47:18.170Z"
+      "capturedAt": "2026-07-21T09:01:16.503Z"
     },
     {
       "themeId": "chicago-lakewind",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/chicago-lakewind-light.png",
-      "sha256": "f718177f49db0048272142f6b33ad0d5914f10c06123ad0bb1a42b871f007478",
-      "bytes": 1307669,
+      "sha256": "5badc87b031a2f2951bdc7834c49f45ef14ba66f17f36cd45fa9612980524c71",
+      "bytes": 1095649,
       "width": 1440,
       "height": 810,
       "assetSha256": "ba453e5276f61280cd7e94945dd17b7d2979761047cb8a183dcc7badf454c6b2",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -1087,18 +1087,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:47:20.850Z"
+      "capturedAt": "2026-07-21T09:01:18.029Z"
     },
     {
       "themeId": "chicago-lakewind",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/chicago-lakewind-dark.png",
-      "sha256": "3b69cfc0357a6927502c2a6fd05ffb34cff45d34d166467bda3c64b5cd9f3350",
-      "bytes": 1083785,
+      "sha256": "ecb33a213246453fc47dc86a4d909078dceddc60c39aa8650326180203a8f343",
+      "bytes": 844607,
       "width": 1440,
       "height": 810,
       "assetSha256": "dc23f4745070bbe6b3c56f964a66b55294c5d4e106dc580ad086185eee710a5e",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -1114,18 +1114,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:47:23.375Z"
+      "capturedAt": "2026-07-21T09:01:19.417Z"
     },
     {
       "themeId": "toronto-blue-hour",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/toronto-blue-hour-light.png",
-      "sha256": "c31b070ae0ad827da0bae475292103aeac441507156030f00bf79780c19d6bcd",
-      "bytes": 1276813,
+      "sha256": "ccea85257d39f48cd07431bc6103066b9e68c8c599892c9489b209293a695fb8",
+      "bytes": 1062226,
       "width": 1440,
       "height": 810,
       "assetSha256": "022589a0e575adb385825304d926474b0a1b3fac6bd2a91ac0c3c359d0ef1819",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -1141,18 +1141,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:47:27.989Z"
+      "capturedAt": "2026-07-21T09:01:20.951Z"
     },
     {
       "themeId": "toronto-blue-hour",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/toronto-blue-hour-dark.png",
-      "sha256": "974dfe92e613b3ca663ce4cb5407821d2c2c7c98695841494082c04fac04314d",
-      "bytes": 1033331,
+      "sha256": "02e5f97f39872ca929ccc5bddc27ab31a6aaf7b6c04fdbb6d435f40d71343fed",
+      "bytes": 809809,
       "width": 1440,
       "height": 810,
       "assetSha256": "d9a039030b5021e4e32a31ab78dcf038dec7738e95ea6e915aa26c8016fa8ebf",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -1168,18 +1168,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:47:32.352Z"
+      "capturedAt": "2026-07-21T09:01:22.236Z"
     },
     {
       "themeId": "vancouver-rain-harbour",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/vancouver-rain-harbour-light.png",
-      "sha256": "3cf6ddbbfd70118a5b9a8137bd71016d2eab0bf3af998947c1a76d1f6e1b91f0",
-      "bytes": 1318338,
+      "sha256": "5e57002a49067ca78f243d5d5af21becf516d78be65a4cad0e5accf08175043b",
+      "bytes": 1127748,
       "width": 1440,
       "height": 810,
       "assetSha256": "8aeaf9a707c4e588efd28f762ed315baeb2ed39682ab371f805d7b43f25af5ef",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -1195,18 +1195,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:47:36.927Z"
+      "capturedAt": "2026-07-21T09:01:23.916Z"
     },
     {
       "themeId": "vancouver-rain-harbour",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/vancouver-rain-harbour-dark.png",
-      "sha256": "5091c6828277ff386d279a9c65bcfeb3a35dc91a57633fb54cea1f1228f855dd",
-      "bytes": 1065150,
+      "sha256": "8bc96ab9edce9bf5003d0396b13764bcb94c3dddd874370fdbb58da3f581c5aa",
+      "bytes": 859174,
       "width": 1440,
       "height": 810,
       "assetSha256": "b6fbd81c7940544bcf9a3617dc39b273621a3ce2e0d9646130ba7716b8c5c20e",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -1222,18 +1222,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:47:41.314Z"
+      "capturedAt": "2026-07-21T09:01:25.209Z"
     },
     {
       "themeId": "london-rainlight",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/london-rainlight-light.png",
-      "sha256": "f76d0a9b87f9a403428f6157e0baf596344c81609f4e57dc10a1797a7bd8e03c",
-      "bytes": 1231587,
+      "sha256": "ee7441135a23c5f2d1d2ff3943696740d94a68bd4a0ff4d63148b71c61c5340d",
+      "bytes": 993720,
       "width": 1440,
       "height": 810,
       "assetSha256": "d5e4be91ef88b4e5bd1a718ebb0c9b78b92c7c009c00a42565c8145f20fb0e5b",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -1249,18 +1249,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:47:45.816Z"
+      "capturedAt": "2026-07-21T09:01:26.694Z"
     },
     {
       "themeId": "london-rainlight",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/london-rainlight-dark.png",
-      "sha256": "ed14281c3174ec748ed9d897f06c13c3911114b44f4012fd656bfb35e3e450d3",
-      "bytes": 1001736,
+      "sha256": "4fe30c166926c611c7e4bca47529d52829fc3f88e6d5f673f9c65e1a37d7078a",
+      "bytes": 750645,
       "width": 1440,
       "height": 810,
       "assetSha256": "d77b6a3e4975c749b3ec7784c3350c80b6a2fd45e269e909f5cfedeba851c4ff",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -1276,18 +1276,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:47:47.150Z"
+      "capturedAt": "2026-07-21T09:01:31.122Z"
     },
     {
       "themeId": "paris-rooftop-dawn",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/paris-rooftop-dawn-light.png",
-      "sha256": "49a1a7d196e2028de6c3fa4c700bcbb92a9897974fb07b9c6a107e6a9c40aeaa",
-      "bytes": 1269899,
+      "sha256": "e5baa4cd1c996d9b2c8434008ca3fa676c4cab927f19a685e62f7bcf229e212d",
+      "bytes": 1052094,
       "width": 1440,
       "height": 810,
       "assetSha256": "29b58465ef5c2a1720696dddabf985ec08a1d3fed322062a51134dc823b2b077",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -1303,18 +1303,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:47:51.719Z"
+      "capturedAt": "2026-07-21T09:01:33.238Z"
     },
     {
       "themeId": "paris-rooftop-dawn",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/paris-rooftop-dawn-dark.png",
-      "sha256": "552f9050438f305efb88949d07fd9fb18ccac5ec266944f86ad4c72790ee33f7",
-      "bytes": 1024281,
+      "sha256": "51f8ad9240d305f438aac11be5cfccd0733eee8896ada42312283a898c6cb2ca",
+      "bytes": 797529,
       "width": 1440,
       "height": 810,
       "assetSha256": "2c9b6dd5bf3885ac8f3b650c5bb431aae49e897c31d9e1bc6927c94872e7c60b",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -1330,18 +1330,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:47:55.100Z"
+      "capturedAt": "2026-07-21T09:01:34.512Z"
     },
     {
       "themeId": "berlin-night-grid",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/berlin-night-grid-light.png",
-      "sha256": "5b48d4ed9a6ec52c89293ad52e7ff8a5d22809db09ee29a1d0637f82eb0dd9a0",
-      "bytes": 1215749,
+      "sha256": "722d44d9247fb2da14ffb8d7bee29a0bd2ced0f40cf36d6d699a279d351e4081",
+      "bytes": 1029566,
       "width": 1440,
       "height": 810,
       "assetSha256": "fe03ac97ef47db28cafebe23ec1df6864ddcb32968e9785ecffb363399fcd06e",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -1357,18 +1357,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:47:59.663Z"
+      "capturedAt": "2026-07-21T09:01:35.973Z"
     },
     {
       "themeId": "berlin-night-grid",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/berlin-night-grid-dark.png",
-      "sha256": "56dcc6cfb14a3699933b8d402f71fbdbd96f2c1c068a169b596b491dfa310d1b",
-      "bytes": 981583,
+      "sha256": "7af8af8716f88af806766eb47a4f87f76ae2dea0eaec195674f3be3cb77a2ddd",
+      "bytes": 771260,
       "width": 1440,
       "height": 810,
       "assetSha256": "92ac84e7a6833e6ff69295b276d224154301130be06b93945d1e19f71eaf8f25",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -1384,18 +1384,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:48:02.156Z"
+      "capturedAt": "2026-07-21T09:01:37.207Z"
     },
     {
       "themeId": "rome-terrace-gold",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/rome-terrace-gold-light.png",
-      "sha256": "cc4adaed09e64d98c70bbe2b9b2640b6d6d2a205e4aa9ed2c17304d0e8943618",
-      "bytes": 1280980,
+      "sha256": "669fa89554ed77e9722af274990128694788d21fd2814343b5ca487fc680a538",
+      "bytes": 1047911,
       "width": 1440,
       "height": 810,
       "assetSha256": "224e8417d1d9af0bec8dea77abdb021220a5bdf24d1580ca8e9ee76afe758a48",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -1411,18 +1411,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:48:05.845Z"
+      "capturedAt": "2026-07-21T09:01:38.701Z"
     },
     {
       "themeId": "rome-terrace-gold",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/rome-terrace-gold-dark.png",
-      "sha256": "cf55c92b137ddaaa27abe7233a39e7c156acb33c93a09ca6a95dff0585d2076e",
-      "bytes": 1039538,
+      "sha256": "a568b1ab9fd3af38bfa8861880ef3fb813113173ddc677de25532693c7d9e2b7",
+      "bytes": 799220,
       "width": 1440,
       "height": 810,
       "assetSha256": "13f82c00db89e7dcef228a37b042c99eaa7938a01c01232beab3db0a04abac38",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -1438,18 +1438,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:48:10.286Z"
+      "capturedAt": "2026-07-21T09:01:40.073Z"
     },
     {
       "themeId": "tokyo-rain-signal",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/tokyo-rain-signal-light.png",
-      "sha256": "951d6ac6dfc6abfa8fdef34bb35eb34d59325a17b8affa1d91ad9def067d17a1",
-      "bytes": 1302288,
+      "sha256": "dc589b225c6f9fc8cf26e4ab10bc537a102907ff56beaa0326fe25d574e28bb5",
+      "bytes": 1108583,
       "width": 1440,
       "height": 810,
       "assetSha256": "172c68804a9807a4b74726b483f6670dfa668ebfefe64728bd0b21828e03fa57",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -1465,18 +1465,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:48:14.966Z"
+      "capturedAt": "2026-07-21T09:01:41.593Z"
     },
     {
       "themeId": "tokyo-rain-signal",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/tokyo-rain-signal-dark.png",
-      "sha256": "69face0416f2fd46144f527e48af9acbcbafb331d374bcf3853426c2135ee652",
-      "bytes": 1049213,
+      "sha256": "610a6d079f09c14ba498e109c1f1561b822a04b388bdcb323b69d6224c594ec0",
+      "bytes": 838682,
       "width": 1440,
       "height": 810,
       "assetSha256": "e58854b98dd5196501d98abc9fa04c80e4e0e6b48b595367ee18adb43047cfb1",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -1492,18 +1492,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:48:17.727Z"
+      "capturedAt": "2026-07-21T09:01:42.847Z"
     },
     {
       "themeId": "singapore-garden-rain",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/singapore-garden-rain-light.png",
-      "sha256": "883dd06a748d6d2184737da3eb25196e5b13cb0096c6cf117986be6ac5f28fe6",
-      "bytes": 1340858,
+      "sha256": "831d6a025c4e9529dc18e92aef87628caf75382920fc8b2968a8cf1f75695735",
+      "bytes": 1120792,
       "width": 1440,
       "height": 810,
       "assetSha256": "6c5eccc1a6d19cfa0189e56e9941c79a276d0e425438e2749f930428ba4e12d3",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -1519,18 +1519,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:48:20.516Z"
+      "capturedAt": "2026-07-21T09:01:44.350Z"
     },
     {
       "themeId": "singapore-garden-rain",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/singapore-garden-rain-dark.png",
-      "sha256": "c8ebb586cbaac10950e588e6e31326dc9cfb964a921633055765517c705d8ebf",
-      "bytes": 1103288,
+      "sha256": "c28e346a2d9d27dbc4a1760ae64c2a1727048414d40fca99d60cd3ed11d20c30",
+      "bytes": 857413,
       "width": 1440,
       "height": 810,
       "assetSha256": "b88aad48fac4762b6001f2e6ead4116ce5071cf66f25c83ffcb35165bf2356e6",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -1546,18 +1546,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:48:25.041Z"
+      "capturedAt": "2026-07-21T09:01:45.681Z"
     },
     {
       "themeId": "sydney-harbour-morning",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/sydney-harbour-morning-light.png",
-      "sha256": "c4fb29ecdec7e1f21762e465bd2518cbb4a2dcabb0cc72fcad43f41cafd4675c",
-      "bytes": 1393970,
+      "sha256": "ba9ab2c2e5a7a4fbce9505a226aefa729c8471f97b0161783c4814dcc5fcc954",
+      "bytes": 1247559,
       "width": 1440,
       "height": 810,
       "assetSha256": "3b6290f5e5394c260031987d690944178b81bb7394d74079c0fa83c8ab479793",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -1573,18 +1573,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:48:27.734Z"
+      "capturedAt": "2026-07-21T09:01:47.273Z"
     },
     {
       "themeId": "sydney-harbour-morning",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/sydney-harbour-morning-dark.png",
-      "sha256": "063239a7c3172c68d8a47e0a9b585f4f5c8b53b4590c8f769b113c4c7fd9d058",
-      "bytes": 1155787,
+      "sha256": "bc90d4304513e2be3c5b1e296d6737ac1180c6c376376cf09390a7f69c55fdf0",
+      "bytes": 972477,
       "width": 1440,
       "height": 810,
       "assetSha256": "ca1f02a96baecbf7a11866a6effe3106b3c6339d9ac7a95062602d91777a172d",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -1600,18 +1600,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:48:30.217Z"
+      "capturedAt": "2026-07-21T09:01:52.171Z"
     },
     {
       "themeId": "mortal-journey-duo",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/mortal-journey-duo-light.png",
-      "sha256": "b533a9e545dcc5d31f8718e1fc5baf2efeec226d0c4efa843cf567b51817e0a4",
-      "bytes": 1371477,
+      "sha256": "f7aa23e92b5e80b07ea98e8d7edb7edae8f9b4e0674c0febfcbc16ea468939d1",
+      "bytes": 1204640,
       "width": 1440,
       "height": 810,
       "assetSha256": "7b89ba9b357484ddf2e189da9307f053ed12bff9a62e07dd0bedc05a471359da",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -1627,18 +1627,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:48:32.877Z"
+      "capturedAt": "2026-07-21T09:01:57.383Z"
     },
     {
       "themeId": "mortal-journey-duo",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/mortal-journey-duo-dark.png",
-      "sha256": "cd4918b602b8455ce59c010f21688179efbfacc4981bef56596ce22b14258350",
-      "bytes": 1121172,
+      "sha256": "4376cf9817e6a6b72142f67b9654b1e7b482656c117ca1c3991242a378591458",
+      "bytes": 929779,
       "width": 1440,
       "height": 810,
       "assetSha256": "93142c77baedde7b5818c438249fedd84b671608905ca0e48a20de809af9dcc5",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -1654,18 +1654,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:48:35.357Z"
+      "capturedAt": "2026-07-21T09:01:58.766Z"
     },
     {
       "themeId": "mortal-journey-chibi",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/mortal-journey-chibi-light.png",
-      "sha256": "619e6b1c966daa2a63122e7664489d6bd541959aa60e9bbe5fe3c6873660b30d",
-      "bytes": 1356278,
+      "sha256": "ba774d76c562ca04c88bdfb970447f1db7a5a5423298aa4de4503ded5c0961b2",
+      "bytes": 1176585,
       "width": 1440,
       "height": 810,
       "assetSha256": "9359005d53760e64c59a1a0bd11aabf4945b9a00ae8f2d7eab49f39b531fa03d",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -1681,18 +1681,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:48:40.132Z"
+      "capturedAt": "2026-07-21T09:02:00.312Z"
     },
     {
       "themeId": "mortal-journey-chibi",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/mortal-journey-chibi-dark.png",
-      "sha256": "841743a2b6d98d10ef3041dcf4df1a4f3b2f94ae59ed859e64781d4087666d06",
-      "bytes": 1125769,
+      "sha256": "dd43561c573a9ff0b2319c15aee08ea557198cf5d93a1354d4235d6f59ebdb48",
+      "bytes": 912033,
       "width": 1440,
       "height": 810,
       "assetSha256": "c1563c42f444e93a03328fdc95f48a50d6557e66f7487d8cfcc1a941c807c748",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -1708,18 +1708,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:48:44.680Z"
+      "capturedAt": "2026-07-21T09:02:01.630Z"
     },
     {
       "themeId": "renegade-immortal-duo",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/renegade-immortal-duo-light.png",
-      "sha256": "664eb049e164f5e72358ca3662dffc44b3603c898fc367013503fcf6510c577b",
-      "bytes": 1304475,
+      "sha256": "e8ac80d82a3ad617fbe26097c88832cf0664d99ddf1b55ea85f00891724409bd",
+      "bytes": 1096601,
       "width": 1440,
       "height": 810,
       "assetSha256": "9e77153459de658d05dd3c69bfa4a956b73eeb1496ad27151e98e27ab0414a05",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -1735,18 +1735,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:48:47.326Z"
+      "capturedAt": "2026-07-21T09:02:03.088Z"
     },
     {
       "themeId": "renegade-immortal-duo",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/renegade-immortal-duo-dark.png",
-      "sha256": "13faf80b7969a7856508aed5a40b80a915f680126612151c45a4bfc5685e37aa",
-      "bytes": 1066288,
+      "sha256": "55ca9fd7739a25eb7683deb806960456ec33fcf9cd61beabd560e294922ca721",
+      "bytes": 844991,
       "width": 1440,
       "height": 810,
       "assetSha256": "bfdf222278abf11dc5f5645640c739197174ad0062f67c2ed21b6e648bba7e07",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -1762,18 +1762,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:48:49.791Z"
+      "capturedAt": "2026-07-21T09:02:04.722Z"
     },
     {
       "themeId": "renegade-immortal-chibi",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/renegade-immortal-chibi-light.png",
-      "sha256": "9dfb604d79147719edeea7f1f860fe7ae79be0e195767ad0150361e0639dc0c5",
-      "bytes": 1266786,
+      "sha256": "03de5997ff0183fcb521801d0f0788995622bc8ff11b58d1e748dc697bbc183d",
+      "bytes": 1049183,
       "width": 1440,
       "height": 810,
       "assetSha256": "0c1fccc8d6cf1e0a3e840a8da6daaa1c8c48e28fbe5dbaf1f3874313f23ea87e",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -1789,18 +1789,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:48:54.320Z"
+      "capturedAt": "2026-07-21T09:02:06.197Z"
     },
     {
       "themeId": "renegade-immortal-chibi",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/renegade-immortal-chibi-dark.png",
-      "sha256": "9c78af7e4c0556215e96d8765e0343508373ad48219c164f66ce6ebbd195a0ef",
-      "bytes": 1030684,
+      "sha256": "95bcba1f4cab06a1007b153a2e6e6f58373fcc94e7cf70f84f5a65e4cf3f4fc5",
+      "bytes": 794695,
       "width": 1440,
       "height": 810,
       "assetSha256": "d39f0167b7926f9a5764794be13830499e0b42497c121d432a20f6a2a5ae86f7",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -1816,18 +1816,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:48:56.669Z"
+      "capturedAt": "2026-07-21T09:02:07.457Z"
     },
     {
       "themeId": "sword-of-coming-duo",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/sword-of-coming-duo-light.png",
-      "sha256": "2ff5ae3004099c58e424dec625583de611f38f2cd65fdf98c4c647e60ee18b3d",
-      "bytes": 1497150,
+      "sha256": "837594d2bcffc6e4e4cf39cee9aa28c73b30cf20d2a2a1bd9fed786a371b76c4",
+      "bytes": 1425503,
       "width": 1440,
       "height": 810,
       "assetSha256": "bd5df1f3fab21ef194213bcfdb48562f4d0901937d7b1b4668d52e63a26d770f",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -1843,18 +1843,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:48:59.467Z"
+      "capturedAt": "2026-07-21T09:02:09.071Z"
     },
     {
       "themeId": "sword-of-coming-duo",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/sword-of-coming-duo-dark.png",
-      "sha256": "cb7a0eb3e618cce0d5ed2b2350448f633a2b30f21e51d36c9a1347a1c3c96c36",
-      "bytes": 1282656,
+      "sha256": "4e07d1e15eeb0be8c625552365b9351255301c80da455da75e210a9da1055091",
+      "bytes": 1120376,
       "width": 1440,
       "height": 810,
       "assetSha256": "b62fdd4b124f5dee5034529664e86f043d4fe6dbb4712d2b79e99f9efee11b12",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -1870,18 +1870,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:49:02.019Z"
+      "capturedAt": "2026-07-21T09:02:10.699Z"
     },
     {
       "themeId": "sword-of-coming-chibi",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/sword-of-coming-chibi-light.png",
-      "sha256": "981b3b654a8896b4c89cbcbafefdd14a429b4a1c25b8e5484833f12f33f623e3",
-      "bytes": 1395680,
+      "sha256": "c7f0a316c8f22a7345e59dedfa7cb566e34e2c9b85d2b3e8329d94ac0e972e3f",
+      "bytes": 1254708,
       "width": 1440,
       "height": 810,
       "assetSha256": "b98b14734af1b6d4ecd64c44a0a0783ef6a1de4e722c03450e72765af2b60c4a",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -1897,18 +1897,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:49:05.686Z"
+      "capturedAt": "2026-07-21T09:02:12.170Z"
     },
     {
       "themeId": "sword-of-coming-chibi",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/sword-of-coming-chibi-dark.png",
-      "sha256": "8a9d6ab27b8fe88b75b767155e1ef93523125840ff38e38e160db7c387cc06cf",
-      "bytes": 1171476,
+      "sha256": "c03c3b4a9c1c393e52d88a45d4adbbc51678471ceb4dc891489276c7360f65bb",
+      "bytes": 982623,
       "width": 1440,
       "height": 810,
       "assetSha256": "b3f9a1e1513561c61befade9813a66563d5fc60a06d731f0d812ccfbf1843976",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -1924,18 +1924,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:49:10.175Z"
+      "capturedAt": "2026-07-21T09:02:13.522Z"
     },
     {
       "themeId": "battle-through-duo",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/battle-through-duo-light.png",
-      "sha256": "df647877ded7d5dabbfdf1d5ed84253dc40301a1cfeece56d6027eeb9d52bcf9",
-      "bytes": 1391613,
+      "sha256": "8a579b01ce07cc8288f77023a471d4b78a2d3e9b33fab8cdcdc16b75b2941c3c",
+      "bytes": 1231105,
       "width": 1440,
       "height": 810,
       "assetSha256": "7286af9f259704871a8c04216cc6fae6dd78fa46db9d769f6f5d19630e18daf5",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -1951,18 +1951,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:49:14.818Z"
+      "capturedAt": "2026-07-21T09:02:14.987Z"
     },
     {
       "themeId": "battle-through-duo",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/battle-through-duo-dark.png",
-      "sha256": "f77a3d514e88c6def0c895f117ef7e6cf0492bad9335129c5f880736d37c6233",
-      "bytes": 1149000,
+      "sha256": "5f1e96af33baf779a540b6286172e6a9de9a4c8a784875d627cfd9177f32680f",
+      "bytes": 956078,
       "width": 1440,
       "height": 810,
       "assetSha256": "288771215fd4d206ca05726081cdcd66931dd8229fb0594b8acb744d19cf506b",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -1978,18 +1978,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:49:17.269Z"
+      "capturedAt": "2026-07-21T09:02:16.293Z"
     },
     {
       "themeId": "battle-through-chibi",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/battle-through-chibi-light.png",
-      "sha256": "79c5c4fe75c08a7c5bb39693d7b29e8e2d0cc7383b8c0d1ceaeb78648ba8cc29",
-      "bytes": 1372829,
+      "sha256": "f1874a4a60e207aac10e33269dd68db372260447eb920288e0a1b922e850bf64",
+      "bytes": 1192238,
       "width": 1440,
       "height": 810,
       "assetSha256": "c44db704a06fe711fcf49724ef634198ab4f1811476c8413c90e12e5ab5e2c8e",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -2005,18 +2005,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:49:21.838Z"
+      "capturedAt": "2026-07-21T09:02:17.760Z"
     },
     {
       "themeId": "battle-through-chibi",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/battle-through-chibi-dark.png",
-      "sha256": "55a113ca72fa3c85b5fd5555426830475aa0530f3f36d47870cf2bff59e25f5f",
-      "bytes": 1149523,
+      "sha256": "c1bf77ed6a9f32076c580af41e0252e4dc39cb45044ef32ef98d92a081816a23",
+      "bytes": 934793,
       "width": 1440,
       "height": 810,
       "assetSha256": "72e9f4be0a0773fbebbf38b115d7e4c1f360bf86e04bc4c2224e2d93695bd595",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -2032,18 +2032,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:49:23.409Z"
+      "capturedAt": "2026-07-21T09:02:19.044Z"
     },
     {
       "themeId": "mortal-void-hall",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/mortal-void-hall-light.png",
-      "sha256": "19740bb456880f5573ec0780a835b0058ac5cce6e69e5e4b2163d339c2669809",
-      "bytes": 1388802,
+      "sha256": "89c9aacae1353b1a8c9a002e5c3f6e1a7be420798ba5f5d60c43d443e75d9857",
+      "bytes": 1204249,
       "width": 1440,
       "height": 810,
       "assetSha256": "7b7c48bd3a7b821dd914b26c3e40cbe2a85db691aa669dee37f69b90eb62c9bb",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -2059,18 +2059,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:49:25.111Z"
+      "capturedAt": "2026-07-21T09:02:20.528Z"
     },
     {
       "themeId": "mortal-void-hall",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/mortal-void-hall-dark.png",
-      "sha256": "f58466a2e300e9577e5fbc3439d275b9795689355411be791b66b8d867699d73",
-      "bytes": 1140037,
+      "sha256": "8a1d04342522358568f12fa5fbec09a15dba6e9bf87f1396e046b47f5669fce4",
+      "bytes": 924116,
       "width": 1440,
       "height": 810,
       "assetSha256": "4787b2ca5d2be14a9329a59d5ad9edd5c288a7ea376691501351e9d9cd1ec3fc",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -2086,18 +2086,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:49:29.534Z"
+      "capturedAt": "2026-07-21T09:02:21.907Z"
     },
     {
       "themeId": "renegade-wedding-storm",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/renegade-wedding-storm-light.png",
-      "sha256": "737afcb7f1afc3f6ed096a9efb3640a7d68368f2a1c7ccf2978c7c5aa08a54b9",
-      "bytes": 1363861,
+      "sha256": "9236c403748794f332f90fd6451265118602bbcbad4a145d4253cbc1693175f1",
+      "bytes": 1206423,
       "width": 1440,
       "height": 810,
       "assetSha256": "1400ac25217ff1023b483c13e0d67bca475e601a02c23dc8af4067d280f072b5",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -2113,18 +2113,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:49:31.133Z"
+      "capturedAt": "2026-07-21T09:02:23.408Z"
     },
     {
       "themeId": "renegade-wedding-storm",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/renegade-wedding-storm-dark.png",
-      "sha256": "5396ab04a25cea7da3eb0c0fccd4238af4d0c1531ad97d37d3b4b7f8206507c5",
-      "bytes": 1135783,
+      "sha256": "98f4c0c736bbda9592e66efa3e8caf5dc1794cf410e1cbd156c6cb57e5548349",
+      "bytes": 944424,
       "width": 1440,
       "height": 810,
       "assetSha256": "0b96186124ccaa161d8ea01bb114d54072a6c41caa95c4c4042556de8e0f4cbd",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -2140,18 +2140,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:49:35.543Z"
+      "capturedAt": "2026-07-21T09:02:24.761Z"
     },
     {
       "themeId": "sword-confession-alley",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/sword-confession-alley-light.png",
-      "sha256": "c95e81f789630c9ae64eb68d20626aa0adfcc3771c28ecea9e9721625b2dafb1",
-      "bytes": 1243518,
+      "sha256": "ddd213a8b843985121ef2534aee82692396a988f2c9e0316017288318df9132f",
+      "bytes": 1041989,
       "width": 1440,
       "height": 810,
       "assetSha256": "adcae78017295693d759c62203b5f897da77b52eef084ae22b979f33d15e6e38",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -2167,18 +2167,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:49:37.097Z"
+      "capturedAt": "2026-07-21T09:02:26.216Z"
     },
     {
       "themeId": "sword-confession-alley",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/sword-confession-alley-dark.png",
-      "sha256": "3c4953ecf2d6307c4e314082890a71fddba186e078bf230efc734fb9cf35a5c7",
-      "bytes": 1019830,
+      "sha256": "d1a6280528b8ea11c461168c1c1e1fb4cef51bbeb687982844ada8bbec70d3eb",
+      "bytes": 790078,
       "width": 1440,
       "height": 810,
       "assetSha256": "52b2eebc8d1fefdc44ff8fe3b18dda427f4b8fce5135198269ba1d280bb61052",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -2194,18 +2194,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:49:38.456Z"
+      "capturedAt": "2026-07-21T09:02:27.451Z"
     },
     {
       "themeId": "battle-three-year-pact",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/battle-three-year-pact-light.png",
-      "sha256": "3a830c69665f4b1e26d820fd97ad8870288c40c806588ecca951b66711dd76b3",
-      "bytes": 1369994,
+      "sha256": "c81d068db3e0036c093ce06c9749dc9383ab91e0ddcb47cd26896afb536044c3",
+      "bytes": 1188026,
       "width": 1440,
       "height": 810,
       "assetSha256": "7e28c361acbbd2f6e537bbc0a9afd104083602c162db4fa69065c895a2ab33a0",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -2221,18 +2221,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:49:43.087Z"
+      "capturedAt": "2026-07-21T09:02:28.936Z"
     },
     {
       "themeId": "battle-three-year-pact",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/battle-three-year-pact-dark.png",
-      "sha256": "f98682539797b74159372b88bd92039c6b05a2804017a67ce273ecb3cf2cd5d0",
-      "bytes": 1115019,
+      "sha256": "2eb20cde8241c5db7e3b3c24c163234b462ce604f90e2e8b6420b42588dbfc80",
+      "bytes": 921574,
       "width": 1440,
       "height": 810,
       "assetSha256": "d1c0bce1e5fd5fbc01d2b15008b07ed618b088091f141aeadad577800e057235",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -2248,18 +2248,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:49:47.482Z"
+      "capturedAt": "2026-07-21T09:02:30.246Z"
     },
     {
       "themeId": "tibo-reset-saint",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/tibo-reset-saint-light.png",
-      "sha256": "30190920ddbf0d8d7b5e08e481f701b67a7ac6ac81dd92333c8b703e2e276555",
-      "bytes": 1515737,
+      "sha256": "6ac7e7b59f5a393976fbb32cb2d21dadc37d5c5572c965e8d2ce48582c03db7a",
+      "bytes": 1396447,
       "width": 1440,
       "height": 810,
       "assetSha256": "11b6a2ca351157517cb3f42d754ec7279e4be6dcabb603c9777f566fff4c107f",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -2275,18 +2275,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:49:52.196Z"
+      "capturedAt": "2026-07-21T09:02:31.854Z"
     },
     {
       "themeId": "tibo-reset-saint",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/tibo-reset-saint-dark.png",
-      "sha256": "974c186be1c390bc270b14a4e701120d058e8d9472a858a9ff862da478839389",
-      "bytes": 1260066,
+      "sha256": "4db1bee6c388fd430490e5f23f38451dcf0e53df2a87eac26681dbf26f670467",
+      "bytes": 1099770,
       "width": 1440,
       "height": 810,
       "assetSha256": "73c84e7524853444eb57cc9a3c16baa2c28902621bbc06aa515a7413b4eb8ee6",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -2302,18 +2302,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:49:56.740Z"
+      "capturedAt": "2026-07-21T09:02:33.336Z"
     },
     {
       "themeId": "tibo-reset-immortal",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/tibo-reset-immortal-light.png",
-      "sha256": "ea17bb6f8138f3f55af991ba48aed2d03ba9a1c3caad7ea6ee0954a3e27cbe0d",
-      "bytes": 1499168,
+      "sha256": "45a937e31b7638cb3a4ad309ed5082e74f03fa9551b3a99d7b306896915d29dc",
+      "bytes": 1422221,
       "width": 1440,
       "height": 810,
       "assetSha256": "976594a32366ac3c2aee2a47b404e03d5a687f20e491d9df677b5e1b394cb855",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -2329,18 +2329,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:49:59.469Z"
+      "capturedAt": "2026-07-21T09:02:35.032Z"
     },
     {
       "themeId": "tibo-reset-immortal",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/tibo-reset-immortal-dark.png",
-      "sha256": "43c0d5a2e798157e2dae0eef07f7caae21486757c92171589e94eb37972d42e0",
-      "bytes": 1240776,
+      "sha256": "dde89daa58afb9a5a6b613798740f553d6d09d5a3a35fe0df5addd244d4b9dd8",
+      "bytes": 1112489,
       "width": 1440,
       "height": 810,
       "assetSha256": "27c1ddfce317e70dafe18278006e51765274e9b9acb5f51b4c1c925eaafd654e",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -2356,18 +2356,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:50:02.020Z"
+      "capturedAt": "2026-07-21T09:02:36.544Z"
     },
     {
       "themeId": "retro-boss-2007",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/retro-boss-2007-light.png",
-      "sha256": "075696e39a4cfbdbe0f22218518b2ebc38b72900645fd01880039cab500b52bb",
-      "bytes": 1077558,
+      "sha256": "ac58d94219918c3ea09d019083471fdffe2f22312498dd19e4c3f9fb29afacb7",
+      "bytes": 828887,
       "width": 1440,
       "height": 810,
       "assetSha256": "658ebf90f9634d4069abf42ee522731d90b1a64e83d384bb51384df1ec015cc9",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -2383,18 +2383,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:50:04.504Z"
+      "capturedAt": "2026-07-21T09:02:37.825Z"
     },
     {
       "themeId": "retro-boss-2007",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/retro-boss-2007-dark.png",
-      "sha256": "688c44a0f7fdbd807615554b5b1da17817f8cc674d0c209ea8cf633b69cacbc1",
-      "bytes": 895477,
+      "sha256": "f9453fb45419a61f9e688f29b3e2e5993e1225ce7d6026778b4b4b7420bdca69",
+      "bytes": 621815,
       "width": 1440,
       "height": 810,
       "assetSha256": "e4edc595dc61b6b221326d5815e2ca7f94374c3d8259dd1cc95ad6aa49b11171",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -2410,18 +2410,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:50:08.770Z"
+      "capturedAt": "2026-07-21T09:02:38.971Z"
     },
     {
       "themeId": "rainy-library",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/rainy-library-light.png",
-      "sha256": "adf475f8ef783ba02ea0b27f43e501e087814f04a2de8cdfe0ba19dec9075f13",
-      "bytes": 1183249,
+      "sha256": "c2eb38ba33e3d3ba6ece3597a2126295012b144503f7d0d26b155405ae81f59a",
+      "bytes": 912893,
       "width": 1440,
       "height": 810,
       "assetSha256": "6a3176fdd82e79176967a33fec256a913bf1a7c42d16c2aea8187fe5224740af",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -2437,18 +2437,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:50:10.386Z"
+      "capturedAt": "2026-07-21T09:02:40.280Z"
     },
     {
       "themeId": "rainy-library",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/rainy-library-dark.png",
-      "sha256": "a37e81c6d7a09c454ea58be797468e5c63523dba493638f1776a0c6c10097fbd",
-      "bytes": 874359,
+      "sha256": "5c3410d247c7b205f48cfebd3af3c544b142e1b91ccefc401e051c69cddf30a6",
+      "bytes": 663939,
       "width": 1440,
       "height": 810,
       "assetSha256": "38cffd42f5c7bd72eeb50ea8c40b7342d783c31fbd2eaac56db1660379860392",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -2464,18 +2464,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:50:14.613Z"
+      "capturedAt": "2026-07-21T09:02:41.497Z"
     },
     {
       "themeId": "orbital-dawn",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/orbital-dawn-light.png",
-      "sha256": "3a7e8e5108b69c3dccd2ecc4dcd62dae207a9e1d72093a94e27c4f946bce81d7",
-      "bytes": 1269620,
+      "sha256": "9ed5c3ebb246c118c4405c9f98d08482e56bc2ad73cc40c688ebc2794dd21179",
+      "bytes": 1061420,
       "width": 1440,
       "height": 810,
       "assetSha256": "f28f35d550575577e252091f1fb6f87eb64e30ed360fec8c8998dc1a4cb2c219",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -2491,18 +2491,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:50:17.273Z"
+      "capturedAt": "2026-07-21T09:02:42.917Z"
     },
     {
       "themeId": "orbital-dawn",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/orbital-dawn-dark.png",
-      "sha256": "3507255dbdb382858bc3b7d3d35646fee8c5d6b6daa424dd6e61b4a4c4b645bd",
-      "bytes": 1024383,
+      "sha256": "91f39919c577d6cb3b4c45e87390688b8eafef80ec3736ace67c6b73de5cf036",
+      "bytes": 808943,
       "width": 1440,
       "height": 810,
       "assetSha256": "0ecb5a45cf1d1c78844987183b24e868a9ea3602456aea7b3f8192947af5aded",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -2518,18 +2518,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:50:21.677Z"
+      "capturedAt": "2026-07-21T09:02:44.197Z"
     },
     {
       "themeId": "deep-ocean-lab",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/deep-ocean-lab-light.png",
-      "sha256": "43215524437694d9b6e12e3cd2f9258278776eadd94258a29f9982c6e0f7c4d1",
-      "bytes": 1205789,
+      "sha256": "f443cf98dcb5c28a6eec8ce01aa9eff3300b8477216b4e6f6a57f7574eae0177",
+      "bytes": 1011676,
       "width": 1440,
       "height": 810,
       "assetSha256": "48180005d5a520c7eea38a29d218b3d2b53df4eb750a4a13f26e368ad23c8770",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -2545,18 +2545,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:50:24.304Z"
+      "capturedAt": "2026-07-21T09:02:45.620Z"
     },
     {
       "themeId": "deep-ocean-lab",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/deep-ocean-lab-dark.png",
-      "sha256": "03ed678beb739767c32f9dea72b3722c88c34044703b0d77043540a9ee24958e",
-      "bytes": 930865,
+      "sha256": "cf1b268358f68b80f4de761cb632ca87f43e8174e364c8ffb88984c729a39f87",
+      "bytes": 747355,
       "width": 1440,
       "height": 810,
       "assetSha256": "62653797e7cd6fb64913c092d41262b9e22b3376c69ac1871b24f1b63626ec7f",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -2572,18 +2572,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:50:26.665Z"
+      "capturedAt": "2026-07-21T09:02:46.833Z"
     },
     {
       "themeId": "synthwave-night-drive",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/synthwave-night-drive-light.png",
-      "sha256": "17209e8a4402f7223c0111aa1da77b7cf829e23d628260d9ea6bfe196af0e9b3",
-      "bytes": 1033481,
+      "sha256": "00f3132f220ce01c0239644e7148e72e120adc1093816deb082c5ffedf87e31a",
+      "bytes": 815504,
       "width": 1440,
       "height": 810,
       "assetSha256": "e74ea387c269f3e82518db28d5b20e32977472af085a826895d2e5f550bfba65",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -2599,18 +2599,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:50:31.211Z"
+      "capturedAt": "2026-07-21T09:02:48.095Z"
     },
     {
       "themeId": "synthwave-night-drive",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/synthwave-night-drive-dark.png",
-      "sha256": "2b9cb71991612a67b205697b98ef9b3b5651e897f9912548649d26eb901cce5f",
-      "bytes": 745955,
+      "sha256": "28b7c8ad5786348196ada24364bb341bcd73c9fa74462082b888d7b05be7cd0c",
+      "bytes": 581184,
       "width": 1440,
       "height": 810,
       "assetSha256": "5394f3d79c2d9d4a6da5f1a836b07cb41615709f02fe62d74b6bcec453a104e9",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -2626,18 +2626,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:50:33.535Z"
+      "capturedAt": "2026-07-21T09:02:49.214Z"
     },
     {
       "themeId": "alpine-cabin-code",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/alpine-cabin-code-light.png",
-      "sha256": "e34669063bd7a7d66baee46af48ba91853ed7b7503650f096f50184c2943d5f3",
-      "bytes": 1329861,
+      "sha256": "4df10adbef260f73e113e83717504ff66b20c22c1715480977c0eab0dec3f1e4",
+      "bytes": 1119304,
       "width": 1440,
       "height": 810,
       "assetSha256": "004f33af98c48ed8ec3e4a0dd82fc9489f991900f3998fb4f1b6053f03302bee",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -2653,18 +2653,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:50:38.762Z"
+      "capturedAt": "2026-07-21T09:02:50.649Z"
     },
     {
       "themeId": "alpine-cabin-code",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/alpine-cabin-code-dark.png",
-      "sha256": "13c1225475490cbd9e9abae5350599da03c1f175a22302fba2c209a0134bf53e",
-      "bytes": 1076325,
+      "sha256": "c8c5bdc8b1eb384aa80fcfb1474249fef8952335cb513542401eb45343624e8f",
+      "bytes": 852395,
       "width": 1440,
       "height": 810,
       "assetSha256": "6c59fc26ed0b33a99d41c09db777326cfda6cdefb5c251edf3e0a0cd11de2253",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -2680,18 +2680,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:50:43.308Z"
+      "capturedAt": "2026-07-21T09:02:51.924Z"
     },
     {
       "themeId": "jiangnan-rain-courtyard",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/jiangnan-rain-courtyard-light.png",
-      "sha256": "fd423ea056339e7587139c933dd26b6694ba05766848efc712d406a62c88ca27",
-      "bytes": 1440404,
+      "sha256": "045de314389aa6935d5bedb62ea8b88ce6b125f41da1474ada957a0a88b062cf",
+      "bytes": 1289174,
       "width": 1440,
       "height": 810,
       "assetSha256": "054b0201ab5b7c4e728f5d10923f1458efbeaa54490e4c6d8f8885d3926b33bb",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -2707,18 +2707,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:50:45.924Z"
+      "capturedAt": "2026-07-21T09:02:53.437Z"
     },
     {
       "themeId": "jiangnan-rain-courtyard",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/jiangnan-rain-courtyard-dark.png",
-      "sha256": "27d979675129f99058431da5511446ae2f1f9b3b62872d286f3eaa691b9124e1",
-      "bytes": 1206030,
+      "sha256": "9497ccd6f2356d70dedf667fc7e474681b2a9b2b0d1d4e84f4d8478920b6dc05",
+      "bytes": 1004322,
       "width": 1440,
       "height": 810,
       "assetSha256": "878efebc9fe6fa69b02d6d656a6dcdc752f4d321932a66716ddbe300a401e728",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -2734,18 +2734,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:50:48.442Z"
+      "capturedAt": "2026-07-21T09:02:54.778Z"
     },
     {
       "themeId": "changan-lanterns",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/changan-lanterns-light.png",
-      "sha256": "8c6ce8be23e91bd6a381625ad56bdd96e8fc1431b9e43c1bdf3849fb7734b1cc",
-      "bytes": 1351161,
+      "sha256": "d1016ad251d7c1247130b6dbfd2002ee8e5cb67b6f5ec7366aaaca8291adb442",
+      "bytes": 1164127,
       "width": 1440,
       "height": 810,
       "assetSha256": "825e1b271146599e98894e629055129824a3ffffb6aa6f3e3de0184ffe2eee22",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -2761,18 +2761,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:50:53.067Z"
+      "capturedAt": "2026-07-21T09:02:56.236Z"
     },
     {
       "themeId": "changan-lanterns",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/changan-lanterns-dark.png",
-      "sha256": "99c6976b464028d5ffc2d397d8e22ffdf741ff9fe95cf499ea21b85faf6f2d07",
-      "bytes": 1081570,
+      "sha256": "aff75a9918750dbe5ac742b63514a94b18d10fe44c0c3b2fc7048a1200fcdee9",
+      "bytes": 889969,
       "width": 1440,
       "height": 810,
       "assetSha256": "06192fdcb287d21aec5c0dc6861b97516789949a3e7fd7b91e543f8d5b95b889",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -2788,18 +2788,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:50:57.677Z"
+      "capturedAt": "2026-07-21T09:02:57.507Z"
     },
     {
       "themeId": "dunhuang-starlight",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/dunhuang-starlight-light.png",
-      "sha256": "e6511e5c6dd3e0f8dab50cabe3bd1c1d0d3ee811525dddca6c0571b25489dfd5",
-      "bytes": 1377118,
+      "sha256": "cb55fd612170577da29e49a0fb072fb4128edd45ddd22e5e0887d5cd970d1b58",
+      "bytes": 1247896,
       "width": 1440,
       "height": 810,
       "assetSha256": "6c7e24a35e58075b03852b63917a9fb9fca1b06761512ed489fa915760604de4",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -2815,18 +2815,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:51:00.668Z"
+      "capturedAt": "2026-07-21T09:02:59.054Z"
     },
     {
       "themeId": "dunhuang-starlight",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/dunhuang-starlight-dark.png",
-      "sha256": "03ce7a9d8f8cf34616bb1f0b81adc56dce4d2cb58df9ab2fe20645a110a50f5c",
-      "bytes": 1150245,
+      "sha256": "e7b53c066ee9028f51a2ba529746215a0195dc1e7f2f82fae52d42b0bb6f4bd7",
+      "bytes": 979896,
       "width": 1440,
       "height": 810,
       "assetSha256": "a2391cef9df611f048e62f71e9c01210e9962b9dbf69e024bc3b8eef9c8afcee",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -2842,18 +2842,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:51:05.392Z"
+      "capturedAt": "2026-07-21T09:03:00.441Z"
     },
     {
       "themeId": "bamboo-tea-rain",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/bamboo-tea-rain-light.png",
-      "sha256": "3edf0939db684d4c9751446835774b02c3d96c7921dd67bc014abcd8118d75db",
-      "bytes": 1324603,
+      "sha256": "f878e67d876972f7a2052c942e2733d86943f4f2657b1d10d586161dc34729a3",
+      "bytes": 1148830,
       "width": 1440,
       "height": 810,
       "assetSha256": "41ebad5fc59ad4513a7cb928ad0d7f55a9b470fd71cb52872e662dadac0c791b",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -2869,18 +2869,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:51:10.240Z"
+      "capturedAt": "2026-07-21T09:03:02.101Z"
     },
     {
       "themeId": "bamboo-tea-rain",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/bamboo-tea-rain-dark.png",
-      "sha256": "e144672c68eb2321e20f0bfb1defbab5cc0458fc0d2adf0e179db07f51a47fd0",
-      "bytes": 1072826,
+      "sha256": "2999c250a0e43659ddc0e01709e80cbd7b987e512e7865c61a5f4f2a2a046566",
+      "bytes": 883610,
       "width": 1440,
       "height": 810,
       "assetSha256": "1c0c536a3ab2dc1172688aaa0ae25a5a12d54aef4401f0fa56097fad13708c10",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -2896,18 +2896,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:51:12.801Z"
+      "capturedAt": "2026-07-21T09:03:03.506Z"
     },
     {
       "themeId": "northeast-snow-train",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/northeast-snow-train-light.png",
-      "sha256": "7ff079b6a5bb374e873a59659ac0d600567ac7ca04bcb568a2b9f10bbac4f925",
-      "bytes": 1298831,
+      "sha256": "fcdbe2980b95aa89f926abe34f873bb6b02331181f09d5111a9393a41d8bed46",
+      "bytes": 1128705,
       "width": 1440,
       "height": 810,
       "assetSha256": "3378959e031a137ef15dce8b0c6781adcafc4425d7f0c6f4b855a74887a6e7aa",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -2923,18 +2923,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:51:17.508Z"
+      "capturedAt": "2026-07-21T09:03:05.071Z"
     },
     {
       "themeId": "northeast-snow-train",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/northeast-snow-train-dark.png",
-      "sha256": "43a8b956f002ade905f6d17899ff81d1f963ae84b4763e62e9c1cf0d44fb37d3",
-      "bytes": 1070928,
+      "sha256": "ea691b0fbca294d70d068ad4f05d5e4df3c896389343f48de394225f6e37e89b",
+      "bytes": 874053,
       "width": 1440,
       "height": 810,
       "assetSha256": "763b9bc9bb97063483e45e6f4505fee5024f03359563fd47c724ae4421714a1e",
-      "runtimeSha256": "272594b79a2c0c83d6f7f94433a63da8f5241c30a98e12ea67f139288a4b6b5b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -2950,7 +2950,7 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T06:51:20.284Z"
+      "capturedAt": "2026-07-21T09:03:06.357Z"
     }
   ]
 }
