@@ -227,11 +227,6 @@ pub fn current(app: &AppHandle) -> Result<PersistenceView, String> {
     Ok(to_view(app, read_state_from(&persistence_root(app)?)?))
 }
 
-fn same_compatibility_train(installed: &str, tested: &str) -> bool {
-    let train = |value: &str| value.split('.').take(2).collect::<Vec<_>>().join(".");
-    !installed.trim().is_empty() && !tested.trim().is_empty() && train(installed) == train(tested)
-}
-
 fn validate_selection(
     catalog: &catalog::Catalog,
     theme_id: &str,
@@ -243,16 +238,7 @@ fn validate_selection(
     }
     let skin = catalog::full_skin_for(catalog, theme_id, mode)?;
     let target = platform::find_target(channel)?;
-    let installed = target
-        .version
-        .as_deref()
-        .ok_or("无法读取所选 ChatGPT 版本；为避免在未知版本自动重启，常驻模式没有开启。")?;
-    if !same_compatibility_train(installed, &skin.tested_version) {
-        return Err(format!(
-            "所选 ChatGPT {installed} 尚未通过常驻兼容验证；当前验证版本为 {}。",
-            skin.tested_version
-        ));
-    }
+    platform::validate_full_skin_target(&target, &skin.tested_version)?;
     Ok((target, skin))
 }
 
@@ -531,14 +517,11 @@ async fn run_controller(app: AppHandle) -> Result<(), String> {
             }
         };
         let installed = target.version.clone();
-        if !installed
-            .as_deref()
-            .is_some_and(|version| same_compatibility_train(version, &skin.tested_version))
-        {
+        if let Err(error) = platform::validate_full_skin_target(&target, &skin.tested_version) {
             update_status(
                 &root,
                 "version-blocked",
-                Some("检测到未验证的 ChatGPT 版本，已保留原生界面。".into()),
+                Some(error),
                 attempts,
                 installed,
                 Some(skin.tested_version),
@@ -804,14 +787,6 @@ mod tests {
         assert_eq!(loaded.theme_id.as_deref(), Some("beijing-meridian"));
         assert_eq!(loaded.consent_version, CONSENT_VERSION);
         fs::remove_dir_all(root).expect("test state should clean up");
-    }
-
-    #[test]
-    fn compatibility_gate_accepts_only_the_tested_release_train() {
-        assert!(same_compatibility_train("26.715.3651.0", "26.715.3651.0"));
-        assert!(same_compatibility_train("26.715.72221", "26.715.3651.0"));
-        assert!(!same_compatibility_train("26.716.1000.0", "26.715.3651.0"));
-        assert!(!same_compatibility_train("", "26.715.3651.0"));
     }
 
     #[test]

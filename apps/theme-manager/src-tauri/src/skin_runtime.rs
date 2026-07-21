@@ -811,9 +811,10 @@ pub async fn apply(
     }
 
     let skin = catalog::full_skin_for(catalog, theme_id, mode)?;
+    let target = platform::find_target(channel)?;
+    platform::validate_full_skin_target(&target, &skin.tested_version)?;
     let art = load_art(app, &skin).await?;
     let script = runtime_script(&skin, &art)?;
-    let target = platform::find_target(channel)?;
     let running = platform::target_is_running(&target)?;
     let port = if running {
         reusable_port

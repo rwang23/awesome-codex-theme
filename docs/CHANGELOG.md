@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+- Tightened the Full Skin compatibility gate to the exact ChatGPT Beta build
+  with real apply-and-restore evidence. Other channels and adjacent build
+  numbers now remain native with a clear verification message instead of
+  attempting CDP injection.
+
 ## 0.3.0 - 2026-07-21
 
 - Changed the primary Apply action to register the durable selection first. The
