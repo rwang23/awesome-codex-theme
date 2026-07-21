@@ -439,21 +439,26 @@ test("gallery follows browser language, uses a language-neutral mark, and locali
   assert.doesNotMatch(css, /--acid|#d9ff43/i);
 });
 
-test("desktop manager localizes from the system and combines collection, rights, and style facets", async function () {
+test("desktop manager localizes from the system and makes visual styles the primary discovery control", async function () {
   const [html, app] = await Promise.all([
     readFile(path.join(ROOT, "apps", "theme-manager", "src", "renderer", "index.html"), "utf8"),
     readFile(path.join(ROOT, "apps", "theme-manager", "src", "renderer", "app.js"), "utf8")
   ]);
   assert.match(html, /id="languageButton"/);
   assert.match(html, /id="rightsFilter"/);
-  assert.match(html, /id="styleFilter"/);
+  assert.match(html, /id="styleTabs"/);
+  assert.match(html, /id="resultCount"/);
+  assert.doesNotMatch(html, /id="styleFilter"/);
   assert.match(app, /navigator\.languages/);
   assert.match(app, /act-manager-locale/);
   assert.match(app, /featuredPriority/);
   assert.match(app, /audiencePriority/);
   assert.doesNotMatch(html, />境</);
-  assert.match(app, /theme\.rightsProfile !== state\.rights/);
-  assert.match(app, /theme\.variant !== state\.style/);
+  assert.match(app, /const styleDefinitions = \[/);
+  assert.match(app, /function renderStyleTabs\(\)/);
+  assert.match(app, /state\.style = button\.dataset\.style/);
+  assert.match(app, /function matchesRights\(theme/);
+  assert.match(app, /function matchesStyle\(theme/);
   assert.match(app, /theme\.name\?\.\["zh-CN"\]/);
   assert.match(app, /theme\.name\?\.en/);
   assert.match(app, /async function refreshThemeCatalog/);

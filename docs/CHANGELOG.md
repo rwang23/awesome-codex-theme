@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+- Rebuilt Theme Manager discovery around visible **Visual Style** tabs, then
+  collection tabs and real-capture theme cards. The new flow makes the full
+  catalog legible before a user enters search or secondary filters, and keeps
+  collection counts honest for the chosen visual form.
+- Replaced the old mirror-like product mark with a language-independent
+  terminal-window and color-orbit symbol across the manager, Gallery, and the
+  regenerated desktop icon source. Rewrote the awkward workspace-climate copy
+  in both Chinese and English.
 - Changed the main Full Skin action from session-only application to
   consent-gated **Apply & Keep** behavior. Once confirmed, later Apply actions
   replace the durable selection; Restore Native disables it.

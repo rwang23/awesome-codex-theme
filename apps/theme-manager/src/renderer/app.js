@@ -15,18 +15,22 @@ const translations = {
     themeUpdateNoRestart: "Auto refresh · no app update",
     appUpdateChannel: "App",
     themeSeries: "Theme collections",
+    visualStyles: "Visual styles",
+    visualStylesHint: "Start with a visual language",
+    collectionHint: "Then browse a collection",
+    themeDiscoveryAria: "Theme discovery",
     filterRightsAria: "Filter by source and rights",
-    filterStyleAria: "Filter by visual form",
+    styleTabsAria: "Choose a visual style",
     themeListAria: "Theme list",
     modeAria: "Theme mode",
     targetAria: "Select a ChatGPT version",
-    archiveEyebrow: "THEME LIBRARY / ARCHIVE",
-    archiveTitleOne: "Choose a",
-    archiveTitleTwo: "working climate.",
+    archiveEyebrow: "THEME LIBRARY",
+    archiveTitleOne: "Pick a visual direction.",
+    archiveTitleTwo: "Make the workspace yours.",
+    archiveDescription: "Browse by visual style first, then explore the collection that feels right.",
     searchPlaceholder: "Search themes, cities, or moods",
     allCollections: "All",
     rightsFacet: "Source",
-    styleFacet: "Style",
     allSources: "All sources",
     original: "Original",
     fanArt: "Fan art",
@@ -35,6 +39,7 @@ const translations = {
     chibi: "Chibi",
     cityscape: "City",
     scene: "Scene",
+    resultsCount: "{count} themes",
     emptyState: "No themes match these filters.",
     light: "Light",
     dark: "Dark",
@@ -112,18 +117,22 @@ const translations = {
     themeUpdateNoRestart: "自动获取 · 无需更新应用",
     appUpdateChannel: "应用",
     themeSeries: "主题系列",
+    visualStyles: "视觉风格",
+    visualStylesHint: "先从一种视觉表达开始",
+    collectionHint: "再选一个主题系列",
+    themeDiscoveryAria: "主题发现",
     filterRightsAria: "按来源与授权筛选",
-    filterStyleAria: "按视觉表达筛选",
+    styleTabsAria: "选择视觉风格",
     themeListAria: "主题列表",
     modeAria: "主题模式",
     targetAria: "选择 ChatGPT 版本",
-    archiveEyebrow: "主题馆藏 / ARCHIVE",
-    archiveTitleOne: "选择一种",
-    archiveTitleTwo: "工作气候。",
+    archiveEyebrow: "主题浏览",
+    archiveTitleOne: "先选视觉风格。",
+    archiveTitleTwo: "再让工作区像你。",
+    archiveDescription: "先按视觉表达探索，再从主题系列里选择一套喜欢的主题。",
     searchPlaceholder: "搜索主题、城市或氛围",
     allCollections: "全部",
     rightsFacet: "来源",
-    styleFacet: "风格",
     allSources: "全部来源",
     original: "原创",
     fanArt: "Fan Art",
@@ -132,6 +141,7 @@ const translations = {
     chibi: "Q 版",
     cityscape: "城市",
     scene: "名场面",
+    resultsCount: "{count} 套主题",
     emptyState: "没有找到符合条件的主题。",
     light: "明亮",
     dark: "暗色",
@@ -240,9 +250,11 @@ const elements = {
   refreshCatalog: document.querySelector("#refreshCatalog"),
   search: document.querySelector("#search"),
   searchShortcut: document.querySelector("#searchShortcut"),
+  discoveryNavigation: document.querySelector("#discoveryNavigation"),
+  styleTabs: document.querySelector("#styleTabs"),
   collectionTabs: document.querySelector("#collectionTabs"),
   rightsFilter: document.querySelector("#rightsFilter"),
-  styleFilter: document.querySelector("#styleFilter"),
+  resultCount: document.querySelector("#resultCount"),
   themeList: document.querySelector("#themeList"),
   emptyState: document.querySelector("#emptyState"),
   modeSwitch: document.querySelector("#modeSwitch"),
@@ -369,12 +381,71 @@ function renderCatalogStatus() {
     : "—";
 }
 
+const styleDefinitions = [
+  ["all", "allStyles", "+"],
+  ["cinematic", "cinematic", "◒"],
+  ["chibi", "chibi", "♡"],
+  ["cityscape", "cityscape", "▦"],
+  ["scene", "scene", "↗"],
+];
+
+function matchesStyle(theme, style = state.style) {
+  return style === "all" || theme.variant === style;
+}
+
+function matchesRights(theme, rights = state.rights) {
+  return rights === "all" || theme.rightsProfile === rights;
+}
+
+function discoveryThemes() {
+  return state.catalog?.themes.filter((theme) => matchesStyle(theme) && matchesRights(theme)) || [];
+}
+
+function collectionThemeCount(collectionId) {
+  return discoveryThemes().filter((theme) => collectionId === "all" || theme.collection === collectionId).length;
+}
+
+function normalizeCollectionSelection() {
+  if (state.collection === "all" || collectionThemeCount(state.collection) > 0) return;
+  state.collection = "all";
+}
+
+function renderStyleTabs() {
+  if (!state.catalog) return;
+  const fragment = document.createDocumentFragment();
+  styleDefinitions.forEach(([id, labelKey, symbol]) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.role = "tab";
+    button.dataset.style = id;
+    button.setAttribute("aria-selected", String(id === state.style));
+    button.classList.toggle("is-active", id === state.style);
+
+    const icon = document.createElement("span");
+    icon.className = "style-tab-symbol";
+    icon.textContent = symbol;
+    const copy = document.createElement("span");
+    copy.className = "style-tab-copy";
+    const label = document.createElement("strong");
+    label.textContent = t(labelKey);
+    const count = document.createElement("small");
+    const themeCount = id === "all"
+      ? state.catalog.themes.filter((theme) => matchesRights(theme)).length
+      : state.catalog.themes.filter((theme) => matchesStyle(theme, id) && matchesRights(theme)).length;
+    count.textContent = String(themeCount);
+    copy.append(label, count);
+    button.append(icon, copy);
+    fragment.append(button);
+  });
+  elements.styleTabs.replaceChildren(fragment);
+}
+
 function renderCollectionTabs() {
   if (!state.catalog) return;
   const records = [
-    { id: "all", name: { "zh-CN": t("allCollections"), en: t("allCollections") }, themeCount: state.catalog.themes.length },
+    { id: "all", name: { "zh-CN": t("allCollections"), en: t("allCollections") } },
     ...state.catalog.collections.slice().sort(compareCollectionPriority),
-  ];
+  ].filter((collection) => collectionThemeCount(collection.id) > 0);
   const fragment = document.createDocumentFragment();
   records.forEach((collection) => {
     const button = document.createElement("button");
@@ -386,7 +457,7 @@ function renderCollectionTabs() {
     const label = document.createElement("span");
     label.textContent = localized(collection.name);
     const count = document.createElement("small");
-    count.textContent = String(collection.themeCount || state.catalog.themes.filter((theme) => theme.collection === collection.id).length).padStart(2, "0");
+    count.textContent = String(collectionThemeCount(collection.id));
     button.append(label, count);
     fragment.append(button);
   });
@@ -400,34 +471,18 @@ function renderFacetOptions() {
     ["original", "original"],
     ["fan-art", "fanArt"],
   ];
-  const styles = [
-    ["all", "allStyles"],
-    ["cinematic", "cinematic"],
-    ["chibi", "chibi"],
-    ["cityscape", "cityscape"],
-    ["scene", "scene"],
-  ];
-  const render = (select, records, selected, countFor) => {
-    const fragment = document.createDocumentFragment();
-    records.forEach(([value, key]) => {
-      const option = document.createElement("option");
-      option.value = value;
-      option.selected = value === selected;
-      option.textContent = t(key) + " · " + String(countFor(value)).padStart(2, "0");
-      fragment.append(option);
-    });
-    select.replaceChildren(fragment);
-  };
-  render(elements.rightsFilter, rights, state.rights, (value) => {
-    return value === "all"
+  const fragment = document.createDocumentFragment();
+  rights.forEach(([value, key]) => {
+    const option = document.createElement("option");
+    option.value = value;
+    option.selected = value === state.rights;
+    const count = value === "all"
       ? state.catalog.themes.length
       : state.catalog.themes.filter((theme) => theme.rightsProfile === value).length;
+    option.textContent = t(key) + " · " + String(count);
+    fragment.append(option);
   });
-  render(elements.styleFilter, styles, state.style, (value) => {
-    return value === "all"
-      ? state.catalog.themes.length
-      : state.catalog.themes.filter((theme) => theme.variant === value).length;
-  });
+  elements.rightsFilter.replaceChildren(fragment);
 }
 
 function filteredThemes() {
@@ -435,8 +490,8 @@ function filteredThemes() {
   const query = state.query.trim().toLocaleLowerCase(state.locale);
   return state.catalog.themes.filter((theme) => {
     if (state.collection !== "all" && theme.collection !== state.collection) return false;
-    if (state.rights !== "all" && theme.rightsProfile !== state.rights) return false;
-    if (state.style !== "all" && theme.variant !== state.style) return false;
+    if (!matchesRights(theme)) return false;
+    if (!matchesStyle(theme)) return false;
     if (!query) return true;
     return [
       theme.id,
@@ -453,12 +508,13 @@ function filteredThemes() {
 
 function renderThemeList() {
   const themes = filteredThemes();
+  elements.resultCount.textContent = t("resultsCount", { count: themes.length });
   if (themes.length && !themes.some((theme) => theme.id === state.themeId)) {
     state.themeId = themes[0].id;
   }
   if (!themes.length) state.themeId = null;
   const fragment = document.createDocumentFragment();
-  themes.forEach((theme, index) => {
+  themes.forEach((theme) => {
     const button = document.createElement("button");
     button.type = "button";
     button.role = "option";
@@ -466,9 +522,6 @@ function renderThemeList() {
     button.setAttribute("aria-selected", String(theme.id === state.themeId));
     button.classList.toggle("is-active", theme.id === state.themeId);
 
-    const number = document.createElement("span");
-    number.className = "theme-index";
-    number.textContent = String(index + 1).padStart(2, "0");
     const thumb = document.createElement("span");
     thumb.className = "theme-thumb";
     const image = document.createElement("img");
@@ -477,15 +530,19 @@ function renderThemeList() {
     thumb.append(image);
     const copy = document.createElement("span");
     copy.className = "theme-list-copy";
+    const meta = document.createElement("small");
+    meta.className = "theme-card-meta";
+    meta.textContent = localized(state.catalog.collections.find((collection) => collection.id === theme.collection)?.name)
+      + " · " + t(theme.variant);
     const title = document.createElement("strong");
     title.textContent = localized(theme.name);
     const subtitle = document.createElement("small");
     subtitle.textContent = localized(theme.tagline);
-    copy.append(title, subtitle);
+    copy.append(meta, title, subtitle);
     const arrow = document.createElement("span");
     arrow.className = "theme-arrow";
     arrow.textContent = "↗";
-    button.append(number, thumb, copy, arrow);
+    button.append(thumb, copy, arrow);
     fragment.append(button);
   });
   elements.themeList.replaceChildren(fragment);
@@ -652,9 +709,10 @@ function renderLanguage() {
   elements.languageButton.setAttribute("aria-label", t("switchLanguage"));
   elements.refreshCatalog.setAttribute("aria-label", t("refreshCatalog"));
   elements.refreshCatalog.title = t("refreshCatalog");
+  elements.discoveryNavigation.setAttribute("aria-label", t("themeDiscoveryAria"));
+  elements.styleTabs.setAttribute("aria-label", t("styleTabsAria"));
   elements.collectionTabs.setAttribute("aria-label", t("themeSeries"));
   elements.rightsFilter.setAttribute("aria-label", t("filterRightsAria"));
-  elements.styleFilter.setAttribute("aria-label", t("filterStyleAria"));
   elements.themeList.setAttribute("aria-label", t("themeListAria"));
   elements.modeSwitch.setAttribute("aria-label", t("modeAria"));
   elements.targetSelect.setAttribute("aria-label", t("targetAria"));
@@ -665,7 +723,9 @@ function renderLanguage() {
     node.placeholder = t(node.dataset.i18nPlaceholder);
   });
   if (state.catalog) {
+    normalizeCollectionSelection();
     renderCatalogStatus();
+    renderStyleTabs();
     renderCollectionTabs();
     renderFacetOptions();
     renderThemeList();
@@ -689,7 +749,9 @@ function acceptCatalog(payload) {
   state.themeId = state.catalog.themes.some((theme) => theme.id === previousTheme)
     ? previousTheme
     : ordered[0]?.id;
+  normalizeCollectionSelection();
   renderCatalogStatus();
+  renderStyleTabs();
   renderCollectionTabs();
   renderFacetOptions();
   renderThemeList();
@@ -724,13 +786,21 @@ elements.collectionTabs.addEventListener("click", (event) => {
   renderThemeList();
 });
 
-elements.rightsFilter.addEventListener("change", () => {
-  state.rights = elements.rightsFilter.value;
+elements.styleTabs.addEventListener("click", (event) => {
+  const button = event.target.closest("[data-style]");
+  if (!button) return;
+  state.style = button.dataset.style;
+  normalizeCollectionSelection();
+  renderStyleTabs();
+  renderCollectionTabs();
   renderThemeList();
 });
 
-elements.styleFilter.addEventListener("change", () => {
-  state.style = elements.styleFilter.value;
+elements.rightsFilter.addEventListener("change", () => {
+  state.rights = elements.rightsFilter.value;
+  normalizeCollectionSelection();
+  renderStyleTabs();
+  renderCollectionTabs();
   renderThemeList();
 });
 

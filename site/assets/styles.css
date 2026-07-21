@@ -162,10 +162,20 @@ img {
   stroke-width: 2.7;
 }
 
-.wordmark-mark .mark-spark {
-  fill: var(--gold);
+.wordmark-mark .mark-cursor,
+.wordmark-mark .mark-line {
+  stroke: #f7dfaa;
+}
+
+.wordmark-mark .mark-orbit {
+  fill: rgba(217, 161, 60, 0.18);
   stroke: var(--gold);
-  stroke-width: 1.4;
+  stroke-width: 2.1;
+}
+
+.wordmark-mark .mark-orbit-core {
+  fill: var(--gold);
+  stroke: none;
 }
 
 .wordmark-copy {

@@ -19,9 +19,14 @@ function insideRoundedRect(x, y, left, top, right, bottom, radius) {
   return Math.hypot(x - closestX, y - closestY) <= radius;
 }
 
-function insideStroke(x, y, left, top, right, bottom, width) {
-  return x >= left && x <= right && y >= top && y <= bottom
-    && !(x >= left + width && x <= right - width && y >= top + width && y <= bottom - width);
+function distanceToSegment(x, y, x1, y1, x2, y2) {
+  const dx = x2 - x1;
+  const dy = y2 - y1;
+  const lengthSquared = dx * dx + dy * dy;
+  const projection = lengthSquared === 0
+    ? 0
+    : Math.max(0, Math.min(1, ((x - x1) * dx + (y - y1) * dy) / lengthSquared));
+  return Math.hypot(x - (x1 + projection * dx), y - (y1 + projection * dy));
 }
 
 function renderIcon(size = 1024) {
@@ -37,15 +42,19 @@ function renderIcon(size = 1024) {
       52 + glow * 30,
       255,
     ];
-    const backFrame = insideStroke(nx, ny, 0.34, 0.21, 0.79, 0.66, 0.035);
-    const frontFrame = insideStroke(nx, ny, 0.19, 0.34, 0.67, 0.81, 0.038);
-    const themeLine = ny > 0.66 && ny < 0.70 && nx > 0.28 && nx < 0.49;
-    const sparkleVertical = Math.abs(nx - 0.72) / 0.045 + Math.abs(ny - 0.72) / 0.13 <= 1;
-    const sparkleHorizontal = Math.abs(nx - 0.72) / 0.13 + Math.abs(ny - 0.72) / 0.045 <= 1;
-    if (backFrame) color = [205, 160, 77, 255];
-    if (frontFrame) color = [235, 231, 217, 255];
-    if (themeLine) color = [202, 83, 59, 255];
-    if (sparkleVertical || sparkleHorizontal) color = [222, 174, 82, 255];
+    const windowOuter = insideRoundedRect(nx, ny, 0.16, 0.27, 0.78, 0.75, 0.09);
+    const windowInner = insideRoundedRect(nx, ny, 0.205, 0.315, 0.735, 0.705, 0.055);
+    const windowFrame = windowOuter && !windowInner;
+    const cursor = distanceToSegment(nx, ny, 0.30, 0.39, 0.43, 0.51) < 0.025
+      || distanceToSegment(nx, ny, 0.43, 0.51, 0.30, 0.63) < 0.025;
+    const promptLine = distanceToSegment(nx, ny, 0.50, 0.64, 0.67, 0.64) < 0.024;
+    const orbitDistance = Math.hypot(nx - 0.75, ny - 0.25);
+    const orbit = orbitDistance > 0.07 && orbitDistance < 0.108;
+    const orbitCore = orbitDistance < 0.022;
+    if (windowFrame) color = [235, 231, 217, 255];
+    if (cursor || promptLine) color = [241, 209, 138, 255];
+    if (orbit) color = [222, 174, 82, 255];
+    if (orbitCore) color = [222, 174, 82, 255];
     return color;
   });
 }
