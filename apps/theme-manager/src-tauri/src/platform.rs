@@ -103,64 +103,109 @@ fn discover_platform_targets() -> Result<Vec<TargetView>, String> {
     }
 }
 
+#[cfg(any(target_os = "macos", test))]
+fn macos_application_names(channel: &str) -> &'static [&'static str] {
+    match channel {
+        "stable" => &["ChatGPT", "Codex"],
+        "beta" => &["ChatGPT Beta", "Codex Beta"],
+        _ => &[],
+    }
+}
+
+#[cfg(any(target_os = "macos", test))]
+fn macos_named_bundle_paths(home: &str, names: &[&str]) -> Vec<String> {
+    names
+        .iter()
+        .flat_map(|name| {
+            [
+                format!("/Applications/{name}.app"),
+                format!("{}/Applications/{name}.app", home.trim_end_matches('/')),
+            ]
+        })
+        .collect()
+}
+
+#[cfg(target_os = "macos")]
+fn macos_plist_value(info: &std::path::Path, key: &str) -> Option<String> {
+    std::process::Command::new("/usr/bin/plutil")
+        .args(["-extract", key, "raw", "-o", "-", info.to_str()?])
+        .output()
+        .ok()
+        .filter(|output| output.status.success())
+        .and_then(|output| String::from_utf8(output.stdout).ok())
+        .map(|value| value.trim().to_owned())
+}
+
+#[cfg(target_os = "macos")]
+fn macos_target_from_bundle(
+    channel: &str,
+    label: &str,
+    expected_bundle: &str,
+    bundle_path: &str,
+) -> Option<TargetView> {
+    let bundle_path = bundle_path.trim().trim_end_matches('/');
+    if !bundle_path.starts_with('/') || !bundle_path.ends_with(".app") {
+        return None;
+    }
+    let info = std::path::Path::new(bundle_path)
+        .join("Contents")
+        .join("Info.plist");
+    if macos_plist_value(&info, "CFBundleIdentifier").as_deref() != Some(expected_bundle) {
+        return None;
+    }
+    let executable_name = macos_plist_value(&info, "CFBundleExecutable")?;
+    let executable_path = std::path::Path::new(bundle_path)
+        .join("Contents")
+        .join("MacOS")
+        .join(executable_name);
+    if !executable_path.is_file() {
+        return None;
+    }
+    Some(TargetView {
+        channel: channel.into(),
+        label: label.into(),
+        version: macos_plist_value(&info, "CFBundleShortVersionString")
+            .or_else(|| macos_plist_value(&info, "CFBundleVersion")),
+        bundle_id: Some(expected_bundle.into()),
+        bundle_path: Some(bundle_path.into()),
+        executable_path: Some(executable_path.to_string_lossy().into_owned()),
+    })
+}
+
+#[cfg(target_os = "macos")]
+fn discover_macos_target(channel: &str, label: &str, expected_bundle: &str) -> Option<TargetView> {
+    let home = std::env::var("HOME").ok().unwrap_or_default();
+    let names = macos_application_names(channel);
+    for candidate in macos_named_bundle_paths(&home, names) {
+        if let Some(target) = macos_target_from_bundle(channel, label, expected_bundle, &candidate)
+        {
+            return Some(target);
+        }
+    }
+    let output = std::process::Command::new("/usr/bin/mdfind")
+        .arg(format!(
+            "kMDItemCFBundleIdentifier == \"{expected_bundle}\""
+        ))
+        .output()
+        .ok()?;
+    if !output.status.success() {
+        return None;
+    }
+    String::from_utf8(output.stdout)
+        .ok()?
+        .lines()
+        .find_map(|candidate| macos_target_from_bundle(channel, label, expected_bundle, candidate))
+}
+
 #[cfg(target_os = "macos")]
 fn discover_platform_targets() -> Result<Vec<TargetView>, String> {
-    let definitions = [
-        ("stable", "ChatGPT", "ChatGPT", "com.openai.codex"),
-        (
-            "beta",
-            "ChatGPT Beta",
-            "ChatGPT Beta",
-            "com.openai.codex.beta",
-        ),
-    ];
-    Ok(definitions
-        .into_iter()
-        .filter_map(|(channel, label, app_name, expected_bundle)| {
-            let script = format!("POSIX path of (path to application \"{app_name}\")");
-            let output = std::process::Command::new("/usr/bin/osascript")
-                .args(["-e", &script])
-                .output()
-                .ok()?;
-            if !output.status.success() {
-                return None;
-            }
-            let app_path = String::from_utf8(output.stdout).ok()?.trim().to_owned();
-            if !app_path.ends_with(".app/") && !app_path.ends_with(".app") {
-                return None;
-            }
-            let info = std::path::Path::new(app_path.trim_end_matches('/'))
-                .join("Contents")
-                .join("Info.plist");
-            let plist = |key: &str| {
-                std::process::Command::new("/usr/bin/plutil")
-                    .args(["-extract", key, "raw", "-o", "-", info.to_str()?])
-                    .output()
-                    .ok()
-                    .filter(|output| output.status.success())
-                    .and_then(|output| String::from_utf8(output.stdout).ok())
-                    .map(|value| value.trim().to_owned())
-            };
-            if plist("CFBundleIdentifier").as_deref() != Some(expected_bundle) {
-                return None;
-            }
-            let executable_name = plist("CFBundleExecutable")?;
-            let executable_path = std::path::Path::new(app_path.trim_end_matches('/'))
-                .join("Contents")
-                .join("MacOS")
-                .join(executable_name)
-                .to_string_lossy()
-                .into_owned();
-            Some(TargetView {
-                channel: channel.into(),
-                label: label.into(),
-                version: plist("CFBundleShortVersionString"),
-                bundle_id: Some(expected_bundle.into()),
-                bundle_path: Some(app_path.trim_end_matches('/').into()),
-                executable_path: Some(executable_path),
-            })
-        })
-        .collect())
+    Ok([
+        ("stable", "ChatGPT", "com.openai.codex"),
+        ("beta", "ChatGPT Beta", "com.openai.codex.beta"),
+    ]
+    .into_iter()
+    .filter_map(|(channel, label, bundle_id)| discover_macos_target(channel, label, bundle_id))
+    .collect())
 }
 
 #[cfg(not(any(target_os = "windows", target_os = "macos")))]
@@ -231,8 +276,8 @@ pub fn launch_target(channel: &str) -> Result<TargetView, String> {
     Ok(target)
 }
 
-#[cfg(any(target_os = "windows", test))]
-fn windows_full_skin_launch_arguments(arguments: &str) -> Result<Vec<String>, String> {
+#[cfg(any(target_os = "windows", target_os = "macos", test))]
+fn full_skin_launch_arguments(arguments: &str) -> Result<Vec<String>, String> {
     let values = arguments
         .split_ascii_whitespace()
         .map(str::to_owned)
@@ -246,9 +291,14 @@ fn windows_full_skin_launch_arguments(arguments: &str) -> Result<Vec<String>, St
         || values.first().map(String::as_str) != Some("--remote-debugging-address=127.0.0.1")
         || !has_valid_port
     {
-        return Err("Windows Full Skin 启动参数无效".into());
+        return Err("Full Skin 启动参数无效".into());
     }
     Ok(values)
+}
+
+#[cfg(any(target_os = "windows", test))]
+fn windows_full_skin_launch_arguments(arguments: &str) -> Result<Vec<String>, String> {
+    full_skin_launch_arguments(arguments)
 }
 
 #[cfg(target_os = "windows")]
@@ -286,8 +336,24 @@ fn launch_platform_target_with_arguments(
     arguments: &str,
 ) -> Result<(), String> {
     let bundle_path = macos_bundle_path(target)?;
-    let arguments = macos_open_arguments(bundle_path, Some(arguments))?;
-    run_macos_open(&arguments, "无法以 Full Skin 模式打开 ChatGPT")
+    let open_arguments = macos_open_arguments(bundle_path, Some(arguments))?;
+    run_macos_open(&open_arguments, "无法以 Full Skin 模式打开 ChatGPT")?;
+    std::thread::sleep(std::time::Duration::from_millis(500));
+    if target_is_running(target)? {
+        return Ok(());
+    }
+    let executable = target
+        .executable_path
+        .as_deref()
+        .ok_or("macOS 可执行文件身份缺失")?;
+    std::process::Command::new(executable)
+        .args(full_skin_launch_arguments(arguments)?)
+        .stdin(std::process::Stdio::null())
+        .stdout(std::process::Stdio::null())
+        .stderr(std::process::Stdio::null())
+        .spawn()
+        .map(|_| ())
+        .map_err(|error| format!("无法以 Full Skin 模式直接启动 ChatGPT：{error}"))
 }
 
 #[cfg(not(any(target_os = "windows", target_os = "macos")))]
@@ -536,13 +602,7 @@ fn macos_open_arguments(bundle_path: &str, arguments: Option<&str>) -> Result<Ve
     }
     let mut command = vec!["-n".into(), bundle_path.into()];
     if let Some(arguments) = arguments {
-        let arguments = arguments
-            .split_ascii_whitespace()
-            .map(str::to_owned)
-            .collect::<Vec<_>>();
-        if arguments.is_empty() {
-            return Err("macOS Full Skin 启动参数缺失".into());
-        }
+        let arguments = full_skin_launch_arguments(arguments)?;
         command.push("--args".into());
         command.extend(arguments);
     }
@@ -687,6 +747,24 @@ mod tests {
     #[test]
     fn macos_full_skin_rejects_a_bundle_identifier_as_a_path() {
         assert!(macos_open_arguments("com.openai.codex", None).is_err());
+    }
+
+    #[test]
+    fn macos_discovery_supports_current_and_legacy_app_names() {
+        assert_eq!(macos_application_names("stable"), ["ChatGPT", "Codex"]);
+        assert_eq!(
+            macos_application_names("beta"),
+            ["ChatGPT Beta", "Codex Beta"]
+        );
+        assert_eq!(
+            macos_named_bundle_paths("/Users/test", macos_application_names("stable")),
+            vec![
+                "/Applications/ChatGPT.app",
+                "/Users/test/Applications/ChatGPT.app",
+                "/Applications/Codex.app",
+                "/Users/test/Applications/Codex.app",
+            ]
+        );
     }
 
     #[test]

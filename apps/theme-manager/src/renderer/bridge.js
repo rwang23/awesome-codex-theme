@@ -46,8 +46,8 @@ window.act = Object.freeze({
   restoreFullSkin: () => invoke("restore_full_skin"),
   getSkinState: () => invoke("get_skin_state"),
   getPersistenceState: () => invoke("get_persistence_state"),
-  enablePersistentTheme: (themeId, mode, channel, consent) =>
-    invoke("enable_persistent_theme", { themeId, mode, channel, consent }),
+  enablePersistentTheme: (themeId, mode, channel, consent, applyNow = false) =>
+    invoke("enable_persistent_theme", { themeId, mode, channel, consent, applyNow }),
   disablePersistentTheme: () => invoke("disable_persistent_theme"),
   openExternal: (target) => invoke("open_external", { target }),
   checkForAppUpdate: () => invoke("check_for_app_update"),

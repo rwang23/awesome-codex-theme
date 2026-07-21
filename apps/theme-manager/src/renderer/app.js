@@ -64,6 +64,10 @@ const translations = {
     persistenceError: "Paused after a bounded failure",
     persistenceOther: "Another theme is kept: {theme} · {mode}",
     persistenceConsent: "Keep this theme after every future launch of the selected, verified ChatGPT version?\n\nThis is the normal result of Apply & Keep Full Skin. Theme Manager will start for your user account at sign-in. When you open ChatGPT normally, it may close and relaunch only that exact app once with a loopback-only debugging port. It never edits ChatGPT files, shortcuts, or chats. Unknown versions stay native. You can turn this off here at any time.",
+    consentEyebrow: "APPLY & KEEP",
+    consentTitle: "Keep this Full Skin?",
+    cancel: "Cancel",
+    confirmApply: "Apply & Keep",
     copyNative: "Copy Native palette only",
     skinIdle: "Theme packs contain only declarative data and images. The manager uses a temporary loopback-only debug session to load the background without modifying WindowsApps, app.asar, or ChatGPT private data.",
     skinActive: "Active in {target}: {theme} · {mode}. Restore the skin first; quit and reopen ChatGPT normally to close the debug port.",
@@ -102,6 +106,8 @@ const translations = {
     assetError: "The theme image failed integrity verification.",
     sessionError: "The verified local Full Skin session could not be opened.",
     genericError: "The operation failed. See the diagnostic reason below.",
+    applyTimeout: "The theme controller did not become active before the safety timeout (phase: {phase}).",
+    selectionChanged: "The persistent theme selection changed before Apply completed.",
     errorReason: "Reason"
   },
   "zh-CN": {
@@ -167,6 +173,10 @@ const translations = {
     persistenceError: "有限重试失败，已暂停",
     persistenceOther: "当前保持的是：{theme} · {mode}",
     persistenceConsent: "要让这套主题在以后每次打开所选且已验证的 ChatGPT 版本时继续生效吗？\n\n这也是“应用并保持完整皮肤”的默认结果。Theme Manager 会为当前用户注册登录启动项。当你正常打开 ChatGPT 时，控制器可能先关闭并只重开这一个准确应用一次，再通过仅限本机回环的调试端口加载主题。它不会修改 ChatGPT 文件、快捷方式或聊天；未知版本会保持原生界面。你可以随时在这里关闭。",
+    consentEyebrow: "应用并保持",
+    consentTitle: "保持使用这套完整皮肤？",
+    cancel: "取消",
+    confirmApply: "应用并保持",
     copyNative: "只复制原生配色",
     skinIdle: "主题包只含声明式配置与图片。管理器通过仅限本机回环的临时调试会话加载背景，不修改 WindowsApps、app.asar 或 ChatGPT 私有数据。",
     skinActive: "正在 {target} 使用 {theme} · {mode}。恢复后如需关闭调试端口，请退出并正常重开 ChatGPT。",
@@ -205,6 +215,8 @@ const translations = {
     assetError: "主题图片未通过完整性校验。",
     sessionError: "无法打开经过验证的本机 Full Skin 会话。",
     genericError: "操作失败，请重试。",
+    applyTimeout: "主题控制器未能在安全等待时间内进入生效状态（阶段：{phase}）。",
+    selectionChanged: "应用完成前，常驻主题选择已经发生变化。",
     errorReason: "原因"
   }
 };
@@ -287,8 +299,30 @@ const elements = {
   openRepository: document.querySelector("#openRepository"),
   updateButton: document.querySelector("#updateButton"),
   updateLabel: document.querySelector("#updateLabel"),
+  persistenceConsentDialog: document.querySelector("#persistenceConsentDialog"),
+  persistenceConsentCancel: document.querySelector("#persistenceConsentCancel"),
+  persistenceConsentConfirm: document.querySelector("#persistenceConsentConfirm"),
   toast: document.querySelector("#toast"),
 };
+
+let consentResolver = null;
+
+function finishPersistenceConsent(confirmed) {
+  if (!consentResolver) return;
+  const resolve = consentResolver;
+  consentResolver = null;
+  elements.persistenceConsentDialog.hidden = true;
+  resolve(confirmed);
+}
+
+function requestPersistenceConsent() {
+  if (consentResolver) return Promise.resolve(false);
+  elements.persistenceConsentDialog.hidden = false;
+  elements.persistenceConsentConfirm.focus();
+  return new Promise((resolve) => {
+    consentResolver = resolve;
+  });
+}
 
 function localized(value) {
   return value?.[state.locale] || value?.en || value?.["zh-CN"] || "";
@@ -305,7 +339,8 @@ function friendlyError(error, fallbackKey) {
   if (/没有检测到|not found/i.test(raw)) return withReason("targetMissingError");
   if (/素材|哈希|PNG|integrity/i.test(raw)) return withReason("assetError");
   if (/CDP|调试|Full Skin 会话|loopback|LaunchServices/i.test(raw)) return withReason("sessionError");
-  return raw && !/[\u3400-\u9fff]/u.test(raw) ? raw : t(fallbackKey || "genericError");
+  if (raw && !/[\u3400-\u9fff]/u.test(raw)) return raw;
+  return raw ? withReason(fallbackKey || "genericError") : t(fallbackKey || "genericError");
 }
 
 function catalogStatusLabel(status) {
@@ -622,17 +657,21 @@ function renderTargets() {
 
 function renderSkinState() {
   const skin = state.skinState || { active: false };
-  const sameSelection = skin.active
+  const persistentActive = persistenceMatchesSelection(state.persistenceState)
+    && state.persistenceState.phase === "active";
+  const sameSessionSelection = skin.active
     && skin.themeId === state.themeId
     && skin.mode === state.mode
     && skin.channel === elements.targetSelect.value;
+  const sameSelection = sameSessionSelection || persistentActive;
   elements.applySkinLabel.textContent = sameSelection ? t("reapplySkin") : t("applySkin");
   elements.restoreSkin.disabled = !skin.active && !state.persistenceState?.enabled;
-  elements.skinStatus.textContent = skin.active
+  const active = sameSessionSelection ? skin : persistentActive ? state.persistenceState : null;
+  elements.skinStatus.textContent = active
     ? t("skinActive", {
-      target: skin.channel === "beta" ? "ChatGPT Beta" : "ChatGPT",
-      theme: skin.themeId,
-      mode: t(skin.mode),
+      target: active.channel === "beta" ? "ChatGPT Beta" : "ChatGPT",
+      theme: active.themeId,
+      mode: t(active.mode),
     })
     : t("skinIdle");
 }
@@ -662,6 +701,7 @@ function renderPersistenceState() {
   } else {
     const labels = {
       disabled: "persistenceDisabled",
+      "apply-requested": "persistenceStarting",
       starting: "persistenceStarting",
       waiting: "persistenceWaiting",
       active: "persistenceActive",
@@ -672,7 +712,11 @@ function renderPersistenceState() {
       "retry-blocked": "persistenceError",
       error: "persistenceError",
     };
-    elements.persistenceStatus.textContent = t(labels[persistence.phase] || "persistenceDisabled");
+    const label = t(labels[persistence.phase] || "persistenceDisabled");
+    elements.persistenceStatus.textContent = persistence.detail
+      && ["blocked", "target-missing", "version-blocked", "retry-blocked", "error"].includes(persistence.phase)
+      ? `${label} · ${persistence.detail}`
+      : label;
   }
 
   const busy = ["starting", "restarting"].includes(persistence.phase);
@@ -780,6 +824,34 @@ async function refreshAppUpdateState() {
   return state.updateState;
 }
 
+function wait(milliseconds) {
+  return new Promise((resolve) => window.setTimeout(resolve, milliseconds));
+}
+
+async function waitForPersistentApply(themeId, mode, channel, timeoutMs = 90000) {
+  const deadline = Date.now() + timeoutMs;
+  while (Date.now() < deadline) {
+    const persistence = await window.act.getPersistenceState();
+    state.persistenceState = persistence;
+    renderPersistenceState();
+    if (!persistence.enabled
+      || persistence.themeId !== themeId
+      || persistence.mode !== mode
+      || persistence.channel !== channel) {
+      throw new Error(t("selectionChanged"));
+    }
+    if (persistence.phase === "active" && persistence.autostartEnabled) {
+      return persistence;
+    }
+    if (["blocked", "target-missing", "version-blocked", "retry-blocked"].includes(persistence.phase)) {
+      throw new Error(persistence.detail || t("toastApplyFailed"));
+    }
+    await wait(500);
+  }
+  const phase = state.persistenceState?.phase || "unknown";
+  throw new Error(state.persistenceState?.detail || t("applyTimeout", { phase }));
+}
+
 elements.languageButton.addEventListener("click", () => {
   state.locale = state.locale === "en" ? "zh-CN" : "en";
   window.localStorage.setItem("act-manager-locale", state.locale);
@@ -856,36 +928,28 @@ elements.copyTheme.addEventListener("click", async () => {
 elements.applySkin.addEventListener("click", async () => {
   const channel = elements.targetSelect.value;
   if (!channel || !state.themeId) return;
-  const previousPersistence = state.persistenceState;
-  const persistenceReady = persistenceMatchesSelection(previousPersistence, channel)
-    && previousPersistence.autostartEnabled;
-  if (!previousPersistence?.enabled && !window.confirm(t("persistenceConsent"))) return;
+  if (!state.persistenceState?.enabled && !await requestPersistenceConsent()) return;
   elements.applySkin.disabled = true;
   elements.applySkinLabel.textContent = t("applyingSkin");
-  let skinApplied = false;
   try {
-    state.skinState = await window.act.applyFullSkin(state.themeId, state.mode, channel);
-    skinApplied = true;
-    if (!persistenceReady) {
-      state.persistenceState = await window.act.enablePersistentTheme(
-        state.themeId,
-        state.mode,
-        channel,
-        true,
-      );
-    }
+    state.persistenceState = await window.act.enablePersistentTheme(
+      state.themeId,
+      state.mode,
+      channel,
+      true,
+      true,
+    );
+    renderPersistenceState();
+    state.persistenceState = await waitForPersistentApply(state.themeId, state.mode, channel);
     renderSkinState();
     renderPersistenceState();
     toast(t("toastSkinApplied"));
   } catch (error) {
-    if (skinApplied) {
-      try {
-        state.skinState = await window.act.restoreFullSkin();
-      } catch {
-        // Do not report a session-only skin as a durable application.
-      }
+    try {
+      state.persistenceState = await window.act.getPersistenceState();
+    } catch {
+      // Keep the last verified state when diagnostics cannot be refreshed.
     }
-    state.persistenceState = previousPersistence;
     renderPersistenceState();
     toast(friendlyError(error, "toastApplyFailed"), "error");
   } finally {
@@ -923,7 +987,7 @@ elements.persistenceToggle.addEventListener("change", async () => {
     renderPersistenceState();
     return;
   }
-  if (enable && !window.confirm(t("persistenceConsent"))) {
+  if (enable && !await requestPersistenceConsent()) {
     renderPersistenceState();
     return;
   }
@@ -939,6 +1003,18 @@ elements.persistenceToggle.addEventListener("change", async () => {
     state.persistenceState = previous;
     renderPersistenceState();
     toast(friendlyError(error, "toastPersistenceFailed"), "error");
+  }
+});
+
+elements.persistenceConsentCancel.addEventListener("click", () => finishPersistenceConsent(false));
+elements.persistenceConsentConfirm.addEventListener("click", () => finishPersistenceConsent(true));
+elements.persistenceConsentDialog.addEventListener("click", (event) => {
+  if (event.target === elements.persistenceConsentDialog) finishPersistenceConsent(false);
+});
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && !elements.persistenceConsentDialog.hidden) {
+    event.preventDefault();
+    finishPersistenceConsent(false);
   }
 });
 

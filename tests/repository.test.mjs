@@ -375,7 +375,12 @@ test("Tauri manager keeps theme values in Rust and limits desktop capabilities",
   assert.match(platform, /Get-Process/);
   assert.doesNotMatch(platform, /Get-CimInstance/);
   assert.match(platform, /vec!\["-n"\.into\(\), bundle_path\.into\(\)\]/);
+  assert.match(platform, /\["ChatGPT", "Codex"\]/);
+  assert.match(platform, /\["ChatGPT Beta", "Codex Beta"\]/);
+  assert.match(platform, /std::process::Command::new\(executable\)/);
   assert.doesNotMatch(bridge, /nativeTheme.*value|nativeValue/i);
+  assert.match(bridge, /applyNow = false/);
+  assert.match(bridge, /applyNow \}/);
   assert.match(updater, /ACT_UPDATER_PUBKEY/);
   assert.match(config.plugins.updater.endpoints[0], /^https:\/\/github\.com\/rwang23\/awesome-codex-theme\/releases\//);
   assert.match(appPackage, /@tauri-apps\/cli/);
@@ -522,10 +527,15 @@ test("desktop manager localizes from the system and makes visual styles the prim
   assert.match(app, /openExternal\(\"repository\"\)/);
   assert.match(app, /Apply & Keep Full Skin/);
   assert.match(app, /应用并保持完整皮肤/);
-  assert.match(app, /window\.confirm\(t\("persistenceConsent"\)\)/);
-  assert.match(app, /await window\.act\.applyFullSkin\(state\.themeId, state\.mode, channel\)/);
+  assert.doesNotMatch(app, /window\.confirm\(/);
+  assert.match(app, /await requestPersistenceConsent\(\)/);
+  assert.match(html, /id="persistenceConsentDialog"/);
+  assert.match(html, /id="persistenceConsentConfirm"/);
+  assert.doesNotMatch(app, /await window\.act\.applyFullSkin\(/);
   assert.match(app, /await window\.act\.enablePersistentTheme\(/);
-  assert.match(app, /Do not report a session-only skin as a durable application/);
+  assert.match(app, /async function waitForPersistentApply\(/);
+  assert.match(app, /"retry-blocked"/);
+  assert.match(app, /state\.persistenceState = await waitForPersistentApply/);
 });
 
 test("READMEs recommend Agent installation first and manual desktop installation last", async function () {

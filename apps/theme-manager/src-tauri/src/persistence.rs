@@ -17,7 +17,8 @@ const STATE_SCHEMA: u8 = 1;
 const CONSENT_VERSION: u8 = 1;
 const CONTROLLER_ARGUMENT: &str = "--persistence-controller";
 const POLL_INTERVAL: Duration = Duration::from_millis(1200);
-const TARGET_WAIT: Duration = Duration::from_secs(8);
+const TARGET_WAIT: Duration = Duration::from_secs(20);
+const APPLY_REQUESTED_PHASE: &str = "apply-requested";
 
 #[derive(Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
@@ -282,13 +283,14 @@ fn spawn_controller_process() -> Result<(), String> {
         .map_err(|error| format!("无法启动主题常驻控制器：{error}"))
 }
 
-pub fn enable(
+fn enable_with_phase(
     app: &AppHandle,
     catalog: &catalog::Catalog,
     theme_id: &str,
     mode: &str,
     channel: &str,
     consent: bool,
+    phase: &str,
 ) -> Result<PersistenceView, String> {
     if !consent {
         return Err("需要先确认常驻模式的受控重启与安全说明".into());
@@ -304,7 +306,7 @@ pub fn enable(
         theme_id: Some(theme_id.into()),
         mode: Some(mode.into()),
         channel: Some(channel.into()),
-        phase: "starting".into(),
+        phase: phase.into(),
         detail: None,
         target_version: target.version,
         tested_version: Some(skin.tested_version),
@@ -326,6 +328,36 @@ pub fn enable(
         return Err(error);
     }
     current(app)
+}
+
+pub fn enable(
+    app: &AppHandle,
+    catalog: &catalog::Catalog,
+    theme_id: &str,
+    mode: &str,
+    channel: &str,
+    consent: bool,
+) -> Result<PersistenceView, String> {
+    enable_with_phase(app, catalog, theme_id, mode, channel, consent, "starting")
+}
+
+pub fn enable_for_apply(
+    app: &AppHandle,
+    catalog: &catalog::Catalog,
+    theme_id: &str,
+    mode: &str,
+    channel: &str,
+    consent: bool,
+) -> Result<PersistenceView, String> {
+    enable_with_phase(
+        app,
+        catalog,
+        theme_id,
+        mode,
+        channel,
+        consent,
+        APPLY_REQUESTED_PHASE,
+    )
 }
 
 pub fn disable(app: &AppHandle) -> Result<PersistenceView, String> {
@@ -388,6 +420,42 @@ fn retry_delay(attempt: u8) -> Option<Duration> {
         1 => Some(Duration::from_secs(2)),
         2 => Some(Duration::from_secs(5)),
         _ => None,
+    }
+}
+
+#[derive(Debug, PartialEq, Eq)]
+enum ControllerDecision {
+    Wait,
+    Blocked,
+    ApplyStopped,
+    Refresh,
+    Active,
+    Restart,
+}
+
+fn controller_decision(
+    phase: &str,
+    target_running: bool,
+    port_matches: bool,
+    desired_active: bool,
+) -> ControllerDecision {
+    if phase == "retry-blocked" {
+        return ControllerDecision::Blocked;
+    }
+    if !target_running {
+        return if matches!(phase, APPLY_REQUESTED_PHASE | "restarting" | "error") {
+            ControllerDecision::ApplyStopped
+        } else {
+            ControllerDecision::Wait
+        };
+    }
+    if !port_matches {
+        return ControllerDecision::Restart;
+    }
+    if desired_active {
+        ControllerDecision::Active
+    } else {
+        ControllerDecision::Refresh
     }
 }
 
@@ -479,26 +547,13 @@ async fn run_controller(app: AppHandle) -> Result<(), String> {
             continue;
         }
 
-        if !platform::target_is_running(&target)? {
-            if state.skin_runtime.current().active {
-                let _ = skin_runtime::restore(&state.skin_runtime).await;
-            }
-            attempts = 0;
-            next_retry = tokio::time::Instant::now();
-            update_status(
-                &root,
-                "waiting",
-                None,
-                attempts,
-                installed,
-                Some(skin.tested_version),
-            )?;
-            tokio::time::sleep(POLL_INTERVAL).await;
-            continue;
-        }
-
+        let target_running = platform::target_is_running(&target)?;
         let runtime = state.skin_runtime.current();
-        let port_matches = runtime.channel.as_deref() == Some(channel)
+        if !target_running && runtime.active {
+            let _ = skin_runtime::restore(&state.skin_runtime).await;
+        }
+        let port_matches = target_running
+            && runtime.channel.as_deref() == Some(channel)
             && runtime.port.is_some_and(|port| {
                 platform::listener_belongs_to_target(port, &target).unwrap_or(false)
             });
@@ -506,8 +561,76 @@ async fn run_controller(app: AppHandle) -> Result<(), String> {
             && runtime.theme_id.as_deref() == Some(theme_id)
             && runtime.mode.as_deref() == Some(mode)
             && runtime.channel.as_deref() == Some(channel);
-        if port_matches {
-            if !desired_active {
+        match controller_decision(
+            &selection.phase,
+            target_running,
+            port_matches,
+            desired_active,
+        ) {
+            ControllerDecision::Blocked => {
+                tokio::time::sleep(POLL_INTERVAL).await;
+                continue;
+            }
+            ControllerDecision::Wait => {
+                attempts = 0;
+                next_retry = tokio::time::Instant::now();
+                update_status(
+                    &root,
+                    "waiting",
+                    None,
+                    attempts,
+                    installed,
+                    Some(skin.tested_version),
+                )?;
+                tokio::time::sleep(POLL_INTERVAL).await;
+                continue;
+            }
+            ControllerDecision::ApplyStopped => {
+                attempts = 1;
+                update_status(
+                    &root,
+                    "restarting",
+                    None,
+                    attempts,
+                    installed.clone(),
+                    Some(skin.tested_version.clone()),
+                )?;
+                match skin_runtime::apply(
+                    &app,
+                    &state.skin_runtime,
+                    &catalog,
+                    theme_id,
+                    mode,
+                    channel,
+                )
+                .await
+                {
+                    Ok(_) => {
+                        attempts = 0;
+                        update_status(
+                            &root,
+                            "active",
+                            None,
+                            attempts,
+                            installed,
+                            Some(skin.tested_version),
+                        )?;
+                    }
+                    Err(error) => {
+                        update_status(
+                            &root,
+                            "retry-blocked",
+                            Some(error),
+                            attempts,
+                            installed,
+                            Some(skin.tested_version),
+                        )?;
+                    }
+                }
+                tokio::time::sleep(POLL_INTERVAL).await;
+                continue;
+            }
+            ControllerDecision::Refresh => {
                 match skin_runtime::apply(
                     &app,
                     &state.skin_runtime,
@@ -533,17 +656,30 @@ async fn run_controller(app: AppHandle) -> Result<(), String> {
                         continue;
                     }
                 }
+                update_status(
+                    &root,
+                    "active",
+                    None,
+                    attempts,
+                    installed,
+                    Some(skin.tested_version),
+                )?;
+                tokio::time::sleep(POLL_INTERVAL).await;
+                continue;
             }
-            update_status(
-                &root,
-                "active",
-                None,
-                attempts,
-                installed,
-                Some(skin.tested_version),
-            )?;
-            tokio::time::sleep(POLL_INTERVAL).await;
-            continue;
+            ControllerDecision::Active => {
+                update_status(
+                    &root,
+                    "active",
+                    None,
+                    attempts,
+                    installed,
+                    Some(skin.tested_version),
+                )?;
+                tokio::time::sleep(POLL_INTERVAL).await;
+                continue;
+            }
+            ControllerDecision::Restart => {}
         }
 
         let Some(delay) = retry_delay(attempts) else {
@@ -684,5 +820,49 @@ mod tests {
         assert_eq!(retry_delay(1), Some(Duration::from_secs(2)));
         assert_eq!(retry_delay(2), Some(Duration::from_secs(5)));
         assert_eq!(retry_delay(3), None);
+    }
+
+    #[test]
+    fn explicit_apply_launches_a_stopped_target_but_passive_persistence_waits() {
+        assert_eq!(
+            controller_decision(APPLY_REQUESTED_PHASE, false, false, false),
+            ControllerDecision::ApplyStopped
+        );
+        assert_eq!(
+            controller_decision("starting", false, false, false),
+            ControllerDecision::Wait
+        );
+        assert_eq!(
+            controller_decision("waiting", false, false, false),
+            ControllerDecision::Wait
+        );
+        assert_eq!(
+            controller_decision("restarting", false, false, false),
+            ControllerDecision::ApplyStopped
+        );
+        assert_eq!(
+            controller_decision("error", false, false, false),
+            ControllerDecision::ApplyStopped
+        );
+        assert_eq!(
+            controller_decision("retry-blocked", false, false, false),
+            ControllerDecision::Blocked
+        );
+    }
+
+    #[test]
+    fn running_targets_are_refreshed_or_restarted_by_listener_identity() {
+        assert_eq!(
+            controller_decision("active", true, true, true),
+            ControllerDecision::Active
+        );
+        assert_eq!(
+            controller_decision("active", true, true, false),
+            ControllerDecision::Refresh
+        );
+        assert_eq!(
+            controller_decision(APPLY_REQUESTED_PHASE, true, false, false),
+            ControllerDecision::Restart
+        );
     }
 }

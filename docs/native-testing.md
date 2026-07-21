@@ -71,14 +71,20 @@ screenshots/codex-beta-26.715.3651.0/manifest.json
 1. 验证调用方传入的 Theme Manager WebView2 动态调试端口，其进程祖先包含准确 release EXE。
 2. 从 Beta 的 `DevToolsActivePort` 发现动态端口，并验证监听属于固定 Store 包。
 3. 在真实管理器 UI 中选择主题、模式和 Beta。
-4. 点击“应用完整皮肤”。
+4. 点击“应用并保持完整皮肤”，并在应用内确认面板中继续。
 5. 从 Beta 页面读回主题 ID、模式、根 class、style、caption 和 artwork。
 6. 依次进入内置的 Pull requests 页面和实际的 `Awesome Codex Theme` 对话，再返回新任务首页。
 7. 在每个路由读回 Blob 背景、`act-full-skin-home` / `act-full-skin-task` 状态和修复计数；对话页面的前景容器还要保持透明，不能遮住文档背景。
-8. 为 README 与 Gallery 采集管理器实机截图。
-9. 点击“恢复原生”，再确认所有运行时标记消失。
+8. 等待常驻控制器回报 `active`，不能只根据按钮点击或窗口打开判断成功。
+9. 为 README 与 Gallery 采集管理器实机截图。
+10. 点击“恢复原生”，再确认所有运行时标记消失并注销当前用户启动项。
 
 `--active-runtime` 用于检查已经启用的永久主题。它不会调用恢复操作，也不会关闭用户的持久化选择。2026-07-21 的实机回归在 Pull requests 和真实对话之间往返后仍保持 2560×1440 图片、Blob 来源和文档背景。稳定路由的 1.2 秒观察窗口内，额外 `ensure()` 次数不超过 1 次；20.01 秒空闲采样中，持久化控制器使用 0.12 CPU 秒，约等于单核 0.62%。
+
+同日的主按钮回归从一个已经运行的 Beta 开始。测试先清理旧选择，在应用内确认后由
+控制器受控重开准确 Beta，等到 UI 收到 `active`，再读回 2560×1440 Blob 图片和
+文档背景。Pull requests 与首页往返后图片仍在。恢复完成后，状态为 `disabled`，当前
+用户启动项不存在；测试创建的 Theme Manager 与 Beta 进程也已关闭。
 
 本地预发布测试可以用 `--seed-local-art` 把经过同一 Registry 哈希验证的图片放入应用缓存。它只绕过尚未部署的 Pages URL，不绕过管理器的素材哈希、进程身份、CDP 或恢复逻辑；脚本结束后会删除自己创建的缓存文件。正式发布前还要对已部署 Pages URL做一次不带 seed 的测试。
 

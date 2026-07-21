@@ -196,6 +196,32 @@
     </div>
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <div class="consent-overlay" id="persistenceConsentDialog" hidden>
+      <section
+        class="consent-dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="persistenceConsentTitle"
+        aria-describedby="persistenceConsentBody"
+      >
+        <div class="consent-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 3.5a7.5 7.5 0 1 0 7.5 7.5"></path>
+            <path d="M12 1v5h5"></path>
+            <path d="M12 8.5v4.25l2.75 1.75"></path>
+          </svg>
+        </div>
+        <div class="consent-copy">
+          <p class="eyebrow" data-i18n="consentEyebrow">APPLY &amp; KEEP</p>
+          <h2 id="persistenceConsentTitle" data-i18n="consentTitle">Keep this Full Skin?</h2>
+          <p id="persistenceConsentBody" data-i18n="persistenceConsent"></p>
+        </div>
+        <div class="consent-actions">
+          <button id="persistenceConsentCancel" type="button" data-i18n="cancel">Cancel</button>
+          <button class="consent-confirm" id="persistenceConsentConfirm" type="button" data-i18n="confirmApply">Apply &amp; Keep</button>
+        </div>
+      </section>
+    </div>
     <script type="module" src="./app.js"></script>
   </body>
 </html>

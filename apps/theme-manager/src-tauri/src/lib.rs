@@ -297,9 +297,14 @@ fn enable_persistent_theme(
     mode: String,
     channel: String,
     consent: bool,
+    apply_now: bool,
 ) -> Result<persistence::PersistenceView, String> {
     let catalog = lock_catalog(&state)?;
-    persistence::enable(&app, &catalog, &theme_id, &mode, &channel, consent)
+    if apply_now {
+        persistence::enable_for_apply(&app, &catalog, &theme_id, &mode, &channel, consent)
+    } else {
+        persistence::enable(&app, &catalog, &theme_id, &mode, &channel, consent)
+    }
 }
 
 #[tauri::command]

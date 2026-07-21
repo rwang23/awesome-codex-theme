@@ -1,5 +1,22 @@
 # Changelog
 
+## Unreleased
+
+- Changed the primary Apply action to register the durable selection first. The
+  per-user controller now owns the initial launch or controlled restart, and the
+  UI waits for an `active` receipt before reporting success. This removes the
+  false `Could not apply the Full Skin` result when ChatGPT is already open in
+  its normal mode.
+- Replaced the browser confirmation prompt with an in-app consent panel that is
+  visible and keyboard accessible in both WebView2 and WKWebView. Backend error
+  details remain visible instead of being reduced to a generic message.
+- macOS target discovery now accepts the current ChatGPT names and the legacy
+  Codex names, verifies the exact Bundle ID and executable, and falls back to
+  the validated bundle executable if LaunchServices does not start the app.
+- Added state-machine and repository regression tests for first-use Apply,
+  stopped and running targets, terminal retry errors, dual-name macOS discovery,
+  the consent panel, and the exact loopback launch arguments.
+
 ## 0.3.0-alpha.4 - 2026-07-21
 
 - Redesigned Theme Manager as a compact two-column browser: visual-style tabs,

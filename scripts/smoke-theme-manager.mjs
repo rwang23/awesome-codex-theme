@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto";
-import { execFileSync, spawnSync } from "node:child_process";
+import { execFileSync } from "node:child_process";
 import { mkdir, readFile, rm, stat, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -33,7 +33,6 @@ const MANAGER_EXE = MANAGER_EXECUTABLE
   );
 const SCREENSHOT_PATH = path.join(ROOT, "docs", "assets", "theme-manager-windows.png");
 const BETA_PACKAGE = "OpenAI.CodexBeta_26.715.3651.0_x64__2p2nqsd0c76g0";
-const BETA_AUMID = "OpenAI.CodexBeta_2p2nqsd0c76g0!App";
 
 function argumentValue(name) {
   const exact = process.argv.find((value) => value.startsWith(name + "="));
@@ -232,20 +231,6 @@ async function pageTarget(port, expectedUrlPrefix) {
   );
   invariant(target, "Expected page target was not found on port " + port);
   return target;
-}
-
-function launchBetaNormally() {
-  invariant(process.platform === "win32", "The persistence relaunch smoke currently requires Windows");
-  const launchEnvironment = { ...process.env };
-  delete launchEnvironment.WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS;
-  // Explorer hands the shell activation to the current interactive session and
-  // commonly returns status 1 even after a successful AppsFolder launch.
-  // The subsequent exact-process and CDP checks are the authoritative result.
-  spawnSync("explorer.exe", [`shell:AppsFolder\\${BETA_AUMID}`], {
-    env: launchEnvironment,
-    stdio: "ignore",
-    windowsHide: true,
-  });
 }
 
 class CdpClient {
@@ -763,10 +748,23 @@ async function runPersistenceSmoke(managerTarget) {
         && [...document.querySelectorAll("#targetSelect option")].some((option) => option.value === "beta")`,
       "manager bootstrap",
     );
-    const initial = await evaluate(manager, "window.act.getPersistenceState()");
+    let initial = await evaluate(manager, "window.act.getPersistenceState()");
+    if (initial?.enabled || initial?.autostartEnabled) {
+      await evaluate(manager, "window.act.disablePersistentTheme()");
+      initial = await waitFor(
+        manager,
+        `window.act.getPersistenceState().then((value) =>
+          !value.enabled && !value.autostartEnabled && value.phase === "disabled"
+            ? value
+            : null
+        )`,
+        "pre-existing persistence cleanup",
+        30000,
+      );
+    }
     invariant(
       initial && !initial.enabled && !initial.autostartEnabled,
-      "Persistence smoke requires an initially disabled user controller",
+      "Persistence smoke could not establish a disabled user controller",
     );
 
     const selected = await evaluate(
@@ -781,10 +779,8 @@ async function runPersistenceSmoke(managerTarget) {
         mode.click();
         target.value = "beta";
         target.dispatchEvent(new Event("change", { bubbles: true }));
-        window.confirm = () => true;
-        const toggle = document.querySelector("#persistenceToggle");
-        toggle.checked = true;
-        toggle.dispatchEvent(new Event("change", { bubbles: true }));
+        document.querySelector("#applySkin")?.click();
+        document.querySelector("#persistenceConsentConfirm")?.click();
         return target.value === "beta";
       })()`,
     );
@@ -794,14 +790,13 @@ async function runPersistenceSmoke(managerTarget) {
       `window.act.getPersistenceState().then((value) =>
         value.enabled
         && value.autostartEnabled
-        && ["starting", "waiting"].includes(value.phase)
+        && ["apply-requested", "restarting", "active"].includes(value.phase)
       )`,
-      "per-user persistence registration",
+      "Apply & Keep registration",
       30000,
     );
-    invariant(armed, "The persistence controller was not armed");
+    invariant(armed, "Apply & Keep did not arm the persistence controller");
 
-    launchBetaNormally();
     let betaEndpoint;
     try {
       betaEndpoint = await discoverBetaTarget(60000);
@@ -841,6 +836,21 @@ async function runPersistenceSmoke(managerTarget) {
       30000,
     );
     invariant(active, "The persistence controller did not report active");
+    const uiComplete = await waitFor(
+      manager,
+      `(() => {
+        const button = document.querySelector("#applySkin");
+        const label = document.querySelector("#applySkinLabel")?.textContent || "";
+        const toast = document.querySelector("#toast");
+        if (toast?.dataset.tone === "error" && toast.classList.contains("is-visible")) {
+          throw new Error(toast.textContent || "Apply failed without a diagnostic");
+        }
+        return button && !button.disabled && !/Verifying|正在校验/u.test(label);
+      })()`,
+      "Apply & Keep UI completion",
+      30000,
+    );
+    invariant(uiComplete, "The main Apply & Keep action did not receive the active receipt");
     const spaNavigation = await exercisePublicBetaRoute(beta);
 
     const screenshot = await manager.send("Page.captureScreenshot", {
@@ -945,8 +955,8 @@ async function main() {
     await runUiOnlySmoke(managerTarget);
     return;
   }
-  if (PERSISTENCE) {
-    invariant(APPLY, "--persistence requires --apply");
+  if (PERSISTENCE || (APPLY && !DEBUG)) {
+    if (PERSISTENCE) invariant(APPLY, "--persistence requires --apply");
     await runPersistenceSmoke(managerTarget);
     return;
   }

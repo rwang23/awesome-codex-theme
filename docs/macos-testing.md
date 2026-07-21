@@ -16,11 +16,13 @@ uname -m
 sw_vers
 ```
 
-还要记录 ChatGPT 应用的实际路径、Bundle ID 和版本。不要根据文件名猜：
+还要记录 ChatGPT 应用的实际路径、Bundle ID 和版本。新版本可能叫
+`ChatGPT.app`，旧版本也可能仍叫 `Codex.app`。不要根据文件名判断身份：
 
 ```bash
-mdls -name kMDItemCFBundleIdentifier "/Applications/ChatGPT.app"
-defaults read "/Applications/ChatGPT.app/Contents/Info" CFBundleShortVersionString
+target_app="/Applications/ChatGPT.app" # 如实际名称是 Codex.app，请替换这里
+mdls -name kMDItemCFBundleIdentifier "$target_app"
+defaults read "$target_app/Contents/Info" CFBundleShortVersionString
 ```
 
 如果应用不在 `/Applications`，先在 Finder 中确认准确位置，再替换命令中的路径。Beta 需要单独记录。
@@ -60,22 +62,23 @@ spctl --assess --type execute --verbose=4 "/Applications/Awesome Codex Theme.app
 
 ## Full Skin 真机流程
 
-当前正确流程不是“安装主题后自己重新打开 ChatGPT”：
+首轮要分别验证目标已关闭和目标正在普通模式运行两种情况：
 
-1. 完全退出准备测试的 ChatGPT Stable 或 Beta。
-2. 打开 Theme Manager。
-3. 选择主题、明暗模式和准确的 ChatGPT 目标。
-4. 点击 Apply Full Skin / 应用完整皮肤。
-5. Theme Manager 向系统申请可用的临时端口，用仅限本机回环的调试参数启动 ChatGPT，并在页面出现后应用主题。
-6. 记录背景、半透明材质、文字、composer 和侧栏是否正常。
-7. 在同一会话中切换一次主题和模式。
-8. 点击 Restore native / 恢复原生。
-9. 退出 ChatGPT，再从系统正常打开，确认没有残留样式和调试端口。
+1. 完全退出准备测试的 ChatGPT Stable 或 Beta，再打开 Theme Manager。
+2. 选择主题、明暗模式和准确的 ChatGPT 目标。
+3. 点击 Apply & Keep Full Skin / 应用并保持完整皮肤。
+4. 确认应用内说明。确认面板必须显示在 Theme Manager 内，不能依赖系统浏览器弹窗。
+5. 等待控制器启动准确目标并回报 `active`，再记录背景、半透明材质、文字、composer 和侧栏。
+6. 在同一会话中切换一次主题和模式。
+7. 关闭并从系统正常打开 ChatGPT，确认主题重新生效。
+8. 保持 ChatGPT 以普通模式运行，重新执行第 2 至第 5 步，确认控制器只受控重开所选目标一次。
+9. 点击 Restore native / 恢复原生，确认运行时、LaunchAgent 和调试端口都已清理。
 
-当前实现先用 Bundle ID 验证目标身份，再使用准确的 `.app` 路径和
-`open -n <bundle path> --args` 启动新实例，避免系统复用旧进程时丢失调试参数。退出仍绑定 Bundle ID；监听端口
-必须属于准确的 executable path 或其有界子进程。Stable 与 Beta 即使显示名称相近，
-也不能互相冒充。
+当前实现会检查四个常见名称，并用 Spotlight 查找其他位置，但候选包必须通过准确的
+Bundle ID 和 executable path 校验。控制器先使用
+`open -n <bundle path> --args` 启动新实例；如果 LaunchServices 没有真正启动目标，
+再调用同一个已验证 bundle 的可执行文件。退出仍绑定 Bundle ID，监听端口必须属于
+准确的 executable path 或其有界子进程。Stable 与 Beta 即使显示名称相近，也不能互相冒充。
 
 检查端口时，先取目标 ChatGPT 的准确 PID，再查看该进程的监听；端口不是固定值：
 
