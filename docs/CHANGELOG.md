@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.3.2 - 2026-07-22
+
+- Made the public Gallery derive the original and disclosed Fan Art totals from
+  the verified Registry at runtime, so collection copy cannot drift when themes
+  are added.
+- Made the published desktop-version label and installer catalog derive from
+  the Tauri configuration during the static build, removing the stale
+  `0.3.0-alpha.4` label from the release page.
+
 ## 0.3.1 - 2026-07-22
 
 - Replaced the temporary Beta-only Full Skin gate with a per-device runtime

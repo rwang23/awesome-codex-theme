@@ -33,7 +33,7 @@ const translations = {
     managerScreenshotCaption: "Tauri Windows runtime · real ChatGPT Beta theme capture inside",
     collectionEyebrow: "Theme library",
     collectionTitle: "Original worlds, city light, and scenes fans remember.",
-    collectionIntro: "The library now includes 39 original themes and 14 clearly disclosed unofficial fan-art tributes. Every source image is generated through an image job and reviewed by hand.",
+    collectionIntro: "The library now includes {original} original themes and {fanArt} clearly disclosed unofficial fan-art tributes. Every source image is generated through an image job and reviewed by hand.",
     searchLabel: "Search themes",
     searchPlaceholder: "Search worlds, moods, tags…",
     facetRights: "Source and rights",
@@ -159,7 +159,7 @@ const translations = {
     managerScreenshotCaption: "Tauri Windows 实机界面 · 内嵌 ChatGPT Beta 真实主题截图",
     collectionEyebrow: "主题馆藏",
     collectionTitle: "原创世界、城市灯火，也有一眼认出的名场面。",
-    collectionIntro: "馆藏现有 39 套原创主题，以及 14 套明确标注的非官方 Fan Art。全部源图都通过 image job 生成并经过人工审查。",
+    collectionIntro: "馆藏现有 {original} 套原创主题，以及 {fanArt} 套明确标注的非官方 Fan Art。全部源图都通过 image job 生成并经过人工审查。",
     searchLabel: "搜索主题",
     searchPlaceholder: "搜索世界、城市或氛围",
     facetRights: "来源与授权",
@@ -290,6 +290,7 @@ const elements = {
   heroVisualKind: document.querySelector("#heroVisualKind"),
   heroMode: document.querySelector("#heroMode"),
   themeStatValue: document.querySelector("#themeStatValue"),
+  collectionIntro: document.querySelector("#collectionIntro"),
   search: document.querySelector("#themeSearch"),
   collectionGroup: document.querySelector("#collectionGroup"),
   rightsGroup: document.querySelector("#rightsGroup"),
@@ -317,6 +318,19 @@ const elements = {
 
 function t(key) {
   return translations[state.locale][key] || translations.en[key] || key;
+}
+
+function renderCollectionIntro() {
+  if (!state.registry || !elements.collectionIntro) return;
+  const original = state.registry.themes.filter(function (theme) {
+    return theme.rightsProfile === "original";
+  }).length;
+  const fanArt = state.registry.themes.filter(function (theme) {
+    return theme.rightsProfile === "fan-art";
+  }).length;
+  elements.collectionIntro.textContent = t("collectionIntro")
+    .replace("{original}", String(original))
+    .replace("{fanArt}", String(fanArt));
 }
 
 function localized(record) {
@@ -485,6 +499,7 @@ function updateLanguage() {
   document.documentElement.lang = state.locale;
   elements.languageLabel.textContent = state.locale === "en" ? "中文" : "English";
   document.querySelectorAll("[data-i18n]").forEach(function (node) {
+    if (node.dataset.i18n === "collectionIntro") return;
     node.textContent = t(node.dataset.i18n);
   });
   document.querySelectorAll("[data-i18n-placeholder]").forEach(function (node) {
@@ -493,6 +508,7 @@ function updateLanguage() {
 
   renderCollectionPicker();
   renderFilterLabels();
+  renderCollectionIntro();
   reorderGalleryForLocale();
 
   state.cards.forEach(function (card, id) {

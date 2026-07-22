@@ -231,6 +231,8 @@ test("static gallery builds with every public contract artifact", async function
     ));
     assert.equal(catalogManifest.registry.catalogRevision, registry.catalogRevision);
     assert.equal(catalogManifest.desktop.currentVersion, tauriConfig.version);
+    assert.match(html, new RegExp(">" + tauriConfig.version + "<"));
+    assert.doesNotMatch(html, /__ACT_DESKTOP_VERSION__/);
     for (const theme of registry.themes) {
       assert.equal(await exists(path.join(output, ...theme.package.path.split("/"))), true, theme.package.path);
       for (const mode of ["light", "dark"]) {
@@ -261,6 +263,8 @@ test("static gallery builds with every public contract artifact", async function
     assert.match(app, /背景 \+ 材质 \+ 配色 \+ 文案/);
     assert.match(app, /nativeTheme\.path/);
     assert.match(app, /modeRecord\.capture/);
+    assert.match(app, /function renderCollectionIntro/);
+    assert.doesNotMatch(app, /39 original themes|39 套原创主题/);
     assert.doesNotMatch(app, /Beta 26\.707\.3351\.0/);
     assert.doesNotMatch(app, /dream-skin|heige-skin-studio|codedrobe/i);
     assert.doesNotMatch(html, /TODO|preset-act/i);

@@ -29,11 +29,26 @@ export async function buildSite(outputPath = DEFAULT_OUTPUT) {
   const registryBuffer = await readFile(path.join(ROOT, "themes", "registry.json"));
   const registry = JSON.parse(registryBuffer.toString("utf8"));
   const registrySha256 = createHash("sha256").update(registryBuffer).digest("hex");
+  const tauriConfig = JSON.parse(await readFile(
+    path.join(ROOT, "apps", "theme-manager", "src-tauri", "tauri.conf.json"),
+    "utf8",
+  ));
+  const desktopVersion = tauriConfig.version;
   const installer = await buildWindowsInstaller();
 
   await rm(output, { recursive: true, force: true });
   await mkdir(output, { recursive: true });
   await cp(path.join(ROOT, "site"), output, { recursive: true });
+  const indexPath = path.join(output, "index.html");
+  const indexHtml = await readFile(indexPath, "utf8");
+  if (!indexHtml.includes("__ACT_DESKTOP_VERSION__")) {
+    throw new Error("Site index is missing the desktop version placeholder");
+  }
+  await writeFile(
+    indexPath,
+    indexHtml.replaceAll("__ACT_DESKTOP_VERSION__", desktopVersion),
+    "utf8",
+  );
 
   await Promise.all([
     copyRelative("themes/registry.json", output),
@@ -70,7 +85,7 @@ export async function buildSite(outputPath = DEFAULT_OUTPUT) {
       desktop: {
         repository: "https://github.com/rwang23/awesome-codex-theme",
         releases: "https://github.com/rwang23/awesome-codex-theme/releases",
-        currentVersion: "0.3.1",
+        currentVersion: desktopVersion,
       },
     }, null, 2) + "\n", "utf8"),
   );
