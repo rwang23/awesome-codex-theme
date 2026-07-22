@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "themeId": "mortal-herb-lantern",
+  "rightsProfile": "fan-art",
+  "workflow": "openai-image-job",
+  "model": "gpt-image-2",
+  "size": "1536x1024",
+  "quality": "high",
+  "jobId": "6d738c41-dca1-4ce7-b680-cd21b7f9e557",
+  "promptSha256": "71c73612666fe9df7caf4448525a0996956c064b5c6962f363150ba2e2be78eb",
+  "sourceSha256": "4c20bd18e86094168ce64b43bad714e098cb487be67efb6bb9a1ecc9afb108c5",
+  "disclosure": "AI-generated unofficial fan art. No official image assets were used. Underlying character and franchise rights remain with their respective rights holders.",
+  "fanArt": {
+    "work": {
+      "zh-CN": "凡人修仙传",
+      "en": "A Record of a Mortal's Journey to Immortality"
+    },
+    "characters": {
+      "zh-CN": [
+        "韩立"
+      ],
+      "en": [
+        "Han Li"
+      ]
+    }
+  }
+}

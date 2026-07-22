@@ -96,7 +96,21 @@ async function runJob(job, config, runner, temporaryRoot, force) {
   if (typeof commonPrompt !== "string" || !commonPrompt.trim()) {
     throw new Error(job.id + " is missing a common prompt for " + rightsProfile);
   }
-  const prompt = commonPrompt + "\n\nScene brief: " + job.prompt;
+  const promptCommonReplacement = job.promptCommonReplacement;
+  let effectiveCommonPrompt = commonPrompt;
+  if (promptCommonReplacement != null) {
+    const { find, replace } = promptCommonReplacement;
+    if (
+      typeof find !== "string"
+      || !find
+      || typeof replace !== "string"
+      || !commonPrompt.includes(find)
+    ) {
+      throw new Error(job.id + " prompt common replacement is invalid");
+    }
+    effectiveCommonPrompt = commonPrompt.replace(find, replace);
+  }
+  const prompt = effectiveCommonPrompt + "\n\nScene brief: " + job.prompt;
   const payload = {
     model: config.workflow.model,
     prompt,

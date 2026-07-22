@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "themeId": "appalachian-cabin-focus",
+  "rightsProfile": "original",
+  "workflow": "openai-image-job",
+  "model": "gpt-image-2",
+  "size": "1536x1024",
+  "quality": "high",
+  "jobId": "1bc7e17f-73f3-4244-9e5d-09dda25eebba",
+  "promptSha256": "9fbf0f17fb50fc05f092dfa169522ee79ce0e87f282d8ab89f840b444fc4355a",
+  "sourceSha256": "9d586d9717c74cbb0a780763f5fefce788fc0f70838d2550f1c7ac0de7cf2b76",
+  "disclosure": "AI-generated original source art. Prompt and output were reviewed for third-party characters, logos, signatures, and text before release."
+}

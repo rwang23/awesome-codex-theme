@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "catalogRevision": 2026072101,
+  "catalogRevision": 2026072201,
   "defaults": {
     "author": "Awesome Codex Theme",
     "license": "CC0-1.0",
@@ -158,6 +158,61 @@
         "en": "Five original scenes drawn from Jiangnan rain, Chang'an lantern light, Dunhuang color, bamboo tea, and a warm train crossing the northern snow.",
         "zh-CN": "从江南雨巷、长安灯火、敦煌色彩、竹院清茶与北方雪原列车中提取的五套原创主题。"
       }
+    },
+    {
+      "id": "mortal-journey-fan-art-02",
+      "order": 9,
+      "pairing": "standalone",
+      "rightsProfile": "fan-art",
+      "name": {
+        "en": "Mortal Journey Fan Art 02",
+        "zh-CN": "凡人修仙传·秘境小集"
+      },
+      "title": {
+        "en": "Five quiet paths through one immortal world.",
+        "zh-CN": "五条新路，仍在同一片修仙世界。"
+      },
+      "description": {
+        "en": "Five newly composed, unofficial AI fan-art scenes for A Record of a Mortal's Journey to Immortality. No official still, logo, poster, promotional asset, or copied composition is used; underlying rights remain with their respective owners.",
+        "zh-CN": "围绕《凡人修仙传》重新构图的五套非官方 AI Fan Art。未使用官方剧照、Logo、海报、宣传素材或复刻镜头，底层作品与角色权利仍归各自权利方。"
+      }
+    },
+    {
+      "id": "original-xianxia-02",
+      "order": 10,
+      "pairing": "standalone",
+      "rightsProfile": "original",
+      "name": {
+        "en": "Xianxia 02",
+        "zh-CN": "原创修仙 02"
+      },
+      "title": {
+        "en": "Five original worlds for a quieter ascent.",
+        "zh-CN": "五个原创世界，留给安静向上的路。"
+      },
+      "description": {
+        "en": "Five original fantasy environments shaped by archives, rivers, snow, workshops, and cloud gardens. They borrow only broad xianxia atmosphere, never a character, franchise, official composition, or artist style.",
+        "zh-CN": "从藏书阁、河流、雪原、工坊与云上花园出发的五套原创幻想环境。只借修仙题材的宽泛气韵，不借角色、作品 IP、官方构图或具体画师风格。"
+      }
+    },
+    {
+      "id": "american-workspace-favorites-02",
+      "order": 11,
+      "pairing": "standalone",
+      "rightsProfile": "original",
+      "audience": "en",
+      "name": {
+        "en": "American Workspace Favorites 02",
+        "zh-CN": "美式工作区灵感 02"
+      },
+      "title": {
+        "en": "Five places to settle in and make progress.",
+        "zh-CN": "五个适合安顿下来、继续推进的地方。"
+      },
+      "description": {
+        "en": "Five original workspace moods inspired by coastlines, cabins, lakes, desert skies, and late-night diners. Each is a newly composed setting with no brand marks, exact landmark, photograph, or licensed character.",
+        "zh-CN": "从海岸、木屋、湖畔、沙漠夜空与深夜餐馆汲取灵感的五套原创工作区氛围。每套都是新构图，不使用品牌标识、地标复刻、照片或授权角色。"
+      }
     }
   ],
   "themes": [
@@ -179,7 +234,12 @@
         "en": "Ink-green ridgelines, a quiet moon gate, and a long road through the mist.",
         "zh-CN": "墨绿山脊、月门与雾中长路，主视觉留在右侧，左侧保持安静。"
       },
-      "tags": ["xianxia", "cinematic", "ink", "original"],
+      "tags": [
+        "xianxia",
+        "cinematic",
+        "ink",
+        "original"
+      ],
       "pattern": "mountain",
       "seed": 1101,
       "art": {
@@ -245,7 +305,12 @@
         "en": "A round original mountain spirit keeps watch beside a warm paper lantern.",
         "zh-CN": "原创圆脸山灵守在纸灯旁，轻松、可爱，但不挤占原生控件。"
       },
-      "tags": ["xianxia", "chibi", "mascot", "original"],
+      "tags": [
+        "xianxia",
+        "chibi",
+        "mascot",
+        "original"
+      ],
       "pattern": "mountain",
       "seed": 1102,
       "art": {
@@ -311,7 +376,12 @@
         "en": "A lone celestial route cuts through cobalt constellations and restrained red light.",
         "zh-CN": "钴蓝星图里穿过一条逆行天路，以克制红光做视觉锚点。"
       },
-      "tags": ["xianxia", "cinematic", "celestial", "original"],
+      "tags": [
+        "xianxia",
+        "cinematic",
+        "celestial",
+        "original"
+      ],
       "pattern": "stars",
       "seed": 2201,
       "art": {
@@ -377,7 +447,12 @@
         "en": "An original star spirit rides a tiny comet across a deep, quiet sky.",
         "zh-CN": "原创星灵坐着小彗星划过夜空，保留足够留白给工作区。"
       },
-      "tags": ["xianxia", "chibi", "celestial", "original"],
+      "tags": [
+        "xianxia",
+        "chibi",
+        "celestial",
+        "original"
+      ],
       "pattern": "stars",
       "seed": 2202,
       "art": {
@@ -443,7 +518,12 @@
         "en": "Black-ink peaks and one vermilion sword line, composed like a modern book cover.",
         "zh-CN": "黑墨山峰与一线朱砂剑光，构图更像现代书封，而不是游戏截图。"
       },
-      "tags": ["xianxia", "cinematic", "sword", "original"],
+      "tags": [
+        "xianxia",
+        "cinematic",
+        "sword",
+        "original"
+      ],
       "pattern": "sword",
       "seed": 3301,
       "art": {
@@ -509,7 +589,12 @@
         "en": "A tiny original swordling practices one careful stroke under a huge sunrise.",
         "zh-CN": "原创剑童在巨大的日轮下练一笔剑式，稚气但不幼稚。"
       },
-      "tags": ["xianxia", "chibi", "sword", "original"],
+      "tags": [
+        "xianxia",
+        "chibi",
+        "sword",
+        "original"
+      ],
       "pattern": "sword",
       "seed": 3302,
       "art": {
@@ -575,7 +660,12 @@
         "en": "Floating islands meet a pale jade horizon in an original spirit-contract world.",
         "zh-CN": "浮岛、玉色天际与原创灵契世界，整体清透，任务页也不会过分抢眼。"
       },
-      "tags": ["xianxia", "cinematic", "clouds", "original"],
+      "tags": [
+        "xianxia",
+        "cinematic",
+        "clouds",
+        "original"
+      ],
       "pattern": "clouds",
       "seed": 4401,
       "art": {
@@ -641,7 +731,12 @@
         "en": "A soft original cloud creature naps on a floating leaf above the sea of mist.",
         "zh-CN": "原创云团灵兽趴在浮叶上打盹，配色柔和，所有装饰都不可交互。"
       },
-      "tags": ["xianxia", "chibi", "clouds", "original"],
+      "tags": [
+        "xianxia",
+        "chibi",
+        "clouds",
+        "original"
+      ],
       "pattern": "clouds",
       "seed": 4402,
       "art": {
@@ -707,7 +802,13 @@
         "en": "Winter-blue air, measured rooflines, and the first warm light along a long city axis.",
         "zh-CN": "冬日蓝调、舒展屋脊和城轴上的第一束暖光，画面克制而端正。"
       },
-      "tags": ["city", "beijing", "architecture", "morning", "original"],
+      "tags": [
+        "city",
+        "beijing",
+        "architecture",
+        "morning",
+        "original"
+      ],
       "pattern": "city-axis",
       "seed": 5101,
       "art": {
@@ -773,7 +874,13 @@
         "en": "River lines, vertical glass, and restrained neon settling into evening haze.",
         "zh-CN": "江面线条、玻璃立面与入夜前的克制霓虹，像一张会呼吸的城市唱片。"
       },
-      "tags": ["city", "shanghai", "river", "neon", "original"],
+      "tags": [
+        "city",
+        "shanghai",
+        "river",
+        "neon",
+        "original"
+      ],
       "pattern": "city-tide",
       "seed": 5201,
       "art": {
@@ -839,7 +946,13 @@
         "en": "Fast rain crosses a leaf-green grid while the towers hold a cool electric glow.",
         "zh-CN": "阵雨穿过叶绿色网格，塔楼亮着冷静的电光，速度感留在画面右侧。"
       },
-      "tags": ["city", "shenzhen", "technology", "rain", "original"],
+      "tags": [
+        "city",
+        "shenzhen",
+        "technology",
+        "rain",
+        "original"
+      ],
       "pattern": "city-circuit",
       "seed": 5301,
       "art": {
@@ -905,7 +1018,13 @@
         "en": "Warm river air moves between banyan shade, curved light, and a soft amber skyline.",
         "zh-CN": "珠水晚风穿过榕荫、弧光与琥珀色天际线，温暖，却不黏腻。"
       },
-      "tags": ["city", "guangzhou", "river", "banyan", "original"],
+      "tags": [
+        "city",
+        "guangzhou",
+        "river",
+        "banyan",
+        "original"
+      ],
       "pattern": "city-river",
       "seed": 5401,
       "art": {
@@ -971,7 +1090,13 @@
         "en": "Fine rain, bamboo shadow, tiled eaves, and tea steam keep the afternoon unhurried.",
         "zh-CN": "细雨、竹影、瓦檐和一缕茶汽，把下午放慢了一点。"
       },
-      "tags": ["city", "chengdu", "bamboo", "rain", "original"],
+      "tags": [
+        "city",
+        "chengdu",
+        "bamboo",
+        "rain",
+        "original"
+      ],
       "pattern": "city-bamboo",
       "seed": 5501,
       "art": {
@@ -1037,7 +1162,13 @@
         "en": "A long causeway, lotus marks, and distant rain settle into pale lake light.",
         "zh-CN": "长堤、莲影和远雨落进浅浅湖光里，适合把注意力留给正在做的事。"
       },
-      "tags": ["city", "hangzhou", "lake", "lotus", "original"],
+      "tags": [
+        "city",
+        "hangzhou",
+        "lake",
+        "lotus",
+        "original"
+      ],
       "pattern": "city-lake",
       "seed": 5601,
       "art": {
@@ -1103,7 +1234,13 @@
         "en": "Stacked slopes, river reflections, and one bright transit line turn depth into rhythm.",
         "zh-CN": "层叠山坡、江面倒影和一条穿城光轨，把高低落差变成节奏。"
       },
-      "tags": ["city", "chongqing", "mountain", "night", "original"],
+      "tags": [
+        "city",
+        "chongqing",
+        "mountain",
+        "night",
+        "original"
+      ],
       "pattern": "city-vertical",
       "seed": 5701,
       "art": {
@@ -1169,7 +1306,13 @@
         "en": "Old wall courses, plum branches, and river mist hold a quiet red winter note.",
         "zh-CN": "城墙砖线、梅枝和江雾留下一点冬日红色，安静，也有筋骨。"
       },
-      "tags": ["city", "nanjing", "wall", "plum", "original"],
+      "tags": [
+        "city",
+        "nanjing",
+        "wall",
+        "plum",
+        "original"
+      ],
       "pattern": "city-wall",
       "seed": 5801,
       "art": {
@@ -1237,7 +1380,14 @@
         "en": "Brownstone shadow, elevated-track rhythm, and a rain-softened Manhattan horizon make a focused metropolitan workspace.",
         "zh-CN": "褐石街区的阴影、高架轨道的节奏与被雨雾收柔的曼哈顿天际线，组成一套利落的都市工作区。"
       },
-      "tags": ["city", "new york", "manhattan", "rain", "brownstone", "original"],
+      "tags": [
+        "city",
+        "new york",
+        "manhattan",
+        "rain",
+        "brownstone",
+        "original"
+      ],
       "pattern": "city-rainline",
       "seed": 6101,
       "art": {
@@ -1305,7 +1455,14 @@
         "en": "A steep street, weathered Victorian color, bay fog, and one restrained bridge line capture San Francisco without becoming a postcard.",
         "zh-CN": "陡坡、维多利亚式街屋、海湾雾气与一笔克制的桥影，让旧金山清晰可辨，却不落入明信片构图。"
       },
-      "tags": ["city", "san francisco", "fog", "hills", "bay", "original"],
+      "tags": [
+        "city",
+        "san francisco",
+        "fog",
+        "hills",
+        "bay",
+        "original"
+      ],
       "pattern": "city-fogline",
       "seed": 6102,
       "art": {
@@ -1373,7 +1530,14 @@
         "en": "Lake Michigan light meets elevated rail steel and the measured verticals of the Loop.",
         "zh-CN": "密歇根湖的冷光、高架铁路的钢结构与 Loop 区克制的竖向线条相遇。"
       },
-      "tags": ["city", "chicago", "lake michigan", "elevated rail", "architecture", "original"],
+      "tags": [
+        "city",
+        "chicago",
+        "lake michigan",
+        "elevated rail",
+        "architecture",
+        "original"
+      ],
       "pattern": "city-lake-grid",
       "seed": 6103,
       "art": {
@@ -1441,7 +1605,14 @@
         "en": "Brick warehouses, ravine-green edges, Lake Ontario haze, and a slender skyline mark Toronto's quiet confidence.",
         "zh-CN": "砖仓、峡谷绿意、安大略湖雾气与一笔纤细天际线，写出多伦多安静而确定的城市气质。"
       },
-      "tags": ["city", "toronto", "lake ontario", "cn tower", "autumn", "original"],
+      "tags": [
+        "city",
+        "toronto",
+        "lake ontario",
+        "cn tower",
+        "autumn",
+        "original"
+      ],
       "pattern": "city-lake-blue",
       "seed": 6104,
       "art": {
@@ -1509,7 +1680,14 @@
         "en": "Cedar rain, mountain layers, seawall reflections, and a compact glass skyline keep Vancouver close to its landscape.",
         "zh-CN": "雪松细雨、山体层次、海堤倒影与紧凑玻璃天际线，让温哥华始终贴着自然生长。"
       },
-      "tags": ["city", "vancouver", "rainforest", "harbour", "mountains", "original"],
+      "tags": [
+        "city",
+        "vancouver",
+        "rainforest",
+        "harbour",
+        "mountains",
+        "original"
+      ],
       "pattern": "city-rain-harbour",
       "seed": 6105,
       "art": {
@@ -1577,7 +1755,14 @@
         "en": "Wet Georgian stone, Thames haze, and layered civic silhouettes form a restrained London study.",
         "zh-CN": "潮湿的乔治时代石材、泰晤士河雾与层叠公共建筑剪影，构成一幅克制的伦敦城市研究。"
       },
-      "tags": ["city", "london", "thames", "rain", "georgian", "original"],
+      "tags": [
+        "city",
+        "london",
+        "thames",
+        "rain",
+        "georgian",
+        "original"
+      ],
       "pattern": "city-river-rain",
       "seed": 6106,
       "art": {
@@ -1645,7 +1830,14 @@
         "en": "Zinc roofs, pale stone, chimney rhythm, and a distant iron silhouette make a quiet Paris morning.",
         "zh-CN": "锌皮屋顶、浅色石墙、烟囱节奏与远处铁塔剪影，共同组成一段安静的巴黎清晨。"
       },
-      "tags": ["city", "paris", "rooftops", "seine", "dawn", "original"],
+      "tags": [
+        "city",
+        "paris",
+        "rooftops",
+        "seine",
+        "dawn",
+        "original"
+      ],
       "pattern": "city-rooftop-dawn",
       "seed": 6107,
       "art": {
@@ -1713,7 +1905,14 @@
         "en": "Spree reflections, rail viaducts, brick industry, and a distant television tower shape Berlin's practical nocturne.",
         "zh-CN": "施普雷河倒影、铁路高架、工业砖墙与远处电视塔，组成柏林务实而清醒的夜曲。"
       },
-      "tags": ["city", "berlin", "spree", "rail", "brick", "original"],
+      "tags": [
+        "city",
+        "berlin",
+        "spree",
+        "rail",
+        "brick",
+        "original"
+      ],
       "pattern": "city-brick-grid",
       "seed": 6108,
       "art": {
@@ -1781,7 +1980,14 @@
         "en": "Travertine, umbrella pines, terracotta roofs, and a layered hill-city horizon hold Rome's long afternoon.",
         "zh-CN": "洞石、伞松、陶瓦屋顶与层叠台地天际线，留住罗马漫长午后的余温。"
       },
-      "tags": ["city", "rome", "travertine", "umbrella pine", "golden hour", "original"],
+      "tags": [
+        "city",
+        "rome",
+        "travertine",
+        "umbrella pine",
+        "golden hour",
+        "original"
+      ],
       "pattern": "city-stone-gold",
       "seed": 6109,
       "art": {
@@ -1849,7 +2055,14 @@
         "en": "A neighborhood rail crossing, compact rooftops, rain reflections, and a distant tower keep Tokyo intimate and unmistakable.",
         "zh-CN": "社区铁路道口、紧凑屋顶、雨中倒影与远处塔影，让东京既亲近又清晰可辨。"
       },
-      "tags": ["city", "tokyo", "train", "rain", "neighborhood", "original"],
+      "tags": [
+        "city",
+        "tokyo",
+        "train",
+        "rain",
+        "neighborhood",
+        "original"
+      ],
       "pattern": "city-rain-signal",
       "seed": 6110,
       "art": {
@@ -1917,7 +2130,14 @@
         "en": "Shophouse shade, tropical rain, garden infrastructure, and a precise skyline express Singapore's cultivated density.",
         "zh-CN": "骑楼阴影、热带阵雨、花园式基础设施与精确天际线，共同写出新加坡被细心维护的密度。"
       },
-      "tags": ["city", "singapore", "tropical", "garden", "rain", "original"],
+      "tags": [
+        "city",
+        "singapore",
+        "tropical",
+        "garden",
+        "rain",
+        "original"
+      ],
       "pattern": "city-garden-rain",
       "seed": 6111,
       "art": {
@@ -1985,7 +2205,14 @@
         "en": "Sandstone, eucalyptus shadow, ferry wakes, and harbour architecture give Sydney a bright, breathable workspace.",
         "zh-CN": "砂岩、桉树阴影、渡轮尾波与海湾建筑，让悉尼主题明亮、开阔，也保留真实呼吸感。"
       },
-      "tags": ["city", "sydney", "harbour", "sandstone", "eucalyptus", "original"],
+      "tags": [
+        "city",
+        "sydney",
+        "harbour",
+        "sandstone",
+        "eucalyptus",
+        "original"
+      ],
       "pattern": "city-harbour-wind",
       "seed": 6112,
       "art": {
@@ -2052,7 +2279,13 @@
         "en": "Unofficial fan art of Han Li and Nangong Wan meeting across a misty cultivation terrace.",
         "zh-CN": "韩立与南宫婉隔着雾中石台相望，克制、疏离，又保留彼此牵挂。"
       },
-      "tags": ["fan-art", "donghua", "mortal-journey", "cinematic", "xianxia"],
+      "tags": [
+        "fan-art",
+        "donghua",
+        "mortal-journey",
+        "cinematic",
+        "xianxia"
+      ],
       "fanArt": {
         "work": {
           "en": "A Record of a Mortal's Journey to Immortality",
@@ -2122,7 +2355,13 @@
         "en": "Chibi Han Li and Nangong Wan guard a tiny green bottle beside a miniature herb garden.",
         "zh-CN": "Q 版韩立与南宫婉守着一只小绿瓶，旁边是一方缩小的灵药园。"
       },
-      "tags": ["fan-art", "donghua", "mortal-journey", "chibi", "xianxia"],
+      "tags": [
+        "fan-art",
+        "donghua",
+        "mortal-journey",
+        "chibi",
+        "xianxia"
+      ],
       "fanArt": {
         "work": {
           "en": "A Record of a Mortal's Journey to Immortality",
@@ -2192,7 +2431,13 @@
         "en": "Unofficial fan art of Wang Lin and Li Muwan beneath a cold sky, held together by one warm lantern.",
         "zh-CN": "王林与李慕婉立在冷色天幕下，万里寒意里只留一盏暖灯。"
       },
-      "tags": ["fan-art", "donghua", "renegade-immortal", "cinematic", "xianxia"],
+      "tags": [
+        "fan-art",
+        "donghua",
+        "renegade-immortal",
+        "cinematic",
+        "xianxia"
+      ],
       "fanArt": {
         "work": {
           "en": "Renegade Immortal",
@@ -2262,7 +2507,13 @@
         "en": "Chibi Wang Lin carves a tiny figure while Li Muwan tends a glowing pill furnace.",
         "zh-CN": "Q 版王林低头刻木雕，李慕婉在旁照看一只发着暖光的小丹炉。"
       },
-      "tags": ["fan-art", "donghua", "renegade-immortal", "chibi", "xianxia"],
+      "tags": [
+        "fan-art",
+        "donghua",
+        "renegade-immortal",
+        "chibi",
+        "xianxia"
+      ],
       "fanArt": {
         "work": {
           "en": "Renegade Immortal",
@@ -2332,7 +2583,13 @@
         "en": "Unofficial fan art of Chen Ping'an and Ning Yao walking out of a small town toward an open mountain road.",
         "zh-CN": "陈平安与宁姚从小镇走向山路，一人背剑，一人回头，脚下就是大道。"
       },
-      "tags": ["fan-art", "donghua", "sword-of-coming", "cinematic", "wuxia"],
+      "tags": [
+        "fan-art",
+        "donghua",
+        "sword-of-coming",
+        "cinematic",
+        "wuxia"
+      ],
       "fanArt": {
         "work": {
           "en": "Sword of Coming",
@@ -2402,7 +2659,13 @@
         "en": "Chibi Chen Ping'an carries an oversized sword case while Ning Yao points toward the next road.",
         "zh-CN": "Q 版陈平安背着过大的剑匣，宁姚抱剑指向下一段山路。"
       },
-      "tags": ["fan-art", "donghua", "sword-of-coming", "chibi", "wuxia"],
+      "tags": [
+        "fan-art",
+        "donghua",
+        "sword-of-coming",
+        "chibi",
+        "wuxia"
+      ],
       "fanArt": {
         "work": {
           "en": "Sword of Coming",
@@ -2472,7 +2735,13 @@
         "en": "Unofficial fan art of Xiao Yan and Medusa framed by green flame and a restrained violet serpent aura.",
         "zh-CN": "萧炎与美杜莎并肩立在异火与紫色蛇影之间，危险感与默契同时存在。"
       },
-      "tags": ["fan-art", "donghua", "battle-through-heavens", "cinematic", "fantasy"],
+      "tags": [
+        "fan-art",
+        "donghua",
+        "battle-through-heavens",
+        "cinematic",
+        "fantasy"
+      ],
       "fanArt": {
         "work": {
           "en": "Battle Through the Heavens",
@@ -2542,7 +2811,13 @@
         "en": "Chibi Xiao Yan balances a tiny fire lotus while Medusa watches with an unimpressed serpent companion.",
         "zh-CN": "Q 版萧炎托着一朵迷你火莲，美杜莎和一条小蛇在旁边冷静围观。"
       },
-      "tags": ["fan-art", "donghua", "battle-through-heavens", "chibi", "fantasy"],
+      "tags": [
+        "fan-art",
+        "donghua",
+        "battle-through-heavens",
+        "chibi",
+        "fantasy"
+      ],
       "fanArt": {
         "work": {
           "en": "Battle Through the Heavens",
@@ -2612,7 +2887,13 @@
         "en": "A newly composed fan-art view of Han Li entering the immense ice-blue Void Hall.",
         "zh-CN": "韩立踏入冰蓝色虚天殿，巨大的殿门、冰阶与人影共同压出秘境尺度。"
       },
-      "tags": ["fan-art", "donghua", "mortal-journey", "scene", "void-hall"],
+      "tags": [
+        "fan-art",
+        "donghua",
+        "mortal-journey",
+        "scene",
+        "void-hall"
+      ],
       "fanArt": {
         "work": {
           "en": "A Record of a Mortal's Journey to Immortality",
@@ -2680,7 +2961,13 @@
         "en": "Wang Lin arrives above the wedding hall as cold wind tears through the red ceremony and Li Muwan looks up.",
         "zh-CN": "王林从风雪中落在喜堂上空，红色婚仪被冷风卷开，李慕婉抬头看见来人。"
       },
-      "tags": ["fan-art", "donghua", "renegade-immortal", "scene", "wedding"],
+      "tags": [
+        "fan-art",
+        "donghua",
+        "renegade-immortal",
+        "scene",
+        "wedding"
+      ],
       "fanArt": {
         "work": {
           "en": "Renegade Immortal",
@@ -2750,7 +3037,13 @@
         "en": "Chen Ping'an speaks plainly to Ning Yao in a quiet small-town lane after the rain.",
         "zh-CN": "雨后小镇巷口，陈平安认真说出喜欢，宁姚抱剑站在暖灯与青石之间。"
       },
-      "tags": ["fan-art", "donghua", "sword-of-coming", "scene", "confession"],
+      "tags": [
+        "fan-art",
+        "donghua",
+        "sword-of-coming",
+        "scene",
+        "confession"
+      ],
       "fanArt": {
         "work": {
           "en": "Sword of Coming",
@@ -2820,7 +3113,13 @@
         "en": "Xiao Yan faces Nalan Yanran across the mountain arena as green flame cuts through cloud and stone.",
         "zh-CN": "云岚山擂台两端，萧炎与纳兰嫣然隔空对峙，青色异火穿过云与石阶。"
       },
-      "tags": ["fan-art", "donghua", "battle-through-heavens", "scene", "three-year-agreement"],
+      "tags": [
+        "fan-art",
+        "donghua",
+        "battle-through-heavens",
+        "scene",
+        "three-year-agreement"
+      ],
       "fanArt": {
         "work": {
           "en": "Battle Through the Heavens",
@@ -2895,7 +3194,13 @@
         "en": "An unofficial illuminated-manuscript parody thanking Tibo Sottiaux for leading Codex and keeping builders moving.",
         "zh-CN": "一幅非官方手抄本式趣味致敬画，感谢 Tibo Sottiaux 带领 Codex，也感谢每一次让创作继续的重置。"
       },
-      "tags": ["fan-art", "codex-community", "tibo", "parody", "illuminated-manuscript"],
+      "tags": [
+        "fan-art",
+        "codex-community",
+        "tibo",
+        "parody",
+        "illuminated-manuscript"
+      ],
       "fanArt": {
         "work": {
           "en": "Codex Community Tribute",
@@ -2968,7 +3273,13 @@
         "en": "An unofficial Chinese mural-style parody portrait celebrating Tibo Sottiaux and the resets Codex users cheer for.",
         "zh-CN": "一套非官方中式壁画趣味致敬主题，献给 Tibo Sottiaux，也献给 Codex 用户最喜欢看到的额度重置。"
       },
-      "tags": ["fan-art", "codex-community", "tibo", "parody", "chinese-mural"],
+      "tags": [
+        "fan-art",
+        "codex-community",
+        "tibo",
+        "parody",
+        "chinese-mural"
+      ],
       "fanArt": {
         "work": {
           "en": "Codex Community Tribute",
@@ -3040,7 +3351,14 @@
         "en": "A glossy blue chibi workspace inspired by the optimism of 2000s desktop messengers, rebuilt with an original mascot and no borrowed interface or brand assets.",
         "zh-CN": "一套来自 2000 年代桌面即时通讯记忆的冰蓝 Q 版工作区，使用原创代码吉祥物，不复刻任何品牌、角色或界面。"
       },
-      "tags": ["original", "retro", "chibi", "2000s", "messenger", "blue"],
+      "tags": [
+        "original",
+        "retro",
+        "chibi",
+        "2000s",
+        "messenger",
+        "blue"
+      ],
       "art": {
         "focusX": 0.78,
         "focusY": 0.48,
@@ -3091,7 +3409,13 @@
         "en": "A warm reading room looking into a rain-soaked glasshouse, with walnut shelves and a quiet amber desk on the right.",
         "zh-CN": "胡桃木书架与玻璃温室连成一间安静阅读室，雨水落在窗外，右侧书桌留着一盏暖灯。"
       },
-      "tags": ["original", "cozy", "library", "rain", "warm"],
+      "tags": [
+        "original",
+        "cozy",
+        "library",
+        "rain",
+        "warm"
+      ],
       "art": {
         "focusX": 0.78,
         "focusY": 0.47,
@@ -3142,7 +3466,13 @@
         "en": "A quiet 1970s-inspired orbital observatory watches sunrise roll over Earth through broad curved windows.",
         "zh-CN": "带有 1970 年代科学想象气质的轨道观测站，从弧形舷窗望见晨光越过地球。"
       },
-      "tags": ["original", "space", "retro-futurism", "earth", "cinematic"],
+      "tags": [
+        "original",
+        "space",
+        "retro-futurism",
+        "earth",
+        "cinematic"
+      ],
       "art": {
         "focusX": 0.77,
         "focusY": 0.43,
@@ -3193,7 +3523,13 @@
         "en": "An underwater research window opens onto drifting jellyfish, distant whales, and a single pool of cyan instrument light.",
         "zh-CN": "水下研究舱外漂着水母与远处鲸影，右侧仪器台只留一片克制的青色微光。"
       },
-      "tags": ["original", "ocean", "science", "jellyfish", "blue"],
+      "tags": [
+        "original",
+        "ocean",
+        "science",
+        "jellyfish",
+        "blue"
+      ],
       "art": {
         "focusX": 0.78,
         "focusY": 0.47,
@@ -3244,7 +3580,13 @@
         "en": "A restrained retro-future highway crosses a violet desert toward a coral sun, with analog dashboard glow on the right.",
         "zh-CN": "克制的复古未来公路穿过紫色荒漠驶向珊瑚色落日，右侧保留模拟仪表盘的柔光。"
       },
-      "tags": ["original", "synthwave", "retro", "night-drive", "neon"],
+      "tags": [
+        "original",
+        "synthwave",
+        "retro",
+        "night-drive",
+        "neon"
+      ],
       "art": {
         "focusX": 0.77,
         "focusY": 0.49,
@@ -3295,7 +3637,13 @@
         "en": "A timber cabin desk looks across snow-heavy pines toward a pale alpine sunrise, quiet and tactile rather than postcard-perfect.",
         "zh-CN": "木屋书桌望向覆雪松林与浅色山间日出，保留真实木材和冬日空气的触感。"
       },
-      "tags": ["original", "alpine", "cabin", "snow", "cozy"],
+      "tags": [
+        "original",
+        "alpine",
+        "cabin",
+        "snow",
+        "cozy"
+      ],
       "art": {
         "focusX": 0.77,
         "focusY": 0.46,
@@ -3346,7 +3694,13 @@
         "en": "White walls, dark tiles, wet stone, and a small waterside courtyard settle into pearl-gray Jiangnan rain.",
         "zh-CN": "白墙黛瓦、湿青石与临水小院落进珍珠灰的江南细雨里，右侧灯火很轻。"
       },
-      "tags": ["original", "china", "jiangnan", "rain", "courtyard"],
+      "tags": [
+        "original",
+        "china",
+        "jiangnan",
+        "rain",
+        "courtyard"
+      ],
       "art": {
         "focusX": 0.77,
         "focusY": 0.47,
@@ -3397,7 +3751,13 @@
         "en": "A Tang-inspired avenue opens beneath layered lantern light and deep indigo sky, composed as original historical fantasy rather than a reconstruction.",
         "zh-CN": "唐风长街在层层灯火与深靛夜色下展开，以原创历史想象构图，不复刻具体古建或影视场景。"
       },
-      "tags": ["original", "china", "changan", "lanterns", "tang-inspired"],
+      "tags": [
+        "original",
+        "china",
+        "changan",
+        "lanterns",
+        "tang-inspired"
+      ],
       "art": {
         "focusX": 0.78,
         "focusY": 0.43,
@@ -3448,7 +3808,13 @@
         "en": "Original mineral-pigment ribbons, desert cliffs, and a lapis night sky evoke Dunhuang color without copying any historic mural figure.",
         "zh-CN": "原创矿物色飘带、沙崖与青金石夜空借敦煌色彩起兴，不临摹任何具体壁画人物或纹样。"
       },
-      "tags": ["original", "china", "dunhuang", "mineral-pigment", "stars"],
+      "tags": [
+        "original",
+        "china",
+        "dunhuang",
+        "mineral-pigment",
+        "stars"
+      ],
       "art": {
         "focusX": 0.77,
         "focusY": 0.44,
@@ -3499,7 +3865,13 @@
         "en": "A modest bamboo courtyard, clay stove, and open lattice window make a tactile, unhurried workspace.",
         "zh-CN": "竹院、泥炉与半开的格窗组成一间不赶时间的工作区，材质朴素，雨声很近。"
       },
-      "tags": ["original", "china", "bamboo", "tea", "rain"],
+      "tags": [
+        "original",
+        "china",
+        "bamboo",
+        "tea",
+        "rain"
+      ],
       "art": {
         "focusX": 0.78,
         "focusY": 0.48,
@@ -3550,7 +3922,13 @@
         "en": "An unbranded green passenger train moves through blue-hour snowfields and dark pines, with warm carriage windows on the right.",
         "zh-CN": "没有标识的绿色客车穿过蓝调雪原与深色松林，右侧车窗留着一排真实而温暖的灯。"
       },
-      "tags": ["original", "china", "northeast", "snow", "train"],
+      "tags": [
+        "original",
+        "china",
+        "northeast",
+        "snow",
+        "train"
+      ],
       "art": {
         "focusX": 0.77,
         "focusY": 0.47,
@@ -3579,6 +3957,955 @@
           "accent": "#8CC4AC",
           "accentContrast": "#11291F",
           "border": "#3D5C6B"
+        }
+      }
+    },
+    {
+      "id": "appalachian-cabin-focus",
+      "version": "1.0.0",
+      "collection": "american-workspace-favorites-02",
+      "pair": "appalachian-cabin-focus",
+      "variant": "scene",
+      "rightsProfile": "original",
+      "audience": "en",
+      "name": {
+        "zh-CN": "山林木屋专注",
+        "en": "Appalachian Cabin Focus"
+      },
+      "tagline": {
+        "zh-CN": "木柴正暖，山雾还在窗外。",
+        "en": "Warm timber, mountain mist, no rush."
+      },
+      "description": {
+        "zh-CN": "一间原创山林木屋的书桌靠着窗边，右侧是暖木、羊毛毯与远处层叠的蓝灰山脊。",
+        "en": "An original mountain cabin desk sits by a window, with warm timber, a wool throw, and layered blue-gray ridges held to the right."
+      },
+      "tags": [
+        "original",
+        "cabin",
+        "mountains",
+        "cozy",
+        "focus"
+      ],
+      "art": {
+        "focusX": 0.78,
+        "focusY": 0.47,
+        "safeArea": "left",
+        "taskMode": "ambient"
+      },
+      "light": {
+        "tokens": {
+          "background": "#F1EEE7",
+          "surface": "#FFFCF7",
+          "surfaceAlt": "#E5DBC9",
+          "text": "#30271B",
+          "muted": "#6D604F",
+          "accent": "#79572B",
+          "accentContrast": "#FFFFFF",
+          "border": "#BAA786"
+        }
+      },
+      "dark": {
+        "tokens": {
+          "background": "#16100A",
+          "surface": "#261B10",
+          "surfaceAlt": "#3B2A17",
+          "text": "#FFF6E7",
+          "muted": "#D0BDA4",
+          "accent": "#F0B766",
+          "accentContrast": "#3A2106",
+          "border": "#76563A"
+        }
+      }
+    },
+    {
+      "id": "cloud-forge-quiet",
+      "version": "1.0.0",
+      "collection": "original-xianxia-02",
+      "pair": "cloud-forge-quiet",
+      "variant": "cinematic",
+      "rightsProfile": "original",
+      "name": {
+        "zh-CN": "云炉静火",
+        "en": "Cloud Forge Quiet"
+      },
+      "tagline": {
+        "zh-CN": "炉火很小，云海很远。",
+        "en": "A small forge fire faces a vast cloud sea."
+      },
+      "description": {
+        "zh-CN": "一座完全原创的悬崖小工坊俯瞰云海，右侧炉火与器具温暖克制，左侧保留低对比天空和山云。",
+        "en": "An entirely original cliffside workshop overlooks a cloud sea, holding its small forge warmth and tools on the right while the left stays atmospheric."
+      },
+      "tags": [
+        "original",
+        "xianxia",
+        "forge",
+        "cloud-sea",
+        "cinematic"
+      ],
+      "art": {
+        "focusX": 0.78,
+        "focusY": 0.47,
+        "safeArea": "left",
+        "taskMode": "ambient"
+      },
+      "light": {
+        "tokens": {
+          "background": "#F5F1EB",
+          "surface": "#FFFFFF",
+          "surfaceAlt": "#E9DDCF",
+          "text": "#32251B",
+          "muted": "#755F4A",
+          "accent": "#A45D32",
+          "accentContrast": "#FFFFFF",
+          "border": "#C4A68E"
+        }
+      },
+      "dark": {
+        "tokens": {
+          "background": "#1B100A",
+          "surface": "#2E1A0E",
+          "surfaceAlt": "#452616",
+          "text": "#FFF4EA",
+          "muted": "#D6BDA7",
+          "accent": "#F2A66C",
+          "accentContrast": "#4B210E",
+          "border": "#835033"
+        }
+      }
+    },
+    {
+      "id": "coastal-studio-morning",
+      "version": "1.0.0",
+      "collection": "american-workspace-favorites-02",
+      "pair": "coastal-studio-morning",
+      "variant": "scene",
+      "rightsProfile": "original",
+      "audience": "en",
+      "name": {
+        "zh-CN": "海岸工作室晨光",
+        "en": "Coastal Studio Morning"
+      },
+      "tagline": {
+        "zh-CN": "潮声很轻，今天先把这一行写好。",
+        "en": "Soft surf, clear desk, one good line at a time."
+      },
+      "description": {
+        "zh-CN": "一间原创的海岸工作室迎着清晨的薄雾，右侧有木桌、陶杯与低矮海崖，左侧留给宁静的海天。",
+        "en": "An original coastside studio meets a misty morning with a wood desk, ceramic cup, and low cliffs to the right while the left stays open to sea and sky."
+      },
+      "tags": [
+        "original",
+        "coast",
+        "studio",
+        "morning",
+        "calm"
+      ],
+      "art": {
+        "focusX": 0.78,
+        "focusY": 0.46,
+        "safeArea": "left",
+        "taskMode": "ambient"
+      },
+      "light": {
+        "tokens": {
+          "background": "#EEF4F2",
+          "surface": "#FFFFFF",
+          "surfaceAlt": "#D9E9E5",
+          "text": "#18332E",
+          "muted": "#526B65",
+          "accent": "#28756A",
+          "accentContrast": "#FFFFFF",
+          "border": "#96B9B1"
+        }
+      },
+      "dark": {
+        "tokens": {
+          "background": "#071613",
+          "surface": "#0F2823",
+          "surfaceAlt": "#183B34",
+          "text": "#EEFBF7",
+          "muted": "#A7C8C0",
+          "accent": "#71D9C5",
+          "accentContrast": "#07352D",
+          "border": "#3B7368"
+        }
+      }
+    },
+    {
+      "id": "desert-observatory-night",
+      "version": "1.0.0",
+      "collection": "american-workspace-favorites-02",
+      "pair": "desert-observatory-night",
+      "variant": "scene",
+      "rightsProfile": "original",
+      "audience": "en",
+      "name": {
+        "zh-CN": "沙漠观测站夜色",
+        "en": "Desert Observatory Night"
+      },
+      "tagline": {
+        "zh-CN": "屏幕微亮，星空把时间拉得很长。",
+        "en": "One quiet screen beneath a very large sky."
+      },
+      "description": {
+        "zh-CN": "一座完全原创的沙漠观测站在夜里亮起低调工作灯，右侧是圆顶、岩石与暖橙色仪器光。",
+        "en": "An entirely original desert observatory glows with restrained task light, holding its dome, rocks, and warm orange instruments to the right."
+      },
+      "tags": [
+        "original",
+        "desert",
+        "observatory",
+        "stars",
+        "night"
+      ],
+      "art": {
+        "focusX": 0.79,
+        "focusY": 0.43,
+        "safeArea": "left",
+        "taskMode": "ambient"
+      },
+      "light": {
+        "tokens": {
+          "background": "#F5EDE2",
+          "surface": "#FFF9F2",
+          "surfaceAlt": "#EAD8BF",
+          "text": "#35291E",
+          "muted": "#705D49",
+          "accent": "#9C552B",
+          "accentContrast": "#FFFFFF",
+          "border": "#C79D74"
+        }
+      },
+      "dark": {
+        "tokens": {
+          "background": "#130C09",
+          "surface": "#23150E",
+          "surfaceAlt": "#3A2317",
+          "text": "#FFF3E4",
+          "muted": "#D3B99D",
+          "accent": "#FF9D62",
+          "accentContrast": "#431707",
+          "border": "#7B4630"
+        }
+      }
+    },
+    {
+      "id": "firefly-river-pact",
+      "version": "1.0.0",
+      "collection": "original-xianxia-02",
+      "pair": "firefly-river-pact",
+      "variant": "cinematic",
+      "rightsProfile": "original",
+      "name": {
+        "zh-CN": "流萤渡",
+        "en": "Firefly River Pact"
+      },
+      "tagline": {
+        "zh-CN": "河灯与流萤，把夜色慢慢渡开。",
+        "en": "Fireflies ferry the night into softer water."
+      },
+      "description": {
+        "zh-CN": "完全原创的灵河渡口被流萤照亮，右侧是一艘空舟与石灯，左侧是平静水面和远处云山。",
+        "en": "An entirely original spirit-river crossing glows with fireflies, keeping an empty boat and stone lanterns to the right and quiet water to the left."
+      },
+      "tags": [
+        "original",
+        "xianxia",
+        "river",
+        "fireflies",
+        "cinematic"
+      ],
+      "art": {
+        "focusX": 0.77,
+        "focusY": 0.51,
+        "safeArea": "left",
+        "taskMode": "ambient"
+      },
+      "light": {
+        "tokens": {
+          "background": "#F0F3F8",
+          "surface": "#FFFFFF",
+          "surfaceAlt": "#DEE5F0",
+          "text": "#1C2839",
+          "muted": "#576B83",
+          "accent": "#49668F",
+          "accentContrast": "#FFFFFF",
+          "border": "#A1B2C9"
+        }
+      },
+      "dark": {
+        "tokens": {
+          "background": "#0B1322",
+          "surface": "#14243A",
+          "surfaceAlt": "#1E3553",
+          "text": "#EFF6FF",
+          "muted": "#AABDD4",
+          "accent": "#8FC0F5",
+          "accentContrast": "#17314F",
+          "border": "#45668B"
+        }
+      }
+    },
+    {
+      "id": "great-lakes-rainroom",
+      "version": "1.0.0",
+      "collection": "american-workspace-favorites-02",
+      "pair": "great-lakes-rainroom",
+      "variant": "scene",
+      "rightsProfile": "original",
+      "audience": "en",
+      "name": {
+        "zh-CN": "湖畔雨窗",
+        "en": "Great Lakes Rainroom"
+      },
+      "tagline": {
+        "zh-CN": "雨声贴着玻璃，湖面把光慢慢推回来。",
+        "en": "Rain on glass, a wide lake, a steadier pace."
+      },
+      "description": {
+        "zh-CN": "湖边工作室的宽窗外落着细雨，右侧是蓝灰桌面、绿植和朦胧水面，左侧保持安静留白。",
+        "en": "Fine rain settles beyond a wide studio window, with a blue-gray desk, greenery, and soft lake water placed to the right."
+      },
+      "tags": [
+        "original",
+        "lake",
+        "rain",
+        "studio",
+        "blue"
+      ],
+      "art": {
+        "focusX": 0.77,
+        "focusY": 0.48,
+        "safeArea": "left",
+        "taskMode": "ambient"
+      },
+      "light": {
+        "tokens": {
+          "background": "#EAF1F4",
+          "surface": "#FFFFFF",
+          "surfaceAlt": "#D7E4EA",
+          "text": "#1A2F3B",
+          "muted": "#536A77",
+          "accent": "#276F8E",
+          "accentContrast": "#FFFFFF",
+          "border": "#92B3C1"
+        }
+      },
+      "dark": {
+        "tokens": {
+          "background": "#07131A",
+          "surface": "#0E232E",
+          "surfaceAlt": "#163746",
+          "text": "#EEFBFF",
+          "muted": "#A6C4D1",
+          "accent": "#6CCDE8",
+          "accentContrast": "#083043",
+          "border": "#3D7084"
+        }
+      }
+    },
+    {
+      "id": "jade-archive-dawn",
+      "version": "1.0.0",
+      "collection": "original-xianxia-02",
+      "pair": "jade-archive-dawn",
+      "variant": "cinematic",
+      "rightsProfile": "original",
+      "name": {
+        "zh-CN": "玉简晨阁",
+        "en": "Jade Archive Dawn"
+      },
+      "tagline": {
+        "zh-CN": "晨光翻开玉简，山风还没有醒。",
+        "en": "Dawn opens the archive before the mountain wakes."
+      },
+      "description": {
+        "zh-CN": "一座完全原创的山顶藏书阁在晨雾中打开窗棂，右侧是玉简与暖光，左侧只留远山和纸白云气。",
+        "en": "An entirely original summit archive opens into dawn mist, holding jade slips and warm windows to the right while the left remains quiet mountain air."
+      },
+      "tags": [
+        "original",
+        "xianxia",
+        "archive",
+        "jade",
+        "cinematic"
+      ],
+      "art": {
+        "focusX": 0.78,
+        "focusY": 0.44,
+        "safeArea": "left",
+        "taskMode": "ambient"
+      },
+      "light": {
+        "tokens": {
+          "background": "#EDF4EF",
+          "surface": "#FFFFFF",
+          "surfaceAlt": "#D9E8DE",
+          "text": "#173025",
+          "muted": "#516B5D",
+          "accent": "#2D7560",
+          "accentContrast": "#FFFFFF",
+          "border": "#96B8A8"
+        }
+      },
+      "dark": {
+        "tokens": {
+          "background": "#081812",
+          "surface": "#11281E",
+          "surfaceAlt": "#1A3B2C",
+          "text": "#EEFAF3",
+          "muted": "#A5C4B3",
+          "accent": "#6FD3AA",
+          "accentContrast": "#0B3827",
+          "border": "#3B725B"
+        }
+      }
+    },
+    {
+      "id": "late-diner-afterhours",
+      "version": "1.0.0",
+      "collection": "american-workspace-favorites-02",
+      "pair": "late-diner-afterhours",
+      "variant": "scene",
+      "rightsProfile": "original",
+      "audience": "en",
+      "name": {
+        "zh-CN": "深夜小餐馆",
+        "en": "Late Diner After Hours"
+      },
+      "tagline": {
+        "zh-CN": "夜还没结束，最后一杯咖啡刚好。",
+        "en": "The night is open; the coffee is still warm."
+      },
+      "description": {
+        "zh-CN": "一家完全原创的深夜小餐馆刚刚安静下来，右侧是软垫座位、暖灯和无字霓虹光。",
+        "en": "An entirely original late-night diner has just gone quiet, with upholstered booths, warm lamps, and wordless neon glow on the right."
+      },
+      "tags": [
+        "original",
+        "diner",
+        "night",
+        "warm",
+        "retro"
+      ],
+      "art": {
+        "focusX": 0.79,
+        "focusY": 0.48,
+        "safeArea": "left",
+        "taskMode": "ambient"
+      },
+      "light": {
+        "tokens": {
+          "background": "#F5ECE8",
+          "surface": "#FFFCFA",
+          "surfaceAlt": "#ECD8D0",
+          "text": "#3A2528",
+          "muted": "#76575B",
+          "accent": "#A33C44",
+          "accentContrast": "#FFFFFF",
+          "border": "#C99B9E"
+        }
+      },
+      "dark": {
+        "tokens": {
+          "background": "#17090D",
+          "surface": "#281016",
+          "surfaceAlt": "#401B24",
+          "text": "#FFF0F2",
+          "muted": "#D7B0B6",
+          "accent": "#FF8C99",
+          "accentContrast": "#4A0D18",
+          "border": "#7B3D4A"
+        }
+      }
+    },
+    {
+      "id": "mortal-bamboo-thunder",
+      "version": "1.0.0",
+      "collection": "mortal-journey-fan-art-02",
+      "pair": "mortal-bamboo-thunder",
+      "variant": "scene",
+      "rightsProfile": "fan-art",
+      "name": {
+        "zh-CN": "凡人·竹海惊雷",
+        "en": "Mortal Journey · Bamboo Thunder"
+      },
+      "tagline": {
+        "zh-CN": "竹影没有退，雷光也没有。",
+        "en": "Neither bamboo nor thunder steps back."
+      },
+      "description": {
+        "zh-CN": "韩立站在重新构图的竹海空地边缘，远处雷光收束成背景，右侧人物与剑意保持清楚而不过满。",
+        "en": "Han Li stands at the edge of a newly composed bamboo clearing, with distant thunder held as a backdrop and the right-side action kept clear."
+      },
+      "tags": [
+        "fan-art",
+        "mortal-journey",
+        "bamboo",
+        "thunder",
+        "scene"
+      ],
+      "art": {
+        "focusX": 0.79,
+        "focusY": 0.45,
+        "safeArea": "left",
+        "taskMode": "ambient"
+      },
+      "light": {
+        "tokens": {
+          "background": "#EFF4F1",
+          "surface": "#FFFFFF",
+          "surfaceAlt": "#D9E8E0",
+          "text": "#183127",
+          "muted": "#4E6B5E",
+          "accent": "#2F796A",
+          "accentContrast": "#FFFFFF",
+          "border": "#93B7AA"
+        }
+      },
+      "dark": {
+        "tokens": {
+          "background": "#071713",
+          "surface": "#102722",
+          "surfaceAlt": "#193B33",
+          "text": "#ECFAF4",
+          "muted": "#A3C4B6",
+          "accent": "#63D3BD",
+          "accentContrast": "#08342D",
+          "border": "#356C60"
+        }
+      },
+      "fanArt": {
+        "work": {
+          "zh-CN": "凡人修仙传",
+          "en": "A Record of a Mortal's Journey to Immortality"
+        },
+        "characters": {
+          "zh-CN": [
+            "韩立"
+          ],
+          "en": [
+            "Han Li"
+          ]
+        },
+        "unofficial": true,
+        "commercialUse": false,
+        "officialAssetsUsed": false
+      }
+    },
+    {
+      "id": "mortal-herb-lantern",
+      "version": "1.0.0",
+      "collection": "mortal-journey-fan-art-02",
+      "pair": "mortal-herb-lantern",
+      "variant": "scene",
+      "rightsProfile": "fan-art",
+      "name": {
+        "zh-CN": "凡人·药圃灯影",
+        "en": "Mortal Journey · Herb Lantern"
+      },
+      "tagline": {
+        "zh-CN": "灯落药圃，脚步仍然很轻。",
+        "en": "One lantern keeps the herb garden awake."
+      },
+      "description": {
+        "zh-CN": "韩立在一处重新构图的山间药圃整理灵草，右侧保留人物与灯火，左侧只留雾、石径与安静叶影。",
+        "en": "Han Li tends spirit herbs in a newly composed mountain garden, with his lantern-lit story held to the right and quiet mist to the left."
+      },
+      "tags": [
+        "fan-art",
+        "mortal-journey",
+        "herb-garden",
+        "lantern",
+        "scene"
+      ],
+      "art": {
+        "focusX": 0.79,
+        "focusY": 0.48,
+        "safeArea": "left",
+        "taskMode": "ambient"
+      },
+      "light": {
+        "tokens": {
+          "background": "#EEF3E8",
+          "surface": "#FFFFFF",
+          "surfaceAlt": "#DCE8D0",
+          "text": "#1B2719",
+          "muted": "#526449",
+          "accent": "#4F742D",
+          "accentContrast": "#FFFFFF",
+          "border": "#9DB58B"
+        }
+      },
+      "dark": {
+        "tokens": {
+          "background": "#0E1609",
+          "surface": "#18240F",
+          "surfaceAlt": "#263618",
+          "text": "#F2F8EC",
+          "muted": "#B0C2A6",
+          "accent": "#B7D86D",
+          "accentContrast": "#172209",
+          "border": "#55703D"
+        }
+      },
+      "fanArt": {
+        "work": {
+          "zh-CN": "凡人修仙传",
+          "en": "A Record of a Mortal's Journey to Immortality"
+        },
+        "characters": {
+          "zh-CN": [
+            "韩立"
+          ],
+          "en": [
+            "Han Li"
+          ]
+        },
+        "unofficial": true,
+        "commercialUse": false,
+        "officialAssetsUsed": false
+      }
+    },
+    {
+      "id": "mortal-moon-market",
+      "version": "1.0.0",
+      "collection": "mortal-journey-fan-art-02",
+      "pair": "mortal-moon-market",
+      "variant": "scene",
+      "rightsProfile": "fan-art",
+      "name": {
+        "zh-CN": "凡人·月下坊市",
+        "en": "Mortal Journey · Moon Market"
+      },
+      "tagline": {
+        "zh-CN": "月色落在摊灯上，也落在重逢里。",
+        "en": "Moonlight finds the lanterns and the reunion."
+      },
+      "description": {
+        "zh-CN": "韩立与南宫婉在全新构图的月下坊市远端相遇，右侧是安静灯摊与人物，左侧留出雾蓝天光。",
+        "en": "Han Li and Nangong Wan meet at the far end of a newly composed moonlit market, with quiet lantern stalls on the right and blue mist on the left."
+      },
+      "tags": [
+        "fan-art",
+        "mortal-journey",
+        "moonlight",
+        "market",
+        "scene"
+      ],
+      "art": {
+        "focusX": 0.8,
+        "focusY": 0.49,
+        "safeArea": "left",
+        "taskMode": "ambient"
+      },
+      "light": {
+        "tokens": {
+          "background": "#F2F0F7",
+          "surface": "#FFFFFF",
+          "surfaceAlt": "#E5DFF0",
+          "text": "#2B223B",
+          "muted": "#665A77",
+          "accent": "#76559E",
+          "accentContrast": "#FFFFFF",
+          "border": "#B9A9CF"
+        }
+      },
+      "dark": {
+        "tokens": {
+          "background": "#130D20",
+          "surface": "#211634",
+          "surfaceAlt": "#322147",
+          "text": "#F8F1FF",
+          "muted": "#C5B4D7",
+          "accent": "#C6A4F0",
+          "accentContrast": "#2A1841",
+          "border": "#684D85"
+        }
+      },
+      "fanArt": {
+        "work": {
+          "zh-CN": "凡人修仙传",
+          "en": "A Record of a Mortal's Journey to Immortality"
+        },
+        "characters": {
+          "zh-CN": [
+            "韩立",
+            "南宫婉"
+          ],
+          "en": [
+            "Han Li",
+            "Nangong Wan"
+          ]
+        },
+        "unofficial": true,
+        "commercialUse": false,
+        "officialAssetsUsed": false
+      }
+    },
+    {
+      "id": "mortal-river-ferry",
+      "version": "1.0.0",
+      "collection": "mortal-journey-fan-art-02",
+      "pair": "mortal-river-ferry",
+      "variant": "scene",
+      "rightsProfile": "fan-art",
+      "name": {
+        "zh-CN": "凡人·夜渡灵河",
+        "en": "Mortal Journey · Night Ferry"
+      },
+      "tagline": {
+        "zh-CN": "一叶小舟，渡过没有说出口的话。",
+        "en": "A small ferry carries the unsaid across."
+      },
+      "description": {
+        "zh-CN": "韩立与南宫婉在全新构图的夜渡场景中分立舟首与岸边，河雾、灯影与远山把叙事收在右侧。",
+        "en": "Han Li and Nangong Wan meet at a newly composed night ferry, with river mist, lantern light, and distant hills holding the story on the right."
+      },
+      "tags": [
+        "fan-art",
+        "mortal-journey",
+        "river",
+        "ferry",
+        "scene"
+      ],
+      "art": {
+        "focusX": 0.78,
+        "focusY": 0.5,
+        "safeArea": "left",
+        "taskMode": "ambient"
+      },
+      "light": {
+        "tokens": {
+          "background": "#EEF2F6",
+          "surface": "#FFFFFF",
+          "surfaceAlt": "#DDE5EF",
+          "text": "#172331",
+          "muted": "#506477",
+          "accent": "#3B6389",
+          "accentContrast": "#FFFFFF",
+          "border": "#9DB2C4"
+        }
+      },
+      "dark": {
+        "tokens": {
+          "background": "#09121C",
+          "surface": "#122131",
+          "surfaceAlt": "#1B3045",
+          "text": "#EEF6FC",
+          "muted": "#A8BDCE",
+          "accent": "#84C4E8",
+          "accentContrast": "#102436",
+          "border": "#3C6180"
+        }
+      },
+      "fanArt": {
+        "work": {
+          "zh-CN": "凡人修仙传",
+          "en": "A Record of a Mortal's Journey to Immortality"
+        },
+        "characters": {
+          "zh-CN": [
+            "韩立",
+            "南宫婉"
+          ],
+          "en": [
+            "Han Li",
+            "Nangong Wan"
+          ]
+        },
+        "unofficial": true,
+        "commercialUse": false,
+        "officialAssetsUsed": false
+      }
+    },
+    {
+      "id": "mortal-talisman-rain",
+      "version": "1.0.0",
+      "collection": "mortal-journey-fan-art-02",
+      "pair": "mortal-talisman-rain",
+      "variant": "scene",
+      "rightsProfile": "fan-art",
+      "name": {
+        "zh-CN": "凡人·雨夜符火",
+        "en": "Mortal Journey · Talisman Rain"
+      },
+      "tagline": {
+        "zh-CN": "雨声盖过脚步，符火照亮归路。",
+        "en": "Rain hides the steps; talismans light the way."
+      },
+      "description": {
+        "zh-CN": "韩立在一个全新山道雨夜场景中以符火照亮前路，右侧动作克制，左侧只保留雨幕与幽暗林影。",
+        "en": "Han Li lights a newly composed mountain path with talismans in the rain, keeping the action restrained on the right and the forest quiet on the left."
+      },
+      "tags": [
+        "fan-art",
+        "mortal-journey",
+        "rain",
+        "talisman",
+        "scene"
+      ],
+      "art": {
+        "focusX": 0.8,
+        "focusY": 0.47,
+        "safeArea": "left",
+        "taskMode": "ambient"
+      },
+      "light": {
+        "tokens": {
+          "background": "#EEF1F4",
+          "surface": "#FFFFFF",
+          "surfaceAlt": "#DDE2E7",
+          "text": "#202833",
+          "muted": "#596976",
+          "accent": "#97603A",
+          "accentContrast": "#FFFFFF",
+          "border": "#B3B9C0"
+        }
+      },
+      "dark": {
+        "tokens": {
+          "background": "#10151B",
+          "surface": "#1B252F",
+          "surfaceAlt": "#293744",
+          "text": "#F3F7FA",
+          "muted": "#B3C0CA",
+          "accent": "#E6A46D",
+          "accentContrast": "#382113",
+          "border": "#526675"
+        }
+      },
+      "fanArt": {
+        "work": {
+          "zh-CN": "凡人修仙传",
+          "en": "A Record of a Mortal's Journey to Immortality"
+        },
+        "characters": {
+          "zh-CN": [
+            "韩立"
+          ],
+          "en": [
+            "Han Li"
+          ]
+        },
+        "unofficial": true,
+        "commercialUse": false,
+        "officialAssetsUsed": false
+      }
+    },
+    {
+      "id": "plum-sword-snow",
+      "version": "1.0.0",
+      "collection": "original-xianxia-02",
+      "pair": "plum-sword-snow",
+      "variant": "cinematic",
+      "rightsProfile": "original",
+      "name": {
+        "zh-CN": "梅雪一剑",
+        "en": "Plum Snow Blade"
+      },
+      "tagline": {
+        "zh-CN": "雪落梅枝，剑意还没有散。",
+        "en": "Snow finds the plum branch; the blade remains."
+      },
+      "description": {
+        "zh-CN": "一名完全原创的旅人停在雪中梅林边，右侧只留一道克制的剑光，左侧保留广阔的雪雾与山谷。",
+        "en": "An entirely original traveler pauses beside a snowy plum grove, keeping one restrained blade-light to the right and a wide quiet valley to the left."
+      },
+      "tags": [
+        "original",
+        "xianxia",
+        "snow",
+        "plum",
+        "cinematic"
+      ],
+      "art": {
+        "focusX": 0.8,
+        "focusY": 0.46,
+        "safeArea": "left",
+        "taskMode": "ambient"
+      },
+      "light": {
+        "tokens": {
+          "background": "#F5F2F4",
+          "surface": "#FFFFFF",
+          "surfaceAlt": "#E9DEE3",
+          "text": "#32242D",
+          "muted": "#755B69",
+          "accent": "#975168",
+          "accentContrast": "#FFFFFF",
+          "border": "#C1A8B3"
+        }
+      },
+      "dark": {
+        "tokens": {
+          "background": "#1B0D15",
+          "surface": "#2B1421",
+          "surfaceAlt": "#401D2F",
+          "text": "#FFF2F8",
+          "muted": "#D5B6C6",
+          "accent": "#F09AB8",
+          "accentContrast": "#4A1730",
+          "border": "#815067"
+        }
+      }
+    },
+    {
+      "id": "sky-garden-herbarium",
+      "version": "1.0.0",
+      "collection": "original-xianxia-02",
+      "pair": "sky-garden-herbarium",
+      "variant": "cinematic",
+      "rightsProfile": "original",
+      "name": {
+        "zh-CN": "天苑灵草",
+        "en": "Sky Garden Herbarium"
+      },
+      "tagline": {
+        "zh-CN": "云上花园，把风也养得很轻。",
+        "en": "The sky garden grows even the wind softly."
+      },
+      "description": {
+        "zh-CN": "完全原创的云上草木园在右侧层层延展，左侧只留下淡青云海与安静天光，适合作为长期工作背景。",
+        "en": "An entirely original sky herbarium terraces across the right, leaving pale cloud sea and quiet light on the left for a long-session workspace."
+      },
+      "tags": [
+        "original",
+        "xianxia",
+        "garden",
+        "clouds",
+        "cinematic"
+      ],
+      "art": {
+        "focusX": 0.77,
+        "focusY": 0.45,
+        "safeArea": "left",
+        "taskMode": "ambient"
+      },
+      "light": {
+        "tokens": {
+          "background": "#EDF6F5",
+          "surface": "#FFFFFF",
+          "surfaceAlt": "#D8ECE8",
+          "text": "#17302E",
+          "muted": "#4E6E6B",
+          "accent": "#247B79",
+          "accentContrast": "#FFFFFF",
+          "border": "#92BDB8"
+        }
+      },
+      "dark": {
+        "tokens": {
+          "background": "#071918",
+          "surface": "#102B29",
+          "surfaceAlt": "#19413F",
+          "text": "#ECFBF8",
+          "muted": "#A0C5C0",
+          "accent": "#61D4CE",
+          "accentContrast": "#093B38",
+          "border": "#377670"
         }
       }
     }

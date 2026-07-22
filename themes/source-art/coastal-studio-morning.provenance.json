@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "themeId": "coastal-studio-morning",
+  "rightsProfile": "original",
+  "workflow": "openai-image-job",
+  "model": "gpt-image-2",
+  "size": "1536x1024",
+  "quality": "high",
+  "jobId": "415053f6-0be8-4fc3-9d91-989598aeff9e",
+  "promptSha256": "28282eebfb3473d7a4b3b74927f5143f8a2c99a4d3426e661cc6a1b255af0e6d",
+  "sourceSha256": "60a7797c7ca393e3b27a5da7a52b9c3f61c94358b47ae718ea1e75f699b0c1d7",
+  "disclosure": "AI-generated original source art. Prompt and output were reviewed for third-party characters, logos, signatures, and text before release."
+}

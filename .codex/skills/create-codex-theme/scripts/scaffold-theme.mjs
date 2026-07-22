@@ -44,11 +44,40 @@ function validateBrief(brief, catalog) {
   requireValue(["original", "fan-art"].includes(rightsProfile), "unsupported rightsProfile");
   requireValue(typeof brief.name?.["zh-CN"] === "string" && brief.name["zh-CN"].trim(), "Chinese name is required");
   requireValue(typeof brief.name?.en === "string" && brief.name.en.trim(), "English name is required");
+  requireValue(
+    typeof brief.tagline?.["zh-CN"] === "string"
+      && brief.tagline["zh-CN"].trim()
+      && brief.tagline["zh-CN"].length <= 60,
+    "Chinese tagline is required and must be 60 characters or fewer",
+  );
+  requireValue(
+    typeof brief.tagline?.en === "string"
+      && brief.tagline.en.trim()
+      && brief.tagline.en.length <= 120,
+    "English tagline is required and must be 120 characters or fewer",
+  );
   requireValue(typeof brief.description?.["zh-CN"] === "string" && brief.description["zh-CN"].trim(), "Chinese description is required");
   requireValue(typeof brief.description?.en === "string" && brief.description.en.trim(), "English description is required");
   requireValue(Array.isArray(brief.tags) && brief.tags.length >= 2, "at least two tags are required");
   requireValue(typeof brief.imagePrompt === "string" && brief.imagePrompt.length >= 40, "imagePrompt is too short");
   requireValue(typeof brief.rightsStatement === "string" && brief.rightsStatement.length >= 30, "rightsStatement is too short");
+  requireValue(
+    brief.promptProfile == null || ["city", "global", "tribute"].includes(brief.promptProfile),
+    "unsupported promptProfile",
+  );
+  requireValue(
+    brief.audience == null || ["global", "en", "zh-CN"].includes(brief.audience),
+    "unsupported audience",
+  );
+  if (brief.featuredRank) {
+    requireValue(
+      Number.isInteger(brief.featuredRank.en)
+        && brief.featuredRank.en >= 0
+        && Number.isInteger(brief.featuredRank["zh-CN"])
+        && brief.featuredRank["zh-CN"] >= 0,
+      "featuredRank must contain non-negative localized integers",
+    );
+  }
   if (rightsProfile === "fan-art") {
     requireValue(typeof brief.fanArt?.work?.["zh-CN"] === "string", "fanArt.work Chinese name is required");
     requireValue(typeof brief.fanArt?.work?.en === "string", "fanArt.work English name is required");
@@ -75,7 +104,10 @@ function themeFromBrief(brief) {
     pair: brief.pair || brief.id,
     variant: brief.variant,
     rightsProfile: brief.rightsProfile || "original",
+    ...(brief.audience ? { audience: brief.audience } : {}),
+    ...(brief.featuredRank ? { featuredRank: brief.featuredRank } : {}),
     name: brief.name,
+    tagline: brief.tagline,
     description: brief.description,
     tags: brief.tags,
     art: brief.art,
@@ -100,6 +132,7 @@ async function main() {
   const theme = themeFromBrief(brief);
   const imageJob = {
     id: brief.id,
+    ...(brief.promptProfile ? { promptProfile: brief.promptProfile } : {}),
     ...(theme.rightsProfile === "fan-art"
       ? {
           rightsProfile: "fan-art",

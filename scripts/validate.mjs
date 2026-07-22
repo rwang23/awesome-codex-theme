@@ -367,7 +367,19 @@ export async function validateRepository() {
           : sourceJob.promptProfile === "city"
             ? sourceJobs.cityPrompt
             : sourceJobs.commonPrompt;
-    const completePrompt = commonPrompt + "\n\nScene brief: " + sourceJob.prompt;
+    const promptCommonReplacement = sourceJob.promptCommonReplacement;
+    const replacementValid = promptCommonReplacement == null || (
+      typeof promptCommonReplacement === "object"
+      && typeof promptCommonReplacement.find === "string"
+      && promptCommonReplacement.find.length > 0
+      && typeof promptCommonReplacement.replace === "string"
+      && commonPrompt.includes(promptCommonReplacement.find)
+    );
+    check(replacementValid, sourceJob.id + " source prompt common replacement is invalid", errors);
+    const effectiveCommonPrompt = replacementValid && promptCommonReplacement
+      ? commonPrompt.replace(promptCommonReplacement.find, promptCommonReplacement.replace)
+      : commonPrompt;
+    const completePrompt = effectiveCommonPrompt + "\n\nScene brief: " + sourceJob.prompt;
     check(
       sourceDimensions.width === SOURCE_WIDTH && sourceDimensions.height === SOURCE_HEIGHT,
       catalogTheme.id + " source-art dimensions mismatch",

@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.3.1 - 2026-07-22
 
 - Replaced the temporary Beta-only Full Skin gate with a per-device runtime
   probe. Any detected Stable or Beta build with a known exact version can be
@@ -11,6 +11,10 @@
   Theme Manager now shows a safe-retry status while it is still trying and
   immediately returns a final CDP or launch diagnostic instead of waiting out
   the full Apply timeout.
+- Added 15 themes: five original xianxia environments, five disclosed
+  non-commercial *A Record of a Mortal's Journey to Immortality* fan-art
+  scenes, and five original American workspace moods. The pinned Beta evidence
+  now covers all 68 themes and 136 light/dark modes.
 
 ## 0.3.0 - 2026-07-21
 

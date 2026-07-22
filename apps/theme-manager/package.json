@@ -1,6 +1,6 @@
 {
   "name": "@awesome-codex-theme/theme-manager",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "private": true,
   "type": "module",
   "description": "Cross-platform declarative full-skin manager for Awesome Codex Theme.",

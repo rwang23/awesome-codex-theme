@@ -27,16 +27,16 @@ async function exists(target) {
   }
 }
 
-test("repository validates fifty-three dual-mode code-free themes in eight collections", async function () {
+test("repository validates sixty-eight dual-mode code-free themes in eleven collections", async function () {
   const result = await validateRepository();
   assert.deepEqual(result, {
-    sources: 53,
-    themes: 53,
-    modes: 106,
-    packages: 53,
-    fullSkinExports: 106,
-    nativeExports: 106,
-    captures: 106
+    sources: 68,
+    themes: 68,
+    modes: 136,
+    packages: 68,
+    fullSkinExports: 136,
+    nativeExports: 136,
+    captures: 136
   });
 });
 
@@ -46,7 +46,7 @@ test("registry exposes original and disclosed fan-art collections", async functi
     readFile(path.join(ROOT, "themes", "registry.json"), "utf8").then(JSON.parse),
     readFile(path.join(ROOT, "screenshots", "codex-beta-26.715.3651.0", "manifest.json"), "utf8").then(JSON.parse),
   ]);
-  assert.equal(catalog.catalogRevision, 2026072101);
+  assert.equal(catalog.catalogRevision, 2026072201);
   assert.equal(registry.catalogRevision, catalog.catalogRevision);
   assert.ok(
     String(catalog.catalogRevision).slice(0, 8)
@@ -63,13 +63,16 @@ test("registry exposes original and disclosed fan-art collections", async functi
     ["donghua-memory-scenes-01", "standalone", 4],
     ["codex-community-tributes-01", "standalone", 2],
     ["global-workspace-favorites-01", "standalone", 6],
-    ["china-life-favorites-01", "standalone", 5]
+    ["china-life-favorites-01", "standalone", 5],
+    ["mortal-journey-fan-art-02", "standalone", 5],
+    ["original-xianxia-02", "standalone", 5],
+    ["american-workspace-favorites-02", "standalone", 5]
   ]);
   assert.equal(registry.themes.filter(function (theme) { return theme.variant === "cityscape"; }).length, 20);
-  assert.equal(registry.themes.filter(function (theme) { return theme.variant === "scene"; }).length, 13);
-  assert.equal(registry.themes.filter(function (theme) { return theme.rightsProfile === "fan-art"; }).length, 14);
-  assert.equal(registry.themes.filter(function (theme) { return theme.rightsProfile === "original"; }).length, 39);
-  assert.equal(registry.themes.filter(function (theme) { return theme.audience === "en"; }).length, 18);
+  assert.equal(registry.themes.filter(function (theme) { return theme.variant === "scene"; }).length, 23);
+  assert.equal(registry.themes.filter(function (theme) { return theme.rightsProfile === "fan-art"; }).length, 19);
+  assert.equal(registry.themes.filter(function (theme) { return theme.rightsProfile === "original"; }).length, 49);
+  assert.equal(registry.themes.filter(function (theme) { return theme.audience === "en"; }).length, 23);
   assert.equal(registry.themes.filter(function (theme) { return theme.audience === "zh-CN"; }).length, 6);
   assert.equal(registry.themes.find(function (theme) { return theme.id === "tibo-reset-saint"; }).featuredRank.en, 1);
   assert.equal(registry.themes.find(function (theme) { return theme.id === "tibo-reset-immortal"; }).featuredRank["zh-CN"], 1);
@@ -160,7 +163,7 @@ test("registry exposes declarative full skins, Native fallbacks, and no third-pa
       assert.equal(payload.theme.opaqueWindows, true);
     }
   }
-  assert.equal(nativeValues.size, 106);
+  assert.equal(nativeValues.size, 136);
 });
 
 test("Codex Native parser rejects undeclared fields", function () {
@@ -200,7 +203,7 @@ test("static gallery builds with every public contract artifact", async function
   const output = path.join(temporary, "site");
   try {
     const result = await buildSite(output);
-    assert.equal(result.themes, 53);
+    assert.equal(result.themes, 68);
     const required = [
       "index.html",
       "assets/app.js",
@@ -222,7 +225,12 @@ test("static gallery builds with every public contract artifact", async function
     const app = await readFile(path.join(output, "assets", "app.js"), "utf8");
     const registry = JSON.parse(await readFile(path.join(output, "themes", "registry.json"), "utf8"));
     const catalogManifest = JSON.parse(await readFile(path.join(output, "downloads", "catalog.json"), "utf8"));
+    const tauriConfig = JSON.parse(await readFile(
+      path.join(ROOT, "apps", "theme-manager", "src-tauri", "tauri.conf.json"),
+      "utf8",
+    ));
     assert.equal(catalogManifest.registry.catalogRevision, registry.catalogRevision);
+    assert.equal(catalogManifest.desktop.currentVersion, tauriConfig.version);
     for (const theme of registry.themes) {
       assert.equal(await exists(path.join(output, ...theme.package.path.split("/"))), true, theme.package.path);
       for (const mode of ["light", "dark"]) {
@@ -431,7 +439,7 @@ test("real screenshot evidence covers every mode and confirms Beta restoration",
   assert.equal(manifest.runtime.implementationVersion, "act-full-skin-runtime-v2");
   assert.equal(manifest.runtime.earlyInjection, true);
   assert.equal(manifest.runtime.removedAfterCapture, true);
-  assert.equal(manifest.captures.length, 106);
+  assert.equal(manifest.captures.length, 136);
   assert.equal(manifest.captures.every(function (capture) {
     return capture.runtimeSha256 === manifest.runtime.sha256
       && capture.markerVersion === "act-full-skin-v1"
@@ -447,7 +455,7 @@ test("real screenshot evidence covers every mode and confirms Beta restoration",
   }), true);
   assert.equal(new Set(manifest.captures.map(function (capture) {
     return capture.themeId + "|" + capture.mode;
-  })).size, 106);
+  })).size, 136);
 });
 
 test("Windows installer is a no-admin helper with a bundled Registry", async function () {
@@ -467,6 +475,7 @@ test("Windows installer is a no-admin helper with a bundled Registry", async fun
   assert.match(script, /OpenAI\.CodexBeta/);
   assert.match(script, /shell:AppsFolder/);
   assert.match(script, /ConvertFrom-ACTNativeTheme/);
+  assert.match(script, /\$expectedExports = @\("codex-full-skin", "codex-native"\)/);
   assert.doesNotMatch(script, /WindowsApps.*(?:Write|Set-Content)|app\.asar|remote-debugging-port/i);
 });
 
@@ -576,7 +585,10 @@ test("desktop beta release requires updater signing and discloses deferred platf
   assert.match(workflow, /TAURI_SIGNING_PRIVATE_KEY/);
   assert.match(workflow, /TAURI_SIGNING_PRIVATE_KEY_PASSWORD/);
   assert.match(workflow, /TAURI_UPDATER_PUBKEY/);
+  assert.match(workflow, /Validate Windows portable helper/);
+  assert.match(workflow, /npm run installer:validate/);
   assert.match(workflow, /Updater-signed Tauri Theme Manager beta/);
+  assert.match(workflow, /releaseName: "Awesome Codex Theme \$\{\{ github\.ref_name \}\} Beta"/);
   assert.match(workflow, /unknown-publisher warning/);
   assert.match(workflow, /prerelease: false/);
   assert.match(workflow, /releaseDraft: true/);

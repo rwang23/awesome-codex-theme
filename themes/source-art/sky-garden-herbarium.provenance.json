@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "themeId": "sky-garden-herbarium",
+  "rightsProfile": "original",
+  "workflow": "openai-image-job",
+  "model": "gpt-image-2",
+  "size": "1536x1024",
+  "quality": "high",
+  "jobId": "f29be100-dc8a-4bdb-9ac3-dcad4e737243",
+  "promptSha256": "0387c6b54394f6cc251248bfc7dc1d0f8088661594521b919b1358798f4bf008",
+  "sourceSha256": "69fd6fdfaafe97821391859e5d07a2a160ceba6f06f3ff0f1dd1d62f47babeba",
+  "disclosure": "AI-generated original source art. Prompt and output were reviewed for third-party characters, logos, signatures, and text before release."
+}

@@ -116,7 +116,7 @@ prerelease 标志恢复为 `true`。
 - Apple Silicon 与 Intel 是否都包含 `.app.tar.gz` 和对应 `.sig`；
 - `latest.json` 或平台更新元数据是否引用准确资产；
 - 文件名、架构、字节数和 SHA-256；
-- Release 标题、alpha 版本和正文是否明确写出 Beta；
+- Release 标题和正文是否明确写出 Beta；
 - GitHub `prerelease` 标志是否为 `false`，确保 updater 的 `latest` endpoint 可发现；
 - 警告文案是否可见。
 

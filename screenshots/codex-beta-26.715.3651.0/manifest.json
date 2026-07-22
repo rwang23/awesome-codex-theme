@@ -1,7 +1,7 @@
 {
   "schemaVersion": "act-full-skin-capture-manifest-v1",
   "status": "complete",
-  "capturedAt": "2026-07-21T08:59:54.135Z",
+  "capturedAt": "2026-07-22T01:25:51.458Z",
   "testBench": {
     "packageFamilyName": "OpenAI.CodexBeta_2p2nqsd0c76g0",
     "packageFullName": "OpenAI.CodexBeta_26.715.3651.0_x64__2p2nqsd0c76g0",
@@ -82,7 +82,22 @@
       "changan-lanterns",
       "dunhuang-starlight",
       "bamboo-tea-rain",
-      "northeast-snow-train"
+      "northeast-snow-train",
+      "appalachian-cabin-focus",
+      "cloud-forge-quiet",
+      "coastal-studio-morning",
+      "desert-observatory-night",
+      "firefly-river-pact",
+      "great-lakes-rainroom",
+      "jade-archive-dawn",
+      "late-diner-afterhours",
+      "mortal-bamboo-thunder",
+      "mortal-herb-lantern",
+      "mortal-moon-market",
+      "mortal-river-ferry",
+      "mortal-talisman-rain",
+      "plum-sword-snow",
+      "sky-garden-herbarium"
     ],
     "modes": [
       "light",
@@ -2951,6 +2966,816 @@
       },
       "modelLabel": "5.6 Sol Max",
       "capturedAt": "2026-07-21T09:03:06.357Z"
+    },
+    {
+      "themeId": "appalachian-cabin-focus",
+      "mode": "light",
+      "path": "screenshots/codex-beta-26.715.3651.0/appalachian-cabin-focus-light.png",
+      "sha256": "eb1aa0eca678b34b5e442625092729d57e98a9ceb9e8204b592bbe2fd8d18633",
+      "bytes": 1128252,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "554ce7102b6fb3ffe126cca0c575efe6986ba76e19cd817678e50a24a169da3d",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "markerVersion": "act-full-skin-v1",
+      "implementationVersion": "act-full-skin-runtime-v2",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "artwork": {
+        "complete": true,
+        "width": 2560,
+        "height": 1440,
+        "source": true,
+        "documentBackground": true
+      },
+      "modelLabel": "5.6 Sol Max",
+      "capturedAt": "2026-07-22T01:25:56.134Z"
+    },
+    {
+      "themeId": "appalachian-cabin-focus",
+      "mode": "dark",
+      "path": "screenshots/codex-beta-26.715.3651.0/appalachian-cabin-focus-dark.png",
+      "sha256": "15e87bc183af088781557ef51dfcad702563b2d1de369272eea8fa64709e0070",
+      "bytes": 869784,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "c8a13885b009217eaa5ac8c9d6b45e546d7fec79f9e6d539ee2b55787032529d",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "markerVersion": "act-full-skin-v1",
+      "implementationVersion": "act-full-skin-runtime-v2",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "artwork": {
+        "complete": true,
+        "width": 2560,
+        "height": 1440,
+        "source": true,
+        "documentBackground": true
+      },
+      "modelLabel": "5.6 Sol Max",
+      "capturedAt": "2026-07-22T01:25:57.475Z"
+    },
+    {
+      "themeId": "cloud-forge-quiet",
+      "mode": "light",
+      "path": "screenshots/codex-beta-26.715.3651.0/cloud-forge-quiet-light.png",
+      "sha256": "3c5e1e6b8aafa7fa50eb6acb4e8b2de007622e657d84bbfd7854ed56b92d9a06",
+      "bytes": 1243432,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "2f6b4b02e3fc18d32ad7166fdec990f8f53eb5cd065d8d139e26532c6421f80b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "markerVersion": "act-full-skin-v1",
+      "implementationVersion": "act-full-skin-runtime-v2",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "artwork": {
+        "complete": true,
+        "width": 2560,
+        "height": 1440,
+        "source": true,
+        "documentBackground": true
+      },
+      "modelLabel": "5.6 Sol Max",
+      "capturedAt": "2026-07-22T01:25:59.204Z"
+    },
+    {
+      "themeId": "cloud-forge-quiet",
+      "mode": "dark",
+      "path": "screenshots/codex-beta-26.715.3651.0/cloud-forge-quiet-dark.png",
+      "sha256": "e0628c423f483586dd5848fdd40eb8e95f294f1f1ff305a298cf5fa70cb4d593",
+      "bytes": 979169,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "154c30f82f4f354dca85c513407b774a66828b78dc3d1b2ee3287c8b2904d7af",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "markerVersion": "act-full-skin-v1",
+      "implementationVersion": "act-full-skin-runtime-v2",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "artwork": {
+        "complete": true,
+        "width": 2560,
+        "height": 1440,
+        "source": true,
+        "documentBackground": true
+      },
+      "modelLabel": "5.6 Sol Max",
+      "capturedAt": "2026-07-22T01:26:00.646Z"
+    },
+    {
+      "themeId": "coastal-studio-morning",
+      "mode": "light",
+      "path": "screenshots/codex-beta-26.715.3651.0/coastal-studio-morning-light.png",
+      "sha256": "97454ea4d85cd58b7e61fe566685e62eca00f774512df4d0f9efc9f533a10440",
+      "bytes": 971687,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "ae94969744ac025a4a46a4d2915f679c36fb4d8185f6bebba5dc1d366e1ddeb5",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "markerVersion": "act-full-skin-v1",
+      "implementationVersion": "act-full-skin-runtime-v2",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "artwork": {
+        "complete": true,
+        "width": 2560,
+        "height": 1440,
+        "source": true,
+        "documentBackground": true
+      },
+      "modelLabel": "5.6 Sol Max",
+      "capturedAt": "2026-07-22T01:26:02.092Z"
+    },
+    {
+      "themeId": "coastal-studio-morning",
+      "mode": "dark",
+      "path": "screenshots/codex-beta-26.715.3651.0/coastal-studio-morning-dark.png",
+      "sha256": "f6697c100943fcd1198ad078f3a8f61dc7e99f72970b1add13ac6836bd52f1e5",
+      "bytes": 734231,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "ef62da0c88047b60cb3b690ca1b2abcebc71b5ddd33a71c6209afacbd40cc349",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "markerVersion": "act-full-skin-v1",
+      "implementationVersion": "act-full-skin-runtime-v2",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "artwork": {
+        "complete": true,
+        "width": 2560,
+        "height": 1440,
+        "source": true,
+        "documentBackground": true
+      },
+      "modelLabel": "5.6 Sol Max",
+      "capturedAt": "2026-07-22T01:26:03.339Z"
+    },
+    {
+      "themeId": "desert-observatory-night",
+      "mode": "light",
+      "path": "screenshots/codex-beta-26.715.3651.0/desert-observatory-night-light.png",
+      "sha256": "3ed589f6e6dfca16ef8c4b6975625367f10c4d8d46fc81210355c8819159d041",
+      "bytes": 942045,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "5f4a231217e9cc83a641872f444a97877ced50d82adcfbef4184092758273ce0",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "markerVersion": "act-full-skin-v1",
+      "implementationVersion": "act-full-skin-runtime-v2",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "artwork": {
+        "complete": true,
+        "width": 2560,
+        "height": 1440,
+        "source": true,
+        "documentBackground": true
+      },
+      "modelLabel": "5.6 Sol Max",
+      "capturedAt": "2026-07-22T01:26:04.698Z"
+    },
+    {
+      "themeId": "desert-observatory-night",
+      "mode": "dark",
+      "path": "screenshots/codex-beta-26.715.3651.0/desert-observatory-night-dark.png",
+      "sha256": "22433f9095121fcf9590a3b738ae65597f89a50827bd4c2aae19cd7bb4b7b891",
+      "bytes": 696707,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "fac3add6265a038f44ba4efa7838509b449108aec97abfca82206146eb4f4d4b",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "markerVersion": "act-full-skin-v1",
+      "implementationVersion": "act-full-skin-runtime-v2",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "artwork": {
+        "complete": true,
+        "width": 2560,
+        "height": 1440,
+        "source": true,
+        "documentBackground": true
+      },
+      "modelLabel": "5.6 Sol Max",
+      "capturedAt": "2026-07-22T01:26:06.034Z"
+    },
+    {
+      "themeId": "firefly-river-pact",
+      "mode": "light",
+      "path": "screenshots/codex-beta-26.715.3651.0/firefly-river-pact-light.png",
+      "sha256": "1054a6d6a47f6b20ae156100e1d441752ec582feaae6854cd0cbc340dd5e4f9c",
+      "bytes": 1115877,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "4491c9d6e04ca92434e87fe128a0b56830a056d41603f5a5c2c4b37e6a496efd",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "markerVersion": "act-full-skin-v1",
+      "implementationVersion": "act-full-skin-runtime-v2",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "artwork": {
+        "complete": true,
+        "width": 2560,
+        "height": 1440,
+        "source": true,
+        "documentBackground": true
+      },
+      "modelLabel": "5.6 Sol Max",
+      "capturedAt": "2026-07-22T01:26:07.560Z"
+    },
+    {
+      "themeId": "firefly-river-pact",
+      "mode": "dark",
+      "path": "screenshots/codex-beta-26.715.3651.0/firefly-river-pact-dark.png",
+      "sha256": "18cf2160c7265e8798a6cb493bfd58d96d816d2b1b1bd507abe383594532070c",
+      "bytes": 856653,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "ea6f971f54203a20727ff30fa9cd8bca8d67423b10666d37cf297e95a93c017f",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "markerVersion": "act-full-skin-v1",
+      "implementationVersion": "act-full-skin-runtime-v2",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "artwork": {
+        "complete": true,
+        "width": 2560,
+        "height": 1440,
+        "source": true,
+        "documentBackground": true
+      },
+      "modelLabel": "5.6 Sol Max",
+      "capturedAt": "2026-07-22T01:26:08.924Z"
+    },
+    {
+      "themeId": "great-lakes-rainroom",
+      "mode": "light",
+      "path": "screenshots/codex-beta-26.715.3651.0/great-lakes-rainroom-light.png",
+      "sha256": "682e0b1c6b380fc7f46ce4c6a7008ac917e55f9fafc2cc94961a33b824783cb9",
+      "bytes": 1102529,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "70a6f0de59418fbd7700a8e236df14611f1e4ed3105ed82640c561dbd2b33749",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "markerVersion": "act-full-skin-v1",
+      "implementationVersion": "act-full-skin-runtime-v2",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "artwork": {
+        "complete": true,
+        "width": 2560,
+        "height": 1440,
+        "source": true,
+        "documentBackground": true
+      },
+      "modelLabel": "5.6 Sol Max",
+      "capturedAt": "2026-07-22T01:26:10.441Z"
+    },
+    {
+      "themeId": "great-lakes-rainroom",
+      "mode": "dark",
+      "path": "screenshots/codex-beta-26.715.3651.0/great-lakes-rainroom-dark.png",
+      "sha256": "cd08c5c337dfb5951c2685655912212052e975cfcfa800e90e79323ca6ff6a05",
+      "bytes": 852793,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "42ff756f1efe80e2c9fcae9f7cb2432c61e7fc71951348404a368939d8be510a",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "markerVersion": "act-full-skin-v1",
+      "implementationVersion": "act-full-skin-runtime-v2",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "artwork": {
+        "complete": true,
+        "width": 2560,
+        "height": 1440,
+        "source": true,
+        "documentBackground": true
+      },
+      "modelLabel": "5.6 Sol Max",
+      "capturedAt": "2026-07-22T01:26:11.812Z"
+    },
+    {
+      "themeId": "jade-archive-dawn",
+      "mode": "light",
+      "path": "screenshots/codex-beta-26.715.3651.0/jade-archive-dawn-light.png",
+      "sha256": "3860051471988a7b34043b8f4db45711fa36c9cff0c6c22ceefb210c059de7c3",
+      "bytes": 1186170,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "f6a0a8b0522bad1ebb2a142243afff34ed38940b9fdba85f8df0b6a8942abd14",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "markerVersion": "act-full-skin-v1",
+      "implementationVersion": "act-full-skin-runtime-v2",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "artwork": {
+        "complete": true,
+        "width": 2560,
+        "height": 1440,
+        "source": true,
+        "documentBackground": true
+      },
+      "modelLabel": "5.6 Sol Max",
+      "capturedAt": "2026-07-22T01:26:13.419Z"
+    },
+    {
+      "themeId": "jade-archive-dawn",
+      "mode": "dark",
+      "path": "screenshots/codex-beta-26.715.3651.0/jade-archive-dawn-dark.png",
+      "sha256": "1a2dadf357fae269995c277fc568ed70c06ce32f562c854ab7137311a0a5e41f",
+      "bytes": 910046,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "3c9a5ddc2966c93e14499d653e9a85e3a5b2bbc69aebfc5f780a0b6ff21e1caf",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "markerVersion": "act-full-skin-v1",
+      "implementationVersion": "act-full-skin-runtime-v2",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "artwork": {
+        "complete": true,
+        "width": 2560,
+        "height": 1440,
+        "source": true,
+        "documentBackground": true
+      },
+      "modelLabel": "5.6 Sol Max",
+      "capturedAt": "2026-07-22T01:26:14.866Z"
+    },
+    {
+      "themeId": "late-diner-afterhours",
+      "mode": "light",
+      "path": "screenshots/codex-beta-26.715.3651.0/late-diner-afterhours-light.png",
+      "sha256": "ef71fa7ee86b14c3784a6af18c390be02b6422e81b1f0729938dd1b298d1eda4",
+      "bytes": 989634,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "755cfb845c00416ff4bce77e14f6b83d2da2bf5a1a0693cff959175fc61dbdb5",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "markerVersion": "act-full-skin-v1",
+      "implementationVersion": "act-full-skin-runtime-v2",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "artwork": {
+        "complete": true,
+        "width": 2560,
+        "height": 1440,
+        "source": true,
+        "documentBackground": true
+      },
+      "modelLabel": "5.6 Sol Max",
+      "capturedAt": "2026-07-22T01:26:16.559Z"
+    },
+    {
+      "themeId": "late-diner-afterhours",
+      "mode": "dark",
+      "path": "screenshots/codex-beta-26.715.3651.0/late-diner-afterhours-dark.png",
+      "sha256": "0af98ae28349f4ffcbf4d06dbee21e41402a93fd05d4e3d20e8f23b00f9b35be",
+      "bytes": 729537,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "16fa78b74c84c2173e9042dddb741912c1a6b4013ee36afbfe9cd7b3b2095484",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "markerVersion": "act-full-skin-v1",
+      "implementationVersion": "act-full-skin-runtime-v2",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "artwork": {
+        "complete": true,
+        "width": 2560,
+        "height": 1440,
+        "source": true,
+        "documentBackground": true
+      },
+      "modelLabel": "5.6 Sol Max",
+      "capturedAt": "2026-07-22T01:26:18.040Z"
+    },
+    {
+      "themeId": "mortal-bamboo-thunder",
+      "mode": "light",
+      "path": "screenshots/codex-beta-26.715.3651.0/mortal-bamboo-thunder-light.png",
+      "sha256": "e97176cf958e783213e5919e95293d39c3db5d9877ca5a16eff4c39bca8d9fdd",
+      "bytes": 1155203,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "165c687e9b5e9ef9aef1d1cc41a422e16c6294006a85b6a1e67bd2d52375b9ff",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "markerVersion": "act-full-skin-v1",
+      "implementationVersion": "act-full-skin-runtime-v2",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "artwork": {
+        "complete": true,
+        "width": 2560,
+        "height": 1440,
+        "source": true,
+        "documentBackground": true
+      },
+      "modelLabel": "5.6 Sol Max",
+      "capturedAt": "2026-07-22T01:26:19.862Z"
+    },
+    {
+      "themeId": "mortal-bamboo-thunder",
+      "mode": "dark",
+      "path": "screenshots/codex-beta-26.715.3651.0/mortal-bamboo-thunder-dark.png",
+      "sha256": "5129a546ec3813d280cf3bd90923fc9226be84a1c74f1fc65dc36cc77421c071",
+      "bytes": 887029,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "e7bea57a0f208b440122326591ee2baea483b63f8e453d2e37eed6f931a532c9",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "markerVersion": "act-full-skin-v1",
+      "implementationVersion": "act-full-skin-runtime-v2",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "artwork": {
+        "complete": true,
+        "width": 2560,
+        "height": 1440,
+        "source": true,
+        "documentBackground": true
+      },
+      "modelLabel": "5.6 Sol Max",
+      "capturedAt": "2026-07-22T01:26:21.384Z"
+    },
+    {
+      "themeId": "mortal-herb-lantern",
+      "mode": "light",
+      "path": "screenshots/codex-beta-26.715.3651.0/mortal-herb-lantern-light.png",
+      "sha256": "54e530ccd0917ead15fc2e1db1101bc414e03f821c984af0ec64187551a2d906",
+      "bytes": 1255884,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "853919ddf40b92dbb1f0bc45bcb620df02b7fc802dd41e5a7dfbbaeb870431a2",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "markerVersion": "act-full-skin-v1",
+      "implementationVersion": "act-full-skin-runtime-v2",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "artwork": {
+        "complete": true,
+        "width": 2560,
+        "height": 1440,
+        "source": true,
+        "documentBackground": true
+      },
+      "modelLabel": "5.6 Sol Max",
+      "capturedAt": "2026-07-22T01:26:23.246Z"
+    },
+    {
+      "themeId": "mortal-herb-lantern",
+      "mode": "dark",
+      "path": "screenshots/codex-beta-26.715.3651.0/mortal-herb-lantern-dark.png",
+      "sha256": "e141f96d57f82fdd0c0257088e3e8d30361da42e7293d262fe9e4ac5568c072f",
+      "bytes": 964769,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "56e88c16ec239023b55145e36ddc8e9fcc66f1e29d971597d0ea803eb2ed7fa9",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "markerVersion": "act-full-skin-v1",
+      "implementationVersion": "act-full-skin-runtime-v2",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "artwork": {
+        "complete": true,
+        "width": 2560,
+        "height": 1440,
+        "source": true,
+        "documentBackground": true
+      },
+      "modelLabel": "5.6 Sol Max",
+      "capturedAt": "2026-07-22T01:26:24.806Z"
+    },
+    {
+      "themeId": "mortal-moon-market",
+      "mode": "light",
+      "path": "screenshots/codex-beta-26.715.3651.0/mortal-moon-market-light.png",
+      "sha256": "ff509a3f4fb0ed92aaf87622c4b6dd36ac96e0ed97a7f831c71d1ffc1a2a5565",
+      "bytes": 1046316,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "7be713c0d184aae819ef97e4b675e8053849b119ecbe050d213cce46088afde4",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "markerVersion": "act-full-skin-v1",
+      "implementationVersion": "act-full-skin-runtime-v2",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "artwork": {
+        "complete": true,
+        "width": 2560,
+        "height": 1440,
+        "source": true,
+        "documentBackground": true
+      },
+      "modelLabel": "5.6 Sol Max",
+      "capturedAt": "2026-07-22T01:26:26.683Z"
+    },
+    {
+      "themeId": "mortal-moon-market",
+      "mode": "dark",
+      "path": "screenshots/codex-beta-26.715.3651.0/mortal-moon-market-dark.png",
+      "sha256": "5e5e3c57262e45ea362054f804374607b11da4fada6b27028d3f88bbdd3bc891",
+      "bytes": 786647,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "3a4139cbda3a64d5fb08edcaa9117d8661bd2df1fe93777c135eb4e8a03719a9",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "markerVersion": "act-full-skin-v1",
+      "implementationVersion": "act-full-skin-runtime-v2",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "artwork": {
+        "complete": true,
+        "width": 2560,
+        "height": 1440,
+        "source": true,
+        "documentBackground": true
+      },
+      "modelLabel": "5.6 Sol Max",
+      "capturedAt": "2026-07-22T01:26:28.231Z"
+    },
+    {
+      "themeId": "mortal-river-ferry",
+      "mode": "light",
+      "path": "screenshots/codex-beta-26.715.3651.0/mortal-river-ferry-light.png",
+      "sha256": "8d751f4d61335b742ea092fb6810cd9ca766a4d0d145d24752326ec9830bee4a",
+      "bytes": 1054480,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "2fbb550967c59dd0e87f21b602d21fff5bb776446c3af2292fcdc13c582a13a9",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "markerVersion": "act-full-skin-v1",
+      "implementationVersion": "act-full-skin-runtime-v2",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "artwork": {
+        "complete": true,
+        "width": 2560,
+        "height": 1440,
+        "source": true,
+        "documentBackground": true
+      },
+      "modelLabel": "5.6 Sol Max",
+      "capturedAt": "2026-07-22T01:26:29.896Z"
+    },
+    {
+      "themeId": "mortal-river-ferry",
+      "mode": "dark",
+      "path": "screenshots/codex-beta-26.715.3651.0/mortal-river-ferry-dark.png",
+      "sha256": "105b152dde721312fd39a05150930592ce5f90bacd9a955563b11ad746c39d8e",
+      "bytes": 801450,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "a61c2e91e413c357ff12fc240213869211b69efa7c32a14355b4d1f7c96f2221",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "markerVersion": "act-full-skin-v1",
+      "implementationVersion": "act-full-skin-runtime-v2",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "artwork": {
+        "complete": true,
+        "width": 2560,
+        "height": 1440,
+        "source": true,
+        "documentBackground": true
+      },
+      "modelLabel": "5.6 Sol Max",
+      "capturedAt": "2026-07-22T01:26:31.414Z"
+    },
+    {
+      "themeId": "mortal-talisman-rain",
+      "mode": "light",
+      "path": "screenshots/codex-beta-26.715.3651.0/mortal-talisman-rain-light.png",
+      "sha256": "fcf760fb12a8f2097ac717f1d2e2ced39a3d982a066d4747c4e51cedf3ac9ebb",
+      "bytes": 1247385,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "166331ed5945870d3b6979f41a320bd64bfa1fed97fcfe117d78a6cf5a751699",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "markerVersion": "act-full-skin-v1",
+      "implementationVersion": "act-full-skin-runtime-v2",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "artwork": {
+        "complete": true,
+        "width": 2560,
+        "height": 1440,
+        "source": true,
+        "documentBackground": true
+      },
+      "modelLabel": "5.6 Sol Max",
+      "capturedAt": "2026-07-22T01:26:33.372Z"
+    },
+    {
+      "themeId": "mortal-talisman-rain",
+      "mode": "dark",
+      "path": "screenshots/codex-beta-26.715.3651.0/mortal-talisman-rain-dark.png",
+      "sha256": "c71a696c3de8463b3c01f1ec09539dc7fe71a6385cac9f1de4a5d15cac21f5b6",
+      "bytes": 965081,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "474402fc2c69009b8161d1127ae94fe54da6025b7c8b710cf7d87c5e782935c0",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "markerVersion": "act-full-skin-v1",
+      "implementationVersion": "act-full-skin-runtime-v2",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "artwork": {
+        "complete": true,
+        "width": 2560,
+        "height": 1440,
+        "source": true,
+        "documentBackground": true
+      },
+      "modelLabel": "5.6 Sol Max",
+      "capturedAt": "2026-07-22T01:26:35.097Z"
+    },
+    {
+      "themeId": "plum-sword-snow",
+      "mode": "light",
+      "path": "screenshots/codex-beta-26.715.3651.0/plum-sword-snow-light.png",
+      "sha256": "feefcabf963c718b1fa66b66db98d34cfd73ce58fa7eb60e5da1e5816b2f4436",
+      "bytes": 1158291,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "a00939da53fad5e926fee6dec22301e41913c35483d86b98e00ee1dfd7a0c253",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "markerVersion": "act-full-skin-v1",
+      "implementationVersion": "act-full-skin-runtime-v2",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "artwork": {
+        "complete": true,
+        "width": 2560,
+        "height": 1440,
+        "source": true,
+        "documentBackground": true
+      },
+      "modelLabel": "5.6 Sol Max",
+      "capturedAt": "2026-07-22T01:26:37.137Z"
+    },
+    {
+      "themeId": "plum-sword-snow",
+      "mode": "dark",
+      "path": "screenshots/codex-beta-26.715.3651.0/plum-sword-snow-dark.png",
+      "sha256": "e7a0aa565fb1330965361163f55bd04291a9d096f39f25f3654b59cd94a983f1",
+      "bytes": 907427,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "685fac12fe7ce4926d3a2d8d264a7558be7ce3a2551e48354dcfd8598d861dc1",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "markerVersion": "act-full-skin-v1",
+      "implementationVersion": "act-full-skin-runtime-v2",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "artwork": {
+        "complete": true,
+        "width": 2560,
+        "height": 1440,
+        "source": true,
+        "documentBackground": true
+      },
+      "modelLabel": "5.6 Sol Max",
+      "capturedAt": "2026-07-22T01:26:38.760Z"
+    },
+    {
+      "themeId": "sky-garden-herbarium",
+      "mode": "light",
+      "path": "screenshots/codex-beta-26.715.3651.0/sky-garden-herbarium-light.png",
+      "sha256": "28ceb74fc5299e9c62754ee44d05c8dd26d2883968137fc976790a7133774f2d",
+      "bytes": 1304979,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "b84ecb6e0257ae1b6a68de2616c81541b5193b61933010173bedbeb7af1cdcab",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "markerVersion": "act-full-skin-v1",
+      "implementationVersion": "act-full-skin-runtime-v2",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "artwork": {
+        "complete": true,
+        "width": 2560,
+        "height": 1440,
+        "source": true,
+        "documentBackground": true
+      },
+      "modelLabel": "5.6 Sol Max",
+      "capturedAt": "2026-07-22T01:26:41.333Z"
+    },
+    {
+      "themeId": "sky-garden-herbarium",
+      "mode": "dark",
+      "path": "screenshots/codex-beta-26.715.3651.0/sky-garden-herbarium-dark.png",
+      "sha256": "e826a72c060ea66c3bf82383b7de1247fbefd731c14147217c9e103a6f8ceadd",
+      "bytes": 1036960,
+      "width": 1440,
+      "height": 810,
+      "assetSha256": "4f27c3a705eff25c5a0ef7f364ba5ef5353954a22f49debc2dd8ea1c7ae29469",
+      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "markerVersion": "act-full-skin-v1",
+      "implementationVersion": "act-full-skin-runtime-v2",
+      "selectors": {
+        "sidebar": false,
+        "composer": true,
+        "main": true
+      },
+      "artwork": {
+        "complete": true,
+        "width": 2560,
+        "height": 1440,
+        "source": true,
+        "documentBackground": true
+      },
+      "modelLabel": "5.6 Sol Max",
+      "capturedAt": "2026-07-22T01:26:43.214Z"
     }
   ]
 }

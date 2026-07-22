@@ -18,7 +18,7 @@
 
 <p align="center">
   <a href="LICENSE"><img alt="MIT License" src="https://img.shields.io/badge/code-MIT-111827"></a>
-  <img alt="53 套主题" src="https://img.shields.io/badge/themes-53-7c3aed">
+  <img alt="68 套主题" src="https://img.shields.io/badge/themes-68-7c3aed">
   <img alt="Windows 与 macOS" src="https://img.shields.io/badge/platform-Windows%20%7C%20macOS-2563eb">
   <img alt="主题包不带代码" src="https://img.shields.io/badge/theme%20packs-code--free-059669">
 </p>
@@ -52,7 +52,7 @@ Awesome Codex Theme 会把一套皮肤需要的部分一起应用：
 | **江南·雨落小院** | **长安·上元灯火** |
 | ![江南雨落小院主题在真实 ChatGPT Beta 中的效果](screenshots/codex-beta-26.715.3651.0/jiangnan-rain-courtyard-light.png) | ![长安上元灯火主题在真实 ChatGPT Beta 中的效果](screenshots/codex-beta-26.715.3651.0/changan-lanterns-dark.png) |
 
-目前共有 53 套主题、106 个明暗模式。中文体验会优先展示：
+目前共有 68 套主题、136 个明暗模式。中文体验会优先展示：
 
 - 8 套国风修仙主题，包含原画版与 Q 版；
 - 8 套原创中国城市图鉴；
@@ -60,6 +60,9 @@ Awesome Codex Theme 会把一套皮肤需要的部分一起应用：
 - 8 套明确披露的非官方国漫角色致意；
 - 4 套明确披露的非官方国漫记忆场景；
 - 5 套面向中文用户创作的山河与生活主题；
+- 5 套原创修仙意境主题，包括玉简晨阁、萤河渡口和云锻静室；
+- 5 套明确披露、非官方、非商业使用的《凡人修仙传》灵感场景；
+- 5 套面向美国工作场景的原创主题，包括海岸工作室和深夜餐馆；
 - 1 套 2007 桌面怀旧 Q 版主题，以及 2 套 Codex 社区致意主题。
 
 每个模式都有固定 Beta 测试台生成的 1440×810 实机截图。Registry 会把截图与准确应用版本、背景哈希、运行时哈希、字节数和页面读回结果绑定。

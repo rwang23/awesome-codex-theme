@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "themeId": "firefly-river-pact",
+  "rightsProfile": "original",
+  "workflow": "openai-image-job",
+  "model": "gpt-image-2",
+  "size": "1536x1024",
+  "quality": "high",
+  "jobId": "95631b22-6c50-40b8-b6d2-777c74def2f7",
+  "promptSha256": "489f66c355e6aa94864916821793f3c57cccdf486b564afe9420d0b57c82b05a",
+  "sourceSha256": "19a1e78781c570425fc28ad915847120dbdc616a998153a215e4bb84fb78f490",
+  "disclosure": "AI-generated original source art. Prompt and output were reviewed for third-party characters, logos, signatures, and text before release."
+}

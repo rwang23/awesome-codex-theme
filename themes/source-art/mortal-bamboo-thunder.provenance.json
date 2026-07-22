@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "themeId": "mortal-bamboo-thunder",
+  "rightsProfile": "fan-art",
+  "workflow": "openai-image-job",
+  "model": "gpt-image-2",
+  "size": "1536x1024",
+  "quality": "high",
+  "jobId": "be99001b-3725-47e0-824b-d2d2385ba2bf",
+  "promptSha256": "7175b6aa54f71d4dcd539fef8ae04453875317a54b1ea6194acd3d1e8ea06eea",
+  "sourceSha256": "75ea2eca04477d05bbf1d9e3aad5e9f611c03348c766d25ec7075f7764443252",
+  "disclosure": "AI-generated unofficial fan art. No official image assets were used. Underlying character and franchise rights remain with their respective rights holders.",
+  "fanArt": {
+    "work": {
+      "zh-CN": "凡人修仙传",
+      "en": "A Record of a Mortal's Journey to Immortality"
+    },
+    "characters": {
+      "zh-CN": [
+        "韩立"
+      ],
+      "en": [
+        "Han Li"
+      ]
+    }
+  }
+}

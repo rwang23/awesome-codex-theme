@@ -664,10 +664,10 @@ mod tests {
     const REGISTRY: &[u8] = include_bytes!("../../../../themes/registry.json");
 
     #[test]
-    fn bundled_registry_has_fifty_three_valid_dual_mode_themes() {
+    fn bundled_registry_has_sixty_eight_valid_dual_mode_themes() {
         let registry = validate_registry(REGISTRY).expect("registry should validate");
-        assert_eq!(registry["catalogRevision"].as_u64(), Some(2026072101));
-        assert_eq!(registry["themes"].as_array().map(Vec::len), Some(53));
+        assert_eq!(registry["catalogRevision"].as_u64(), Some(2026072201));
+        assert_eq!(registry["themes"].as_array().map(Vec::len), Some(68));
     }
 
     #[test]

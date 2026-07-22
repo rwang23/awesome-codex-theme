@@ -9,6 +9,10 @@
     "zh-CN": "示例·记忆场面",
     "en": "Example Memory Scene"
   },
+  "tagline": {
+    "zh-CN": "用新的机位，留住熟悉的记忆。",
+    "en": "A familiar memory from a new angle."
+  },
   "description": {
     "zh-CN": "用新的机位和环境叙事重构一个已声明场面，左侧安静承载工作区。",
     "en": "Recompose a declared scene with a new camera and environmental story while keeping the workspace quiet on the left."

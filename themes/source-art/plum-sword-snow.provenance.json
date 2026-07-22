@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "themeId": "plum-sword-snow",
+  "rightsProfile": "original",
+  "workflow": "openai-image-job",
+  "model": "gpt-image-2",
+  "size": "1536x1024",
+  "quality": "high",
+  "jobId": "22872d3a-c9e4-45f4-b00e-de7bc0995c56",
+  "promptSha256": "ead5b8a56c3b3a50b45c609689fc26fd81918fe1e6d84f0c298fe908f9c9ce48",
+  "sourceSha256": "0db74a9df358991d4261236a9ad94a31a963e187b75ea2c6693c2d1e01015a1a",
+  "disclosure": "AI-generated original source art. Prompt and output were reviewed for third-party characters, logos, signatures, and text before release."
+}

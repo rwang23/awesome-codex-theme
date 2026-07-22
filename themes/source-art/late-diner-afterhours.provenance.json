@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "themeId": "late-diner-afterhours",
+  "rightsProfile": "original",
+  "workflow": "openai-image-job",
+  "model": "gpt-image-2",
+  "size": "1536x1024",
+  "quality": "high",
+  "jobId": "e360339c-b526-4ec4-a23a-c27a506bb440",
+  "promptSha256": "f5107d65ae27444fdff95f576042b69731ab3b7d5024b7a33196e3c98945b776",
+  "sourceSha256": "39a525aeca2f7fa5d5ecfeec798f6203e16222a8d80fa08cbc0147cac7923860",
+  "disclosure": "AI-generated original source art. Prompt and output were reviewed for third-party characters, logos, signatures, and text before release."
+}

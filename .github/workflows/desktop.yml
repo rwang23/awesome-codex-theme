@@ -102,6 +102,10 @@ jobs:
       - name: Generate, validate, and prepare desktop assets
         run: npm run generate && npm run validate && npm run desktop:prepare
 
+      - name: Validate Windows portable helper
+        if: runner.os == 'Windows'
+        run: npm run installer:validate
+
       - name: Install desktop dependencies
         run: npm ci --prefix apps/theme-manager
 
@@ -210,7 +214,7 @@ jobs:
           projectPath: apps/theme-manager
           args: "--config src-tauri/tauri.release.conf.json ${{ matrix.build-args }}"
           tagName: ${{ github.ref_name }}
-          releaseName: "Awesome Codex Theme ${{ github.ref_name }}"
+          releaseName: "Awesome Codex Theme ${{ github.ref_name }} Beta"
           releaseAssetNamePattern: ${{ matrix.release-asset-name }}
           releaseBody: "Updater-signed Tauri Theme Manager beta with ACT Full Skin v1. Windows Authenticode and Apple Developer ID signing/notarization are not included in this beta, so the operating system may show an unknown-publisher warning. macOS bundles carry an ad-hoc signature for package integrity only. The app applies verified backgrounds, materials, colors, and theme copy without modifying ChatGPT application files."
           prerelease: false

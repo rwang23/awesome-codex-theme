@@ -30,7 +30,7 @@ Windows 开发不需要 Xcode。macOS 构建由 GitHub Actions 的 macOS runner 
 - 根据系统语言自动选择中文或英文，并允许手动切换和记住选择；
 - 馆藏、素材来源与授权、视觉表达三类组合筛选；
 - 双语搜索和主题列表；
-- 106 张真实 Beta 明暗截图；
+- 136 张真实 Beta 明暗截图；
 - Stable/Beta 目标选择；
 - 应用、重新应用和恢复；
 - Windows 与 macOS 共用的“始终应用”开关、当前状态和一键注销；
@@ -65,7 +65,7 @@ install_app_update
 
 ## Registry 与素材
 
-管理器包含一个构建时 Registry，以及从 106 张已验证实机截图确定性缩放出的
+管理器包含一个构建时 Registry，以及从 136 张已验证实机截图确定性缩放出的
 720×405 浏览缩略图。完整 1440×810 证据仍保留在仓库和 Pages；桌面包不重复
 携带全部原始 PNG。启动后，管理器会读取 GitHub Pages 的
 `downloads/catalog.json`，先核对 Registry URL、单调递增的
@@ -135,8 +135,8 @@ Gatekeeper 和 Full Skin 读回仍需单独验收。
 - 主按钮在 Beta 已经运行时完成应用内确认、受控重开和 `active` 回执，读回
   2560×1440 Blob 图片，并在 Pull requests 与首页之间保持文档背景；
 - 关闭后 Theme Manager、Beta 进程、用户启动项和本次动态 CDP 端口全部无残留；
-- 53 套主题、106 个模式完成实机截图；
-- Pages 构建包含 106 张 Full Skin 原图。
+- 68 套主题、136 个模式完成实机截图；
+- Pages 构建包含 136 张 Full Skin 原图。
 
 ## 发布与签名
 

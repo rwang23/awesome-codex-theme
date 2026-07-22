@@ -485,6 +485,210 @@
     {
       "id": "northeast-snow-train",
       "prompt": "An original winter journey across the broad northeastern Chinese snowfields at blue hour. The calm left half is open snow, low wind-carved ridges, dark utility poles, and distant larch forest under a pale steel sky. On the right, an unbranded deep-green mid-century passenger train curves through the landscape, its warm carriage windows revealing only soft silhouettes and steam-fogged glass. Practical railway details, heavy cold air, muted green, indigo, cream, and amber, documentary warmth translated into refined animation-background painting. No railway logo, carriage number, text, station sign, flags, copied train photograph, holiday advertising, or fantasy locomotive."
+    },
+    {
+      "id": "appalachian-cabin-focus",
+      "promptCommonReplacement": {
+        "find": "Landscape 3:2.",
+        "replace": "MANDATORY STYLE: deliver clearly hand-painted 2D animation background art with visible painterly brushwork and intentionally illustrative forms. Do not resemble a photograph, live-action still, glossy 3D render, or photorealistic anatomy or material texture. Landscape 3:2."
+      },
+      "promptProfile": "global",
+      "prompt": "An entirely original mountain cabin workspace in soft overcast morning light. Keep the left 46 percent as a broad low-detail window view of misty blue-gray ridges and quiet trees. On the right, show an invented timber desk, folded wool throw, simple task lamp, stone hearth glow, and a few unbranded objects with tactile walnut and moss colors. CORRECTION: the desk must be completely screen-free and analog; do not include a laptop, monitor, mobile device, keyboard, code, interface panel, writing, book title, legible or illegible text. No people, text, signs, logos, brand marks, exact landmark, photograph, or copied composition."
+    },
+    {
+      "id": "cloud-forge-quiet",
+      "promptCommonReplacement": {
+        "find": "No photorealism.",
+        "replace": "MANDATORY STYLE: deliver clearly hand-painted 2D animation background art with visible painterly brushwork and intentionally illustrative forms. Do not resemble a photograph, live-action still, glossy 3D render, or photorealistic anatomy or material texture."
+      },
+      "prompt": "An entirely original cliffside xianxia workshop above a sea of cloud. Keep the left 46 percent as quiet pale sky, layered cloud banks, and faint floating rock silhouettes. On the right, an invented compact stone forge glows with one low amber fire beside anonymous metal tools, a cooling bowl, and wind-chimes without symbols; no person is visible. Believable materials, polished environmental detail, no franchise reference, existing fantasy forge, text, logo, or copied composition."
+    },
+    {
+      "id": "coastal-studio-morning",
+      "promptCommonReplacement": {
+        "find": "Landscape 3:2.",
+        "replace": "MANDATORY STYLE: deliver clearly hand-painted 2D animation background art with visible painterly brushwork and intentionally illustrative forms. Do not resemble a photograph, live-action still, glossy 3D render, or photorealistic anatomy or material texture. Landscape 3:2."
+      },
+      "promptProfile": "global",
+      "prompt": "An entirely original coastal creative studio at early morning, made for a calm coding workspace. Keep the left 46 percent as a low-detail pale ocean horizon, soft marine fog, and broad quiet sky. On the right, show a simple wood desk, one unbranded ceramic cup, a linen curtain, coastal grasses, and invented low cliffs in sea-glass green and warm sand tones. No people, text, signs, logos, brand marks, exact landmark, photograph, or copied composition."
+    },
+    {
+      "id": "desert-observatory-night",
+      "promptCommonReplacement": {
+        "find": "Landscape 3:2.",
+        "replace": "MANDATORY STYLE: deliver clearly hand-painted 2D animation background art with visible painterly brushwork and intentionally illustrative forms. Do not resemble a photograph, live-action still, glossy 3D render, or photorealistic anatomy or material texture. Landscape 3:2."
+      },
+      "promptProfile": "global",
+      "prompt": "An entirely original small desert observatory at night, designed as a focused coding backdrop. Keep the left 46 percent as low-detail deep-blue sky, sparse stars, and softly layered desert silhouettes. On the right, place an invented compact observatory dome, a simple workbench, red-rock forms, and restrained warm amber instrument light. No people, text, signs, logos, brand marks, exact landmark, named telescope, photograph, or copied composition."
+    },
+    {
+      "id": "firefly-river-pact",
+      "promptCommonReplacement": {
+        "find": "No photorealism.",
+        "replace": "MANDATORY STYLE: deliver clearly hand-painted 2D animation background art with visible painterly brushwork and intentionally illustrative forms. Do not resemble a photograph, live-action still, glossy 3D render, or photorealistic anatomy or material texture."
+      },
+      "prompt": "An entirely original xianxia spirit-river crossing at blue hour. Keep the left half as low-detail silver water, open fog, and distant cloud hills. On the right, an invented narrow wooden ferry rests beside worn stone lanterns, reeds, and hundreds of soft gold fireflies; no people are present. The scene feels contemplative, with mineral indigo, moss green, and one quiet amber glow. No franchise reference, character, familiar landmark, text, logo, or copied composition."
+    },
+    {
+      "id": "great-lakes-rainroom",
+      "promptCommonReplacement": {
+        "find": "Landscape 3:2.",
+        "replace": "MANDATORY STYLE: deliver clearly hand-painted 2D animation background art with visible painterly brushwork and intentionally illustrative forms. Do not resemble a photograph, live-action still, glossy 3D render, or photorealistic anatomy or material texture. Landscape 3:2."
+      },
+      "promptProfile": "global",
+      "prompt": "An entirely original lakeside workspace during gentle rain. Keep the left 46 percent as a low-detail expanse of rain-softened water, silver sky, and blurred distant shoreline. On the right, show a modern but unbranded desk, one leafy plant, a large rain-speckled window, and tactile blue-gray and cedar materials. No people, text, signs, logos, brand marks, exact city, photograph, or copied composition."
+    },
+    {
+      "id": "jade-archive-dawn",
+      "promptCommonReplacement": {
+        "find": "No photorealism.",
+        "replace": "MANDATORY STYLE: deliver clearly hand-painted 2D animation background art with visible painterly brushwork and intentionally illustrative forms. Do not resemble a photograph, live-action still, glossy 3D render, or photorealistic anatomy or material texture."
+      },
+      "prompt": "An entirely original xianxia mountain archive at first dawn. Keep the left 46 percent as pale cloud, quiet layered ridges, and a broad low-detail stone terrace. On the right, an invented open timber-and-stone library pavilion holds a few luminous jade slips, tall shelves, wind-touched paper screens, and one warm window. No named character, existing franchise, familiar temple, calligraphy, text, logo, or copied composition. Refined mineral jade and warm parchment atmosphere."
+    },
+    {
+      "id": "late-diner-afterhours",
+      "promptCommonReplacement": {
+        "find": "Landscape 3:2.",
+        "replace": "MANDATORY STYLE: deliver clearly hand-painted 2D animation background art with visible painterly brushwork and intentionally illustrative forms. Do not resemble a photograph, live-action still, glossy 3D render, or photorealistic anatomy or material texture. Landscape 3:2."
+      },
+      "promptProfile": "global",
+      "prompt": "An entirely original late-night neighborhood diner after closing, designed for a warm coding workspace. Keep the left 46 percent as dark plum window glass, soft rain reflections, and low-detail ambient glow. On the right, show invented curved booths, a simple counter, a ceramic mug, warm pendant lights, and abstract wordless pink-red neon. No people, text, menus, signs, logos, brand marks, photograph, or copied composition."
+    },
+    {
+      "id": "mortal-bamboo-thunder",
+      "promptCommonReplacement": {
+        "find": "No photorealism.",
+        "replace": "MANDATORY STYLE: deliver clearly hand-painted 2D animation background art with visible painterly brushwork and intentionally illustrative forms. Do not resemble a photograph, live-action still, glossy 3D render, or photorealistic anatomy or material texture."
+      },
+      "rightsProfile": "fan-art",
+      "fanArt": {
+        "work": {
+          "zh-CN": "凡人修仙传",
+          "en": "A Record of a Mortal's Journey to Immortality"
+        },
+        "characters": {
+          "zh-CN": [
+            "韩立"
+          ],
+          "en": [
+            "Han Li"
+          ]
+        }
+      },
+      "prompt": "Unofficial fan art for 《凡人修仙传》 featuring 韩立 in a completely new bamboo-grove storm scene. Leave the left half as soft rain haze, low-detail bamboo trunks, and muted blue sky. On the right, Han Li in a practical dark-green and indigo robe stands in a small clearing with one restrained blue-white lightning arc far behind him and a simple sword-light held low at his side. Fresh camera angle, environmental tension, no copied official still, poster, emblem, or promotional composition."
+    },
+    {
+      "id": "mortal-herb-lantern",
+      "promptCommonReplacement": {
+        "find": "No photorealism.",
+        "replace": "MANDATORY STYLE: deliver clearly hand-painted 2D animation background art with visible painterly brushwork and intentionally illustrative forms. Do not resemble a photograph, live-action still, glossy 3D render, or photorealistic anatomy or material texture."
+      },
+      "rightsProfile": "fan-art",
+      "fanArt": {
+        "work": {
+          "zh-CN": "凡人修仙传",
+          "en": "A Record of a Mortal's Journey to Immortality"
+        },
+        "characters": {
+          "zh-CN": [
+            "韩立"
+          ],
+          "en": [
+            "Han Li"
+          ]
+        }
+      },
+      "prompt": "Unofficial fan art for 《凡人修仙传》 featuring 韩立 in a completely new moonlit mountain herb garden. Keep the left half as quiet pale mist, wet stone path, and low-detail leaves. On the right, Han Li in a practical indigo travel robe carefully tends luminous spirit herbs beside one warm paper lantern, a small green bottle at his belt and a simple satchel at his side. New environmental storytelling, restrained medicine-green glow, no copied official still, poster, emblem, or signature camera angle."
+    },
+    {
+      "id": "mortal-moon-market",
+      "promptCommonReplacement": {
+        "find": "No photorealism.",
+        "replace": "MANDATORY STYLE: deliver clearly hand-painted 2D animation background art with visible painterly brushwork and intentionally illustrative forms. Do not resemble a photograph, live-action still, glossy 3D render, or photorealistic anatomy or material texture."
+      },
+      "rightsProfile": "fan-art",
+      "fanArt": {
+        "work": {
+          "zh-CN": "凡人修仙传",
+          "en": "A Record of a Mortal's Journey to Immortality"
+        },
+        "characters": {
+          "zh-CN": [
+            "韩立",
+            "南宫婉"
+          ],
+          "en": [
+            "Han Li",
+            "Nangong Wan"
+          ]
+        }
+      },
+      "prompt": "Unofficial fan art for 《凡人修仙传》 featuring 韩立 and 南宫婉 in a completely new moonlit cultivator market. Keep the left half as low-detail midnight mist, soft rooflines, and distant lantern bokeh with no readable signs. On the right, Han Li in a restrained dark-blue travel robe pauses beside a small unmarked spirit-herb stall as Nangong Wan approaches in pale silver-blue layers; warm lanterns, hanging charms without text, and a fresh over-the-shoulder camera angle make the scene intimate. No copied official still, poster, logo, emblem, or promotional composition."
+    },
+    {
+      "id": "mortal-river-ferry",
+      "promptCommonReplacement": {
+        "find": "No photorealism.",
+        "replace": "MANDATORY STYLE: deliver clearly hand-painted 2D animation background art with visible painterly brushwork and intentionally illustrative forms. Do not resemble a photograph, live-action still, glossy 3D render, or photorealistic anatomy or material texture."
+      },
+      "rightsProfile": "fan-art",
+      "fanArt": {
+        "work": {
+          "zh-CN": "凡人修仙传",
+          "en": "A Record of a Mortal's Journey to Immortality"
+        },
+        "characters": {
+          "zh-CN": [
+            "韩立",
+            "南宫婉"
+          ],
+          "en": [
+            "Han Li",
+            "Nangong Wan"
+          ]
+        }
+      },
+      "prompt": "Unofficial fan art for 《凡人修仙传》 featuring 韩立 and 南宫婉 in a completely new night-river composition. Leave the left half as calm moonlit water, slow fog, and faint ripples. On the right, Han Li stands in a simple deep-blue robe at the stern of a narrow wooden ferry while Nangong Wan waits on a reed-lined landing in pale cool-blue layers; a single lantern reflects between them. New camera height, new environment, quiet emotion, no copied official still, poster, emblem, or promotional composition."
+    },
+    {
+      "id": "mortal-talisman-rain",
+      "promptCommonReplacement": {
+        "find": "No photorealism.",
+        "replace": "MANDATORY STYLE: deliver clearly hand-painted 2D animation background art with visible painterly brushwork and intentionally illustrative forms. Do not resemble a photograph, live-action still, glossy 3D render, or photorealistic anatomy or material texture."
+      },
+      "rightsProfile": "fan-art",
+      "fanArt": {
+        "work": {
+          "zh-CN": "凡人修仙传",
+          "en": "A Record of a Mortal's Journey to Immortality"
+        },
+        "characters": {
+          "zh-CN": [
+            "韩立"
+          ],
+          "en": [
+            "Han Li"
+          ]
+        }
+      },
+      "prompt": "Unofficial fan art for 《凡人修仙传》 featuring 韩立 in a completely new rain-soaked mountain pass. Keep the left half low-contrast with blue-gray rain, dark pine silhouettes, and wet stone. On the right, Han Li in a practical charcoal-and-indigo robe moves along the path while several small amber talismans circle his hand, reflecting in puddles; his tied dark hair, travel pouch, and cautious posture tell the story. New composition and weather-driven staging, no copied official still, poster, emblem, or franchise camera angle."
+    },
+    {
+      "id": "plum-sword-snow",
+      "promptCommonReplacement": {
+        "find": "No photorealism.",
+        "replace": "MANDATORY STYLE: deliver clearly hand-painted 2D animation background art with visible painterly brushwork and intentionally illustrative forms. Do not resemble a photograph, live-action still, glossy 3D render, or photorealistic anatomy or material texture."
+      },
+      "prompt": "An entirely original xianxia snow valley at dawn. Keep the left half as broad low-contrast snow fog, distant gray ridges, and soft drifting flakes. On the right, one anonymous traveler in a simple charcoal cloak stands beside sparse crimson plum branches, holding a plain narrow sword with one small cool-blue glint. No recognizable existing character, no named franchise, no iconic costume, text, logo, calligraphy, or copied composition. Quiet scale, restrained vermilion, and crisp mineral winter light."
+    },
+    {
+      "id": "sky-garden-herbarium",
+      "promptCommonReplacement": {
+        "find": "No photorealism.",
+        "replace": "MANDATORY STYLE: deliver clearly hand-painted 2D animation background art with visible painterly brushwork and intentionally illustrative forms. Do not resemble a photograph, live-action still, glossy 3D render, or photorealistic anatomy or material texture."
+      },
+      "prompt": "An entirely original floating sky herbarium in a pale jade morning. Keep the left half as calm low-detail cloud sea, soft turquoise atmosphere, and distant tiny islands. On the right, invented stepped glass-and-stone garden beds hold unusual but non-iconic luminous leaves, water channels, and a small empty viewing bridge; no character is present. Refined botanical detail, natural materials, spacious composition, no franchise reference, text, logo, familiar game garden, or copied composition."
     }
   ]
 }

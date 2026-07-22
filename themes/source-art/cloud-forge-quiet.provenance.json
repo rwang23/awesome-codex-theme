@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "themeId": "cloud-forge-quiet",
+  "rightsProfile": "original",
+  "workflow": "openai-image-job",
+  "model": "gpt-image-2",
+  "size": "1536x1024",
+  "quality": "high",
+  "jobId": "a11d062d-ee7c-4a73-b275-3a1b07a2c54d",
+  "promptSha256": "e47b83bfd5d85617f43fba1e7e671346b7f8b0bdec4d4e362e9d567b031671fd",
+  "sourceSha256": "152833b53eaf14c870ad6df5a60bc9dd3ebfb3504b9e48af26e1d0ff62ab8181",
+  "disclosure": "AI-generated original source art. Prompt and output were reviewed for third-party characters, logos, signatures, and text before release."
+}

@@ -134,9 +134,10 @@ function Assert-ACTRegistry {
         [string]::IsNullOrWhiteSpace("$($theme.tagline.en)")) {
       throw "Theme $($theme.id) is missing bilingual display copy."
     }
-    $exportKeys = @($theme.exports.PSObject.Properties.Name)
-    if ($exportKeys.Count -ne 1 -or $exportKeys[0] -cne "codex-native") {
-      throw "Theme $($theme.id) declares a non-native export."
+    $exportKeys = @($theme.exports.PSObject.Properties.Name | Sort-Object)
+    $expectedExports = @("codex-full-skin", "codex-native")
+    if (($exportKeys -join "|") -cne ($expectedExports -join "|")) {
+      throw "Theme $($theme.id) declares an unsupported export set."
     }
 
     foreach ($mode in @("light", "dark")) {

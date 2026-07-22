@@ -18,7 +18,7 @@
 
 <p align="center">
   <a href="LICENSE"><img alt="MIT License" src="https://img.shields.io/badge/code-MIT-111827"></a>
-  <img alt="53 themes" src="https://img.shields.io/badge/themes-53-7c3aed">
+  <img alt="68 themes" src="https://img.shields.io/badge/themes-68-7c3aed">
   <img alt="Windows and macOS" src="https://img.shields.io/badge/platform-Windows%20%7C%20macOS-2563eb">
   <img alt="Code-free packs" src="https://img.shields.io/badge/theme%20packs-code--free-059669">
 </p>
@@ -52,10 +52,13 @@ Version 1 preserves the original Codex layout and controls. It changes the atmos
 | **Rainy Library** | **Orbital Dawn** |
 | ![Rainy Library theme in real ChatGPT Beta](screenshots/codex-beta-26.715.3651.0/rainy-library-dark.png) | ![Orbital Dawn theme in real ChatGPT Beta](screenshots/codex-beta-26.715.3651.0/orbital-dawn-light.png) |
 
-The collection currently includes 53 themes and 106 light/dark modes. The English experience highlights:
+The collection currently includes 68 themes and 136 light/dark modes. The English experience highlights:
 
 - 12 original World City themes spanning New York, San Francisco, Chicago, Toronto, Vancouver, London, Paris, Berlin, Rome, Tokyo, Singapore, and Sydney;
 - 6 original global workspace themes, from a rainy library to an orbital sunrise;
+- 5 original xianxia environments, including a jade archive, a firefly river, and a cloud forge;
+- 5 disclosed, unofficial, non-commercial fan-art scenes inspired by *A Record of a Mortal's Journey to Immortality*;
+- 5 original American workspace moods, from a coastal studio to an after-hours diner;
 - 1 original 2007 desktop-nostalgia theme with a new, non-franchise chibi mascot;
 - 2 disclosed, unofficial Codex community tributes;
 - the broader original and fan-art catalog, available through language-aware discovery in the Gallery.
