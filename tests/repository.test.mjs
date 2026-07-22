@@ -251,8 +251,10 @@ test("static gallery builds with every public contract artifact", async function
     assert.match(html, /data-filter="scene"/);
     assert.match(html, /id="rightsGroup"/);
     assert.match(html, /id="community"/);
+    assert.match(html, /class="hero-download" href="https:\/\/github\.com\/rwang23\/awesome-codex-theme\/releases"/);
     assert.match(html, /theme-proposal\.yml/);
-    assert.match(html, /docs\/community-registry\.md/);
+    assert.doesNotMatch(html, /community\.ecomstack\.net/);
+    assert.doesNotMatch(html, /docs\/community-registry\.md/);
     assert.doesNotMatch(html, /codex:\/\/settings/);
     assert.match(html, /awesome-codex-theme-installer-windows\.zip/);
     assert.match(html, /theme-manager-windows\.png/);
@@ -261,6 +263,8 @@ test("static gallery builds with every public contract artifact", async function
     assert.match(html, /github\.com\/rwang23\/awesome-codex-theme\/releases/);
     assert.match(app, /Background \+ materials \+ colors \+ copy/);
     assert.match(app, /背景 \+ 材质 \+ 配色 \+ 文案/);
+    assert.match(app, /Download Theme Manager/);
+    assert.match(app, /社区投稿暂未开放/);
     assert.match(app, /nativeTheme\.path/);
     assert.match(app, /modeRecord\.capture/);
     assert.match(app, /function renderCollectionIntro/);

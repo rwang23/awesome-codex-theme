@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Changed the Gallery community section to clearly state that public community
+  submissions are not open and removed its hosted-community link. Added a
+  direct Theme Manager download action to the Gallery hero.
 - Simplified the Gallery's Theme Manager introduction around choosing,
   previewing, applying, and restoring a verified theme.
 - Moved setup guidance ahead of the real-app showcase in both READMEs, added a

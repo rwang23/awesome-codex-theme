@@ -338,6 +338,7 @@ img {
 }
 
 .hero-cta,
+.hero-download,
 .hero-installer,
 .hero-repo {
   display: inline-flex;
@@ -358,6 +359,12 @@ img {
   box-shadow: 0 12px 26px rgba(49, 95, 85, 0.22);
 }
 
+.hero-download {
+  color: #fff;
+  background: #244258;
+  box-shadow: 0 12px 26px rgba(36, 66, 88, 0.2);
+}
+
 .hero-installer {
   color: #fff;
   background: var(--vermilion);
@@ -370,6 +377,7 @@ img {
 }
 
 .hero-cta:hover,
+.hero-download:hover,
 .hero-installer:hover,
 .hero-repo:hover {
   transform: translateY(-2px);
@@ -1564,33 +1572,6 @@ img {
   color: rgba(244, 241, 232, 0.7);
 }
 
-.community-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 28px;
-}
-
-.community-actions a {
-  display: inline-flex;
-  min-width: 168px;
-  align-items: center;
-  justify-content: space-between;
-  gap: 22px;
-  padding: 13px 16px;
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  border-radius: 13px;
-  color: rgba(255, 255, 255, 0.82);
-  font-size: 11px;
-  font-weight: 700;
-}
-
-.community-actions .community-primary {
-  border-color: #e3c07b;
-  color: #17231f;
-  background: #e3c07b;
-}
-
 .community-path {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -2262,6 +2243,7 @@ img {
   }
 
   .hero-cta,
+  .hero-download,
   .hero-installer,
   .hero-repo {
     justify-content: space-between;
