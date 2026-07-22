@@ -501,7 +501,10 @@ fn controller_decision(
         return ControllerDecision::Blocked;
     }
     if !target_running {
-        return if matches!(phase, APPLY_REQUESTED_PHASE | "restarting" | "error") {
+        return if matches!(
+            phase,
+            APPLY_REQUESTED_PHASE | "restarting" | "retrying" | "error"
+        ) {
             ControllerDecision::ApplyStopped
         } else {
             ControllerDecision::Wait
@@ -719,7 +722,7 @@ async fn run_controller(app: AppHandle) -> Result<(), String> {
                         attempts = attempts.saturating_add(1);
                         update_status(
                             &root,
-                            "error",
+                            "retrying",
                             Some(error),
                             attempts,
                             installed,
@@ -783,7 +786,7 @@ async fn run_controller(app: AppHandle) -> Result<(), String> {
         if let Err(error) = platform::stop_target(&target) {
             update_status(
                 &root,
-                "error",
+                "retrying",
                 Some(error),
                 attempts,
                 installed,
@@ -795,7 +798,7 @@ async fn run_controller(app: AppHandle) -> Result<(), String> {
         if let Err(error) = wait_until_stopped(&target).await {
             update_status(
                 &root,
-                "error",
+                "retrying",
                 Some(error),
                 attempts,
                 installed,
@@ -829,7 +832,7 @@ async fn run_controller(app: AppHandle) -> Result<(), String> {
             Err(error) => {
                 update_status(
                     &root,
-                    "error",
+                    "retrying",
                     Some(error),
                     attempts,
                     installed,
@@ -965,6 +968,10 @@ mod tests {
         );
         assert_eq!(
             controller_decision("error", false, false, false),
+            ControllerDecision::ApplyStopped
+        );
+        assert_eq!(
+            controller_decision("retrying", false, false, false),
             ControllerDecision::ApplyStopped
         );
         assert_eq!(

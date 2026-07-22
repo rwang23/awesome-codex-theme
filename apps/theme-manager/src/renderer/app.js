@@ -60,6 +60,7 @@ const translations = {
     persistenceWaiting: "Ready · waiting for ChatGPT",
     persistenceActive: "Kept on for this locally verified version",
     persistenceRestarting: "Safely reopening the selected ChatGPT app",
+    persistenceRetrying: "Retrying after a safe failure",
     persistenceBlocked: "Paused · reapply to verify this version",
     persistenceError: "Paused after a bounded failure",
     persistenceOther: "Another theme is kept: {theme} · {mode}",
@@ -169,6 +170,7 @@ const translations = {
     persistenceWaiting: "已就绪，等待打开 ChatGPT",
     persistenceActive: "正在守护这个已完成本机验证的版本",
     persistenceRestarting: "正在安全重开所选 ChatGPT",
+    persistenceRetrying: "遇到错误，正在安全重试",
     persistenceBlocked: "已暂停，请重新应用以验证当前版本",
     persistenceError: "有限重试失败，已暂停",
     persistenceOther: "当前保持的是：{theme} · {mode}",
@@ -706,6 +708,7 @@ function renderPersistenceState() {
       waiting: "persistenceWaiting",
       active: "persistenceActive",
       restarting: "persistenceRestarting",
+      retrying: "persistenceRetrying",
       blocked: "persistenceBlocked",
       "target-missing": "persistenceBlocked",
       "version-blocked": "persistenceBlocked",
@@ -714,7 +717,7 @@ function renderPersistenceState() {
     };
     const label = t(labels[persistence.phase] || "persistenceDisabled");
     elements.persistenceStatus.textContent = persistence.detail
-      && ["blocked", "target-missing", "version-blocked", "retry-blocked", "error"].includes(persistence.phase)
+      && ["blocked", "target-missing", "version-blocked", "retrying", "retry-blocked", "error"].includes(persistence.phase)
       ? `${label} · ${persistence.detail}`
       : label;
   }
@@ -843,7 +846,7 @@ async function waitForPersistentApply(themeId, mode, channel, timeoutMs = 90000)
     if (persistence.phase === "active" && persistence.autostartEnabled) {
       return persistence;
     }
-    if (["blocked", "target-missing", "version-blocked", "retry-blocked"].includes(persistence.phase)) {
+    if (["blocked", "target-missing", "version-blocked", "retry-blocked", "error"].includes(persistence.phase)) {
       throw new Error(persistence.detail || t("toastApplyFailed"));
     }
     await wait(500);

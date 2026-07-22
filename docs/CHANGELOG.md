@@ -7,6 +7,10 @@
   explicitly applied; only a successful loopback CDP session is recorded for
   future automatic replay. After a ChatGPT update, the manager keeps the new
   version native until the user explicitly reapplies and completes that probe.
+- Separated recoverable controller retries from terminal controller errors.
+  Theme Manager now shows a safe-retry status while it is still trying and
+  immediately returns a final CDP or launch diagnostic instead of waiting out
+  the full Apply timeout.
 
 ## 0.3.0 - 2026-07-21
 
