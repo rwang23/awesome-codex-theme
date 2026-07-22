@@ -44,33 +44,6 @@ Awesome Codex Theme 会把一套皮肤需要的部分一起应用：
 
 第一版保留 Codex 原有布局与控件。它会改变整个工作区的氛围，但不会移动导航、替换输入框，也不会用一张假截图覆盖真实界面。
 
-## 真实使用效果
-
-| 提博大神<br>重置之神 | 老板经典 Q 版 |
-| --- | --- |
-| ![提博大神主题在真实 ChatGPT Beta 中的效果](screenshots/codex-beta-26.715.3651.0/tibo-reset-immortal-light.png) | ![老板经典 Q 版主题在真实 ChatGPT Beta 中的效果](screenshots/codex-beta-26.715.3651.0/retro-boss-2007-light.png) |
-| **江南·雨落小院** | **长安·上元灯火** |
-| ![江南雨落小院主题在真实 ChatGPT Beta 中的效果](screenshots/codex-beta-26.715.3651.0/jiangnan-rain-courtyard-light.png) | ![长安上元灯火主题在真实 ChatGPT Beta 中的效果](screenshots/codex-beta-26.715.3651.0/changan-lanterns-dark.png) |
-
-目前共有 68 套主题、136 个明暗模式。中文体验会优先展示：
-
-- 8 套国风修仙主题，包含原画版与 Q 版；
-- 8 套原创中国城市图鉴；
-- 12 套覆盖北美、欧洲与亚太的原创世界城市图鉴；
-- 8 套明确披露的非官方国漫角色致意；
-- 4 套明确披露的非官方国漫记忆场景；
-- 5 套面向中文用户创作的山河与生活主题；
-- 5 套原创修仙意境主题，包括玉简晨阁、萤河渡口和云锻静室；
-- 5 套明确披露、非官方、非商业使用的《凡人修仙传》灵感场景；
-- 5 套面向美国工作场景的原创主题，包括海岸工作室和深夜餐馆；
-- 1 套 2007 桌面怀旧 Q 版主题，以及 2 套 Codex 社区致意主题。
-
-每个模式都有固定 Beta 测试台生成的 1440×810 实机截图。Registry 会把截图与准确应用版本、背景哈希、运行时哈希、字节数和页面读回结果绑定。
-
-“提博大神”是社区表达喜爱的非官方戏仿与致意，不代表 OpenAI 或被描绘者背书，也不包含官方产品素材。
-
-[在 Gallery 查看全部主题](https://rwang23.github.io/awesome-codex-theme/)
-
 ## 开始使用
 
 下面三种方式任选其一即可，它们不是必须依次完成的三个步骤。
@@ -117,6 +90,49 @@ Windows 版“应用并保持完整皮肤”已经通过 ChatGPT Beta `26.715.36
 主题更新与应用更新彼此独立。管理器启动时会刷新经过验证的 Registry，所以新发布的主题无需重装或重启应用就会直接出现。只有管理器自身的运行时、兼容规则、安全边界、平台集成或界面发生变化时，才需要安装签名应用更新。
 
 公开 Beta 使用 Tauri updater 签名来验证以后收到的应用更新；macOS 应用包还带有只用于包完整性的 ad-hoc 签名。Windows Authenticode、Apple Developer ID 与公证暂时延后，所以系统仍可能显示未知发布者提示。Updater 与 ad-hoc 签名都不能消除 SmartScreen 或 Gatekeeper 提示，详见[发布信任与签名](docs/release-signing.md)。
+
+## 真实使用效果
+
+[**先在 Gallery 浏览全部 68 套主题 →**](https://rwang23.github.io/awesome-codex-theme/)
+
+下面的实机图覆盖当前每一个系列。第一张保留提博大神的暗色 Reset 效果；其余全部使用明亮模式，让工作区细节更容易看清。
+
+| Codex 社区致意 01 | 国风修仙 01 |
+| --- | --- |
+| **提博圣像 · 重置之神** | **青岚小修 · Q 版修仙** |
+| ![提博圣像主题在真实 ChatGPT Beta 中的效果](screenshots/codex-beta-26.715.3651.0/tibo-reset-saint-dark.png) | ![青岚小修明亮主题在真实 ChatGPT Beta 中的效果](screenshots/codex-beta-26.715.3651.0/qinglan-sprite-light.png) |
+| 中国城市图鉴 01 | 国漫角色致敬 01 |
+| **北京·城轴晨光** | **凡人·道侣相望** |
+| ![北京城轴晨光明亮主题在真实 ChatGPT Beta 中的效果](screenshots/codex-beta-26.715.3651.0/beijing-meridian-light.png) | ![凡人道侣相望明亮主题在真实 ChatGPT Beta 中的效果](screenshots/codex-beta-26.715.3651.0/mortal-journey-duo-light.png) |
+| 国漫名场面 01 | 凡人修仙传·秘境小集 |
+| **凡人·虚天殿** | **凡人·药圃灯影** |
+| ![凡人虚天殿明亮主题在真实 ChatGPT Beta 中的效果](screenshots/codex-beta-26.715.3651.0/mortal-void-hall-light.png) | ![凡人药圃灯影明亮主题在真实 ChatGPT Beta 中的效果](screenshots/codex-beta-26.715.3651.0/mortal-herb-lantern-light.png) |
+| 原创修仙 02 | 中国生活诗意 01 |
+| **玉简晨阁** | **江南·雨落小院** |
+| ![玉简晨阁明亮主题在真实 ChatGPT Beta 中的效果](screenshots/codex-beta-26.715.3651.0/jade-archive-dawn-light.png) | ![江南雨落小院明亮主题在真实 ChatGPT Beta 中的效果](screenshots/codex-beta-26.715.3651.0/jiangnan-rain-courtyard-light.png) |
+| 世界城市图鉴 01 | 全球工作区灵感 01 |
+| **纽约·雨落曼哈顿** | **轨道黎明** |
+| ![纽约雨落曼哈顿明亮主题在真实 ChatGPT Beta 中的效果](screenshots/codex-beta-26.715.3651.0/new-york-rainline-light.png) | ![轨道黎明明亮主题在真实 ChatGPT Beta 中的效果](screenshots/codex-beta-26.715.3651.0/orbital-dawn-light.png) |
+| 美式工作区灵感 02 | 凡人修仙传·秘境小集 |
+| **海岸工作室晨光** | **凡人·雨夜符火** |
+| ![海岸工作室晨光明亮主题在真实 ChatGPT Beta 中的效果](screenshots/codex-beta-26.715.3651.0/coastal-studio-morning-light.png) | ![凡人雨夜符火明亮主题在真实 ChatGPT Beta 中的效果](screenshots/codex-beta-26.715.3651.0/mortal-talisman-rain-light.png) |
+
+目前共有 68 套主题、136 个明暗模式。中文体验会优先展示：
+
+- 8 套国风修仙主题，包含原画版与 Q 版；
+- 8 套原创中国城市图鉴；
+- 12 套覆盖北美、欧洲与亚太的原创世界城市图鉴；
+- 8 套明确披露的非官方国漫角色致意；
+- 4 套明确披露的非官方国漫记忆场景；
+- 5 套面向中文用户创作的山河与生活主题；
+- 5 套原创修仙意境主题，包括玉简晨阁、萤河渡口和云锻静室；
+- 5 套明确披露、非官方、非商业使用的《凡人修仙传》灵感场景；
+- 5 套面向美国工作场景的原创主题，包括海岸工作室和深夜餐馆；
+- 1 套 2007 桌面怀旧 Q 版主题，以及 2 套 Codex 社区致意主题。
+
+每个模式都有固定 Beta 测试台生成的 1440×810 实机截图。Registry 会把截图与准确应用版本、背景哈希、运行时哈希、字节数和页面读回结果绑定。
+
+“提博大神”是社区表达喜爱的非官方戏仿与致意，不代表 OpenAI 或被描绘者背书，也不包含官方产品素材。
 
 ## 安全边界
 

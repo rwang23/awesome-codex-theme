@@ -44,31 +44,6 @@ Theme packs are declarative and contain no executable code. A `.act-theme` archi
 
 Version 1 preserves the original Codex layout and controls. It changes the atmosphere without replacing navigation, moving the composer, or turning the app into a screenshot.
 
-## See the real result
-
-| Saint Tibo<br>God of Reset | Boss Mode 2007 |
-| --- | --- |
-| ![Saint Tibo theme in real ChatGPT Beta](screenshots/codex-beta-26.715.3651.0/tibo-reset-saint-dark.png) | ![Boss Mode 2007 theme in real ChatGPT Beta](screenshots/codex-beta-26.715.3651.0/retro-boss-2007-light.png) |
-| **Rainy Library** | **Orbital Dawn** |
-| ![Rainy Library theme in real ChatGPT Beta](screenshots/codex-beta-26.715.3651.0/rainy-library-dark.png) | ![Orbital Dawn theme in real ChatGPT Beta](screenshots/codex-beta-26.715.3651.0/orbital-dawn-light.png) |
-
-The collection currently includes 68 themes and 136 light/dark modes. The English experience highlights:
-
-- 12 original World City themes spanning New York, San Francisco, Chicago, Toronto, Vancouver, London, Paris, Berlin, Rome, Tokyo, Singapore, and Sydney;
-- 6 original global workspace themes, from a rainy library to an orbital sunrise;
-- 5 original xianxia environments, including a jade archive, a firefly river, and a cloud forge;
-- 5 disclosed, unofficial, non-commercial fan-art scenes inspired by *A Record of a Mortal's Journey to Immortality*;
-- 5 original American workspace moods, from a coastal studio to an after-hours diner;
-- 1 original 2007 desktop-nostalgia theme with a new, non-franchise chibi mascot;
-- 2 disclosed, unofficial Codex community tributes;
-- the broader original and fan-art catalog, available through language-aware discovery in the Gallery.
-
-Every mode has a 1440×810 capture from the pinned Beta test bench. Registry records bind each capture to the exact app version, background hash, runtime hash, byte count, and renderer readback.
-
-“Saint Tibo” is an affectionate, unofficial community parody. It is not endorsed by OpenAI or by the person depicted, and no official product artwork is bundled.
-
-[Browse all themes in the Gallery](https://rwang23.github.io/awesome-codex-theme/)
-
 ## Get started
 
 Choose one of the following three methods. They are alternatives, not sequential setup steps.
@@ -116,6 +91,47 @@ The Windows implementation of **Apply & Keep Full Skin** has passed an exact Cha
 Theme updates and app updates are independent. The manager refreshes the verified Registry on startup, so newly published themes appear immediately without reinstalling or restarting the app. A signed app update is needed only when the manager itself changes, such as its runtime, compatibility rules, security boundary, platform integration, or interface.
 
 The public beta uses Tauri updater signatures so future app updates can be verified. macOS bundles also carry an ad-hoc signature for package integrity, but Windows Authenticode, Apple Developer ID, and notarization are deferred. The operating system may still show an unknown-publisher warning; neither the updater signature nor the ad-hoc Mac signature removes SmartScreen or Gatekeeper warnings. See [release trust and signing](docs/release-signing.md).
+
+## See the real result
+
+[**Browse the full 68-theme Gallery →**](https://rwang23.github.io/awesome-codex-theme/)
+
+The samples below cover every current collection. Saint Tibo keeps the existing dark Reset capture; every other sample is shown in Light mode so the workspace is easy to read.
+
+| Codex Community Tributes 01 | Original Xianxia 01 |
+| --- | --- |
+| **Saint Tibo · God of Reset** | **Qinglan Little Cultivator · chibi xianxia** |
+| ![Saint Tibo theme in real ChatGPT Beta](screenshots/codex-beta-26.715.3651.0/tibo-reset-saint-dark.png) | ![Qinglan Little Cultivator light theme in real ChatGPT Beta](screenshots/codex-beta-26.715.3651.0/qinglan-sprite-light.png) |
+| China City Atlas 01 | Donghua Character Tributes 01 |
+| **Beijing Meridian** | **Mortal Journey · Kindred Paths** |
+| ![Beijing Meridian light theme in real ChatGPT Beta](screenshots/codex-beta-26.715.3651.0/beijing-meridian-light.png) | ![Mortal Journey Kindred Paths light theme in real ChatGPT Beta](screenshots/codex-beta-26.715.3651.0/mortal-journey-duo-light.png) |
+| Donghua Memory Scenes 01 | Mortal Journey Fan Art 02 |
+| **Mortal Journey · The Void Hall** | **Mortal Journey · Herb Lantern** |
+| ![Mortal Journey The Void Hall light theme in real ChatGPT Beta](screenshots/codex-beta-26.715.3651.0/mortal-void-hall-light.png) | ![Mortal Journey Herb Lantern light theme in real ChatGPT Beta](screenshots/codex-beta-26.715.3651.0/mortal-herb-lantern-light.png) |
+| Original Xianxia 02 | Chinese Everyday Poetry 01 |
+| **Jade Archive Dawn** | **Jiangnan Rain Courtyard** |
+| ![Jade Archive Dawn light theme in real ChatGPT Beta](screenshots/codex-beta-26.715.3651.0/jade-archive-dawn-light.png) | ![Jiangnan Rain Courtyard light theme in real ChatGPT Beta](screenshots/codex-beta-26.715.3651.0/jiangnan-rain-courtyard-light.png) |
+| World City Atlas 01 | Global Workspace Favorites 01 |
+| **New York Rainline** | **Orbital Dawn** |
+| ![New York Rainline light theme in real ChatGPT Beta](screenshots/codex-beta-26.715.3651.0/new-york-rainline-light.png) | ![Orbital Dawn light theme in real ChatGPT Beta](screenshots/codex-beta-26.715.3651.0/orbital-dawn-light.png) |
+| American Workspace Favorites 02 | Mortal Journey Fan Art 02 |
+| **Coastal Studio Morning** | **Mortal Journey · Talisman Rain** |
+| ![Coastal Studio Morning light theme in real ChatGPT Beta](screenshots/codex-beta-26.715.3651.0/coastal-studio-morning-light.png) | ![Mortal Journey Talisman Rain light theme in real ChatGPT Beta](screenshots/codex-beta-26.715.3651.0/mortal-talisman-rain-light.png) |
+
+The collection currently includes 68 themes and 136 light/dark modes. The English experience highlights:
+
+- 12 original World City themes spanning New York, San Francisco, Chicago, Toronto, Vancouver, London, Paris, Berlin, Rome, Tokyo, Singapore, and Sydney;
+- 6 original global workspace themes, from a rainy library to an orbital sunrise;
+- 5 original xianxia environments, including a jade archive, a firefly river, and a cloud forge;
+- 5 disclosed, unofficial, non-commercial fan-art scenes inspired by *A Record of a Mortal's Journey to Immortality*;
+- 5 original American workspace moods, from a coastal studio to an after-hours diner;
+- 1 original 2007 desktop-nostalgia theme with a new, non-franchise chibi mascot;
+- 2 disclosed, unofficial Codex community tributes;
+- the broader original and fan-art catalog, available through language-aware discovery in the Gallery.
+
+Every mode has a 1440×810 capture from the pinned Beta test bench. Registry records bind each capture to the exact app version, background hash, runtime hash, byte count, and renderer readback.
+
+“Saint Tibo” is an affectionate, unofficial community parody. It is not endorsed by OpenAI or by the person depicted, and no official product artwork is bundled.
 
 ## Safe by design
 

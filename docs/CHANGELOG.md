@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased
+
+- Simplified the Gallery's Theme Manager introduction around choosing,
+  previewing, applying, and restoring a verified theme.
+- Moved setup guidance ahead of the real-app showcase in both READMEs, added a
+  direct Gallery link, and expanded the Light-mode capture samples to cover
+  every current collection.
+
 ## 0.3.2 - 2026-07-22
 
 - Made the public Gallery derive the original and disclosed Fan Art totals from
