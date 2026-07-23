@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "catalogRevision": 2026072201,
+  "catalogRevision": 2026072301,
   "defaults": {
     "author": "Awesome Codex Theme",
     "license": "CC0-1.0",
@@ -151,12 +151,12 @@
         "zh-CN": "中国生活诗意 01"
       },
       "title": {
-        "en": "Five familiar places, held in a quieter light.",
-        "zh-CN": "五种熟悉风景，换一种更安静的光。"
+        "en": "Six familiar places and rituals, held in a quieter light.",
+        "zh-CN": "六种熟悉风景与日常仪式，换一种更安静的光。"
       },
       "description": {
-        "en": "Five original scenes drawn from Jiangnan rain, Chang'an lantern light, Dunhuang color, bamboo tea, and a warm train crossing the northern snow.",
-        "zh-CN": "从江南雨巷、长安灯火、敦煌色彩、竹院清茶与北方雪原列车中提取的五套原创主题。"
+        "en": "Original scenes drawn from Jiangnan rain, Chang'an lantern light, Dunhuang color, bamboo tea, a northern snow train, and a soft Caishen desk ritual.",
+        "zh-CN": "从江南雨巷、长安灯火、敦煌色彩、竹院清茶、北方雪原列车与轻量财神工作台中提取的六套原创主题。"
       }
     },
     {
@@ -3957,6 +3957,58 @@
           "accent": "#8CC4AC",
           "accentContrast": "#11291F",
           "border": "#3D5C6B"
+        }
+      }
+    },
+    {
+      "id": "fortune-desk-caishen",
+      "version": "1.0.0",
+      "collection": "china-life-favorites-01",
+      "pair": "fortune-desk-caishen",
+      "variant": "scene",
+      "audience": "zh-CN",
+      "rightsProfile": "original",
+      "name": {
+        "en": "Fortune Desk Caishen",
+        "zh-CN": "财神工作台"
+      },
+      "tagline": {
+        "en": "A little fortune, without hiding the work.",
+        "zh-CN": "沾点财气，但不挡字。"
+      },
+      "description": {
+        "en": "A soft, readable Caishen-inspired workspace with calm warm space on the left and a cheerful fortune figure on the right.",
+        "zh-CN": "轻量、明亮、低干扰的财神主题工作区，左侧保持安静可读，右侧保留温和发财氛围。"
+      },
+      "tags": ["original", "caishen", "fortune", "warm", "readable"],
+      "art": {
+        "focusX": 0.82,
+        "focusY": 0.58,
+        "safeArea": "left",
+        "taskMode": "ambient"
+      },
+      "light": {
+        "tokens": {
+          "background": "#FFF6EA",
+          "surface": "#FFFDF7",
+          "surfaceAlt": "#F1E2CF",
+          "text": "#34251D",
+          "muted": "#655246",
+          "accent": "#9F472B",
+          "accentContrast": "#FFFFFF",
+          "border": "#CDAE8F"
+        }
+      },
+      "dark": {
+        "tokens": {
+          "background": "#17100C",
+          "surface": "#241A14",
+          "surfaceAlt": "#34251B",
+          "text": "#FFF3E8",
+          "muted": "#CDB9A9",
+          "accent": "#F0B45E",
+          "accentContrast": "#2B1608",
+          "border": "#7A5133"
         }
       }
     },

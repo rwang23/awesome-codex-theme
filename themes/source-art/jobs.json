@@ -487,6 +487,10 @@
       "prompt": "An original winter journey across the broad northeastern Chinese snowfields at blue hour. The calm left half is open snow, low wind-carved ridges, dark utility poles, and distant larch forest under a pale steel sky. On the right, an unbranded deep-green mid-century passenger train curves through the landscape, its warm carriage windows revealing only soft silhouettes and steam-fogged glass. Practical railway details, heavy cold air, muted green, indigo, cream, and amber, documentary warmth translated into refined animation-background painting. No railway logo, carriage number, text, station sign, flags, copied train photograph, holiday advertising, or fantasy locomotive."
     },
     {
+      "id": "fortune-desk-caishen",
+      "prompt": "A soft original Caishen-inspired coding desk ritual. The entire left half is quiet warm cream sky and low-contrast clouds for readable desktop controls. On the right third, a cheerful original fortune figure in red and gold robes sits among soft cloud shapes, a small coding laptop, gold ingots, and round coins. Gentle peach light, polished animation-background finish, friendly but not noisy, no text, no logo, no watermark, no user interface, no official mascot or copied festival poster."
+    },
+    {
       "id": "appalachian-cabin-focus",
       "promptCommonReplacement": {
         "find": "Landscape 3:2.",

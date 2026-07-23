@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "themeId": "fortune-desk-caishen",
+  "rightsProfile": "original",
+  "workflow": "openai-image-job",
+  "model": "gpt-image-2",
+  "size": "1536x1024",
+  "quality": "high",
+  "jobId": "external-caishen-readable-20260723",
+  "promptSha256": "af68136ffee15036542d926a191d7e6c89aab3b68d6a563ae093209ba4fcd069",
+  "sourceSha256": "b0765cb4a334d6a0cb8a0e79ceea95d6078e895290a3ca68d9539cd619a6a9c5",
+  "disclosure": "AI-generated original source art. Prompt and output were reviewed for third-party characters, logos, signatures, and text before release."
+}
