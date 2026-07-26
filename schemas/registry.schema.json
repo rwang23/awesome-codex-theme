@@ -182,6 +182,8 @@
       "required": [
         "preview",
         "previewSha256",
+        "previewBytes",
+        "previewRenderFingerprint",
         "assetSha256",
         "assetBytes",
         "fullSkin",
@@ -193,6 +195,14 @@
           "pattern": "^themes/[a-z0-9-]+/previews/(light|dark)\\.png$"
         },
         "previewSha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "previewBytes": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "previewRenderFingerprint": {
           "type": "string",
           "pattern": "^[a-f0-9]{64}$"
         },

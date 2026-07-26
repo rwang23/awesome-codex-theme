@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Reworked theme generation into a bounded, incremental pipeline with
+  source-art provenance checks, complete render fingerprints, atomic per-theme
+  writes, cache-aware progress, and reproducible benchmark commands.
 - Changed the Gallery community section to clearly state that public community
   submissions are not open and removed its hosted-community link. Added a
   direct Theme Manager download action to the Gallery hero.

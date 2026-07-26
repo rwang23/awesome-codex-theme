@@ -9,6 +9,7 @@ import {
   CODEX_NATIVE_TESTED_VERSION,
   parseCodexNativeTheme,
 } from "./lib/codex-native-theme.mjs";
+import { renderFingerprint } from "./lib/source-art-contract.mjs";
 
 const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(SCRIPT_DIR, "..");
@@ -21,7 +22,6 @@ const MAX_IMAGE_BYTES = 16 * 1024 * 1024;
 const CODEX_BETA_CAPTURE_VERSION = "26.715.3651.0";
 const CODEX_BETA_PACKAGE = "OpenAI.CodexBeta_26.715.3651.0_x64__2p2nqsd0c76g0";
 const FULL_SKIN_FORMAT = "act-full-skin-v1";
-const SOURCE_ART_RENDERER_ID = "act-source-art-renderer-v1";
 const SOURCE_WIDTH = 1536;
 const SOURCE_HEIGHT = 1024;
 const CANONICAL_ENTRIES = [
@@ -34,17 +34,6 @@ const CANONICAL_ENTRIES = [
 
 function sha256(buffer) {
   return createHash("sha256").update(buffer).digest("hex");
-}
-
-function renderFingerprint(theme, mode, sourceProvenance, width, height) {
-  return sha256(Buffer.from(JSON.stringify({
-    renderer: SOURCE_ART_RENDERER_ID,
-    sourceSha256: sourceProvenance.sourceSha256,
-    mode,
-    width,
-    height,
-    background: theme[mode].tokens.background,
-  }), "utf8"));
 }
 
 function check(condition, message, errors) {
@@ -532,6 +521,35 @@ export async function validateRepository() {
       );
       check(sha256(asset) === modeRecord.assetSha256, theme.id + " " + mode + " registry asset hash mismatch", errors);
       check(asset.length === manifestMode.integrity.bytes && asset.length === modeRecord.assetBytes, theme.id + " " + mode + " asset byte count mismatch", errors);
+      check(manifestMode.preview?.path === "previews/" + mode + ".png", theme.id + " " + mode + " preview path mismatch", errors);
+      check(
+        manifestMode.preview?.integrity?.renderFingerprint
+          === renderFingerprint(catalogTheme, mode, sourceProvenance, 960, 540),
+        theme.id + " " + mode + " preview render fingerprint mismatch",
+        errors,
+      );
+      check(
+        sha256(preview) === manifestMode.preview?.integrity?.sha256,
+        theme.id + " " + mode + " manifest preview hash mismatch",
+        errors,
+      );
+      check(
+        preview.length === manifestMode.preview?.integrity?.bytes,
+        theme.id + " " + mode + " manifest preview byte count mismatch",
+        errors,
+      );
+      check(
+        previewDimensions.width === manifestMode.preview?.integrity?.width
+          && previewDimensions.height === manifestMode.preview?.integrity?.height,
+        theme.id + " " + mode + " manifest preview dimensions mismatch",
+        errors,
+      );
+      check(modeRecord.previewBytes === preview.length, theme.id + " " + mode + " registry preview byte count mismatch", errors);
+      check(
+        modeRecord.previewRenderFingerprint === manifestMode.preview?.integrity?.renderFingerprint,
+        theme.id + " " + mode + " registry preview render fingerprint mismatch",
+        errors,
+      );
       check(modeRecord.fullSkin?.format === FULL_SKIN_FORMAT, theme.id + " " + mode + " full-skin format mismatch", errors);
       check(modeRecord.fullSkin?.asset === "themes/" + theme.id + "/" + manifestMode.asset, theme.id + " " + mode + " full-skin asset path mismatch", errors);
       check(modeRecord.fullSkin?.sha256 === sha256(asset), theme.id + " " + mode + " full-skin asset hash mismatch", errors);

@@ -347,11 +347,48 @@
     "mode": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["asset", "art", "tokens", "integrity", "nativeTheme"],
+      "required": ["asset", "preview", "art", "tokens", "integrity", "nativeTheme"],
       "properties": {
         "asset": {
           "type": "string",
           "pattern": "^assets/[a-z0-9-]+\\.png$"
+        },
+        "preview": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["path", "integrity"],
+          "properties": {
+            "path": {
+              "type": "string",
+              "pattern": "^previews/(light|dark)\\.png$"
+            },
+            "integrity": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["sha256", "bytes", "width", "height", "renderFingerprint"],
+              "properties": {
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{64}$"
+                },
+                "bytes": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 16777216
+                },
+                "width": {
+                  "const": 960
+                },
+                "height": {
+                  "const": 540
+                },
+                "renderFingerprint": {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{64}$"
+                }
+              }
+            }
+          }
         },
         "art": {
           "type": "object",

@@ -8,6 +8,7 @@
     "art:generate": "node scripts/run-image-jobs.mjs",
     "generate": "node scripts/generate-themes.mjs",
     "generate:check": "node scripts/generate-themes.mjs --check",
+    "generate:benchmark": "node scripts/benchmark-generator.mjs",
     "validate": "node scripts/ensure-generated.mjs && node scripts/validate.mjs",
     "test": "npm run test:source",
     "test:source": "node --test tests/source-contract.test.mjs tests/full-skin-runtime.test.mjs",

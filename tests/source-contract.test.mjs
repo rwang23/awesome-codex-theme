@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { createHash } from "node:crypto";
 import { mkdtemp, mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
@@ -7,9 +8,18 @@ import { fileURLToPath } from "node:url";
 
 import { assertGeneratedArtifacts } from "../scripts/ensure-generated.mjs";
 import {
+  generateRepository,
+  parseGenerationOptions,
+  readVerifiedSourceProvenance,
+} from "../scripts/generate-themes.mjs";
+import {
   CODEX_THEME_PREFIX,
   parseCodexNativeTheme,
 } from "../scripts/lib/codex-native-theme.mjs";
+import {
+  renderFingerprint,
+  SOURCE_ART_RENDERER_CONSTANTS,
+} from "../scripts/lib/source-art-contract.mjs";
 import { contrastRatio, isSafeRelativePath } from "../scripts/validate.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -118,4 +128,115 @@ test("CI invokes the complete source and generated test contract", async functio
 
   assert.match(desktopWorkflow, /run: npm run test:ci/);
   assert.match(pagesWorkflow, /run: npm run test:ci && npm run build/);
+});
+
+test("incremental generator options stay bounded and explicit", function () {
+  assert.deepEqual(
+    parseGenerationOptions([
+      "--ids=qinglan-odyssey,jiangnan-rain-courtyard",
+      "--concurrency=1",
+      "--force",
+      "--json-progress",
+      "--summary",
+    ]),
+    {
+      check: false,
+      concurrency: 1,
+      force: true,
+      help: false,
+      ids: ["qinglan-odyssey", "jiangnan-rain-courtyard"],
+      jsonProgress: true,
+      summary: true,
+    },
+  );
+  assert.throws(() => parseGenerationOptions(["--concurrency=5"]), /from 1 to 4/);
+  assert.throws(() => parseGenerationOptions(["--concurrency=1.5"]), /from 1 to 4/);
+  assert.throws(() => parseGenerationOptions(["--concurrency=1junk"]), /from 1 to 4/);
+  assert.throws(() => parseGenerationOptions(["--ids="]), /at least one theme id/);
+});
+
+test("render fingerprints invalidate every declared visual input", function () {
+  const theme = {
+    art: { focusX: 0.6, focusY: 0.4, safeArea: "left", taskMode: "ambient" },
+    light: {
+      tokens: {
+        background: "#123456",
+        surface: "#234567",
+        surfaceAlt: "#345678",
+        text: "#FFFFFF",
+        muted: "#CCCCCC",
+        accent: "#AA5500",
+        accentContrast: "#FFFFFF",
+        border: "#778899",
+      },
+    },
+  };
+  const provenance = { sourceSha256: "a".repeat(64) };
+  const baseline = renderFingerprint(theme, "light", provenance, 2560, 1440);
+  const mutations = [
+    (candidate) => { candidate.art.focusX = 0.2; },
+    (candidate) => { candidate.art.focusY = 0.8; },
+    (candidate) => { candidate.art.safeArea = "right"; },
+    (candidate) => { candidate.art.taskMode = "banner"; },
+    (candidate) => { candidate.light.tokens.accent = "#0055AA"; },
+  ];
+
+  for (const mutate of mutations) {
+    const candidate = structuredClone(theme);
+    mutate(candidate);
+    assert.notEqual(renderFingerprint(candidate, "light", provenance, 2560, 1440), baseline);
+  }
+  assert.notEqual(renderFingerprint(theme, "light", provenance, 960, 540), baseline);
+  assert.ok(Object.keys(SOURCE_ART_RENDERER_CONSTANTS.grading).length > 8);
+});
+
+test("generator rejects source art whose bytes no longer match provenance", async function () {
+  const temporary = await mkdtemp(path.join(os.tmpdir(), "awesome-codex-theme-source-provenance-"));
+  const sourceDirectory = path.join(temporary, "themes", "source-art");
+  const source = Buffer.from("verified-source-art", "utf8");
+  const sourceSha256 = createHash("sha256").update(source).digest("hex");
+
+  try {
+    await mkdir(sourceDirectory, { recursive: true });
+    await writeFile(path.join(sourceDirectory, "fixture.png"), source);
+    await writeFile(
+      path.join(sourceDirectory, "fixture.provenance.json"),
+      JSON.stringify({ sourceSha256 }) + "\n",
+      "utf8",
+    );
+    await assert.doesNotReject(readVerifiedSourceProvenance(temporary, "fixture"));
+
+    await writeFile(path.join(sourceDirectory, "fixture.png"), Buffer.from("unexpected-source-art", "utf8"));
+    await assert.rejects(
+      readVerifiedSourceProvenance(temporary, "fixture"),
+      /Source-art hash does not match provenance/,
+    );
+  } finally {
+    await rm(temporary, { recursive: true, force: true });
+  }
+});
+
+test("targeted generation refuses a mixed legacy Registry migration", async function () {
+  const temporary = await mkdtemp(path.join(os.tmpdir(), "awesome-codex-theme-partial-migration-"));
+  const themesDirectory = path.join(temporary, "themes");
+
+  try {
+    await mkdir(themesDirectory, { recursive: true });
+    await writeFile(
+      path.join(themesDirectory, "catalog.json"),
+      JSON.stringify({ collections: [], themes: [{ id: "fixture" }] }) + "\n",
+      "utf8",
+    );
+    await writeFile(
+      path.join(themesDirectory, "registry.json"),
+      JSON.stringify({ generatedBy: "act-theme-generator-v4.0", themes: [{ id: "fixture" }] }) + "\n",
+      "utf8",
+    );
+    await assert.rejects(
+      generateRepository({ root: temporary, options: { ids: ["fixture"] } }),
+      /Partial generation requires a current v5 Registry/,
+    );
+  } finally {
+    await rm(temporary, { recursive: true, force: true });
+  }
 });

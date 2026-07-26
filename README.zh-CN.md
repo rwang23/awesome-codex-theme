@@ -78,6 +78,8 @@ npm run build             # 依赖生成产物的 Pages 构建
 npm run check:full        # 发布级完整生成、校验、测试、桌面检查与构建
 ```
 
+生成器按主题流式处理，复用已经验证的 mode/尺寸产物，并报告缓存、耗时与峰值 RSS。用 `npm run generate -- --ids=qinglan-odyssey --summary` 定向重建，用 `npm run generate:check -- --concurrency=1 --summary` 回读可复现性，用 `npm run generate:benchmark -- --scenario=warm` 检查 60 秒的热缓存预算。
+
 ### 方式 C：手动安装桌面应用
 
 1. 从 [GitHub Releases](https://github.com/rwang23/awesome-codex-theme/releases) 下载与你的系统和 CPU 匹配的版本。
@@ -204,6 +206,8 @@ npm run test:generated
 npm run test:ci
 npm run generate
 npm run generate:check
+npm run generate -- --ids=qinglan-odyssey --summary
+npm run generate:benchmark -- --scenario=warm
 npm run validate
 npm run check:full
 npm run screenshots:capture
