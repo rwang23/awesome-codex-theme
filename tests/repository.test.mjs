@@ -545,7 +545,8 @@ test("desktop manager localizes from the system and makes visual styles the prim
   assert.match(app, /Apply & Keep Full Skin/);
   assert.match(app, /应用并保持完整皮肤/);
   assert.doesNotMatch(app, /window\.confirm\(/);
-  assert.match(app, /await requestPersistenceConsent\(\)/);
+  assert.match(app, /await requestPersistenceConsent\(elements\.applySkin\)/);
+  assert.match(app, /await requestPersistenceConsent\(elements\.persistenceToggle\)/);
   assert.match(html, /id="persistenceConsentDialog"/);
   assert.match(html, /id="persistenceConsentConfirm"/);
   assert.doesNotMatch(app, /await window\.act\.applyFullSkin\(/);
