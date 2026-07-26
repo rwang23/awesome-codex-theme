@@ -4,6 +4,8 @@ updates:
     directory: /
     schedule:
       interval: weekly
+    cooldown:
+      default-days: 7
     groups:
       github-actions:
         patterns:
@@ -13,8 +15,12 @@ updates:
     directory: /apps/theme-manager
     schedule:
       interval: weekly
+    cooldown:
+      default-days: 7
 
   - package-ecosystem: cargo
     directory: /apps/theme-manager/src-tauri
     schedule:
       interval: weekly
+    cooldown:
+      default-days: 7

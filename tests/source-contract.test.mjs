@@ -143,6 +143,9 @@ test("CI reuses canonical generated assets with pinned, least-privilege workflow
   const releaseJob = desktopWorkflow.slice(desktopWorkflow.indexOf("\n  release:"));
   assert.match(releaseJob, /permissions:\n\s+contents: write/);
   assert.doesNotMatch(desktopJob, /contents: write/);
+  assert.doesNotMatch(desktopWorkflow, /cache: npm/);
+  assert.match(desktopWorkflow, /package-manager-cache: false/);
+  assert.doesNotMatch(desktopWorkflow, /swatinem\/rust-cache/);
   assert.match(desktopWorkflow, /uses: actions\/checkout@[0-9a-f]{40} # v7/);
   assert.match(supplyChainWorkflow, /reviewdog\/action-actionlint@[0-9a-f]{40}/);
   assert.match(supplyChainWorkflow, /zizmorcore\/zizmor-action@[0-9a-f]{40}/);

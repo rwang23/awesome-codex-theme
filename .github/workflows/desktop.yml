@@ -68,6 +68,7 @@ jobs:
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
         with:
           node-version: 22
+          package-manager-cache: false
 
       - name: Generate, validate, and test public artifacts once
         run: npm run test:ci
@@ -130,18 +131,12 @@ jobs:
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
         with:
           node-version: 22
-          cache: npm
-          cache-dependency-path: apps/theme-manager/package-lock.json
+          package-manager-cache: false
 
       - name: Set up Rust
         uses: dtolnay/rust-toolchain@4cda84d5c5c54efe2404f9d843567869ab1699d4 # stable
         with:
           targets: ${{ matrix.rust-target }}
-
-      - name: Cache Rust build
-        uses: swatinem/rust-cache@42dc69e1aa15d09112580998cf2ef0119e2e91ae # v2
-        with:
-          workspaces: apps/theme-manager/src-tauri -> target
 
       - name: Validate Windows portable helper
         if: runner.os == 'Windows'
@@ -161,7 +156,9 @@ jobs:
         if: startsWith(matrix.os, 'macos-')
         shell: bash
         run: |
-          artifacts=( ${{ matrix.artifact-path }} )
+          dmg_dir="apps/theme-manager/src-tauri/target/${{ matrix.rust-target }}/release/bundle/dmg"
+          shopt -s nullglob
+          artifacts=("$dmg_dir"/*.dmg)
           if [ "${#artifacts[@]}" -ne 1 ]; then
             echo "::error::Expected exactly one macOS DMG, found ${#artifacts[@]}."
             exit 1
@@ -177,11 +174,12 @@ jobs:
           trap cleanup EXIT
           hdiutil attach "$dmg" -nobrowse -readonly -mountpoint "$mount_dir"
 
-          app_path="$(find "$mount_dir" -maxdepth 1 -type d -name '*.app' -print -quit)"
-          if [ -z "$app_path" ]; then
-            echo "::error::The DMG does not contain a macOS application bundle."
+          apps=("$mount_dir"/*.app)
+          if [ "${#apps[@]}" -ne 1 ]; then
+            echo "::error::Expected exactly one macOS application bundle."
             exit 1
           fi
+          app_path="${apps[0]}"
 
           info_plist="$app_path/Contents/Info.plist"
           bundle_id="$(/usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' "$info_plist")"
@@ -249,6 +247,7 @@ jobs:
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
         with:
           node-version: 22
+          package-manager-cache: false
 
       - name: Build gallery from the canonical artifact set
         run: npm run build
@@ -323,18 +322,12 @@ jobs:
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
         with:
           node-version: 22
-          cache: npm
-          cache-dependency-path: apps/theme-manager/package-lock.json
+          package-manager-cache: false
 
       - name: Set up Rust
         uses: dtolnay/rust-toolchain@4cda84d5c5c54efe2404f9d843567869ab1699d4 # stable
         with:
           targets: ${{ matrix.rust-target }}
-
-      - name: Cache Rust build
-        uses: swatinem/rust-cache@42dc69e1aa15d09112580998cf2ef0119e2e91ae # v2
-        with:
-          workspaces: apps/theme-manager/src-tauri -> target
 
       - name: Install desktop dependencies
         run: npm ci --prefix apps/theme-manager
@@ -374,8 +367,9 @@ jobs:
         if: startsWith(matrix.os, 'macos-')
         shell: bash
         run: |
-          dmg_pattern="apps/theme-manager/src-tauri/target/${{ matrix.rust-target }}/release/bundle/dmg/*.dmg"
-          artifacts=( $dmg_pattern )
+          dmg_dir="apps/theme-manager/src-tauri/target/${{ matrix.rust-target }}/release/bundle/dmg"
+          shopt -s nullglob
+          artifacts=("$dmg_dir"/*.dmg)
           if [ "${#artifacts[@]}" -ne 1 ]; then
             echo "::error::Expected exactly one release DMG, found ${#artifacts[@]}."
             exit 1
@@ -390,11 +384,12 @@ jobs:
           }
           trap cleanup EXIT
           hdiutil attach "$dmg" -nobrowse -readonly -mountpoint "$mount_dir"
-          app_path="$(find "$mount_dir" -maxdepth 1 -type d -name '*.app' -print -quit)"
-          if [ -z "$app_path" ]; then
-            echo "::error::The release DMG does not contain a macOS application bundle."
+          apps=("$mount_dir"/*.app)
+          if [ "${#apps[@]}" -ne 1 ]; then
+            echo "::error::Expected exactly one macOS application bundle."
             exit 1
           fi
+          app_path="${apps[0]}"
 
           codesign --verify --deep --strict --verbose=2 "$app_path"
           signing_details="$(codesign --display --verbose=4 "$app_path" 2>&1)"
@@ -404,11 +399,18 @@ jobs:
             exit 1
           fi
 
-          updater_archives=( apps/theme-manager/src-tauri/target/${{ matrix.rust-target }}/release/bundle/macos/*.app.tar.gz )
-          updater_signatures=( apps/theme-manager/src-tauri/target/${{ matrix.rust-target }}/release/bundle/macos/*.app.tar.gz.sig )
-          if [ "${#updater_archives[@]}" -ne 1 ] || [ "${#updater_signatures[@]}" -ne 1 ]; then
-            echo "::error::Expected one macOS updater archive and one signature."
+          updater_dir="apps/theme-manager/src-tauri/target/${{ matrix.rust-target }}/release/bundle/macos"
+          updater_archives=("$updater_dir"/*.app.tar.gz)
+          if [ "${#updater_archives[@]}" -ne 1 ]; then
+            echo "::error::Expected exactly one macOS updater archive."
             exit 1
           fi
-          test -s "${updater_archives[0]}"
-          test -s "${updater_signatures[0]}"
+          updater_archive="${updater_archives[0]}"
+          updater_signatures=("$updater_dir"/*.app.tar.gz.sig)
+          if [ "${#updater_signatures[@]}" -ne 1 ]; then
+            echo "::error::Expected exactly one macOS updater signature."
+            exit 1
+          fi
+          updater_signature="${updater_signatures[0]}"
+          test -s "$updater_archive"
+          test -s "$updater_signature"
