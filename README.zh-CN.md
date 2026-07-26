@@ -70,10 +70,12 @@ ChatGPT/Codex。如果当前没有兼容的 Release，请停止并告诉我，�
 贡献者需要 Node.js 22+。桌面构建还需要 Rust stable 和对应平台的构建工具。
 
 ```bash
-npm run generate
-npm run validate
-npm test
-npm run build
+npm test                 # 快速源码检查；干净检出即可运行
+npm run generate         # 较慢：渲染完整生成目录
+npm run validate          # 生成产物校验
+npm run test:generated    # Registry、主题包与站点断言
+npm run build             # 依赖生成产物的 Pages 构建
+npm run check:full        # 发布级完整生成、校验、测试、桌面检查与构建
 ```
 
 ### 方式 C：手动安装桌面应用
@@ -196,9 +198,14 @@ site/                        无依赖 Gallery
 
 ```bash
 npm run art:generate
+npm test
+npm run test:source
+npm run test:generated
+npm run test:ci
 npm run generate
 npm run generate:check
 npm run validate
+npm run check:full
 npm run screenshots:capture
 npm run desktop:check
 npm run desktop:start
