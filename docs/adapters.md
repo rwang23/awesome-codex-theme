@@ -16,9 +16,15 @@ The project does not export Dream Skin, HeiGe Skin Studio, CodeDrobe, or other t
 - background, surface, text, accent, muted, and border tokens;
 - the exact Codex version used for verification.
 
-The manager downloads only the declared PNG and checks it against the Registry. The fixed repository-owned runtime assigns that verified image to a manager-created, fixed `<img>` layer behind the app root, then applies the materials and tokens above it. It deliberately does not depend on an `app://` blob URL.
+The manager downloads only the declared PNG and checks it against the Registry. The fixed repository-owned runtime decodes that verified payload into a manager-owned Blob URL, assigns it to the document root's `--act-art-image` CSS custom property, and applies the materials and tokens above it. Cleanup removes the managed CSS state and revokes that exact Blob URL. It does not create a fixed `<img>` layer, accept a theme-supplied remote URL, or let a theme package replace the runtime.
 
 Theme packages cannot override the runtime. They contain no CSS, JavaScript, shell commands, plugins, or remote URLs.
+
+For original source art, `rightsVerified` is emitted only from the separate
+`themes/source-art/reviews.json` approval ledger. Each approval is bound to the
+theme ID and source PNG SHA-256, so changing source bytes invalidates the
+approval until a new review is recorded. The ledger documents review scope; it
+does not claim to clear third-party rights automatically.
 
 ### Session lifecycle
 

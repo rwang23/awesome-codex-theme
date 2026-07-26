@@ -2,6 +2,16 @@
 
 ## Unreleased
 
+- Added a source-hash-bound original-art review ledger and made generated
+  `rightsVerified` status depend on its explicit approval rather than the
+  rights profile alone. A source-art byte change now invalidates the approval.
+- Centralized desktop release, capture, updater, and platform-capability
+  metadata. The generator, Gallery, Theme Manager, desktop configuration, and
+  release workflow now validate synchronized metadata instead of carrying
+  independent version or capability claims.
+- Changed draft Beta releases to GitHub prereleases and marked the updater
+  channel unreleased until a signed, cross-platform static feed is separately
+  published and verified.
 - Reworked theme generation into a bounded, incremental pipeline with
   source-art provenance checks, complete render fingerprints, atomic per-theme
   writes, cache-aware progress, and reproducible benchmark commands.

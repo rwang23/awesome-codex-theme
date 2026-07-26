@@ -157,9 +157,11 @@ Authenticode；macOS 应用包有 ad-hoc 签名，但没有 Developer ID 或 not
 macOS release 同时构建 `app,dmg`：DMG 供首次安装，`.app.tar.gz` 与对应 `.sig`
 供 Tauri updater 使用。CI 会在 draft 公开前检查两个架构都具备这组更新产物。
 
-GitHub 的 `releases/latest` 不返回 prerelease。当前 updater endpoint 依赖该
-路径，所以 GitHub `prerelease` 标志保持 `false`，Beta 身份由 alpha 版本、
-Release 标题和正文明确标注。
+版本、发布通道与 updater 状态由
+[`metadata/release.json`](../metadata/release.json) 统一声明。当前 GitHub Beta
+Release 使用 `prerelease: true`；Theme Manager 仍将 updater 标为 `unreleased`，
+直到独立的签名静态更新清单覆盖全部平台并完成已安装应用验证。draft 或公开 Beta
+Release 本身不是应用内更新可用性的证明。
 
 以后面向完全小白用户时，再分别接入 Windows 可信签名和 Apple Developer ID
 公证。配置、用户提示和发布步骤见[发布信任与签名](release-signing.md)。

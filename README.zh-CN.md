@@ -29,6 +29,21 @@
 
 > 桌面安装包只会发布在官方 [GitHub Releases 页面](https://github.com/rwang23/awesome-codex-theme/releases)。如果页面上没有与你的操作系统和 CPU 匹配的文件，就表示当前没有支持该目标的公开安装包。
 
+<!-- ACT:CAPABILITY-MATRIX:START -->
+## 当前平台能力矩阵
+
+此表由 [`metadata/release.json`](metadata/release.json) 生成，并由 `npm run metadata:check` 校验。
+
+| 目标 | Full Skin | Native 回退 | 常驻 |
+| --- | --- | --- | --- |
+| Windows x64 | 已验证 (`26.715.3651.0`) | 已验证 (`26.715.2305.0`) | 已验证 (`26.715.3651.0`) |
+| macOS Apple 芯片 | 仅构建 | 仅构建 | 未验证 |
+| macOS Intel | 仅构建 | 仅构建 | 未验证 |
+
+当前 Catalog 有 **68 套主题**、**136 个模式**（修订 `2026072201`）。
+当前 `beta` 通道更新源状态为 `unreleased`；在签名静态清单覆盖全部平台前，不宣称应用内更新可用。
+<!-- ACT:CAPABILITY-MATRIX:END -->
+
 ## 它不只是换一组颜色
 
 Awesome Codex Theme 会把一套皮肤需要的部分一起应用：
@@ -93,7 +108,7 @@ Windows 版“应用并保持完整皮肤”已经通过 ChatGPT Beta `26.715.36
 
 主题更新与应用更新彼此独立。管理器启动时会刷新经过验证的 Registry，所以新发布的主题无需重装或重启应用就会直接出现。只有管理器自身的运行时、兼容规则、安全边界、平台集成或界面发生变化时，才需要安装签名应用更新。
 
-公开 Beta 使用 Tauri updater 签名来验证以后收到的应用更新；macOS 应用包还带有只用于包完整性的 ad-hoc 签名。Windows Authenticode、Apple Developer ID 与公证暂时延后，所以系统仍可能显示未知发布者提示。Updater 与 ad-hoc 签名都不能消除 SmartScreen 或 Gatekeeper 提示，详见[发布信任与签名](docs/release-signing.md)。
+公开 Beta 为未来的签名更新链路保留 Tauri updater 签名。当前更新源状态明确为**尚未发布**：仅有 GitHub prerelease 并不代表可以应用内更新，必须先有覆盖全部平台的签名静态清单并完成 action-after 验证。macOS 应用包还带有只用于包完整性的 ad-hoc 签名。Windows Authenticode、Apple Developer ID 与公证暂时延后，所以系统仍可能显示未知发布者提示。Updater 与 ad-hoc 签名都不能消除 SmartScreen 或 Gatekeeper 提示，详见[发布元数据](docs/release-metadata.md)与[发布信任与签名](docs/release-signing.md)。
 
 ## 真实使用效果
 

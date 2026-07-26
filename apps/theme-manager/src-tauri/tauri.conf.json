@@ -27,7 +27,9 @@
       "csp": "default-src 'self'; img-src 'self' asset: http://asset.localhost https://rwang23.github.io data:; style-src 'self'; script-src 'self'; connect-src 'self' ipc: http://ipc.localhost; object-src 'none'; base-uri 'none'; form-action 'none'",
       "assetProtocol": {
         "enable": true,
-        "scope": ["$RESOURCE/catalog/screenshots/**"]
+        "scope": [
+          "$RESOURCE/catalog/screenshots/**"
+        ]
       }
     }
   },
@@ -35,7 +37,7 @@
     "updater": {
       "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEZEMTlENzE5NjIzRkIwREQKUldUZHNEOWlHZGNaL1NYb25kMnRpNDRUMFNFaHVOeU5KeEFSeXYxUlUwSXFRbVppcTUwdWV1YlMK",
       "endpoints": [
-        "https://github.com/rwang23/awesome-codex-theme/releases/latest/download/latest.json"
+        "https://rwang23.github.io/awesome-codex-theme/updates/stable.json"
       ],
       "windows": {
         "installMode": "passive"
@@ -70,7 +72,10 @@
       "nsis": {
         "installMode": "currentUser",
         "displayLanguageSelector": true,
-        "languages": ["SimpChinese", "English"]
+        "languages": [
+          "SimpChinese",
+          "English"
+        ]
       }
     },
     "macOS": {

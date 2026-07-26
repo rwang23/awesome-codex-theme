@@ -16,20 +16,28 @@ import {
   CODEX_THEME_PREFIX,
   parseCodexNativeTheme,
 } from "../scripts/lib/codex-native-theme.mjs";
+import { readReleaseMetadata, releaseForRegistry } from "../scripts/lib/release-metadata.mjs";
 import {
   renderFingerprint,
   SOURCE_ART_RENDERER_CONSTANTS,
 } from "../scripts/lib/source-art-contract.mjs";
+import {
+  resolveSourceArtReview,
+  validateSourceArtReviewLedger,
+} from "../scripts/lib/source-art-reviews.mjs";
+import { syncReleaseMetadata } from "../scripts/sync-release-metadata.mjs";
 import { contrastRatio, isSafeRelativePath } from "../scripts/validate.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
 test("source catalog and image-job provenance stay aligned without generated artifacts", async function () {
-  const [catalog, jobs, themeSchema, registrySchema] = await Promise.all([
+  const [catalog, jobs, themeSchema, registrySchema, reviewSchema, reviews] = await Promise.all([
     readFile(path.join(ROOT, "themes", "catalog.json"), "utf8").then(JSON.parse),
     readFile(path.join(ROOT, "themes", "source-art", "jobs.json"), "utf8").then(JSON.parse),
     readFile(path.join(ROOT, "schemas", "theme-pack.schema.json"), "utf8").then(JSON.parse),
     readFile(path.join(ROOT, "schemas", "registry.schema.json"), "utf8").then(JSON.parse),
+    readFile(path.join(ROOT, "schemas", "source-art-review.schema.json"), "utf8").then(JSON.parse),
+    readFile(path.join(ROOT, "themes", "source-art", "reviews.json"), "utf8").then(JSON.parse),
   ]);
 
   assert.equal(catalog.catalogRevision, 2026072201);
@@ -37,6 +45,7 @@ test("source catalog and image-job provenance stay aligned without generated art
   assert.equal(catalog.collections.length, 11);
   assert.equal(themeSchema.$schema.includes("2020-12"), true);
   assert.equal(registrySchema.$schema.includes("2020-12"), true);
+  assert.equal(reviewSchema.$schema.includes("2020-12"), true);
   assert.deepEqual(
     jobs.jobs.map((job) => job.id).sort(),
     catalog.themes.map((theme) => theme.id).sort(),
@@ -53,6 +62,88 @@ test("source catalog and image-job provenance stay aligned without generated art
       assert.equal(theme.fanArt.officialAssetsUsed, false);
     }
   }
+  assert.equal(validateSourceArtReviewLedger(catalog, reviews).records.size, 49);
+});
+
+test("source-art approval is explicit, source-hash-bound, and excludes fan art", async function () {
+  const [catalog, reviews] = await Promise.all([
+    readFile(path.join(ROOT, "themes", "catalog.json"), "utf8").then(JSON.parse),
+    readFile(path.join(ROOT, "themes", "source-art", "reviews.json"), "utf8").then(JSON.parse),
+  ]);
+  const parsed = validateSourceArtReviewLedger(catalog, reviews);
+  const original = catalog.themes.find((theme) => (theme.rightsProfile || "original") === "original");
+  const fanArt = catalog.themes.find((theme) => theme.rightsProfile === "fan-art");
+  const provenance = JSON.parse(await readFile(
+    path.join(ROOT, "themes", "source-art", original.id + ".provenance.json"),
+    "utf8",
+  ));
+  const review = resolveSourceArtReview(original, provenance, parsed);
+  assert.equal(review.decision, "approved");
+  assert.equal(review.sourceSha256, provenance.sourceSha256);
+  assert.equal(resolveSourceArtReview(fanArt, {}, parsed), null);
+  assert.throws(
+    () => resolveSourceArtReview(original, { ...provenance, sourceSha256: "0".repeat(64) }, parsed),
+    /approval source hash does not match provenance/,
+  );
+});
+
+test("release metadata is the synchronized source for desktop version and capability disclosure", async function () {
+  const metadata = readReleaseMetadata(ROOT);
+  const [rootPackage, managerPackage, tauriConfig, catalog, capture, smoke, skinRuntime, readmeText, chineseReadmeText] = await Promise.all([
+    readFile(path.join(ROOT, "package.json"), "utf8").then(JSON.parse),
+    readFile(path.join(ROOT, "apps", "theme-manager", "package.json"), "utf8").then(JSON.parse),
+    readFile(path.join(ROOT, "apps", "theme-manager", "src-tauri", "tauri.conf.json"), "utf8").then(JSON.parse),
+    readFile(path.join(ROOT, "themes", "catalog.json"), "utf8").then(JSON.parse),
+    readFile(path.join(ROOT, "scripts", "capture-full-skin-screenshots.mjs"), "utf8"),
+    readFile(path.join(ROOT, "scripts", "smoke-theme-manager.mjs"), "utf8"),
+    readFile(path.join(ROOT, "apps", "theme-manager", "src-tauri", "src", "skin_runtime.rs"), "utf8"),
+    readFile(path.join(ROOT, "README.md"), "utf8"),
+    readFile(path.join(ROOT, "README.zh-CN.md"), "utf8"),
+  ]);
+  assert.equal(rootPackage.version, metadata.desktop.version);
+  assert.equal(managerPackage.version, metadata.desktop.version);
+  assert.equal(tauriConfig.version, metadata.desktop.version);
+  assert.deepEqual(tauriConfig.plugins.updater.endpoints, [metadata.desktop.updater.endpoint]);
+  assert.doesNotMatch(tauriConfig.plugins.updater.endpoints[0], /releases\/latest/);
+  assert.equal(metadata.desktop.githubPrerelease, true);
+  assert.equal(metadata.capabilities.length, 3);
+  assert.equal(catalog.defaults, undefined);
+  assert.deepEqual(releaseForRegistry(metadata).capture, {
+    channel: metadata.capture.channel,
+    appVersion: metadata.capture.appVersion,
+    packageFullName: metadata.capture.packageFullName,
+    fixture: metadata.capture.fixture,
+    modelLabel: metadata.capture.modelLabel,
+  });
+  assert.match(capture, /readReleaseMetadata/);
+  assert.match(smoke, /readReleaseMetadata/);
+  assert.doesNotMatch(capture, /const CAPTURE_VERSION = "\d+\.\d+\.\d+"/);
+  assert.doesNotMatch(smoke, /const BETA_PACKAGE = "OpenAI\.CodexBeta_/);
+  assert.match(skinRuntime, new RegExp(metadata.runtime.implementationVersion));
+  for (const currentReadme of [readmeText, chineseReadmeText]) {
+    assert.match(currentReadme, /<!-- ACT:CAPABILITY-MATRIX:START -->/);
+    assert.match(currentReadme, /<!-- ACT:CAPABILITY-MATRIX:END -->/);
+  }
+  await assert.doesNotReject(syncReleaseMetadata(["--check"]));
+});
+
+test("Gallery and compatibility docs consume generated metadata instead of stale fallback claims", async function () {
+  const [index, gallery, adapters, build] = await Promise.all([
+    readFile(path.join(ROOT, "site", "index.html"), "utf8"),
+    readFile(path.join(ROOT, "site", "assets", "app.js"), "utf8"),
+    readFile(path.join(ROOT, "docs", "adapters.md"), "utf8"),
+    readFile(path.join(ROOT, "scripts", "build.mjs"), "utf8"),
+  ]);
+  assert.match(index, /id="themeStatValue">—/);
+  assert.match(index, /id="resultSummary">—/);
+  assert.match(index, /id="capabilityMatrix"/);
+  assert.match(gallery, /renderCapabilityMatrix/);
+  assert.match(gallery, /state\.registry\?\.themes\?\.length/);
+  assert.doesNotMatch(gallery, /all 106 theme modes/);
+  assert.match(adapters, /Blob URL/);
+  assert.match(adapters, /--act-art-image/);
+  assert.doesNotMatch(adapters, /assigns that verified image to a manager-created/);
+  assert.match(build, /registry\.release\?\.desktop\?\.version/);
 });
 
 test("generated-artifact guard describes the missing prerequisite", async function () {
@@ -117,6 +208,7 @@ test("package scripts keep source checks fast and generated checks explicit", as
   assert.match(packageJson.scripts["test:source"], /source-contract\.test\.mjs/);
   assert.match(packageJson.scripts["test:generated"], /ensure-generated\.mjs/);
   assert.match(packageJson.scripts["test:ci"], /^npm run generate/);
+  assert.equal(packageJson.scripts["metadata:check"], "node scripts/sync-release-metadata.mjs --check");
   assert.match(packageJson.scripts["check:full"], /npm run test:ci/);
 });
 

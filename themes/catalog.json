@@ -1,11 +1,6 @@
 {
   "schemaVersion": 1,
   "catalogRevision": 2026072201,
-  "defaults": {
-    "author": "Awesome Codex Theme",
-    "license": "CC0-1.0",
-    "codexDesktopTested": "26.715.2305.0"
-  },
   "collections": [
     {
       "id": "original-xianxia-01",

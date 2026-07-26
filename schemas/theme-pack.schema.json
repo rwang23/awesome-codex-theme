@@ -168,6 +168,9 @@
           "type": "string",
           "pattern": "^[a-f0-9]{64}$"
         },
+        "review": {
+          "$ref": "#/$defs/sourceArtReview"
+        },
         "notes": {
           "type": "string",
           "maxLength": 500
@@ -274,7 +277,30 @@
         }
       },
       "then": {
-        "required": ["fanArt"]
+        "required": ["fanArt"],
+        "properties": {
+          "provenance": {
+            "not": {
+              "required": ["review"]
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "rightsProfile": {
+            "const": "original"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "provenance": {
+            "required": ["review"]
+          }
+        }
       }
     }
   ],
@@ -338,6 +364,54 @@
             "maxLength": 100
           }
         }
+      }
+    },
+    "sourceArtReview": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["record", "reviewer", "reviewedAt", "checks", "sourceSha256", "decision", "notes"],
+      "properties": {
+        "record": {
+          "type": "string",
+          "pattern": "^themes/source-art/reviews\\.json#[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "reviewer": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 120
+        },
+        "reviewedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "checks": {
+          "$ref": "#/$defs/sourceArtReviewChecks"
+        },
+        "sourceSha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "decision": {
+          "const": "approved"
+        },
+        "notes": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 500
+        }
+      }
+    },
+    "sourceArtReviewChecks": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["noThirdPartyLogo", "noSignatureOrWatermark", "noUnintendedText", "rightsProfileMatches", "safeAreaReviewed", "lightDarkCaptureReviewed"],
+      "properties": {
+        "noThirdPartyLogo": { "const": true },
+        "noSignatureOrWatermark": { "const": true },
+        "noUnintendedText": { "const": true },
+        "rightsProfileMatches": { "const": true },
+        "safeAreaReviewed": { "const": true },
+        "lightDarkCaptureReviewed": { "const": true }
       }
     },
     "hex": {

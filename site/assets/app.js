@@ -117,7 +117,14 @@ const translations = {
     copied: "Codex Native theme copied.",
     copyFailed: "Copy failed. Select the theme string manually.",
     loadFailed: "The registry could not be loaded. Run the build and serve this directory over HTTP.",
-    capabilityNative: "ACT Full Skin v1 is verified with ChatGPT Beta 26.715.3651.0 and the available 5.6 Sol Max setting across all 106 theme modes. It applies the background, materials, colors, and theme copy; Native v1 remains a palette-only fallback.",
+    capabilityNote: "{format} is verified with ChatGPT Beta {version} and {model} across {modes} theme modes. {updater}",
+    capabilityMatrixTitle: "Platform evidence",
+    capabilityFullSkin: "Full Skin",
+    capabilityNativeFallback: "Native fallback",
+    capabilityPersistence: "Persistence",
+    capabilityStatusVerified: "Verified",
+    capabilityStatusBuildOnly: "Build-only",
+    capabilityStatusUnverified: "Unverified",
     resultCount: "themes shown",
     allCollections: "All collections",
     allCollectionsCaption: "Original, city, and unofficial fan-art themes",
@@ -242,7 +249,14 @@ const translations = {
     copied: "Codex Native 主题已复制。",
     copyFailed: "复制失败，请手动选择主题字符串。",
     loadFailed: "无法读取 Registry。请先构建项目，并通过 HTTP 服务访问。",
-    capabilityNative: "ACT Full Skin v1 已使用 ChatGPT Beta 26.715.3651.0 与当前测试台实际提供的 5.6 Sol Max 完成全部 106 个模式的实机验证，可应用背景、材质、配色和主题文字；Native v1 只保留为配色回退。",
+    capabilityNote: "{format} 已使用 ChatGPT Beta {version} 与 {model} 完成全部 {modes} 个主题模式的实机验证。{updater}",
+    capabilityMatrixTitle: "平台证据",
+    capabilityFullSkin: "Full Skin",
+    capabilityNativeFallback: "Native 回退",
+    capabilityPersistence: "常驻",
+    capabilityStatusVerified: "已验证",
+    capabilityStatusBuildOnly: "仅构建",
+    capabilityStatusUnverified: "未验证",
     resultCount: "套主题",
     allCollections: "全部系列",
     allCollectionsCaption: "原创、城市与非官方 Fan Art 主题",
@@ -305,6 +319,7 @@ const elements = {
   dialogDescription: document.querySelector("#dialogDescription"),
   dialogMode: document.querySelector("#dialogMode"),
   capabilityNote: document.querySelector("#capabilityNote"),
+  capabilityMatrix: document.querySelector("#capabilityMatrix"),
   dialogRights: document.querySelector("#dialogRights"),
   nativeThemeString: document.querySelector("#nativeThemeString"),
   copyTheme: document.querySelector("#copyTheme"),
@@ -318,6 +333,12 @@ function t(key) {
   return translations[state.locale][key] || translations.en[key] || key;
 }
 
+function interpolate(template, values) {
+  return Object.entries(values).reduce(function (result, entry) {
+    return result.replaceAll("{" + entry[0] + "}", String(entry[1] ?? ""));
+  }, template);
+}
+
 function renderCollectionIntro() {
   if (!state.registry || !elements.collectionIntro) return;
   const original = state.registry.themes.filter(function (theme) {
@@ -329,6 +350,73 @@ function renderCollectionIntro() {
   elements.collectionIntro.textContent = t("collectionIntro")
     .replace("{original}", String(original))
     .replace("{fanArt}", String(fanArt));
+}
+
+function capabilityStatus(status) {
+  const keys = {
+    verified: "capabilityStatusVerified",
+    "build-only": "capabilityStatusBuildOnly",
+    unverified: "capabilityStatusUnverified"
+  };
+  return t(keys[status] || "capabilityStatusUnverified");
+}
+
+function buildCapabilityNote() {
+  const release = state.registry?.release;
+  const capture = release?.capture || {};
+  return interpolate(t("capabilityNote"), {
+    format: release?.runtime?.fullSkinFormat || "ACT Full Skin v1",
+    version: capture.appVersion || "—",
+    model: capture.modelLabel || "—",
+    modes: (state.registry?.themes?.length || 0) * 2,
+    updater: localized(release?.desktop?.updater?.message)
+  });
+}
+
+function renderCapabilityMatrix() {
+  const capabilities = state.registry?.capabilities;
+  if (!elements.capabilityMatrix || !Array.isArray(capabilities) || capabilities.length === 0) {
+    elements.capabilityMatrix?.replaceChildren();
+    if (elements.capabilityMatrix) elements.capabilityMatrix.hidden = true;
+    return;
+  }
+  const featureLabels = [
+    ["fullSkin", "capabilityFullSkin"],
+    ["native", "capabilityNativeFallback"],
+    ["persistence", "capabilityPersistence"]
+  ];
+  const fragment = document.createDocumentFragment();
+  const heading = document.createElement("h3");
+  heading.textContent = t("capabilityMatrixTitle");
+  fragment.append(heading);
+  capabilities.forEach(function (capability) {
+    const card = document.createElement("article");
+    card.className = "capability-card";
+    const title = document.createElement("h4");
+    title.textContent = localized(capability.title) || capability.id;
+    const list = document.createElement("dl");
+    featureLabels.forEach(function (entry) {
+      const feature = capability[entry[0]];
+      if (!feature || typeof feature !== "object") return;
+      const row = document.createElement("div");
+      const term = document.createElement("dt");
+      term.textContent = t(entry[1]);
+      const definition = document.createElement("dd");
+      const status = document.createElement("span");
+      status.className = "capability-status is-" + feature.status;
+      status.textContent = capabilityStatus(feature.status)
+        + (feature.testedVersion ? " · " + feature.testedVersion : "");
+      const detail = document.createElement("small");
+      detail.textContent = localized(feature.detail);
+      definition.append(status, detail);
+      row.append(term, definition);
+      list.append(row);
+    });
+    card.append(title, list);
+    fragment.append(card);
+  });
+  elements.capabilityMatrix.replaceChildren(fragment);
+  elements.capabilityMatrix.hidden = false;
 }
 
 function localized(record) {
@@ -507,6 +595,7 @@ function updateLanguage() {
   renderCollectionPicker();
   renderFilterLabels();
   renderCollectionIntro();
+  renderCapabilityMatrix();
   reorderGalleryForLocale();
 
   state.cards.forEach(function (card, id) {
@@ -694,7 +783,7 @@ function updateDialog() {
   elements.dialogPreview.src = assetUrl(visual.path);
   elements.dialogPreview.alt = localized(theme.name) + " · " + visual.label + " · " + t(state.dialogMode);
   elements.dialogVariant.textContent = visual.label + " · " + localized(collectionFor(theme)?.name) + " · " + t(theme.variant);
-  elements.capabilityNote.textContent = t("capabilityNative");
+  elements.capabilityNote.textContent = buildCapabilityNote();
   elements.dialogRights.hidden = theme.rightsProfile !== "fan-art";
   elements.dialogRights.textContent = theme.rightsProfile === "fan-art"
     ? localized(theme.fanArt?.work) + " · " + t("fanArtNotice")

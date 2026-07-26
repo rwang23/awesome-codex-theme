@@ -9,7 +9,9 @@ import {
   CODEX_NATIVE_TESTED_VERSION,
   parseCodexNativeTheme,
 } from "./lib/codex-native-theme.mjs";
+import { readReleaseMetadata, releaseForRegistry } from "./lib/release-metadata.mjs";
 import { renderFingerprint } from "./lib/source-art-contract.mjs";
+import { loadSourceArtReviews, resolveSourceArtReview } from "./lib/source-art-reviews.mjs";
 
 const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(SCRIPT_DIR, "..");
@@ -19,9 +21,6 @@ const HEX = /^#[0-9A-Fa-f]{6}$/;
 const FAN_ART_LICENSE_ID = "LicenseRef-ACT-Fan-Art-Notice";
 const FORBIDDEN_PROMPT = /凡人修仙传|仙逆|剑来|斗破苍穹|studio\s+ghibli|makoto\s+shinkai|hayao\s+miyazaki|style\s+of/i;
 const MAX_IMAGE_BYTES = 16 * 1024 * 1024;
-const CODEX_BETA_CAPTURE_VERSION = "26.715.3651.0";
-const CODEX_BETA_PACKAGE = "OpenAI.CodexBeta_26.715.3651.0_x64__2p2nqsd0c76g0";
-const FULL_SKIN_FORMAT = "act-full-skin-v1";
 const SOURCE_WIDTH = 1536;
 const SOURCE_HEIGHT = 1024;
 const CANONICAL_ENTRIES = [
@@ -167,24 +166,38 @@ function validateNativeTheme(theme, mode, nativeBytes, modeRecord, manifestMode,
 
 export async function validateRepository() {
   const errors = [];
+  const release = readReleaseMetadata(ROOT);
   let captureCount = 0;
   let fullSkinCount = 0;
   const nativeThemeOwners = new Map();
-  const [catalog, registry, sourceJobs, captureManifest, themeSchema, registrySchema, runtimeCss, runtimeJs] = await Promise.all([
+  const [catalog, registry, sourceJobs, captureManifest, themeSchema, registrySchema, sourceReviewSchema, runtimeCss, runtimeJs] = await Promise.all([
     readJson("themes/catalog.json"),
     readJson("themes/registry.json"),
     readJson("themes/source-art/jobs.json"),
-    readJson("screenshots/codex-beta-26.715.3651.0/manifest.json"),
+    readJson("screenshots/codex-beta-" + release.capture.appVersion + "/manifest.json"),
     readJson("schemas/theme-pack.schema.json"),
     readJson("schemas/registry.schema.json"),
+    readJson("schemas/source-art-review.schema.json"),
     readFile(path.join(ROOT, "packages", "full-skin", "runtime.css"), "utf8"),
     readFile(path.join(ROOT, "packages", "full-skin", "runtime.js"), "utf8"),
   ]);
   const runtimeSha256 = sha256(Buffer.from(runtimeCss + "\n" + runtimeJs, "utf8"));
+  const sourceReviews = await loadSourceArtReviews(ROOT, catalog);
 
   check(themeSchema.$schema?.includes("2020-12"), "Theme schema is not JSON Schema 2020-12", errors);
   check(registrySchema.$schema?.includes("2020-12"), "Registry schema is not JSON Schema 2020-12", errors);
+  check(sourceReviewSchema.$schema?.includes("2020-12"), "Source-art review schema is not JSON Schema 2020-12", errors);
   check(registry.standard === "act-theme-pack-v1", "Registry standard id mismatch", errors);
+  check(JSON.stringify(registry.release) === JSON.stringify(releaseForRegistry(release)), "Registry release metadata drifted", errors);
+  check(JSON.stringify(registry.capabilities) === JSON.stringify(release.capabilities), "Registry capability disclosure drifted", errors);
+  check(CODEX_NATIVE_TESTED_VERSION === release.runtime.nativeTestedVersion, "Native helper version drifted from release metadata", errors);
+  check(
+    captureManifest.testBench?.version === release.capture.appVersion
+      && captureManifest.testBench?.packageFullName === release.capture.packageFullName
+      && captureManifest.fixture?.id === release.capture.fixture,
+    "Capture manifest drifted from release metadata",
+    errors,
+  );
   check(
     Number.isInteger(catalog.catalogRevision)
       && catalog.catalogRevision > 0
@@ -347,6 +360,14 @@ export async function validateRepository() {
     const sourceDimensions = readPngDimensions(sourceArt);
     const rightsProfile = catalogTheme.rightsProfile || "original";
     const fanArt = rightsProfile === "fan-art";
+    let sourceReview;
+    try {
+      sourceReview = resolveSourceArtReview(catalogTheme, sourceProvenance, sourceReviews);
+    } catch (error) {
+      errors.push(error.message);
+      continue;
+    }
+    const rightsVerified = sourceReview?.decision === "approved";
     const commonPrompt = sourceJob.promptProfile === "tribute"
       ? sourceJobs.tributePrompt
       : sourceJob.promptProfile === "global"
@@ -414,7 +435,7 @@ export async function validateRepository() {
     check(theme.provenance?.aiGenerated === true, theme.id + " registry AI disclosure mismatch", errors);
     check(JSON.stringify(theme.tagline) === JSON.stringify(catalogTheme.tagline), theme.id + " registry tagline mismatch", errors);
     check(theme.rightsProfile === rightsProfile, theme.id + " registry rights-profile mismatch", errors);
-    check(theme.provenance?.rightsVerified === !fanArt, theme.id + " registry rights status mismatch", errors);
+    check(theme.provenance?.rightsVerified === rightsVerified, theme.id + " registry rights status mismatch", errors);
     check(theme.provenance?.type === (fanArt ? "fan-art" : "original"), theme.id + " registry provenance type mismatch", errors);
     check(theme.provenance?.record === provenancePath, theme.id + " registry provenance record mismatch", errors);
     check(theme.provenance?.sourceArt === sourcePath, theme.id + " registry source-art path mismatch", errors);
@@ -422,8 +443,13 @@ export async function validateRepository() {
     check(theme.provenance?.promptSha256 === sourceProvenance.promptSha256, theme.id + " registry prompt hash mismatch", errors);
     check(theme.provenance?.jobId === sourceProvenance.jobId, theme.id + " registry image job mismatch", errors);
     check(
+      JSON.stringify(theme.provenance?.review || null) === JSON.stringify(sourceReview || null),
+      theme.id + " registry source-art review mismatch",
+      errors,
+    );
+    check(
       theme.license?.spdx === (fanArt ? FAN_ART_LICENSE_ID : "CC0-1.0")
-        && theme.license?.rightsVerified === !fanArt,
+        && theme.license?.rightsVerified === rightsVerified,
       theme.id + " license or rights disclosure mismatch",
       errors,
     );
@@ -456,7 +482,7 @@ export async function validateRepository() {
       theme.id + " registry featured rank mismatch",
       errors,
     );
-    check(manifest.provenance?.rightsVerified === !fanArt, theme.id + " canonical rights status mismatch", errors);
+    check(manifest.provenance?.rightsVerified === rightsVerified, theme.id + " canonical rights status mismatch", errors);
     check(manifest.provenance?.aiGenerated === true, theme.id + " generated-art disclosure mismatch", errors);
     check(manifest.provenance?.type === (fanArt ? "fan-art" : "original"), theme.id + " generated-art provenance type mismatch", errors);
     if (fanArt) {
@@ -467,13 +493,18 @@ export async function validateRepository() {
     check(manifest.provenance?.jobId === sourceProvenance.jobId, theme.id + " manifest image job mismatch", errors);
     check(manifest.provenance?.promptSha256 === sourceProvenance.promptSha256, theme.id + " manifest prompt hash mismatch", errors);
     check(manifest.provenance?.sourceSha256 === sourceProvenance.sourceSha256, theme.id + " manifest source hash mismatch", errors);
+    check(
+      JSON.stringify(manifest.provenance?.review || null) === JSON.stringify(sourceReview || null),
+      theme.id + " manifest source-art review mismatch",
+      errors,
+    );
     check(manifest.motion?.default === "reduced" && manifest.motion?.animated === false, theme.id + " canonical motion mismatch", errors);
     check(
       JSON.stringify(manifest.compatibility?.engines) === JSON.stringify([
         {
           id: "codex-full-skin",
           coverage: "full-skin-v1",
-          testedVersion: CODEX_BETA_CAPTURE_VERSION,
+          testedVersion: release.capture.appVersion,
         },
         {
           id: "codex-native",
@@ -490,8 +521,8 @@ export async function validateRepository() {
       errors,
     );
     check(theme.exports?.["codex-full-skin"]?.coverage === "full-skin-v1", theme.id + " full-skin registry coverage mismatch", errors);
-    check(theme.exports?.["codex-full-skin"]?.format === FULL_SKIN_FORMAT, theme.id + " full-skin registry format mismatch", errors);
-    check(theme.exports?.["codex-full-skin"]?.testedVersion === CODEX_BETA_CAPTURE_VERSION, theme.id + " full-skin registry version mismatch", errors);
+    check(theme.exports?.["codex-full-skin"]?.format === release.runtime.fullSkinFormat, theme.id + " full-skin registry format mismatch", errors);
+    check(theme.exports?.["codex-full-skin"]?.testedVersion === release.capture.appVersion, theme.id + " full-skin registry version mismatch", errors);
     check(theme.exports?.["codex-native"]?.coverage === "native-theme-v1", theme.id + " native registry coverage mismatch", errors);
     check(theme.exports?.["codex-native"]?.testedVersion === CODEX_NATIVE_TESTED_VERSION, theme.id + " native registry version mismatch", errors);
     validateCanonicalZip(theme.id, packageBytes, manifestBytes, errors);
@@ -550,13 +581,13 @@ export async function validateRepository() {
         theme.id + " " + mode + " registry preview render fingerprint mismatch",
         errors,
       );
-      check(modeRecord.fullSkin?.format === FULL_SKIN_FORMAT, theme.id + " " + mode + " full-skin format mismatch", errors);
+      check(modeRecord.fullSkin?.format === release.runtime.fullSkinFormat, theme.id + " " + mode + " full-skin format mismatch", errors);
       check(modeRecord.fullSkin?.asset === "themes/" + theme.id + "/" + manifestMode.asset, theme.id + " " + mode + " full-skin asset path mismatch", errors);
       check(modeRecord.fullSkin?.sha256 === sha256(asset), theme.id + " " + mode + " full-skin asset hash mismatch", errors);
       check(modeRecord.fullSkin?.bytes === asset.length, theme.id + " " + mode + " full-skin asset byte count mismatch", errors);
       check(JSON.stringify(modeRecord.fullSkin?.art) === JSON.stringify(manifestMode.art), theme.id + " " + mode + " full-skin art contract mismatch", errors);
       check(JSON.stringify(modeRecord.fullSkin?.tokens) === JSON.stringify(manifestMode.tokens), theme.id + " " + mode + " full-skin token contract mismatch", errors);
-      check(modeRecord.fullSkin?.testedVersion === CODEX_BETA_CAPTURE_VERSION, theme.id + " " + mode + " full-skin tested version mismatch", errors);
+      check(modeRecord.fullSkin?.testedVersion === release.capture.appVersion, theme.id + " " + mode + " full-skin tested version mismatch", errors);
       fullSkinCount += 1;
       check(sha256(preview) === modeRecord.previewSha256, theme.id + " " + mode + " preview hash mismatch", errors);
       check(sha256(nativeTheme) === modeRecord.nativeTheme.sha256, theme.id + " " + mode + " native theme hash mismatch", errors);
@@ -575,7 +606,7 @@ export async function validateRepository() {
         captureCount += 1;
         check(isSafeRelativePath(capture.path), theme.id + " " + mode + " capture path is unsafe", errors);
         check(
-          capture.path === "screenshots/codex-beta-" + CODEX_BETA_CAPTURE_VERSION + "/" + theme.id + "-" + mode + ".png",
+          capture.path === "screenshots/codex-beta-" + release.capture.appVersion + "/" + theme.id + "-" + mode + ".png",
           theme.id + " " + mode + " capture path mismatch",
           errors,
         );
@@ -587,11 +618,11 @@ export async function validateRepository() {
         check(capture.sha256 === sha256(captureBytes), theme.id + " " + mode + " capture hash mismatch", errors);
         check(capture.assetSha256 === modeRecord.fullSkin.sha256, theme.id + " " + mode + " capture asset hash mismatch", errors);
         check(capture.runtimeSha256 === runtimeSha256, theme.id + " " + mode + " capture runtime hash mismatch", errors);
-        check(capture.markerVersion === FULL_SKIN_FORMAT, theme.id + " " + mode + " capture marker mismatch", errors);
+        check(capture.markerVersion === release.runtime.fullSkinFormat, theme.id + " " + mode + " capture marker mismatch", errors);
         check(capture.selectors?.main === true, theme.id + " " + mode + " capture main selector was not verified", errors);
-        check(capture.appVersion === CODEX_BETA_CAPTURE_VERSION, theme.id + " " + mode + " capture app version mismatch", errors);
-        check(capture.packageFullName === CODEX_BETA_PACKAGE, theme.id + " " + mode + " capture package identity mismatch", errors);
-        check(capture.fixture === "full-skin-home-v1", theme.id + " " + mode + " capture fixture mismatch", errors);
+        check(capture.appVersion === release.capture.appVersion, theme.id + " " + mode + " capture app version mismatch", errors);
+        check(capture.packageFullName === release.capture.packageFullName, theme.id + " " + mode + " capture package identity mismatch", errors);
+        check(capture.fixture === release.capture.fixture, theme.id + " " + mode + " capture fixture mismatch", errors);
       }
       validateTokens(theme.id, mode, manifestMode.tokens, errors);
       validateNativeTheme(theme, mode, nativeTheme, modeRecord, manifestMode, packageBytes, errors);

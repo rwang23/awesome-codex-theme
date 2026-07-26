@@ -7,21 +7,23 @@ import { Worker } from "node:worker_threads";
 import { readPngDimensions } from "./png.mjs";
 import { renderFingerprint, SOURCE_ART_RENDERER_ID } from "./source-art-contract.mjs";
 import { createZip } from "./zip.mjs";
+import { createCodexNativeTheme, serializeCodexNativeTheme } from "./codex-native-theme.mjs";
 import {
-  CODEX_NATIVE_TESTED_VERSION,
-  createCodexNativeTheme,
-  serializeCodexNativeTheme,
-} from "./codex-native-theme.mjs";
+  FULL_SKIN_FORMAT,
+  readReleaseMetadata,
+  releaseForRegistry,
+} from "./release-metadata.mjs";
+import {
+  loadSourceArtReviews,
+  resolveSourceArtReview,
+} from "./source-art-reviews.mjs";
 
 const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
 export const REPOSITORY_ROOT = path.resolve(SCRIPT_DIR, "..", "..");
 const WORKER_URL = new URL("../generate-theme-worker.mjs", import.meta.url);
 const CATALOG_PATH = "themes/catalog.json";
 const REGISTRY_PATH = "themes/registry.json";
-const CAPTURE_MANIFEST_PATH = "screenshots/codex-beta-26.715.3651.0/manifest.json";
 const GENERATOR_ID = "act-theme-generator-v5.0";
-const FULL_SKIN_FORMAT = "act-full-skin-v1";
-const FULL_SKIN_TESTED_VERSION = "26.715.3651.0";
 const FAN_ART_LICENSE_ID = "LicenseRef-ACT-Fan-Art-Notice";
 const FAN_ART_POLICY_URL = "https://github.com/rwang23/awesome-codex-theme/blob/main/docs/fan-art-policy.md";
 const OUTPUTS = Object.freeze([
@@ -73,7 +75,7 @@ function legacyRenderFingerprint(theme, mode, sourceProvenance, width, height) {
   }), "utf8"));
 }
 
-function rightsFor(theme) {
+function rightsFor(theme, sourceReview) {
   const fanArt = theme.rightsProfile === "fan-art";
   return fanArt
     ? {
@@ -95,8 +97,8 @@ function rightsFor(theme) {
           url: "https://creativecommons.org/publicdomain/zero/1.0/",
         },
         provenanceType: "original",
-        rightsVerified: true,
-        notes: "Original AI-generated source art, reviewed for third-party characters, logos, signatures, text, screenshots, and franchise assets.",
+        rightsVerified: sourceReview?.decision === "approved",
+        notes: "Original AI-generated source art with an approved source-hash-bound review record. This record does not create a claim of third-party rights clearance.",
       };
 }
 
@@ -107,8 +109,8 @@ function nativeThemeBuffer(theme, mode) {
   );
 }
 
-function manifestFor(theme, assets, previews, nativeThemes, sourceProvenance) {
-  const rights = rightsFor(theme);
+function manifestFor(theme, assets, previews, nativeThemes, sourceProvenance, sourceReview, release) {
+  const rights = rightsFor(theme, sourceReview);
   const mode = (name) => ({
     asset: "assets/background-" + name + ".png",
     preview: {
@@ -138,7 +140,7 @@ function manifestFor(theme, assets, previews, nativeThemes, sourceProvenance) {
       path: "native/" + name + ".codex-theme.txt",
       sha256: sha256(nativeThemes[name]),
       bytes: nativeThemes[name].length,
-      testedVersion: CODEX_NATIVE_TESTED_VERSION,
+      testedVersion: release.runtime.nativeTestedVersion,
     },
   });
 
@@ -168,13 +170,14 @@ function manifestFor(theme, assets, previews, nativeThemes, sourceProvenance) {
       jobId: sourceProvenance.jobId,
       promptSha256: sourceProvenance.promptSha256,
       sourceSha256: sourceProvenance.sourceSha256,
+      ...(sourceReview ? { review: sourceReview } : {}),
       notes: rights.notes,
     },
     compatibility: {
-      codexDesktopTested: FULL_SKIN_TESTED_VERSION,
+      codexDesktopTested: release.capture.appVersion,
       engines: [
-        { id: "codex-full-skin", coverage: "full-skin-v1", testedVersion: FULL_SKIN_TESTED_VERSION },
-        { id: "codex-native", coverage: "native-theme-v1", testedVersion: CODEX_NATIVE_TESTED_VERSION },
+        { id: "codex-full-skin", coverage: "full-skin-v1", testedVersion: release.capture.appVersion },
+        { id: "codex-native", coverage: "native-theme-v1", testedVersion: release.runtime.nativeTestedVersion },
       ],
     },
     motion: {
@@ -193,13 +196,17 @@ async function readJson(root, relativePath) {
   return JSON.parse(await readFile(path.join(root, ...relativePath.split("/")), "utf8"));
 }
 
-async function loadCaptureContext(root) {
+async function loadCaptureContext(root, release) {
+  const captureManifestPath = "screenshots/codex-beta-" + release.capture.appVersion + "/manifest.json";
   try {
-    const manifest = await readJson(root, CAPTURE_MANIFEST_PATH);
+    const manifest = await readJson(root, captureManifestPath);
     if (manifest.schemaVersion !== "act-full-skin-capture-manifest-v1"
       || manifest.status !== "complete"
       || manifest.runtime?.format !== FULL_SKIN_FORMAT
-      || manifest.runtime?.removedAfterCapture !== true) {
+      || manifest.runtime?.removedAfterCapture !== true
+      || manifest.testBench?.version !== release.capture.appVersion
+      || manifest.testBench?.packageFullName !== release.capture.packageFullName
+      || manifest.fixture?.id !== release.capture.fixture) {
       return { manifest: null, index: new Map() };
     }
     return {
@@ -374,8 +381,8 @@ function createThemeOutputs(theme, assets, previews, nativeThemes, manifest, man
   ];
 }
 
-function registryRecordFor(theme, manifest, manifestBuffer, canonicalPackage, previews, assets, nativeThemes, sourceProvenance, captureContext) {
-  const rights = rightsFor(theme);
+function registryRecordFor(theme, manifest, manifestBuffer, canonicalPackage, previews, assets, nativeThemes, sourceProvenance, sourceReview, captureContext, release) {
+  const rights = rightsFor(theme, sourceReview);
   const themeRoot = "themes/" + theme.id;
   const modeRecords = {};
   for (const mode of MODES) {
@@ -394,14 +401,14 @@ function registryRecordFor(theme, manifest, manifestBuffer, canonicalPackage, pr
         bytes: assets[mode].length,
         art: manifest.modes[mode].art,
         tokens: manifest.modes[mode].tokens,
-        testedVersion: FULL_SKIN_TESTED_VERSION,
+        testedVersion: release.capture.appVersion,
       },
       nativeTheme: {
         format: "codex-theme-v1",
         path: "packages/native/" + theme.id + "-" + mode + ".codex-theme.txt",
         sha256: sha256(nativeThemes[mode]),
         bytes: nativeThemes[mode].length,
-        testedVersion: CODEX_NATIVE_TESTED_VERSION,
+        testedVersion: release.runtime.nativeTestedVersion,
         value: nativeThemes[mode].toString("utf8").trim(),
       },
       ...(capture ? {
@@ -456,6 +463,7 @@ function registryRecordFor(theme, manifest, manifestBuffer, canonicalPackage, pr
       promptRecord: "themes/source-art/jobs.json#" + theme.id,
       promptSha256: sourceProvenance.promptSha256,
       sourceSha256: sourceProvenance.sourceSha256,
+      ...(sourceReview ? { review: sourceReview } : {}),
     },
     motion: {
       default: "reduced",
@@ -473,14 +481,14 @@ function registryRecordFor(theme, manifest, manifestBuffer, canonicalPackage, pr
       "codex-full-skin": {
         coverage: "full-skin-v1",
         format: FULL_SKIN_FORMAT,
-        testedVersion: FULL_SKIN_TESTED_VERSION,
+        testedVersion: release.capture.appVersion,
         delivery: "Awesome Codex Theme Manager",
         limitations: ["runtime-session", "no-layout-replacement"],
       },
       "codex-native": {
         coverage: "native-theme-v1",
         format: "codex-theme-v1",
-        testedVersion: CODEX_NATIVE_TESTED_VERSION,
+        testedVersion: release.runtime.nativeTestedVersion,
         importPath: "Settings > Appearance > Import",
         limitations: ["background-image"],
       },
@@ -539,7 +547,7 @@ async function runBounded(items, concurrency, worker) {
   return results;
 }
 
-async function generateTheme({ root, theme, sourceProvenance, existingManifest, existingRecord, force, render, captureContext }) {
+async function generateTheme({ root, theme, sourceProvenance, sourceReview, existingManifest, existingRecord, force, render, captureContext, release }) {
   const assets = {};
   const previews = {};
   const missing = [];
@@ -587,7 +595,7 @@ async function generateTheme({ root, theme, sourceProvenance, existingManifest, 
     light: nativeThemeBuffer(theme, "light"),
     dark: nativeThemeBuffer(theme, "dark"),
   };
-  const manifest = manifestFor(theme, assets, previews, nativeThemes, sourceProvenance);
+  const manifest = manifestFor(theme, assets, previews, nativeThemes, sourceProvenance, sourceReview, release);
   const manifestBuffer = jsonBuffer(manifest);
   const canonicalPackage = createZip([
     { name: "manifest.json", data: manifestBuffer },
@@ -610,7 +618,9 @@ async function generateTheme({ root, theme, sourceProvenance, existingManifest, 
       assets,
       nativeThemes,
       sourceProvenance,
+      sourceReview,
       captureContext,
+      release,
     ),
   };
 }
@@ -631,12 +641,14 @@ function hasCurrentRegistryRecord(record) {
   ));
 }
 
-function createRegistry(catalog, records) {
+function createRegistry(catalog, records, release) {
   return {
     schemaVersion: 1,
     standard: "act-theme-pack-v1",
     generatedBy: GENERATOR_ID,
     catalogRevision: catalog.catalogRevision,
+    release: releaseForRegistry(release),
+    capabilities: release.capabilities,
     collections: catalog.collections.map((collection) => ({
       ...collection,
       themeCount: catalog.themes.filter((theme) => theme.collection === collection.id).length,
@@ -754,7 +766,10 @@ export async function generateRepository({
     }
   }
 
-  const captureContext = await loadCaptureContext(root);
+  const release = readReleaseMetadata(root);
+  const sourceReviews = await loadSourceArtReviews(root, catalog);
+
+  const captureContext = await loadCaptureContext(root, release);
   const records = new Map(existingRecords);
   const drift = [];
   const stats = {
@@ -776,15 +791,18 @@ export async function generateRepository({
   try {
     const generated = await runBounded(themes, normalized.concurrency, async (theme) => {
       const sourceProvenance = await readVerifiedSourceProvenance(root, theme.id);
+      const sourceReview = resolveSourceArtReview(theme, sourceProvenance, sourceReviews);
       const result = await generateTheme({
         root,
         theme,
         sourceProvenance,
+        sourceReview,
         existingManifest: await readExistingManifest(root, theme.id),
         existingRecord: existingRecords.get(theme.id),
         force: normalized.force,
         render,
         captureContext,
+        release,
       });
       for (const output of result.outputs) {
         await reconcileFile(root, output, normalized.check, drift, collectOutput);
@@ -798,7 +816,7 @@ export async function generateRepository({
     });
     void generated;
 
-    const registry = createRegistry(catalog, records);
+    const registry = createRegistry(catalog, records, release);
     await reconcileFile(
       root,
       { relativePath: REGISTRY_PATH, data: jsonBuffer(registry) },

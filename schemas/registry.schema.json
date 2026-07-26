@@ -4,7 +4,7 @@
   "title": "Awesome Codex Theme Registry",
   "type": "object",
   "additionalProperties": false,
-  "required": ["schemaVersion", "standard", "generatedBy", "catalogRevision", "collections", "themes"],
+  "required": ["schemaVersion", "standard", "generatedBy", "catalogRevision", "release", "capabilities", "collections", "themes"],
   "properties": {
     "schemaVersion": {
       "const": 1
@@ -18,6 +18,16 @@
     "catalogRevision": {
       "type": "integer",
       "minimum": 1
+    },
+    "release": {
+      "$ref": "#/$defs/release"
+    },
+    "capabilities": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/capability"
+      }
     },
     "collections": {
       "type": "array",
@@ -71,6 +81,9 @@
           },
           "tagline": {
             "$ref": "#/$defs/localizedShort"
+          },
+          "provenance": {
+            "$ref": "#/$defs/registryProvenance"
           },
           "previews": {
             "type": "object",
@@ -159,6 +172,143 @@
     }
   },
   "$defs": {
+    "localized": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["en", "zh-CN"],
+      "properties": {
+        "en": { "type": "string", "minLength": 1 },
+        "zh-CN": { "type": "string", "minLength": 1 }
+      }
+    },
+    "release": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["product", "desktop", "runtime", "capture"],
+      "properties": {
+        "product": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["name", "repository", "releases"],
+          "properties": {
+            "name": { "type": "string", "minLength": 1 },
+            "repository": { "type": "string", "format": "uri" },
+            "releases": { "type": "string", "format": "uri" }
+          }
+        },
+        "desktop": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["version", "channel", "updater"],
+          "properties": {
+            "version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+            "channel": { "enum": ["beta", "stable"] },
+            "updater": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["status", "message"],
+              "properties": {
+                "status": { "enum": ["unreleased", "available"] },
+                "message": { "$ref": "#/$defs/localized" }
+              }
+            }
+          }
+        },
+        "runtime": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["fullSkinFormat", "implementationVersion", "sourceArtRenderer", "nativeTestedVersion"],
+          "properties": {
+            "fullSkinFormat": { "const": "act-full-skin-v1" },
+            "implementationVersion": { "type": "string", "minLength": 1 },
+            "sourceArtRenderer": { "type": "string", "minLength": 1 },
+            "nativeTestedVersion": { "type": "string", "minLength": 1 }
+          }
+        },
+        "capture": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["channel", "appVersion", "packageFullName", "fixture", "modelLabel"],
+          "properties": {
+            "channel": { "const": "beta" },
+            "appVersion": { "type": "string", "minLength": 1 },
+            "packageFullName": { "type": "string", "pattern": "^OpenAI\\.CodexBeta_" },
+            "fixture": { "const": "full-skin-home-v1" },
+            "modelLabel": { "type": "string", "minLength": 1 }
+          }
+        }
+      }
+    },
+    "capability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "platform", "architecture", "title", "fullSkin", "native", "persistence"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+        "platform": { "enum": ["windows", "macos"] },
+        "architecture": { "enum": ["x64", "aarch64", "x86_64"] },
+        "title": { "$ref": "#/$defs/localized" },
+        "fullSkin": { "$ref": "#/$defs/capabilityFeature" },
+        "native": { "$ref": "#/$defs/capabilityFeature" },
+        "persistence": { "$ref": "#/$defs/capabilityFeature" }
+      }
+    },
+    "capabilityFeature": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "testedVersion", "detail"],
+      "properties": {
+        "status": { "enum": ["verified", "build-only", "unverified"] },
+        "testedVersion": { "type": "string" },
+        "detail": { "$ref": "#/$defs/localized" }
+      }
+    },
+    "registryProvenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "aiGenerated", "rightsVerified", "generator", "model", "jobId", "sourceArt", "record", "promptRecord", "promptSha256", "sourceSha256"],
+      "properties": {
+        "type": { "enum": ["original", "fan-art"] },
+        "aiGenerated": { "const": true },
+        "rightsVerified": { "type": "boolean" },
+        "generator": { "type": "string", "minLength": 1 },
+        "model": { "type": "string", "minLength": 1 },
+        "jobId": { "type": "string", "minLength": 10 },
+        "sourceArt": { "type": "string", "pattern": "^themes/source-art/[a-z0-9-]+\\.png$" },
+        "record": { "type": "string", "pattern": "^themes/source-art/[a-z0-9-]+\\.provenance\\.json$" },
+        "promptRecord": { "type": "string", "pattern": "^themes/source-art/jobs\\.json#[a-z0-9-]+$" },
+        "promptSha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "sourceSha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "review": { "$ref": "#/$defs/sourceArtReview" }
+      }
+    },
+    "sourceArtReview": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["record", "reviewer", "reviewedAt", "checks", "sourceSha256", "decision", "notes"],
+      "properties": {
+        "record": { "type": "string", "pattern": "^themes/source-art/reviews\\.json#[a-z0-9]+(?:-[a-z0-9]+)*$" },
+        "reviewer": { "type": "string", "minLength": 3 },
+        "reviewedAt": { "type": "string", "format": "date-time" },
+        "checks": { "$ref": "#/$defs/sourceArtReviewChecks" },
+        "sourceSha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "decision": { "const": "approved" },
+        "notes": { "type": "string", "minLength": 1, "maxLength": 500 }
+      }
+    },
+    "sourceArtReviewChecks": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["noThirdPartyLogo", "noSignatureOrWatermark", "noUnintendedText", "rightsProfileMatches", "safeAreaReviewed", "lightDarkCaptureReviewed"],
+      "properties": {
+        "noThirdPartyLogo": { "const": true },
+        "noSignatureOrWatermark": { "const": true },
+        "noUnintendedText": { "const": true },
+        "rightsProfileMatches": { "const": true },
+        "safeAreaReviewed": { "const": true },
+        "lightDarkCaptureReviewed": { "const": true }
+      }
+    },
     "localizedShort": {
       "type": "object",
       "additionalProperties": false,

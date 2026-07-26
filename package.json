@@ -1,6 +1,6 @@
 {
   "name": "awesome-codex-theme",
-  "version": "0.1.0",
+  "version": "0.3.2",
   "private": true,
   "type": "module",
   "description": "A free declarative Codex Full Skin standard, registry, validator, gallery, and manager.",
@@ -9,7 +9,9 @@
     "generate": "node scripts/generate-themes.mjs",
     "generate:check": "node scripts/generate-themes.mjs --check",
     "generate:benchmark": "node scripts/benchmark-generator.mjs",
-    "validate": "node scripts/ensure-generated.mjs && node scripts/validate.mjs",
+    "metadata:sync": "node scripts/sync-release-metadata.mjs --apply",
+    "metadata:check": "node scripts/sync-release-metadata.mjs --check",
+    "validate": "npm run metadata:check && node scripts/ensure-generated.mjs && node scripts/validate.mjs",
     "test": "npm run test:source",
     "test:source": "node --test tests/source-contract.test.mjs tests/full-skin-runtime.test.mjs",
     "test:generated": "node scripts/ensure-generated.mjs && node --test tests/repository.test.mjs",
