@@ -14,11 +14,19 @@ function usage() {
   return "Usage: node scripts/verify-gallery.mjs [--screenshot=gallery-home.png]";
 }
 
-function parseOptions(argv = process.argv.slice(2)) {
+export function parseOptions(argv = process.argv.slice(2)) {
   const options = { screenshot: null };
-  for (const argument of argv) {
+  for (let index = 0; index < argv.length; index += 1) {
+    const argument = argv[index];
     if (argument === "--help" || argument === "-h") {
       options.help = true;
+    } else if (argument === "--screenshot") {
+      const value = argv[index + 1]?.trim();
+      if (!value || value.startsWith("--")) {
+        throw new Error("--screenshot requires a relative output path");
+      }
+      options.screenshot = value;
+      index += 1;
     } else if (argument.startsWith("--screenshot=")) {
       const value = argument.slice("--screenshot=".length).trim();
       if (!value) throw new Error("--screenshot requires a relative output path");
@@ -292,9 +300,11 @@ async function main(options) {
   }
 }
 
-try {
-  await main(parseOptions());
-} catch (error) {
-  console.error(error.message);
-  process.exitCode = 1;
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  try {
+    await main(parseOptions());
+  } catch (error) {
+    console.error(error.message);
+    process.exitCode = 1;
+  }
 }

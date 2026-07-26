@@ -20,6 +20,7 @@ import {
   renderFingerprint,
   SOURCE_ART_RENDERER_CONSTANTS,
 } from "../scripts/lib/source-art-contract.mjs";
+import { parseOptions as parseGalleryCheckOptions } from "../scripts/verify-gallery.mjs";
 import { contrastRatio, isSafeRelativePath } from "../scripts/validate.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -119,6 +120,21 @@ test("package scripts keep source checks fast and generated checks explicit", as
   assert.match(packageJson.scripts["test:ci"], /^npm run generate/);
   assert.match(packageJson.scripts["check:full"], /npm run test:ci/);
   assert.equal(packageJson.scripts["gallery:check"], "node scripts/verify-gallery.mjs");
+});
+
+test("gallery check accepts both standard screenshot argument forms", function () {
+  assert.equal(
+    parseGalleryCheckOptions(["--screenshot=gallery-home.png"]).screenshot,
+    "gallery-home.png",
+  );
+  assert.equal(
+    parseGalleryCheckOptions(["--screenshot", "gallery-home.png"]).screenshot,
+    "gallery-home.png",
+  );
+  assert.throws(
+    () => parseGalleryCheckOptions(["--screenshot"]),
+    /--screenshot requires a relative output path/,
+  );
 });
 
 test("CI reuses canonical generated assets with pinned, least-privilege workflows", async function () {
