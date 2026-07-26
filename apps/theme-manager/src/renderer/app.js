@@ -63,16 +63,32 @@ const translations = {
     persistenceRetrying: "Retrying after a safe failure",
     persistenceBlocked: "Paused · reapply to verify this version",
     persistenceError: "Paused after a bounded failure",
+    persistenceNeedsUserClose: "Waiting for you to close the selected ChatGPT safely",
+    persistenceForceClosing: "Closing the selected ChatGPT after your confirmation",
     persistenceOther: "Another theme is kept: {theme} · {mode}",
     persistenceConsent: "Keep this theme after every future launch of the selected ChatGPT version once it completes a local verification?\n\nThis is the normal result of Apply & Keep Full Skin. Theme Manager will start for your user account at sign-in. When you open ChatGPT normally, it may close and relaunch only that exact app once with a loopback-only debugging port. A detected Stable or Beta build stays native until you explicitly choose Apply & Keep Full Skin to run a controlled local probe. Only a successful app-target and runtime-marker readback enables future replay for that exact version. It never edits ChatGPT files, shortcuts, or chats. You can turn this off here at any time.",
     consentEyebrow: "APPLY & KEEP",
     consentTitle: "Keep this Full Skin?",
     cancel: "Cancel",
     confirmApply: "Apply & Keep",
+    forceRestartEyebrow: "RESTART SAFETY",
+    forceRestartTitle: "Force close the selected ChatGPT?",
+    forceRestartWarning: "ChatGPT did not close after a normal request. Force closing may lose unsent prompts or other unsaved input. Cancel leaves the app and theme unchanged.",
+    forceRestartConfirm: "Force close & restart",
+    forceRestart: "Force close & restart",
     copyNative: "Copy Native palette only",
     skinIdle: "Theme packs contain only declarative data and images. The manager uses a temporary loopback-only debug session to load the background without modifying WindowsApps, app.asar, or ChatGPT private data.",
     skinActive: "Active in {target}: {theme} · {mode}. Restore the skin first; quit and reopen ChatGPT normally to close the debug port.",
     noTarget: "ChatGPT was not found",
+    retryTargetDiscovery: "Retry detection",
+    copyDiagnostic: "Copy diagnostic",
+    targetDiagnosticCommandUnavailable: "Target detection could not start.",
+    targetDiagnosticPermissionDenied: "Target detection was blocked by permissions.",
+    targetDiagnosticMalformedPackage: "Target detection found malformed package metadata.",
+    targetDiagnosticMalformedOutput: "Target detection returned invalid data.",
+    targetDiagnosticCommandFailed: "Target detection failed.",
+    targetDiagnosticUnsupported: "This platform does not support target detection.",
+    targetUnsupportedVersionError: "The selected ChatGPT version could not be verified.",
     onlineGallery: "Online Gallery",
     githubRepository: "GitHub repository",
     checkUpdate: "Check for app updates",
@@ -100,6 +116,8 @@ const translations = {
     toastPersistenceEnabled: "Always apply is on for this theme.",
     toastPersistenceDisabled: "Always apply is off and the login task was removed.",
     toastPersistenceFailed: "Could not change the always-apply setting.",
+    toastDiagnosticCopied: "Diagnostic copied.",
+    toastForceRestartRequested: "Force close requested. The controller will reapply after ChatGPT exits.",
     toastUpdateFailed: "App update check failed.",
     startupFailed: "Theme Manager could not start.",
     closeCodexError: "Quit the selected ChatGPT app completely, then apply the theme again.",
@@ -173,16 +191,32 @@ const translations = {
     persistenceRetrying: "遇到错误，正在安全重试",
     persistenceBlocked: "已暂停，请重新应用以验证当前版本",
     persistenceError: "有限重试失败，已暂停",
+    persistenceNeedsUserClose: "正在等待你安全关闭所选 ChatGPT",
+    persistenceForceClosing: "正按你的确认关闭所选 ChatGPT",
     persistenceOther: "当前保持的是：{theme} · {mode}",
     persistenceConsent: "要让这套主题在所选 ChatGPT 版本完成本机验证后，于以后每次打开时继续生效吗？\n\n这也是“应用并保持完整皮肤”的默认结果。Theme Manager 会为当前用户注册登录启动项。当你正常打开 ChatGPT 时，控制器可能先关闭并只重开这一个准确应用一次，再通过仅限本机回环的调试端口加载主题。检测到的 Stable/Beta 版本会先保持原生；只有你明确选择“应用并保持完整皮肤”时，才会进行一次受控本机探测。只有端口、页面和运行时标记读回成功后，才会在以后自动重放该准确版本。它不会修改 ChatGPT 文件、快捷方式或聊天。你可以随时在这里关闭。",
     consentEyebrow: "应用并保持",
     consentTitle: "保持使用这套完整皮肤？",
     cancel: "取消",
     confirmApply: "应用并保持",
+    forceRestartEyebrow: "重启安全",
+    forceRestartTitle: "强制关闭所选 ChatGPT？",
+    forceRestartWarning: "ChatGPT 在正常退出请求后仍未关闭。强制关闭可能丢失未发送的提示词或其他未保存输入。取消不会改变应用或主题状态。",
+    forceRestartConfirm: "强制关闭并重新应用",
+    forceRestart: "强制关闭并重新应用",
     copyNative: "只复制原生配色",
     skinIdle: "主题包只含声明式配置与图片。管理器通过仅限本机回环的临时调试会话加载背景，不修改 WindowsApps、app.asar 或 ChatGPT 私有数据。",
     skinActive: "正在 {target} 使用 {theme} · {mode}。恢复后如需关闭调试端口，请退出并正常重开 ChatGPT。",
     noTarget: "未检测到 ChatGPT",
+    retryTargetDiscovery: "重新检测",
+    copyDiagnostic: "复制诊断",
+    targetDiagnosticCommandUnavailable: "无法启动目标检测。",
+    targetDiagnosticPermissionDenied: "目标检测被权限阻止。",
+    targetDiagnosticMalformedPackage: "目标检测发现了损坏的软件包元数据。",
+    targetDiagnosticMalformedOutput: "目标检测返回了无效数据。",
+    targetDiagnosticCommandFailed: "目标检测失败。",
+    targetDiagnosticUnsupported: "当前平台不支持目标检测。",
+    targetUnsupportedVersionError: "无法验证所选 ChatGPT 的准确版本。",
     onlineGallery: "在线 Gallery",
     githubRepository: "GitHub 仓库",
     checkUpdate: "检查应用更新",
@@ -210,6 +244,8 @@ const translations = {
     toastPersistenceEnabled: "已为这套主题开启始终应用。",
     toastPersistenceDisabled: "已关闭始终应用并移除登录启动项。",
     toastPersistenceFailed: "无法更改始终应用设置。",
+    toastDiagnosticCopied: "诊断信息已复制。",
+    toastForceRestartRequested: "已请求强制关闭；ChatGPT 退出后控制器会重新应用。",
     toastUpdateFailed: "应用更新检查失败。",
     startupFailed: "无法启动主题管理器。",
     closeCodexError: "请先完全退出所选 ChatGPT，再重新应用主题。",
@@ -245,6 +281,7 @@ const state = {
   catalog: null,
   catalogState: null,
   targets: [],
+  targetDiagnostic: null,
   skinState: null,
   persistenceState: null,
   updateState: null,
@@ -290,6 +327,9 @@ const elements = {
   copyShortcut: document.querySelector("#copyShortcut"),
   targetSelect: document.querySelector("#targetSelect"),
   restoreSkin: document.querySelector("#restoreSkin"),
+  targetDiagnosticActions: document.querySelector("#targetDiagnosticActions"),
+  retryTargetDiscovery: document.querySelector("#retryTargetDiscovery"),
+  copyTargetDiagnostic: document.querySelector("#copyTargetDiagnostic"),
   persistenceControl: document.querySelector("#persistenceControl"),
   persistenceToggle: document.querySelector("#persistenceToggle"),
   persistenceStatus: document.querySelector("#persistenceStatus"),
@@ -304,10 +344,15 @@ const elements = {
   persistenceConsentDialog: document.querySelector("#persistenceConsentDialog"),
   persistenceConsentCancel: document.querySelector("#persistenceConsentCancel"),
   persistenceConsentConfirm: document.querySelector("#persistenceConsentConfirm"),
+  forceRestart: document.querySelector("#forceRestart"),
+  forceRestartDialog: document.querySelector("#forceRestartDialog"),
+  forceRestartCancel: document.querySelector("#forceRestartCancel"),
+  forceRestartConfirm: document.querySelector("#forceRestartConfirm"),
   toast: document.querySelector("#toast"),
 };
 
 let consentResolver = null;
+let forceRestartResolver = null;
 
 function finishPersistenceConsent(confirmed) {
   if (!consentResolver) return;
@@ -326,6 +371,23 @@ function requestPersistenceConsent() {
   });
 }
 
+function finishForceRestartConsent(confirmed) {
+  if (!forceRestartResolver) return;
+  const resolve = forceRestartResolver;
+  forceRestartResolver = null;
+  elements.forceRestartDialog.hidden = true;
+  resolve(confirmed);
+}
+
+function requestForceRestartConsent() {
+  if (forceRestartResolver) return Promise.resolve(false);
+  elements.forceRestartDialog.hidden = false;
+  elements.forceRestartConfirm.focus();
+  return new Promise((resolve) => {
+    forceRestartResolver = resolve;
+  });
+}
+
 function localized(value) {
   return value?.[state.locale] || value?.en || value?.["zh-CN"] || "";
 }
@@ -338,6 +400,7 @@ function friendlyError(error, fallbackKey) {
     return reason ? `${t(key)}\n${t("errorReason")}: ${reason}` : t(key);
   };
   if (/完全退出|正在普通模式运行|already running/i.test(raw)) return withReason("closeCodexError");
+  if (/\[unsupported-version\]/i.test(raw)) return withReason("targetUnsupportedVersionError");
   if (/没有检测到|not found/i.test(raw)) return withReason("targetMissingError");
   if (/素材|哈希|PNG|integrity/i.test(raw)) return withReason("assetError");
   if (/CDP|调试|Full Skin 会话|loopback|LaunchServices/i.test(raw)) return withReason("sessionError");
@@ -636,12 +699,57 @@ function renderSelectedTheme() {
   renderPersistenceState();
 }
 
+function targetDiagnosticLabel(diagnostic) {
+  const labels = {
+    "command-unavailable": "targetDiagnosticCommandUnavailable",
+    "permission-denied": "targetDiagnosticPermissionDenied",
+    "malformed-package": "targetDiagnosticMalformedPackage",
+    "malformed-output": "targetDiagnosticMalformedOutput",
+    "command-failed": "targetDiagnosticCommandFailed",
+    "unsupported-platform": "targetDiagnosticUnsupported",
+  };
+  return t(labels[diagnostic?.code] || "targetDiagnosticCommandFailed");
+}
+
+function targetDiagnosticText() {
+  const diagnostic = state.targetDiagnostic;
+  if (!diagnostic) return "";
+  const detail = String(diagnostic.detail || "").replace(/\s+/gu, " ").trim();
+  return `${targetDiagnosticLabel(diagnostic)}\nCode: ${diagnostic.code || "command-failed"}${detail ? `\n${detail}` : ""}`;
+}
+
+async function refreshTargets() {
+  const discovery = await window.act.discoverTargets();
+  state.targets = discovery.targets || [];
+  state.targetDiagnostic = discovery.diagnostic || null;
+  renderTargets();
+}
+
+async function copyPlainText(text) {
+  if (navigator.clipboard?.writeText) {
+    await navigator.clipboard.writeText(text);
+    return;
+  }
+  const input = document.createElement("textarea");
+  input.value = text;
+  input.setAttribute("readonly", "");
+  input.style.position = "fixed";
+  input.style.opacity = "0";
+  document.body.append(input);
+  input.select();
+  const copied = document.execCommand("copy");
+  input.remove();
+  if (!copied) throw new Error("Clipboard is unavailable");
+}
+
 function renderTargets() {
   const fragment = document.createDocumentFragment();
   if (!state.targets.length) {
     const option = document.createElement("option");
     option.value = "";
-    option.textContent = t("noTarget");
+    option.textContent = state.targetDiagnostic
+      ? targetDiagnosticLabel(state.targetDiagnostic)
+      : t("noTarget");
     fragment.append(option);
   } else {
     state.targets.forEach((target) => {
@@ -652,6 +760,7 @@ function renderTargets() {
     });
   }
   elements.targetSelect.replaceChildren(fragment);
+  elements.targetDiagnosticActions.hidden = !state.targetDiagnostic;
   elements.applySkin.disabled = state.targets.length === 0 || !state.themeId;
   renderSkinState();
   renderPersistenceState();
@@ -669,13 +778,16 @@ function renderSkinState() {
   elements.applySkinLabel.textContent = sameSelection ? t("reapplySkin") : t("applySkin");
   elements.restoreSkin.disabled = !skin.active && !state.persistenceState?.enabled;
   const active = sameSessionSelection ? skin : persistentActive ? state.persistenceState : null;
-  elements.skinStatus.textContent = active
+  const status = active
     ? t("skinActive", {
       target: active.channel === "beta" ? "ChatGPT Beta" : "ChatGPT",
       theme: active.themeId,
       mode: t(active.mode),
     })
     : t("skinIdle");
+  elements.skinStatus.textContent = state.targetDiagnostic && !state.targets.length
+    ? targetDiagnosticText()
+    : status;
 }
 
 function persistenceMatchesSelection(persistence, channel = elements.targetSelect.value) {
@@ -714,10 +826,12 @@ function renderPersistenceState() {
       "version-blocked": "persistenceBlocked",
       "retry-blocked": "persistenceError",
       error: "persistenceError",
+      "needs-user-close": "persistenceNeedsUserClose",
+      "force-closing": "persistenceForceClosing",
     };
     const label = t(labels[persistence.phase] || "persistenceDisabled");
     elements.persistenceStatus.textContent = persistence.detail
-      && ["blocked", "target-missing", "version-blocked", "retrying", "retry-blocked", "error"].includes(persistence.phase)
+      && ["blocked", "target-missing", "version-blocked", "retrying", "retry-blocked", "error", "needs-user-close", "force-closing"].includes(persistence.phase)
       ? `${label} · ${persistence.detail}`
       : label;
   }
@@ -725,6 +839,12 @@ function renderPersistenceState() {
   const busy = ["starting", "restarting"].includes(persistence.phase);
   elements.persistenceToggle.disabled = busy
     || (!sameSelection && (state.targets.length === 0 || !state.themeId || !channel));
+  const forceRestartAvailable = state.platform === "win32"
+    && persistence.enabled
+    && persistence.channel === channel
+    && ["needs-user-close", "force-closing"].includes(persistence.phase);
+  elements.forceRestart.hidden = !forceRestartAvailable;
+  elements.forceRestart.disabled = !forceRestartAvailable;
   elements.restoreSkin.disabled = !(state.skinState?.active || persistence.enabled);
 }
 
@@ -919,12 +1039,49 @@ elements.refreshCatalog.addEventListener("click", async () => {
   }
 });
 
+elements.retryTargetDiscovery.addEventListener("click", async () => {
+  elements.retryTargetDiscovery.disabled = true;
+  try {
+    await refreshTargets();
+  } catch (error) {
+    toast(friendlyError(error, "targetDiagnosticCommandFailed"), "error");
+  } finally {
+    elements.retryTargetDiscovery.disabled = false;
+  }
+});
+
+elements.copyTargetDiagnostic.addEventListener("click", async () => {
+  const text = targetDiagnosticText();
+  if (!text) return;
+  try {
+    await copyPlainText(text);
+    toast(t("toastDiagnosticCopied"));
+  } catch {
+    toast(t("toastCopyFailed"), "error");
+  }
+});
+
 elements.copyTheme.addEventListener("click", async () => {
   try {
     await window.act.copyTheme(state.themeId, state.mode);
     toast(t("toastNativeCopied"));
   } catch {
     toast(t("toastCopyFailed"), "error");
+  }
+});
+
+elements.forceRestart.addEventListener("click", async () => {
+  const channel = elements.targetSelect.value;
+  if (!channel || !await requestForceRestartConsent()) return;
+  elements.forceRestart.disabled = true;
+  try {
+    state.persistenceState = await window.act.forceRestartPersistentTheme(channel, true);
+    renderPersistenceState();
+    toast(t("toastForceRestartRequested"));
+  } catch (error) {
+    toast(friendlyError(error, "toastPersistenceFailed"), "error");
+  } finally {
+    renderPersistenceState();
   }
 });
 
@@ -1014,10 +1171,19 @@ elements.persistenceConsentConfirm.addEventListener("click", () => finishPersist
 elements.persistenceConsentDialog.addEventListener("click", (event) => {
   if (event.target === elements.persistenceConsentDialog) finishPersistenceConsent(false);
 });
+elements.forceRestartCancel.addEventListener("click", () => finishForceRestartConsent(false));
+elements.forceRestartConfirm.addEventListener("click", () => finishForceRestartConsent(true));
+elements.forceRestartDialog.addEventListener("click", (event) => {
+  if (event.target === elements.forceRestartDialog) finishForceRestartConsent(false);
+});
 document.addEventListener("keydown", (event) => {
   if (event.key === "Escape" && !elements.persistenceConsentDialog.hidden) {
     event.preventDefault();
     finishPersistenceConsent(false);
+  }
+  if (event.key === "Escape" && !elements.forceRestartDialog.hidden) {
+    event.preventDefault();
+    finishForceRestartConsent(false);
   }
 });
 
@@ -1067,6 +1233,7 @@ try {
   state.platform = bootstrap.platform;
   renderWindowChrome();
   state.targets = bootstrap.targets;
+  state.targetDiagnostic = bootstrap.targetDiagnostic || null;
   state.skinState = bootstrap.skinState;
   state.persistenceState = bootstrap.persistenceState;
   state.updateState = bootstrap.updateState;
