@@ -137,6 +137,13 @@ test("gallery check accepts both standard screenshot argument forms", function (
   );
 });
 
+test("gallery browser check retries isolated profile cleanup after Chromium exits", async function () {
+  const galleryCheck = await readFile(path.join(ROOT, "scripts", "verify-gallery.mjs"), "utf8");
+  assert.match(galleryCheck, /maxRetries:\s*PROFILE_REMOVE_RETRIES/);
+  assert.match(galleryCheck, /retryDelay:\s*PROFILE_REMOVE_RETRY_DELAY_MS/);
+  assert.match(galleryCheck, /child\.signalCode !== null/);
+});
+
 test("CI reuses canonical generated assets with pinned, least-privilege workflows", async function () {
   const [desktopWorkflow, supplyChainWorkflow, dependabot] = await Promise.all([
     readFile(path.join(ROOT, ".github", "workflows", "desktop.yml"), "utf8"),

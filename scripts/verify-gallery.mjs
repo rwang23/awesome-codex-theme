@@ -9,6 +9,9 @@ const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(SCRIPT_DIR, "..");
 const DIST = path.join(ROOT, "dist");
 const DEFAULT_TIMEOUT_MS = 30_000;
+const PROCESS_STOP_TIMEOUT_MS = 2_000;
+const PROFILE_REMOVE_RETRIES = 10;
+const PROFILE_REMOVE_RETRY_DELAY_MS = 250;
 
 function usage() {
   return "Usage: node scripts/verify-gallery.mjs [--screenshot=gallery-home.png]";
@@ -94,13 +97,36 @@ function startProcess(command, argumentsList, label) {
 }
 
 async function stopProcess(processRecord) {
-  if (!processRecord?.child || processRecord.child.exitCode !== null) return;
-  processRecord.child.kill();
-  await Promise.race([
-    new Promise((resolve) => processRecord.child.once("exit", resolve)),
-    sleep(2_000),
-  ]);
-  if (processRecord.child.exitCode === null) processRecord.child.kill("SIGKILL");
+  if (!processRecord?.child) return;
+  const { child } = processRecord;
+  const exited = () => child.exitCode !== null || child.signalCode !== null;
+  const waitForExit = async () => {
+    if (exited()) return;
+    await Promise.race([
+      new Promise((resolve) => child.once("exit", resolve)),
+      sleep(PROCESS_STOP_TIMEOUT_MS),
+    ]);
+  };
+  if (!exited()) {
+    child.kill();
+    await waitForExit();
+  }
+  if (!exited()) {
+    child.kill("SIGKILL");
+    await waitForExit();
+  }
+}
+
+async function removeProfile(profile) {
+  // Chromium can finish closing child processes just after its parent exits.
+  // Retrying an isolated temporary directory prevents that race from turning a
+  // successful browser assertion into a failed CI run.
+  await rm(profile, {
+    recursive: true,
+    force: true,
+    maxRetries: PROFILE_REMOVE_RETRIES,
+    retryDelay: PROFILE_REMOVE_RETRY_DELAY_MS,
+  });
 }
 
 class DevToolsSession {
@@ -296,7 +322,7 @@ async function main(options) {
   } finally {
     session?.close();
     await Promise.all([stopProcess(browser), stopProcess(server)]);
-    await rm(profile, { recursive: true, force: true });
+    await removeProfile(profile);
   }
 }
 
