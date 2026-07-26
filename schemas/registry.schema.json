@@ -4,7 +4,7 @@
   "title": "Awesome Codex Theme Registry",
   "type": "object",
   "additionalProperties": false,
-  "required": ["schemaVersion", "standard", "generatedBy", "catalogRevision", "collections", "themes"],
+  "required": ["schemaVersion", "standard", "generatedBy", "catalogRevision", "runtimeEvidence", "collections", "themes"],
   "properties": {
     "schemaVersion": {
       "const": 1
@@ -18,6 +18,22 @@
     "catalogRevision": {
       "type": "integer",
       "minimum": 1
+    },
+    "runtimeEvidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "capturedRuntime", "currentRuntime"],
+      "properties": {
+        "status": {
+          "enum": ["verified", "reference"]
+        },
+        "capturedRuntime": {
+          "$ref": "#/$defs/runtimeEvidenceRecord"
+        },
+        "currentRuntime": {
+          "$ref": "#/$defs/currentRuntimeEvidenceRecord"
+        }
+      }
     },
     "collections": {
       "type": "array",
@@ -159,6 +175,39 @@
     }
   },
   "$defs": {
+    "runtimeEvidenceRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["implementationVersion", "sha256"],
+      "properties": {
+        "implementationVersion": {
+          "type": "string",
+          "pattern": "^act-full-skin-runtime-v[0-9]+$"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      }
+    },
+    "currentRuntimeEvidenceRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["implementationVersion", "sha256", "verification"],
+      "properties": {
+        "implementationVersion": {
+          "type": "string",
+          "pattern": "^act-full-skin-runtime-v[0-9]+$"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "verification": {
+          "enum": ["verified", "source-tested-recapture-required"]
+        }
+      }
+    },
     "localizedShort": {
       "type": "object",
       "additionalProperties": false,

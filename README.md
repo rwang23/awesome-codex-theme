@@ -1,7 +1,7 @@
 <h1 align="center">Awesome Codex Theme</h1>
 
 <p align="center">
-  Full visual skins for Codex Desktop, backed by real app captures and code-free theme packs.
+  Full visual skins for Codex Desktop, backed by version-bound app-capture evidence and code-free theme packs.
 </p>
 
 <p align="center">
@@ -23,9 +23,9 @@
   <img alt="Code-free packs" src="https://img.shields.io/badge/theme%20packs-code--free-059669">
 </p>
 
-![Saint Tibo theme running in the real ChatGPT Beta test bench](screenshots/codex-beta-26.715.3651.0/tibo-reset-saint-dark.png)
+![Saint Tibo theme in the ChatGPT Beta v2 reference capture](screenshots/codex-beta-26.715.3651.0/tibo-reset-saint-dark.png)
 
-The screenshot above comes from ChatGPT Beta `26.715.3651.0` after the skin was applied and read back from the live renderer. It is not a wallpaper pasted into an app mockup.
+The screenshot above is a real `act-full-skin-runtime-v2` capture from ChatGPT Beta `26.715.3651.0`, after the skin was applied and read back from the live renderer. It is not a wallpaper pasted into an app mockup. The current v3 runtime is source-tested and marked recapture-required, so this image is reference evidence rather than a claim of current v3 app verification.
 
 > Desktop builds are published only on the official [GitHub Releases page](https://github.com/rwang23/awesome-codex-theme/releases). If that page has no asset compatible with your operating system and CPU, there is no supported public installer for that target.
 
@@ -131,7 +131,7 @@ The collection currently includes 68 themes and 136 light/dark modes. The Englis
 - 2 disclosed, unofficial Codex community tributes;
 - the broader original and fan-art catalog, available through language-aware discovery in the Gallery.
 
-Every mode has a 1440×810 capture from the pinned Beta test bench. Registry records bind each capture to the exact app version, background hash, runtime hash, byte count, and renderer readback.
+Every mode has a 1440×810 v2 reference capture from the pinned Beta test bench. Registry records bind each capture to the exact app version, background hash, runtime hash, byte count, and renderer readback; the current v3 runtime remains recapture-required until that exact test bench is rerun.
 
 “Saint Tibo” is an affectionate, unofficial community parody. It is not endorsed by OpenAI or by the person depicted, and no official product artwork is bundled.
 
@@ -189,7 +189,7 @@ schemas/                     Theme Pack and Registry schemas
 themes/catalog.json          Hand-maintained theme catalog
 themes/source-art/           Image jobs, source art, and provenance
 themes/registry.json         Generated public Registry
-screenshots/                 Version-pinned real app captures
+screenshots/                 Version-pinned app-capture evidence
 scripts/                     Build, validation, capture, and site tooling
 site/                        Dependency-free Gallery
 ```

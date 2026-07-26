@@ -48,6 +48,18 @@ test("registry exposes original and disclosed fan-art collections", async functi
   ]);
   assert.equal(catalog.catalogRevision, 2026072201);
   assert.equal(registry.catalogRevision, catalog.catalogRevision);
+  assert.deepEqual(registry.runtimeEvidence, {
+    status: "reference",
+    capturedRuntime: {
+      implementationVersion: "act-full-skin-runtime-v2",
+      sha256: "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+    },
+    currentRuntime: {
+      implementationVersion: "act-full-skin-runtime-v3",
+      sha256: "7e601b402ce1aae3b1a72e55cfaffc2b23cf03951401100d3e0918138ca2445d",
+      verification: "source-tested-recapture-required",
+    },
+  });
   assert.ok(
     String(catalog.catalogRevision).slice(0, 8)
       >= captureManifest.capturedAt.slice(0, 10).replaceAll("-", ""),
@@ -362,7 +374,10 @@ test("Tauri manager keeps theme values in Rust and limits desktop capabilities",
   assert.doesNotMatch(fullSkinRuntime, /createElement\("img"\)|art\.src = imageData/);
   assert.match(fullSkinRuntime, /installToken/);
   assert.match(fullSkinRuntime, /metrics/);
-  assert.match(fullSkinRuntime, /new MutationObserver\(\(\) =>/);
+  assert.match(fullSkinRuntime, /implementationVersion = "act-full-skin-runtime-v3"/);
+  assert.match(fullSkinRuntime, /new MutationObserver\(onMutations\)/);
+  assert.match(fullSkinRuntime, /observer\.observe\(nextRoot, \{ childList: true, subtree: true \}\)/);
+  assert.match(fullSkinRuntime, /ignoredMutationCallbacks/);
   assert.match(fullSkinRuntime, /clearTimeout\(ensureTimer\)/);
   assert.match(fullSkinRuntime, /}, 180\)/);
   assert.match(fullSkinRuntime, /}, 5000\)/);
@@ -429,7 +444,7 @@ test("Theme Manager renders a compact Copy action, footer version, and macOS tra
   assert.match(styles, /@media \(min-width: 1051px\) and \(max-height: 840px\)/);
 });
 
-test("real screenshot evidence covers every mode and confirms Beta restoration", async function () {
+test("recorded screenshot evidence covers every mode and distinguishes the current runtime", async function () {
   const manifest = JSON.parse(await readFile(
     path.join(ROOT, "screenshots", "codex-beta-26.715.3651.0", "manifest.json"),
     "utf8",
@@ -445,6 +460,12 @@ test("real screenshot evidence covers every mode and confirms Beta restoration",
   assert.equal(manifest.fixture.nativeSettingsChanged, false);
   assert.equal(manifest.runtime.format, "act-full-skin-v1");
   assert.equal(manifest.runtime.implementationVersion, "act-full-skin-runtime-v2");
+  assert.equal(manifest.runtime.evidenceStatus, "reference");
+  assert.deepEqual(manifest.runtime.currentRuntime, {
+    implementationVersion: "act-full-skin-runtime-v3",
+    sha256: "7e601b402ce1aae3b1a72e55cfaffc2b23cf03951401100d3e0918138ca2445d",
+    verification: "source-tested-recapture-required",
+  });
   assert.equal(manifest.runtime.earlyInjection, true);
   assert.equal(manifest.runtime.removedAfterCapture, true);
   assert.equal(manifest.captures.length, 136);
@@ -619,7 +640,7 @@ test("desktop beta release requires updater signing and discloses deferred platf
   assert.match(tauriConfig.plugins.updater.pubkey, /^[A-Za-z0-9+/=]{100,}$/);
 });
 
-test("desktop preparation derives compact thumbnails from verified captures", async function () {
+test("desktop preparation derives compact thumbnails from recorded captures", async function () {
   const prepare = await readFile(path.join(ROOT, "scripts", "prepare-desktop.mjs"), "utf8");
   assert.match(prepare, /CAPTURE_WIDTH = 720/);
   assert.match(prepare, /CAPTURE_HEIGHT = 405/);

@@ -207,6 +207,24 @@ async function loadCaptureContext() {
   }
 }
 
+function runtimeEvidenceFor(manifest) {
+  const capturedRuntime = manifest?.runtime;
+  if (!capturedRuntime) throw new Error("A capture manifest is required to build Registry runtime evidence");
+  const currentRuntime = capturedRuntime.currentRuntime || {
+    implementationVersion: capturedRuntime.implementationVersion,
+    sha256: capturedRuntime.sha256,
+    verification: "verified",
+  };
+  return {
+    status: capturedRuntime.evidenceStatus || "verified",
+    capturedRuntime: {
+      implementationVersion: capturedRuntime.implementationVersion,
+      sha256: capturedRuntime.sha256,
+    },
+    currentRuntime,
+  };
+}
+
 export async function buildGeneratedFiles() {
   const catalog = JSON.parse(await readFile(CATALOG_PATH, "utf8"));
   const existingRegistry = await readFile(path.join(ROOT, "themes", "registry.json"), "utf8")
@@ -216,6 +234,7 @@ export async function buildGeneratedFiles() {
     (existingRegistry.themes || []).map((theme) => [theme.id, theme]),
   );
   const captureContext = await loadCaptureContext();
+  const runtimeEvidence = runtimeEvidenceFor(captureContext.manifest);
   const files = new Map();
   const registryThemes = [];
 
@@ -375,6 +394,7 @@ export async function buildGeneratedFiles() {
     standard: "act-theme-pack-v1",
     generatedBy: GENERATOR_ID,
     catalogRevision: catalog.catalogRevision,
+    runtimeEvidence,
     collections: catalog.collections.map((collection) => ({
       ...collection,
       themeCount: catalog.themes.filter((theme) => theme.collection === collection.id).length,

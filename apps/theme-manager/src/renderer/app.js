@@ -27,7 +27,7 @@ const translations = {
     archiveEyebrow: "THEME LIBRARY",
     archiveTitleOne: "Find your next",
     archiveTitleTwo: "workspace.",
-    archiveDescription: "Filter by style and collection, then check the real Beta capture before applying.",
+    archiveDescription: "Filter by style and collection, then check the recorded Beta capture before applying.",
     searchPlaceholder: "Search themes, cities, or moods",
     allCollections: "All",
     rightsFacet: "Source",
@@ -46,6 +46,11 @@ const translations = {
     verifiedCapture: "Real Beta capture",
     captureAlt: "real Beta capture",
     captureProof: "REAL APP CAPTURE",
+    referenceCapture: "Recorded Beta capture",
+    referenceCaptureAlt: "recorded Beta capture",
+    referenceCaptureProof: "RECORDED APP CAPTURE · RECAPTURE REQUIRED",
+    captureVersionVerified: "Beta {version} · current",
+    captureVersionReference: "Beta {version} · reference",
     originalRights: "Original · CC0",
     fanArtRights: "Unofficial fan art · non-commercial",
     applyStep: "APPLY TO CODEX",
@@ -141,7 +146,7 @@ const translations = {
     archiveEyebrow: "主题浏览",
     archiveTitleOne: "找到适合你的",
     archiveTitleTwo: "工作区。",
-    archiveDescription: "按风格和系列筛选，应用前先看真实 Beta 截图。",
+    archiveDescription: "按风格和系列筛选，应用前先看已记录的 Beta 截图。",
     searchPlaceholder: "搜索主题、城市或氛围",
     allCollections: "全部",
     rightsFacet: "来源",
@@ -160,6 +165,11 @@ const translations = {
     verifiedCapture: "Beta 实机截图",
     captureAlt: "Beta 实机截图",
     captureProof: "真实应用截图",
+    referenceCapture: "已记录 Beta 截图",
+    referenceCaptureAlt: "已记录 Beta 截图",
+    referenceCaptureProof: "已记录应用截图 · 需要重新采集",
+    captureVersionVerified: "Beta {version} · 当前验证",
+    captureVersionReference: "Beta {version} · 参考证据",
     originalRights: "原创 · CC0",
     fanArtRights: "非官方 Fan Art · 非商业",
     applyStep: "应用到 Codex",
@@ -282,8 +292,10 @@ const elements = {
   themeList: document.querySelector("#themeList"),
   emptyState: document.querySelector("#emptyState"),
   modeSwitch: document.querySelector("#modeSwitch"),
+  captureBadgeLabel: document.querySelector("#captureBadgeLabel"),
   captureVersion: document.querySelector("#captureVersion"),
   themeCapture: document.querySelector("#themeCapture"),
+  captureProofLabel: document.querySelector("#captureProofLabel"),
   captureHash: document.querySelector("#captureHash"),
   collectionName: document.querySelector("#collectionName"),
   themeName: document.querySelector("#themeName"),
@@ -374,6 +386,11 @@ function currentTheme() {
 function currentCollection() {
   const theme = currentTheme();
   return state.catalog?.collections.find((collection) => collection.id === theme?.collection);
+}
+
+function captureEvidenceIsVerified() {
+  const evidence = state.catalog?.runtimeEvidence;
+  return evidence?.status === "verified" && evidence.currentRuntime?.verification === "verified";
 }
 
 function audiencePriority(record) {
@@ -604,6 +621,10 @@ function renderThemeList() {
   } else {
     elements.themeCapture.removeAttribute("src");
     elements.themeCapture.alt = "";
+    elements.captureBadgeLabel.textContent = "";
+    elements.captureVersion.textContent = "";
+    elements.captureProofLabel.textContent = "";
+    elements.captureHash.textContent = "";
     elements.collectionName.textContent = "";
     elements.themeName.textContent = t("emptyState");
     elements.themeTagline.textContent = "";
@@ -619,9 +640,16 @@ function renderSelectedTheme() {
   if (!theme) return;
   elements.applySkin.disabled = state.targets.length === 0;
   const preview = theme.previews[state.mode];
+  const captureVerified = captureEvidenceIsVerified();
   elements.themeCapture.src = preview.imageUrl;
-  elements.themeCapture.alt = localized(theme.name) + " · " + t(state.mode) + " · " + t("captureAlt");
-  elements.captureVersion.textContent = preview.capture.appVersion;
+  elements.themeCapture.alt = localized(theme.name) + " · " + t(state.mode) + " · "
+    + t(captureVerified ? "captureAlt" : "referenceCaptureAlt");
+  elements.captureBadgeLabel.textContent = t(captureVerified ? "verifiedCapture" : "referenceCapture");
+  elements.captureVersion.textContent = t(
+    captureVerified ? "captureVersionVerified" : "captureVersionReference",
+    { version: preview.capture.appVersion },
+  );
+  elements.captureProofLabel.textContent = t(captureVerified ? "captureProof" : "referenceCaptureProof");
   elements.captureHash.textContent = shortHash(preview.capture.sha256);
   elements.collectionName.textContent = localized(currentCollection()?.name) + " / " + t(theme.variant).toUpperCase();
   elements.themeName.textContent = localized(theme.name);

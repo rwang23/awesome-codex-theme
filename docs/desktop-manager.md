@@ -1,6 +1,6 @@
 # 桌面主题管理器
 
-Awesome Codex Theme Manager 是 Windows 与 macOS 共用的 Tauri 2 应用。它浏览 Registry 中的真实截图，并把所选 `ACT Full Skin v1` 应用到准确的 ChatGPT Stable 或 Beta 会话。
+Awesome Codex Theme Manager 是 Windows 与 macOS 共用的 Tauri 2 应用。它浏览 Registry 中带状态的截图证据，并把所选 `ACT Full Skin v1` 应用到准确的 ChatGPT Stable 或 Beta 会话。
 
 ## 技术选择
 
@@ -30,7 +30,7 @@ Windows 开发不需要 Xcode。macOS 构建由 GitHub Actions 的 macOS runner 
 - 根据系统语言自动选择中文或英文，并允许手动切换和记住选择；
 - 馆藏、素材来源与授权、视觉表达三类组合筛选；
 - 双语搜索和主题列表；
-- 136 张真实 Beta 明暗截图；
+- 136 张已记录的 Beta 明暗截图（当前为 v2 参考证据）；
 - Stable/Beta 目标选择；
 - 应用、重新应用和恢复；
 - Windows 与 macOS 共用的“始终应用”开关、当前状态和一键注销；
@@ -41,7 +41,7 @@ Windows 开发不需要 Xcode。macOS 构建由 GitHub Actions 的 macOS runner 
 
 ![Theme Manager Windows 实机截图](assets/theme-manager-windows.png)
 
-截图来自 release EXE 的真实 WebView2 页面。右侧显示 Windows “始终应用”已开启，内嵌预览来自同一 Beta 测试批次。
+截图来自 release EXE 的真实 WebView2 页面。右侧显示 Windows “始终应用”已开启，内嵌预览来自同一 Beta 测试批次；该 v2 批次在当前 v3 重新采集前显示为参考证据。
 
 ## Rust 命令边界
 
@@ -65,7 +65,7 @@ install_app_update
 
 ## Registry 与素材
 
-管理器包含一个构建时 Registry，以及从 136 张已验证实机截图确定性缩放出的
+管理器包含一个构建时 Registry，以及从 136 张已记录的 v2 实机截图确定性缩放出的
 720×405 浏览缩略图。完整 1440×810 证据仍保留在仓库和 Pages；桌面包不重复
 携带全部原始 PNG。启动后，管理器会读取 GitHub Pages 的
 `downloads/catalog.json`，先核对 Registry URL、单调递增的
@@ -135,7 +135,7 @@ Gatekeeper 和 Full Skin 读回仍需单独验收。
 - 主按钮在 Beta 已经运行时完成应用内确认、受控重开和 `active` 回执，读回
   2560×1440 Blob 图片，并在 Pull requests 与首页之间保持文档背景；
 - 关闭后 Theme Manager、Beta 进程、用户启动项和本次动态 CDP 端口全部无残留；
-- 68 套主题、136 个模式完成实机截图；
+- 68 套主题、136 个模式完成历史 v2 实机截图，当前 v3 仍待重新采集；
 - Pages 构建包含 136 张 Full Skin 原图。
 
 ## 发布与签名

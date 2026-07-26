@@ -77,7 +77,7 @@ async function main() {
       const relative = theme.previews?.[mode]?.capture?.path;
       if (typeof relative !== "string"
         || !/^screenshots\/codex-beta-[A-Za-z0-9.-]+\/[a-z0-9-]+-(?:light|dark)\.png$/.test(relative)) {
-        throw new Error(theme.id + " " + mode + " has an unsafe desktop capture path");
+        throw new Error(theme.id + " " + mode + " has an unsafe desktop capture evidence path");
       }
       const source = path.join(ROOT, ...relative.split("/"));
       const destination = path.join(DESKTOP_CATALOG, ...relative.split("/"));
