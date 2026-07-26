@@ -24,6 +24,7 @@ import {
   isGalleryRequestFailure,
   parseOptions as parseGalleryCheckOptions,
 } from "../scripts/verify-gallery.mjs";
+import { canUseGlobalActionShortcut } from "../apps/theme-manager/src/renderer/shortcuts.js";
 import { contrastRatio, isSafeRelativePath } from "../scripts/validate.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -173,6 +174,48 @@ test("gallery browser check retries isolated profile cleanup after Chromium exit
   assert.match(galleryCheck, /unmodifiedText:\s*"\\r"/);
 });
 
+test("Theme Manager uses native dialog semantics and simple button selectors", async function () {
+  const [html, app, styles, packageJson] = await Promise.all([
+    readFile(path.join(ROOT, "apps", "theme-manager", "src", "renderer", "index.html"), "utf8"),
+    readFile(path.join(ROOT, "apps", "theme-manager", "src", "renderer", "app.js"), "utf8"),
+    readFile(path.join(ROOT, "apps", "theme-manager", "src", "renderer", "styles.css"), "utf8"),
+    readFile(path.join(ROOT, "apps", "theme-manager", "package.json"), "utf8").then(JSON.parse),
+  ]);
+
+  assert.match(html, /<dialog\s+class="consent-dialog"\s+id="persistenceConsentDialog"/);
+  assert.doesNotMatch(html, /role="tablist"|role="listbox"|role="dialog"/);
+  assert.match(app, /persistenceConsentDialog\.showModal\(\)/);
+  assert.match(app, /persistenceConsentDialog\.addEventListener\("cancel"/);
+  assert.match(app, /setFallbackBackgroundInert/);
+  assert.match(app, /trapFallbackConsentFocus/);
+  assert.doesNotMatch(app, /button\.role\s*=\s*"tab"|button\.role\s*=\s*"option"/);
+  assert.match(app, /button\.setAttribute\("aria-pressed"/);
+  assert.doesNotMatch(app, /key\s*===\s*"c"/);
+  assert.match(styles, /dialog\.consent-dialog::backdrop/);
+  assert.match(styles, /\.consent-fallback-backdrop/);
+  assert.match(styles, /@media \(forced-colors: active\)/);
+  assert.match(styles, /\.action-card > p \{[^}]*font-size: 11px/s);
+  assert.match(styles, /\.persistence-copy small \{[^}]*font-size: 11px/s);
+  assert.equal(packageJson.scripts["a11y:check"], "node scripts/verify-a11y.mjs");
+  assert.equal(packageJson.devDependencies["axe-core"], "4.12.1");
+});
+
+test("Theme Manager global action shortcut leaves selection and controls alone", function () {
+  const neutralTarget = { closest: () => null };
+  const editableTarget = { closest: () => ({}) };
+  const contentEditableTarget = { isContentEditable: true, closest: () => null };
+  const selectedText = { isCollapsed: false, toString: () => "selected diagnostic" };
+  const selectedWhitespace = { isCollapsed: false, toString: () => " " };
+  const emptySelection = { isCollapsed: true, toString: () => "" };
+
+  assert.equal(canUseGlobalActionShortcut({ dialogOpen: false, selection: emptySelection, target: neutralTarget }), true);
+  assert.equal(canUseGlobalActionShortcut({ dialogOpen: true, selection: emptySelection, target: neutralTarget }), false);
+  assert.equal(canUseGlobalActionShortcut({ dialogOpen: false, selection: selectedText, target: neutralTarget }), false);
+  assert.equal(canUseGlobalActionShortcut({ dialogOpen: false, selection: selectedWhitespace, target: neutralTarget }), false);
+  assert.equal(canUseGlobalActionShortcut({ dialogOpen: false, selection: emptySelection, target: editableTarget }), false);
+  assert.equal(canUseGlobalActionShortcut({ dialogOpen: false, selection: emptySelection, target: contentEditableTarget }), false);
+});
+
 test("CI reuses canonical generated assets with pinned, least-privilege workflows", async function () {
   const [desktopWorkflow, supplyChainWorkflow, dependabot] = await Promise.all([
     readFile(path.join(ROOT, ".github", "workflows", "desktop.yml"), "utf8"),
@@ -184,6 +227,9 @@ test("CI reuses canonical generated assets with pinned, least-privilege workflow
   assert.match(desktopWorkflow, /name: act-generated-theme-assets/);
   assert.match(desktopWorkflow, /uses: actions\/download-artifact@[0-9a-f]{40}/);
   assert.match(desktopWorkflow, /run: npm run gallery:check/);
+  assert.match(desktopWorkflow, /a11y:\n\s+name: Verify Theme Manager accessibility/);
+  assert.match(desktopWorkflow, /run: npm run a11y:check --prefix apps\/theme-manager/);
+  assert.match(desktopWorkflow, /ACT_CHROME_BIN: google-chrome/);
   assert.match(desktopWorkflow, /cancel-in-progress: true/);
   assert.match(desktopWorkflow, /- "screenshots\/\*\*"/);
   assert.match(desktopWorkflow, /- "LICENSE"/);
