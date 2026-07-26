@@ -10,12 +10,18 @@ use serde_json::{Map, Value, json};
 use sha2::{Digest, Sha256};
 use tauri::{AppHandle, Manager};
 
+use crate::{cache, network};
+
 pub const REMOTE_SITE_ROOT: &str = "https://rwang23.github.io/awesome-codex-theme/";
 const REMOTE_CATALOG_URL: &str =
     "https://rwang23.github.io/awesome-codex-theme/downloads/catalog.json";
 const REMOTE_REGISTRY_URL: &str =
     "https://rwang23.github.io/awesome-codex-theme/themes/registry.json";
 const MODES: [&str; 2] = ["light", "dark"];
+const MAX_CATALOG_BYTES: usize = 256 * 1024;
+const MAX_REGISTRY_BYTES: usize = 8 * 1024 * 1024;
+const CACHE_FILE_PREFIX: &str = "catalog-cache-";
+const CACHE_FILE_SUFFIX: &str = ".json";
 
 #[derive(Clone)]
 pub struct Catalog {
@@ -384,11 +390,65 @@ fn bundled_registry_path(app: &AppHandle) -> Result<PathBuf, String> {
         .map_err(|error| format!("无法定位内置 Registry：{error}"))
 }
 
-fn cache_path(app: &AppHandle) -> Result<PathBuf, String> {
+fn cache_directory(app: &AppHandle) -> Result<PathBuf, String> {
     app.path()
         .app_cache_dir()
-        .map(|path| path.join("catalog-cache.json"))
         .map_err(|error| format!("无法定位主题缓存：{error}"))
+}
+
+fn cache_path_for_hash(directory: &Path, registry_sha256: &str) -> PathBuf {
+    directory.join(format!(
+        "{CACHE_FILE_PREFIX}{registry_sha256}{CACHE_FILE_SUFFIX}"
+    ))
+}
+
+fn catalog_from_cache_bytes(bytes: &[u8]) -> Result<Catalog, String> {
+    let cache: CatalogCache =
+        serde_json::from_slice(bytes).map_err(|error| format!("主题缓存无效：{error}"))?;
+    if cache.schema_version != 1
+        || sha256_hex(cache.registry_text.as_bytes()) != cache.registry_sha256
+    {
+        return fail("主题缓存哈希无效");
+    }
+    let registry = validate_registry(cache.registry_text.as_bytes())?;
+    Ok(Catalog {
+        source: "cache".into(),
+        registry,
+        registry_sha256: cache.registry_sha256,
+        registry_bytes: cache.registry_text.len(),
+        asset_base_url: Some(REMOTE_SITE_ROOT.into()),
+    })
+}
+
+fn cache_candidate_paths(directory: &Path) -> Result<Vec<PathBuf>, String> {
+    let mut candidates = Vec::new();
+    let legacy = directory.join("catalog-cache.json");
+    if legacy.is_file() {
+        candidates.push(legacy);
+    }
+
+    let entries = match fs::read_dir(directory) {
+        Ok(entries) => entries,
+        Err(error) if error.kind() == std::io::ErrorKind::NotFound => return Ok(candidates),
+        Err(error) => return Err(format!("无法读取主题缓存目录：{error}")),
+    };
+    for entry in entries {
+        let entry = entry.map_err(|error| format!("无法读取主题缓存目录：{error}"))?;
+        if !entry
+            .file_type()
+            .map_err(|error| format!("无法读取主题缓存条目：{error}"))?
+            .is_file()
+        {
+            continue;
+        }
+        let name = entry.file_name();
+        let name = name.to_string_lossy();
+        if name.starts_with(CACHE_FILE_PREFIX) && name.ends_with(CACHE_FILE_SUFFIX) {
+            candidates.push(entry.path());
+        }
+    }
+    candidates.sort();
+    Ok(candidates)
 }
 
 pub fn load_bundled(app: &AppHandle) -> Result<Catalog, String> {
@@ -405,29 +465,34 @@ pub fn load_bundled(app: &AppHandle) -> Result<Catalog, String> {
 }
 
 pub fn load_cached(app: &AppHandle) -> Result<Catalog, String> {
-    let bytes = fs::read(cache_path(app)?).map_err(|error| format!("无法读取主题缓存：{error}"))?;
-    let cache: CatalogCache =
-        serde_json::from_slice(&bytes).map_err(|error| format!("主题缓存无效：{error}"))?;
-    if cache.schema_version != 1
-        || sha256_hex(cache.registry_text.as_bytes()) != cache.registry_sha256
-    {
-        return fail("主题缓存哈希无效");
+    let directory = cache_directory(app)?;
+    let mut selected = None;
+    let mut last_error = None;
+    for path in cache_candidate_paths(&directory)? {
+        let candidate = fs::read(&path)
+            .map_err(|error| format!("无法读取主题缓存：{error}"))
+            .and_then(|bytes| catalog_from_cache_bytes(&bytes));
+        match candidate {
+            Ok(candidate)
+                if selected
+                    .as_ref()
+                    .is_none_or(|current: &Catalog| revision(&candidate) > revision(current)) =>
+            {
+                selected = Some(candidate);
+            }
+            Ok(_) => {}
+            Err(error) => last_error = Some(error),
+        }
     }
-    let registry = validate_registry(cache.registry_text.as_bytes())?;
-    Ok(Catalog {
-        source: "cache".into(),
-        registry,
-        registry_sha256: cache.registry_sha256,
-        registry_bytes: cache.registry_text.len(),
-        asset_base_url: Some(REMOTE_SITE_ROOT.into()),
-    })
+    selected.ok_or_else(|| last_error.unwrap_or_else(|| "未找到可验证的主题缓存".into()))
 }
 
 pub fn save_cached(app: &AppHandle, catalog: &Catalog, registry_text: &str) -> Result<(), String> {
-    let destination = cache_path(app)?;
-    let parent = destination.parent().ok_or("主题缓存路径无效")?;
-    fs::create_dir_all(parent).map_err(|error| format!("无法创建主题缓存目录：{error}"))?;
-    let temporary = destination.with_extension("json.tmp");
+    if !valid_sha256(&catalog.registry_sha256) {
+        return fail("主题缓存 Registry 哈希无效");
+    }
+    let directory = cache_directory(app)?;
+    let destination = cache_path_for_hash(&directory, &catalog.registry_sha256);
     let payload = CatalogCache {
         schema_version: 1,
         registry_sha256: catalog.registry_sha256.clone(),
@@ -435,14 +500,32 @@ pub fn save_cached(app: &AppHandle, catalog: &Catalog, registry_text: &str) -> R
     };
     let bytes = serde_json::to_vec_pretty(&payload)
         .map_err(|error| format!("无法序列化主题缓存：{error}"))?;
-    fs::write(&temporary, bytes).map_err(|error| format!("无法写入主题缓存：{error}"))?;
-    if destination.exists() {
-        fs::remove_file(&destination).map_err(|error| format!("无法替换主题缓存：{error}"))?;
+    if let Ok(existing) = fs::read(&destination)
+        && let Ok(existing) = catalog_from_cache_bytes(&existing)
+        && existing.registry_sha256 == catalog.registry_sha256
+    {
+        return Ok(());
     }
-    fs::rename(&temporary, &destination).map_err(|error| format!("无法提交主题缓存：{error}"))
+    if destination.exists() {
+        fs::remove_file(&destination).map_err(|error| format!("无法移除无效主题缓存：{error}"))?;
+    }
+    if cache::publish_new_file(&destination, &bytes, "主题缓存")? {
+        return Ok(());
+    }
+    let existing = fs::read(&destination).map_err(|error| format!("无法读取主题缓存：{error}"))?;
+    let existing = catalog_from_cache_bytes(&existing)?;
+    if existing.registry_sha256 == catalog.registry_sha256 {
+        Ok(())
+    } else {
+        fail("主题缓存候选与当前 Registry 不匹配")
+    }
 }
 
-async fn fetch_bytes(client: &reqwest::Client, url: &str) -> Result<Vec<u8>, String> {
+async fn fetch_bytes(
+    client: &reqwest::Client,
+    url: &str,
+    max_bytes: usize,
+) -> Result<Vec<u8>, String> {
     let response = client
         .get(url)
         .header("Accept", "application/json")
@@ -452,19 +535,17 @@ async fn fetch_bytes(client: &reqwest::Client, url: &str) -> Result<Vec<u8>, Str
     if !response.status().is_success() {
         return fail(format!("主题目录返回 HTTP {}", response.status()));
     }
-    response
-        .bytes()
-        .await
-        .map(|bytes| bytes.to_vec())
-        .map_err(|error| format!("无法读取主题目录响应：{error}"))
+    network::read_capped_response(response, max_bytes, "application/json", "主题目录").await
 }
 
 pub async fn load_remote() -> Result<(Catalog, String), String> {
     let client = reqwest::Client::builder()
         .timeout(Duration::from_secs(8))
+        .connect_timeout(Duration::from_secs(3))
+        .redirect(reqwest::redirect::Policy::none())
         .build()
         .map_err(|error| format!("无法创建主题目录客户端：{error}"))?;
-    let manifest_bytes = fetch_bytes(&client, REMOTE_CATALOG_URL).await?;
+    let manifest_bytes = fetch_bytes(&client, REMOTE_CATALOG_URL, MAX_CATALOG_BYTES).await?;
     let manifest: Value = serde_json::from_slice(&manifest_bytes)
         .map_err(|error| format!("Catalog manifest 无效：{error}"))?;
     if manifest["schemaVersion"].as_u64() != Some(1)
@@ -480,34 +561,39 @@ pub async fn load_remote() -> Result<(Catalog, String), String> {
         .ok_or("远程 Registry 哈希无效")?;
     let expected_bytes = manifest["registry"]["bytes"]
         .as_u64()
-        .ok_or("远程 Registry 字节数无效")? as usize;
+        .ok_or("远程 Registry 字节数无效")
+        .and_then(|bytes| usize::try_from(bytes).map_err(|_| "远程 Registry 字节数无效"))?;
+    if expected_bytes == 0 || expected_bytes > MAX_REGISTRY_BYTES {
+        return fail("远程 Registry 声明字节数超出安全上限");
+    }
     let expected_revision = manifest["registry"]["catalogRevision"]
         .as_u64()
         .filter(|revision| *revision > 0)
         .ok_or("远程 Registry 版本无效")?;
     let expected_themes = manifest["registry"]["themeCount"]
         .as_u64()
-        .ok_or("远程 Registry 主题数无效")? as usize;
+        .ok_or("远程 Registry 主题数无效")
+        .and_then(|count| usize::try_from(count).map_err(|_| "远程 Registry 主题数无效"))?;
 
-    let registry_bytes = fetch_bytes(&client, REMOTE_REGISTRY_URL).await?;
+    let registry_bytes = fetch_bytes(&client, REMOTE_REGISTRY_URL, expected_bytes).await?;
     if registry_bytes.len() != expected_bytes || sha256_hex(&registry_bytes) != expected_hash {
         return fail("远程 Registry 大小或哈希不匹配");
     }
-    let registry = validate_registry(&registry_bytes)?;
+    let registry_text = String::from_utf8(registry_bytes)
+        .map_err(|error| format!("远程 Registry 不是 UTF-8：{error}"))?;
+    let registry = validate_registry(registry_text.as_bytes())?;
     if registry["catalogRevision"].as_u64() != Some(expected_revision) {
         return fail("远程 Registry 版本不匹配");
     }
     if registry["themes"].as_array().map(Vec::len) != Some(expected_themes) {
         return fail("远程 Registry 主题数量不匹配");
     }
-    let registry_text = String::from_utf8(registry_bytes.clone())
-        .map_err(|error| format!("远程 Registry 不是 UTF-8：{error}"))?;
     Ok((
         Catalog {
             source: "remote".into(),
             registry,
             registry_sha256: expected_hash.into(),
-            registry_bytes: registry_bytes.len(),
+            registry_bytes: registry_text.len(),
             asset_base_url: Some(REMOTE_SITE_ROOT.into()),
         },
         registry_text,
@@ -660,8 +746,85 @@ pub fn native_value_for(catalog: &Catalog, theme_id: &str, mode: &str) -> Result
 #[cfg(test)]
 mod tests {
     use super::*;
+    use std::{
+        io::{Read, Write},
+        net::TcpListener,
+        thread,
+        time::Duration,
+    };
 
     const REGISTRY: &[u8] = include_bytes!("../../../../themes/registry.json");
+
+    fn serve_chunked_json(chunks: Vec<Vec<u8>>) -> (String, thread::JoinHandle<()>) {
+        let listener = TcpListener::bind(("127.0.0.1", 0)).expect("test server should bind");
+        let address = listener
+            .local_addr()
+            .expect("test server should expose an address");
+        let worker = thread::spawn(move || {
+            let (mut stream, _) = listener
+                .accept()
+                .expect("test server should accept a request");
+            let mut request = [0_u8; 1024];
+            let _ = stream.read(&mut request);
+            stream
+                .write_all(
+                    b"HTTP/1.1 200 OK\r\nContent-Type: application/json\r\nTransfer-Encoding: chunked\r\nConnection: close\r\n\r\n",
+                )
+                .expect("test server should write response headers");
+            for chunk in chunks {
+                stream
+                    .write_all(format!("{:X}\r\n", chunk.len()).as_bytes())
+                    .expect("test server should write chunk size");
+                stream
+                    .write_all(&chunk)
+                    .expect("test server should write chunk body");
+                stream
+                    .write_all(b"\r\n")
+                    .expect("test server should write chunk terminator");
+            }
+            stream
+                .write_all(b"0\r\n\r\n")
+                .expect("test server should finish chunked response");
+        });
+        (format!("http://{address}/catalog.json"), worker)
+    }
+
+    fn serve_response(
+        content_type: &str,
+        content_length: Option<usize>,
+        body: Vec<u8>,
+        delay: Duration,
+    ) -> (String, thread::JoinHandle<()>) {
+        let listener = TcpListener::bind(("127.0.0.1", 0)).expect("test server should bind");
+        let address = listener
+            .local_addr()
+            .expect("test server should expose an address");
+        let content_length = content_length
+            .map(|length| format!("Content-Length: {length}\r\n"))
+            .unwrap_or_default();
+        let headers = format!(
+            "HTTP/1.1 200 OK\r\nContent-Type: {content_type}\r\n{content_length}Connection: close\r\n\r\n"
+        );
+        let worker = thread::spawn(move || {
+            let (mut stream, _) = listener
+                .accept()
+                .expect("test server should accept a request");
+            let mut request = [0_u8; 1024];
+            let _ = stream.read(&mut request);
+            thread::sleep(delay);
+            let _ = stream.write_all(headers.as_bytes());
+            let _ = stream.write_all(&body);
+        });
+        (format!("http://{address}/catalog.json"), worker)
+    }
+
+    fn test_client(timeout: Duration) -> reqwest::Client {
+        crate::install_crypto_provider();
+        reqwest::Client::builder()
+            .timeout(timeout)
+            .build()
+            .expect("test client should build")
+    }
 
     #[test]
     fn bundled_registry_has_sixty_eight_valid_dual_mode_themes() {
@@ -686,6 +849,79 @@ mod tests {
             native_value_for(&catalog, "qinglan-odyssey", "light")
                 .expect("theme should exist")
                 .starts_with("codex-theme-v1:")
+        );
+    }
+
+    #[test]
+    fn remote_catalog_fetch_rejects_an_oversized_chunked_response() {
+        let (url, worker) = serve_chunked_json(vec![vec![b'x'; 96 * 1024]]);
+        let client = test_client(Duration::from_secs(1));
+        let result = tauri::async_runtime::block_on(fetch_bytes(&client, &url, 64 * 1024));
+        worker.join().expect("test server should finish");
+
+        assert!(
+            result.is_err(),
+            "chunked catalog responses must be rejected before they can be fully buffered"
+        );
+    }
+
+    #[test]
+    fn remote_catalog_fetch_rejects_an_oversized_declared_response() {
+        let (url, worker) = serve_response(
+            "application/json",
+            Some(64 * 1024 + 1),
+            Vec::new(),
+            Duration::ZERO,
+        );
+        let client = test_client(Duration::from_secs(1));
+        let result = tauri::async_runtime::block_on(fetch_bytes(&client, &url, 64 * 1024));
+        worker.join().expect("test server should finish");
+
+        assert!(
+            result.is_err(),
+            "declared catalog responses above the hard limit must be rejected before reading"
+        );
+    }
+
+    #[test]
+    fn remote_catalog_fetch_rejects_the_wrong_content_type() {
+        let (url, worker) = serve_response("text/html", Some(2), b"{}".to_vec(), Duration::ZERO);
+        let client = test_client(Duration::from_secs(1));
+        let result = tauri::async_runtime::block_on(fetch_bytes(&client, &url, 64 * 1024));
+        worker.join().expect("test server should finish");
+
+        assert!(
+            result.is_err(),
+            "catalog responses with an unexpected content type must be rejected"
+        );
+    }
+
+    #[test]
+    fn remote_catalog_fetch_rejects_truncated_data() {
+        let (url, worker) =
+            serve_response("application/json", Some(64), b"{}".to_vec(), Duration::ZERO);
+        let client = test_client(Duration::from_secs(1));
+        let result = tauri::async_runtime::block_on(fetch_bytes(&client, &url, 64 * 1024));
+        worker.join().expect("test server should finish");
+
+        assert!(result.is_err(), "truncated catalog data must be rejected");
+    }
+
+    #[test]
+    fn remote_catalog_fetch_times_out_before_response_headers_arrive() {
+        let (url, worker) = serve_response(
+            "application/json",
+            Some(2),
+            b"{}".to_vec(),
+            Duration::from_millis(250),
+        );
+        let client = test_client(Duration::from_millis(50));
+        let result = tauri::async_runtime::block_on(fetch_bytes(&client, &url, 64 * 1024));
+        worker.join().expect("test server should finish");
+
+        assert!(
+            result.is_err(),
+            "catalog requests must respect the client timeout"
         );
     }
 }
