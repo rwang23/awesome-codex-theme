@@ -49,6 +49,13 @@ const translations = {
     filterScene: "Memory scene",
     clearFilters: "Clear filters",
     emptyState: "No themes match this view.",
+    viewDetails: "View details",
+    viewEvidence: "View original evidence",
+    previewMode: "Preview mode",
+    heroMode: "Hero preview mode",
+    closeDialog: "Close details",
+    evidenceMetadata: "Original evidence · Beta {version} · SHA-256 {hash} · {bytes} bytes · {fixture}",
+    presentationFallback: "Presentation image unavailable; showing reviewed cover art.",
     standardEyebrow: "ACT theme pack standard",
     standardTitle: "Before a theme looks good, it should earn your trust.",
     standardIntro: "The canonical .act-theme file is a ZIP-compatible package with one manifest and declared assets. JavaScript, shell scripts, remote CSS, and hidden runtime behavior are not allowed inside it.",
@@ -174,6 +181,13 @@ const translations = {
     filterScene: "名场面",
     clearFilters: "清除筛选",
     emptyState: "当前条件下没有主题。",
+    viewDetails: "查看详情",
+    viewEvidence: "查看原始证据",
+    previewMode: "预览模式",
+    heroMode: "首页预览模式",
+    closeDialog: "关闭详情",
+    evidenceMetadata: "原始证据 · Beta {version} · SHA-256 {hash} · {bytes} 字节 · {fixture}",
+    presentationFallback: "展示图暂不可用，正在显示已审查的封面图。",
     standardEyebrow: "ACT 主题包标准",
     standardTitle: "好看之前，先让一套主题值得信任。",
     standardIntro: "标准 .act-theme 是兼容 ZIP 的纯声明包，只包含一份 manifest 和已声明素材。包内不允许 JavaScript、Shell 脚本、远程 CSS 或隐藏运行逻辑。",
@@ -298,24 +312,30 @@ const elements = {
   gallery: document.querySelector("#gallery"),
   empty: document.querySelector("#emptyState"),
   dialog: document.querySelector("#installDialog"),
+  dialogClose: document.querySelector(".dialog-close"),
   dialogPreview: document.querySelector("#dialogPreview"),
   dialogVariant: document.querySelector("#dialogVariant"),
   dialogTitle: document.querySelector("#dialogTitle"),
   dialogTagline: document.querySelector("#dialogTagline"),
   dialogDescription: document.querySelector("#dialogDescription"),
+  evidenceMetadata: document.querySelector("#evidenceMetadata"),
   dialogMode: document.querySelector("#dialogMode"),
   capabilityNote: document.querySelector("#capabilityNote"),
   dialogRights: document.querySelector("#dialogRights"),
   nativeThemeString: document.querySelector("#nativeThemeString"),
   copyTheme: document.querySelector("#copyTheme"),
   downloadNativeTheme: document.querySelector("#downloadNativeTheme"),
+  viewEvidence: document.querySelector("#viewEvidence"),
   downloadPackage: document.querySelector("#downloadPackage"),
   trustNote: document.querySelector("#trustNote"),
   toast: document.querySelector("#toast")
 };
 
-function t(key) {
-  return translations[state.locale][key] || translations.en[key] || key;
+function t(key, values = {}) {
+  const template = translations[state.locale][key] || translations.en[key] || key;
+  return Object.entries(values).reduce(function (result, entry) {
+    return result.replaceAll("{" + entry[0] + "}", String(entry[1]));
+  }, template);
 }
 
 function renderCollectionIntro() {
@@ -376,18 +396,57 @@ function reorderGalleryForLocale() {
   state.heroTheme = themes[0] || null;
 }
 
-function visualFor(modeRecord) {
-  if (modeRecord.capture) {
+function captureEvidence(modeRecord) {
+  const capture = modeRecord.capture;
+  if (!capture) return null;
+  return capture.evidence || (capture.path ? capture : null);
+}
+
+function presentationFor(modeRecord, width) {
+  return modeRecord.capture?.presentation?.find(function (variant) {
+    return variant.width === width;
+  }) || null;
+}
+
+function presentationSrcset(modeRecord) {
+  const presentation = modeRecord.capture?.presentation;
+  if (!Array.isArray(presentation)) return "";
+  return presentation
+    .slice()
+    .sort(function (left, right) { return left.width - right.width; })
+    .map(function (variant) { return assetUrl(variant.path) + " " + variant.width + "w"; })
+    .join(", ");
+}
+
+function visualFor(modeRecord, purpose = "card") {
+  const evidence = captureEvidence(modeRecord);
+  const presentation = presentationFor(modeRecord, purpose === "card" ? 480 : 960);
+  if (presentation && evidence) {
     return {
-      path: modeRecord.capture.path,
+      path: presentation.path,
       label: t("realCapture"),
-      badge: t("captureBadge") + " · BETA " + modeRecord.capture.appVersion
+      badge: t("captureBadge") + " · BETA " + evidence.appVersion,
+      width: presentation.width,
+      height: presentation.height,
+      srcset: presentationSrcset(modeRecord)
     };
   }
   return {
     path: modeRecord.preview,
     label: t("coverArt"),
-    badge: t("coverBadge")
+    badge: t("coverBadge"),
+    width: 960,
+    height: 540
+  };
+}
+
+function fallbackVisual(modeRecord) {
+  return {
+    path: modeRecord.preview,
+    label: t("coverArt"),
+    badge: t("coverBadge"),
+    width: 960,
+    height: 540
   };
 }
 
@@ -399,6 +458,26 @@ function collectionFor(theme) {
 
 function assetUrl(relativePath) {
   return new URL("./" + relativePath, window.location.href).href;
+}
+
+function setVisualImage(image, visual, sizes, fallback = null, onFallback = null) {
+  const source = assetUrl(visual.path);
+  image.dataset.visualSource = source;
+  image.onerror = fallback && fallback.path !== visual.path ? function () {
+    if (image.dataset.visualSource !== source) return;
+    onFallback?.(fallback);
+    setVisualImage(image, fallback, sizes);
+  } : null;
+  if (visual.srcset) {
+    image.srcset = visual.srcset;
+    image.sizes = sizes;
+  } else {
+    image.removeAttribute("srcset");
+    image.removeAttribute("sizes");
+  }
+  if (visual.width) image.width = visual.width;
+  if (visual.height) image.height = visual.height;
+  image.src = source;
 }
 
 function setActiveButton(container, attribute, value) {
@@ -484,12 +563,23 @@ function renderFilterLabels() {
 function updateHero(theme = state.heroTheme) {
   if (!theme) return;
   state.heroTheme = theme;
-  const visual = visualFor(theme.previews[state.heroMode]);
-  elements.heroPreview.src = assetUrl(visual.path);
+  const modeRecord = theme.previews[state.heroMode];
+  const visual = visualFor(modeRecord, "hero");
+  setVisualImage(
+    elements.heroPreview,
+    visual,
+    "(max-width: 720px) 100vw, (max-width: 1200px) 80vw, 960px",
+    fallbackVisual(modeRecord),
+    function (fallback) {
+      elements.heroPreview.alt = localized(theme.name) + " · " + fallback.label + " · " + t(state.heroMode);
+      elements.heroThemeMeta.textContent = fallback.label + " · " + localized(collectionFor(theme)?.name) + " · " + t(state.heroMode);
+      elements.heroVisualKind.textContent = "COVER ART";
+    },
+  );
   elements.heroPreview.alt = localized(theme.name) + " · " + visual.label + " · " + t(state.heroMode);
   elements.heroThemeName.textContent = localized(theme.name);
   elements.heroThemeMeta.textContent = visual.label + " · " + localized(collectionFor(theme)?.name) + " · " + t(state.heroMode);
-  elements.heroVisualKind.textContent = theme.previews[state.heroMode].capture ? "BETA CAPTURE" : "COVER ART";
+  elements.heroVisualKind.textContent = captureEvidence(theme.previews[state.heroMode]) ? "BETA CAPTURE" : "COVER ART";
   setActiveButton(elements.heroMode, "data-mode", state.heroMode);
 }
 
@@ -503,6 +593,8 @@ function updateLanguage() {
   document.querySelectorAll("[data-i18n-placeholder]").forEach(function (node) {
     node.placeholder = t(node.dataset.i18nPlaceholder);
   });
+  elements.heroMode.setAttribute("aria-label", t("heroMode"));
+  elements.dialogClose.setAttribute("aria-label", t("closeDialog"));
 
   renderCollectionPicker();
   renderFilterLabels();
@@ -517,7 +609,9 @@ function updateLanguage() {
     card.variant.textContent = t(theme.variant);
     card.original.textContent = theme.rightsProfile === "fan-art" ? t("fanArtBadge") : t("original");
     card.collection.textContent = localized(collectionFor(theme)?.name);
-    card.install.setAttribute("aria-label", t("installTheme") + ": " + localized(theme.name));
+    card.install.setAttribute("aria-label", t("viewDetails") + ": " + localized(theme.name));
+    card.install.textContent = t("viewDetails");
+    card.toggle.setAttribute("aria-label", t("previewMode"));
     card.lightButton.setAttribute("aria-label", t("light"));
     card.darkButton.setAttribute("aria-label", t("dark"));
     card.lightButton.textContent = state.locale === "zh-CN" ? "日" : "L";
@@ -539,7 +633,7 @@ function makeButton(label, className) {
   return button;
 }
 
-function createCard(theme, index) {
+function createCard(theme) {
   const article = document.createElement("article");
   article.className = "theme-card";
   article.dataset.variant = theme.variant;
@@ -550,14 +644,14 @@ function createCard(theme, index) {
   const visual = document.createElement("div");
   visual.className = "card-visual";
   const image = document.createElement("img");
-  image.loading = index < 2 ? "eager" : "lazy";
+  image.loading = "lazy";
   image.decoding = "async";
   visual.append(image);
 
   const toggle = document.createElement("div");
   toggle.className = "card-mode-toggle";
   toggle.setAttribute("role", "group");
-  toggle.setAttribute("aria-label", "Preview mode");
+  toggle.setAttribute("aria-label", t("previewMode"));
   const lightButton = makeButton(state.locale === "zh-CN" ? "日" : "L");
   const darkButton = makeButton(state.locale === "zh-CN" ? "夜" : "D");
   lightButton.dataset.mode = "light";
@@ -587,7 +681,8 @@ function createCard(theme, index) {
   const description = document.createElement("p");
   description.className = "card-description";
   copy.append(meta, title, tagline, description);
-  const install = makeButton("↗", "card-install");
+  const install = makeButton(t("viewDetails"), "card-install");
+  install.setAttribute("aria-label", t("viewDetails") + ": " + localized(theme.name));
   body.append(copy, install);
   article.append(visual, body);
 
@@ -596,8 +691,18 @@ function createCard(theme, index) {
 
   function updateMode(mode) {
     state.cardModes.set(theme.id, mode);
-    const visualRecord = visualFor(theme.previews[mode]);
-    image.src = assetUrl(visualRecord.path);
+    const modeRecord = theme.previews[mode];
+    const visualRecord = visualFor(modeRecord, "card");
+    setVisualImage(
+      image,
+      visualRecord,
+      "(max-width: 720px) 100vw, (max-width: 1100px) 50vw, 520px",
+      fallbackVisual(modeRecord),
+      function (fallback) {
+        image.alt = localized(theme.name) + " · " + fallback.label + " · " + t(mode);
+        license.textContent = t("presentationFallback");
+      },
+    );
     image.alt = localized(theme.name) + " · " + visualRecord.label + " · " + t(mode);
     license.textContent = visualRecord.badge;
     setActiveButton(toggle, "data-mode", mode);
@@ -632,6 +737,7 @@ function createCard(theme, index) {
     variant,
     collection,
     install,
+    toggle,
     lightButton,
     darkButton,
     updateMode
@@ -687,13 +793,39 @@ function updateDialog() {
   const theme = state.currentTheme;
   if (!theme) return;
   const modeRecord = theme.previews[state.dialogMode];
-  const visual = visualFor(modeRecord);
+  const visual = visualFor(modeRecord, "hero");
+  const evidence = captureEvidence(modeRecord);
   elements.dialogTitle.textContent = localized(theme.name);
   elements.dialogTagline.textContent = localized(theme.tagline);
   elements.dialogDescription.textContent = localized(theme.description);
-  elements.dialogPreview.src = assetUrl(visual.path);
+  const evidenceMetadata = evidence
+    ? t("evidenceMetadata", {
+      version: evidence.appVersion,
+      hash: evidence.sha256,
+      bytes: new Intl.NumberFormat(state.locale).format(evidence.bytes),
+      fixture: evidence.fixture
+    })
+    : "";
+  setVisualImage(
+    elements.dialogPreview,
+    visual,
+    "100vw",
+    fallbackVisual(modeRecord),
+    function (fallback) {
+      elements.dialogPreview.alt = localized(theme.name) + " · " + fallback.label + " · " + t(state.dialogMode);
+      elements.evidenceMetadata.textContent = [t("presentationFallback"), evidenceMetadata].filter(Boolean).join(" ");
+    },
+  );
   elements.dialogPreview.alt = localized(theme.name) + " · " + visual.label + " · " + t(state.dialogMode);
   elements.dialogVariant.textContent = visual.label + " · " + localized(collectionFor(theme)?.name) + " · " + t(theme.variant);
+  elements.evidenceMetadata.textContent = evidenceMetadata;
+  elements.evidenceMetadata.hidden = !evidence;
+  elements.viewEvidence.hidden = !evidence;
+  if (evidence) {
+    elements.viewEvidence.href = assetUrl(evidence.path);
+  } else {
+    elements.viewEvidence.removeAttribute("href");
+  }
   elements.capabilityNote.textContent = t("capabilityNative");
   elements.dialogRights.hidden = theme.rightsProfile !== "fan-art";
   elements.dialogRights.textContent = theme.rightsProfile === "fan-art"
@@ -830,8 +962,8 @@ async function loadRegistry() {
     elements.themeStatValue.textContent = String(registry.themes.length).padStart(2, "0");
     renderCollectionPicker();
     const fragment = document.createDocumentFragment();
-    registry.themes.forEach(function (theme, index) {
-      fragment.append(createCard(theme, index));
+    registry.themes.forEach(function (theme) {
+      fragment.append(createCard(theme));
     });
     elements.gallery.replaceChildren(fragment);
     elements.gallery.setAttribute("aria-busy", "false");

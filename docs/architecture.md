@@ -90,15 +90,15 @@ The site build copies:
 - theme packages and manifests;
 - Full Skin background assets;
 - Native fallback files;
-- real Beta screenshots;
+- original real Beta screenshots and their 320px, 480px, and 960px presentation variants;
 - manager screenshot;
 - portable Windows Native helper.
 
-Gallery cards use the Registry capture first and fall back to the reviewed preview only when capture evidence is absent.
+Gallery cards and the hero use responsive presentation variants, never the original evidence PNG during ordinary browsing. Opening the explicit evidence action loads the original 1440×810 capture together with its version, SHA-256, byte count, and fixture metadata. Each presentation variant carries its own hash, dimensions, renderer fingerprint, and a binding to the original evidence hash.
 
 ### Desktop application
 
-The manager ships a bundled Registry and verified screenshots for browsing. Every catalog carries a monotonically increasing `catalogRevision`; a stale cache or remote descriptor can never replace a newer bundled catalog. The manager also checks the fixed catalog URL, revision, byte count, theme count, and SHA-256 before accepting a remote Registry. Full Skin PNGs are downloaded on demand and retained in the application cache only after hash verification.
+The manager ships a bundled Registry plus shared 320px list and 960px detail presentations; it does not duplicate the original 1440×810 evidence PNGs for its browse surface. Cards are keyed by theme ID and retained across search, filter, and mode changes. An `IntersectionObserver` rooted at the list assigns list image sources only to visible or near-visible cards, so a mode change does not mutate distant card images. Every catalog carries a monotonically increasing `catalogRevision`; a stale cache or remote descriptor can never replace a newer bundled catalog. The manager also checks the fixed catalog URL, revision, byte count, theme count, and SHA-256 before accepting a remote Registry. Full Skin PNGs are downloaded on demand and retained in the application cache only after hash verification.
 
 ### Native fallback
 

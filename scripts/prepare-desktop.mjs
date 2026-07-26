@@ -1,8 +1,8 @@
-import { mkdir, readFile, rm, writeFile } from "node:fs/promises";
+import { copyFile, mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { encodePng, resizePng } from "./lib/png.mjs";
+import { encodePng } from "./lib/png.mjs";
 
 const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(SCRIPT_DIR, "..");
@@ -10,8 +10,10 @@ const REGISTRY = path.join(ROOT, "themes", "registry.json");
 const ICON = path.join(ROOT, "apps", "theme-manager", "build", "icon.png");
 const DESKTOP_BUILD = path.join(ROOT, "apps", "theme-manager", "build");
 const DESKTOP_CATALOG = path.join(DESKTOP_BUILD, "catalog");
-const CAPTURE_WIDTH = 720;
-const CAPTURE_HEIGHT = 405;
+const PRESENTATION_SIZES = [
+  { width: 320, height: 180 },
+  { width: 960, height: 540 },
+];
 
 function insideRoundedRect(x, y, left, top, right, bottom, radius) {
   const closestX = Math.max(left + radius, Math.min(right - radius, x));
@@ -71,27 +73,31 @@ async function main() {
     throw new Error("Desktop catalog output escaped the generated build directory");
   }
   await rm(DESKTOP_CATALOG, { recursive: true, force: true });
-  let captures = 0;
+  let presentationAssets = 0;
   for (const theme of registry.themes) {
     for (const mode of ["light", "dark"]) {
-      const relative = theme.previews?.[mode]?.capture?.path;
-      if (typeof relative !== "string"
-        || !/^screenshots\/codex-beta-[A-Za-z0-9.-]+\/[a-z0-9-]+-(?:light|dark)\.png$/.test(relative)) {
-        throw new Error(theme.id + " " + mode + " has an unsafe desktop capture path");
+      const presentation = theme.previews?.[mode]?.capture?.presentation;
+      for (const size of PRESENTATION_SIZES) {
+        const variant = presentation?.find((candidate) => candidate?.width === size.width);
+        const relative = variant?.path;
+        if (typeof relative !== "string"
+          || variant.height !== size.height
+          || !new RegExp(
+            "^screenshots/codex-beta-[A-Za-z0-9.-]+/presentation/[a-z0-9-]+-(?:light|dark)-" + size.width + "\\.png$",
+          ).test(relative)) {
+          throw new Error(theme.id + " " + mode + " has an unsafe desktop presentation path");
+        }
+        const source = path.join(ROOT, ...relative.split("/"));
+        const destination = path.join(DESKTOP_CATALOG, ...relative.split("/"));
+        await mkdir(path.dirname(destination), { recursive: true });
+        await copyFile(source, destination);
+        presentationAssets += 1;
       }
-      const source = path.join(ROOT, ...relative.split("/"));
-      const destination = path.join(DESKTOP_CATALOG, ...relative.split("/"));
-      await mkdir(path.dirname(destination), { recursive: true });
-      await writeFile(
-        destination,
-        resizePng(await readFile(source), CAPTURE_WIDTH, CAPTURE_HEIGHT),
-      );
-      captures += 1;
     }
   }
   console.log(
     "Prepared desktop assets for " + registry.themes.length + " themes and "
-    + captures + " verified " + CAPTURE_WIDTH + "x" + CAPTURE_HEIGHT + " capture thumbnails.",
+    + presentationAssets + " shared 320px list and 960px detail presentations.",
   );
 }
 

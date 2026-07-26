@@ -4,6 +4,14 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { readPngDimensions } from "./lib/png.mjs";
+import {
+  CAPTURE_PRESENTATION_RENDERER,
+  CAPTURE_PRESENTATION_SIZES,
+  GALLERY_MEDIA_BUDGET,
+  presentationFingerprint,
+  presentationManifestPathFor,
+  presentationPathFor,
+} from "./lib/capture-presentation.mjs";
 import { extractStoredEntry, listZipEntries } from "./lib/zip.mjs";
 import {
   CODEX_NATIVE_TESTED_VERSION,
@@ -21,6 +29,10 @@ const FORBIDDEN_PROMPT = /凡人修仙传|仙逆|剑来|斗破苍穹|studio\s+gh
 const MAX_IMAGE_BYTES = 16 * 1024 * 1024;
 const CODEX_BETA_CAPTURE_VERSION = "26.715.3651.0";
 const CODEX_BETA_PACKAGE = "OpenAI.CodexBeta_26.715.3651.0_x64__2p2nqsd0c76g0";
+const CAPTURE_MANIFEST_PATH = "screenshots/codex-beta-" + CODEX_BETA_CAPTURE_VERSION + "/manifest.json";
+const CAPTURE_PRESENTATION_MANIFEST_PATH = presentationManifestPathFor(
+  "screenshots/codex-beta-" + CODEX_BETA_CAPTURE_VERSION + "/placeholder.png",
+);
 const FULL_SKIN_FORMAT = "act-full-skin-v1";
 const SOURCE_WIDTH = 1536;
 const SOURCE_HEIGHT = 1024;
@@ -168,13 +180,17 @@ function validateNativeTheme(theme, mode, nativeBytes, modeRecord, manifestMode,
 export async function validateRepository() {
   const errors = [];
   let captureCount = 0;
+  let presentationVariantCount = 0;
+  let largestCardPresentationBytes = 0;
+  let largestPresentationBytes = 0;
   let fullSkinCount = 0;
   const nativeThemeOwners = new Map();
-  const [catalog, registry, sourceJobs, captureManifest, themeSchema, registrySchema, runtimeCss, runtimeJs] = await Promise.all([
+  const [catalog, registry, sourceJobs, captureManifest, presentationManifest, themeSchema, registrySchema, runtimeCss, runtimeJs] = await Promise.all([
     readJson("themes/catalog.json"),
     readJson("themes/registry.json"),
     readJson("themes/source-art/jobs.json"),
-    readJson("screenshots/codex-beta-26.715.3651.0/manifest.json"),
+    readJson(CAPTURE_MANIFEST_PATH),
+    readJson(CAPTURE_PRESENTATION_MANIFEST_PATH),
     readJson("schemas/theme-pack.schema.json"),
     readJson("schemas/registry.schema.json"),
     readFile(path.join(ROOT, "packages", "full-skin", "runtime.css"), "utf8"),
@@ -185,6 +201,34 @@ export async function validateRepository() {
   check(themeSchema.$schema?.includes("2020-12"), "Theme schema is not JSON Schema 2020-12", errors);
   check(registrySchema.$schema?.includes("2020-12"), "Registry schema is not JSON Schema 2020-12", errors);
   check(registry.standard === "act-theme-pack-v1", "Registry standard id mismatch", errors);
+  check(
+    presentationManifest.schemaVersion === "act-capture-presentation-manifest-v1",
+    "Capture presentation manifest schema mismatch",
+    errors,
+  );
+  check(
+    presentationManifest.renderer === CAPTURE_PRESENTATION_RENDERER,
+    "Capture presentation renderer mismatch",
+    errors,
+  );
+  check(
+    presentationManifest.sourceManifest === CAPTURE_MANIFEST_PATH,
+    "Capture presentation manifest source mismatch",
+    errors,
+  );
+  const presentationRecords = Array.isArray(presentationManifest.captures)
+    ? presentationManifest.captures
+    : [];
+  const presentationByCapture = new Map(presentationRecords.map((record) => [
+    record.themeId + "|" + record.mode,
+    record,
+  ]));
+  check(
+    presentationRecords.length === registry.themes.length * 2
+      && presentationByCapture.size === presentationRecords.length,
+    "Capture presentation manifest must have one unique record for every theme mode",
+    errors,
+  );
   check(
     Number.isInteger(catalog.catalogRevision)
       && catalog.catalogRevision > 0
@@ -570,28 +614,105 @@ export async function validateRepository() {
       );
       if (!duplicateOwner) nativeThemeOwners.set(nativeThemeSha256, theme.id + " " + mode);
       const capture = modeRecord.capture;
-      check(Boolean(capture), theme.id + " " + mode + " is missing a real Codex Beta capture", errors);
-      if (capture) {
+      const evidence = capture?.evidence;
+      check(Boolean(evidence), theme.id + " " + mode + " is missing a real Codex Beta capture", errors);
+      if (evidence) {
         captureCount += 1;
-        check(isSafeRelativePath(capture.path), theme.id + " " + mode + " capture path is unsafe", errors);
+        check(isSafeRelativePath(evidence.path), theme.id + " " + mode + " capture path is unsafe", errors);
         check(
-          capture.path === "screenshots/codex-beta-" + CODEX_BETA_CAPTURE_VERSION + "/" + theme.id + "-" + mode + ".png",
+          evidence.path === "screenshots/codex-beta-" + CODEX_BETA_CAPTURE_VERSION + "/" + theme.id + "-" + mode + ".png",
           theme.id + " " + mode + " capture path mismatch",
           errors,
         );
-        const captureBytes = await readBytes(capture.path);
+        const captureBytes = await readBytes(evidence.path);
         const captureDimensions = readPngDimensions(captureBytes);
         check(captureDimensions.width === 1440 && captureDimensions.height === 810, theme.id + " " + mode + " capture dimensions mismatch", errors);
-        check(capture.width === 1440 && capture.height === 810, theme.id + " " + mode + " capture metadata dimensions mismatch", errors);
-        check(capture.bytes === captureBytes.length, theme.id + " " + mode + " capture byte count mismatch", errors);
-        check(capture.sha256 === sha256(captureBytes), theme.id + " " + mode + " capture hash mismatch", errors);
-        check(capture.assetSha256 === modeRecord.fullSkin.sha256, theme.id + " " + mode + " capture asset hash mismatch", errors);
-        check(capture.runtimeSha256 === runtimeSha256, theme.id + " " + mode + " capture runtime hash mismatch", errors);
-        check(capture.markerVersion === FULL_SKIN_FORMAT, theme.id + " " + mode + " capture marker mismatch", errors);
-        check(capture.selectors?.main === true, theme.id + " " + mode + " capture main selector was not verified", errors);
-        check(capture.appVersion === CODEX_BETA_CAPTURE_VERSION, theme.id + " " + mode + " capture app version mismatch", errors);
-        check(capture.packageFullName === CODEX_BETA_PACKAGE, theme.id + " " + mode + " capture package identity mismatch", errors);
-        check(capture.fixture === "full-skin-home-v1", theme.id + " " + mode + " capture fixture mismatch", errors);
+        check(evidence.width === 1440 && evidence.height === 810, theme.id + " " + mode + " capture metadata dimensions mismatch", errors);
+        check(evidence.bytes === captureBytes.length, theme.id + " " + mode + " capture byte count mismatch", errors);
+        check(evidence.sha256 === sha256(captureBytes), theme.id + " " + mode + " capture hash mismatch", errors);
+        check(evidence.assetSha256 === modeRecord.fullSkin.sha256, theme.id + " " + mode + " capture asset hash mismatch", errors);
+        check(evidence.runtimeSha256 === runtimeSha256, theme.id + " " + mode + " capture runtime hash mismatch", errors);
+        check(evidence.markerVersion === FULL_SKIN_FORMAT, theme.id + " " + mode + " capture marker mismatch", errors);
+        check(evidence.selectors?.main === true, theme.id + " " + mode + " capture main selector was not verified", errors);
+        check(evidence.appVersion === CODEX_BETA_CAPTURE_VERSION, theme.id + " " + mode + " capture app version mismatch", errors);
+        check(evidence.packageFullName === CODEX_BETA_PACKAGE, theme.id + " " + mode + " capture package identity mismatch", errors);
+        check(evidence.fixture === "full-skin-home-v1", theme.id + " " + mode + " capture fixture mismatch", errors);
+
+        const presentation = Array.isArray(capture?.presentation) ? capture.presentation : [];
+        check(
+          presentation.length === CAPTURE_PRESENTATION_SIZES.length,
+          theme.id + " " + mode + " must have every required capture presentation size",
+          errors,
+        );
+        const expectedPresentation = [];
+        for (const size of CAPTURE_PRESENTATION_SIZES) {
+          const variant = presentation.find((candidate) => candidate?.width === size.width);
+          check(Boolean(variant), theme.id + " " + mode + " is missing the " + size.width + "px presentation", errors);
+          if (!variant) continue;
+          expectedPresentation.push(variant);
+          check(isSafeRelativePath(variant.path), theme.id + " " + mode + " presentation path is unsafe", errors);
+          check(
+            variant.path === presentationPathFor(evidence.path, size.width),
+            theme.id + " " + mode + " presentation path mismatch for " + size.width + "px",
+            errors,
+          );
+          check(variant.format === "png", theme.id + " " + mode + " presentation format mismatch", errors);
+          check(
+            variant.width === size.width && variant.height === size.height,
+            theme.id + " " + mode + " presentation dimensions mismatch for " + size.width + "px",
+            errors,
+          );
+          check(variant.evidenceSha256 === evidence.sha256, theme.id + " " + mode + " presentation evidence hash mismatch", errors);
+          check(
+            variant.renderFingerprint === presentationFingerprint(evidence, size),
+            theme.id + " " + mode + " presentation render fingerprint mismatch",
+            errors,
+          );
+          const presentationBytes = await readBytes(variant.path);
+          const presentationDimensions = readPngDimensions(presentationBytes);
+          check(
+            presentationDimensions.width === size.width && presentationDimensions.height === size.height,
+            theme.id + " " + mode + " presentation file dimensions mismatch for " + size.width + "px",
+            errors,
+          );
+          check(variant.bytes === presentationBytes.length, theme.id + " " + mode + " presentation byte count mismatch", errors);
+          check(variant.sha256 === sha256(presentationBytes), theme.id + " " + mode + " presentation hash mismatch", errors);
+          check(
+            presentationBytes.length <= 1024 * 1024,
+            theme.id + " " + mode + " presentation exceeds the per-asset byte limit",
+            errors,
+          );
+          largestPresentationBytes = Math.max(largestPresentationBytes, presentationBytes.length);
+          if (size.width === 480) {
+            largestCardPresentationBytes = Math.max(largestCardPresentationBytes, presentationBytes.length);
+            check(
+              presentationBytes.length <= GALLERY_MEDIA_BUDGET.maxCardBytes,
+              theme.id + " " + mode + " 480px card presentation exceeds the gallery byte budget",
+              errors,
+            );
+          }
+          presentationVariantCount += 1;
+        }
+        const manifestRecord = presentationByCapture.get(theme.id + "|" + mode);
+        check(Boolean(manifestRecord), theme.id + " " + mode + " is missing from the presentation manifest", errors);
+        if (manifestRecord) {
+          check(
+            JSON.stringify(manifestRecord.evidence) === JSON.stringify({
+              path: evidence.path,
+              sha256: evidence.sha256,
+              bytes: evidence.bytes,
+              width: evidence.width,
+              height: evidence.height,
+            }),
+            theme.id + " " + mode + " presentation manifest evidence mismatch",
+            errors,
+          );
+          check(
+            JSON.stringify(manifestRecord.presentation) === JSON.stringify(expectedPresentation),
+            theme.id + " " + mode + " presentation manifest variants mismatch",
+            errors,
+          );
+        }
       }
       validateTokens(theme.id, mode, manifestMode.tokens, errors);
       validateNativeTheme(theme, mode, nativeTheme, modeRecord, manifestMode, packageBytes, errors);
@@ -599,6 +720,16 @@ export async function validateRepository() {
   }
 
   check(captureCount === registry.themes.length * 2, "Registry must expose one real capture for every theme mode", errors);
+  check(
+    presentationVariantCount === registry.themes.length * 2 * CAPTURE_PRESENTATION_SIZES.length,
+    "Registry must expose every required capture presentation variant",
+    errors,
+  );
+  check(
+    3 * largestPresentationBytes <= GALLERY_MEDIA_BUDGET.maxInitialBytes,
+    "High-DPR Gallery initial-media byte budget is exceeded",
+    errors,
+  );
   check(fullSkinCount === registry.themes.length * 2, "Registry must expose one full-skin record for every theme mode", errors);
   if (errors.length) {
     throw new Error("Validation failed:\n- " + errors.join("\n- "));
@@ -611,6 +742,8 @@ export async function validateRepository() {
     fullSkinExports: fullSkinCount,
     nativeExports: registry.themes.length * 2,
     captures: captureCount,
+    presentationVariants: presentationVariantCount,
+    conservativeGalleryInitialBytes: 3 * largestPresentationBytes,
   };
 }
 
@@ -620,7 +753,9 @@ async function main() {
     "Validated " + result.sources + " source images, " + result.themes + " themes, " + result.modes + " modes, "
     + result.packages + " code-free packages, " + result.fullSkinExports + " full-skin records, "
     + result.nativeExports + " Codex Native fallbacks, and "
-    + result.captures + " real Beta captures.",
+    + result.captures + " real Beta captures with " + result.presentationVariants
+    + " presentation variants (conservative initial Gallery media: "
+    + result.conservativeGalleryInitialBytes + " bytes).",
   );
 }
 

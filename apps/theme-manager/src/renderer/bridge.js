@@ -7,6 +7,10 @@ function normalizeCatalog(catalog) {
   for (const theme of catalog.themes || []) {
     for (const mode of ["light", "dark"]) {
       const preview = theme.previews?.[mode];
+      if (preview?.thumbnailPath) {
+        preview.thumbnailUrl = convertFileSrc(preview.thumbnailPath);
+        delete preview.thumbnailPath;
+      }
       if (preview?.imagePath) {
         preview.imageUrl = convertFileSrc(preview.imagePath);
         delete preview.imagePath;

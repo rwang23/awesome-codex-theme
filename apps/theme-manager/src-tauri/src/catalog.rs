@@ -16,6 +16,7 @@ const REMOTE_CATALOG_URL: &str =
 const REMOTE_REGISTRY_URL: &str =
     "https://rwang23.github.io/awesome-codex-theme/themes/registry.json";
 const MODES: [&str; 2] = ["light", "dark"];
+const PRESENTATION_SIZES: [(u64, u64); 3] = [(320, 180), (480, 270), (960, 540)];
 
 #[derive(Clone)]
 pub struct Catalog {
@@ -237,22 +238,56 @@ fn validate_mode(
     }
 
     let capture = &record["capture"];
-    let capture_path = capture["path"].as_str().unwrap_or_default();
+    let evidence = &capture["evidence"];
+    let capture_path = evidence["path"].as_str().unwrap_or_default();
     if !safe_relative_path(capture_path)
         || !capture_path.starts_with("screenshots/")
-        || !capture["sha256"].as_str().is_some_and(valid_sha256)
-        || !capture["assetSha256"].as_str().is_some_and(valid_sha256)
-        || !capture["runtimeSha256"].as_str().is_some_and(valid_sha256)
-        || capture["markerVersion"].as_str() != Some("act-full-skin-v1")
-        || capture["width"].as_u64() != Some(1440)
-        || capture["height"].as_u64() != Some(810)
-        || capture["fixture"].as_str() != Some("full-skin-home-v1")
-        || capture["appVersion"]
+        || !evidence["sha256"].as_str().is_some_and(valid_sha256)
+        || !evidence["assetSha256"].as_str().is_some_and(valid_sha256)
+        || !evidence["runtimeSha256"].as_str().is_some_and(valid_sha256)
+        || evidence["markerVersion"].as_str() != Some("act-full-skin-v1")
+        || evidence["width"].as_u64() != Some(1440)
+        || evidence["height"].as_u64() != Some(810)
+        || evidence["fixture"].as_str() != Some("full-skin-home-v1")
+        || evidence["appVersion"]
             .as_str()
             .unwrap_or_default()
             .is_empty()
     {
         return fail(format!("{theme_id} {mode} 实机截图记录无效"));
+    }
+    let (capture_directory, capture_file) = capture_path
+        .rsplit_once('/')
+        .ok_or_else(|| format!("{theme_id} {mode} 实机截图路径无效"))?;
+    let capture_stem = capture_file
+        .strip_suffix(".png")
+        .ok_or_else(|| format!("{theme_id} {mode} 实机截图格式无效"))?;
+    let presentation = array(&capture["presentation"], "capture.presentation")?;
+    if presentation.len() != PRESENTATION_SIZES.len() {
+        return fail(format!("{theme_id} {mode} 缩略图数量无效"));
+    }
+    for (width, height) in PRESENTATION_SIZES {
+        let variant = presentation
+            .iter()
+            .find(|candidate| candidate["width"].as_u64() == Some(width))
+            .ok_or_else(|| format!("{theme_id} {mode} 缺少 {width}px 缩略图"))?;
+        let variant_path = variant["path"].as_str().unwrap_or_default();
+        let expected_path = format!("{capture_directory}/presentation/{capture_stem}-{width}.png");
+        if !safe_relative_path(variant_path)
+            || variant_path != expected_path
+            || variant["format"].as_str() != Some("png")
+            || variant["height"].as_u64() != Some(height)
+            || !variant["sha256"].as_str().is_some_and(valid_sha256)
+            || variant["bytes"]
+                .as_u64()
+                .is_none_or(|bytes| bytes == 0 || bytes > 1_048_576)
+            || variant["evidenceSha256"] != evidence["sha256"]
+            || !variant["renderFingerprint"]
+                .as_str()
+                .is_some_and(valid_sha256)
+        {
+            return fail(format!("{theme_id} {mode} {width}px 缩略图记录无效"));
+        }
     }
 
     let full_skin = &record["fullSkin"];
@@ -523,6 +558,16 @@ fn local_capture_path(app: &AppHandle, relative: &str) -> Result<String, String>
     Ok(path.to_string_lossy().into_owned())
 }
 
+fn presentation_path(capture: &Value, width: u64) -> Result<&str, String> {
+    let variant = array(&capture["presentation"], "capture.presentation")?
+        .iter()
+        .find(|candidate| candidate["width"].as_u64() == Some(width))
+        .ok_or_else(|| format!("缺少 {width}px 缩略图"))?;
+    variant["path"]
+        .as_str()
+        .ok_or_else(|| format!("{width}px 缩略图路径无效"))
+}
+
 pub fn present_catalog(app: &AppHandle, catalog: &Catalog) -> Result<Value, String> {
     let collections = catalog.registry["collections"].clone();
     let themes = array(&catalog.registry["themes"], "themes")?
@@ -532,19 +577,28 @@ pub fn present_catalog(app: &AppHandle, catalog: &Catalog) -> Result<Value, Stri
                 .iter()
                 .map(|mode| {
                     let record = &theme["previews"][mode];
-                    let capture_path = record["capture"]["path"].as_str().unwrap_or_default();
-                    let image = if let Some(base) = &catalog.asset_base_url {
-                        json!({ "imageUrl": format!("{base}{capture_path}") })
+                    let capture = &record["capture"];
+                    let thumbnail_path = presentation_path(capture, 320)?;
+                    let image_path = presentation_path(capture, 960)?;
+                    let images = if let Some(base) = &catalog.asset_base_url {
+                        json!({
+                            "thumbnailUrl": format!("{base}{thumbnail_path}"),
+                            "imageUrl": format!("{base}{image_path}")
+                        })
                     } else {
-                        json!({ "imagePath": local_capture_path(app, capture_path)? })
+                        json!({
+                            "thumbnailPath": local_capture_path(app, thumbnail_path)?,
+                            "imagePath": local_capture_path(app, image_path)?
+                        })
                     };
-                    let mut preview = image.as_object().cloned().unwrap_or_default();
+                    let mut preview = images.as_object().cloned().unwrap_or_default();
                     preview.insert(
                         "capture".into(),
                         json!({
-                            "appVersion": record["capture"]["appVersion"],
-                            "sha256": record["capture"]["sha256"],
-                            "nativeSha256": record["capture"]["nativeSha256"]
+                            "appVersion": capture["evidence"]["appVersion"],
+                            "sha256": capture["evidence"]["sha256"],
+                            "bytes": capture["evidence"]["bytes"],
+                            "fixture": capture["evidence"]["fixture"]
                         }),
                     );
                     preview.insert(
@@ -686,6 +740,17 @@ mod tests {
             native_value_for(&catalog, "qinglan-odyssey", "light")
                 .expect("theme should exist")
                 .starts_with("codex-theme-v1:")
+        );
+    }
+
+    #[test]
+    fn registry_rejects_invalid_presentation_metadata() {
+        let mut registry: Value = serde_json::from_slice(REGISTRY).expect("registry should parse");
+        registry["themes"][0]["previews"]["light"]["capture"]["presentation"][0]["format"] =
+            json!("jpg");
+        assert!(
+            validate_registry(&serde_json::to_vec(&registry).expect("registry should serialize"))
+                .is_err()
         );
     }
 }

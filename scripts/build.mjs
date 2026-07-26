@@ -92,6 +92,10 @@ export async function buildSite(outputPath = DEFAULT_OUTPUT) {
 
   const copied = new Set();
   for (const theme of registry.themes) {
+    const capturePaths = (capture) => [
+      capture?.evidence?.path,
+      ...(capture?.presentation || []).map((variant) => variant.path),
+    ];
     const paths = [
       theme.package.path,
       theme.package.manifest,
@@ -102,8 +106,8 @@ export async function buildSite(outputPath = DEFAULT_OUTPUT) {
       theme.previews.dark.fullSkin?.asset,
       theme.previews.light.nativeTheme.path,
       theme.previews.dark.nativeTheme.path,
-      theme.previews.light.capture?.path,
-      theme.previews.dark.capture?.path,
+      ...capturePaths(theme.previews.light.capture),
+      ...capturePaths(theme.previews.dark.capture),
     ].filter(Boolean);
     for (const relativePath of paths) {
       if (copied.has(relativePath)) continue;

@@ -1091,6 +1091,8 @@ img {
   border-radius: 26px;
   background: rgba(255, 255, 255, 0.68);
   box-shadow: 0 10px 28px rgba(25, 41, 36, 0.05);
+  content-visibility: auto;
+  contain-intrinsic-size: 520px 500px;
   transition: transform 220ms ease, box-shadow 220ms ease, border 220ms ease;
 }
 
@@ -1123,6 +1125,7 @@ img {
 }
 
 .card-visual img {
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -1261,20 +1264,22 @@ img {
 
 .card-install {
   display: grid;
-  width: 48px;
-  height: 48px;
+  min-width: 108px;
+  min-height: 42px;
+  padding: 0 12px;
   place-items: center;
   border-radius: 16px;
   color: #fff;
   background: var(--jade);
   cursor: pointer;
-  font-size: 16px;
+  font-size: 10px;
+  font-weight: 720;
   transition: background 160ms ease, transform 160ms ease;
 }
 
 .card-install:hover {
   background: var(--vermilion);
-  transform: rotate(-4deg);
+  transform: translateY(-1px);
 }
 
 .empty-state {
@@ -1787,6 +1792,15 @@ img {
   line-height: 1.65;
 }
 
+.evidence-metadata {
+  margin: 12px 0 0;
+  color: var(--ink-soft);
+  font-family: var(--mono);
+  font-size: 9px;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+
 .dialog-rights[hidden] {
   display: none;
 }
@@ -1952,6 +1966,12 @@ img {
   justify-content: center !important;
   color: var(--ink-soft);
   background: rgba(21, 35, 31, 0.04);
+}
+
+.evidence-action {
+  grid-column: 1 / -1;
+  color: var(--jade);
+  background: var(--jade-pale);
 }
 
 .trust-note {
