@@ -72,6 +72,10 @@ const translations = {
     copyNative: "Copy Native palette only",
     skinIdle: "Theme packs contain only declarative data and images. The manager uses a temporary loopback-only debug session to load the background without modifying WindowsApps, app.asar, or ChatGPT private data.",
     skinActive: "Active in {target}: {theme} · {mode}. Restore the skin first; quit and reopen ChatGPT normally to close the debug port.",
+    monitorHealthy: "Runtime monitor healthy.",
+    monitorRecovering: "Runtime monitor is retrying a page check.",
+    monitorDegraded: "Runtime monitor is degraded. Restore or reapply to verify the current session.",
+    monitorStopped: "Runtime monitor stopped because the verified session is no longer available.",
     noTarget: "ChatGPT was not found",
     onlineGallery: "Online Gallery",
     githubRepository: "GitHub repository",
@@ -182,6 +186,10 @@ const translations = {
     copyNative: "只复制原生配色",
     skinIdle: "主题包只含声明式配置与图片。管理器通过仅限本机回环的临时调试会话加载背景，不修改 WindowsApps、app.asar 或 ChatGPT 私有数据。",
     skinActive: "正在 {target} 使用 {theme} · {mode}。恢复后如需关闭调试端口，请退出并正常重开 ChatGPT。",
+    monitorHealthy: "运行时监控正常。",
+    monitorRecovering: "运行时监控正在重试页面检查。",
+    monitorDegraded: "运行时监控已降级，请恢复或重新应用以验证当前会话。",
+    monitorStopped: "已验证会话不再可用，运行时监控已停止。",
     noTarget: "未检测到 ChatGPT",
     onlineGallery: "在线 Gallery",
     githubRepository: "GitHub 仓库",
@@ -669,13 +677,20 @@ function renderSkinState() {
   elements.applySkinLabel.textContent = sameSelection ? t("reapplySkin") : t("applySkin");
   elements.restoreSkin.disabled = !skin.active && !state.persistenceState?.enabled;
   const active = sameSessionSelection ? skin : persistentActive ? state.persistenceState : null;
-  elements.skinStatus.textContent = active
+  const monitorKey = {
+    healthy: "monitorHealthy",
+    recovering: "monitorRecovering",
+    degraded: "monitorDegraded",
+    stopped: "monitorStopped",
+  }[skin.monitorState];
+  const monitorSuffix = skin.active && monitorKey ? " " + t(monitorKey) : "";
+  elements.skinStatus.textContent = (active
     ? t("skinActive", {
       target: active.channel === "beta" ? "ChatGPT Beta" : "ChatGPT",
       theme: active.themeId,
       mode: t(active.mode),
     })
-    : t("skinIdle");
+    : t("skinIdle")) + monitorSuffix;
 }
 
 function persistenceMatchesSelection(persistence, channel = elements.targetSelect.value) {
@@ -1080,7 +1095,9 @@ try {
   setTimeout(() => void refreshAppUpdateState().catch(() => {}), 1800);
   setInterval(async () => {
     try {
+      state.skinState = await window.act.getSkinState();
       state.persistenceState = await window.act.getPersistenceState();
+      renderSkinState();
       renderPersistenceState();
     } catch {
       // Keep the last verified state; the next poll may recover.
