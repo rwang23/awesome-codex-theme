@@ -142,6 +142,8 @@ test("gallery browser check retries isolated profile cleanup after Chromium exit
   assert.match(galleryCheck, /maxRetries:\s*PROFILE_REMOVE_RETRIES/);
   assert.match(galleryCheck, /retryDelay:\s*PROFILE_REMOVE_RETRY_DELAY_MS/);
   assert.match(galleryCheck, /child\.signalCode !== null/);
+  assert.match(galleryCheck, /text:\s*"\\r"/);
+  assert.match(galleryCheck, /unmodifiedText:\s*"\\r"/);
 });
 
 test("CI reuses canonical generated assets with pinned, least-privilege workflows", async function () {

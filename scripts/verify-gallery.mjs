@@ -282,6 +282,8 @@ async function main(options) {
       type: "keyDown",
       key: "Enter",
       code: "Enter",
+      text: "\r",
+      unmodifiedText: "\r",
       windowsVirtualKeyCode: 13,
       nativeVirtualKeyCode: 13,
     });
