@@ -195,6 +195,18 @@ function safeOutputPath(relativePath) {
   return output;
 }
 
+export function isGalleryRequestFailure(event, siteUrl) {
+  const responseFailure = event.method === "Network.responseReceived"
+    && event.params.response.status >= 400
+    && event.params.response.url.startsWith(siteUrl);
+  const browserFaviconFallback = responseFailure
+    && event.params.type === "Other"
+    && event.params.response.status === 404
+    && event.params.response.url === new URL("/favicon.ico", siteUrl).href;
+  return (responseFailure && !browserFaviconFallback)
+    || (event.method === "Network.loadingFailed" && !event.params.canceled);
+}
+
 async function main(options) {
   if (options.help) {
     console.log(usage());
@@ -300,16 +312,20 @@ async function main(options) {
     ), 5_000);
     if (!dialogOpened) throw new Error("Keyboard activation did not open a populated install dialog");
 
-    const requestFailures = session.events.filter((event) => (event.method === "Network.responseReceived"
-      && event.params.response.status >= 400
-      && event.params.response.url.startsWith(siteUrl))
-      || (event.method === "Network.loadingFailed" && !event.params.canceled));
+    const requestFailures = session.events.filter((event) => isGalleryRequestFailure(event, siteUrl));
     const runtimeFailures = session.events.filter((event) => event.method === "Runtime.exceptionThrown"
       || (event.method === "Runtime.consoleAPICalled" && event.params.type === "error"));
     if (requestFailures.length || runtimeFailures.length) {
+      const requestFailureDetails = requestFailures.map((event) => {
+        if (event.method === "Network.responseReceived") {
+          return event.params.type + " " + event.params.response.status + " " + event.params.response.url;
+        }
+        return event.params.errorText || "Network loading failed";
+      }).join("; ");
       throw new Error(
         "Gallery browser check observed " + requestFailures.length + " HTTP failure(s) and "
-        + runtimeFailures.length + " runtime error(s)",
+        + runtimeFailures.length + " runtime error(s)"
+        + (requestFailureDetails ? ": " + requestFailureDetails : ""),
       );
     }
 

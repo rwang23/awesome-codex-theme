@@ -20,7 +20,10 @@ import {
   renderFingerprint,
   SOURCE_ART_RENDERER_CONSTANTS,
 } from "../scripts/lib/source-art-contract.mjs";
-import { parseOptions as parseGalleryCheckOptions } from "../scripts/verify-gallery.mjs";
+import {
+  isGalleryRequestFailure,
+  parseOptions as parseGalleryCheckOptions,
+} from "../scripts/verify-gallery.mjs";
 import { contrastRatio, isSafeRelativePath } from "../scripts/validate.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -134,6 +137,30 @@ test("gallery check accepts both standard screenshot argument forms", function (
   assert.throws(
     () => parseGalleryCheckOptions(["--screenshot"]),
     /--screenshot requires a relative output path/,
+  );
+});
+
+test("gallery browser check ignores Chromium's undeclared favicon fallback", function () {
+  const siteUrl = "http://127.0.0.1:4173/";
+  assert.equal(
+    isGalleryRequestFailure({
+      method: "Network.responseReceived",
+      params: {
+        type: "Other",
+        response: { status: 404, url: siteUrl + "favicon.ico" },
+      },
+    }, siteUrl),
+    false,
+  );
+  assert.equal(
+    isGalleryRequestFailure({
+      method: "Network.responseReceived",
+      params: {
+        type: "Fetch",
+        response: { status: 404, url: siteUrl + "themes/registry.json" },
+      },
+    }, siteUrl),
+    true,
   );
 });
 
