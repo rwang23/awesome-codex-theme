@@ -28,6 +28,7 @@
     "build": "node scripts/ensure-generated.mjs && node scripts/build.mjs",
     "check:full": "npm run test:ci && npm run desktop:check && npm run build",
     "check": "npm run check:full",
+    "gallery:check": "node scripts/verify-gallery.mjs",
     "serve": "node scripts/serve.mjs"
   },
   "engines": {

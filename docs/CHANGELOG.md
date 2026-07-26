@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Made CI generate the canonical theme artifacts once and reuse them across
+  desktop and Gallery jobs; pinned Actions, isolated release credentials and
+  write permission, added workflow security linting, and made stale runs
+  cancellable.
 - Reworked theme generation into a bounded, incremental pipeline with
   source-art provenance checks, complete render fingerprints, atomic per-theme
   writes, cache-aware progress, and reproducible benchmark commands.

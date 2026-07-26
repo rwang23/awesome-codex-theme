@@ -588,7 +588,9 @@ test("desktop beta release requires updater signing and discloses deferred platf
     readFile(path.join(ROOT, "apps", "theme-manager", "src-tauri", "tauri.conf.json"), "utf8")
   ]);
   const tauriConfig = JSON.parse(tauriConfigText);
-  assert.match(workflow, /npm run generate && npm run validate && npm run desktop:prepare/);
+  assert.match(workflow, /run: npm run test:ci/);
+  assert.match(workflow, /run: npm run desktop:prepare/);
+  assert.match(workflow, /name: act-generated-theme-assets/);
   assert.match(workflow, /DESKTOP_RELEASE_READY/);
   assert.match(workflow, /TAURI_SIGNING_PRIVATE_KEY/);
   assert.match(workflow, /TAURI_SIGNING_PRIVATE_KEY_PASSWORD/);
