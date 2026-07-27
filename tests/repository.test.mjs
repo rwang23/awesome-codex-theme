@@ -742,7 +742,8 @@ test("desktop beta release uses a static updater feed and discloses deferred pla
   assert.match(workflow, /Updater-signed Tauri Theme Manager beta/);
   assert.match(workflow, new RegExp('releaseName: "Awesome Codex Theme v' + versionPattern + " " + releaseLabel + '"'));
   assert.match(workflow, /Verify release tag matches metadata/);
-  assert.match(workflow, new RegExp('run: test "\\$\\{\\{ github\\.ref_name \\}\\}" = "v' + versionPattern + '"'));
+  assert.match(workflow, /RELEASE_TAG: \$\{\{ github\.ref_name \}\}/);
+  assert.match(workflow, new RegExp('run: test "\\$RELEASE_TAG" = "v' + versionPattern + '"'));
   assert.match(workflow, /unknown-publisher warning/);
   assert.match(workflow, new RegExp("prerelease: " + releaseMetadata.desktop.githubPrerelease));
   assert.match(workflow, /releaseDraft: true/);

@@ -215,7 +215,7 @@ async function expectedOutputs(metadata) {
           "$1\"Awesome Codex Theme v" + metadata.desktop.version + " " + releaseChannelLabel(metadata.desktop.channel) + "\"$2",
           "desktop release name",
         ),
-        /(run: test "\$\{\{ github\.ref_name \}\}" = "v)\d+\.\d+\.\d+(")/,
+        /(run: test "\$RELEASE_TAG" = "v)\d+\.\d+\.\d+(")/,
         "$1" + metadata.desktop.version + "$2",
         "desktop release tag check",
       ),
