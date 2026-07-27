@@ -20,6 +20,10 @@ import {
   renderFingerprint,
   SOURCE_ART_RENDERER_CONSTANTS,
 } from "../scripts/lib/source-art-contract.mjs";
+import {
+  isGalleryRequestFailure,
+  parseOptions as parseGalleryCheckOptions,
+} from "../scripts/verify-gallery.mjs";
 import { contrastRatio, isSafeRelativePath } from "../scripts/validate.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -118,16 +122,92 @@ test("package scripts keep source checks fast and generated checks explicit", as
   assert.match(packageJson.scripts["test:generated"], /ensure-generated\.mjs/);
   assert.match(packageJson.scripts["test:ci"], /^npm run generate/);
   assert.match(packageJson.scripts["check:full"], /npm run test:ci/);
+  assert.equal(packageJson.scripts["gallery:check"], "node scripts/verify-gallery.mjs");
 });
 
-test("CI invokes the complete source and generated test contract", async function () {
-  const [desktopWorkflow, pagesWorkflow] = await Promise.all([
+test("gallery check accepts both standard screenshot argument forms", function () {
+  assert.equal(
+    parseGalleryCheckOptions(["--screenshot=gallery-home.png"]).screenshot,
+    "gallery-home.png",
+  );
+  assert.equal(
+    parseGalleryCheckOptions(["--screenshot", "gallery-home.png"]).screenshot,
+    "gallery-home.png",
+  );
+  assert.throws(
+    () => parseGalleryCheckOptions(["--screenshot"]),
+    /--screenshot requires a relative output path/,
+  );
+});
+
+test("gallery browser check ignores Chromium's undeclared favicon fallback", function () {
+  const siteUrl = "http://127.0.0.1:4173/";
+  assert.equal(
+    isGalleryRequestFailure({
+      method: "Network.responseReceived",
+      params: {
+        type: "Other",
+        response: { status: 404, url: siteUrl + "favicon.ico" },
+      },
+    }, siteUrl),
+    false,
+  );
+  assert.equal(
+    isGalleryRequestFailure({
+      method: "Network.responseReceived",
+      params: {
+        type: "Fetch",
+        response: { status: 404, url: siteUrl + "themes/registry.json" },
+      },
+    }, siteUrl),
+    true,
+  );
+});
+
+test("gallery browser check retries isolated profile cleanup after Chromium exits", async function () {
+  const galleryCheck = await readFile(path.join(ROOT, "scripts", "verify-gallery.mjs"), "utf8");
+  assert.match(galleryCheck, /maxRetries:\s*PROFILE_REMOVE_RETRIES/);
+  assert.match(galleryCheck, /retryDelay:\s*PROFILE_REMOVE_RETRY_DELAY_MS/);
+  assert.match(galleryCheck, /child\.signalCode !== null/);
+  assert.match(galleryCheck, /text:\s*"\\r"/);
+  assert.match(galleryCheck, /unmodifiedText:\s*"\\r"/);
+});
+
+test("CI reuses canonical generated assets with pinned, least-privilege workflows", async function () {
+  const [desktopWorkflow, supplyChainWorkflow, dependabot] = await Promise.all([
     readFile(path.join(ROOT, ".github", "workflows", "desktop.yml"), "utf8"),
-    readFile(path.join(ROOT, ".github", "workflows", "pages.yml"), "utf8"),
+    readFile(path.join(ROOT, ".github", "workflows", "supply-chain.yml"), "utf8"),
+    readFile(path.join(ROOT, ".github", "dependabot.yml"), "utf8"),
   ]);
 
   assert.match(desktopWorkflow, /run: npm run test:ci/);
-  assert.match(pagesWorkflow, /run: npm run test:ci && npm run build/);
+  assert.match(desktopWorkflow, /name: act-generated-theme-assets/);
+  assert.match(desktopWorkflow, /uses: actions\/download-artifact@[0-9a-f]{40}/);
+  assert.match(desktopWorkflow, /run: npm run gallery:check/);
+  assert.match(desktopWorkflow, /cancel-in-progress: true/);
+  assert.match(desktopWorkflow, /- "screenshots\/\*\*"/);
+  assert.match(desktopWorkflow, /- "LICENSE"/);
+  assert.match(desktopWorkflow, /- "NOTICE\.md"/);
+  const desktopJob = desktopWorkflow.slice(
+    desktopWorkflow.indexOf("\n  desktop:"),
+    desktopWorkflow.indexOf("\n  pages:"),
+  );
+  const releaseJob = desktopWorkflow.slice(desktopWorkflow.indexOf("\n  release:"));
+  assert.match(releaseJob, /permissions:\n\s+contents: write/);
+  assert.doesNotMatch(desktopJob, /contents: write/);
+  assert.doesNotMatch(desktopWorkflow, /cache: npm/);
+  assert.match(desktopWorkflow, /package-manager-cache: false/);
+  assert.doesNotMatch(desktopWorkflow, /swatinem\/rust-cache/);
+  assert.match(desktopWorkflow, /uses: actions\/checkout@[0-9a-f]{40} # v7/);
+  assert.match(supplyChainWorkflow, /reviewdog\/action-actionlint@[0-9a-f]{40}/);
+  assert.match(supplyChainWorkflow, /zizmorcore\/zizmor-action@[0-9a-f]{40}/);
+  assert.match(dependabot, /package-ecosystem: github-actions/);
+  assert.match(dependabot, /package-ecosystem: cargo/);
+  for (const workflow of [desktopWorkflow, supplyChainWorkflow]) {
+    for (const action of workflow.matchAll(/^\s*uses:\s+[^@\s]+@([^\s#]+)/gm)) {
+      assert.match(action[1], /^[0-9a-f]{40}$/);
+    }
+  }
 });
 
 test("incremental generator options stay bounded and explicit", function () {
