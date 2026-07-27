@@ -485,7 +485,12 @@ async function main() {
     await session.send("Page.navigate", { url: url + "?confirm=1" });
     await waitFor("the native confirmation fixture", async () => evaluate(session, `(() => {
       const apply = document.querySelector("#applySkin");
-      return Boolean(apply && window.__ACT_A11Y__ && !document.querySelector("#persistenceConsentDialog")?.open);
+      return Boolean(
+        new URL(window.location.href).searchParams.has("confirm")
+          && apply
+          && window.__ACT_A11Y__
+          && !document.querySelector("#persistenceConsentDialog")?.open,
+      );
     })()`));
     await evaluate(session, `document.querySelector("#applySkin")?.focus()`);
     await pressKey(session, "Enter", "Enter", 13, 0, "\r");
@@ -551,7 +556,8 @@ async function main() {
     await waitFor("the fallback consent fixture", async () => evaluate(session, `(() => {
       const apply = document.querySelector("#applySkin");
       return Boolean(
-        apply
+        new URL(window.location.href).searchParams.has("fallback")
+          && apply
           && window.__ACT_A11Y__
           && !document.querySelector("#persistenceConsentDialog")?.open
           && matchMedia("(forced-colors: active)").matches
