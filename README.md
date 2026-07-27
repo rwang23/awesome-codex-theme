@@ -163,7 +163,7 @@ Use $create-codex-theme to add an original "Suzhou Canal Mist" theme.
 Keep the left work area quiet, provide light and dark modes, and run every check.
 ```
 
-The Skill prepares an art brief and image job, checks original or fan-art disclosure, configures safe areas and contrast, updates the Registry, and guides the real-app capture step.
+The Skill prepares an art brief and image job, checks original or fan-art disclosure, configures focal composition, safe areas, and contrast, updates the Registry, and guides the real-app capture step. New source art must be 16:9 at 2560x1440 or larger. The current 1536x1024 catalog material has a named legacy exception and is not a template for new themes. Run `npm run art:review:write` to create the composition contact sheets, inspect them, then keep `npm run art:review` green before the exact-app capture.
 
 ## Join the community
 

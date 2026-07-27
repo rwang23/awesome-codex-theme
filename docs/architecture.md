@@ -23,7 +23,7 @@ generator -> manifest / .act-theme / Registry / Native fallback
 
 ## Theme data
 
-`themes/catalog.json` and source-art provenance are the maintained inputs. The generator creates:
+`themes/catalog.json`, source-art policy, and source-art provenance are the maintained inputs. The generator creates:
 
 - `themes/<id>/manifest.json`;
 - light and dark 2560×1440 PNGs;
@@ -33,6 +33,8 @@ generator -> manifest / .act-theme / Registry / Native fallback
 - `themes/registry.json`.
 
 The Registry is the public index. Every path is repository-relative and paired with SHA-256 and byte count. A mode also contains Full Skin composition data and tokens.
+
+New source art is 16:9 at 2560x1440 or larger. The named legacy exception in `themes/source-art/jobs.json` records the current catalog's lower-resolution source material and does not apply to new IDs. A shared focal-cover calculation derives every output crop from declared focus coordinates, while directional safe-area shading remains separate. `scripts/review-source-art.mjs` writes deterministic before-and-after contact sheets, safe-area fixtures, and the reviewed manifest that bind an approval to the renderer version.
 
 Canonical theme archives contain only:
 

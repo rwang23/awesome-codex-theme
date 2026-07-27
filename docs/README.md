@@ -30,6 +30,7 @@ locations are reserved for execution evidence or closed history when needed.
 - fan-art-policy.md: public rights boundary, non-commercial terms, and takedown path
 - gallery-design.md: redesign evidence and the independent Gallery visual system
 - standard.md: version 1 canonical manifest and package contract
+- assets/source-art-review/ and ../themes/source-art/reviews/: deterministic focal-crop contact sheets, safe-area fixtures, and approval records
 - adapters.md: ACT Full Skin contract, Native fallback, and unsupported
   capabilities
 - desktop-manager.md: Tauri architecture, catalog refresh, signed app updates,

@@ -1,7 +1,7 @@
 {
   "schemaVersion": "act-full-skin-capture-manifest-v1",
   "status": "complete",
-  "capturedAt": "2026-07-22T01:25:51.458Z",
+  "capturedAt": "2026-07-27T00:03:04.207Z",
   "testBench": {
     "packageFamilyName": "OpenAI.CodexBeta_2p2nqsd0c76g0",
     "packageFullName": "OpenAI.CodexBeta_26.715.3651.0_x64__2p2nqsd0c76g0",
@@ -24,7 +24,7 @@
   "runtime": {
     "format": "act-full-skin-v1",
     "implementationVersion": "act-full-skin-runtime-v2",
-    "sha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+    "sha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
     "earlyInjection": true,
     "removedAfterCapture": true
   },
@@ -109,12 +109,12 @@
       "themeId": "qinglan-odyssey",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/qinglan-odyssey-light.png",
-      "sha256": "8cf5d22bfd6ad33e6fffd813ef70fd5ce9a5c4d75fb83687e0d172b2617fb0af",
-      "bytes": 932484,
+      "sha256": "d02a1df7f8cc37d8c15bdf3322b1d87d58b66c43ae427d0894abfe1ec98fa885",
+      "bytes": 871376,
       "width": 1440,
       "height": 810,
-      "assetSha256": "70aac35419396548788840366a517efbda5cb51e859918b4e5472810adc045e6",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "335865f6020b911556fdd90bc1f9e0222b06fef80c2dc00b1fb6ec01ab212e9f",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -130,18 +130,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:00:03.816Z"
+      "capturedAt": "2026-07-27T00:03:08.490Z"
     },
     {
       "themeId": "qinglan-odyssey",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/qinglan-odyssey-dark.png",
-      "sha256": "5acdb00c5f54a781932999f69ec2949d736edd2a3ff3dfa4d0eef65710a81a5e",
-      "bytes": 700862,
+      "sha256": "7122892f9b92d3c2567f14345c509413f717c5541edf2f2f1377fde95e92c96c",
+      "bytes": 655780,
       "width": 1440,
       "height": 810,
-      "assetSha256": "f92d2eb762c017d1a040945344cbd4def90604ad20df95e54c9e1a3dccb4c48a",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "415b83bee01495ba8353430aa4c19a85dbe928e2a2d114e3c7c8f6c7ad908377",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -157,18 +157,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:00:05.025Z"
+      "capturedAt": "2026-07-27T00:03:09.579Z"
     },
     {
       "themeId": "qinglan-sprite",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/qinglan-sprite-light.png",
-      "sha256": "81fdc3ae2030b756a2dd72afe7d08130a4422f91452d639acb557c584c96bbd3",
-      "bytes": 1051823,
+      "sha256": "819237e103056e43bd74e9f1bfb43f1df415b0d48e67791640f95edb873fa1c8",
+      "bytes": 1061961,
       "width": 1440,
       "height": 810,
-      "assetSha256": "f63e4691545e9d67a2cdd6983b2ab3d44cd4f591ee6f09feb2408b497f59e12b",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "070025457f3154fb8442811b34ae4ededf8854775a7ecfbfae91ff3ee82eac36",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -184,18 +184,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:00:09.799Z"
+      "capturedAt": "2026-07-27T00:03:11.064Z"
     },
     {
       "themeId": "qinglan-sprite",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/qinglan-sprite-dark.png",
-      "sha256": "642ecb33a86b17811712368cd7cad3f435d1a0c1799973a333d9a36eb07d7928",
-      "bytes": 806699,
+      "sha256": "3b9de02b9acbc251e3507d63b62342fb908eba6ceb55d093f2dae1bc7720ab50",
+      "bytes": 811660,
       "width": 1440,
       "height": 810,
-      "assetSha256": "2848b184e061fd6b8d181980e399791de199441d5212346254f0be3dc6852641",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "534402fc750410cb4b16fbc933e27b36a3e11768685e39e74887e3ad14563b7f",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -211,18 +211,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:00:13.459Z"
+      "capturedAt": "2026-07-27T00:03:12.301Z"
     },
     {
       "themeId": "starbound-rebel",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/starbound-rebel-light.png",
-      "sha256": "8377eae3cba2f4be26eb2b08df18e1969d468130b7630943a707e011b0d81e78",
-      "bytes": 1001710,
+      "sha256": "84cc429d45ffcfe8418e400123aa469e01e684062d736d3deb6b2df60038ab54",
+      "bytes": 1011575,
       "width": 1440,
       "height": 810,
-      "assetSha256": "2cba3222ca719a30735a45d1862a8ab9d42ceb751a7b71708742d9a5ea8ee55d",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "66a54035a3c279c73522a07dadf2e8550e462c8fed45bd5b41a8a16b8ce0d887",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -238,18 +238,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:00:20.065Z"
+      "capturedAt": "2026-07-27T00:03:13.744Z"
     },
     {
       "themeId": "starbound-rebel",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/starbound-rebel-dark.png",
-      "sha256": "4cb654349af28c01541e4c4735c103a6e9e161d9d0aff4aa9b2f04a1d7119f75",
-      "bytes": 739483,
+      "sha256": "09af3a256e4aa3dc693f98e53072254854fd6db950962252cb7381ac59da519f",
+      "bytes": 748313,
       "width": 1440,
       "height": 810,
-      "assetSha256": "f11f5b51fca837dcb994460eaf9df7f01dccd71ad4f7a43c88445103e81f33a7",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "7b43816e3705b0da707a79f5bdb2c71abd6930eac7d1445f236c0563113af79c",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -265,18 +265,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:00:21.476Z"
+      "capturedAt": "2026-07-27T00:03:15.019Z"
     },
     {
       "themeId": "starbound-sprite",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/starbound-sprite-light.png",
-      "sha256": "95687e06dc522c2032097f314f1acbb851ec931d88fb392df465d633df8eb11a",
-      "bytes": 928169,
+      "sha256": "1a947fb3deadf60f670af51fa77119cc1b7a41a397c0223e9da433e48149b98d",
+      "bytes": 934744,
       "width": 1440,
       "height": 810,
-      "assetSha256": "d0c4dc986aa4a9fcde1768693ec5b03c855f42cc8881b582949a9f723abd276c",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "198c7704e2b6f13d8b18e9f819f78ba139c06e5e7684bad73127dcad6ee8df5c",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -292,18 +292,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:00:23.066Z"
+      "capturedAt": "2026-07-27T00:03:16.414Z"
     },
     {
       "themeId": "starbound-sprite",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/starbound-sprite-dark.png",
-      "sha256": "2234fd6663409292a56e2b90846526ec2438bddfab9de83e6d768c2bb12958c3",
-      "bytes": 681425,
+      "sha256": "5b3b8e063eb98a4d68b2a85030eba7d80cfb07fa234c2fd85f5500d6d8627126",
+      "bytes": 688383,
       "width": 1440,
       "height": 810,
-      "assetSha256": "aa7f7cb00342dc55e63bad442c23a073a5399fec311af6b3a8ae82b337ac6824",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "eaa45009de1f0bf90da9bef4cd45b46005fe187985cdec506dad1752aab8dccb",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -319,18 +319,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:00:24.516Z"
+      "capturedAt": "2026-07-27T00:03:17.668Z"
     },
     {
       "themeId": "mountain-sword",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/mountain-sword-light.png",
-      "sha256": "4d7950a6ff7bcb51f6265328b9a286f85b9d55ec164348eb1f9fe4b8f88885d4",
-      "bytes": 1034291,
+      "sha256": "c5d7f126156d3e451534761fd16d22038db84daf6a9113f27b4d1f217f8f8fda",
+      "bytes": 1016833,
       "width": 1440,
       "height": 810,
-      "assetSha256": "f9714d1cb77ffa8c03e3f0611c0d33c39e3f5278580550d31c7aea6b6baa2769",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "08ad272775c24d356a61e82656fc924601e30d711e2d6145feec669ba5967404",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -346,18 +346,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:00:26.423Z"
+      "capturedAt": "2026-07-27T00:03:19.024Z"
     },
     {
       "themeId": "mountain-sword",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/mountain-sword-dark.png",
-      "sha256": "69ef3f7f3240a09d445cb91425d0e1acbaed8585a775e5d570aeb20a4c32a3a0",
-      "bytes": 796897,
+      "sha256": "e46175f99f92529c869f8ef19c6a1ca5f7f5d982c76f87aff8ff5c7c5c8f7dae",
+      "bytes": 783558,
       "width": 1440,
       "height": 810,
-      "assetSha256": "e1e6423cf15d6fd023f85e511576d67327d23c0c22da0aa6c1a9ccb02434333b",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "09052e9b5c77850e60b4545d0a913b65cda83024ea5f8932074a38c4a211c0df",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -373,18 +373,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:00:27.759Z"
+      "capturedAt": "2026-07-27T00:03:20.207Z"
     },
     {
       "themeId": "mountain-swordling",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/mountain-swordling-light.png",
-      "sha256": "1ddc49d9364e2cabaf62e4b0ce8f5784f391b862b7e4f82f4ce2d52d10f4ff62",
-      "bytes": 998916,
+      "sha256": "2b8229f19387f9daeab84aa41b574ff940e725e90b91e4004e3b1bc38ba5795d",
+      "bytes": 1045882,
       "width": 1440,
       "height": 810,
-      "assetSha256": "8c3efbb6a6528d3bd7b517c9b8429cd1c1085533c2f922d64257a2024a31fada",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "ace36dd2f93fd4dfcf5b82aabf73988cbee0f4bc2c1ba6f7298b367974fb0011",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -400,18 +400,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:00:29.323Z"
+      "capturedAt": "2026-07-27T00:03:21.532Z"
     },
     {
       "themeId": "mountain-swordling",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/mountain-swordling-dark.png",
-      "sha256": "bfc0a7a252a4e0c91e99f6063a710d7aa67db28aaba1a51e13fa7aa10572eecb",
-      "bytes": 770553,
+      "sha256": "5c39508c75ffa7ba060843de8552750b32d8dcced5a360e1b9008ab6aca19bd4",
+      "bytes": 804673,
       "width": 1440,
       "height": 810,
-      "assetSha256": "3bc4a5824c98867af736f5d1d8a9d47af48ab71990056f8676b95d106d4153b1",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "55b84c0dd9292ddef970bf8db3ad429b345f6137f56d4035617c8817c6f7fe90",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -427,18 +427,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:00:30.641Z"
+      "capturedAt": "2026-07-27T00:03:22.769Z"
     },
     {
       "themeId": "cloudsea-pact",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/cloudsea-pact-light.png",
-      "sha256": "9353495d0af267ae5a30e344459d4ac01aae39b4532591e0b0eb9024050ef177",
-      "bytes": 1102005,
+      "sha256": "b4cbcc2926e28a1b06ab4b1beb33ead71213f6e541e7134aeff8c8b218d8be06",
+      "bytes": 1082763,
       "width": 1440,
       "height": 810,
-      "assetSha256": "14832c4ab93a9e91869f52721b3a9a4f219d22deac9c754cdf6a1ed681f0a373",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "9323da3045c897344c01d21edc042049c3e1f8f3a74e103e2984c7e6998e95ab",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -454,18 +454,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:00:32.382Z"
+      "capturedAt": "2026-07-27T00:03:24.123Z"
     },
     {
       "themeId": "cloudsea-pact",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/cloudsea-pact-dark.png",
-      "sha256": "e6abb7ed6186d5e0282991ac9ba461fda997d378f214d86daff0e57a112d701b",
-      "bytes": 852205,
+      "sha256": "7e0ef8f9c0505d37da93f475566449a6a7b4ff54e767c0b1d193179724515ea6",
+      "bytes": 838434,
       "width": 1440,
       "height": 810,
-      "assetSha256": "71d3bf142e788366aaea064db1f2f51b40573fa6be2d986af75dc0af249e45bd",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "0f6224f4e78348d143a13ef7aeadd472b5b92bfa87ea3463d64ae1e093147026",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -481,18 +481,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:00:33.775Z"
+      "capturedAt": "2026-07-27T00:03:25.320Z"
     },
     {
       "themeId": "cloudsea-mochi",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/cloudsea-mochi-light.png",
-      "sha256": "9d921ec440361cf763003c852c7db2454547b63a780ba82aedb471c1e54dbfe3",
-      "bytes": 813761,
+      "sha256": "78d4af8307d567a102adf47be633ebc8e2888062e8b91428923fd3f3c6b982f1",
+      "bytes": 829268,
       "width": 1440,
       "height": 810,
-      "assetSha256": "d02d9ae98d2f80c4c75660b3c2a18ff33b0fdfb177a99a82e5a470695e41ac55",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "1c6f5883b0dd4abc12c25fc7ec215e5cf7353f302821cdd6ac9f11efef8f69b3",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -508,18 +508,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:00:35.137Z"
+      "capturedAt": "2026-07-27T00:03:26.557Z"
     },
     {
       "themeId": "cloudsea-mochi",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/cloudsea-mochi-dark.png",
-      "sha256": "71cbc089b46bce901e7704247f36f62bbc34da381710f1206bdef1968c878dbe",
-      "bytes": 616557,
+      "sha256": "c4ec2fccd45768b8bf08c3aee894ad0c9f243607cfd0db40b104a642f3bbf97a",
+      "bytes": 627084,
       "width": 1440,
       "height": 810,
-      "assetSha256": "751580d8d3d12673e6c99e023ab6b67603aec0358395fa440b8f6e57b450c6c9",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "0bbc78b98b498560cddb6cf32df4d61fbbfea5d0dcfc49999545c2170b63fff4",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -535,18 +535,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:00:39.204Z"
+      "capturedAt": "2026-07-27T00:03:27.667Z"
     },
     {
       "themeId": "beijing-meridian",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/beijing-meridian-light.png",
-      "sha256": "772a8c3c8617590f01de53048b2ad69154d7aea8e919ca7f382cdd9522a2ac15",
-      "bytes": 1003101,
+      "sha256": "aa23c9569d21daf88b6bf1bf6a6557bf875fc7a04703a15b6df59d144c3dc7e2",
+      "bytes": 951837,
       "width": 1440,
       "height": 810,
-      "assetSha256": "5cc21cfbcd59870bc87e4e9154476b1a0e6b25775f15128cdf26404d0536d64a",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "35388e6b4e06f7803b222dd5b6a1c5cc063ada61374fb8c54d21428746ee0acd",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -562,18 +562,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:00:42.157Z"
+      "capturedAt": "2026-07-27T00:03:28.988Z"
     },
     {
       "themeId": "beijing-meridian",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/beijing-meridian-dark.png",
-      "sha256": "cdc3ddce50cfd5c7063496b33a57d679306f697ef0df7f86f6548aa8a54c14c5",
-      "bytes": 762494,
+      "sha256": "e5434d3b6ae7a9ab1d77eaa913b07a2bffb9caccd7a3f62866e54ca3ece8b220",
+      "bytes": 715780,
       "width": 1440,
       "height": 810,
-      "assetSha256": "e23a4592084e27cac12e97c77bebd27dc4f3760e80911786dae2eddebf9abc9d",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "c70a72b076c43efc9ff5baa1dfe8f0d2c8ee78e3b27a288ee2f21204b51262b8",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -589,18 +589,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:00:44.559Z"
+      "capturedAt": "2026-07-27T00:03:30.196Z"
     },
     {
       "themeId": "shanghai-afterglow",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/shanghai-afterglow-light.png",
-      "sha256": "18ab791a9fdd8769962aa5c7a34446bd676a8b1eaf1417b75f1475333e150849",
-      "bytes": 1184113,
+      "sha256": "fae3940b14f8d6b3a30371bb2787600c75a128ad036a45725ac88265c9d54da9",
+      "bytes": 1171222,
       "width": 1440,
       "height": 810,
-      "assetSha256": "fa73f15ee9d3f8f4942bd775e4385ca13b1fbd9e9422054cd3356f1f80460717",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "056d5b0f0c114ca71d8f0111d9ec7b7a249daafc4b404f447843edfb2bb84ed1",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -616,18 +616,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:00:46.237Z"
+      "capturedAt": "2026-07-27T00:03:31.653Z"
     },
     {
       "themeId": "shanghai-afterglow",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/shanghai-afterglow-dark.png",
-      "sha256": "30f13af74e45b5e64e78ee417f4a2d10d8056b251e7a18ec04ee0679da449079",
-      "bytes": 911824,
+      "sha256": "1b622bdac8462acfb0048f0f5642a1854c8addb040aa00d9029aa0d001c9dded",
+      "bytes": 904420,
       "width": 1440,
       "height": 810,
-      "assetSha256": "9efac99b9e14bf3b6b4fb4e46bfe82c3e9bc63a5489946647f2d4d543491aa9e",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "d3cceecbfa6f49a09f928040c4197d82f060cc8e6218f0b754d05713c4a516ed",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -643,18 +643,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:00:47.715Z"
+      "capturedAt": "2026-07-27T00:03:32.919Z"
     },
     {
       "themeId": "shenzhen-circuit-rain",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/shenzhen-circuit-rain-light.png",
-      "sha256": "4ac49d33b77853ee9b49a8b493f503655b839605f6321a06b18e437860354bbc",
-      "bytes": 1357529,
+      "sha256": "72e9d2e5f2fdccf611092b009732b3cdf753b927deccb1f13165df47d9e42827",
+      "bytes": 1321521,
       "width": 1440,
       "height": 810,
-      "assetSha256": "e87e4c66392436b5df59e2d490433dab39632cd7370af9a5876462053b782e96",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "d5d8453a60dbfc9aa2549981dc09a25af28c07d17dfa4da26fdf595612f6ede9",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -670,18 +670,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:00:49.497Z"
+      "capturedAt": "2026-07-27T00:03:34.451Z"
     },
     {
       "themeId": "shenzhen-circuit-rain",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/shenzhen-circuit-rain-dark.png",
-      "sha256": "e80a0744fc8a9b718038550f584a40369e48964d88a2881a6607acd47052025c",
-      "bytes": 1065780,
+      "sha256": "8e860bd5a88ba11c7bdbf75c8bd951a0fab5cc5e0e4b9ef5e961b9132a544628",
+      "bytes": 1031730,
       "width": 1440,
       "height": 810,
-      "assetSha256": "8f11f29b02d830af78df4276ada7801e7b6498e5bc5ac13a43aa85f670c55465",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "e7a51f22b8d52323a3b2c09e1017bd6bdadc60b5677cb51f81addc4cde95ea23",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -697,18 +697,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:00:51.064Z"
+      "capturedAt": "2026-07-27T00:03:35.805Z"
     },
     {
       "themeId": "guangzhou-riverwind",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/guangzhou-riverwind-light.png",
-      "sha256": "eec5c500a0c57d95a3943169c3466c30844986ec93aa8d8dadfc3cf497802a27",
-      "bytes": 1257677,
+      "sha256": "bf2b8819dd0e3e2fe39a69c388d1fea59aaf6ec438e97ebb75793714c95528f9",
+      "bytes": 1259594,
       "width": 1440,
       "height": 810,
-      "assetSha256": "49bc9ef9dc4388057062705db84b9ea067b0f8e1373023e7ff89b3b08aa7ac6c",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "3c598385f9be1dc1074580f314f5bb0e5b9c777007f45be427a3b8101edaca5a",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -724,18 +724,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:00:52.766Z"
+      "capturedAt": "2026-07-27T00:03:37.391Z"
     },
     {
       "themeId": "guangzhou-riverwind",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/guangzhou-riverwind-dark.png",
-      "sha256": "14f24e80b03acf6afb5975c25844f13a7f636c9d0d463105c95e05a6329959a6",
-      "bytes": 976007,
+      "sha256": "bba92cd89d8ceebe138b08e3e492563917d85282954dafadb197664d3a42e0fb",
+      "bytes": 978112,
       "width": 1440,
       "height": 810,
-      "assetSha256": "3ee3a4b1ae1fe8ec85d2eebea224ebb64402ad23d2dcfc82010f7190c261e27f",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "a557f9f51dc29922067f070a7b26b8941d4fb24eabde07dc3d8a3968a3b8bab8",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -751,18 +751,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:00:54.234Z"
+      "capturedAt": "2026-07-27T00:03:38.750Z"
     },
     {
       "themeId": "chengdu-teahouse-rain",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/chengdu-teahouse-rain-light.png",
-      "sha256": "b763f24e1f7f82f47c47c3410821e5fb796ad3bc06cf18af62bc4a0c3a22312d",
-      "bytes": 1298500,
+      "sha256": "5da6beb38dee7dda3b31fc7f226bdf35c8a213ea378a8e13bd021770a7ba75d8",
+      "bytes": 1303852,
       "width": 1440,
       "height": 810,
-      "assetSha256": "1d4328fc4263e524340ea84f4ab22e1e8e83e37833c8279e5496f0bb11634d5d",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "6bbe223295777b86d1f3ea6732455f8e13ad833c979561f3dddbca4ddf5afadb",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -778,18 +778,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:00:55.931Z"
+      "capturedAt": "2026-07-27T00:03:40.343Z"
     },
     {
       "themeId": "chengdu-teahouse-rain",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/chengdu-teahouse-rain-dark.png",
-      "sha256": "f035f20a32ed4ed45721c01f2b8361457f10a2ddd43889a6d539d9076ec891e8",
-      "bytes": 1005230,
+      "sha256": "1e8ee15e902ef934752a2192413e366bde0c6f761bab33b4a5df55e18764f5dd",
+      "bytes": 1009220,
       "width": 1440,
       "height": 810,
-      "assetSha256": "93f48b14535b5e73bb7bc54fa5cb7a2d7cac5a49ca97c97ce72579219ab923de",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "19685fd5526825bb1bacc3fffdd1062a3d3e94eade6c9745659162534264a3fb",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -805,18 +805,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:00:57.345Z"
+      "capturedAt": "2026-07-27T00:03:41.722Z"
     },
     {
       "themeId": "hangzhou-lake-letter",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/hangzhou-lake-letter-light.png",
-      "sha256": "750795fae3f9f19d0fad0c577347736bf08eb4d78e74e43de1e4c1d0f1e9a24a",
-      "bytes": 1184895,
+      "sha256": "7de51e4b2931faf6cec2596fd26c5230cc6909081ce6a3b6e84dde70620b7647",
+      "bytes": 1184937,
       "width": 1440,
       "height": 810,
-      "assetSha256": "ff8f72e9c9fd1edbd272cb7197994d13792bf3fc3914d5de8c6b365ad53f1c50",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "1f66e367287617492124dfa365b248b8a05ef9d884f0cb99bce23203dfe525f0",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -832,18 +832,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:00:58.927Z"
+      "capturedAt": "2026-07-27T00:03:43.175Z"
     },
     {
       "themeId": "hangzhou-lake-letter",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/hangzhou-lake-letter-dark.png",
-      "sha256": "f45a0e8bfe2ae5cb39ec36e7971579bdc0a939510476323628611f66d769c1de",
-      "bytes": 912302,
+      "sha256": "825951f654e4876750bb4082e436379c701388e25812b16655aceae8b61da1d8",
+      "bytes": 910846,
       "width": 1440,
       "height": 810,
-      "assetSha256": "afb7f3a24b54cd9e3614a187d4c27d3f99fa6a395ab89b302381ea879038f432",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "f4053a32771df4a53040ce0c15616d5211bd921f2b7f564e8104fabdeb14d32c",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -859,18 +859,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:01:00.241Z"
+      "capturedAt": "2026-07-27T00:03:44.417Z"
     },
     {
       "themeId": "chongqing-vertical-night",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/chongqing-vertical-night-light.png",
-      "sha256": "4720fdf6a88e0536c06aa50d3b6d1cc9967dec4782f5e25d99a1ff17e3b8cd61",
-      "bytes": 1187040,
+      "sha256": "48eb1ee5b221f1337973812648908a6be11046f605d3ef3f145aa0245b055049",
+      "bytes": 1181810,
       "width": 1440,
       "height": 810,
-      "assetSha256": "88511b6f1f2fd06fce3786016109cd2fa2d87d2c45afb0b62fc83d0bd27e9946",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "826b8affa8d9b340ca8f5480d949ba66757f365a5a0f1eed176c495fbfb36fdb",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -886,18 +886,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:01:01.944Z"
+      "capturedAt": "2026-07-27T00:03:45.886Z"
     },
     {
       "themeId": "chongqing-vertical-night",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/chongqing-vertical-night-dark.png",
-      "sha256": "cddf52b2ce640d5c58f22f64166aca85b059e89c95fa6b8a8663fa438d847df9",
-      "bytes": 917154,
+      "sha256": "d0330c47704d3fc741e7d5d6ab1984476ea7c6dd15cc7d2c49073c253ef0c48e",
+      "bytes": 915373,
       "width": 1440,
       "height": 810,
-      "assetSha256": "59ffc290e1362e640bd46ebdd5e74589a4aa160b093f1a6d766314e78634f99e",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "cf3e16cca1a32d0a256561ee54ae3151e8323dcbd93c5a8b91b4e40cf1c7148b",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -913,18 +913,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:01:03.465Z"
+      "capturedAt": "2026-07-27T00:03:47.167Z"
     },
     {
       "themeId": "nanjing-wall-plum",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/nanjing-wall-plum-light.png",
-      "sha256": "75c1b12f9c14881c4043bdb263a7b929ea1d0f99060215f55f168e07f3f5c049",
-      "bytes": 1232734,
+      "sha256": "9dc0c629bc168d568305ab941f84e5369a282e020f5f642f7df7fb047adf542c",
+      "bytes": 1225739,
       "width": 1440,
       "height": 810,
-      "assetSha256": "0c63869d896460d5a4f56ec11831681e45038ae7c2c9b10edc7c159474752024",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "a5a301a1dd1c0d32a4ae229170346d00cb4e965c97a65cbbf931d2c6b5f3eb8c",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -940,18 +940,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:01:08.820Z"
+      "capturedAt": "2026-07-27T00:03:48.679Z"
     },
     {
       "themeId": "nanjing-wall-plum",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/nanjing-wall-plum-dark.png",
-      "sha256": "11b40b650766707ac8916b3a39cbf2288309d6cad0ee53a3c014e9c328a2b1af",
-      "bytes": 952134,
+      "sha256": "aad10551db8e6d8634fd1c3cdbae386c388c7fd7f5d785a08cc1b9b15f9f32ef",
+      "bytes": 951502,
       "width": 1440,
       "height": 810,
-      "assetSha256": "d53ffb8b6f370da0cb925c58dd73af7314c8ee33d41f4dbacf9cd53dd2274369",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "8a409781357549eebdc003060ee2559d68444db07ed76732dc8ae37c332a106a",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -967,18 +967,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:01:10.514Z"
+      "capturedAt": "2026-07-27T00:03:49.990Z"
     },
     {
       "themeId": "new-york-rainline",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/new-york-rainline-light.png",
-      "sha256": "b0b75462a6cfd79f2f1619a4647dc0462606fbe89fa78d23cc1e69762a539e3d",
-      "bytes": 1076298,
+      "sha256": "3191c6152299fa7b2268561d88bf78b95ddf309760a4a9eaa080430651e83d29",
+      "bytes": 1034718,
       "width": 1440,
       "height": 810,
-      "assetSha256": "571aee82103f8bc2e14debc1a3393cd93d0110f4e6f4dcc90aed4aade59c88d8",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "a6d744990759e591f5dcbe01920a07edf33f435f11e5b9178c260a718045c323",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -994,18 +994,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:01:12.173Z"
+      "capturedAt": "2026-07-27T00:03:51.382Z"
     },
     {
       "themeId": "new-york-rainline",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/new-york-rainline-dark.png",
-      "sha256": "76a774dca2a77f041c9a2986db6d049c0fcaa9c6d3d80897215ac0818d7cb14f",
-      "bytes": 823581,
+      "sha256": "6886535c65f957a8fe634bfc221ca64dfba1b459b7698c3da9d06012bc44f9df",
+      "bytes": 788969,
       "width": 1440,
       "height": 810,
-      "assetSha256": "c3aee1a47ac463e206438ae4920337d9391d6942d6aa9650712a1821a82ac59d",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "44487cf9e5603e85239fd28a90c1d10049bdb28f6153e0c0419c5ab881713541",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -1021,18 +1021,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:01:13.638Z"
+      "capturedAt": "2026-07-27T00:03:52.587Z"
     },
     {
       "themeId": "san-francisco-fogline",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/san-francisco-fogline-light.png",
-      "sha256": "6c70d5b0379607a049d1b1f8163bbd4ab34cdc68d7d2f2292cc37a6ad71df72a",
-      "bytes": 934916,
+      "sha256": "83777507fc817c1aeb71d189e8a8f47357dd0688fd032d3d8a2f0cd77857e141",
+      "bytes": 894573,
       "width": 1440,
       "height": 810,
-      "assetSha256": "58684fc92b6607710b97915e293bf70d76bb6919b010be400530490b1719b745",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "f140b0fd09e27e449ac94ef1f3acb2b412ff5009f2072729271aa34377e4485f",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -1048,18 +1048,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:01:15.086Z"
+      "capturedAt": "2026-07-27T00:03:53.866Z"
     },
     {
       "themeId": "san-francisco-fogline",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/san-francisco-fogline-dark.png",
-      "sha256": "f8f463940b1a5fea98407849886f921cce1b0d156ed3c32912ba9acaa469b99d",
-      "bytes": 704018,
+      "sha256": "0a600aff696e686b9d21d44738424e935eb50edd2b7bebf9e94d1c1900835653",
+      "bytes": 671543,
       "width": 1440,
       "height": 810,
-      "assetSha256": "e8b816767e2e976f72e12f8963c77e7e250bca6311195e093aba883c6f9f43b2",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "8c22126e635ce00f6d5b91b4186460b8ddfa7c2863ec203c9ee6b1d9532e6783",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -1075,18 +1075,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:01:16.503Z"
+      "capturedAt": "2026-07-27T00:03:54.995Z"
     },
     {
       "themeId": "chicago-lakewind",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/chicago-lakewind-light.png",
-      "sha256": "5badc87b031a2f2951bdc7834c49f45ef14ba66f17f36cd45fa9612980524c71",
-      "bytes": 1095649,
+      "sha256": "381578e13a86e0ed4d596261299bb3689498fd7644094051d85e174da0bc4406",
+      "bytes": 1075906,
       "width": 1440,
       "height": 810,
-      "assetSha256": "ba453e5276f61280cd7e94945dd17b7d2979761047cb8a183dcc7badf454c6b2",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "544bd00808c87f9abb1213778ccb7ac11dcd0312d14941c8fe1cbea6ac0d90b1",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -1102,18 +1102,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:01:18.029Z"
+      "capturedAt": "2026-07-27T00:03:56.411Z"
     },
     {
       "themeId": "chicago-lakewind",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/chicago-lakewind-dark.png",
-      "sha256": "ecb33a213246453fc47dc86a4d909078dceddc60c39aa8650326180203a8f343",
-      "bytes": 844607,
+      "sha256": "b4cde7be1463a87e4fdfcb07c07e97d13eff00370cdc8e79d7d0d749ce423192",
+      "bytes": 826870,
       "width": 1440,
       "height": 810,
-      "assetSha256": "dc23f4745070bbe6b3c56f964a66b55294c5d4e106dc580ad086185eee710a5e",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "4c8ccac1347c47085bcfef75e32b88765f72646cd49b206017cfecb7a0da6551",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -1129,18 +1129,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:01:19.417Z"
+      "capturedAt": "2026-07-27T00:03:57.676Z"
     },
     {
       "themeId": "toronto-blue-hour",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/toronto-blue-hour-light.png",
-      "sha256": "ccea85257d39f48cd07431bc6103066b9e68c8c599892c9489b209293a695fb8",
-      "bytes": 1062226,
+      "sha256": "47bfc8749f19a51c386e6719ce490452e77cf437980e38773f1f9a59338ae81a",
+      "bytes": 1012324,
       "width": 1440,
       "height": 810,
-      "assetSha256": "022589a0e575adb385825304d926474b0a1b3fac6bd2a91ac0c3c359d0ef1819",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "fd91921a778ba26af2e00c9049fa1652f9a11b7467e9c6e88e565234b89b657a",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -1156,18 +1156,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:01:20.951Z"
+      "capturedAt": "2026-07-27T00:03:59.026Z"
     },
     {
       "themeId": "toronto-blue-hour",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/toronto-blue-hour-dark.png",
-      "sha256": "02e5f97f39872ca929ccc5bddc27ab31a6aaf7b6c04fdbb6d435f40d71343fed",
-      "bytes": 809809,
+      "sha256": "794b86c3b17880c28dbe2a95dbb6fd9ca7b592c303990ac7f0c6700b5d6d5bb9",
+      "bytes": 767318,
       "width": 1440,
       "height": 810,
-      "assetSha256": "d9a039030b5021e4e32a31ab78dcf038dec7738e95ea6e915aa26c8016fa8ebf",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "284765ce27ac894a3abb01f8352b7e2faad2ff0633343369dbf693b9704b6cda",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -1183,18 +1183,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:01:22.236Z"
+      "capturedAt": "2026-07-27T00:04:00.209Z"
     },
     {
       "themeId": "vancouver-rain-harbour",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/vancouver-rain-harbour-light.png",
-      "sha256": "5e57002a49067ca78f243d5d5af21becf516d78be65a4cad0e5accf08175043b",
-      "bytes": 1127748,
+      "sha256": "9f5c5f869b6be70eccd6b767d49537a399f94677e1fba6183259736eabcc0b37",
+      "bytes": 1115986,
       "width": 1440,
       "height": 810,
-      "assetSha256": "8aeaf9a707c4e588efd28f762ed315baeb2ed39682ab371f805d7b43f25af5ef",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "cd84fd60ddaa2ecde1d293f16e661b50464e03259a9fe78dd58ed3ba5bb93365",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -1210,18 +1210,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:01:23.916Z"
+      "capturedAt": "2026-07-27T00:04:01.635Z"
     },
     {
       "themeId": "vancouver-rain-harbour",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/vancouver-rain-harbour-dark.png",
-      "sha256": "8bc96ab9edce9bf5003d0396b13764bcb94c3dddd874370fdbb58da3f581c5aa",
-      "bytes": 859174,
+      "sha256": "e571c948cb3cc0f00b5a82f39fd7dd8ad661fa93285253ab8a4a448206827a06",
+      "bytes": 850127,
       "width": 1440,
       "height": 810,
-      "assetSha256": "b6fbd81c7940544bcf9a3617dc39b273621a3ce2e0d9646130ba7716b8c5c20e",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "94d8b5aaf222075c6d8b311fea1861832eed8b56598e7aec43b81322b013ff0b",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -1237,18 +1237,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:01:25.209Z"
+      "capturedAt": "2026-07-27T00:04:02.902Z"
     },
     {
       "themeId": "london-rainlight",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/london-rainlight-light.png",
-      "sha256": "ee7441135a23c5f2d1d2ff3943696740d94a68bd4a0ff4d63148b71c61c5340d",
-      "bytes": 993720,
+      "sha256": "6a32ee4fae82904df1365b4e2c9272fa7ae4bdf71e9f6adf352eade409958210",
+      "bytes": 992187,
       "width": 1440,
       "height": 810,
-      "assetSha256": "d5e4be91ef88b4e5bd1a718ebb0c9b78b92c7c009c00a42565c8145f20fb0e5b",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "e3991144675b33d961dc435226723b6fdfcec93b83bff6222d30153641c4956d",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -1264,18 +1264,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:01:26.694Z"
+      "capturedAt": "2026-07-27T00:04:04.293Z"
     },
     {
       "themeId": "london-rainlight",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/london-rainlight-dark.png",
-      "sha256": "4fe30c166926c611c7e4bca47529d52829fc3f88e6d5f673f9c65e1a37d7078a",
-      "bytes": 750645,
+      "sha256": "1076ac95236ac915992b741e02f0a171d975791094ae64f21ba5105a254a76fc",
+      "bytes": 754477,
       "width": 1440,
       "height": 810,
-      "assetSha256": "d77b6a3e4975c749b3ec7784c3350c80b6a2fd45e269e909f5cfedeba851c4ff",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "63ec5b706906c62844ebffc4ede1a35b6d8fadbfd8b0ad61a857ec5796f6d7cf",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -1291,18 +1291,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:01:31.122Z"
+      "capturedAt": "2026-07-27T00:04:05.472Z"
     },
     {
       "themeId": "paris-rooftop-dawn",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/paris-rooftop-dawn-light.png",
-      "sha256": "e5baa4cd1c996d9b2c8434008ca3fa676c4cab927f19a685e62f7bcf229e212d",
-      "bytes": 1052094,
+      "sha256": "4ae58f9502a3111a2108b3d29c045c2b433a6043c001832f2324000dcce3e710",
+      "bytes": 996420,
       "width": 1440,
       "height": 810,
-      "assetSha256": "29b58465ef5c2a1720696dddabf985ec08a1d3fed322062a51134dc823b2b077",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "830b4dfbba368b0375cddd02cc5d9be0df6415a49c6d2507b61310156a96e506",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -1318,18 +1318,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:01:33.238Z"
+      "capturedAt": "2026-07-27T00:04:06.837Z"
     },
     {
       "themeId": "paris-rooftop-dawn",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/paris-rooftop-dawn-dark.png",
-      "sha256": "51f8ad9240d305f438aac11be5cfccd0733eee8896ada42312283a898c6cb2ca",
-      "bytes": 797529,
+      "sha256": "7508a74a803e56ca709bc99fc1f882bac347f36af0bc832ab23c2d1c03f567bc",
+      "bytes": 751432,
       "width": 1440,
       "height": 810,
-      "assetSha256": "2c9b6dd5bf3885ac8f3b650c5bb431aae49e897c31d9e1bc6927c94872e7c60b",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "c25f956993fd9fb4b0e2b0f310245817f0719702621de45d07811d2ec395bf32",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -1345,18 +1345,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:01:34.512Z"
+      "capturedAt": "2026-07-27T00:04:08.032Z"
     },
     {
       "themeId": "berlin-night-grid",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/berlin-night-grid-light.png",
-      "sha256": "722d44d9247fb2da14ffb8d7bee29a0bd2ced0f40cf36d6d699a279d351e4081",
-      "bytes": 1029566,
+      "sha256": "35fa6adbd8aa0e1ae41f3d7b5d7ef94fffdd6719958be32e9eb540275f60a335",
+      "bytes": 994904,
       "width": 1440,
       "height": 810,
-      "assetSha256": "fe03ac97ef47db28cafebe23ec1df6864ddcb32968e9785ecffb363399fcd06e",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "fcbe961b7e783b3736bb0de00f85217c3fcafc3d485ad7d81a7669d6cde31a4f",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -1372,18 +1372,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:01:35.973Z"
+      "capturedAt": "2026-07-27T00:04:09.358Z"
     },
     {
       "themeId": "berlin-night-grid",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/berlin-night-grid-dark.png",
-      "sha256": "7af8af8716f88af806766eb47a4f87f76ae2dea0eaec195674f3be3cb77a2ddd",
-      "bytes": 771260,
+      "sha256": "722acdfe8c4f63c61e5537c02cf9134c6db8952537503ec089e7b888999be69b",
+      "bytes": 744576,
       "width": 1440,
       "height": 810,
-      "assetSha256": "92ac84e7a6833e6ff69295b276d224154301130be06b93945d1e19f71eaf8f25",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "fd99a7ef319e65a78315c95c2378338affb9c20346c995054a08b5f828cb4659",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -1399,18 +1399,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:01:37.207Z"
+      "capturedAt": "2026-07-27T00:04:10.519Z"
     },
     {
       "themeId": "rome-terrace-gold",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/rome-terrace-gold-light.png",
-      "sha256": "669fa89554ed77e9722af274990128694788d21fd2814343b5ca487fc680a538",
-      "bytes": 1047911,
+      "sha256": "eb9c756fe0e8f5bd0b1fbc93c1d8bf904e5e87cbb7ca92d5e09af891c85ebe47",
+      "bytes": 1057413,
       "width": 1440,
       "height": 810,
-      "assetSha256": "224e8417d1d9af0bec8dea77abdb021220a5bdf24d1580ca8e9ee76afe758a48",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "0e74452c9d35ff57433984a612874988e48a26b03b8e330ade968c7d41e33ca3",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -1426,18 +1426,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:01:38.701Z"
+      "capturedAt": "2026-07-27T00:04:11.869Z"
     },
     {
       "themeId": "rome-terrace-gold",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/rome-terrace-gold-dark.png",
-      "sha256": "a568b1ab9fd3af38bfa8861880ef3fb813113173ddc677de25532693c7d9e2b7",
-      "bytes": 799220,
+      "sha256": "8d738f3c4f95f53df835475ff4c5295dbdc66132dfacabce8e258f8bf25131f8",
+      "bytes": 810819,
       "width": 1440,
       "height": 810,
-      "assetSha256": "13f82c00db89e7dcef228a37b042c99eaa7938a01c01232beab3db0a04abac38",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "c2e795be2d8043fe016985c4b195badd316eb5fe47bd3760edbe9e21f0070aff",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -1453,18 +1453,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:01:40.073Z"
+      "capturedAt": "2026-07-27T00:04:13.034Z"
     },
     {
       "themeId": "tokyo-rain-signal",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/tokyo-rain-signal-light.png",
-      "sha256": "dc589b225c6f9fc8cf26e4ab10bc537a102907ff56beaa0326fe25d574e28bb5",
-      "bytes": 1108583,
+      "sha256": "acf90b0869ce315317a9499d3cff9c438296fd1e0c33f93fb305a7cd2bdbce1c",
+      "bytes": 1056704,
       "width": 1440,
       "height": 810,
-      "assetSha256": "172c68804a9807a4b74726b483f6670dfa668ebfefe64728bd0b21828e03fa57",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "8bbf0f75a2162a521a8ad4d451c242dc409136fc81278339003c18acc0e6fbb8",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -1480,18 +1480,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:01:41.593Z"
+      "capturedAt": "2026-07-27T00:04:14.368Z"
     },
     {
       "themeId": "tokyo-rain-signal",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/tokyo-rain-signal-dark.png",
-      "sha256": "610a6d079f09c14ba498e109c1f1561b822a04b388bdcb323b69d6224c594ec0",
-      "bytes": 838682,
+      "sha256": "88a19238d94cd14cf7edad0097dd5e49ebec48d865e4c8fb2bf1a3380852f52e",
+      "bytes": 795560,
       "width": 1440,
       "height": 810,
-      "assetSha256": "e58854b98dd5196501d98abc9fa04c80e4e0e6b48b595367ee18adb43047cfb1",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "8dab8190882789bc156716c91ca274af44529b8a7c4f2482e94a551ad551e6d2",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -1507,18 +1507,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:01:42.847Z"
+      "capturedAt": "2026-07-27T00:04:15.535Z"
     },
     {
       "themeId": "singapore-garden-rain",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/singapore-garden-rain-light.png",
-      "sha256": "831d6a025c4e9529dc18e92aef87628caf75382920fc8b2968a8cf1f75695735",
-      "bytes": 1120792,
+      "sha256": "a38406d73ef3cd2a42f3678fe1aecb2ef922aa609094e3e2990ff7f7fd2c9a2e",
+      "bytes": 1102380,
       "width": 1440,
       "height": 810,
-      "assetSha256": "6c5eccc1a6d19cfa0189e56e9941c79a276d0e425438e2749f930428ba4e12d3",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "3d90cb2d0f55d14fe57b539d6d5eeeb056c265c9d3a67fbc8d9215ad203568c6",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -1534,18 +1534,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:01:44.350Z"
+      "capturedAt": "2026-07-27T00:04:16.952Z"
     },
     {
       "themeId": "singapore-garden-rain",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/singapore-garden-rain-dark.png",
-      "sha256": "c28e346a2d9d27dbc4a1760ae64c2a1727048414d40fca99d60cd3ed11d20c30",
-      "bytes": 857413,
+      "sha256": "97bb18ae66607962e524be8dbd0868e88742ff5bb7c0e764d2b6c41861a67ac1",
+      "bytes": 841626,
       "width": 1440,
       "height": 810,
-      "assetSha256": "b88aad48fac4762b6001f2e6ead4116ce5071cf66f25c83ffcb35165bf2356e6",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "9f49a3fe734e6ebae9b3266a1d1dd77001c55e622af22782a14c454af3042392",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -1561,18 +1561,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:01:45.681Z"
+      "capturedAt": "2026-07-27T00:04:18.224Z"
     },
     {
       "themeId": "sydney-harbour-morning",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/sydney-harbour-morning-light.png",
-      "sha256": "ba9ab2c2e5a7a4fbce9505a226aefa729c8471f97b0161783c4814dcc5fcc954",
-      "bytes": 1247559,
+      "sha256": "481f9aa86dd19236b7fd51ef7b9baf27ffe17a487dec9614143f699e1b5a15ca",
+      "bytes": 1228879,
       "width": 1440,
       "height": 810,
-      "assetSha256": "3b6290f5e5394c260031987d690944178b81bb7394d74079c0fa83c8ab479793",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "14dcf97fd24ed4ff2c29dcc04f29912fc8a8fc195387070dd10c9b0833510d05",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -1588,18 +1588,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:01:47.273Z"
+      "capturedAt": "2026-07-27T00:04:19.696Z"
     },
     {
       "themeId": "sydney-harbour-morning",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/sydney-harbour-morning-dark.png",
-      "sha256": "bc90d4304513e2be3c5b1e296d6737ac1180c6c376376cf09390a7f69c55fdf0",
-      "bytes": 972477,
+      "sha256": "388f0afadaafa5aa1aaabe7dd597f564eee0c8f77b555ce11335337b4875aefa",
+      "bytes": 960879,
       "width": 1440,
       "height": 810,
-      "assetSha256": "ca1f02a96baecbf7a11866a6effe3106b3c6339d9ac7a95062602d91777a172d",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "95fe5f611489ac2377c66c31cf2dd49308e466428ab042fcb3d9b59d3a06815f",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -1615,18 +1615,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:01:52.171Z"
+      "capturedAt": "2026-07-27T00:04:20.974Z"
     },
     {
       "themeId": "mortal-journey-duo",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/mortal-journey-duo-light.png",
-      "sha256": "f7aa23e92b5e80b07ea98e8d7edb7edae8f9b4e0674c0febfcbc16ea468939d1",
-      "bytes": 1204640,
+      "sha256": "802aa04751b1bc6b815c10228544bdf19b8d16179e69a53b0be9f74ac27a4015",
+      "bytes": 1187439,
       "width": 1440,
       "height": 810,
-      "assetSha256": "7b89ba9b357484ddf2e189da9307f053ed12bff9a62e07dd0bedc05a471359da",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "23bd1acdb77d4ec02949eaa247ba295d53e58457b534d8700b7fefbe29af22e9",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -1642,18 +1642,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:01:57.383Z"
+      "capturedAt": "2026-07-27T00:04:22.373Z"
     },
     {
       "themeId": "mortal-journey-duo",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/mortal-journey-duo-dark.png",
-      "sha256": "4376cf9817e6a6b72142f67b9654b1e7b482656c117ca1c3991242a378591458",
-      "bytes": 929779,
+      "sha256": "677200f85a069af2fd650db7991db41fd10ad537bc892112cc8f89c204493c60",
+      "bytes": 917475,
       "width": 1440,
       "height": 810,
-      "assetSha256": "93142c77baedde7b5818c438249fedd84b671608905ca0e48a20de809af9dcc5",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "14d308748b43c7d22e1aae20c59e133efccd50e5a2c35ed2bd1de757960a4ea0",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -1669,18 +1669,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:01:58.766Z"
+      "capturedAt": "2026-07-27T00:04:23.635Z"
     },
     {
       "themeId": "mortal-journey-chibi",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/mortal-journey-chibi-light.png",
-      "sha256": "ba774d76c562ca04c88bdfb970447f1db7a5a5423298aa4de4503ded5c0961b2",
-      "bytes": 1176585,
+      "sha256": "8592c4a44db1c297dd2f3996d9af77d0ef858b57d7a9985ea389f6419df95abd",
+      "bytes": 1167684,
       "width": 1440,
       "height": 810,
-      "assetSha256": "9359005d53760e64c59a1a0bd11aabf4945b9a00ae8f2d7eab49f39b531fa03d",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "3b55ea76292dd580989b087dd2c39863f282d4ef41aae7ce1df0c872ef4fe330",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -1696,18 +1696,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:02:00.312Z"
+      "capturedAt": "2026-07-27T00:04:25.078Z"
     },
     {
       "themeId": "mortal-journey-chibi",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/mortal-journey-chibi-dark.png",
-      "sha256": "dd43561c573a9ff0b2319c15aee08ea557198cf5d93a1354d4235d6f59ebdb48",
-      "bytes": 912033,
+      "sha256": "a62814f909d01dcc21d21065992b14303dd72c4445037c66cb41d16073bc8048",
+      "bytes": 904832,
       "width": 1440,
       "height": 810,
-      "assetSha256": "c1563c42f444e93a03328fdc95f48a50d6557e66f7487d8cfcc1a941c807c748",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "4a1763df2d16e42b8a6bf1a8c454cbc070f9c546375cf284d816d0be0ce896ba",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -1723,18 +1723,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:02:01.630Z"
+      "capturedAt": "2026-07-27T00:04:26.327Z"
     },
     {
       "themeId": "renegade-immortal-duo",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/renegade-immortal-duo-light.png",
-      "sha256": "e8ac80d82a3ad617fbe26097c88832cf0664d99ddf1b55ea85f00891724409bd",
-      "bytes": 1096601,
+      "sha256": "95bbd070e5dc3bfc20015d0ab3a4942609cb70be085f39cf3dd9651446f184e6",
+      "bytes": 1077675,
       "width": 1440,
       "height": 810,
-      "assetSha256": "9e77153459de658d05dd3c69bfa4a956b73eeb1496ad27151e98e27ab0414a05",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "c427898492d9cfbc8c5021c18d14854a11d7163a4ef93545fedf4bf8254a67ae",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -1750,18 +1750,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:02:03.088Z"
+      "capturedAt": "2026-07-27T00:04:27.605Z"
     },
     {
       "themeId": "renegade-immortal-duo",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/renegade-immortal-duo-dark.png",
-      "sha256": "55ca9fd7739a25eb7683deb806960456ec33fcf9cd61beabd560e294922ca721",
-      "bytes": 844991,
+      "sha256": "3956c16c682c8e06c4ba0817beffdf4fd2384bd8cfd9cfb3e9698eff3101c423",
+      "bytes": 827320,
       "width": 1440,
       "height": 810,
-      "assetSha256": "bfdf222278abf11dc5f5645640c739197174ad0062f67c2ed21b6e648bba7e07",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "4a30ea5acd11c2deda2b849f635c0c61a6813910607de88bec79a80cd31deb8e",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -1777,18 +1777,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:02:04.722Z"
+      "capturedAt": "2026-07-27T00:04:28.855Z"
     },
     {
       "themeId": "renegade-immortal-chibi",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/renegade-immortal-chibi-light.png",
-      "sha256": "03de5997ff0183fcb521801d0f0788995622bc8ff11b58d1e748dc697bbc183d",
-      "bytes": 1049183,
+      "sha256": "b7e1a0ea1ef2c4185b08b7d5c20fd72da6154e1cc3ea4625444609b1602f9fcf",
+      "bytes": 1050407,
       "width": 1440,
       "height": 810,
       "assetSha256": "0c1fccc8d6cf1e0a3e840a8da6daaa1c8c48e28fbe5dbaf1f3874313f23ea87e",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -1804,18 +1804,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:02:06.197Z"
+      "capturedAt": "2026-07-27T00:04:30.198Z"
     },
     {
       "themeId": "renegade-immortal-chibi",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/renegade-immortal-chibi-dark.png",
-      "sha256": "95bcba1f4cab06a1007b153a2e6e6f58373fcc94e7cf70f84f5a65e4cf3f4fc5",
-      "bytes": 794695,
+      "sha256": "defb61f6f17d7b411e2e819b5552a85a53ad7604438fb71a97d6c2469efc0cad",
+      "bytes": 796508,
       "width": 1440,
       "height": 810,
       "assetSha256": "d39f0167b7926f9a5764794be13830499e0b42497c121d432a20f6a2a5ae86f7",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -1831,18 +1831,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:02:07.457Z"
+      "capturedAt": "2026-07-27T00:04:31.401Z"
     },
     {
       "themeId": "sword-of-coming-duo",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/sword-of-coming-duo-light.png",
-      "sha256": "837594d2bcffc6e4e4cf39cee9aa28c73b30cf20d2a2a1bd9fed786a371b76c4",
-      "bytes": 1425503,
+      "sha256": "39ad9ebf89ba66b1ddc0f7e3f1cfc440aa0b874ec1a3c183b433a02618ce9525",
+      "bytes": 1412587,
       "width": 1440,
       "height": 810,
-      "assetSha256": "bd5df1f3fab21ef194213bcfdb48562f4d0901937d7b1b4668d52e63a26d770f",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "fa3886b759451c40489ff4b816ed90f0d68f61d33475dfc1148d03fdc9b4ad5f",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -1858,18 +1858,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:02:09.071Z"
+      "capturedAt": "2026-07-27T00:04:32.893Z"
     },
     {
       "themeId": "sword-of-coming-duo",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/sword-of-coming-duo-dark.png",
-      "sha256": "4e07d1e15eeb0be8c625552365b9351255301c80da455da75e210a9da1055091",
-      "bytes": 1120376,
+      "sha256": "0ef4a870a394762f3cb0358b628f6a38af04d18116eb31091155c38bcba95f59",
+      "bytes": 1111621,
       "width": 1440,
       "height": 810,
-      "assetSha256": "b62fdd4b124f5dee5034529664e86f043d4fe6dbb4712d2b79e99f9efee11b12",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "af435f0f1cd48d0a8ae447e5a57c561f20e6a35c901ed2df54d385a93035ca77",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -1885,18 +1885,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:02:10.699Z"
+      "capturedAt": "2026-07-27T00:04:34.260Z"
     },
     {
       "themeId": "sword-of-coming-chibi",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/sword-of-coming-chibi-light.png",
-      "sha256": "c7f0a316c8f22a7345e59dedfa7cb566e34e2c9b85d2b3e8329d94ac0e972e3f",
-      "bytes": 1254708,
+      "sha256": "9292b7f06efc6bd7f477dfaedfbf7bce315c9a48ed92d56c5b1b0d973a9cdde2",
+      "bytes": 1255807,
       "width": 1440,
       "height": 810,
       "assetSha256": "b98b14734af1b6d4ecd64c44a0a0783ef6a1de4e722c03450e72765af2b60c4a",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -1912,18 +1912,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:02:12.170Z"
+      "capturedAt": "2026-07-27T00:04:35.741Z"
     },
     {
       "themeId": "sword-of-coming-chibi",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/sword-of-coming-chibi-dark.png",
-      "sha256": "c03c3b4a9c1c393e52d88a45d4adbbc51678471ceb4dc891489276c7360f65bb",
-      "bytes": 982623,
+      "sha256": "b6f78aeea7dbc097e51e282990c78d76a8a2609422db4de85bd6653e535b6c75",
+      "bytes": 983972,
       "width": 1440,
       "height": 810,
       "assetSha256": "b3f9a1e1513561c61befade9813a66563d5fc60a06d731f0d812ccfbf1843976",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -1939,18 +1939,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:02:13.522Z"
+      "capturedAt": "2026-07-27T00:04:37.127Z"
     },
     {
       "themeId": "battle-through-duo",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/battle-through-duo-light.png",
-      "sha256": "8a579b01ce07cc8288f77023a471d4b78a2d3e9b33fab8cdcdc16b75b2941c3c",
-      "bytes": 1231105,
+      "sha256": "6d4f9fe862268809fb0b9a41d6947f9d234026217fbef6936347834d17a5700e",
+      "bytes": 1229545,
       "width": 1440,
       "height": 810,
-      "assetSha256": "7286af9f259704871a8c04216cc6fae6dd78fa46db9d769f6f5d19630e18daf5",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "0ff57c28a61dcf05173b8e039c767d8c532c48bc764190b451970cba1eb0b6cc",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -1966,18 +1966,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:02:14.987Z"
+      "capturedAt": "2026-07-27T00:04:38.632Z"
     },
     {
       "themeId": "battle-through-duo",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/battle-through-duo-dark.png",
-      "sha256": "5f1e96af33baf779a540b6286172e6a9de9a4c8a784875d627cfd9177f32680f",
-      "bytes": 956078,
+      "sha256": "e785d0a46f5d84ebbd58e52f981ebf4fbc4faada8ef11a8e8e9ac6e46f4d9f9b",
+      "bytes": 957750,
       "width": 1440,
       "height": 810,
-      "assetSha256": "288771215fd4d206ca05726081cdcd66931dd8229fb0594b8acb744d19cf506b",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "0bc1923acaa874a996470cfc706f98af79bb61669fa575c059b652ce0c41c002",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -1993,18 +1993,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:02:16.293Z"
+      "capturedAt": "2026-07-27T00:04:39.918Z"
     },
     {
       "themeId": "battle-through-chibi",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/battle-through-chibi-light.png",
-      "sha256": "f1874a4a60e207aac10e33269dd68db372260447eb920288e0a1b922e850bf64",
-      "bytes": 1192238,
+      "sha256": "5a3639f49f78d2be804e7446dac73b3a69137592238bf22fabd51a0df14859b5",
+      "bytes": 1193355,
       "width": 1440,
       "height": 810,
       "assetSha256": "c44db704a06fe711fcf49724ef634198ab4f1811476c8413c90e12e5ab5e2c8e",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -2020,18 +2020,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:02:17.760Z"
+      "capturedAt": "2026-07-27T00:04:41.391Z"
     },
     {
       "themeId": "battle-through-chibi",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/battle-through-chibi-dark.png",
-      "sha256": "c1bf77ed6a9f32076c580af41e0252e4dc39cb45044ef32ef98d92a081816a23",
-      "bytes": 934793,
+      "sha256": "917d5b383f4224aff918d0bc47d69d168fb2deba6133cf3d5158ff71419c5fda",
+      "bytes": 936034,
       "width": 1440,
       "height": 810,
       "assetSha256": "72e9f4be0a0773fbebbf38b115d7e4c1f360bf86e04bc4c2224e2d93695bd595",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -2047,18 +2047,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:02:19.044Z"
+      "capturedAt": "2026-07-27T00:04:42.635Z"
     },
     {
       "themeId": "mortal-void-hall",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/mortal-void-hall-light.png",
-      "sha256": "89c9aacae1353b1a8c9a002e5c3f6e1a7be420798ba5f5d60c43d443e75d9857",
-      "bytes": 1204249,
+      "sha256": "00bb0e883203e0e7e5a3f93b5ebbfc961aab4980084ae6b4a2d2a61f6d4765ad",
+      "bytes": 1190727,
       "width": 1440,
       "height": 810,
-      "assetSha256": "7b7c48bd3a7b821dd914b26c3e40cbe2a85db691aa669dee37f69b90eb62c9bb",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "741b3b2e51c350ac93787e7889aa59e1b14f9434c4ad9dfaa6a6f7a96fb4c391",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -2074,18 +2074,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:02:20.528Z"
+      "capturedAt": "2026-07-27T00:04:44.055Z"
     },
     {
       "themeId": "mortal-void-hall",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/mortal-void-hall-dark.png",
-      "sha256": "8a1d04342522358568f12fa5fbec09a15dba6e9bf87f1396e046b47f5669fce4",
-      "bytes": 924116,
+      "sha256": "55e402f3484f005797d6e351a212de758f72c10e0a8c1687d0aa6f3b7ee1e2e9",
+      "bytes": 908736,
       "width": 1440,
       "height": 810,
-      "assetSha256": "4787b2ca5d2be14a9329a59d5ad9edd5c288a7ea376691501351e9d9cd1ec3fc",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "a81b13f9e65e9f3fd210e116741658065f1895237079ab848bccfc78945e8540",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -2101,18 +2101,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:02:21.907Z"
+      "capturedAt": "2026-07-27T00:04:45.284Z"
     },
     {
       "themeId": "renegade-wedding-storm",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/renegade-wedding-storm-light.png",
-      "sha256": "9236c403748794f332f90fd6451265118602bbcbad4a145d4253cbc1693175f1",
-      "bytes": 1206423,
+      "sha256": "fb3c857b0e7a00d0719bfd96bddecfcca11c4a01f38eacac76b72f9633caf319",
+      "bytes": 1200237,
       "width": 1440,
       "height": 810,
-      "assetSha256": "1400ac25217ff1023b483c13e0d67bca475e601a02c23dc8af4067d280f072b5",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "26afd49934d3acd9b81fa2d0e6dd13ec824f371c48dc348ad0b8e738d81cf61f",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -2128,18 +2128,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:02:23.408Z"
+      "capturedAt": "2026-07-27T00:04:46.689Z"
     },
     {
       "themeId": "renegade-wedding-storm",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/renegade-wedding-storm-dark.png",
-      "sha256": "98f4c0c736bbda9592e66efa3e8caf5dc1794cf410e1cbd156c6cb57e5548349",
-      "bytes": 944424,
+      "sha256": "3dbee26387c40d1cd7447610faffc7a2f81d9603d051299cd0e4a0771dbd1bb8",
+      "bytes": 939178,
       "width": 1440,
       "height": 810,
-      "assetSha256": "0b96186124ccaa161d8ea01bb114d54072a6c41caa95c4c4042556de8e0f4cbd",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "7d0006709c697369116351e8183d6ae53691c9889521c466c649b415b2bc7f27",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -2155,18 +2155,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:02:24.761Z"
+      "capturedAt": "2026-07-27T00:04:48.002Z"
     },
     {
       "themeId": "sword-confession-alley",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/sword-confession-alley-light.png",
-      "sha256": "ddd213a8b843985121ef2534aee82692396a988f2c9e0316017288318df9132f",
-      "bytes": 1041989,
+      "sha256": "7c3de7cb6194d5b65f850da049ed8d020ba0958ef8e57edaf4c37e329e4af753",
+      "bytes": 1044326,
       "width": 1440,
       "height": 810,
-      "assetSha256": "adcae78017295693d759c62203b5f897da77b52eef084ae22b979f33d15e6e38",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "7bb1321d2038ce3a1b3459cf22a85a340d3b83ffeb11b11c0a2776089e85599c",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -2182,18 +2182,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:02:26.216Z"
+      "capturedAt": "2026-07-27T00:04:49.404Z"
     },
     {
       "themeId": "sword-confession-alley",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/sword-confession-alley-dark.png",
-      "sha256": "d1a6280528b8ea11c461168c1c1e1fb4cef51bbeb687982844ada8bbec70d3eb",
-      "bytes": 790078,
+      "sha256": "5e328cfc17e276857c31325828154983fcaca488757dcb1ea51aa2a199ca0480",
+      "bytes": 793190,
       "width": 1440,
       "height": 810,
-      "assetSha256": "52b2eebc8d1fefdc44ff8fe3b18dda427f4b8fce5135198269ba1d280bb61052",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "bd70f5ba5a35f986fc2c27435bd3201b35b243b83a17803d283808ba4b29978f",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -2209,18 +2209,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:02:27.451Z"
+      "capturedAt": "2026-07-27T00:04:50.597Z"
     },
     {
       "themeId": "battle-three-year-pact",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/battle-three-year-pact-light.png",
-      "sha256": "c81d068db3e0036c093ce06c9749dc9383ab91e0ddcb47cd26896afb536044c3",
-      "bytes": 1188026,
+      "sha256": "b69610ed7bbbfc6cf3cccd0b230be4269b7ca46f50d1bae0105ebe33bdc2f42a",
+      "bytes": 1143519,
       "width": 1440,
       "height": 810,
-      "assetSha256": "7e28c361acbbd2f6e537bbc0a9afd104083602c162db4fa69065c895a2ab33a0",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "fc342c3ebf6c658ff0ae84e18e5843810de5fe68b0c952befcaf70f3ca049012",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -2236,18 +2236,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:02:28.936Z"
+      "capturedAt": "2026-07-27T00:04:51.971Z"
     },
     {
       "themeId": "battle-three-year-pact",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/battle-three-year-pact-dark.png",
-      "sha256": "2eb20cde8241c5db7e3b3c24c163234b462ce604f90e2e8b6420b42588dbfc80",
-      "bytes": 921574,
+      "sha256": "2bff73b8b1563501c74159a75a605d685ce2c8ce78d6ed355532bade504226c7",
+      "bytes": 886563,
       "width": 1440,
       "height": 810,
-      "assetSha256": "d1c0bce1e5fd5fbc01d2b15008b07ed618b088091f141aeadad577800e057235",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "05bb9adb2040c3afedf63203863dce2e366175d4ac9c01bb958c07d6552739a1",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -2263,18 +2263,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:02:30.246Z"
+      "capturedAt": "2026-07-27T00:04:53.200Z"
     },
     {
       "themeId": "tibo-reset-saint",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/tibo-reset-saint-light.png",
-      "sha256": "6ac7e7b59f5a393976fbb32cb2d21dadc37d5c5572c965e8d2ce48582c03db7a",
-      "bytes": 1396447,
+      "sha256": "71da85641df27db45e511e18a92831c26051716e4c9c2d110c71b4382c1808b7",
+      "bytes": 1387805,
       "width": 1440,
       "height": 810,
-      "assetSha256": "11b6a2ca351157517cb3f42d754ec7279e4be6dcabb603c9777f566fff4c107f",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "782d1ff526773329a44ed0798e0ef026162f93b1bba994a314a7af2f27a0681d",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -2290,18 +2290,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:02:31.854Z"
+      "capturedAt": "2026-07-27T00:04:54.741Z"
     },
     {
       "themeId": "tibo-reset-saint",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/tibo-reset-saint-dark.png",
-      "sha256": "4db1bee6c388fd430490e5f23f38451dcf0e53df2a87eac26681dbf26f670467",
-      "bytes": 1099770,
+      "sha256": "ac2e7973cc9b750100e5e2c564fe0593e00701c3acffcca5be1729e23ca857bf",
+      "bytes": 1096495,
       "width": 1440,
       "height": 810,
-      "assetSha256": "73c84e7524853444eb57cc9a3c16baa2c28902621bbc06aa515a7413b4eb8ee6",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "bd57e8cf4fed7e46db01651593c0e35a132d9e566a55c0eb847c2aaa260eab5b",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -2317,18 +2317,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:02:33.336Z"
+      "capturedAt": "2026-07-27T00:04:56.149Z"
     },
     {
       "themeId": "tibo-reset-immortal",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/tibo-reset-immortal-light.png",
-      "sha256": "45a937e31b7638cb3a4ad309ed5082e74f03fa9551b3a99d7b306896915d29dc",
-      "bytes": 1422221,
+      "sha256": "b6573a820a7bc674e4539e2b5b8b696c7a4926beccd74592ee49afd28f6a8273",
+      "bytes": 1416357,
       "width": 1440,
       "height": 810,
-      "assetSha256": "976594a32366ac3c2aee2a47b404e03d5a687f20e491d9df677b5e1b394cb855",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "edddd20e288baabdffdbb135fd17c4a50563ca45ae31ec0591af89d70565843c",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -2344,18 +2344,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:02:35.032Z"
+      "capturedAt": "2026-07-27T00:04:57.752Z"
     },
     {
       "themeId": "tibo-reset-immortal",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/tibo-reset-immortal-dark.png",
-      "sha256": "dde89daa58afb9a5a6b613798740f553d6d09d5a3a35fe0df5addd244d4b9dd8",
-      "bytes": 1112489,
+      "sha256": "2a86e3757402845d14b36377cd1a7d2097428cb28a19ccec43cf3f7b63112777",
+      "bytes": 1108293,
       "width": 1440,
       "height": 810,
-      "assetSha256": "27c1ddfce317e70dafe18278006e51765274e9b9acb5f51b4c1c925eaafd654e",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "4671154882566fd50d7a82079c113c8c5ada25030ef3c87719e0361c0fdd607a",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -2371,18 +2371,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:02:36.544Z"
+      "capturedAt": "2026-07-27T00:04:59.203Z"
     },
     {
       "themeId": "retro-boss-2007",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/retro-boss-2007-light.png",
-      "sha256": "ac58d94219918c3ea09d019083471fdffe2f22312498dd19e4c3f9fb29afacb7",
-      "bytes": 828887,
+      "sha256": "8a2ba8cbe028ad9143b80a7b3dc8c832f1a5269aad65cfb92c2b21f6f2e9d80e",
+      "bytes": 827883,
       "width": 1440,
       "height": 810,
-      "assetSha256": "658ebf90f9634d4069abf42ee522731d90b1a64e83d384bb51384df1ec015cc9",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "1a4c10bb7a8df8a611edda5fa68fc47d00b2b31d0a8d0e5fb7c8a7ba0ec7c32f",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -2398,18 +2398,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:02:37.825Z"
+      "capturedAt": "2026-07-27T00:05:00.416Z"
     },
     {
       "themeId": "retro-boss-2007",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/retro-boss-2007-dark.png",
-      "sha256": "f9453fb45419a61f9e688f29b3e2e5993e1225ce7d6026778b4b4b7420bdca69",
-      "bytes": 621815,
+      "sha256": "638938cb302ac92f3c25cf4c6097c6ae156d07d0493ed58255044ead8446d9ed",
+      "bytes": 623214,
       "width": 1440,
       "height": 810,
-      "assetSha256": "e4edc595dc61b6b221326d5815e2ca7f94374c3d8259dd1cc95ad6aa49b11171",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "cdfb15a10030371898389d7e43c120d3bc22dc0d448600b6c890c6658f0856fa",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -2425,18 +2425,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:02:38.971Z"
+      "capturedAt": "2026-07-27T00:05:01.533Z"
     },
     {
       "themeId": "rainy-library",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/rainy-library-light.png",
-      "sha256": "c2eb38ba33e3d3ba6ece3597a2126295012b144503f7d0d26b155405ae81f59a",
-      "bytes": 912893,
+      "sha256": "1aa6dd2e969635826661edb23a1cd5b041fc6cc475fa6b26ae486104983d030c",
+      "bytes": 922918,
       "width": 1440,
       "height": 810,
-      "assetSha256": "6a3176fdd82e79176967a33fec256a913bf1a7c42d16c2aea8187fe5224740af",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "0f43951c7cdfb05b8ec33c3b1604cf2819ba4091c0419af9b4e73711b04228dd",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -2452,18 +2452,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:02:40.280Z"
+      "capturedAt": "2026-07-27T00:05:02.812Z"
     },
     {
       "themeId": "rainy-library",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/rainy-library-dark.png",
-      "sha256": "5c3410d247c7b205f48cfebd3af3c544b142e1b91ccefc401e051c69cddf30a6",
-      "bytes": 663939,
+      "sha256": "d297060fa47627661b4ff2964379658c40de3f3f871baa620fd0dee72fae75ab",
+      "bytes": 671889,
       "width": 1440,
       "height": 810,
-      "assetSha256": "38cffd42f5c7bd72eeb50ea8c40b7342d783c31fbd2eaac56db1660379860392",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "062e77f41acb0d775a9b4a720b79f63f12596e139d0e0b7d281b13d521ced53f",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -2479,18 +2479,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:02:41.497Z"
+      "capturedAt": "2026-07-27T00:05:03.913Z"
     },
     {
       "themeId": "orbital-dawn",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/orbital-dawn-light.png",
-      "sha256": "9ed5c3ebb246c118c4405c9f98d08482e56bc2ad73cc40c688ebc2794dd21179",
-      "bytes": 1061420,
+      "sha256": "c553066e1c61bf21f29ce4f4154aeacdb6d5923f62d963157e32c3a3567f4bfc",
+      "bytes": 1067007,
       "width": 1440,
       "height": 810,
-      "assetSha256": "f28f35d550575577e252091f1fb6f87eb64e30ed360fec8c8998dc1a4cb2c219",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "02204c1e131bcf796d196c5f98d0e1f82a33efbfc832141614586e22eb5187d9",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -2506,18 +2506,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:02:42.917Z"
+      "capturedAt": "2026-07-27T00:05:05.280Z"
     },
     {
       "themeId": "orbital-dawn",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/orbital-dawn-dark.png",
-      "sha256": "91f39919c577d6cb3b4c45e87390688b8eafef80ec3736ace67c6b73de5cf036",
-      "bytes": 808943,
+      "sha256": "faf73df3a494639e671ccede518a6108524431e67b582a0ef9e4916acbfceacf",
+      "bytes": 817238,
       "width": 1440,
       "height": 810,
-      "assetSha256": "0ecb5a45cf1d1c78844987183b24e868a9ea3602456aea7b3f8192947af5aded",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "cc59d698c0672c964347e27320947fc5dfa20477641b6e886fbbb77030597f78",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -2533,18 +2533,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:02:44.197Z"
+      "capturedAt": "2026-07-27T00:05:06.447Z"
     },
     {
       "themeId": "deep-ocean-lab",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/deep-ocean-lab-light.png",
-      "sha256": "f443cf98dcb5c28a6eec8ce01aa9eff3300b8477216b4e6f6a57f7574eae0177",
-      "bytes": 1011676,
+      "sha256": "1b39a2b61192af76d76b8dfd2e726f0dfffc2be123aa7b2cf08ae1a27fecda5b",
+      "bytes": 1017191,
       "width": 1440,
       "height": 810,
-      "assetSha256": "48180005d5a520c7eea38a29d218b3d2b53df4eb750a4a13f26e368ad23c8770",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "f179d7ec083b52ccc0c42a55e8a0f22570bf4dca4374bfd5a78128d3db505b00",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -2560,18 +2560,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:02:45.620Z"
+      "capturedAt": "2026-07-27T00:05:07.814Z"
     },
     {
       "themeId": "deep-ocean-lab",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/deep-ocean-lab-dark.png",
-      "sha256": "cf1b268358f68b80f4de761cb632ca87f43e8174e364c8ffb88984c729a39f87",
-      "bytes": 747355,
+      "sha256": "df3bd09ebc1e9421c43885c4fdd5629ab61dcf7156a90673eb72e0037f8007d1",
+      "bytes": 752087,
       "width": 1440,
       "height": 810,
-      "assetSha256": "62653797e7cd6fb64913c092d41262b9e22b3376c69ac1871b24f1b63626ec7f",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "2062e4d12259e6f60b076686ab033793cbab048422a9cb36fda1c94e87353bee",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -2587,18 +2587,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:02:46.833Z"
+      "capturedAt": "2026-07-27T00:05:09.010Z"
     },
     {
       "themeId": "synthwave-night-drive",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/synthwave-night-drive-light.png",
-      "sha256": "00f3132f220ce01c0239644e7148e72e120adc1093816deb082c5ffedf87e31a",
-      "bytes": 815504,
+      "sha256": "3898dd2da0ceb1db4136b04e3f0614d57573f06af5fb63b9d531e9c80c81cb29",
+      "bytes": 816793,
       "width": 1440,
       "height": 810,
-      "assetSha256": "e74ea387c269f3e82518db28d5b20e32977472af085a826895d2e5f550bfba65",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "46c567c1e57f27f67f895629d0160b6fd07d92e2a0cf34a14ac3e7f5aad8c4e5",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -2614,18 +2614,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:02:48.095Z"
+      "capturedAt": "2026-07-27T00:05:10.206Z"
     },
     {
       "themeId": "synthwave-night-drive",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/synthwave-night-drive-dark.png",
-      "sha256": "28b7c8ad5786348196ada24364bb341bcd73c9fa74462082b888d7b05be7cd0c",
-      "bytes": 581184,
+      "sha256": "897e7a9019d1608aebd4751484770281b0dafe3a07842c9849e8db4f3e267b7b",
+      "bytes": 581704,
       "width": 1440,
       "height": 810,
-      "assetSha256": "5394f3d79c2d9d4a6da5f1a836b07cb41615709f02fe62d74b6bcec453a104e9",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "e071c45c321062f194e0726ec910e7ee724e0a19e2cd47a0f6fe3549ee207024",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -2641,18 +2641,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:02:49.214Z"
+      "capturedAt": "2026-07-27T00:05:11.335Z"
     },
     {
       "themeId": "alpine-cabin-code",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/alpine-cabin-code-light.png",
-      "sha256": "4df10adbef260f73e113e83717504ff66b20c22c1715480977c0eab0dec3f1e4",
-      "bytes": 1119304,
+      "sha256": "3ae23ab8e954d7f86e56a4fef7bf975da57e1866bf4e27509da9d9226861116c",
+      "bytes": 1118595,
       "width": 1440,
       "height": 810,
-      "assetSha256": "004f33af98c48ed8ec3e4a0dd82fc9489f991900f3998fb4f1b6053f03302bee",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "ea2a95cd3903d2653f563f4ff38cb5c43d6cbf0da5aa3c8fe64c1f2a76ea5739",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -2668,18 +2668,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:02:50.649Z"
+      "capturedAt": "2026-07-27T00:05:12.708Z"
     },
     {
       "themeId": "alpine-cabin-code",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/alpine-cabin-code-dark.png",
-      "sha256": "c8c5bdc8b1eb384aa80fcfb1474249fef8952335cb513542401eb45343624e8f",
-      "bytes": 852395,
+      "sha256": "02a5f19e10a0bf437e9ee246a452059007388e407e69ef76642510eda6780283",
+      "bytes": 851866,
       "width": 1440,
       "height": 810,
-      "assetSha256": "6c59fc26ed0b33a99d41c09db777326cfda6cdefb5c251edf3e0a0cd11de2253",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "84c72a84cd37cc09aadea15b4129ce957b36aeeb3d9b08f7375f666a63842bfd",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -2695,18 +2695,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:02:51.924Z"
+      "capturedAt": "2026-07-27T00:05:13.910Z"
     },
     {
       "themeId": "jiangnan-rain-courtyard",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/jiangnan-rain-courtyard-light.png",
-      "sha256": "045de314389aa6935d5bedb62ea8b88ce6b125f41da1474ada957a0a88b062cf",
-      "bytes": 1289174,
+      "sha256": "4d6c907949227a06343679763ec2c6f07749662eed4e9ed8eb155b586b8ac97e",
+      "bytes": 1292205,
       "width": 1440,
       "height": 810,
-      "assetSha256": "054b0201ab5b7c4e728f5d10923f1458efbeaa54490e4c6d8f8885d3926b33bb",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "1383cc64e7bad5094dfc49e8268ec1642f32883226760d57f8f75beb52b4ccfb",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -2722,18 +2722,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:02:53.437Z"
+      "capturedAt": "2026-07-27T00:05:15.327Z"
     },
     {
       "themeId": "jiangnan-rain-courtyard",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/jiangnan-rain-courtyard-dark.png",
-      "sha256": "9497ccd6f2356d70dedf667fc7e474681b2a9b2b0d1d4e84f4d8478920b6dc05",
-      "bytes": 1004322,
+      "sha256": "3f81e87b413efa90036a715f416e363c085f18123f78904cb29ec629822847fb",
+      "bytes": 1005839,
       "width": 1440,
       "height": 810,
-      "assetSha256": "878efebc9fe6fa69b02d6d656a6dcdc752f4d321932a66716ddbe300a401e728",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "312d986be1412db51836d162bd36e0a703d904868ca7cf02ee6714d9137dfadd",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -2749,18 +2749,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:02:54.778Z"
+      "capturedAt": "2026-07-27T00:05:16.635Z"
     },
     {
       "themeId": "changan-lanterns",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/changan-lanterns-light.png",
-      "sha256": "d1016ad251d7c1247130b6dbfd2002ee8e5cb67b6f5ec7366aaaca8291adb442",
-      "bytes": 1164127,
+      "sha256": "00bca34a68c853c9509a2195853db954fd7984b4a88c1eec878f970ab1289697",
+      "bytes": 1135973,
       "width": 1440,
       "height": 810,
-      "assetSha256": "825e1b271146599e98894e629055129824a3ffffb6aa6f3e3de0184ffe2eee22",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "3275daa22d620ec3175d3a6aff064df7063feb26de52d73dd78f8c4f34b85ac8",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -2776,18 +2776,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:02:56.236Z"
+      "capturedAt": "2026-07-27T00:05:18.076Z"
     },
     {
       "themeId": "changan-lanterns",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/changan-lanterns-dark.png",
-      "sha256": "aff75a9918750dbe5ac742b63514a94b18d10fe44c0c3b2fc7048a1200fcdee9",
-      "bytes": 889969,
+      "sha256": "eb4207395c039d089f56914ca5480a95b1daf498764ca5cbd74f11c01408102d",
+      "bytes": 867257,
       "width": 1440,
       "height": 810,
-      "assetSha256": "06192fdcb287d21aec5c0dc6861b97516789949a3e7fd7b91e543f8d5b95b889",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "20fa767ef3b8852aab5b6c25027443c6db0830ff22f6b44de1d36ae1bce13e31",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -2803,18 +2803,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:02:57.507Z"
+      "capturedAt": "2026-07-27T00:05:19.329Z"
     },
     {
       "themeId": "dunhuang-starlight",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/dunhuang-starlight-light.png",
-      "sha256": "cb55fd612170577da29e49a0fb072fb4128edd45ddd22e5e0887d5cd970d1b58",
-      "bytes": 1247896,
+      "sha256": "c6f423f3274d29524fc9566734937e0543a9854eed95182942a2ba8effd0959e",
+      "bytes": 1243290,
       "width": 1440,
       "height": 810,
-      "assetSha256": "6c7e24a35e58075b03852b63917a9fb9fca1b06761512ed489fa915760604de4",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "dff538ca54b65e4b77a2c6ea017e3923276eabecd7aea5d4d1836fc76ce7a72c",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -2830,18 +2830,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:02:59.054Z"
+      "capturedAt": "2026-07-27T00:05:20.804Z"
     },
     {
       "themeId": "dunhuang-starlight",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/dunhuang-starlight-dark.png",
-      "sha256": "e7b53c066ee9028f51a2ba529746215a0195dc1e7f2f82fae52d42b0bb6f4bd7",
-      "bytes": 979896,
+      "sha256": "205ceb230d676e2461b97f7ad949fe4c7232a6d0b6aee0967044ffd6a2780d09",
+      "bytes": 976242,
       "width": 1440,
       "height": 810,
-      "assetSha256": "a2391cef9df611f048e62f71e9c01210e9962b9dbf69e024bc3b8eef9c8afcee",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "a235d9c62e3cb6d063109ebb3bc0a85d9fca6ad37465a5c7a20f5d3c65d8363f",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -2857,18 +2857,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:03:00.441Z"
+      "capturedAt": "2026-07-27T00:05:22.028Z"
     },
     {
       "themeId": "bamboo-tea-rain",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/bamboo-tea-rain-light.png",
-      "sha256": "f878e67d876972f7a2052c942e2733d86943f4f2657b1d10d586161dc34729a3",
-      "bytes": 1148830,
+      "sha256": "33a7a6c13256327a26c18ab9c2fa8acb856cfda222d426a5058a9194b8aef835",
+      "bytes": 1154387,
       "width": 1440,
       "height": 810,
-      "assetSha256": "41ebad5fc59ad4513a7cb928ad0d7f55a9b470fd71cb52872e662dadac0c791b",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "b83267d6b391c191d8286a07d1d95bba124f34191722831164b1f03b29881ace",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -2884,18 +2884,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:03:02.101Z"
+      "capturedAt": "2026-07-27T00:05:23.437Z"
     },
     {
       "themeId": "bamboo-tea-rain",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/bamboo-tea-rain-dark.png",
-      "sha256": "2999c250a0e43659ddc0e01709e80cbd7b987e512e7865c61a5f4f2a2a046566",
-      "bytes": 883610,
+      "sha256": "419712bf1224aa980170d1e51dff5efcbc09d8ea6b3ef3849531922164d1ef0b",
+      "bytes": 888745,
       "width": 1440,
       "height": 810,
-      "assetSha256": "1c0c536a3ab2dc1172688aaa0ae25a5a12d54aef4401f0fa56097fad13708c10",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "246c5c1e666380761ce2fbd3fc99695ad3651addfae1e11db611764fee34d9b3",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -2911,18 +2911,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:03:03.506Z"
+      "capturedAt": "2026-07-27T00:05:24.714Z"
     },
     {
       "themeId": "northeast-snow-train",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/northeast-snow-train-light.png",
-      "sha256": "fcdbe2980b95aa89f926abe34f873bb6b02331181f09d5111a9393a41d8bed46",
-      "bytes": 1128705,
+      "sha256": "918972412db889f837a9d2ec30bc22394f01bd1bb91285a8f279048cb740b2f5",
+      "bytes": 1115332,
       "width": 1440,
       "height": 810,
-      "assetSha256": "3378959e031a137ef15dce8b0c6781adcafc4425d7f0c6f4b855a74887a6e7aa",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "1cbbe6508879b17b4b0fcf4bdf8b24f13cd2480625a68b737eab88293f1b0188",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -2938,18 +2938,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:03:05.071Z"
+      "capturedAt": "2026-07-27T00:05:26.143Z"
     },
     {
       "themeId": "northeast-snow-train",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/northeast-snow-train-dark.png",
-      "sha256": "ea691b0fbca294d70d068ad4f05d5e4df3c896389343f48de394225f6e37e89b",
-      "bytes": 874053,
+      "sha256": "86198e275ef145c49810e07ccefb5ece2b335be6e94b69dbb0ef0248feeccdc2",
+      "bytes": 863264,
       "width": 1440,
       "height": 810,
-      "assetSha256": "763b9bc9bb97063483e45e6f4505fee5024f03359563fd47c724ae4421714a1e",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "bf9dc5b03b14c09906e26f695bb3ecfd5852f80d9a0b1454f97649aed9501f9e",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -2965,18 +2965,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-21T09:03:06.357Z"
+      "capturedAt": "2026-07-27T00:05:27.357Z"
     },
     {
       "themeId": "appalachian-cabin-focus",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/appalachian-cabin-focus-light.png",
-      "sha256": "eb1aa0eca678b34b5e442625092729d57e98a9ceb9e8204b592bbe2fd8d18633",
-      "bytes": 1128252,
+      "sha256": "cb3fdfb11eb4c4ed7d634038e082b382e2acac2848e4bf0f56fdafb623d26c4e",
+      "bytes": 1121982,
       "width": 1440,
       "height": 810,
-      "assetSha256": "554ce7102b6fb3ffe126cca0c575efe6986ba76e19cd817678e50a24a169da3d",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "d84a096f32bbdedd7fbeec555563bee953930f5ea96a9f0b79b8cdfca3c9be5e",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -2992,18 +2992,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-22T01:25:56.134Z"
+      "capturedAt": "2026-07-27T00:05:28.827Z"
     },
     {
       "themeId": "appalachian-cabin-focus",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/appalachian-cabin-focus-dark.png",
-      "sha256": "15e87bc183af088781557ef51dfcad702563b2d1de369272eea8fa64709e0070",
-      "bytes": 869784,
+      "sha256": "af46bc922039e34b6ade632d48787565cd5b334d95d52b8619f2ae3f5da3ff7f",
+      "bytes": 864838,
       "width": 1440,
       "height": 810,
-      "assetSha256": "c8a13885b009217eaa5ac8c9d6b45e546d7fec79f9e6d539ee2b55787032529d",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "0e7fa3f4812ea036f55b22f14a495c0c897a526e334b6b82923db34b00743b7f",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -3019,18 +3019,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-22T01:25:57.475Z"
+      "capturedAt": "2026-07-27T00:05:30.091Z"
     },
     {
       "themeId": "cloud-forge-quiet",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/cloud-forge-quiet-light.png",
-      "sha256": "3c5e1e6b8aafa7fa50eb6acb4e8b2de007622e657d84bbfd7854ed56b92d9a06",
-      "bytes": 1243432,
+      "sha256": "fdf9111fc3aa286d08798a1f038b1d357e40b1031fe27db20a9152488fbd3c56",
+      "bytes": 1243004,
       "width": 1440,
       "height": 810,
-      "assetSha256": "2f6b4b02e3fc18d32ad7166fdec990f8f53eb5cd065d8d139e26532c6421f80b",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "f279402138f5d21b5ff2ab4c32c298d2c3f3302aaea96f673a936f5dbeed526c",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -3046,18 +3046,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-22T01:25:59.204Z"
+      "capturedAt": "2026-07-27T00:05:31.562Z"
     },
     {
       "themeId": "cloud-forge-quiet",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/cloud-forge-quiet-dark.png",
-      "sha256": "e0628c423f483586dd5848fdd40eb8e95f294f1f1ff305a298cf5fa70cb4d593",
-      "bytes": 979169,
+      "sha256": "e4b69f861da947b6cad950d1d403b65a0c8c1e1e0ba39acacdcff967bcf57770",
+      "bytes": 979742,
       "width": 1440,
       "height": 810,
-      "assetSha256": "154c30f82f4f354dca85c513407b774a66828b78dc3d1b2ee3287c8b2904d7af",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "d0d89136ff34c9b79b43f89a4934f3b3caf1f337ebaae896ce368e7b09294828",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -3073,18 +3073,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-22T01:26:00.646Z"
+      "capturedAt": "2026-07-27T00:05:32.864Z"
     },
     {
       "themeId": "coastal-studio-morning",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/coastal-studio-morning-light.png",
-      "sha256": "97454ea4d85cd58b7e61fe566685e62eca00f774512df4d0f9efc9f533a10440",
-      "bytes": 971687,
+      "sha256": "46007c297fba2a59d4470e56c50e01b81259177201563daa99da797faae4dc24",
+      "bytes": 957484,
       "width": 1440,
       "height": 810,
-      "assetSha256": "ae94969744ac025a4a46a4d2915f679c36fb4d8185f6bebba5dc1d366e1ddeb5",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "c82d102bdaa50660641dc5ed4df63cc2dade78b4be49e2435773390c74642662",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -3100,18 +3100,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-22T01:26:02.092Z"
+      "capturedAt": "2026-07-27T00:05:34.207Z"
     },
     {
       "themeId": "coastal-studio-morning",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/coastal-studio-morning-dark.png",
-      "sha256": "f6697c100943fcd1198ad078f3a8f61dc7e99f72970b1add13ac6836bd52f1e5",
-      "bytes": 734231,
+      "sha256": "8db28d99019aad1fa812fb0598e54e39b3b25b1f56556a00e9500f9d001e118d",
+      "bytes": 723777,
       "width": 1440,
       "height": 810,
-      "assetSha256": "ef62da0c88047b60cb3b690ca1b2abcebc71b5ddd33a71c6209afacbd40cc349",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "2555c2c21b3a616daa2b98df65527cbc3cc0fb347c5c814bee913d1dc4467d85",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -3127,18 +3127,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-22T01:26:03.339Z"
+      "capturedAt": "2026-07-27T00:05:35.397Z"
     },
     {
       "themeId": "desert-observatory-night",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/desert-observatory-night-light.png",
-      "sha256": "3ed589f6e6dfca16ef8c4b6975625367f10c4d8d46fc81210355c8819159d041",
-      "bytes": 942045,
+      "sha256": "933a4b7bb896c5e3eda0456257994cd98f59eaa24b3938173ba1d408a4127639",
+      "bytes": 925873,
       "width": 1440,
       "height": 810,
-      "assetSha256": "5f4a231217e9cc83a641872f444a97877ced50d82adcfbef4184092758273ce0",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "8bd2296debdb124f879ffdc234051785a162540635a13e4192a90b4d9dc89d7e",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -3154,18 +3154,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-22T01:26:04.698Z"
+      "capturedAt": "2026-07-27T00:05:36.800Z"
     },
     {
       "themeId": "desert-observatory-night",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/desert-observatory-night-dark.png",
-      "sha256": "22433f9095121fcf9590a3b738ae65597f89a50827bd4c2aae19cd7bb4b7b891",
-      "bytes": 696707,
+      "sha256": "f4fcdf2f485add9e7da9a3c7fc2e284c3cea3fdf721de7381ad443a8629b8ba5",
+      "bytes": 680160,
       "width": 1440,
       "height": 810,
-      "assetSha256": "fac3add6265a038f44ba4efa7838509b449108aec97abfca82206146eb4f4d4b",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "df53cebc0fcb4d6200b955ac7d75992e9a47ce2395d4697dc32d64bc79abf6cc",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -3181,18 +3181,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-22T01:26:06.034Z"
+      "capturedAt": "2026-07-27T00:05:37.988Z"
     },
     {
       "themeId": "firefly-river-pact",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/firefly-river-pact-light.png",
-      "sha256": "1054a6d6a47f6b20ae156100e1d441752ec582feaae6854cd0cbc340dd5e4f9c",
-      "bytes": 1115877,
+      "sha256": "e5dfdcaa1dea111b65646a339623ebc28c0102171bfe23828ccfa8badea83652",
+      "bytes": 1115983,
       "width": 1440,
       "height": 810,
-      "assetSha256": "4491c9d6e04ca92434e87fe128a0b56830a056d41603f5a5c2c4b37e6a496efd",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "bb2a4784b1fd4e65e1896a09a6de3451ed1ed253df4b9d7030ca585290a45907",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -3208,18 +3208,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-22T01:26:07.560Z"
+      "capturedAt": "2026-07-27T00:05:39.556Z"
     },
     {
       "themeId": "firefly-river-pact",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/firefly-river-pact-dark.png",
-      "sha256": "18cf2160c7265e8798a6cb493bfd58d96d816d2b1b1bd507abe383594532070c",
-      "bytes": 856653,
+      "sha256": "2576410a6e64eda4d89b1e7ae11c182d09de78ec94612e6a22b6bac1546eeba5",
+      "bytes": 857566,
       "width": 1440,
       "height": 810,
-      "assetSha256": "ea6f971f54203a20727ff30fa9cd8bca8d67423b10666d37cf297e95a93c017f",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "d67355b36e32f0bbcf961c4cc14c39ba2bb67aed15d491314caf9911076ff0bb",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -3235,18 +3235,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-22T01:26:08.924Z"
+      "capturedAt": "2026-07-27T00:05:40.885Z"
     },
     {
       "themeId": "great-lakes-rainroom",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/great-lakes-rainroom-light.png",
-      "sha256": "682e0b1c6b380fc7f46ce4c6a7008ac917e55f9fafc2cc94961a33b824783cb9",
-      "bytes": 1102529,
+      "sha256": "8f986d152b4f70363fc4a58284eaff9c2b5687f47f5b684f53ce8dd5657bf5ab",
+      "bytes": 1106098,
       "width": 1440,
       "height": 810,
-      "assetSha256": "70a6f0de59418fbd7700a8e236df14611f1e4ed3105ed82640c561dbd2b33749",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "7261ac960faebc13822b2e8db2d11430a8e1cc2d429e262865c2095553ec7f2d",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -3262,18 +3262,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-22T01:26:10.441Z"
+      "capturedAt": "2026-07-27T00:05:42.375Z"
     },
     {
       "themeId": "great-lakes-rainroom",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/great-lakes-rainroom-dark.png",
-      "sha256": "cd08c5c337dfb5951c2685655912212052e975cfcfa800e90e79323ca6ff6a05",
-      "bytes": 852793,
+      "sha256": "f83dae5cbf95c19a40bf2910bd63f357648265a2e2123d34461c780c192ab3cf",
+      "bytes": 852227,
       "width": 1440,
       "height": 810,
-      "assetSha256": "42ff756f1efe80e2c9fcae9f7cb2432c61e7fc71951348404a368939d8be510a",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "c07b3df9cff8b0e52907020e23b0287c271665a8de9630cea5b99508cd5a198c",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -3289,18 +3289,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-22T01:26:11.812Z"
+      "capturedAt": "2026-07-27T00:05:43.656Z"
     },
     {
       "themeId": "jade-archive-dawn",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/jade-archive-dawn-light.png",
-      "sha256": "3860051471988a7b34043b8f4db45711fa36c9cff0c6c22ceefb210c059de7c3",
-      "bytes": 1186170,
+      "sha256": "a9ca65544128e9d391da5b4cfa522f6bfcfd939e5e97cc681b0233ca2b85cdbc",
+      "bytes": 1179473,
       "width": 1440,
       "height": 810,
-      "assetSha256": "f6a0a8b0522bad1ebb2a142243afff34ed38940b9fdba85f8df0b6a8942abd14",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "aa9cb675b1d5ab0b828bd7647538a5990e7f2370aa43225b98de2e24cbe47a7c",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -3316,18 +3316,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-22T01:26:13.419Z"
+      "capturedAt": "2026-07-27T00:05:45.097Z"
     },
     {
       "themeId": "jade-archive-dawn",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/jade-archive-dawn-dark.png",
-      "sha256": "1a2dadf357fae269995c277fc568ed70c06ce32f562c854ab7137311a0a5e41f",
-      "bytes": 910046,
+      "sha256": "99f8b3f07371152232ad3ed5dfb2af80fec6a22d208a516910c48365b1f0354d",
+      "bytes": 907402,
       "width": 1440,
       "height": 810,
-      "assetSha256": "3c9a5ddc2966c93e14499d653e9a85e3a5b2bbc69aebfc5f780a0b6ff21e1caf",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "84727d33efeeb10ef61707d261c5498cd6770f637dff33c377f5f0c96d4d8a62",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -3343,18 +3343,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-22T01:26:14.866Z"
+      "capturedAt": "2026-07-27T00:05:46.413Z"
     },
     {
       "themeId": "late-diner-afterhours",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/late-diner-afterhours-light.png",
-      "sha256": "ef71fa7ee86b14c3784a6af18c390be02b6422e81b1f0729938dd1b298d1eda4",
-      "bytes": 989634,
+      "sha256": "7c9615fb62a1852153bbe165bff0b806b4e180dd7b599354dda2a1b587ba26fc",
+      "bytes": 995002,
       "width": 1440,
       "height": 810,
-      "assetSha256": "755cfb845c00416ff4bce77e14f6b83d2da2bf5a1a0693cff959175fc61dbdb5",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "bd8e69544771498ea02cc4d40cc6f88e9432d3a0453cee617aed3d14b02c7756",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -3370,18 +3370,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-22T01:26:16.559Z"
+      "capturedAt": "2026-07-27T00:05:47.752Z"
     },
     {
       "themeId": "late-diner-afterhours",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/late-diner-afterhours-dark.png",
-      "sha256": "0af98ae28349f4ffcbf4d06dbee21e41402a93fd05d4e3d20e8f23b00f9b35be",
-      "bytes": 729537,
+      "sha256": "064eabb076bd8eaff154f77e82796f96867e3b5bfcf7dda95f0b99931e2e8983",
+      "bytes": 735236,
       "width": 1440,
       "height": 810,
-      "assetSha256": "16fa78b74c84c2173e9042dddb741912c1a6b4013ee36afbfe9cd7b3b2095484",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "1fe1855b8528d781966090dedb9d2f30851245c103a25319e85e5474f6070dc5",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -3397,18 +3397,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-22T01:26:18.040Z"
+      "capturedAt": "2026-07-27T00:05:48.901Z"
     },
     {
       "themeId": "mortal-bamboo-thunder",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/mortal-bamboo-thunder-light.png",
-      "sha256": "e97176cf958e783213e5919e95293d39c3db5d9877ca5a16eff4c39bca8d9fdd",
-      "bytes": 1155203,
+      "sha256": "8678df54289942600b4e4b9b57093732c92741c33c2e4abe4b77c3c06ce0b67c",
+      "bytes": 1150467,
       "width": 1440,
       "height": 810,
-      "assetSha256": "165c687e9b5e9ef9aef1d1cc41a422e16c6294006a85b6a1e67bd2d52375b9ff",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "61908a16b93ec737bccec17c62bf1e7713c501a68d09f67eecfbe68014167966",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -3424,18 +3424,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-22T01:26:19.862Z"
+      "capturedAt": "2026-07-27T00:05:50.325Z"
     },
     {
       "themeId": "mortal-bamboo-thunder",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/mortal-bamboo-thunder-dark.png",
-      "sha256": "5129a546ec3813d280cf3bd90923fc9226be84a1c74f1fc65dc36cc77421c071",
-      "bytes": 887029,
+      "sha256": "833e2118f6f76d69bfb56dd3fa9b594ed3da7189f3f030242d603f48b204b76d",
+      "bytes": 881238,
       "width": 1440,
       "height": 810,
-      "assetSha256": "e7bea57a0f208b440122326591ee2baea483b63f8e453d2e37eed6f931a532c9",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "7311f69b08e59a2265d3afce382478718c6e0ea4bb6be4137ef6c80fc2f53073",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -3451,18 +3451,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-22T01:26:21.384Z"
+      "capturedAt": "2026-07-27T00:05:51.608Z"
     },
     {
       "themeId": "mortal-herb-lantern",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/mortal-herb-lantern-light.png",
-      "sha256": "54e530ccd0917ead15fc2e1db1101bc414e03f821c984af0ec64187551a2d906",
-      "bytes": 1255884,
+      "sha256": "f80a243d0242081ec46b728b5759a50393db8a7e31d41b4f58673ea635a6f4a9",
+      "bytes": 1261857,
       "width": 1440,
       "height": 810,
-      "assetSha256": "853919ddf40b92dbb1f0bc45bcb620df02b7fc802dd41e5a7dfbbaeb870431a2",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "f8535a8ea63885aff1df97f648241b4a0ed69456d4d631ae623e37d4b0c8d500",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -3478,18 +3478,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-22T01:26:23.246Z"
+      "capturedAt": "2026-07-27T00:05:53.127Z"
     },
     {
       "themeId": "mortal-herb-lantern",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/mortal-herb-lantern-dark.png",
-      "sha256": "e141f96d57f82fdd0c0257088e3e8d30361da42e7293d262fe9e4ac5568c072f",
-      "bytes": 964769,
+      "sha256": "137bb0ac40120a713e7e41fd4e73cf8fed3f70be2e1f2c8e5f14690ed5c66214",
+      "bytes": 970832,
       "width": 1440,
       "height": 810,
-      "assetSha256": "56e88c16ec239023b55145e36ddc8e9fcc66f1e29d971597d0ea803eb2ed7fa9",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "53b05c9cdfbd8109f8a96e2382b7a9ff2ff0627f6e533b11de97976b1ac91bd8",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -3505,18 +3505,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-22T01:26:24.806Z"
+      "capturedAt": "2026-07-27T00:05:54.471Z"
     },
     {
       "themeId": "mortal-moon-market",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/mortal-moon-market-light.png",
-      "sha256": "ff509a3f4fb0ed92aaf87622c4b6dd36ac96e0ed97a7f831c71d1ffc1a2a5565",
-      "bytes": 1046316,
+      "sha256": "02fb3b4772a0a063860ec9f406d65058ad7be2797f3d318172a331bf0184d338",
+      "bytes": 1048906,
       "width": 1440,
       "height": 810,
-      "assetSha256": "7be713c0d184aae819ef97e4b675e8053849b119ecbe050d213cce46088afde4",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "39ea437e9cf454cfd8b08ae86b638285935028281b16fbc8634bae2dc7c0f90a",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -3532,18 +3532,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-22T01:26:26.683Z"
+      "capturedAt": "2026-07-27T00:05:55.886Z"
     },
     {
       "themeId": "mortal-moon-market",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/mortal-moon-market-dark.png",
-      "sha256": "5e5e3c57262e45ea362054f804374607b11da4fada6b27028d3f88bbdd3bc891",
-      "bytes": 786647,
+      "sha256": "0960e8b14089ee54ecb2e3bc0463ff6875bffc9d32a71648258e2ce5e7df1d14",
+      "bytes": 790897,
       "width": 1440,
       "height": 810,
-      "assetSha256": "3a4139cbda3a64d5fb08edcaa9117d8661bd2df1fe93777c135eb4e8a03719a9",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "f170f00547865d97abeb62b52b0fc1de88747ca1143bbd9ab639334d6cbdddd6",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -3559,18 +3559,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-22T01:26:28.231Z"
+      "capturedAt": "2026-07-27T00:05:57.064Z"
     },
     {
       "themeId": "mortal-river-ferry",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/mortal-river-ferry-light.png",
-      "sha256": "8d751f4d61335b742ea092fb6810cd9ca766a4d0d145d24752326ec9830bee4a",
-      "bytes": 1054480,
+      "sha256": "a2f146e0b629d3a322a329527765533f07d30dc934408738a876ce340f6d226c",
+      "bytes": 1055816,
       "width": 1440,
       "height": 810,
       "assetSha256": "2fbb550967c59dd0e87f21b602d21fff5bb776446c3af2292fcdc13c582a13a9",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -3586,18 +3586,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-22T01:26:29.896Z"
+      "capturedAt": "2026-07-27T00:05:58.470Z"
     },
     {
       "themeId": "mortal-river-ferry",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/mortal-river-ferry-dark.png",
-      "sha256": "105b152dde721312fd39a05150930592ce5f90bacd9a955563b11ad746c39d8e",
-      "bytes": 801450,
+      "sha256": "ee0aaadc7121cbc0f892b571505efdc19c2666f6877824aab79aea6185590097",
+      "bytes": 803180,
       "width": 1440,
       "height": 810,
       "assetSha256": "a61c2e91e413c357ff12fc240213869211b69efa7c32a14355b4d1f7c96f2221",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -3613,18 +3613,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-22T01:26:31.414Z"
+      "capturedAt": "2026-07-27T00:05:59.700Z"
     },
     {
       "themeId": "mortal-talisman-rain",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/mortal-talisman-rain-light.png",
-      "sha256": "fcf760fb12a8f2097ac717f1d2e2ced39a3d982a066d4747c4e51cedf3ac9ebb",
-      "bytes": 1247385,
+      "sha256": "11f6b7816840bacd12a8fe38c1e1d70313594fa2eb6622c543f0f8c9fa6dfe69",
+      "bytes": 1242647,
       "width": 1440,
       "height": 810,
-      "assetSha256": "166331ed5945870d3b6979f41a320bd64bfa1fed97fcfe117d78a6cf5a751699",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "fa9366f0d0bd9a0b0a0d70065bd2837070a2865aeb7b61f3f4af4cb30b3e62c9",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -3640,18 +3640,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-22T01:26:33.372Z"
+      "capturedAt": "2026-07-27T00:06:01.155Z"
     },
     {
       "themeId": "mortal-talisman-rain",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/mortal-talisman-rain-dark.png",
-      "sha256": "c71a696c3de8463b3c01f1ec09539dc7fe71a6385cac9f1de4a5d15cac21f5b6",
-      "bytes": 965081,
+      "sha256": "8872bb61e46fdf2761ad5d439a1cc721696cd5563fda5ed90a30b59ed270e477",
+      "bytes": 962060,
       "width": 1440,
       "height": 810,
-      "assetSha256": "474402fc2c69009b8161d1127ae94fe54da6025b7c8b710cf7d87c5e782935c0",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "51ff7e5bd57f41108330ea71a4ae24eacee029c6533acbea3c0993668ae41a90",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -3667,18 +3667,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-22T01:26:35.097Z"
+      "capturedAt": "2026-07-27T00:06:02.444Z"
     },
     {
       "themeId": "plum-sword-snow",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/plum-sword-snow-light.png",
-      "sha256": "feefcabf963c718b1fa66b66db98d34cfd73ce58fa7eb60e5da1e5816b2f4436",
-      "bytes": 1158291,
+      "sha256": "bde45eed917666051aa09fef405b19b5ebc1b380be752a565ecb2d67bab20321",
+      "bytes": 1144956,
       "width": 1440,
       "height": 810,
-      "assetSha256": "a00939da53fad5e926fee6dec22301e41913c35483d86b98e00ee1dfd7a0c253",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "f185f4f918091bc2e2fedfd484674afc8918eb8d46d735bfe0315c003fb0c411",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -3694,18 +3694,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-22T01:26:37.137Z"
+      "capturedAt": "2026-07-27T00:06:03.835Z"
     },
     {
       "themeId": "plum-sword-snow",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/plum-sword-snow-dark.png",
-      "sha256": "e7a0aa565fb1330965361163f55bd04291a9d096f39f25f3654b59cd94a983f1",
-      "bytes": 907427,
+      "sha256": "574d9c1a06982b8204e7f2b9109d097bed8d54ef96e87cf8e2a26ae4515471cd",
+      "bytes": 893276,
       "width": 1440,
       "height": 810,
-      "assetSha256": "685fac12fe7ce4926d3a2d8d264a7558be7ce3a2551e48354dcfd8598d861dc1",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "0df58a57309f36284958e145568ccb2c28bb60a757dff4becde408dc8f4d69ee",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -3721,18 +3721,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-22T01:26:38.760Z"
+      "capturedAt": "2026-07-27T00:06:05.042Z"
     },
     {
       "themeId": "sky-garden-herbarium",
       "mode": "light",
       "path": "screenshots/codex-beta-26.715.3651.0/sky-garden-herbarium-light.png",
-      "sha256": "28ceb74fc5299e9c62754ee44d05c8dd26d2883968137fc976790a7133774f2d",
-      "bytes": 1304979,
+      "sha256": "29a9b53500f39d3c58f6f0b8973ac2fcb11400a5ce45a46a26d62a54c131bad9",
+      "bytes": 1281992,
       "width": 1440,
       "height": 810,
-      "assetSha256": "b84ecb6e0257ae1b6a68de2616c81541b5193b61933010173bedbeb7af1cdcab",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "0e6c626a7d127ed6295df36738ec928c8d1821ff911cba1ff2e7e12c308dc4d1",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -3748,18 +3748,18 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-22T01:26:41.333Z"
+      "capturedAt": "2026-07-27T00:06:06.502Z"
     },
     {
       "themeId": "sky-garden-herbarium",
       "mode": "dark",
       "path": "screenshots/codex-beta-26.715.3651.0/sky-garden-herbarium-dark.png",
-      "sha256": "e826a72c060ea66c3bf82383b7de1247fbefd731c14147217c9e103a6f8ceadd",
-      "bytes": 1036960,
+      "sha256": "bb1ffb650455c372e6744baae93c962f7731e647745cf034439ce775d425b92f",
+      "bytes": 1017090,
       "width": 1440,
       "height": 810,
-      "assetSha256": "4f27c3a705eff25c5a0ef7f364ba5ef5353954a22f49debc2dd8ea1c7ae29469",
-      "runtimeSha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+      "assetSha256": "982dc615d5c4b2ed5cb96ccb2b7ad4f5475a776d893210c7596ebf76017a7dd7",
+      "runtimeSha256": "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
       "markerVersion": "act-full-skin-v1",
       "implementationVersion": "act-full-skin-runtime-v2",
       "selectors": {
@@ -3775,7 +3775,7 @@
         "documentBackground": true
       },
       "modelLabel": "5.6 Sol Max",
-      "capturedAt": "2026-07-22T01:26:43.214Z"
+      "capturedAt": "2026-07-27T00:06:07.843Z"
     }
   ]
 }

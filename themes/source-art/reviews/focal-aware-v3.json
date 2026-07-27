@@ -1,0 +1,1302 @@
+{
+  "schemaVersion": 1,
+  "reviewId": "act-focal-aware-v3-2026-07-26",
+  "reviewedAt": "2026-07-26",
+  "renderer": {
+    "before": "act-source-art-renderer-v2",
+    "after": "act-source-art-renderer-v3"
+  },
+  "tileLayout": {
+    "columns": 3,
+    "tileSize": {
+      "width": 144,
+      "height": 81
+    },
+    "order": [
+      "legacy-light",
+      "focal-light",
+      "legacy-dark",
+      "focal-dark"
+    ],
+    "focalFrame": "green",
+    "legacyFrame": "gray"
+  },
+  "contactSheets": [
+    {
+      "path": "docs/assets/source-art-review/focal-aware-v3-01.png",
+      "sha256": "5fac6cf51788c9a697ed669708bd6889382526b3e947452f5fb683f9904c7d91",
+      "bytes": 1528540,
+      "themeIds": [
+        "qinglan-odyssey",
+        "qinglan-sprite",
+        "starbound-rebel",
+        "starbound-sprite",
+        "mountain-sword",
+        "mountain-swordling",
+        "cloudsea-pact",
+        "cloudsea-mochi",
+        "beijing-meridian",
+        "shanghai-afterglow",
+        "shenzhen-circuit-rain",
+        "guangzhou-riverwind",
+        "chengdu-teahouse-rain",
+        "hangzhou-lake-letter",
+        "chongqing-vertical-night",
+        "nanjing-wall-plum",
+        "new-york-rainline",
+        "san-francisco-fogline"
+      ]
+    },
+    {
+      "path": "docs/assets/source-art-review/focal-aware-v3-02.png",
+      "sha256": "cbfd27a4a5a0c1e960ed940478653339d4befe92d669a1713fe348d670117a28",
+      "bytes": 1492983,
+      "themeIds": [
+        "chicago-lakewind",
+        "toronto-blue-hour",
+        "vancouver-rain-harbour",
+        "london-rainlight",
+        "paris-rooftop-dawn",
+        "berlin-night-grid",
+        "rome-terrace-gold",
+        "tokyo-rain-signal",
+        "singapore-garden-rain",
+        "sydney-harbour-morning",
+        "mortal-journey-duo",
+        "mortal-journey-chibi",
+        "renegade-immortal-duo",
+        "renegade-immortal-chibi",
+        "sword-of-coming-duo",
+        "sword-of-coming-chibi",
+        "battle-through-duo",
+        "battle-through-chibi"
+      ]
+    },
+    {
+      "path": "docs/assets/source-art-review/focal-aware-v3-03.png",
+      "sha256": "c0290c0df52bf6ba83f03107d865ac1e545820128d33060c82f8889505d44426",
+      "bytes": 1628573,
+      "themeIds": [
+        "mortal-void-hall",
+        "renegade-wedding-storm",
+        "sword-confession-alley",
+        "battle-three-year-pact",
+        "tibo-reset-saint",
+        "tibo-reset-immortal",
+        "retro-boss-2007",
+        "rainy-library",
+        "orbital-dawn",
+        "deep-ocean-lab",
+        "synthwave-night-drive",
+        "alpine-cabin-code",
+        "jiangnan-rain-courtyard",
+        "changan-lanterns",
+        "dunhuang-starlight",
+        "bamboo-tea-rain",
+        "northeast-snow-train",
+        "appalachian-cabin-focus"
+      ]
+    },
+    {
+      "path": "docs/assets/source-art-review/focal-aware-v3-04.png",
+      "sha256": "388faf7aec5482f0f84002530c0bdc347ac2f5a99b11bd27267e62ad95b10713",
+      "bytes": 1223824,
+      "themeIds": [
+        "cloud-forge-quiet",
+        "coastal-studio-morning",
+        "desert-observatory-night",
+        "firefly-river-pact",
+        "great-lakes-rainroom",
+        "jade-archive-dawn",
+        "late-diner-afterhours",
+        "mortal-bamboo-thunder",
+        "mortal-herb-lantern",
+        "mortal-moon-market",
+        "mortal-river-ferry",
+        "mortal-talisman-rain",
+        "plum-sword-snow",
+        "sky-garden-herbarium"
+      ]
+    }
+  ],
+  "fixtureSheet": {
+    "path": "docs/assets/source-art-review/focal-aware-v3-fixtures.png",
+    "sha256": "e248b4cc6391bdf864dcf6501d65d89887e553d9de4caaf87e2ccc4c4fb19f53",
+    "bytes": 130230,
+    "themeId": "qinglan-odyssey",
+    "order": {
+      "rows": [
+        "left",
+        "right",
+        "center",
+        "none"
+      ],
+      "columns": [
+        "home",
+        "task",
+        "diff",
+        "settings",
+        "dialog",
+        "composer"
+      ]
+    }
+  },
+  "decisions": [
+    {
+      "themeId": "qinglan-odyssey",
+      "decision": "approved",
+      "focus": {
+        "x": 0.76,
+        "y": 0.42
+      },
+      "safeArea": "left",
+      "crop": {
+        "cropX": 0,
+        "cropY": 0,
+        "cropWidth": 1536,
+        "cropHeight": 864,
+        "focusX": 0.76,
+        "focusY": 0.42
+      }
+    },
+    {
+      "themeId": "qinglan-sprite",
+      "decision": "approved",
+      "focus": {
+        "x": 0.78,
+        "y": 0.56
+      },
+      "safeArea": "left",
+      "crop": {
+        "cropX": 0,
+        "cropY": 141.44000000000005,
+        "cropWidth": 1536,
+        "cropHeight": 864,
+        "focusX": 0.78,
+        "focusY": 0.56
+      }
+    },
+    {
+      "themeId": "starbound-rebel",
+      "decision": "approved",
+      "focus": {
+        "x": 0.76,
+        "y": 0.4
+      },
+      "safeArea": "left",
+      "crop": {
+        "cropX": 0,
+        "cropY": 0,
+        "cropWidth": 1536,
+        "cropHeight": 864,
+        "focusX": 0.76,
+        "focusY": 0.4
+      }
+    },
+    {
+      "themeId": "starbound-sprite",
+      "decision": "approved",
+      "focus": {
+        "x": 0.79,
+        "y": 0.54
+      },
+      "safeArea": "left",
+      "crop": {
+        "cropX": 0,
+        "cropY": 120.96000000000004,
+        "cropWidth": 1536,
+        "cropHeight": 864,
+        "focusX": 0.79,
+        "focusY": 0.54
+      }
+    },
+    {
+      "themeId": "mountain-sword",
+      "decision": "approved",
+      "focus": {
+        "x": 0.75,
+        "y": 0.44
+      },
+      "safeArea": "left",
+      "crop": {
+        "cropX": 0,
+        "cropY": 18.560000000000002,
+        "cropWidth": 1536,
+        "cropHeight": 864,
+        "focusX": 0.75,
+        "focusY": 0.44
+      }
+    },
+    {
+      "themeId": "mountain-swordling",
+      "decision": "approved",
+      "focus": {
+        "x": 0.79,
+        "y": 0.58
+      },
+      "safeArea": "left",
+      "crop": {
+        "cropX": 0,
+        "cropY": 160,
+        "cropWidth": 1536,
+        "cropHeight": 864,
+        "focusX": 0.79,
+        "focusY": 0.58
+      }
+    },
+    {
+      "themeId": "cloudsea-pact",
+      "decision": "approved",
+      "focus": {
+        "x": 0.74,
+        "y": 0.42
+      },
+      "safeArea": "left",
+      "crop": {
+        "cropX": 0,
+        "cropY": 0,
+        "cropWidth": 1536,
+        "cropHeight": 864,
+        "focusX": 0.74,
+        "focusY": 0.42
+      }
+    },
+    {
+      "themeId": "cloudsea-mochi",
+      "decision": "approved",
+      "focus": {
+        "x": 0.8,
+        "y": 0.57
+      },
+      "safeArea": "left",
+      "crop": {
+        "cropX": 0,
+        "cropY": 151.67999999999995,
+        "cropWidth": 1536,
+        "cropHeight": 864,
+        "focusX": 0.8,
+        "focusY": 0.57
+      }
+    },
+    {
+      "themeId": "beijing-meridian",
+      "decision": "approved",
+      "focus": {
+        "x": 0.76,
+        "y": 0.43
+      },
+      "safeArea": "left",
+      "crop": {
+        "cropX": 0,
+        "cropY": 8.319999999999993,
+        "cropWidth": 1536,
+        "cropHeight": 864,
+        "focusX": 0.76,
+        "focusY": 0.43
+      }
+    },
+    {
+      "themeId": "shanghai-afterglow",
+      "decision": "approved",
+      "focus": {
+        "x": 0.78,
+        "y": 0.45
+      },
+      "safeArea": "left",
+      "crop": {
+        "cropX": 0,
+        "cropY": 28.80000000000001,
+        "cropWidth": 1536,
+        "cropHeight": 864,
+        "focusX": 0.78,
+        "focusY": 0.45
+      }
+    },
+    {
+      "themeId": "shenzhen-circuit-rain",
+      "decision": "approved",
+      "focus": {
+        "x": 0.77,
+        "y": 0.44
+      },
+      "safeArea": "left",
+      "crop": {
+        "cropX": 0,
+        "cropY": 18.560000000000002,
+        "cropWidth": 1536,
+        "cropHeight": 864,
+        "focusX": 0.77,
+        "focusY": 0.44
+      }
+    },
+    {
+      "themeId": "guangzhou-riverwind",
+      "decision": "approved",
+      "focus": {
+        "x": 0.79,
+        "y": 0.47
+      },
+      "safeArea": "left",
+      "crop": {
+        "cropX": 0,
+        "cropY": 49.27999999999997,
+        "cropWidth": 1536,
+        "cropHeight": 864,
+        "focusX": 0.79,
+        "focusY": 0.47
+      }
+    },
+    {
+      "themeId": "chengdu-teahouse-rain",
+      "decision": "approved",
+      "focus": {
+        "x": 0.78,
+        "y": 0.48
+      },
+      "safeArea": "left",
+      "crop": {
+        "cropX": 0,
+        "cropY": 59.51999999999998,
+        "cropWidth": 1536,
+        "cropHeight": 864,
+        "focusX": 0.78,
+        "focusY": 0.48
+      }
+    },
+    {
+      "themeId": "hangzhou-lake-letter",
+      "decision": "approved",
+      "focus": {
+        "x": 0.77,
+        "y": 0.44
+      },
+      "safeArea": "left",
+      "crop": {
+        "cropX": 0,
+        "cropY": 18.560000000000002,
+        "cropWidth": 1536,
+        "cropHeight": 864,
+        "focusX": 0.77,
+        "focusY": 0.44
+      }
+    },
+    {
+      "themeId": "chongqing-vertical-night",
+      "decision": "approved",
+      "focus": {
+        "x": 0.8,
+        "y": 0.46
+      },
+      "safeArea": "left",
+      "crop": {
+        "cropX": 0,
+        "cropY": 39.04000000000002,
+        "cropWidth": 1536,
+        "cropHeight": 864,
+        "focusX": 0.8,
+        "focusY": 0.46
+      }
+    },
+    {
+      "themeId": "nanjing-wall-plum",
+      "decision": "approved",
+      "focus": {
+        "x": 0.78,
+        "y": 0.45
+      },
+      "safeArea": "left",
+      "crop": {
+        "cropX": 0,
+        "cropY": 28.80000000000001,
+        "cropWidth": 1536,
+        "cropHeight": 864,
+        "focusX": 0.78,
+        "focusY": 0.45
+      }
+    },
+    {
+      "themeId": "new-york-rainline",
+      "decision": "approved",
+      "focus": {
+        "x": 0.79,
+        "y": 0.44
+      },
+      "safeArea": "left",
+      "crop": {
+        "cropX": 0,
+        "cropY": 18.560000000000002,
+        "cropWidth": 1536,
+        "cropHeight": 864,
+        "focusX": 0.79,
+        "focusY": 0.44
+      }
+    },
+    {
+      "themeId": "san-francisco-fogline",
+      "decision": "approved",
+      "focus": {
+        "x": 0.78,
+        "y": 0.43
+      },
+      "safeArea": "left",
+      "crop": {
+        "cropX": 0,
+        "cropY": 8.319999999999993,
+        "cropWidth": 1536,
+        "cropHeight": 864,
+        "focusX": 0.78,
+        "focusY": 0.43
+      }
+    },
+    {
+      "themeId": "chicago-lakewind",
+      "decision": "approved",
+      "focus": {
+        "x": 0.78,
+        "y": 0.43
+      },
+      "safeArea": "left",
+      "crop": {
+        "cropX": 0,
+        "cropY": 8.319999999999993,
+        "cropWidth": 1536,
+        "cropHeight": 864,
+        "focusX": 0.78,
+        "focusY": 0.43
+      }
+    },
+    {
+      "themeId": "toronto-blue-hour",
+      "decision": "approved",
+      "focus": {
+        "x": 0.8,
+        "y": 0.43
+      },
+      "safeArea": "left",
+      "crop": {
+        "cropX": 0,
+        "cropY": 8.319999999999993,
+        "cropWidth": 1536,
+        "cropHeight": 864,
+        "focusX": 0.8,
+        "focusY": 0.43
+      }
+    },
+    {
+      "themeId": "vancouver-rain-harbour",
+      "decision": "approved",
+      "focus": {
+        "x": 0.79,
+        "y": 0.44
+      },
+      "safeArea": "left",
+      "crop": {
+        "cropX": 0,
+        "cropY": 18.560000000000002,
+        "cropWidth": 1536,
+        "cropHeight": 864,
+        "focusX": 0.79,
+        "focusY": 0.44
+      }
+    },
+    {
+      "themeId": "london-rainlight",
+      "decision": "approved",
+      "focus": {
+        "x": 0.8,
+        "y": 0.43
+      },
+      "safeArea": "left",
+      "crop": {
+        "cropX": 0,
+        "cropY": 8.319999999999993,
+        "cropWidth": 1536,
+        "cropHeight": 864,
+        "focusX": 0.8,
+        "focusY": 0.43
+      }
+    },
+    {
+      "themeId": "paris-rooftop-dawn",
+      "decision": "approved",
+      "focus": {
+        "x": 0.79,
+        "y": 0.42
+      },
+      "safeArea": "left",
+      "crop": {
+        "cropX": 0,
+        "cropY": 0,
+        "cropWidth": 1536,
+        "cropHeight": 864,
+        "focusX": 0.79,
+        "focusY": 0.42
+      }
+    },
+    {
+      "themeId": "berlin-night-grid",
+      "decision": "approved",
+      "focus": {
+        "x": 0.8,
+        "y": 0.43
+      },
+      "safeArea": "left",
+      "crop": {
+        "cropX": 0,
+        "cropY": 8.319999999999993,
+        "cropWidth": 1536,
+        "cropHeight": 864,
+        "focusX": 0.8,
+        "focusY": 0.43
+      }
+    },
+    {
+      "themeId": "rome-terrace-gold",
+      "decision": "approved",
+      "focus": {
+        "x": 0.79,
+        "y": 0.42
+      },
+      "safeArea": "left",
+      "crop": {
+        "cropX": 0,
+        "cropY": 0,
+        "cropWidth": 1536,
+        "cropHeight": 864,
+        "focusX": 0.79,
+        "focusY": 0.42
+      }
+    },
+    {
+      "themeId": "tokyo-rain-signal",
+      "decision": "approved",
+      "focus": {
+        "x": 0.8,
+        "y": 0.44
+      },
+      "safeArea": "left",
+      "crop": {
+        "cropX": 0,
+        "cropY": 18.560000000000002,
+        "cropWidth": 1536,
+        "cropHeight": 864,
+        "focusX": 0.8,
+        "focusY": 0.44
+      }
+    },
+    {
+      "themeId": "singapore-garden-rain",
+      "decision": "approved",
+      "focus": {
+        "x": 0.79,
+        "y": 0.43
+      },
+      "safeArea": "left",
+      "crop": {
+        "cropX": 0,
+        "cropY": 8.319999999999993,
+        "cropWidth": 1536,
+        "cropHeight": 864,
+        "focusX": 0.79,
+        "focusY": 0.43
+      }
+    },
+    {
+      "themeId": "sydney-harbour-morning",
+      "decision": "approved",
+      "focus": {
+        "x": 0.8,
+        "y": 0.42
+      },
+      "safeArea": "left",
+      "crop": {
+        "cropX": 0,
+        "cropY": 0,
+        "cropWidth": 1536,
+        "cropHeight": 864,
+        "focusX": 0.8,
+        "focusY": 0.42
+      }
+    },
+    {
+      "themeId": "mortal-journey-duo",
+      "decision": "approved",
+      "focus": {
+        "x": 0.76,
+        "y": 0.46
+      },
+      "safeArea": "left",
+      "crop": {
+        "cropX": 0,
+        "cropY": 39.04000000000002,
+        "cropWidth": 1536,
+        "cropHeight": 864,
+        "focusX": 0.76,
+        "focusY": 0.46
+      }
+    },
+    {
+      "themeId": "mortal-journey-chibi",
+      "decision": "approved",
+      "focus": {
+        "x": 0.77,
+        "y": 0.48
+      },
+      "safeArea": "left",
+      "crop": {
+        "cropX": 0,
+        "cropY": 59.51999999999998,
+        "cropWidth": 1536,
+        "cropHeight": 864,
+        "focusX": 0.77,
+        "focusY": 0.48
+      }
+    },
+    {
+      "themeId": "renegade-immortal-duo",
+      "decision": "approved",
+      "focus": {
+        "x": 0.77,
+        "y": 0.45
+      },
+      "safeArea": "left",
+      "crop": {
+        "cropX": 0,
+        "cropY": 28.80000000000001,
+        "cropWidth": 1536,
+        "cropHeight": 864,
+        "focusX": 0.77,
+        "focusY": 0.45
+      }
+    },
+    {
+      "themeId": "renegade-immortal-chibi",
+      "decision": "approved",
+      "focus": {
+        "x": 0.78,
+        "y": 0.5
+      },
+      "safeArea": "left",
+      "crop": {
+        "cropX": 0,
+        "cropY": 80,
+        "cropWidth": 1536,
+        "cropHeight": 864,
+        "focusX": 0.78,
+        "focusY": 0.5
+      }
+    },
+    {
+      "themeId": "sword-of-coming-duo",
+      "decision": "approved",
+      "focus": {
+        "x": 0.78,
+        "y": 0.46
+      },
+      "safeArea": "left",
+      "crop": {
+        "cropX": 0,
+        "cropY": 39.04000000000002,
+        "cropWidth": 1536,
+        "cropHeight": 864,
+        "focusX": 0.78,
+        "focusY": 0.46
+      }
+    },
+    {
+      "themeId": "sword-of-coming-chibi",
+      "decision": "approved",
+      "focus": {
+        "x": 0.79,
+        "y": 0.5
+      },
+      "safeArea": "left",
+      "crop": {
+        "cropX": 0,
+        "cropY": 80,
+        "cropWidth": 1536,
+        "cropHeight": 864,
+        "focusX": 0.79,
+        "focusY": 0.5
+      }
+    },
+    {
+      "themeId": "battle-through-duo",
+      "decision": "approved",
+      "focus": {
+        "x": 0.77,
+        "y": 0.45
+      },
+      "safeArea": "left",
+      "crop": {
+        "cropX": 0,
+        "cropY": 28.80000000000001,
+        "cropWidth": 1536,
+        "cropHeight": 864,
+        "focusX": 0.77,
+        "focusY": 0.45
+      }
+    },
+    {
+      "themeId": "battle-through-chibi",
+      "decision": "approved",
+      "focus": {
+        "x": 0.78,
+        "y": 0.5
+      },
+      "safeArea": "left",
+      "crop": {
+        "cropX": 0,
+        "cropY": 80,
+        "cropWidth": 1536,
+        "cropHeight": 864,
+        "focusX": 0.78,
+        "focusY": 0.5
+      }
+    },
+    {
+      "themeId": "mortal-void-hall",
+      "decision": "approved",
+      "focus": {
+        "x": 0.78,
+        "y": 0.44
+      },
+      "safeArea": "left",
+      "crop": {
+        "cropX": 0,
+        "cropY": 18.560000000000002,
+        "cropWidth": 1536,
+        "cropHeight": 864,
+        "focusX": 0.78,
+        "focusY": 0.44
+      }
+    },
+    {
+      "themeId": "renegade-wedding-storm",
+      "decision": "approved",
+      "focus": {
+        "x": 0.77,
+        "y": 0.43
+      },
+      "safeArea": "left",
+      "crop": {
+        "cropX": 0,
+        "cropY": 8.319999999999993,
+        "cropWidth": 1536,
+        "cropHeight": 864,
+        "focusX": 0.77,
+        "focusY": 0.43
+      }
+    },
+    {
+      "themeId": "sword-confession-alley",
+      "decision": "approved",
+      "focus": {
+        "x": 0.78,
+        "y": 0.48
+      },
+      "safeArea": "left",
+      "crop": {
+        "cropX": 0,
+        "cropY": 59.51999999999998,
+        "cropWidth": 1536,
+        "cropHeight": 864,
+        "focusX": 0.78,
+        "focusY": 0.48
+      }
+    },
+    {
+      "themeId": "battle-three-year-pact",
+      "decision": "approved",
+      "focus": {
+        "x": 0.77,
+        "y": 0.43
+      },
+      "safeArea": "left",
+      "crop": {
+        "cropX": 0,
+        "cropY": 8.319999999999993,
+        "cropWidth": 1536,
+        "cropHeight": 864,
+        "focusX": 0.77,
+        "focusY": 0.43
+      }
+    },
+    {
+      "themeId": "tibo-reset-saint",
+      "decision": "approved",
+      "focus": {
+        "x": 0.77,
+        "y": 0.45
+      },
+      "safeArea": "left",
+      "crop": {
+        "cropX": 0,
+        "cropY": 28.80000000000001,
+        "cropWidth": 1536,
+        "cropHeight": 864,
+        "focusX": 0.77,
+        "focusY": 0.45
+      }
+    },
+    {
+      "themeId": "tibo-reset-immortal",
+      "decision": "approved",
+      "focus": {
+        "x": 0.76,
+        "y": 0.45
+      },
+      "safeArea": "left",
+      "crop": {
+        "cropX": 0,
+        "cropY": 28.80000000000001,
+        "cropWidth": 1536,
+        "cropHeight": 864,
+        "focusX": 0.76,
+        "focusY": 0.45
+      }
+    },
+    {
+      "themeId": "retro-boss-2007",
+      "decision": "approved",
+      "focus": {
+        "x": 0.78,
+        "y": 0.48
+      },
+      "safeArea": "left",
+      "crop": {
+        "cropX": 0,
+        "cropY": 59.51999999999998,
+        "cropWidth": 1536,
+        "cropHeight": 864,
+        "focusX": 0.78,
+        "focusY": 0.48
+      }
+    },
+    {
+      "themeId": "rainy-library",
+      "decision": "approved",
+      "focus": {
+        "x": 0.78,
+        "y": 0.47
+      },
+      "safeArea": "left",
+      "crop": {
+        "cropX": 0,
+        "cropY": 49.27999999999997,
+        "cropWidth": 1536,
+        "cropHeight": 864,
+        "focusX": 0.78,
+        "focusY": 0.47
+      }
+    },
+    {
+      "themeId": "orbital-dawn",
+      "decision": "approved",
+      "focus": {
+        "x": 0.77,
+        "y": 0.43
+      },
+      "safeArea": "left",
+      "crop": {
+        "cropX": 0,
+        "cropY": 8.319999999999993,
+        "cropWidth": 1536,
+        "cropHeight": 864,
+        "focusX": 0.77,
+        "focusY": 0.43
+      }
+    },
+    {
+      "themeId": "deep-ocean-lab",
+      "decision": "approved",
+      "focus": {
+        "x": 0.78,
+        "y": 0.47
+      },
+      "safeArea": "left",
+      "crop": {
+        "cropX": 0,
+        "cropY": 49.27999999999997,
+        "cropWidth": 1536,
+        "cropHeight": 864,
+        "focusX": 0.78,
+        "focusY": 0.47
+      }
+    },
+    {
+      "themeId": "synthwave-night-drive",
+      "decision": "approved",
+      "focus": {
+        "x": 0.77,
+        "y": 0.49
+      },
+      "safeArea": "left",
+      "crop": {
+        "cropX": 0,
+        "cropY": 69.75999999999999,
+        "cropWidth": 1536,
+        "cropHeight": 864,
+        "focusX": 0.77,
+        "focusY": 0.49
+      }
+    },
+    {
+      "themeId": "alpine-cabin-code",
+      "decision": "approved",
+      "focus": {
+        "x": 0.77,
+        "y": 0.46
+      },
+      "safeArea": "left",
+      "crop": {
+        "cropX": 0,
+        "cropY": 39.04000000000002,
+        "cropWidth": 1536,
+        "cropHeight": 864,
+        "focusX": 0.77,
+        "focusY": 0.46
+      }
+    },
+    {
+      "themeId": "jiangnan-rain-courtyard",
+      "decision": "approved",
+      "focus": {
+        "x": 0.77,
+        "y": 0.47
+      },
+      "safeArea": "left",
+      "crop": {
+        "cropX": 0,
+        "cropY": 49.27999999999997,
+        "cropWidth": 1536,
+        "cropHeight": 864,
+        "focusX": 0.77,
+        "focusY": 0.47
+      }
+    },
+    {
+      "themeId": "changan-lanterns",
+      "decision": "approved",
+      "focus": {
+        "x": 0.78,
+        "y": 0.43
+      },
+      "safeArea": "left",
+      "crop": {
+        "cropX": 0,
+        "cropY": 8.319999999999993,
+        "cropWidth": 1536,
+        "cropHeight": 864,
+        "focusX": 0.78,
+        "focusY": 0.43
+      }
+    },
+    {
+      "themeId": "dunhuang-starlight",
+      "decision": "approved",
+      "focus": {
+        "x": 0.77,
+        "y": 0.44
+      },
+      "safeArea": "left",
+      "crop": {
+        "cropX": 0,
+        "cropY": 18.560000000000002,
+        "cropWidth": 1536,
+        "cropHeight": 864,
+        "focusX": 0.77,
+        "focusY": 0.44
+      }
+    },
+    {
+      "themeId": "bamboo-tea-rain",
+      "decision": "approved",
+      "focus": {
+        "x": 0.78,
+        "y": 0.48
+      },
+      "safeArea": "left",
+      "crop": {
+        "cropX": 0,
+        "cropY": 59.51999999999998,
+        "cropWidth": 1536,
+        "cropHeight": 864,
+        "focusX": 0.78,
+        "focusY": 0.48
+      }
+    },
+    {
+      "themeId": "northeast-snow-train",
+      "decision": "approved",
+      "focus": {
+        "x": 0.77,
+        "y": 0.47
+      },
+      "safeArea": "left",
+      "crop": {
+        "cropX": 0,
+        "cropY": 49.27999999999997,
+        "cropWidth": 1536,
+        "cropHeight": 864,
+        "focusX": 0.77,
+        "focusY": 0.47
+      }
+    },
+    {
+      "themeId": "appalachian-cabin-focus",
+      "decision": "approved",
+      "focus": {
+        "x": 0.78,
+        "y": 0.47
+      },
+      "safeArea": "left",
+      "crop": {
+        "cropX": 0,
+        "cropY": 49.27999999999997,
+        "cropWidth": 1536,
+        "cropHeight": 864,
+        "focusX": 0.78,
+        "focusY": 0.47
+      }
+    },
+    {
+      "themeId": "cloud-forge-quiet",
+      "decision": "approved",
+      "focus": {
+        "x": 0.78,
+        "y": 0.47
+      },
+      "safeArea": "left",
+      "crop": {
+        "cropX": 0,
+        "cropY": 49.27999999999997,
+        "cropWidth": 1536,
+        "cropHeight": 864,
+        "focusX": 0.78,
+        "focusY": 0.47
+      }
+    },
+    {
+      "themeId": "coastal-studio-morning",
+      "decision": "approved",
+      "focus": {
+        "x": 0.78,
+        "y": 0.46
+      },
+      "safeArea": "left",
+      "crop": {
+        "cropX": 0,
+        "cropY": 39.04000000000002,
+        "cropWidth": 1536,
+        "cropHeight": 864,
+        "focusX": 0.78,
+        "focusY": 0.46
+      }
+    },
+    {
+      "themeId": "desert-observatory-night",
+      "decision": "approved",
+      "focus": {
+        "x": 0.79,
+        "y": 0.43
+      },
+      "safeArea": "left",
+      "crop": {
+        "cropX": 0,
+        "cropY": 8.319999999999993,
+        "cropWidth": 1536,
+        "cropHeight": 864,
+        "focusX": 0.79,
+        "focusY": 0.43
+      }
+    },
+    {
+      "themeId": "firefly-river-pact",
+      "decision": "approved",
+      "focus": {
+        "x": 0.77,
+        "y": 0.51
+      },
+      "safeArea": "left",
+      "crop": {
+        "cropX": 0,
+        "cropY": 90.24000000000001,
+        "cropWidth": 1536,
+        "cropHeight": 864,
+        "focusX": 0.77,
+        "focusY": 0.51
+      }
+    },
+    {
+      "themeId": "great-lakes-rainroom",
+      "decision": "approved",
+      "focus": {
+        "x": 0.77,
+        "y": 0.48
+      },
+      "safeArea": "left",
+      "crop": {
+        "cropX": 0,
+        "cropY": 59.51999999999998,
+        "cropWidth": 1536,
+        "cropHeight": 864,
+        "focusX": 0.77,
+        "focusY": 0.48
+      }
+    },
+    {
+      "themeId": "jade-archive-dawn",
+      "decision": "approved",
+      "focus": {
+        "x": 0.78,
+        "y": 0.44
+      },
+      "safeArea": "left",
+      "crop": {
+        "cropX": 0,
+        "cropY": 18.560000000000002,
+        "cropWidth": 1536,
+        "cropHeight": 864,
+        "focusX": 0.78,
+        "focusY": 0.44
+      }
+    },
+    {
+      "themeId": "late-diner-afterhours",
+      "decision": "approved",
+      "focus": {
+        "x": 0.79,
+        "y": 0.48
+      },
+      "safeArea": "left",
+      "crop": {
+        "cropX": 0,
+        "cropY": 59.51999999999998,
+        "cropWidth": 1536,
+        "cropHeight": 864,
+        "focusX": 0.79,
+        "focusY": 0.48
+      }
+    },
+    {
+      "themeId": "mortal-bamboo-thunder",
+      "decision": "approved",
+      "focus": {
+        "x": 0.79,
+        "y": 0.45
+      },
+      "safeArea": "left",
+      "crop": {
+        "cropX": 0,
+        "cropY": 28.80000000000001,
+        "cropWidth": 1536,
+        "cropHeight": 864,
+        "focusX": 0.79,
+        "focusY": 0.45
+      }
+    },
+    {
+      "themeId": "mortal-herb-lantern",
+      "decision": "approved",
+      "focus": {
+        "x": 0.79,
+        "y": 0.48
+      },
+      "safeArea": "left",
+      "crop": {
+        "cropX": 0,
+        "cropY": 59.51999999999998,
+        "cropWidth": 1536,
+        "cropHeight": 864,
+        "focusX": 0.79,
+        "focusY": 0.48
+      }
+    },
+    {
+      "themeId": "mortal-moon-market",
+      "decision": "approved",
+      "focus": {
+        "x": 0.8,
+        "y": 0.49
+      },
+      "safeArea": "left",
+      "crop": {
+        "cropX": 0,
+        "cropY": 69.75999999999999,
+        "cropWidth": 1536,
+        "cropHeight": 864,
+        "focusX": 0.8,
+        "focusY": 0.49
+      }
+    },
+    {
+      "themeId": "mortal-river-ferry",
+      "decision": "approved",
+      "focus": {
+        "x": 0.78,
+        "y": 0.5
+      },
+      "safeArea": "left",
+      "crop": {
+        "cropX": 0,
+        "cropY": 80,
+        "cropWidth": 1536,
+        "cropHeight": 864,
+        "focusX": 0.78,
+        "focusY": 0.5
+      }
+    },
+    {
+      "themeId": "mortal-talisman-rain",
+      "decision": "approved",
+      "focus": {
+        "x": 0.8,
+        "y": 0.47
+      },
+      "safeArea": "left",
+      "crop": {
+        "cropX": 0,
+        "cropY": 49.27999999999997,
+        "cropWidth": 1536,
+        "cropHeight": 864,
+        "focusX": 0.8,
+        "focusY": 0.47
+      }
+    },
+    {
+      "themeId": "plum-sword-snow",
+      "decision": "approved",
+      "focus": {
+        "x": 0.8,
+        "y": 0.46
+      },
+      "safeArea": "left",
+      "crop": {
+        "cropX": 0,
+        "cropY": 39.04000000000002,
+        "cropWidth": 1536,
+        "cropHeight": 864,
+        "focusX": 0.8,
+        "focusY": 0.46
+      }
+    },
+    {
+      "themeId": "sky-garden-herbarium",
+      "decision": "approved",
+      "focus": {
+        "x": 0.77,
+        "y": 0.45
+      },
+      "safeArea": "left",
+      "crop": {
+        "cropX": 0,
+        "cropY": 28.80000000000001,
+        "cropWidth": 1536,
+        "cropHeight": 864,
+        "focusX": 0.77,
+        "focusY": 0.45
+      }
+    }
+  ]
+}

@@ -107,6 +107,11 @@ html.act-full-skin [class*="home-suggestions"] button:hover {
   background-color: color-mix(in srgb, var(--act-accent) 12%, transparent) !important;
 }
 
+html.act-full-skin :focus-visible {
+  outline: 2px solid var(--act-accent) !important;
+  outline-offset: 2px;
+}
+
 html.act-full-skin aside.app-shell-left-panel,
 html.act-full-skin aside.app-shell-left-panel button,
 html.act-full-skin aside.app-shell-left-panel a,

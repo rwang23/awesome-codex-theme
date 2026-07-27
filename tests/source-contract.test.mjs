@@ -17,9 +17,16 @@ import {
   parseCodexNativeTheme,
 } from "../scripts/lib/codex-native-theme.mjs";
 import {
+  computeCoverCrop,
   renderFingerprint,
+  safeAreaWeight,
   SOURCE_ART_RENDERER_CONSTANTS,
 } from "../scripts/lib/source-art-contract.mjs";
+import {
+  assessSourceArt,
+  parseImageSize,
+} from "../scripts/lib/source-art-policy.mjs";
+import { decodePng, encodePng, renderSourceArtImage } from "../scripts/lib/png.mjs";
 import { contrastRatio, isSafeRelativePath } from "../scripts/validate.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -32,7 +39,7 @@ test("source catalog and image-job provenance stay aligned without generated art
     readFile(path.join(ROOT, "schemas", "registry.schema.json"), "utf8").then(JSON.parse),
   ]);
 
-  assert.equal(catalog.catalogRevision, 2026072201);
+  assert.equal(catalog.catalogRevision, 2026072701);
   assert.equal(catalog.themes.length, 68);
   assert.equal(catalog.collections.length, 11);
   assert.equal(themeSchema.$schema.includes("2020-12"), true);
@@ -41,6 +48,15 @@ test("source catalog and image-job provenance stay aligned without generated art
     jobs.jobs.map((job) => job.id).sort(),
     catalog.themes.map((theme) => theme.id).sort(),
   );
+  assert.deepEqual(
+    jobs.sourceArtPolicy.reviewedUpscaleExceptions.flatMap((exception) => exception.themeIds).sort(),
+    catalog.themes.map((theme) => theme.id).sort(),
+  );
+  assert.deepEqual(jobs.sourceArtPolicy.minimum, {
+    width: 2560,
+    height: 1440,
+    aspectRatio: "16:9",
+  });
 
   for (const theme of catalog.themes) {
     const rightsProfile = theme.rightsProfile || "original";
@@ -111,13 +127,19 @@ test("source-only guards reject unsafe paths and undeclared Native fields", func
 });
 
 test("package scripts keep source checks fast and generated checks explicit", async function () {
-  const packageJson = JSON.parse(await readFile(path.join(ROOT, "package.json"), "utf8"));
+  const [packageJson, desktopPackageJson] = await Promise.all([
+    readFile(path.join(ROOT, "package.json"), "utf8").then(JSON.parse),
+    readFile(path.join(ROOT, "apps", "theme-manager", "package.json"), "utf8").then(JSON.parse),
+  ]);
 
   assert.equal(packageJson.scripts.test, "npm run test:source");
   assert.match(packageJson.scripts["test:source"], /source-contract\.test\.mjs/);
   assert.match(packageJson.scripts["test:generated"], /ensure-generated\.mjs/);
   assert.match(packageJson.scripts["test:ci"], /^npm run generate/);
+  assert.equal(packageJson.scripts["art:review"], "node scripts/review-source-art.mjs --check");
+  assert.match(packageJson.scripts["test:ci"], /npm run art:review/);
   assert.match(packageJson.scripts["check:full"], /npm run test:ci/);
+  assert.match(desktopPackageJson.scripts.check, /^node \.\.\/\.\.\/scripts\/prepare-desktop\.mjs && cargo fmt/);
 });
 
 test("CI invokes the complete source and generated test contract", async function () {
@@ -188,6 +210,97 @@ test("render fingerprints invalidate every declared visual input", function () {
   }
   assert.notEqual(renderFingerprint(theme, "light", provenance, 960, 540), baseline);
   assert.ok(Object.keys(SOURCE_ART_RENDERER_CONSTANTS.grading).length > 8);
+});
+
+test("focal cover crops preserve the focal coordinate while clamping to image edges", function () {
+  assert.deepEqual(
+    computeCoverCrop({
+      sourceWidth: 400,
+      sourceHeight: 100,
+      targetWidth: 100,
+      targetHeight: 100,
+      focusX: 0,
+      focusY: 0.5,
+    }),
+    { cropX: 0, cropY: 0, cropWidth: 100, cropHeight: 100, focusX: 0, focusY: 0.5 },
+  );
+  assert.deepEqual(
+    computeCoverCrop({
+      sourceWidth: 400,
+      sourceHeight: 100,
+      targetWidth: 100,
+      targetHeight: 100,
+      focusX: 1,
+      focusY: 0.5,
+    }),
+    { cropX: 300, cropY: 0, cropWidth: 100, cropHeight: 100, focusX: 1, focusY: 0.5 },
+  );
+  assert.deepEqual(
+    computeCoverCrop({
+      sourceWidth: 100,
+      sourceHeight: 400,
+      targetWidth: 100,
+      targetHeight: 100,
+      focusX: -2,
+      focusY: 2,
+    }),
+    { cropX: 0, cropY: 300, cropWidth: 100, cropHeight: 100, focusX: 0, focusY: 1 },
+  );
+  assert.throws(
+    () => computeCoverCrop({ sourceWidth: 0, sourceHeight: 1, targetWidth: 1, targetHeight: 1 }),
+    /positive numbers/,
+  );
+});
+
+test("directional safe-area grading has distinct left, right, center, and none profiles", function () {
+  assert.ok(safeAreaWeight(0.05, "left") > safeAreaWeight(0.95, "left"));
+  assert.ok(safeAreaWeight(0.95, "right") > safeAreaWeight(0.05, "right"));
+  assert.ok(safeAreaWeight(0.5, "center") > safeAreaWeight(0.05, "center"));
+  assert.equal(safeAreaWeight(0.5, "none"), 0);
+  assert.throws(() => safeAreaWeight(0.5, "diagonal"), /Unsupported safeArea/);
+});
+
+test("focal rendering changes pixels on each crop axis without changing safe-area semantics", function () {
+  const pixels = encodePng(40, 40, (x, y) => [x * 6, y * 6, 120, 255]);
+  const image = decodePng(pixels);
+  const baseTheme = {
+    art: { focusX: 0.5, focusY: 0.5, safeArea: "none" },
+    light: { tokens: { background: "#FFFFFF" } },
+    dark: { tokens: { background: "#101010" } },
+  };
+  const wide = { ...baseTheme, art: { ...baseTheme.art, focusX: 0.1 } };
+  const wideOther = { ...baseTheme, art: { ...baseTheme.art, focusX: 0.9 } };
+  const tall = { ...baseTheme, art: { ...baseTheme.art, focusY: 0.1 } };
+  const tallOther = { ...baseTheme, art: { ...baseTheme.art, focusY: 0.9 } };
+
+  assert.notDeepEqual(
+    renderSourceArtImage(image, wide, "light", 20, 40),
+    renderSourceArtImage(image, wideOther, "light", 20, 40),
+  );
+  assert.notDeepEqual(
+    renderSourceArtImage(image, tall, "light", 40, 20),
+    renderSourceArtImage(image, tallOther, "light", 40, 20),
+  );
+});
+
+test("source-art policy accepts canonical sources and only named legacy exceptions", function () {
+  const policy = {
+    minimum: { width: 2560, height: 1440, aspectRatio: "16:9" },
+    reviewedUpscaleExceptions: [{
+      id: "legacy-review",
+      reviewedAt: "2026-07-26",
+      sourceSize: "1536x1024",
+      themeIds: ["legacy-theme"],
+    }],
+  };
+  assert.deepEqual(parseImageSize("2560x1440"), { width: 2560, height: 1440 });
+  assert.equal(assessSourceArt(policy, "new-theme", { width: 2560, height: 1440 }).kind, "canonical");
+  assert.equal(
+    assessSourceArt(policy, "legacy-theme", { width: 1536, height: 1024 }).kind,
+    "reviewed-upscale-exception",
+  );
+  assert.equal(assessSourceArt(policy, "new-theme", { width: 1536, height: 1024 }).accepted, false);
+  assert.throws(() => parseImageSize("2560:1440"), /WIDTHxHEIGHT/);
 });
 
 test("generator rejects source art whose bytes no longer match provenance", async function () {

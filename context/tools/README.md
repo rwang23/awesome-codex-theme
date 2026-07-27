@@ -4,14 +4,14 @@
 
 | Tool | Role | Writes | Verification |
 | --- | --- | --- | --- |
-| scripts/run-image-jobs.mjs | Generate reviewed 1536 x 1024 source art through the shared OpenAI image-job runner | themes/source-art/*.png and compact provenance | visual review plus source hashes |
-| scripts/generate-themes.mjs | Decode source art and generate 53 deterministic dual-mode packs, Full Skin backgrounds, Native fallbacks, and Registry | themes/<theme-id>/, packages/, themes/registry.json | npm run generate:check |
+| scripts/run-image-jobs.mjs | Generate source art to the 2560 x 1440 16:9 baseline through the shared OpenAI image-job runner; named reviewed 1536 x 1024 exceptions remain legacy-only | themes/source-art/*.png and compact provenance | visual review plus source hashes |
+| scripts/generate-themes.mjs | Decode source art and generate 68 deterministic dual-mode packs, Full Skin backgrounds, Native fallbacks, and Registry | themes/<theme-id>/, packages/, themes/registry.json | npm run generate:check |
 | scripts/validate.mjs | Validate ids, paths, dimensions, hashes, allowlists, contrast, rights rules, Full Skin records, Native fallbacks, and capture evidence | none | npm run validate |
 | scripts/build-installer.mjs | Build the no-admin Windows companion installer with a bundled Registry snapshot | dist/downloads/*.zip and installer manifest | npm run installer:validate |
 | scripts/capture-full-skin-screenshots.mjs | Apply the fixed runtime to the pinned Beta test bench, clear project context, capture all 136 Full Skin modes with the verified available `5.6 Sol Max` label, restore the prior model choice, and prove cleanup | screenshots/codex-beta-26.715.3651.0/*.png and manifest | npm run screenshots:probe plus `npm run screenshots:capture` with explicit authorization |
 | scripts/smoke-theme-manager.mjs | Drive the real Tauri UI, apply one Full Skin, discover the dynamic Beta endpoint, read back markers, capture the manager, restore, and verify cleanup | docs/assets/theme-manager-windows.png | explicit `--apply`, an OS-selected Manager port, exact process ownership, and final marker readback |
 | scripts/build.mjs | Assemble the static Pages artifact | dist/ | npm run build |
-| scripts/prepare-desktop.mjs | Generate the deterministic desktop icon and confirm the Registry is ready for packaging | apps/theme-manager/build/icon.png | npm run desktop:prepare |
+| scripts/prepare-desktop.mjs | Generate the deterministic desktop icon and compact verified-capture thumbnails for packaging | apps/theme-manager/build/icon.png and apps/theme-manager/build/catalog/screenshots/ | npm run desktop:prepare |
 | scripts/serve.mjs | Serve dist/ on localhost | none | browser smoke |
 | .codex/skills/create-codex-theme/scripts/scaffold-theme.mjs | Dry-run or append a validated theme brief to the catalog and image-job queue | themes/catalog.json, themes/source-art/jobs.json with --apply | dry run, then npm run check |
 The image-job runner writes only inside `themes/source-art/`. The Full Skin

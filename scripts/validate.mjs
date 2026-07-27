@@ -9,7 +9,8 @@ import {
   CODEX_NATIVE_TESTED_VERSION,
   parseCodexNativeTheme,
 } from "./lib/codex-native-theme.mjs";
-import { renderFingerprint } from "./lib/source-art-contract.mjs";
+import { assessSourceArt, parseImageSize } from "./lib/source-art-policy.mjs";
+import { computeCoverCrop, renderFingerprint } from "./lib/source-art-contract.mjs";
 
 const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(SCRIPT_DIR, "..");
@@ -22,8 +23,6 @@ const MAX_IMAGE_BYTES = 16 * 1024 * 1024;
 const CODEX_BETA_CAPTURE_VERSION = "26.715.3651.0";
 const CODEX_BETA_PACKAGE = "OpenAI.CodexBeta_26.715.3651.0_x64__2p2nqsd0c76g0";
 const FULL_SKIN_FORMAT = "act-full-skin-v1";
-const SOURCE_WIDTH = 1536;
-const SOURCE_HEIGHT = 1024;
 const CANONICAL_ENTRIES = [
   "assets/background-dark.png",
   "assets/background-light.png",
@@ -108,8 +107,28 @@ function validateTokens(themeId, mode, tokens, errors) {
     errors,
   );
   check(
+    contrastRatio(tokens.text, tokens.surfaceAlt) >= 4.5,
+    themeId + " " + mode + " text/surfaceAlt contrast is below 4.5",
+    errors,
+  );
+  check(
+    contrastRatio(tokens.muted, tokens.surfaceAlt) >= 4.5,
+    themeId + " " + mode + " muted/surfaceAlt contrast is below 4.5",
+    errors,
+  );
+  check(
     contrastRatio(tokens.accent, tokens.background) >= 3,
     themeId + " " + mode + " accent/background contrast is below 3.0",
+    errors,
+  );
+  check(
+    contrastRatio(tokens.accent, tokens.surface) >= 3,
+    themeId + " " + mode + " accent/surface interactive-boundary contrast is below 3.0",
+    errors,
+  );
+  check(
+    contrastRatio(tokens.accent, tokens.surfaceAlt) >= 3,
+    themeId + " " + mode + " accent/surfaceAlt interactive-boundary contrast is below 3.0",
     errors,
   );
   check(
@@ -169,6 +188,11 @@ export async function validateRepository() {
   const errors = [];
   let captureCount = 0;
   let fullSkinCount = 0;
+  const focalCropDiagnostics = {
+    horizontallyAdjustable: 0,
+    sources: 0,
+    verticallyAdjustable: 0,
+  };
   const nativeThemeOwners = new Map();
   const [catalog, registry, sourceJobs, captureManifest, themeSchema, registrySchema, runtimeCss, runtimeJs] = await Promise.all([
     readJson("themes/catalog.json"),
@@ -202,7 +226,12 @@ export async function validateRepository() {
     errors,
   );
   check(sourceJobs.workflow?.runner === "openai-image-job", "Source-art workflow mismatch", errors);
-  check(sourceJobs.workflow?.size === SOURCE_WIDTH + "x" + SOURCE_HEIGHT, "Source-art dimensions mismatch", errors);
+  try {
+    parseImageSize(sourceJobs.workflow?.size);
+  } catch {
+    errors.push("Source-art workflow size is invalid");
+  }
+  check(Boolean(sourceJobs.sourceArtPolicy), "Source-art policy is missing", errors);
   check(Array.isArray(sourceJobs.jobs), "Source-art jobs are missing", errors);
   check(Array.isArray(catalog.collections) && catalog.collections.length > 0, "Catalog must declare at least one collection", errors);
   check(Array.isArray(registry.collections), "Registry collections are missing", errors);
@@ -369,11 +398,31 @@ export async function validateRepository() {
       ? commonPrompt.replace(promptCommonReplacement.find, promptCommonReplacement.replace)
       : commonPrompt;
     const completePrompt = effectiveCommonPrompt + "\n\nScene brief: " + sourceJob.prompt;
+    const sourcePolicy = assessSourceArt(sourceJobs.sourceArtPolicy, catalogTheme.id, sourceDimensions);
     check(
-      sourceDimensions.width === SOURCE_WIDTH && sourceDimensions.height === SOURCE_HEIGHT,
-      catalogTheme.id + " source-art dimensions mismatch",
+      sourcePolicy.accepted,
+      catalogTheme.id + " " + (sourcePolicy.reason || "source-art policy rejected the source"),
       errors,
     );
+    const crop = computeCoverCrop({
+      sourceWidth: sourceDimensions.width,
+      sourceHeight: sourceDimensions.height,
+      targetWidth: 2560,
+      targetHeight: 1440,
+      focusX: catalogTheme.art.focusX,
+      focusY: catalogTheme.art.focusY,
+    });
+    const sourceFocusX = crop.focusX * sourceDimensions.width;
+    const sourceFocusY = crop.focusY * sourceDimensions.height;
+    check(
+      sourceFocusX >= crop.cropX - 0.001 && sourceFocusX <= crop.cropX + crop.cropWidth + 0.001
+        && sourceFocusY >= crop.cropY - 0.001 && sourceFocusY <= crop.cropY + crop.cropHeight + 0.001,
+      catalogTheme.id + " focal point falls outside its 16:9 crop",
+      errors,
+    );
+    focalCropDiagnostics.sources += 1;
+    if (crop.cropWidth < sourceDimensions.width) focalCropDiagnostics.horizontallyAdjustable += 1;
+    if (crop.cropHeight < sourceDimensions.height) focalCropDiagnostics.verticallyAdjustable += 1;
     check(sourceArt.length > 0 && sourceArt.length <= MAX_IMAGE_BYTES, catalogTheme.id + " source-art size invalid", errors);
     check(sourceProvenance.themeId === catalogTheme.id, catalogTheme.id + " source provenance identity mismatch", errors);
     check(sourceJob.rightsProfile === rightsProfile || (!sourceJob.rightsProfile && rightsProfile === "original"), catalogTheme.id + " source job rights-profile mismatch", errors);
@@ -389,7 +438,12 @@ export async function validateRepository() {
     check(typeof sourceProvenance.jobId === "string" && sourceProvenance.jobId.length > 10, catalogTheme.id + " source job id missing", errors);
     check(sourceProvenance.sourceSha256 === sha256(sourceArt), catalogTheme.id + " source image hash mismatch", errors);
     check(
-      sourceProvenance.promptSha256 === sha256(Buffer.from(completePrompt, "utf8")),
+      sourceProvenance.promptSha256 === sha256(Buffer.from(
+        completePrompt + (sourcePolicy.kind === "canonical"
+          ? "\n\n" + sourceJobs.sourceArtPolicy.newThemePrompt
+          : ""),
+        "utf8",
+      )),
       catalogTheme.id + " source prompt hash mismatch",
       errors,
     );
@@ -611,6 +665,7 @@ export async function validateRepository() {
     fullSkinExports: fullSkinCount,
     nativeExports: registry.themes.length * 2,
     captures: captureCount,
+    focalCropDiagnostics,
   };
 }
 
@@ -620,7 +675,10 @@ async function main() {
     "Validated " + result.sources + " source images, " + result.themes + " themes, " + result.modes + " modes, "
     + result.packages + " code-free packages, " + result.fullSkinExports + " full-skin records, "
     + result.nativeExports + " Codex Native fallbacks, and "
-    + result.captures + " real Beta captures.",
+    + result.captures + " real Beta captures. Focal crop diagnostics: "
+    + result.focalCropDiagnostics.sources + " sources ("
+    + result.focalCropDiagnostics.horizontallyAdjustable + " horizontal, "
+    + result.focalCropDiagnostics.verticallyAdjustable + " vertical adjustments).",
   );
 }
 

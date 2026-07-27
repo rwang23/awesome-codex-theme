@@ -29,7 +29,7 @@ A manifest declares:
 - compatibility targets;
 - tags and reduced-motion behavior;
 - light and dark asset records;
-- composition focus, safe area, task mode, and color tokens;
+- composition focus, directional safe area, task mode, and color tokens;
 - image SHA-256, byte count, width, and height;
 - Native fallback path, SHA-256, size, and tested version.
 
@@ -53,6 +53,7 @@ The Validator checks:
 - archive allowlist and path safety;
 - source, asset, package, Native, and screenshot hashes;
 - PNG signature, dimensions, and byte counts;
+- source-art resolution policy, focal crop bounds, and review artifacts;
 - light and dark mode completeness;
 - color format and WCAG contrast;
 - unique Native payloads;
@@ -62,6 +63,18 @@ The Validator checks:
 - runtime cleanup evidence.
 
 Gallery artwork is not treated as installed proof. A public Full Skin claim needs a real screenshot bound to the exact Beta package and runtime hash.
+
+## Source art composition and review
+
+New production source art must be 16:9 and at least 2560x1440. A smaller or differently proportioned source can only be used through a named, reviewed exception in `themes/source-art/jobs.json`. An exception records the exact source size, affected IDs, review date, and reason. The current 1536x1024 exception covers the existing catalog only. It does not authorize a new job.
+
+The renderer uses clamped `focusX` and `focusY` coordinates with `focal-cover-v1`, so a crop follows its declared subject when the source aspect ratio leaves room to move. `safeArea` can be `left`, `right`, `center`, or `none`; it controls the readability wash independently of the crop anchor.
+
+Every source-art renderer revision has deterministic contact sheets and a safe-area fixture under `docs/assets/source-art-review/`, plus a machine-readable approval record under `themes/source-art/reviews/`. They prove the reviewed generated composition. A new Full Skin runtime or asset still requires a fresh exact-app capture and cleanup readback.
+
+## Color roles
+
+`text` and `muted` must each reach 4.5:1 against both `surface` and `surfaceAlt`. `accent` must reach 3:1 against `background`, `surface`, and `surfaceAlt`, because it marks interactive controls and focus. `border` is decorative and cannot substitute for an interactive focus boundary. `accentContrast` must reach 4.5:1 against `accent`.
 
 ## Licensing
 

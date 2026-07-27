@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { createHash } from "node:crypto";
 import { mkdtemp, readFile, rm, stat } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
@@ -36,7 +37,12 @@ test("repository validates sixty-eight dual-mode code-free themes in eleven coll
     packages: 68,
     fullSkinExports: 136,
     nativeExports: 136,
-    captures: 136
+    captures: 136,
+    focalCropDiagnostics: {
+      horizontallyAdjustable: 0,
+      sources: 68,
+      verticallyAdjustable: 68,
+    },
   });
 });
 
@@ -46,7 +52,7 @@ test("registry exposes original and disclosed fan-art collections", async functi
     readFile(path.join(ROOT, "themes", "registry.json"), "utf8").then(JSON.parse),
     readFile(path.join(ROOT, "screenshots", "codex-beta-26.715.3651.0", "manifest.json"), "utf8").then(JSON.parse),
   ]);
-  assert.equal(catalog.catalogRevision, 2026072201);
+  assert.equal(catalog.catalogRevision, 2026072701);
   assert.equal(registry.catalogRevision, catalog.catalogRevision);
   assert.ok(
     String(catalog.catalogRevision).slice(0, 8)
@@ -117,6 +123,28 @@ test("registry exposes original and disclosed fan-art collections", async functi
       && theme.provenance.type === "original"
       && theme.provenance.rightsVerified === true;
   }), true);
+});
+
+test("focal-aware review artifacts cover every current source image", async function () {
+  const [catalog, approval] = await Promise.all([
+    readFile(path.join(ROOT, "themes", "catalog.json"), "utf8").then(JSON.parse),
+    readFile(path.join(ROOT, "themes", "source-art", "reviews", "focal-aware-v3.json"), "utf8").then(JSON.parse),
+  ]);
+  assert.equal(approval.renderer.before, "act-source-art-renderer-v2");
+  assert.equal(approval.renderer.after, "act-source-art-renderer-v3");
+  assert.equal(approval.decisions.length, catalog.themes.length);
+  assert.deepEqual(
+    approval.decisions.map((decision) => decision.themeId),
+    catalog.themes.map((theme) => theme.id),
+  );
+  assert.equal(approval.decisions.every((decision) => decision.decision === "approved"), true);
+  assert.equal(approval.fixtureSheet.order.rows.join(","), "left,right,center,none");
+  assert.deepEqual(approval.fixtureSheet.order.columns, ["home", "task", "diff", "settings", "dialog", "composer"]);
+  for (const artifact of [...approval.contactSheets, approval.fixtureSheet]) {
+    const bytes = await readFile(path.join(ROOT, ...artifact.path.split("/")));
+    assert.equal(bytes.length, artifact.bytes, artifact.path + " byte count");
+    assert.equal(createHash("sha256").update(bytes).digest("hex"), artifact.sha256, artifact.path + " hash");
+  }
 });
 
 test("canonical archives contain only declared art, manifest, and Codex Native themes", async function () {
