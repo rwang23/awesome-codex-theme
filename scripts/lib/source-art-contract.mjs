@@ -1,6 +1,8 @@
 import { createHash } from "node:crypto";
 
-export const SOURCE_ART_RENDERER_ID = "act-source-art-renderer-v2";
+import { SOURCE_ART_RENDERER_VERSION } from "./release-metadata.mjs";
+
+export const SOURCE_ART_RENDERER_ID = SOURCE_ART_RENDERER_VERSION;
 
 // Every value that changes the deterministic source-art result belongs here.
 // The generator stores this contract in its render fingerprints so a later

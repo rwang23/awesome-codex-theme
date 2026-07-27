@@ -24,6 +24,15 @@ const CACHE_FILE_PREFIX: &str = "catalog-cache-";
 const CACHE_FILE_SUFFIX: &str = ".json";
 
 #[derive(Clone)]
+struct ReleaseContract {
+    full_skin_format: String,
+    native_tested_version: String,
+    capture_version: String,
+    capture_package: String,
+    capture_fixture: String,
+}
+
+#[derive(Clone)]
 pub struct Catalog {
     pub source: String,
     pub registry: Value,
@@ -209,6 +218,158 @@ fn valid_hex_color(value: &str) -> bool {
             .all(|character| character.is_ascii_hexdigit())
 }
 
+fn required_string(value: &Value, label: &str) -> Result<String, String> {
+    value
+        .as_str()
+        .filter(|value| !value.trim().is_empty())
+        .map(str::to_owned)
+        .ok_or_else(|| format!("{label} 必须是非空字符串"))
+}
+
+fn validate_release(registry: &Value) -> Result<ReleaseContract, String> {
+    let release = object(&registry["release"], "release")?;
+    let product = object(
+        release.get("product").unwrap_or(&Value::Null),
+        "release.product",
+    )?;
+    for field in ["name", "repository", "releases"] {
+        required_string(
+            product.get(field).unwrap_or(&Value::Null),
+            &format!("release.product.{field}"),
+        )?;
+    }
+    let desktop = object(
+        release.get("desktop").unwrap_or(&Value::Null),
+        "release.desktop",
+    )?;
+    required_string(
+        desktop.get("version").unwrap_or(&Value::Null),
+        "release.desktop.version",
+    )?;
+    if !matches!(
+        desktop.get("channel").and_then(Value::as_str),
+        Some("beta" | "stable")
+    ) {
+        return fail("release.desktop.channel 无效");
+    }
+    let updater = object(
+        desktop.get("updater").unwrap_or(&Value::Null),
+        "release.desktop.updater",
+    )?;
+    if !matches!(
+        updater.get("status").and_then(Value::as_str),
+        Some("unreleased" | "available")
+    ) {
+        return fail("release.desktop.updater.status 无效");
+    }
+    localized(
+        updater.get("message").unwrap_or(&Value::Null),
+        "release.desktop.updater.message",
+    )?;
+    let runtime = object(
+        release.get("runtime").unwrap_or(&Value::Null),
+        "release.runtime",
+    )?;
+    let full_skin_format = required_string(
+        runtime.get("fullSkinFormat").unwrap_or(&Value::Null),
+        "release.runtime.fullSkinFormat",
+    )?;
+    if full_skin_format != "act-full-skin-v1" {
+        return fail("release.runtime.fullSkinFormat 不受支持");
+    }
+    required_string(
+        runtime.get("implementationVersion").unwrap_or(&Value::Null),
+        "release.runtime.implementationVersion",
+    )?;
+    required_string(
+        runtime.get("sourceArtRenderer").unwrap_or(&Value::Null),
+        "release.runtime.sourceArtRenderer",
+    )?;
+    let native_tested_version = required_string(
+        runtime.get("nativeTestedVersion").unwrap_or(&Value::Null),
+        "release.runtime.nativeTestedVersion",
+    )?;
+    let capture = object(
+        release.get("capture").unwrap_or(&Value::Null),
+        "release.capture",
+    )?;
+    if capture.get("channel").and_then(Value::as_str) != Some("beta") {
+        return fail("release.capture.channel 必须是 beta");
+    }
+    let capture_version = required_string(
+        capture.get("appVersion").unwrap_or(&Value::Null),
+        "release.capture.appVersion",
+    )?;
+    let capture_package = required_string(
+        capture.get("packageFullName").unwrap_or(&Value::Null),
+        "release.capture.packageFullName",
+    )?;
+    if !capture_package.starts_with("OpenAI.CodexBeta_") {
+        return fail("release.capture.packageFullName 不是 Codex Beta 包");
+    }
+    let capture_fixture = required_string(
+        capture.get("fixture").unwrap_or(&Value::Null),
+        "release.capture.fixture",
+    )?;
+    required_string(
+        capture.get("modelLabel").unwrap_or(&Value::Null),
+        "release.capture.modelLabel",
+    )?;
+    Ok(ReleaseContract {
+        full_skin_format,
+        native_tested_version,
+        capture_version,
+        capture_package,
+        capture_fixture,
+    })
+}
+
+fn validate_capabilities(value: &Value) -> Result<(), String> {
+    let capabilities = array(value, "capabilities")?;
+    if capabilities.is_empty() || capabilities.len() > 16 {
+        return fail("capabilities 数量超出边界");
+    }
+    let mut ids = HashSet::new();
+    for capability in capabilities {
+        let id = capability["id"].as_str().unwrap_or_default();
+        if !safe_id(id) || !ids.insert(id.to_owned()) {
+            return fail("capability ID 无效或重复");
+        }
+        if !matches!(capability["platform"].as_str(), Some("windows" | "macos"))
+            || !matches!(
+                capability["architecture"].as_str(),
+                Some("x64" | "aarch64" | "x86_64")
+            )
+        {
+            return fail(format!("{id} capability 平台或架构无效"));
+        }
+        localized(&capability["title"], &format!("{id} capability title"))?;
+        for feature_name in ["fullSkin", "native", "persistence"] {
+            let feature = object(&capability[feature_name], &format!("{id} {feature_name}"))?;
+            if !matches!(
+                feature.get("status").and_then(Value::as_str),
+                Some("verified" | "build-only" | "unverified")
+            ) {
+                return fail(format!("{id} {feature_name} status 无效"));
+            }
+            feature
+                .get("testedVersion")
+                .and_then(Value::as_str)
+                .ok_or_else(|| format!("{id} {feature_name} testedVersion 无效"))?;
+            localized(
+                feature.get("detail").unwrap_or(&Value::Null),
+                &format!("{id} {feature_name} detail"),
+            )?;
+        }
+    }
+    for id in ["windows-x64", "macos-aarch64", "macos-x86-64"] {
+        if !ids.contains(id) {
+            return fail(format!("capabilities 缺少 {id}"));
+        }
+    }
+    Ok(())
+}
+
 fn validate_native_theme(value: &str, mode: &str) -> Result<(), String> {
     let body = value
         .strip_prefix("codex-theme-v1:")
@@ -273,6 +434,7 @@ fn validate_mode(
     theme: &Value,
     mode: &str,
     native_values: &mut HashSet<String>,
+    release: &ReleaseContract,
 ) -> Result<(), String> {
     let record = theme["previews"]
         .get(mode)
@@ -289,31 +451,26 @@ fn validate_mode(
         || !capture["sha256"].as_str().is_some_and(valid_sha256)
         || !capture["assetSha256"].as_str().is_some_and(valid_sha256)
         || !capture["runtimeSha256"].as_str().is_some_and(valid_sha256)
-        || capture["markerVersion"].as_str() != Some("act-full-skin-v1")
+        || capture["markerVersion"].as_str() != Some(release.full_skin_format.as_str())
         || capture["width"].as_u64() != Some(1440)
         || capture["height"].as_u64() != Some(810)
-        || capture["fixture"].as_str() != Some("full-skin-home-v1")
-        || capture["appVersion"]
-            .as_str()
-            .unwrap_or_default()
-            .is_empty()
+        || capture["appVersion"].as_str() != Some(release.capture_version.as_str())
+        || capture["packageFullName"].as_str() != Some(release.capture_package.as_str())
+        || capture["fixture"].as_str() != Some(release.capture_fixture.as_str())
     {
         return fail(format!("{theme_id} {mode} 实机截图记录无效"));
     }
 
     let full_skin = &record["fullSkin"];
     let full_skin_asset = full_skin["asset"].as_str().unwrap_or_default();
-    if full_skin["format"].as_str() != Some("act-full-skin-v1")
+    if full_skin["format"].as_str() != Some(release.full_skin_format.as_str())
         || !safe_relative_path(full_skin_asset)
         || full_skin_asset != format!("themes/{theme_id}/assets/background-{mode}.png")
         || !full_skin["sha256"].as_str().is_some_and(valid_sha256)
         || full_skin["sha256"] != record["assetSha256"]
         || full_skin["bytes"].as_u64().is_none()
         || full_skin["bytes"] != record["assetBytes"]
-        || full_skin["testedVersion"]
-            .as_str()
-            .unwrap_or_default()
-            .is_empty()
+        || full_skin["testedVersion"].as_str() != Some(release.capture_version.as_str())
     {
         return fail(format!("{theme_id} {mode} Full Skin 记录无效"));
     }
@@ -349,6 +506,7 @@ fn validate_mode(
     if native["format"].as_str() != Some("codex-theme-v1")
         || !safe_relative_path(native_path)
         || !native["sha256"].as_str().is_some_and(valid_sha256)
+        || native["testedVersion"].as_str() != Some(release.native_tested_version.as_str())
     {
         return fail(format!("{theme_id} {mode} Native 记录无效"));
     }
@@ -379,6 +537,8 @@ pub fn validate_registry(bytes: &[u8]) -> Result<Value, String> {
     }
     validate_runtime_evidence(&registry["runtimeEvidence"])?;
 
+    let release = validate_release(&registry)?;
+    validate_capabilities(&registry["capabilities"])?;
     let collections = array(&registry["collections"], "collections")?;
     let themes = array(&registry["themes"], "themes")?;
     if collections.is_empty() || themes.is_empty() || themes.len() > 500 {
@@ -414,7 +574,7 @@ pub fn validate_registry(bytes: &[u8]) -> Result<Value, String> {
             return fail(format!("{id} 权利标记无效"));
         }
         for mode in MODES {
-            validate_mode(id, theme, mode, &mut native_values)?;
+            validate_mode(id, theme, mode, &mut native_values, &release)?;
         }
     }
     Ok(registry)
@@ -629,6 +789,11 @@ pub async fn load_remote() -> Result<(Catalog, String), String> {
     if registry["themes"].as_array().map(Vec::len) != Some(expected_themes) {
         return fail("远程 Registry 主题数量不匹配");
     }
+    if manifest["release"] != registry["release"]
+        || manifest["capabilities"] != registry["capabilities"]
+    {
+        return fail("远程 Registry 发布元数据不匹配");
+    }
     Ok((
         Catalog {
             source: "remote".into(),
@@ -710,6 +875,8 @@ pub fn present_catalog(app: &AppHandle, catalog: &Catalog) -> Result<Value, Stri
         "registrySha256": catalog.registry_sha256,
         "registryBytes": catalog.registry_bytes,
         "standard": catalog.registry["standard"],
+        "release": catalog.registry["release"],
+        "capabilities": catalog.registry["capabilities"],
         "collections": collections,
         "themes": themes
     }))
@@ -795,6 +962,7 @@ mod tests {
     };
 
     const REGISTRY: &[u8] = include_bytes!("../../../../themes/registry.json");
+    const CATALOG: &[u8] = include_bytes!("../../../../themes/catalog.json");
 
     fn serve_chunked_json(chunks: Vec<Vec<u8>>) -> (String, thread::JoinHandle<()>) {
         let listener = TcpListener::bind(("127.0.0.1", 0)).expect("test server should bind");
@@ -868,10 +1036,14 @@ mod tests {
     }
 
     #[test]
-    fn bundled_registry_has_sixty_eight_valid_dual_mode_themes() {
+    fn bundled_registry_matches_the_source_catalog() {
         let registry = validate_registry(REGISTRY).expect("registry should validate");
-        assert_eq!(registry["catalogRevision"].as_u64(), Some(2026072201));
-        assert_eq!(registry["themes"].as_array().map(Vec::len), Some(68));
+        let catalog: Value = serde_json::from_slice(CATALOG).expect("source catalog should parse");
+        assert_eq!(registry["catalogRevision"], catalog["catalogRevision"]);
+        assert_eq!(
+            registry["themes"].as_array().map(Vec::len),
+            catalog["themes"].as_array().map(Vec::len),
+        );
     }
 
     #[test]

@@ -413,7 +413,8 @@ test("Tauri manager keeps theme values in Rust and limits desktop capabilities",
   assert.match(bridge, /applyNow = false/);
   assert.match(bridge, /applyNow \}/);
   assert.match(updater, /ACT_UPDATER_PUBKEY/);
-  assert.match(config.plugins.updater.endpoints[0], /^https:\/\/github\.com\/rwang23\/awesome-codex-theme\/releases\//);
+  assert.equal(config.plugins.updater.endpoints[0], "https://rwang23.github.io/awesome-codex-theme/updates/stable.json");
+  assert.doesNotMatch(config.plugins.updater.endpoints[0], /github\.com\/.*\/releases\/(?:latest|download)/);
   assert.match(appPackage, /@tauri-apps\/cli/);
   assert.doesNotMatch(appPackage, /electron/i);
   assert.doesNotMatch(backend + catalog + runtime + platform, /WindowsApps.*(?:write|copy)|app\.asar.*(?:write|copy)/i);
@@ -604,15 +605,20 @@ test("Tibo copy uses a deliberate two-line God of Reset lockup", async function 
   assert.deepEqual(immortal.tagline, { en: "God of Reset", "zh-CN": "重置之神" });
 });
 
-test("desktop beta release requires updater signing and discloses deferred platform trust", async function () {
-  const [workflow, tauriConfigText] = await Promise.all([
+test("desktop beta release uses a static updater feed and discloses deferred platform trust", async function () {
+  const [workflow, tauriConfigText, releaseMetadata] = await Promise.all([
     readFile(path.join(ROOT, ".github", "workflows", "desktop.yml"), "utf8"),
-    readFile(path.join(ROOT, "apps", "theme-manager", "src-tauri", "tauri.conf.json"), "utf8")
+    readFile(path.join(ROOT, "apps", "theme-manager", "src-tauri", "tauri.conf.json"), "utf8"),
+    readFile(path.join(ROOT, "metadata", "release.json"), "utf8").then(JSON.parse),
   ]);
   const tauriConfig = JSON.parse(tauriConfigText);
   assert.match(workflow, /run: npm run test:ci/);
   assert.match(workflow, /run: npm run desktop:prepare/);
   assert.match(workflow, /name: act-generated-theme-assets/);
+  const releaseLabel = releaseMetadata.desktop.channel.slice(0, 1).toUpperCase()
+    + releaseMetadata.desktop.channel.slice(1);
+  const versionPattern = releaseMetadata.desktop.version.replaceAll(".", "\\.");
+  assert.match(workflow, /npm run generate && npm run validate && npm run desktop:prepare/);
   assert.match(workflow, /DESKTOP_RELEASE_READY/);
   assert.match(workflow, /TAURI_SIGNING_PRIVATE_KEY/);
   assert.match(workflow, /TAURI_SIGNING_PRIVATE_KEY_PASSWORD/);
@@ -620,9 +626,11 @@ test("desktop beta release requires updater signing and discloses deferred platf
   assert.match(workflow, /Validate Windows portable helper/);
   assert.match(workflow, /npm run installer:validate/);
   assert.match(workflow, /Updater-signed Tauri Theme Manager beta/);
-  assert.match(workflow, /releaseName: "Awesome Codex Theme \$\{\{ github\.ref_name \}\} Beta"/);
+  assert.match(workflow, new RegExp('releaseName: "Awesome Codex Theme v' + versionPattern + " " + releaseLabel + '"'));
+  assert.match(workflow, /Verify release tag matches metadata/);
+  assert.match(workflow, new RegExp('run: test "\\$\\{\\{ github\\.ref_name \\}\\}" = "v' + versionPattern + '"'));
   assert.match(workflow, /unknown-publisher warning/);
-  assert.match(workflow, /prerelease: false/);
+  assert.match(workflow, new RegExp("prerelease: " + releaseMetadata.desktop.githubPrerelease));
   assert.match(workflow, /releaseDraft: true/);
   assert.doesNotMatch(workflow, /WINDOWS_CERTIFICATE/);
   assert.doesNotMatch(workflow, /APPLE_CERTIFICATE/);
@@ -641,6 +649,8 @@ test("desktop beta release requires updater signing and discloses deferred platf
   assert.doesNotMatch(workflow, /desktop-macos-(?:arm64|x64)/);
   assert.equal(tauriConfig.bundle.macOS.signingIdentity, "-");
   assert.match(tauriConfig.plugins.updater.pubkey, /^[A-Za-z0-9+/=]{100,}$/);
+  assert.equal(tauriConfig.plugins.updater.endpoints[0], releaseMetadata.desktop.updater.endpoint);
+  assert.doesNotMatch(tauriConfig.plugins.updater.endpoints[0], /github\.com\/.*\/releases\/(?:latest|download)/);
 });
 
 test("desktop preparation derives compact thumbnails from recorded captures", async function () {

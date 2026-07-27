@@ -1,0 +1,63 @@
+name: Bug report / 缺陷报告
+description: Report a reproducible Gallery, generator, Theme Manager, or Native fallback defect.
+title: "[Bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Do not include credentials, private chats, account names, local home paths, or unredacted screenshots. For a security vulnerability, follow SECURITY.md instead of opening a public issue.
+
+  - type: dropdown
+    id: surface
+    attributes:
+      label: Surface / 受影响部分
+      options:
+        - Gallery
+        - Theme generator or validator
+        - Theme Manager
+        - Full Skin runtime
+        - Native fallback
+        - Installer or release artifact
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment / 环境
+      description: Include OS, architecture, browser or Theme Manager version, and the exact Codex version only when relevant.
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Reproduction steps / 复现步骤
+      placeholder: |
+        1. ...
+        2. ...
+        3. ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected_actual
+    attributes:
+      label: Expected and actual result / 预期与实际结果
+    validations:
+      required: true
+
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Privacy-safe evidence / 脱敏证据
+      description: Add a redacted error, screenshot, or a minimal trace. Do not attach private application data.
+
+  - type: checkboxes
+    id: confirmation
+    attributes:
+      label: Confirmation / 确认
+      options:
+        - label: I removed private data, secrets, and personal paths from this report. / 我已移除私有数据、密钥和个人路径。
+          required: true

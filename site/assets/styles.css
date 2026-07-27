@@ -1410,6 +1410,91 @@ img {
   display: none;
 }
 
+.capability-matrix {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 14px;
+}
+
+.capability-matrix > h3 {
+  grid-column: 1 / -1;
+  margin: 14px 0 0;
+  color: var(--ink);
+  font-size: 14px;
+  letter-spacing: 0.02em;
+}
+
+.capability-card {
+  min-width: 0;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.56);
+}
+
+.capability-card h4 {
+  margin: 0 0 13px;
+  font-size: 15px;
+}
+
+.capability-card dl,
+.capability-card dd {
+  padding: 0;
+  margin: 0;
+}
+
+.capability-card dl {
+  display: grid;
+  gap: 12px;
+}
+
+.capability-card dl > div {
+  display: grid;
+  gap: 4px;
+}
+
+.capability-card dt {
+  color: var(--ink-soft);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.capability-card dd {
+  display: grid;
+  gap: 4px;
+}
+
+.capability-card small {
+  color: var(--ink-soft);
+  font-size: 10px;
+  line-height: 1.55;
+}
+
+.capability-status {
+  width: fit-content;
+  padding: 3px 6px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.capability-status.is-verified {
+  color: #1e624c;
+  background: rgba(78, 141, 118, 0.16);
+}
+
+.capability-status.is-build-only {
+  color: #845f17;
+  background: rgba(217, 161, 60, 0.18);
+}
+
+.capability-status.is-unverified {
+  color: #874b40;
+  background: rgba(185, 101, 80, 0.16);
+}
+
 .coverage-dot {
   width: 8px;
   height: 8px;
@@ -2145,6 +2230,10 @@ img {
   }
 
   .compatibility-table {
+    grid-template-columns: 1fr;
+  }
+
+  .capability-matrix {
     grid-template-columns: 1fr;
   }
 

@@ -105,6 +105,9 @@ const translations = {
     registryCount: "{count} themes / {source}",
     sourceRemote: "online",
     sourceLocal: "local",
+    capabilityVerified: "verified",
+    capabilityBuildOnly: "build-only",
+    capabilityUnverified: "unverified",
     updateDevelopment: "Development build · v{version}",
     updateUnsupported: "Catalog updates only on this platform",
     updateIdle: "Check for app updates",
@@ -242,6 +245,9 @@ const translations = {
     registryCount: "{count} 套 / {source}",
     sourceRemote: "在线",
     sourceLocal: "本地",
+    capabilityVerified: "已验证",
+    capabilityBuildOnly: "仅构建",
+    capabilityUnverified: "未验证",
     updateDevelopment: "开发模式 · v{version}",
     updateUnsupported: "当前平台仅提供目录更新",
     updateIdle: "检查应用更新",
@@ -357,6 +363,7 @@ const elements = {
   appVersion: document.querySelector("#appVersion"),
   registryHash: document.querySelector("#registryHash"),
   themeCount: document.querySelector("#themeCount"),
+  capabilitySummary: document.querySelector("#capabilitySummary"),
   openGallery: document.querySelector("#openGallery"),
   openRepository: document.querySelector("#openRepository"),
   updateButton: document.querySelector("#updateButton"),
@@ -584,6 +591,26 @@ function renderCatalogStatus() {
       source: t(state.catalog.source === "remote" ? "sourceRemote" : "sourceLocal"),
     })
     : "—";
+}
+
+function capabilityStatusLabel(status) {
+  const keys = {
+    verified: "capabilityVerified",
+    "build-only": "capabilityBuildOnly",
+    unverified: "capabilityUnverified",
+  };
+  return t(keys[status] || "capabilityUnverified");
+}
+
+function renderCapabilitySummary() {
+  const capabilities = state.catalog?.capabilities;
+  if (!Array.isArray(capabilities) || capabilities.length === 0) {
+    elements.capabilitySummary.textContent = "—";
+    return;
+  }
+  elements.capabilitySummary.textContent = capabilities.map((capability) => (
+    localized(capability.title) + " " + capabilityStatusLabel(capability.fullSkin?.status)
+  )).join(" · ");
 }
 
 function renderAppVersion() {
@@ -1016,6 +1043,7 @@ function renderLanguage() {
   if (state.catalog) {
     normalizeCollectionSelection();
     renderCatalogStatus();
+    renderCapabilitySummary();
     renderStyleTabs();
     renderCollectionTabs();
     renderFacetOptions();
@@ -1042,6 +1070,7 @@ function acceptCatalog(payload) {
     : ordered[0]?.id;
   normalizeCollectionSelection();
   renderCatalogStatus();
+  renderCapabilitySummary();
   renderStyleTabs();
   renderCollectionTabs();
   renderFacetOptions();

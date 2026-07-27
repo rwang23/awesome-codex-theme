@@ -29,6 +29,21 @@ The screenshot above is a real `act-full-skin-runtime-v2` capture from ChatGPT B
 
 > Desktop builds are published only on the official [GitHub Releases page](https://github.com/rwang23/awesome-codex-theme/releases). If that page has no asset compatible with your operating system and CPU, there is no supported public installer for that target.
 
+<!-- ACT:CAPABILITY-MATRIX:START -->
+## Current platform capability matrix
+
+This table is generated from [`metadata/release.json`](metadata/release.json) and checked by `npm run metadata:check`.
+
+| Target | Full Skin | Native fallback | Persistence |
+| --- | --- | --- | --- |
+| Windows x64 | Build-only (`26.715.3651.0`) | Verified (`26.715.2305.0`) | Verified (`26.715.3651.0`) |
+| macOS Apple silicon | Build-only | Build-only | Unverified |
+| macOS Intel | Build-only | Build-only | Unverified |
+
+The current catalog has **68 themes** and **136 modes** (revision `2026072201`).
+The current `beta` update-feed status is `unreleased`; in-app updates are not claimed until a signed static feed covers every platform.
+<!-- ACT:CAPABILITY-MATRIX:END -->
+
 ## More than a color palette
 
 Awesome Codex Theme combines the parts that make a desktop skin feel complete:
@@ -94,7 +109,7 @@ The Windows implementation of **Apply & Keep Full Skin** has passed an exact Cha
 
 Theme updates and app updates are independent. The manager refreshes the verified Registry on startup, so newly published themes appear immediately without reinstalling or restarting the app. A signed app update is needed only when the manager itself changes, such as its runtime, compatibility rules, security boundary, platform integration, or interface.
 
-The public beta uses Tauri updater signatures so future app updates can be verified. macOS bundles also carry an ad-hoc signature for package integrity, but Windows Authenticode, Apple Developer ID, and notarization are deferred. The operating system may still show an unknown-publisher warning; neither the updater signature nor the ad-hoc Mac signature removes SmartScreen or Gatekeeper warnings. See [release trust and signing](docs/release-signing.md).
+The public beta uses Tauri updater signatures for the future signed-update path. The current update-feed state is intentionally **unreleased**: a GitHub prerelease alone does not enable in-app updates until a signed static feed covers every platform and passes action-after verification. macOS bundles also carry an ad-hoc signature for package integrity, but Windows Authenticode, Apple Developer ID, and notarization are deferred. The operating system may still show an unknown-publisher warning; neither the updater signature nor the ad-hoc Mac signature removes SmartScreen or Gatekeeper warnings. See [release metadata](docs/release-metadata.md) and [release trust and signing](docs/release-signing.md).
 
 ## See the real result
 

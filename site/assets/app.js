@@ -123,6 +123,15 @@ const translations = {
     loadFailed: "The registry could not be loaded. Run the build and serve this directory over HTTP.",
     capabilityNative: "ACT Full Skin v1 has current app-capture evidence for the named ChatGPT Beta test bench. It applies the background, materials, colors, and theme copy; Native v1 remains a palette-only fallback.",
     capabilityRuntimePending: "These Beta screenshots are recorded v2 reference evidence. The current Full Skin runtime is source-tested and must be recaptured on the named Beta test bench before it can be presented as current app verification; Native v1 remains a palette-only fallback.",
+    capabilityNote: "{format} is verified with ChatGPT Beta {version} and {model} across {modes} theme modes. {updater}",
+    capabilityMatrixTitle: "Platform evidence",
+    capabilityFullSkin: "Full Skin",
+    capabilityNativeFallback: "Native fallback",
+    capabilityPersistence: "Persistence",
+    capabilityStatusVerified: "Verified",
+    capabilityStatusBuildOnly: "Build-only",
+    capabilityStatusUnverified: "Unverified",
+    capabilityStatusReference: "Recorded reference",
     resultCount: "themes shown",
     allCollections: "All collections",
     allCollectionsCaption: "Original, city, and unofficial fan-art themes",
@@ -253,6 +262,15 @@ const translations = {
     loadFailed: "无法读取 Registry。请先构建项目，并通过 HTTP 服务访问。",
     capabilityNative: "ACT Full Skin v1 已具备指定 ChatGPT Beta 测试台的当前实机截图证据，可应用背景、材质、配色和主题文字；Native v1 只保留为配色回退。",
     capabilityRuntimePending: "这里的 Beta 截图是 v2 的已记录参考证据。当前 Full Skin 运行时已完成源码测试，必须在指定 Beta 测试台重新采集后，才可称为当前实机验证；Native v1 仍只保留为配色回退。",
+    capabilityNote: "{format} 已使用 ChatGPT Beta {version} 与 {model} 完成全部 {modes} 个主题模式的实机验证。{updater}",
+    capabilityMatrixTitle: "平台证据",
+    capabilityFullSkin: "Full Skin",
+    capabilityNativeFallback: "Native 回退",
+    capabilityPersistence: "常驻",
+    capabilityStatusVerified: "已验证",
+    capabilityStatusBuildOnly: "仅构建",
+    capabilityStatusUnverified: "未验证",
+    capabilityStatusReference: "已记录参考",
     resultCount: "套主题",
     allCollections: "全部系列",
     allCollectionsCaption: "原创、城市与非官方 Fan Art 主题",
@@ -315,6 +333,7 @@ const elements = {
   dialogDescription: document.querySelector("#dialogDescription"),
   dialogMode: document.querySelector("#dialogMode"),
   capabilityNote: document.querySelector("#capabilityNote"),
+  capabilityMatrix: document.querySelector("#capabilityMatrix"),
   dialogRights: document.querySelector("#dialogRights"),
   nativeThemeString: document.querySelector("#nativeThemeString"),
   copyTheme: document.querySelector("#copyTheme"),
@@ -333,6 +352,12 @@ function captureEvidenceIsVerified() {
   return evidence?.status === "verified" && evidence.currentRuntime?.verification === "verified";
 }
 
+function interpolate(template, values) {
+  return Object.entries(values).reduce(function (result, entry) {
+    return result.replaceAll("{" + entry[0] + "}", String(entry[1] ?? ""));
+  }, template);
+}
+
 function renderCollectionIntro() {
   if (!state.registry || !elements.collectionIntro) return;
   const original = state.registry.themes.filter(function (theme) {
@@ -344,6 +369,80 @@ function renderCollectionIntro() {
   elements.collectionIntro.textContent = t("collectionIntro")
     .replace("{original}", String(original))
     .replace("{fanArt}", String(fanArt));
+}
+
+function capabilityStatus(status) {
+  const keys = {
+    verified: "capabilityStatusVerified",
+    "build-only": "capabilityStatusBuildOnly",
+    unverified: "capabilityStatusUnverified",
+    reference: "capabilityStatusReference"
+  };
+  return t(keys[status] || "capabilityStatusUnverified");
+}
+
+function buildCapabilityNote() {
+  if (!captureEvidenceIsVerified()) return t("capabilityRuntimePending");
+  const release = state.registry?.release;
+  const capture = release?.capture || {};
+  return interpolate(t("capabilityNote"), {
+    format: release?.runtime?.fullSkinFormat || "ACT Full Skin v1",
+    version: capture.appVersion || "—",
+    model: capture.modelLabel || "—",
+    modes: (state.registry?.themes?.length || 0) * 2,
+    updater: localized(release?.desktop?.updater?.message)
+  });
+}
+
+function renderCapabilityMatrix() {
+  const capabilities = state.registry?.capabilities;
+  if (!elements.capabilityMatrix || !Array.isArray(capabilities) || capabilities.length === 0) {
+    elements.capabilityMatrix?.replaceChildren();
+    if (elements.capabilityMatrix) elements.capabilityMatrix.hidden = true;
+    return;
+  }
+  const featureLabels = [
+    ["fullSkin", "capabilityFullSkin"],
+    ["native", "capabilityNativeFallback"],
+    ["persistence", "capabilityPersistence"]
+  ];
+  const fragment = document.createDocumentFragment();
+  const heading = document.createElement("h3");
+  heading.textContent = t("capabilityMatrixTitle");
+  fragment.append(heading);
+  capabilities.forEach(function (capability) {
+    const card = document.createElement("article");
+    card.className = "capability-card";
+    const title = document.createElement("h4");
+    title.textContent = localized(capability.title) || capability.id;
+    const list = document.createElement("dl");
+    featureLabels.forEach(function (entry) {
+      const feature = capability[entry[0]];
+      if (!feature || typeof feature !== "object") return;
+      const row = document.createElement("div");
+      const term = document.createElement("dt");
+      term.textContent = t(entry[1]);
+      const definition = document.createElement("dd");
+      const displayStatus = entry[0] === "fullSkin" && !captureEvidenceIsVerified()
+        ? "reference"
+        : feature.status;
+      const status = document.createElement("span");
+      status.className = "capability-status is-" + displayStatus;
+      status.textContent = capabilityStatus(displayStatus)
+        + (feature.testedVersion ? " · " + feature.testedVersion : "");
+      const detail = document.createElement("small");
+      detail.textContent = displayStatus === "reference"
+        ? t("capabilityRuntimePending")
+        : localized(feature.detail);
+      definition.append(status, detail);
+      row.append(term, definition);
+      list.append(row);
+    });
+    card.append(title, list);
+    fragment.append(card);
+  });
+  elements.capabilityMatrix.replaceChildren(fragment);
+  elements.capabilityMatrix.hidden = false;
 }
 
 function localized(record) {
@@ -525,6 +624,7 @@ function updateLanguage() {
   renderCollectionPicker();
   renderFilterLabels();
   renderCollectionIntro();
+  renderCapabilityMatrix();
   reorderGalleryForLocale();
 
   state.cards.forEach(function (card, id) {
@@ -712,7 +812,7 @@ function updateDialog() {
   elements.dialogPreview.src = assetUrl(visual.path);
   elements.dialogPreview.alt = localized(theme.name) + " · " + visual.label + " · " + t(state.dialogMode);
   elements.dialogVariant.textContent = visual.label + " · " + localized(collectionFor(theme)?.name) + " · " + t(theme.variant);
-  elements.capabilityNote.textContent = t(captureEvidenceIsVerified() ? "capabilityNative" : "capabilityRuntimePending");
+  elements.capabilityNote.textContent = buildCapabilityNote();
   elements.dialogRights.hidden = theme.rightsProfile !== "fan-art";
   elements.dialogRights.textContent = theme.rightsProfile === "fan-art"
     ? localized(theme.fanArt?.work) + " · " + t("fanArtNotice")

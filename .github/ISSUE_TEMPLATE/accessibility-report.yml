@@ -1,0 +1,44 @@
+name: Accessibility report / 无障碍报告
+description: Report a keyboard, focus, contrast, screen-reader, zoom, motion, or forced-colors barrier.
+title: "[Accessibility] "
+labels: ["accessibility"]
+body:
+  - type: dropdown
+    id: surface
+    attributes:
+      label: Surface / 受影响部分
+      options:
+        - Gallery website
+        - Theme Manager
+        - Theme Manager installer or update UI
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment / 环境
+      description: OS, browser/WebView, assistive technology when relevant, zoom or display scaling, and color/motion settings.
+    validations:
+      required: true
+
+  - type: textarea
+    id: barrier
+    attributes:
+      label: Barrier and expected outcome / 障碍与预期结果
+      description: Include the control or content, current behavior, expected behavior, and why it blocks the task.
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Reproduction steps / 复现步骤
+    validations:
+      required: true
+
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Privacy-safe evidence / 脱敏证据
+      description: Screenshots, a short recording, or screen-reader output are welcome after private content is removed.

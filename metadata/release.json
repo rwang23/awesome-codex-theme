@@ -1,0 +1,138 @@
+{
+  "schemaVersion": 1,
+  "product": {
+    "name": "Awesome Codex Theme",
+    "repository": "https://github.com/rwang23/awesome-codex-theme",
+    "releases": "https://github.com/rwang23/awesome-codex-theme/releases"
+  },
+  "desktop": {
+    "version": "0.3.2",
+    "channel": "beta",
+    "githubPrerelease": true,
+    "updater": {
+      "status": "unreleased",
+      "endpoint": "https://rwang23.github.io/awesome-codex-theme/updates/stable.json",
+      "message": {
+        "en": "This beta does not consume a public update feed until a signed static feed with every platform record is published.",
+        "zh-CN": "在发布包含全部平台记录的签名静态更新清单前，此 Beta 不使用公共更新源。"
+      }
+    }
+  },
+  "runtime": {
+    "fullSkinFormat": "act-full-skin-v1",
+    "implementationVersion": "act-full-skin-runtime-v3",
+    "sourceArtRenderer": "act-source-art-renderer-v2",
+    "nativeTestedVersion": "26.715.2305.0"
+  },
+  "capture": {
+    "channel": "beta",
+    "appVersion": "26.715.3651.0",
+    "packageFullName": "OpenAI.CodexBeta_26.715.3651.0_x64__2p2nqsd0c76g0",
+    "packageFamilyName": "OpenAI.CodexBeta_2p2nqsd0c76g0",
+    "aumid": "OpenAI.CodexBeta_2p2nqsd0c76g0!App",
+    "executable": "ChatGPT (Beta).exe",
+    "fixture": "full-skin-home-v1",
+    "modelLabel": "5.6 Sol Max"
+  },
+  "capabilities": [
+    {
+      "id": "windows-x64",
+      "platform": "windows",
+      "architecture": "x64",
+      "title": {
+        "en": "Windows x64",
+        "zh-CN": "Windows x64"
+      },
+      "fullSkin": {
+        "status": "build-only",
+        "testedVersion": "26.715.3651.0",
+        "detail": {
+          "en": "The recorded Beta capture is v2 reference evidence; the current v3 runtime is source-tested and requires recapture before a physical-app verification claim.",
+          "zh-CN": "已记录的 Beta 截图是 v2 参考证据；当前 v3 运行时已完成源码测试，需重新采集后才能称为实体应用验证。"
+        }
+      },
+      "native": {
+        "status": "verified",
+        "testedVersion": "26.715.2305.0",
+        "detail": {
+          "en": "Strict Native v1 payload generation and parser validation are covered.",
+          "zh-CN": "已覆盖严格 Native v1 载荷生成与解析校验。"
+        }
+      },
+      "persistence": {
+        "status": "verified",
+        "testedVersion": "26.715.3651.0",
+        "detail": {
+          "en": "Consent-gated persistent replay and cleanup were verified for the named Beta package.",
+          "zh-CN": "已针对指定 Beta 包验证经同意的常驻重放与清理。"
+        }
+      }
+    },
+    {
+      "id": "macos-aarch64",
+      "platform": "macos",
+      "architecture": "aarch64",
+      "title": {
+        "en": "macOS Apple silicon",
+        "zh-CN": "macOS Apple 芯片"
+      },
+      "fullSkin": {
+        "status": "build-only",
+        "testedVersion": "",
+        "detail": {
+          "en": "CI validates the bundle structure; physical-app Full Skin verification is pending.",
+          "zh-CN": "CI 已校验包结构；实体应用的 Full Skin 验证仍待完成。"
+        }
+      },
+      "native": {
+        "status": "build-only",
+        "testedVersion": "",
+        "detail": {
+          "en": "The generated Native payload is portable, but no physical macOS import test is recorded.",
+          "zh-CN": "生成的 Native 载荷可移植，但尚未记录实体 macOS 导入测试。"
+        }
+      },
+      "persistence": {
+        "status": "unverified",
+        "testedVersion": "",
+        "detail": {
+          "en": "The implementation rejects unsafe paths; physical-Mac persistence evidence is still pending.",
+          "zh-CN": "实现会拒绝不安全路径；实体 Mac 常驻证据仍待完成。"
+        }
+      }
+    },
+    {
+      "id": "macos-x86-64",
+      "platform": "macos",
+      "architecture": "x86_64",
+      "title": {
+        "en": "macOS Intel",
+        "zh-CN": "macOS Intel"
+      },
+      "fullSkin": {
+        "status": "build-only",
+        "testedVersion": "",
+        "detail": {
+          "en": "CI validates the bundle structure; physical-app Full Skin verification is pending.",
+          "zh-CN": "CI 已校验包结构；实体应用的 Full Skin 验证仍待完成。"
+        }
+      },
+      "native": {
+        "status": "build-only",
+        "testedVersion": "",
+        "detail": {
+          "en": "The generated Native payload is portable, but no physical macOS import test is recorded.",
+          "zh-CN": "生成的 Native 载荷可移植，但尚未记录实体 macOS 导入测试。"
+        }
+      },
+      "persistence": {
+        "status": "unverified",
+        "testedVersion": "",
+        "detail": {
+          "en": "The implementation rejects unsafe paths; physical-Mac persistence evidence is still pending.",
+          "zh-CN": "实现会拒绝不安全路径；实体 Mac 常驻证据仍待完成。"
+        }
+      }
+    }
+  ]
+}
