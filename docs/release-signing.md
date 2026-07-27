@@ -74,13 +74,16 @@ DESKTOP_RELEASE_READY=true
 4. 生成 Tauri updater 产物与 `.sig`；
 5. 创建 draft Beta Release。
 
-当前 updater endpoint 使用 GitHub 的
-`/releases/latest/download/latest.json`。[GitHub 官方规定](https://docs.github.com/en/rest/releases/releases#get-the-latest-release)
-`latest` 只返回非 draft、非 prerelease 的 Release，因此工作流把
-`prerelease` 标志设为 `false`。
-Beta 身份由 `0.x` alpha 版本号、Release 标题和正文明确表达。发布前仍保留
-draft，人工检查后才公开。若以后改用独立的 Beta 更新清单，再把 GitHub 的
-prerelease 标志恢复为 `true`。
+发布状态、版本与 updater endpoint 由
+[`metadata/release.json`](../metadata/release.json) 统一声明，并由
+[`docs/release-metadata.md`](release-metadata.md) 生成可读摘要。当前 Beta 的
+GitHub Release 是 `prerelease: true`，但其 updater 状态明确为 `unreleased`：
+应用只指向预留的稳定静态清单位置，尚没有公开、签名且覆盖全部平台的更新清单。
+
+[Tauri Updater 文档](https://v2.tauri.app/plugin/updater/)允许使用静态 JSON
+endpoint，但该清单必须为每个目标平台提供正确的签名更新记录。因此，创建 draft
+或公开 Beta Release 本身不等于已经启用应用内更新；在独立静态清单准备并经过
+端到端验证前，Theme Manager 必须继续显示“更新通道尚未发布”。
 
 工作流不再要求 `WINDOWS_CERTIFICATE` 或 Apple 凭据。
 
@@ -114,14 +117,15 @@ prerelease 标志恢复为 `true`。
 - 三个平台资产是否齐全；
 - updater `.sig` 是否存在；
 - Apple Silicon 与 Intel 是否都包含 `.app.tar.gz` 和对应 `.sig`；
-- `latest.json` 或平台更新元数据是否引用准确资产；
+- 如果本次明确发布 updater 静态清单，检查它是否引用准确的全部平台资产；否则确认应用继续显示“更新通道尚未发布”；
 - 文件名、架构、字节数和 SHA-256；
 - Release 标题和正文是否明确写出 Beta；
-- GitHub `prerelease` 标志是否为 `false`，确保 updater 的 `latest` endpoint 可发现；
+- GitHub `prerelease` 标志是否为 `true`，并且没有把 draft Beta 错误宣称为可应用内更新；
 - 警告文案是否可见。
 
-检查完成后才能手动发布 Beta Release；GitHub 的 `prerelease` 标志仍保持
-`false`，由版本号、标题与正文表达 Beta 身份。创建 tag、推送和发布 Release
+检查完成后才能手动发布 Beta Release；GitHub 的 `prerelease` 标志保持 `true`。
+只有另行完成静态更新清单、签名和已安装应用的 action-after 验证，才能把
+`metadata/release.json` 的 updater 状态改为可用。创建 tag、推送和发布 Release
 都是远端状态变更，需要单独执行。
 
 ## 以后补齐平台签名
@@ -150,4 +154,4 @@ prerelease 标志恢复为 `true`。
 
 ## English summary
 
-The public beta requires Tauri updater signatures and an ad-hoc macOS bundle signature, while intentionally deferring Windows Authenticode, Apple Developer ID, and notarization. The updater signature authenticates future in-app updates; the ad-hoc signature checks bundle integrity. Neither establishes operating-system publisher trust. Tagged builds create a draft Beta Release only after updater keys and validation are ready. Because GitHub's `latest` route excludes prereleases, the GitHub prerelease flag remains false while the alpha version, title, and body clearly identify the build as Beta. Release notes must disclose the platform-trust boundary, and agents must never disable SmartScreen or Gatekeeper on the user's behalf.
+The public beta requires Tauri updater signatures and an ad-hoc macOS bundle signature, while intentionally deferring Windows Authenticode, Apple Developer ID, and notarization. The updater signature authenticates future in-app updates; the ad-hoc signature checks bundle integrity. Neither establishes operating-system publisher trust. Tagged builds create a draft prerelease Beta only after updater keys and validation are ready. The current Beta deliberately has no public updater feed: a separately signed static endpoint covering every platform must be published and action-after verified before in-app updates are described as available. Release notes must disclose the platform-trust boundary, and agents must never disable SmartScreen or Gatekeeper on the user's behalf.

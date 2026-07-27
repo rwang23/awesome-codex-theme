@@ -2,6 +2,52 @@
 
 ## Unreleased
 
+- Added a Chinese collaboration guide explaining local worktrees, branches,
+  Issues, draft PRs, reviews, merging, and post-merge verification.
+- Replaced the Theme Manager's custom persistence overlay and incomplete
+  composite control semantics with a native dialog, a tested inert/focus-trap
+  fallback, and ordinary button groups; restored invoking focus after
+  Escape/cancel, preserved normal copy behavior, improved essential
+  explanatory/status text contrast and size, and added an isolated Chromium
+  axe regression gate for serious/critical violations.
+- Made CI generate the canonical theme artifacts once and reuse them across
+  desktop and Gallery jobs; pinned Actions, isolated release credentials and
+  write permission, added workflow security linting, and made stale runs
+  cancellable.
+- Added a source-hash-bound original-art review ledger and made generated
+  `rightsVerified` status depend on its explicit approval rather than the
+  rights profile alone. A source-art byte change now invalidates the approval.
+- Centralized desktop release, capture, updater, and platform-capability
+  metadata. The generator, Gallery, Theme Manager, desktop configuration, and
+  release workflow now validate synchronized metadata instead of carrying
+  independent version or capability claims.
+- Changed draft Beta releases to GitHub prereleases and marked the updater
+  channel unreleased until a signed, cross-platform static feed is separately
+  published and verified.
+- Added integrity-bound 320px, 480px, and 960px presentation derivatives for
+  every recorded Beta capture. Gallery cards and the hero now use responsive
+  `srcset` media, the original evidence is an explicit metadata-backed action,
+  and Theme Manager reuses stable keyed cards with shared list/detail assets.
+- Reworked theme generation into a bounded, incremental pipeline with
+  source-art provenance checks, complete render fingerprints, atomic per-theme
+  writes, cache-aware progress, and reproducible benchmark commands.
+- Preserved target-discovery diagnostics instead of treating PowerShell,
+  permission, malformed-package, or malformed-output failures as “not found”.
+  The Theme Manager now provides retry and copy-diagnostic controls.
+- Changed Windows persistence restarts to request a normal app close first.
+  When that bounded wait expires, the controller leaves the existing selection
+  unchanged and requires a second, explicit data-loss warning before a force
+  close can be requested. macOS persistence hosts are now limited to
+  `/Applications` or the current user's `Applications` folder.
+- Preserved native Full Skin semantic colors and states, scoped runtime repair to
+  relevant document mutations, and added a synthetic long-session performance
+  budget. Existing Beta v2 screenshots are now explicit reference evidence;
+  the current v3 runtime is source-tested and recapture-required rather than
+  being presented as current app verification.
+- Replaced centered source-art cropping with a versioned focal-cover renderer, added directional safe-area grading, raised the new-source baseline to 2560x1440 16:9, and committed reproducible contact-sheet review evidence for the existing catalog.
+- Made the desktop check prepare its required capture catalog without relying
+  on the Tauri CLI, and bound its bundled-registry assertion to the current
+  catalog revision.
 - Changed the Gallery community section to clearly state that public community
   submissions are not open and removed its hosted-community link. Added a
   direct Theme Manager download action to the Gallery hero.

@@ -3,7 +3,7 @@
   const cssText = __ACT_CSS_JSON__;
   const imageData = __ACT_IMAGE_JSON__;
   const version = "act-full-skin-v1";
-  const implementationVersion = "act-full-skin-runtime-v2";
+  const implementationVersion = "act-full-skin-runtime-v3";
   const stateKey = "__ACT_FULL_SKIN_STATE__";
   const pendingKey = "__ACT_FULL_SKIN_PENDING__";
   const installToken = {};
@@ -88,15 +88,26 @@
   }
 
   let observer;
+  let observerRoot;
   let ensureTimer;
   let fallbackTimer;
   let retired = false;
   const metrics = {
     ensureCalls: 0,
     mutationCallbacks: 0,
-    scheduledEnsures: 0,
-    fallbackEnsures: 0,
+    relevantMutationCallbacks: 0,
+    ignoredMutationCallbacks: 0,
+    scheduledReconciles: 0,
+    fallbackHealthChecks: 0,
+    healthChecks: 0,
+    observerReconnects: 0,
+    ensureDurationMs: 0,
+    lastEnsureDurationMs: 0,
   };
+
+  const now = () => typeof globalThis.performance?.now === "function"
+    ? globalThis.performance.now()
+    : Date.now();
 
   const applyRoot = () => {
     root.classList.add("act-full-skin");
@@ -159,27 +170,62 @@
       )),
   );
 
-  const homeMarkerPresent = () => Boolean(
-    document.querySelector("[data-testid='home-icon']")
-    || document.querySelector(".group\\/home-suggestions, [class*='home-suggestions']"),
+  const runtimeMissing = () => {
+    const style = document.getElementById("act-full-skin-style");
+    const caption = document.getElementById("act-full-skin-caption");
+    return !root.classList.contains("act-full-skin")
+      || style?.textContent !== cssText
+      || caption?.parentElement !== document.body
+      || !root.style.getPropertyValue("--act-art-image").includes(artUrl);
+  };
+
+  const routeState = () => {
+    const hasMainSurface = Boolean(document.querySelector(mainSelector));
+    const home = hasMainSurface && detectHome();
+    return { hasMainSurface, home };
+  };
+
+  const routeChanged = ({ hasMainSurface, home }) => (
+    root.classList.contains("act-full-skin-home") !== home
+    || root.classList.contains("act-full-skin-task") !== (hasMainSurface && !home)
   );
+
+  const nodeMatches = (node, selector) => Boolean(
+    node
+    && (node.id === "act-full-skin-style" || node.id === "act-full-skin-caption"
+      || node.tagName === "BODY"
+      || node.matches?.(selector)
+      || node.querySelector?.(selector)),
+  );
+
+  const mutationMayAffectRuntime = (records) => records.some((record) => {
+    if (record.type !== "childList") return false;
+    const nodes = [...record.addedNodes, ...record.removedNodes];
+    return nodes.some((node) => nodeMatches(
+      node,
+      "main.main-surface, main, [role='main'], [data-testid='home-icon'], .group\\/home-suggestions, [class*='home-suggestions'], h1, h2, [class*='title'], #act-full-skin-style, #act-full-skin-caption",
+    ));
+  });
 
   const ensure = () => {
     if (retired || window[stateKey]?.installToken !== installToken || !document.body) return false;
+    const startedAt = now();
     metrics.ensureCalls += 1;
     applyRoot();
     ensureStyle();
     const caption = ensureCaption();
-    const hasMainSurface = Boolean(document.querySelector(mainSelector));
-    const home = hasMainSurface && detectHome();
+    const { hasMainSurface, home } = routeState();
     root.classList.toggle("act-full-skin-home", home);
     root.classList.toggle("act-full-skin-task", hasMainSurface && !home);
     caption.hidden = !home;
+    metrics.lastEnsureDurationMs = now() - startedAt;
+    metrics.ensureDurationMs += metrics.lastEnsureDurationMs;
     return true;
   };
 
   const stopWatchers = () => {
     observer?.disconnect();
+    observerRoot = undefined;
     clearTimeout(ensureTimer);
     clearInterval(fallbackTimer);
   };
@@ -210,6 +256,46 @@
     return true;
   };
 
+  const reconcile = () => {
+    if (retired || window[stateKey]?.installToken !== installToken || !document.body) return false;
+    metrics.healthChecks += 1;
+    const nextRoute = routeState();
+    const needsRepair = runtimeMissing() || routeChanged(nextRoute);
+    if (needsRepair) ensure();
+    if (observerRoot !== document.body) watchDocument();
+    return needsRepair;
+  };
+
+  const scheduleReconcile = () => {
+    clearTimeout(ensureTimer);
+    ensureTimer = setTimeout(() => {
+      ensureTimer = undefined;
+      metrics.scheduledReconciles += 1;
+      reconcile();
+    }, 180);
+  };
+
+  const onMutations = (records) => {
+    metrics.mutationCallbacks += 1;
+    if (!mutationMayAffectRuntime(records)) {
+      metrics.ignoredMutationCallbacks += 1;
+      return;
+    }
+    metrics.relevantMutationCallbacks += 1;
+    scheduleReconcile();
+  };
+
+  const watchDocument = () => {
+    const nextRoot = document.body || root;
+    if (observer && observerRoot === nextRoot) return;
+    observer?.disconnect();
+    observer = new MutationObserver(onMutations);
+    observer.observe(nextRoot, { childList: true, subtree: true });
+    observerRoot = nextRoot;
+    metrics.observerReconnects += 1;
+    state.observer = observer;
+  };
+
   const state = {
     version,
     implementationVersion,
@@ -220,39 +306,18 @@
     artwork,
     metrics,
     ensure,
+    reconcile,
     retire,
     cleanup,
   };
   window[stateKey] = state;
-  applyRoot();
-  ensureStyle();
-  ensureCaption();
   previous?.retire?.();
   ensure();
-
-  const scheduleEnsure = () => {
-    clearTimeout(ensureTimer);
-    ensureTimer = setTimeout(() => {
-      ensureTimer = undefined;
-      metrics.scheduledEnsures += 1;
-      ensure();
-    }, 180);
-  };
-  observer = new MutationObserver(() => {
-    metrics.mutationCallbacks += 1;
-    const routeChanged = homeMarkerPresent() !== root.classList.contains("act-full-skin-home");
-    const runtimeMissing = !root.classList.contains("act-full-skin")
-      || !document.getElementById("act-full-skin-style")
-      || !document.getElementById("act-full-skin-caption")
-      || !root.style.getPropertyValue("--act-art-image").includes(artUrl);
-    if (routeChanged || runtimeMissing) scheduleEnsure();
-  });
-  observer.observe(document.documentElement, { childList: true, subtree: true });
+  watchDocument();
   fallbackTimer = setInterval(() => {
-    metrics.fallbackEnsures += 1;
-    ensure();
+    metrics.fallbackHealthChecks += 1;
+    reconcile();
   }, 5000);
-  state.observer = observer;
   state.fallbackTimer = fallbackTimer;
   delete window[pendingKey];
 

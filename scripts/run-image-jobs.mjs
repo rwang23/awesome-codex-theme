@@ -6,6 +6,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { readPngDimensions } from "./lib/png.mjs";
+import { assessSourceArt, parseImageSize } from "./lib/source-art-policy.mjs";
 
 const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(SCRIPT_DIR, "..");
@@ -83,6 +84,12 @@ async function runJob(job, config, runner, temporaryRoot, force) {
     return;
   }
 
+  const expectedDimensions = parseImageSize(config.workflow.size);
+  const policyResult = assessSourceArt(config.sourceArtPolicy, job.id, expectedDimensions);
+  if (!policyResult.accepted) {
+    throw new Error(job.id + " image job " + policyResult.reason);
+  }
+
   const rightsProfile = job.rightsProfile || "original";
   const commonPrompt = job.promptProfile === "tribute"
     ? config.tributePrompt
@@ -110,7 +117,9 @@ async function runJob(job, config, runner, temporaryRoot, force) {
     }
     effectiveCommonPrompt = commonPrompt.replace(find, replace);
   }
-  const prompt = effectiveCommonPrompt + "\n\nScene brief: " + job.prompt;
+  const prompt = effectiveCommonPrompt
+    + "\n\nScene brief: " + job.prompt
+    + (policyResult.kind === "canonical" ? "\n\n" + config.sourceArtPolicy.newThemePrompt : "");
   const payload = {
     model: config.workflow.model,
     prompt,
@@ -135,8 +144,9 @@ async function runJob(job, config, runner, temporaryRoot, force) {
 
   const image = await readFile(output);
   const dimensions = readPngDimensions(image);
-  if (dimensions.width !== 1536 || dimensions.height !== 1024) {
-    throw new Error(job.id + " returned " + dimensions.width + "x" + dimensions.height);
+  if (dimensions.width !== expectedDimensions.width || dimensions.height !== expectedDimensions.height) {
+    throw new Error(job.id + " returned " + dimensions.width + "x" + dimensions.height
+      + " instead of " + config.workflow.size);
   }
   const jobResult = JSON.parse(await readFile(resultPath, "utf8"));
   const fanArt = rightsProfile === "fan-art" ? job.fanArt : undefined;

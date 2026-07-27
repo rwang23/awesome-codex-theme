@@ -4,8 +4,11 @@ import { mkdir, readFile, rm, stat, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
+import { readReleaseMetadata } from "./lib/release-metadata.mjs";
+
 const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(SCRIPT_DIR, "..");
+const RELEASE = readReleaseMetadata(ROOT);
 const APPLY = process.argv.includes("--apply");
 const DEBUG = process.argv.includes("--debug");
 const UI_ONLY = process.argv.includes("--ui-only");
@@ -32,7 +35,7 @@ const MANAGER_EXE = MANAGER_EXECUTABLE
     "awesome-codex-theme.exe",
   );
 const SCREENSHOT_PATH = path.join(ROOT, "docs", "assets", "theme-manager-windows.png");
-const BETA_PACKAGE = "OpenAI.CodexBeta_26.715.3651.0_x64__2p2nqsd0c76g0";
+const BETA_PACKAGE = RELEASE.capture.packageFullName;
 
 function argumentValue(name) {
   const exact = process.argv.find((value) => value.startsWith(name + "="));
@@ -336,7 +339,7 @@ function expectedFullSkinStateExpression() {
         && bodyBackground.includes(runtime.artUrl)
     };
     return state.version === "act-full-skin-v1"
-      && state.implementationVersion === "act-full-skin-runtime-v2"
+      && state.implementationVersion === "act-full-skin-runtime-v3"
       && state.themeId === ${JSON.stringify(THEME_ID)}
       && state.mode === ${JSON.stringify(MODE)}
       && state.root

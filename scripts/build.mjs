@@ -29,11 +29,14 @@ export async function buildSite(outputPath = DEFAULT_OUTPUT) {
   const registryBuffer = await readFile(path.join(ROOT, "themes", "registry.json"));
   const registry = JSON.parse(registryBuffer.toString("utf8"));
   const registrySha256 = createHash("sha256").update(registryBuffer).digest("hex");
-  const tauriConfig = JSON.parse(await readFile(
-    path.join(ROOT, "apps", "theme-manager", "src-tauri", "tauri.conf.json"),
-    "utf8",
-  ));
-  const desktopVersion = tauriConfig.version;
+  const desktopVersion = registry.release?.desktop?.version;
+  if (typeof desktopVersion !== "string" || desktopVersion.length === 0) {
+    throw new Error("Generated Registry is missing release.desktop.version");
+  }
+  const product = registry.release?.product;
+  if (!product?.repository || !product?.releases) {
+    throw new Error("Generated Registry is missing product release metadata");
+  }
   const installer = await buildWindowsInstaller();
 
   await rm(output, { recursive: true, force: true });
@@ -53,8 +56,11 @@ export async function buildSite(outputPath = DEFAULT_OUTPUT) {
   await Promise.all([
     copyRelative("themes/registry.json", output),
     copyRelative("themes/source-art/jobs.json", output),
+    copyRelative("themes/source-art/reviews.json", output),
+    copyRelative("metadata/release.json", output),
     copyRelative("schemas/theme-pack.schema.json", output),
     copyRelative("schemas/registry.schema.json", output),
+    copyRelative("schemas/source-art-review.schema.json", output),
     copyRelative("docs/assets/theme-manager-windows.png", output),
     copyRelative("LICENSE", output),
     copyRelative("NOTICE.md", output),
@@ -74,6 +80,7 @@ export async function buildSite(outputPath = DEFAULT_OUTPUT) {
       schemaVersion: 1,
       standard: registry.standard,
       assetsBaseUrl: "https://rwang23.github.io/awesome-codex-theme/",
+      release: registry.release,
       registry: {
         url: "https://rwang23.github.io/awesome-codex-theme/themes/registry.json",
         sha256: registrySha256,
@@ -83,15 +90,22 @@ export async function buildSite(outputPath = DEFAULT_OUTPUT) {
         modeCount: registry.themes.length * 2,
       },
       desktop: {
-        repository: "https://github.com/rwang23/awesome-codex-theme",
-        releases: "https://github.com/rwang23/awesome-codex-theme/releases",
+        repository: product.repository,
+        releases: product.releases,
         currentVersion: desktopVersion,
+        channel: registry.release.desktop.channel,
+        updater: registry.release.desktop.updater,
       },
+      capabilities: registry.capabilities,
     }, null, 2) + "\n", "utf8"),
   );
 
   const copied = new Set();
   for (const theme of registry.themes) {
+    const capturePaths = (capture) => [
+      capture?.evidence?.path,
+      ...(capture?.presentation || []).map((variant) => variant.path),
+    ];
     const paths = [
       theme.package.path,
       theme.package.manifest,
@@ -102,8 +116,8 @@ export async function buildSite(outputPath = DEFAULT_OUTPUT) {
       theme.previews.dark.fullSkin?.asset,
       theme.previews.light.nativeTheme.path,
       theme.previews.dark.nativeTheme.path,
-      theme.previews.light.capture?.path,
-      theme.previews.dark.capture?.path,
+      ...capturePaths(theme.previews.light.capture),
+      ...capturePaths(theme.previews.dark.capture),
     ].filter(Boolean);
     for (const relativePath of paths) {
       if (copied.has(relativePath)) continue;

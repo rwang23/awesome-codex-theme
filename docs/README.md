@@ -30,6 +30,7 @@ locations are reserved for execution evidence or closed history when needed.
 - fan-art-policy.md: public rights boundary, non-commercial terms, and takedown path
 - gallery-design.md: redesign evidence and the independent Gallery visual system
 - standard.md: version 1 canonical manifest and package contract
+- assets/source-art-review/ and ../themes/source-art/reviews/: deterministic focal-crop contact sheets, safe-area fixtures, and approval records
 - adapters.md: ACT Full Skin contract, Native fallback, and unsupported
   capabilities
 - desktop-manager.md: Tauri architecture, catalog refresh, signed app updates,
@@ -45,6 +46,8 @@ locations are reserved for execution evidence or closed history when needed.
   Windows-verified no-patch per-user controller
 - agent-install.md: copy-ready installation contract, trust checks, and
   explicit stop conditions for coding agents
+- git-pr-collaboration-guide.zh-CN.md: plain-language Chinese guide to local
+  worktrees, branches, Issues, draft PRs, review, merge, and post-merge checks
 - community-platform.md: custom-domain, hosted submission, voting, storage,
   moderation, deployed private Beta, and staged backend architecture
 - native-testing.md: isolated Full Skin validation, Theme Manager smoke, and

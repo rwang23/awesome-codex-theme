@@ -1,0 +1,55 @@
+name: Compatibility report / 兼容性报告
+description: Report a platform, package-version, or supported-runtime compatibility result.
+title: "[Compatibility] "
+labels: ["compatibility"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Compatibility is version-bound. Please do not run a Full Skin probe against a personal or production session just to fill this form. Remove private paths, user names, chats, and account data.
+
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Platform / 平台
+      options:
+        - Windows x64
+        - macOS Apple silicon
+        - macOS Intel
+        - Other or unsupported platform
+    validations:
+      required: true
+
+  - type: dropdown
+    id: path
+    attributes:
+      label: Feature path / 功能路径
+      options:
+        - Full Skin apply and restore
+        - Native fallback import
+        - Persistent replay
+        - Theme Manager build or launch
+        - App update channel
+    validations:
+      required: true
+
+  - type: textarea
+    id: identity
+    attributes:
+      label: Version and target identity / 版本与目标身份
+      description: State exact app and Theme Manager versions. Redact personal installation paths; package family/channel is enough.
+    validations:
+      required: true
+
+  - type: textarea
+    id: result
+    attributes:
+      label: Result and verification boundary / 结果与验证边界
+      description: Describe what worked or failed, what direct evidence you observed, and any step you intentionally did not run.
+    validations:
+      required: true
+
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Privacy-safe evidence / 脱敏证据

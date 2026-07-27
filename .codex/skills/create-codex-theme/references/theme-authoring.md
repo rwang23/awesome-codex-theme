@@ -10,7 +10,7 @@
 - `cinematic`、`chibi`、`cityscape` 或 `scene` variant
 - 左右焦点、安全区和任务模式
 - 符合对比度门槛的明暗 token
-- 一张 1536×1024 已审查源图及 provenance
+- 一张 2560×1440 或更高的 16:9 已审查源图及 provenance
 
 `cinematic-chibi` collection 要求同一 `pair` 同时有原画版和 Q 版。新增此类主题时准备两份 brief，并在运行完整校验前把两个 variant 都加入 catalog。`standalone` collection 可以一次加入一套。
 
@@ -32,11 +32,12 @@
 
 ## 工作区构图
 
-源图不是实机截图，但会生成 Full Skin 使用的 2560×1440 背景。Codex Native 回退仍然只改变配色。安全区要同时照顾左侧导航、主标题、建议卡片和底部 composer，不能只为了 Gallery 卡片好看。
+源图不是实机截图，但会生成 Full Skin 使用的 2560×1440 背景。新主题必须使用 16:9、2560×1440 或更高的源图。当前 1536×1024 源图只能通过 `themes/source-art/jobs.json` 的具名历史例外保留给现有 ID，不能复制到新 job。Codex Native 回退仍然只改变配色。安全区要同时照顾左侧导航、主标题、建议卡片和底部 composer，不能只为了 Gallery 卡片好看。
 
-- `safeArea: left` 时，左侧约 46% 保持低对比、低细节。
-- 主体放在右侧三分之一，不能贴边。
-- 重要内容放在垂直中间 82%，以适应 3:2 到 16:9 的裁切。
+- `focusX` 和 `focusY` 是归一化焦点。生成器在源图可移动时以该点为中心生成 16:9 焦点裁切，并在边缘夹紧。
+- `safeArea: left` 时，左侧约 46% 保持低对比、低细节；`right` 反转该阅读区；`center` 保留中部阅读区；`none` 不追加阅读区叠色。
+- 主体放在与安全区相反的区域，不能贴边。`center` 安全区需要把主体分布到两侧，或使用 `none`。
+- 重要内容留在垂直中间 82%，即使源图已经是 16:9，也要为不同预览尺寸留余量。
 - 避免满屏人脸、强烈放射光、碎片和密集文字形状。
 - Q 版角色要有完整剪影和可信材质，不能像随机贴纸。
 
@@ -60,12 +61,12 @@
 
 校验器要求：
 
-- text/surface ≥ 4.5
-- muted/surface ≥ 4.5
-- accent/background ≥ 3.0
+- text/surface 和 text/surfaceAlt 都 ≥ 4.5
+- muted/surface 和 muted/surfaceAlt 都 ≥ 4.5
+- accent/background、accent/surface 和 accent/surfaceAlt 都 ≥ 3.0
 - accentContrast/accent ≥ 4.5
 
-不要只看色卡。把预览放进 Gallery 和安装弹窗后再判断。
+`border` 只作装饰，不能作为键盘焦点或可点击状态的唯一边界。不要只看色卡。把预览放进 Gallery 和安装弹窗后再判断。
 
 ## 来源与授权
 

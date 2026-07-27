@@ -7,10 +7,11 @@
   "scripts": {
     "tauri": "tauri",
     "prepare:assets": "node ../../scripts/prepare-desktop.mjs && tauri icon build/icon.png --output src-tauri/icons",
+    "a11y:check": "node scripts/verify-a11y.mjs",
     "start": "npm run prepare:assets && tauri dev",
     "pretest": "npm run prepare:assets",
     "test": "cargo test --manifest-path src-tauri/Cargo.toml",
-    "check": "cargo fmt --manifest-path src-tauri/Cargo.toml --check && cargo test --manifest-path src-tauri/Cargo.toml",
+    "check": "node ../../scripts/prepare-desktop.mjs && cargo fmt --manifest-path src-tauri/Cargo.toml --check && cargo test --manifest-path src-tauri/Cargo.toml",
     "build": "npm run prepare:assets && tauri build",
     "build:win": "npm run prepare:assets && tauri build --bundles nsis",
     "build:mac": "npm run prepare:assets && tauri build --bundles dmg",
@@ -18,7 +19,8 @@
     "build:mac:release": "npm run prepare:assets && tauri build --config src-tauri/tauri.release.conf.json --bundles dmg"
   },
   "devDependencies": {
-    "@tauri-apps/cli": "2.11.4"
+    "@tauri-apps/cli": "2.11.4",
+    "axe-core": "4.12.1"
   },
   "author": "Awesome Codex Theme contributors",
   "license": "MIT"

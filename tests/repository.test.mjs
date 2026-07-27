@@ -1,9 +1,11 @@
 import assert from "node:assert/strict";
+import { createHash } from "node:crypto";
 import { mkdtemp, readFile, rm, stat } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
+import { runInNewContext } from "node:vm";
 
 import { buildSite } from "../scripts/build.mjs";
 import { buildWindowsInstaller } from "../scripts/build-installer.mjs";
@@ -29,14 +31,19 @@ async function exists(target) {
 
 test("repository validates sixty-eight dual-mode code-free themes in eleven collections", async function () {
   const result = await validateRepository();
-  assert.deepEqual(result, {
+  assert.equal(result.sources, 68);
+  assert.equal(result.themes, 68);
+  assert.equal(result.modes, 136);
+  assert.equal(result.packages, 68);
+  assert.equal(result.fullSkinExports, 136);
+  assert.equal(result.nativeExports, 136);
+  assert.equal(result.captures, 136);
+  assert.equal(result.presentationVariants, 408);
+  assert.ok(result.conservativeGalleryInitialBytes <= 3 * 1024 * 1024);
+  assert.deepEqual(result.focalCropDiagnostics, {
+    horizontallyAdjustable: 0,
     sources: 68,
-    themes: 68,
-    modes: 136,
-    packages: 68,
-    fullSkinExports: 136,
-    nativeExports: 136,
-    captures: 136
+    verticallyAdjustable: 68,
   });
 });
 
@@ -46,8 +53,20 @@ test("registry exposes original and disclosed fan-art collections", async functi
     readFile(path.join(ROOT, "themes", "registry.json"), "utf8").then(JSON.parse),
     readFile(path.join(ROOT, "screenshots", "codex-beta-26.715.3651.0", "manifest.json"), "utf8").then(JSON.parse),
   ]);
-  assert.equal(catalog.catalogRevision, 2026072201);
+  assert.equal(catalog.catalogRevision, 2026072701);
   assert.equal(registry.catalogRevision, catalog.catalogRevision);
+  assert.deepEqual(registry.runtimeEvidence, {
+    status: "reference",
+    capturedRuntime: {
+      implementationVersion: "act-full-skin-runtime-v2",
+      sha256: "351922db02564b328caabaa762600653e89abbddd93b6eee640d4da28cc4a594",
+    },
+    currentRuntime: {
+      implementationVersion: "act-full-skin-runtime-v3",
+      sha256: "7e601b402ce1aae3b1a72e55cfaffc2b23cf03951401100d3e0918138ca2445d",
+      verification: "source-tested-recapture-required",
+    },
+  });
   assert.ok(
     String(catalog.catalogRevision).slice(0, 8)
       >= captureManifest.capturedAt.slice(0, 10).replaceAll("-", ""),
@@ -86,15 +105,22 @@ test("registry exposes original and disclosed fan-art collections", async functi
   assert.equal(registry.themes.every(function (theme) {
     return ["light", "dark"].every(function (mode) {
       const capture = theme.previews[mode].capture;
-      return capture?.appVersion === "26.715.3651.0"
-        && capture.fixture === "full-skin-home-v1"
-        && capture.modelLabel === "5.6 Sol Max"
-        && capture.width === 1440
-        && capture.height === 810
-        && capture.assetSha256 === theme.previews[mode].fullSkin.sha256
-        && capture.markerVersion === "act-full-skin-v1"
-        && capture.selectors.main === true
-        && capture.selectors.composer === true;
+      const evidence = capture?.evidence;
+      return evidence?.appVersion === "26.715.3651.0"
+        && evidence.fixture === "full-skin-home-v1"
+        && evidence.modelLabel === "5.6 Sol Max"
+        && evidence.width === 1440
+        && evidence.height === 810
+        && evidence.assetSha256 === theme.previews[mode].fullSkin.sha256
+        && evidence.markerVersion === "act-full-skin-v1"
+        && evidence.selectors.main === true
+        && evidence.selectors.composer === true
+        && capture.presentation?.length === 3
+        && [320, 480, 960].every(function (width) {
+          return capture.presentation.some(function (variant) {
+            return variant.width === width && variant.evidenceSha256 === evidence.sha256;
+          });
+        });
     });
   }), true);
   assert.equal(registry.themes.every(function (theme) {
@@ -117,6 +143,28 @@ test("registry exposes original and disclosed fan-art collections", async functi
       && theme.provenance.type === "original"
       && theme.provenance.rightsVerified === true;
   }), true);
+});
+
+test("focal-aware review artifacts cover every current source image", async function () {
+  const [catalog, approval] = await Promise.all([
+    readFile(path.join(ROOT, "themes", "catalog.json"), "utf8").then(JSON.parse),
+    readFile(path.join(ROOT, "themes", "source-art", "reviews", "focal-aware-v3.json"), "utf8").then(JSON.parse),
+  ]);
+  assert.equal(approval.renderer.before, "act-source-art-renderer-v2");
+  assert.equal(approval.renderer.after, "act-source-art-renderer-v3");
+  assert.equal(approval.decisions.length, catalog.themes.length);
+  assert.deepEqual(
+    approval.decisions.map((decision) => decision.themeId),
+    catalog.themes.map((theme) => theme.id),
+  );
+  assert.equal(approval.decisions.every((decision) => decision.decision === "approved"), true);
+  assert.equal(approval.fixtureSheet.order.rows.join(","), "left,right,center,none");
+  assert.deepEqual(approval.fixtureSheet.order.columns, ["home", "task", "diff", "settings", "dialog", "composer"]);
+  for (const artifact of [...approval.contactSheets, approval.fixtureSheet]) {
+    const bytes = await readFile(path.join(ROOT, ...artifact.path.split("/")));
+    assert.equal(bytes.length, artifact.bytes, artifact.path + " byte count");
+    assert.equal(createHash("sha256").update(bytes).digest("hex"), artifact.sha256, artifact.path + " hash");
+  }
 });
 
 test("canonical archives contain only declared art, manifest, and Codex Native themes", async function () {
@@ -238,15 +286,22 @@ test("static gallery builds with every public contract artifact", async function
       for (const mode of ["light", "dark"]) {
         const fullSkinPath = theme.previews[mode].fullSkin.asset;
         const nativePath = theme.previews[mode].nativeTheme.path;
-        const capturePath = theme.previews[mode].capture.path;
+        const capture = theme.previews[mode].capture;
+        const capturePath = capture.evidence.path;
         assert.equal(await exists(path.join(output, ...fullSkinPath.split("/"))), true, fullSkinPath);
         assert.equal(await exists(path.join(output, ...nativePath.split("/"))), true, nativePath);
         assert.equal(await exists(path.join(output, ...capturePath.split("/"))), true, capturePath);
+        for (const variant of capture.presentation) {
+          assert.equal(await exists(path.join(output, ...variant.path.split("/"))), true, variant.path);
+        }
       }
     }
     assert.match(html, /Awesome Codex Theme/);
     assert.match(html, /id="trustNote"/);
     assert.match(html, /id="dialogRights"/);
+    assert.match(html, /id="evidenceMetadata"/);
+    assert.match(html, /id="viewEvidence"/);
+    assert.doesNotMatch(html, /id="heroPreview" src=/);
     assert.match(html, /docs\/fan-art-policy\.md/);
     assert.match(html, /data-filter="scene"/);
     assert.match(html, /id="rightsGroup"/);
@@ -266,7 +321,14 @@ test("static gallery builds with every public contract artifact", async function
     assert.match(app, /Download Theme Manager/);
     assert.match(app, /社区投稿暂未开放/);
     assert.match(app, /nativeTheme\.path/);
-    assert.match(app, /modeRecord\.capture/);
+    assert.match(app, /capture\.evidence/);
+    assert.match(app, /function presentationSrcset/);
+    assert.match(app, /viewEvidence/);
+    assert.match(app, /presentationFallback/);
+    assert.match(app, /image\.onerror = fallback/);
+    assert.match(app, /function fallbackVisual/);
+    const updateDialog = app.slice(app.indexOf("function updateDialog()"), app.indexOf("function showToast("));
+    assert.match(updateDialog, /visualFor\(modeRecord, "hero"\)/);
     assert.match(app, /function renderCollectionIntro/);
     assert.doesNotMatch(app, /39 original themes|39 套原创主题/);
     assert.doesNotMatch(app, /Beta 26\.707\.3351\.0/);
@@ -318,6 +380,9 @@ test("Tauri manager keeps theme values in Rust and limits desktop capabilities",
   }));
   assert.match(catalog, /native_value_for/);
   assert.match(catalog, /REMOTE_CATALOG_URL/);
+  assert.match(catalog, /PRESENTATION_SIZES/);
+  assert.match(catalog, /thumbnailUrl/);
+  assert.match(catalog, /presentation_path/);
   assert.match(catalog, /registry_bytes\.len\(\) != expected_bytes/);
   assert.match(backend, /copy_theme/);
   assert.match(backend, /native_value_for\(&catalog, &theme_id, &mode\)/);
@@ -362,7 +427,10 @@ test("Tauri manager keeps theme values in Rust and limits desktop capabilities",
   assert.doesNotMatch(fullSkinRuntime, /createElement\("img"\)|art\.src = imageData/);
   assert.match(fullSkinRuntime, /installToken/);
   assert.match(fullSkinRuntime, /metrics/);
-  assert.match(fullSkinRuntime, /new MutationObserver\(\(\) =>/);
+  assert.match(fullSkinRuntime, /implementationVersion = "act-full-skin-runtime-v3"/);
+  assert.match(fullSkinRuntime, /new MutationObserver\(onMutations\)/);
+  assert.match(fullSkinRuntime, /observer\.observe\(nextRoot, \{ childList: true, subtree: true \}\)/);
+  assert.match(fullSkinRuntime, /ignoredMutationCallbacks/);
   assert.match(fullSkinRuntime, /clearTimeout\(ensureTimer\)/);
   assert.match(fullSkinRuntime, /}, 180\)/);
   assert.match(fullSkinRuntime, /}, 5000\)/);
@@ -395,13 +463,62 @@ test("Tauri manager keeps theme values in Rust and limits desktop capabilities",
   assert.match(platform, /\["ChatGPT Beta", "Codex Beta"\]/);
   assert.match(platform, /std::process::Command::new\(executable\)/);
   assert.doesNotMatch(bridge, /nativeTheme.*value|nativeValue/i);
+  assert.match(bridge, /preview\.thumbnailUrl = convertFileSrc\(preview\.thumbnailPath\)/);
+  assert.match(bridge, /delete preview\.thumbnailPath/);
   assert.match(bridge, /applyNow = false/);
   assert.match(bridge, /applyNow \}/);
   assert.match(updater, /ACT_UPDATER_PUBKEY/);
-  assert.match(config.plugins.updater.endpoints[0], /^https:\/\/github\.com\/rwang23\/awesome-codex-theme\/releases\//);
+  assert.equal(config.plugins.updater.endpoints[0], "https://rwang23.github.io/awesome-codex-theme/updates/stable.json");
+  assert.doesNotMatch(config.plugins.updater.endpoints[0], /github\.com\/.*\/releases\/(?:latest|download)/);
   assert.match(appPackage, /@tauri-apps\/cli/);
   assert.doesNotMatch(appPackage, /electron/i);
   assert.doesNotMatch(backend + catalog + runtime + platform, /WindowsApps.*(?:write|copy)|app\.asar.*(?:write|copy)/i);
+});
+
+test("Tauri bridge converts both local presentation paths before the list renders", async function () {
+  const bridge = await readFile(path.join(ROOT, "apps", "theme-manager", "src", "renderer", "bridge.js"), "utf8");
+  const catalog = {
+    themes: [{
+      previews: {
+        light: {
+          thumbnailPath: "/catalog/screenshots/presentation/fixture-light-320.png",
+          imagePath: "/catalog/screenshots/presentation/fixture-light-960.png",
+        },
+        dark: {},
+      },
+    }],
+  };
+  const eventTarget = { addEventListener() {} };
+  const context = {
+    document: { querySelector: () => eventTarget },
+    window: {
+      __TAURI__: {
+        core: {
+          convertFileSrc: (value) => "asset://" + value,
+          invoke: async (command) => {
+            assert.equal(command, "bootstrap");
+            return { catalog };
+          },
+        },
+        event: { listen: async () => () => {} },
+        window: {
+          getCurrentWindow: () => ({
+            toggleMaximize() {},
+            startDragging() {},
+            minimize() {},
+            close() {},
+          }),
+        },
+      },
+    },
+  };
+  runInNewContext(bridge, context);
+  const payload = await context.window.act.bootstrap();
+  const preview = payload.catalog.themes[0].previews.light;
+  assert.equal(preview.thumbnailUrl, "asset:///catalog/screenshots/presentation/fixture-light-320.png");
+  assert.equal(preview.imageUrl, "asset:///catalog/screenshots/presentation/fixture-light-960.png");
+  assert.equal("thumbnailPath" in preview, false);
+  assert.equal("imagePath" in preview, false);
 });
 
 test("Theme Manager renders a compact Copy action, footer version, and macOS traffic-light chrome", async function () {
@@ -429,7 +546,7 @@ test("Theme Manager renders a compact Copy action, footer version, and macOS tra
   assert.match(styles, /@media \(min-width: 1051px\) and \(max-height: 840px\)/);
 });
 
-test("real screenshot evidence covers every mode and confirms Beta restoration", async function () {
+test("recorded screenshot evidence covers every mode and distinguishes the current runtime", async function () {
   const manifest = JSON.parse(await readFile(
     path.join(ROOT, "screenshots", "codex-beta-26.715.3651.0", "manifest.json"),
     "utf8",
@@ -445,6 +562,12 @@ test("real screenshot evidence covers every mode and confirms Beta restoration",
   assert.equal(manifest.fixture.nativeSettingsChanged, false);
   assert.equal(manifest.runtime.format, "act-full-skin-v1");
   assert.equal(manifest.runtime.implementationVersion, "act-full-skin-runtime-v2");
+  assert.equal(manifest.runtime.evidenceStatus, "reference");
+  assert.deepEqual(manifest.runtime.currentRuntime, {
+    implementationVersion: "act-full-skin-runtime-v3",
+    sha256: "7e601b402ce1aae3b1a72e55cfaffc2b23cf03951401100d3e0918138ca2445d",
+    verification: "source-tested-recapture-required",
+  });
   assert.equal(manifest.runtime.earlyInjection, true);
   assert.equal(manifest.runtime.removedAfterCapture, true);
   assert.equal(manifest.captures.length, 136);
@@ -545,7 +668,8 @@ test("desktop manager localizes from the system and makes visual styles the prim
   assert.match(app, /Apply & Keep Full Skin/);
   assert.match(app, /应用并保持完整皮肤/);
   assert.doesNotMatch(app, /window\.confirm\(/);
-  assert.match(app, /await requestPersistenceConsent\(\)/);
+  assert.match(app, /await requestPersistenceConsent\(elements\.applySkin\)/);
+  assert.match(app, /await requestPersistenceConsent\(elements\.persistenceToggle\)/);
   assert.match(html, /id="persistenceConsentDialog"/);
   assert.match(html, /id="persistenceConsentConfirm"/);
   assert.doesNotMatch(app, /await window\.act\.applyFullSkin\(/);
@@ -553,6 +677,16 @@ test("desktop manager localizes from the system and makes visual styles the prim
   assert.match(app, /async function waitForPersistentApply\(/);
   assert.match(app, /"retry-blocked"/);
   assert.match(app, /state\.persistenceState = await waitForPersistentApply/);
+  assert.match(app, /themeCards: new Map\(\)/);
+  assert.match(app, /function ensureThemeCards\(\)/);
+  assert.match(app, /image\.loading = "lazy"/);
+  assert.match(app, /thumbnailUrl/);
+  assert.match(app, /new IntersectionObserver/);
+  assert.match(app, /root: elements\.themeList/);
+  assert.match(app, /if \(!card\.visible \|\| \(!force && !card\.nearViewport\)\) return;/);
+  const renderThemeList = app.slice(app.indexOf("function renderThemeList()"), app.indexOf("function renderSelectedTheme()"));
+  assert.match(renderThemeList, /updateThemeCard/);
+  assert.doesNotMatch(renderThemeList, /replaceChildren/);
 });
 
 test("READMEs recommend Agent installation first and manual desktop installation last", async function () {
@@ -582,13 +716,24 @@ test("Tibo copy uses a deliberate two-line God of Reset lockup", async function 
   assert.deepEqual(immortal.tagline, { en: "God of Reset", "zh-CN": "重置之神" });
 });
 
-test("desktop beta release requires updater signing and discloses deferred platform trust", async function () {
-  const [workflow, tauriConfigText] = await Promise.all([
+test("desktop beta release uses a static updater feed and discloses deferred platform trust", async function () {
+  const [workflow, tauriConfigText, releaseMetadata] = await Promise.all([
     readFile(path.join(ROOT, ".github", "workflows", "desktop.yml"), "utf8"),
-    readFile(path.join(ROOT, "apps", "theme-manager", "src-tauri", "tauri.conf.json"), "utf8")
+    readFile(path.join(ROOT, "apps", "theme-manager", "src-tauri", "tauri.conf.json"), "utf8"),
+    readFile(path.join(ROOT, "metadata", "release.json"), "utf8").then(JSON.parse),
   ]);
   const tauriConfig = JSON.parse(tauriConfigText);
-  assert.match(workflow, /npm run generate && npm run validate && npm run desktop:prepare/);
+  assert.match(workflow, /run: npm run test:ci/);
+  assert.match(workflow, /run: npm run desktop:prepare/);
+  assert.match(workflow, /name: act-generated-theme-assets/);
+  assert.match(workflow, /screenshots\/\*\/presentation\/\*\*/);
+  const releaseLabel = releaseMetadata.desktop.channel.slice(0, 1).toUpperCase()
+    + releaseMetadata.desktop.channel.slice(1);
+  const versionPattern = releaseMetadata.desktop.version.replaceAll(".", "\\.");
+  assert.match(
+    workflow,
+    /Generate, validate, and test public artifacts once[\s\S]*run: npm run test:ci[\s\S]*Prepare desktop assets once[\s\S]*run: npm run desktop:prepare/,
+  );
   assert.match(workflow, /DESKTOP_RELEASE_READY/);
   assert.match(workflow, /TAURI_SIGNING_PRIVATE_KEY/);
   assert.match(workflow, /TAURI_SIGNING_PRIVATE_KEY_PASSWORD/);
@@ -596,9 +741,12 @@ test("desktop beta release requires updater signing and discloses deferred platf
   assert.match(workflow, /Validate Windows portable helper/);
   assert.match(workflow, /npm run installer:validate/);
   assert.match(workflow, /Updater-signed Tauri Theme Manager beta/);
-  assert.match(workflow, /releaseName: "Awesome Codex Theme \$\{\{ github\.ref_name \}\} Beta"/);
+  assert.match(workflow, new RegExp('releaseName: "Awesome Codex Theme v' + versionPattern + " " + releaseLabel + '"'));
+  assert.match(workflow, /Verify release tag matches metadata/);
+  assert.match(workflow, /RELEASE_TAG: \$\{\{ github\.ref_name \}\}/);
+  assert.match(workflow, new RegExp('run: test "\\$RELEASE_TAG" = "v' + versionPattern + '"'));
   assert.match(workflow, /unknown-publisher warning/);
-  assert.match(workflow, /prerelease: false/);
+  assert.match(workflow, new RegExp("prerelease: " + releaseMetadata.desktop.githubPrerelease));
   assert.match(workflow, /releaseDraft: true/);
   assert.doesNotMatch(workflow, /WINDOWS_CERTIFICATE/);
   assert.doesNotMatch(workflow, /APPLE_CERTIFICATE/);
@@ -617,13 +765,15 @@ test("desktop beta release requires updater signing and discloses deferred platf
   assert.doesNotMatch(workflow, /desktop-macos-(?:arm64|x64)/);
   assert.equal(tauriConfig.bundle.macOS.signingIdentity, "-");
   assert.match(tauriConfig.plugins.updater.pubkey, /^[A-Za-z0-9+/=]{100,}$/);
+  assert.equal(tauriConfig.plugins.updater.endpoints[0], releaseMetadata.desktop.updater.endpoint);
+  assert.doesNotMatch(tauriConfig.plugins.updater.endpoints[0], /github\.com\/.*\/releases\/(?:latest|download)/);
 });
 
-test("desktop preparation derives compact thumbnails from verified captures", async function () {
+test("desktop preparation derives compact thumbnails from recorded captures", async function () {
   const prepare = await readFile(path.join(ROOT, "scripts", "prepare-desktop.mjs"), "utf8");
-  assert.match(prepare, /CAPTURE_WIDTH = 720/);
-  assert.match(prepare, /CAPTURE_HEIGHT = 405/);
-  assert.match(prepare, /resizePng/);
+  assert.match(prepare, /PRESENTATION_SIZES/);
+  assert.match(prepare, /copyFile/);
+  assert.match(prepare, /capture\?\.presentation/);
+  assert.doesNotMatch(prepare, /resizePng/);
   assert.match(prepare, /DESKTOP_CATALOG\.startsWith\(DESKTOP_BUILD \+ path\.sep\)/);
-  assert.match(prepare, /capture\?\.path/);
 });

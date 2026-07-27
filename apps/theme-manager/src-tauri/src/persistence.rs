@@ -485,6 +485,7 @@ fn retry_delay(attempt: u8) -> Option<Duration> {
 enum ControllerDecision {
     Wait,
     Blocked,
+    AwaitUserClose,
     ApplyStopped,
     Refresh,
     Active,
@@ -500,10 +501,18 @@ fn controller_decision(
     if phase == "retry-blocked" {
         return ControllerDecision::Blocked;
     }
+    if target_running && matches!(phase, "needs-user-close" | "force-closing") {
+        return ControllerDecision::AwaitUserClose;
+    }
     if !target_running {
         return if matches!(
             phase,
-            APPLY_REQUESTED_PHASE | "restarting" | "retrying" | "error"
+            APPLY_REQUESTED_PHASE
+                | "restarting"
+                | "retrying"
+                | "error"
+                | "needs-user-close"
+                | "force-closing"
         ) {
             ControllerDecision::ApplyStopped
         } else {
@@ -529,6 +538,43 @@ async fn wait_until_stopped(target: &platform::TargetView) -> Result<(), String>
         tokio::time::sleep(Duration::from_millis(250)).await;
     }
     Err("ChatGPT 没有在安全等待时间内退出".into())
+}
+
+fn force_restart_is_authorized(confirmed: bool, phase: &str) -> Result<(), String> {
+    if !confirmed {
+        return Err("必须确认未发送的输入可能丢失，才能强制关闭 ChatGPT。".into());
+    }
+    if !matches!(phase, "needs-user-close" | "force-closing") {
+        return Err("只有正常退出超时后才能请求强制关闭 ChatGPT。".into());
+    }
+    Ok(())
+}
+
+pub fn force_restart(
+    app: &AppHandle,
+    channel: &str,
+    confirmed: bool,
+) -> Result<PersistenceView, String> {
+    let root = persistence_root(app)?;
+    let selection = read_state_from(&root)?;
+    if !selection.enabled || selection.channel.as_deref() != Some(channel) {
+        return Err("所选 ChatGPT 不是当前启用的常驻主题目标。".into());
+    }
+    force_restart_is_authorized(confirmed, &selection.phase)?;
+    let target = platform::find_target(channel)?;
+    if !platform::target_is_running(&target)? {
+        return current(app);
+    }
+    platform::force_stop_target(&target)?;
+    update_status(
+        &root,
+        "force-closing",
+        Some("已请求强制关闭所选 ChatGPT，正在等待其退出后重新应用。".into()),
+        selection.attempts,
+        target.version,
+        selection.tested_version,
+    )?;
+    current(app)
 }
 
 async fn run_controller(app: AppHandle) -> Result<(), String> {
@@ -626,6 +672,10 @@ async fn run_controller(app: AppHandle) -> Result<(), String> {
             desired_active,
         ) {
             ControllerDecision::Blocked => {
+                tokio::time::sleep(POLL_INTERVAL).await;
+                continue;
+            }
+            ControllerDecision::AwaitUserClose => {
                 tokio::time::sleep(POLL_INTERVAL).await;
                 continue;
             }
@@ -798,13 +848,15 @@ async fn run_controller(app: AppHandle) -> Result<(), String> {
         if let Err(error) = wait_until_stopped(&target).await {
             update_status(
                 &root,
-                "retrying",
-                Some(error),
+                "needs-user-close",
+                Some(format!(
+                    "已请求所选 ChatGPT 正常退出，但安全等待超时：{error}"
+                )),
                 attempts,
                 installed,
                 Some(skin.tested_version),
             )?;
-            next_retry = tokio::time::Instant::now() + delay;
+            next_retry = tokio::time::Instant::now();
             continue;
         }
         match skin_runtime::apply(&app, &state.skin_runtime, &catalog, theme_id, mode, channel)
@@ -978,6 +1030,14 @@ mod tests {
             controller_decision("retry-blocked", false, false, false),
             ControllerDecision::Blocked
         );
+        assert_eq!(
+            controller_decision("needs-user-close", false, false, false),
+            ControllerDecision::ApplyStopped
+        );
+        assert_eq!(
+            controller_decision("force-closing", false, false, false),
+            ControllerDecision::ApplyStopped
+        );
     }
 
     #[test]
@@ -994,5 +1054,21 @@ mod tests {
             controller_decision(APPLY_REQUESTED_PHASE, true, false, false),
             ControllerDecision::Restart
         );
+        assert_eq!(
+            controller_decision("needs-user-close", true, false, false),
+            ControllerDecision::AwaitUserClose
+        );
+        assert_eq!(
+            controller_decision("force-closing", true, false, false),
+            ControllerDecision::AwaitUserClose
+        );
+    }
+
+    #[test]
+    fn force_restart_requires_a_second_confirmation_after_graceful_timeout() {
+        assert!(force_restart_is_authorized(false, "needs-user-close").is_err());
+        assert!(force_restart_is_authorized(true, "active").is_err());
+        assert!(force_restart_is_authorized(true, "needs-user-close").is_ok());
+        assert!(force_restart_is_authorized(true, "force-closing").is_ok());
     }
 }

@@ -91,7 +91,10 @@ function validateBrief(brief, catalog) {
     requireValue(brief.fanArt?.commercialUse === false, "fan art must prohibit commercial use");
     requireValue(brief.fanArt?.officialAssetsUsed === false, "fan art must disclose that no official assets were used");
   }
-  requireValue(brief.art?.safeArea === "left", "v1 Gallery themes must use a left safe area");
+  requireValue(Number.isFinite(brief.art?.focusX) && brief.art.focusX >= 0 && brief.art.focusX <= 1, "art.focusX must be a number from 0 to 1");
+  requireValue(Number.isFinite(brief.art?.focusY) && brief.art.focusY >= 0 && brief.art.focusY <= 1, "art.focusY must be a number from 0 to 1");
+  requireValue(["left", "right", "center", "none"].includes(brief.art?.safeArea), "unsupported art.safeArea");
+  requireValue(["ambient", "banner", "off"].includes(brief.art?.taskMode), "unsupported art.taskMode");
   validateTokens("light", brief.light?.tokens);
   validateTokens("dark", brief.dark?.tokens);
 }

@@ -168,6 +168,9 @@
           "type": "string",
           "pattern": "^[a-f0-9]{64}$"
         },
+        "review": {
+          "$ref": "#/$defs/sourceArtReview"
+        },
         "notes": {
           "type": "string",
           "maxLength": 500
@@ -274,7 +277,30 @@
         }
       },
       "then": {
-        "required": ["fanArt"]
+        "required": ["fanArt"],
+        "properties": {
+          "provenance": {
+            "not": {
+              "required": ["review"]
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "rightsProfile": {
+            "const": "original"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "provenance": {
+            "required": ["review"]
+          }
+        }
       }
     }
   ],
@@ -340,6 +366,54 @@
         }
       }
     },
+    "sourceArtReview": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["record", "reviewer", "reviewedAt", "checks", "sourceSha256", "decision", "notes"],
+      "properties": {
+        "record": {
+          "type": "string",
+          "pattern": "^themes/source-art/reviews\\.json#[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "reviewer": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 120
+        },
+        "reviewedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "checks": {
+          "$ref": "#/$defs/sourceArtReviewChecks"
+        },
+        "sourceSha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "decision": {
+          "const": "approved"
+        },
+        "notes": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 500
+        }
+      }
+    },
+    "sourceArtReviewChecks": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["noThirdPartyLogo", "noSignatureOrWatermark", "noUnintendedText", "rightsProfileMatches", "safeAreaReviewed", "lightDarkCaptureReviewed"],
+      "properties": {
+        "noThirdPartyLogo": { "const": true },
+        "noSignatureOrWatermark": { "const": true },
+        "noUnintendedText": { "const": true },
+        "rightsProfileMatches": { "const": true },
+        "safeAreaReviewed": { "const": true },
+        "lightDarkCaptureReviewed": { "const": true }
+      }
+    },
     "hex": {
       "type": "string",
       "pattern": "^#[0-9A-Fa-f]{6}$"
@@ -347,11 +421,48 @@
     "mode": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["asset", "art", "tokens", "integrity", "nativeTheme"],
+      "required": ["asset", "preview", "art", "tokens", "integrity", "nativeTheme"],
       "properties": {
         "asset": {
           "type": "string",
           "pattern": "^assets/[a-z0-9-]+\\.png$"
+        },
+        "preview": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["path", "integrity"],
+          "properties": {
+            "path": {
+              "type": "string",
+              "pattern": "^previews/(light|dark)\\.png$"
+            },
+            "integrity": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["sha256", "bytes", "width", "height", "renderFingerprint"],
+              "properties": {
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{64}$"
+                },
+                "bytes": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 16777216
+                },
+                "width": {
+                  "const": 960
+                },
+                "height": {
+                  "const": 540
+                },
+                "renderFingerprint": {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{64}$"
+                }
+              }
+            }
+          }
         },
         "art": {
           "type": "object",

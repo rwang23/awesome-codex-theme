@@ -1,6 +1,6 @@
 ---
 name: create-codex-theme
-description: 为 Awesome Codex Theme 创建、补全或校验原创主题或明确披露的非官方 Fan Art。适用于把一句视觉想法变成双语 theme brief、用 OpenAI image job 生成安全留白的源图、写入 themes/catalog.json 与 source-art/jobs.json、导出明暗模式并运行 ACT Registry 校验。Use when a user asks to create, adapt, package, validate, or contribute a Codex theme in this repository.
+description: 为 Awesome Codex Theme 创建、补全或校验原创主题或明确披露的非官方 Fan Art。适用于把一句视觉想法变成双语 theme brief、用 OpenAI image job 生成带焦点构图与安全区的 16:9 源图、写入 themes/catalog.json 与 source-art/jobs.json、导出明暗模式并运行 ACT Registry 校验。Use when a user asks to create, adapt, package, validate, or contribute a Codex theme in this repository.
 ---
 
 # 创建 Codex 主题
@@ -31,7 +31,7 @@ description: 为 Awesome Codex Theme 创建、补全或校验原创主题或明�
 - 中文主名称与英文辅助名称
 - 一句话场景 brief
 - `original` 或 `fan-art` 权利轨道与相应声明
-- 左侧或右侧安全留白
+- 左侧、右侧、中部或无安全区，以及与主体对应的焦点位置
 - 明暗模式 token
 
 中文文案先写，英文随后补齐。描述具体画面，不使用“震撼”“极致”“重新定义”等宣传套话。
@@ -57,6 +57,8 @@ node .codex/skills/create-codex-theme/scripts/scaffold-theme.mjs \
 
 ### 4. 生成并审查源图
 
+新主题的 source art 必须为 2560×1440 或更高的 16:9 图像。`themes/source-art/jobs.json` 中现有 1536×1024 的具名历史例外只覆盖已列出的 ID，不能复制给新主题。
+
 使用仓库的 image job 流程：
 
 ```bash
@@ -69,10 +71,17 @@ npm run art:generate -- --ids=<theme-id>
 - 画面没有文字、签名、水印、Logo 或 UI
 - 原创轨道的人物和物件不像现成 IP；Fan Art 只出现 brief 已声明的角色
 - Fan Art 没有复制官方截图、海报、镜头、Logo 或宣传素材
-- 16:9 中心裁切不会截断主体
+- 焦点裁切在 16:9 输出中不会截断主体
 - 图片达到主题 Gallery 的完成度
 
-任何一项不合格，就改 job prompt 后重跑 `--force`。具体命令和检查顺序见 [references/image-job-playbook.md](references/image-job-playbook.md)。
+任何一项不合格，就改 job prompt 后重跑 `--force`。通过源图检查后运行：
+
+```bash
+npm run art:review:write
+npm run art:review
+```
+
+打开联系表和安全区夹具，确认焦点输出与 `left`、`right`、`center`、`none` 四种阅读区都符合 brief。具体命令和检查顺序见 [references/image-job-playbook.md](references/image-job-playbook.md)。
 
 ### 5. 生成主题包
 

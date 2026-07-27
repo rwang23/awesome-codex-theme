@@ -1,4 +1,5 @@
 import "./bridge.js";
+import { canUseGlobalActionShortcut } from "./shortcuts.js";
 
 const translations = {
   en: {
@@ -27,7 +28,7 @@ const translations = {
     archiveEyebrow: "THEME LIBRARY",
     archiveTitleOne: "Find your next",
     archiveTitleTwo: "workspace.",
-    archiveDescription: "Filter by style and collection, then check the real Beta capture before applying.",
+    archiveDescription: "Filter by style and collection, then check the recorded Beta capture before applying.",
     searchPlaceholder: "Search themes, cities, or moods",
     allCollections: "All",
     rightsFacet: "Source",
@@ -41,11 +42,17 @@ const translations = {
     scene: "Scene",
     resultsCount: "{count} themes",
     emptyState: "No themes match these filters.",
+    viewDetails: "View details",
     light: "Light",
     dark: "Dark",
     verifiedCapture: "Real Beta capture",
     captureAlt: "real Beta capture",
     captureProof: "REAL APP CAPTURE",
+    referenceCapture: "Recorded Beta capture",
+    referenceCaptureAlt: "recorded Beta capture",
+    referenceCaptureProof: "RECORDED APP CAPTURE · RECAPTURE REQUIRED",
+    captureVersionVerified: "Beta {version} · current",
+    captureVersionReference: "Beta {version} · reference",
     originalRights: "Original · CC0",
     fanArtRights: "Unofficial fan art · non-commercial",
     applyStep: "APPLY TO CODEX",
@@ -63,22 +70,45 @@ const translations = {
     persistenceRetrying: "Retrying after a safe failure",
     persistenceBlocked: "Paused · reapply to verify this version",
     persistenceError: "Paused after a bounded failure",
+    persistenceNeedsUserClose: "Waiting for you to close the selected ChatGPT safely",
+    persistenceForceClosing: "Closing the selected ChatGPT after your confirmation",
     persistenceOther: "Another theme is kept: {theme} · {mode}",
     persistenceConsent: "Keep this theme after every future launch of the selected ChatGPT version once it completes a local verification?\n\nThis is the normal result of Apply & Keep Full Skin. Theme Manager will start for your user account at sign-in. When you open ChatGPT normally, it may close and relaunch only that exact app once with a loopback-only debugging port. A detected Stable or Beta build stays native until you explicitly choose Apply & Keep Full Skin to run a controlled local probe. Only a successful app-target and runtime-marker readback enables future replay for that exact version. It never edits ChatGPT files, shortcuts, or chats. You can turn this off here at any time.",
     consentEyebrow: "APPLY & KEEP",
     consentTitle: "Keep this Full Skin?",
     cancel: "Cancel",
     confirmApply: "Apply & Keep",
+    forceRestartEyebrow: "RESTART SAFETY",
+    forceRestartTitle: "Force close the selected ChatGPT?",
+    forceRestartWarning: "ChatGPT did not close after a normal request. Force closing may lose unsent prompts or other unsaved input. Cancel leaves the app and theme unchanged.",
+    forceRestartConfirm: "Force close & restart",
+    forceRestart: "Force close & restart",
     copyNative: "Copy Native palette only",
     skinIdle: "Theme packs contain only declarative data and images. The manager uses a temporary loopback-only debug session to load the background without modifying WindowsApps, app.asar, or ChatGPT private data.",
     skinActive: "Active in {target}: {theme} · {mode}. Restore the skin first; quit and reopen ChatGPT normally to close the debug port.",
+    monitorHealthy: "Runtime monitor healthy.",
+    monitorRecovering: "Runtime monitor is retrying a page check.",
+    monitorDegraded: "Runtime monitor is degraded. Restore or reapply to verify the current session.",
+    monitorStopped: "Runtime monitor stopped because the verified session is no longer available.",
     noTarget: "ChatGPT was not found",
+    retryTargetDiscovery: "Retry detection",
+    copyDiagnostic: "Copy diagnostic",
+    targetDiagnosticCommandUnavailable: "Target detection could not start.",
+    targetDiagnosticPermissionDenied: "Target detection was blocked by permissions.",
+    targetDiagnosticMalformedPackage: "Target detection found malformed package metadata.",
+    targetDiagnosticMalformedOutput: "Target detection returned invalid data.",
+    targetDiagnosticCommandFailed: "Target detection failed.",
+    targetDiagnosticUnsupported: "This platform does not support target detection.",
+    targetUnsupportedVersionError: "The selected ChatGPT version could not be verified.",
     onlineGallery: "Online Gallery",
     githubRepository: "GitHub repository",
     checkUpdate: "Check for app updates",
     registryCount: "{count} themes / {source}",
     sourceRemote: "online",
     sourceLocal: "local",
+    capabilityVerified: "verified",
+    capabilityBuildOnly: "build-only",
+    capabilityUnverified: "unverified",
     updateDevelopment: "Development build · v{version}",
     updateUnsupported: "Catalog updates only on this platform",
     updateIdle: "Check for app updates",
@@ -100,6 +130,8 @@ const translations = {
     toastPersistenceEnabled: "Always apply is on for this theme.",
     toastPersistenceDisabled: "Always apply is off and the login task was removed.",
     toastPersistenceFailed: "Could not change the always-apply setting.",
+    toastDiagnosticCopied: "Diagnostic copied.",
+    toastForceRestartRequested: "Force close requested. The controller will reapply after ChatGPT exits.",
     toastUpdateFailed: "App update check failed.",
     startupFailed: "Theme Manager could not start.",
     closeCodexError: "Quit the selected ChatGPT app completely, then apply the theme again.",
@@ -137,7 +169,7 @@ const translations = {
     archiveEyebrow: "主题浏览",
     archiveTitleOne: "找到适合你的",
     archiveTitleTwo: "工作区。",
-    archiveDescription: "按风格和系列筛选，应用前先看真实 Beta 截图。",
+    archiveDescription: "按风格和系列筛选，应用前先看已记录的 Beta 截图。",
     searchPlaceholder: "搜索主题、城市或氛围",
     allCollections: "全部",
     rightsFacet: "来源",
@@ -151,11 +183,17 @@ const translations = {
     scene: "名场面",
     resultsCount: "{count} 套主题",
     emptyState: "没有找到符合条件的主题。",
+    viewDetails: "查看详情",
     light: "明亮",
     dark: "暗色",
     verifiedCapture: "Beta 实机截图",
     captureAlt: "Beta 实机截图",
     captureProof: "真实应用截图",
+    referenceCapture: "已记录 Beta 截图",
+    referenceCaptureAlt: "已记录 Beta 截图",
+    referenceCaptureProof: "已记录应用截图 · 需要重新采集",
+    captureVersionVerified: "Beta {version} · 当前验证",
+    captureVersionReference: "Beta {version} · 参考证据",
     originalRights: "原创 · CC0",
     fanArtRights: "非官方 Fan Art · 非商业",
     applyStep: "应用到 Codex",
@@ -173,22 +211,45 @@ const translations = {
     persistenceRetrying: "遇到错误，正在安全重试",
     persistenceBlocked: "已暂停，请重新应用以验证当前版本",
     persistenceError: "有限重试失败，已暂停",
+    persistenceNeedsUserClose: "正在等待你安全关闭所选 ChatGPT",
+    persistenceForceClosing: "正按你的确认关闭所选 ChatGPT",
     persistenceOther: "当前保持的是：{theme} · {mode}",
     persistenceConsent: "要让这套主题在所选 ChatGPT 版本完成本机验证后，于以后每次打开时继续生效吗？\n\n这也是“应用并保持完整皮肤”的默认结果。Theme Manager 会为当前用户注册登录启动项。当你正常打开 ChatGPT 时，控制器可能先关闭并只重开这一个准确应用一次，再通过仅限本机回环的调试端口加载主题。检测到的 Stable/Beta 版本会先保持原生；只有你明确选择“应用并保持完整皮肤”时，才会进行一次受控本机探测。只有端口、页面和运行时标记读回成功后，才会在以后自动重放该准确版本。它不会修改 ChatGPT 文件、快捷方式或聊天。你可以随时在这里关闭。",
     consentEyebrow: "应用并保持",
     consentTitle: "保持使用这套完整皮肤？",
     cancel: "取消",
     confirmApply: "应用并保持",
+    forceRestartEyebrow: "重启安全",
+    forceRestartTitle: "强制关闭所选 ChatGPT？",
+    forceRestartWarning: "ChatGPT 在正常退出请求后仍未关闭。强制关闭可能丢失未发送的提示词或其他未保存输入。取消不会改变应用或主题状态。",
+    forceRestartConfirm: "强制关闭并重新应用",
+    forceRestart: "强制关闭并重新应用",
     copyNative: "只复制原生配色",
     skinIdle: "主题包只含声明式配置与图片。管理器通过仅限本机回环的临时调试会话加载背景，不修改 WindowsApps、app.asar 或 ChatGPT 私有数据。",
     skinActive: "正在 {target} 使用 {theme} · {mode}。恢复后如需关闭调试端口，请退出并正常重开 ChatGPT。",
+    monitorHealthy: "运行时监控正常。",
+    monitorRecovering: "运行时监控正在重试页面检查。",
+    monitorDegraded: "运行时监控已降级，请恢复或重新应用以验证当前会话。",
+    monitorStopped: "已验证会话不再可用，运行时监控已停止。",
     noTarget: "未检测到 ChatGPT",
+    retryTargetDiscovery: "重新检测",
+    copyDiagnostic: "复制诊断",
+    targetDiagnosticCommandUnavailable: "无法启动目标检测。",
+    targetDiagnosticPermissionDenied: "目标检测被权限阻止。",
+    targetDiagnosticMalformedPackage: "目标检测发现了损坏的软件包元数据。",
+    targetDiagnosticMalformedOutput: "目标检测返回了无效数据。",
+    targetDiagnosticCommandFailed: "目标检测失败。",
+    targetDiagnosticUnsupported: "当前平台不支持目标检测。",
+    targetUnsupportedVersionError: "无法验证所选 ChatGPT 的准确版本。",
     onlineGallery: "在线 Gallery",
     githubRepository: "GitHub 仓库",
     checkUpdate: "检查应用更新",
     registryCount: "{count} 套 / {source}",
     sourceRemote: "在线",
     sourceLocal: "本地",
+    capabilityVerified: "已验证",
+    capabilityBuildOnly: "仅构建",
+    capabilityUnverified: "未验证",
     updateDevelopment: "开发模式 · v{version}",
     updateUnsupported: "当前平台仅提供目录更新",
     updateIdle: "检查应用更新",
@@ -210,6 +271,8 @@ const translations = {
     toastPersistenceEnabled: "已为这套主题开启始终应用。",
     toastPersistenceDisabled: "已关闭始终应用并移除登录启动项。",
     toastPersistenceFailed: "无法更改始终应用设置。",
+    toastDiagnosticCopied: "诊断信息已复制。",
+    toastForceRestartRequested: "已请求强制关闭；ChatGPT 退出后控制器会重新应用。",
     toastUpdateFailed: "应用更新检查失败。",
     startupFailed: "无法启动主题管理器。",
     closeCodexError: "请先完全退出所选 ChatGPT，再重新应用主题。",
@@ -245,6 +308,7 @@ const state = {
   catalog: null,
   catalogState: null,
   targets: [],
+  targetDiagnostic: null,
   skinState: null,
   persistenceState: null,
   updateState: null,
@@ -254,6 +318,9 @@ const state = {
   style: "all",
   query: "",
   themeId: null,
+  themeCards: new Map(),
+  thumbnailObserver: null,
+  catalogKey: null,
   mode: window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light",
 };
 
@@ -274,8 +341,10 @@ const elements = {
   themeList: document.querySelector("#themeList"),
   emptyState: document.querySelector("#emptyState"),
   modeSwitch: document.querySelector("#modeSwitch"),
+  captureBadgeLabel: document.querySelector("#captureBadgeLabel"),
   captureVersion: document.querySelector("#captureVersion"),
   themeCapture: document.querySelector("#themeCapture"),
+  captureProofLabel: document.querySelector("#captureProofLabel"),
   captureHash: document.querySelector("#captureHash"),
   collectionName: document.querySelector("#collectionName"),
   themeName: document.querySelector("#themeName"),
@@ -287,9 +356,11 @@ const elements = {
   applySkinLabel: document.querySelector("#applySkinLabel"),
   applyShortcut: document.querySelector("#applyShortcut"),
   copyTheme: document.querySelector("#copyTheme"),
-  copyShortcut: document.querySelector("#copyShortcut"),
   targetSelect: document.querySelector("#targetSelect"),
   restoreSkin: document.querySelector("#restoreSkin"),
+  targetDiagnosticActions: document.querySelector("#targetDiagnosticActions"),
+  retryTargetDiscovery: document.querySelector("#retryTargetDiscovery"),
+  copyTargetDiagnostic: document.querySelector("#copyTargetDiagnostic"),
   persistenceControl: document.querySelector("#persistenceControl"),
   persistenceToggle: document.querySelector("#persistenceToggle"),
   persistenceStatus: document.querySelector("#persistenceStatus"),
@@ -297,32 +368,132 @@ const elements = {
   appVersion: document.querySelector("#appVersion"),
   registryHash: document.querySelector("#registryHash"),
   themeCount: document.querySelector("#themeCount"),
+  capabilitySummary: document.querySelector("#capabilitySummary"),
   openGallery: document.querySelector("#openGallery"),
   openRepository: document.querySelector("#openRepository"),
   updateButton: document.querySelector("#updateButton"),
   updateLabel: document.querySelector("#updateLabel"),
+  persistenceConsentBackdrop: document.querySelector("#persistenceConsentBackdrop"),
   persistenceConsentDialog: document.querySelector("#persistenceConsentDialog"),
   persistenceConsentCancel: document.querySelector("#persistenceConsentCancel"),
   persistenceConsentConfirm: document.querySelector("#persistenceConsentConfirm"),
+  forceRestart: document.querySelector("#forceRestart"),
+  forceRestartDialog: document.querySelector("#forceRestartDialog"),
+  forceRestartCancel: document.querySelector("#forceRestartCancel"),
+  forceRestartConfirm: document.querySelector("#forceRestartConfirm"),
   toast: document.querySelector("#toast"),
 };
 
 let consentResolver = null;
+let consentTrigger = null;
+let consentUsesNativeDialog = false;
+const FALLBACK_FOCUSABLE_SELECTOR = [
+  "a[href]",
+  "button:not([disabled])",
+  "input:not([disabled])",
+  "select:not([disabled])",
+  "textarea:not([disabled])",
+  "[tabindex]:not([tabindex='-1'])",
+].join(", ");
+let forceRestartResolver = null;
+
+function supportsNativeDialog() {
+  return typeof elements.persistenceConsentDialog.showModal === "function"
+    && typeof elements.persistenceConsentDialog.close === "function";
+}
+
+function setFallbackBackgroundInert(inert) {
+  if ("inert" in elements.appShell) elements.appShell.inert = inert;
+  if (inert) elements.appShell.setAttribute("aria-hidden", "true");
+  else elements.appShell.removeAttribute("aria-hidden");
+}
+
+function openConsentDialog() {
+  consentUsesNativeDialog = supportsNativeDialog();
+  if (consentUsesNativeDialog) {
+    elements.persistenceConsentDialog.showModal();
+    return;
+  }
+  elements.persistenceConsentDialog.dataset.fallback = "true";
+  elements.persistenceConsentBackdrop.hidden = false;
+  setFallbackBackgroundInert(true);
+  elements.persistenceConsentDialog.setAttribute("open", "");
+}
+
+function closeConsentDialog() {
+  if (consentUsesNativeDialog) {
+    if (elements.persistenceConsentDialog.open) elements.persistenceConsentDialog.close();
+  } else {
+    elements.persistenceConsentDialog.removeAttribute("open");
+    delete elements.persistenceConsentDialog.dataset.fallback;
+    elements.persistenceConsentBackdrop.hidden = true;
+    setFallbackBackgroundInert(false);
+  }
+  consentUsesNativeDialog = false;
+}
+
+function trapFallbackConsentFocus(event) {
+  if (!elements.persistenceConsentDialog.dataset.fallback) return;
+  if (event.key === "Escape") {
+    event.preventDefault();
+    finishPersistenceConsent(false);
+    return;
+  }
+  if (event.key !== "Tab") return;
+  const focusable = [...elements.persistenceConsentDialog.querySelectorAll(FALLBACK_FOCUSABLE_SELECTOR)]
+    .filter((node) => !node.hidden && node.getAttribute("aria-hidden") !== "true" && node.offsetParent !== null);
+  if (!focusable.length) return;
+  const first = focusable[0];
+  const last = focusable.at(-1);
+  if (event.shiftKey && document.activeElement === first) {
+    event.preventDefault();
+    last.focus();
+  } else if (!event.shiftKey && document.activeElement === last) {
+    event.preventDefault();
+    first.focus();
+  }
+}
+
+function restoreConsentTrigger() {
+  const trigger = consentTrigger;
+  consentTrigger = null;
+  if (trigger instanceof HTMLElement && trigger.isConnected) {
+    trigger.focus({ preventScroll: true });
+  }
+}
 
 function finishPersistenceConsent(confirmed) {
-  if (!consentResolver) return;
   const resolve = consentResolver;
   consentResolver = null;
-  elements.persistenceConsentDialog.hidden = true;
+  closeConsentDialog();
+  restoreConsentTrigger();
+  resolve?.(confirmed);
+}
+
+function requestPersistenceConsent(trigger) {
+  if (consentResolver || elements.persistenceConsentDialog.open) return Promise.resolve(false);
+  consentTrigger = trigger instanceof HTMLElement ? trigger : document.activeElement;
+  openConsentDialog();
+  elements.persistenceConsentCancel.focus({ preventScroll: true });
+  return new Promise((resolve) => {
+    consentResolver = resolve;
+  });
+}
+
+function finishForceRestartConsent(confirmed) {
+  if (!forceRestartResolver) return;
+  const resolve = forceRestartResolver;
+  forceRestartResolver = null;
+  elements.forceRestartDialog.hidden = true;
   resolve(confirmed);
 }
 
-function requestPersistenceConsent() {
-  if (consentResolver) return Promise.resolve(false);
-  elements.persistenceConsentDialog.hidden = false;
-  elements.persistenceConsentConfirm.focus();
+function requestForceRestartConsent() {
+  if (forceRestartResolver) return Promise.resolve(false);
+  elements.forceRestartDialog.hidden = false;
+  elements.forceRestartConfirm.focus();
   return new Promise((resolve) => {
-    consentResolver = resolve;
+    forceRestartResolver = resolve;
   });
 }
 
@@ -338,6 +509,7 @@ function friendlyError(error, fallbackKey) {
     return reason ? `${t(key)}\n${t("errorReason")}: ${reason}` : t(key);
   };
   if (/完全退出|正在普通模式运行|already running/i.test(raw)) return withReason("closeCodexError");
+  if (/\[unsupported-version\]/i.test(raw)) return withReason("targetUnsupportedVersionError");
   if (/没有检测到|not found/i.test(raw)) return withReason("targetMissingError");
   if (/素材|哈希|PNG|integrity/i.test(raw)) return withReason("assetError");
   if (/CDP|调试|Full Skin 会话|loopback|LaunchServices/i.test(raw)) return withReason("sessionError");
@@ -366,6 +538,11 @@ function currentTheme() {
 function currentCollection() {
   const theme = currentTheme();
   return state.catalog?.collections.find((collection) => collection.id === theme?.collection);
+}
+
+function captureEvidenceIsVerified() {
+  const evidence = state.catalog?.runtimeEvidence;
+  return evidence?.status === "verified" && evidence.currentRuntime?.verification === "verified";
 }
 
 function audiencePriority(record) {
@@ -421,6 +598,26 @@ function renderCatalogStatus() {
     : "—";
 }
 
+function capabilityStatusLabel(status) {
+  const keys = {
+    verified: "capabilityVerified",
+    "build-only": "capabilityBuildOnly",
+    unverified: "capabilityUnverified",
+  };
+  return t(keys[status] || "capabilityUnverified");
+}
+
+function renderCapabilitySummary() {
+  const capabilities = state.catalog?.capabilities;
+  if (!Array.isArray(capabilities) || capabilities.length === 0) {
+    elements.capabilitySummary.textContent = "—";
+    return;
+  }
+  elements.capabilitySummary.textContent = capabilities.map((capability) => (
+    localized(capability.title) + " " + capabilityStatusLabel(capability.fullSkin?.status)
+  )).join(" · ");
+}
+
 function renderAppVersion() {
   elements.appVersion.textContent = state.appVersion ? `v${state.appVersion}` : "—";
 }
@@ -460,9 +657,8 @@ function renderStyleTabs() {
   styleDefinitions.forEach(([id, labelKey, symbol]) => {
     const button = document.createElement("button");
     button.type = "button";
-    button.role = "tab";
     button.dataset.style = id;
-    button.setAttribute("aria-selected", String(id === state.style));
+    button.setAttribute("aria-pressed", String(id === state.style));
     button.classList.toggle("is-active", id === state.style);
 
     const icon = document.createElement("span");
@@ -494,9 +690,8 @@ function renderCollectionTabs() {
   records.forEach((collection) => {
     const button = document.createElement("button");
     button.type = "button";
-    button.role = "tab";
     button.dataset.collection = collection.id;
-    button.setAttribute("aria-selected", String(collection.id === state.collection));
+    button.setAttribute("aria-pressed", String(collection.id === state.collection));
     button.classList.toggle("is-active", collection.id === state.collection);
     const label = document.createElement("span");
     label.textContent = localized(collection.name);
@@ -550,52 +745,151 @@ function filteredThemes() {
   }).sort(compareThemePriority);
 }
 
+function previewSource(preview, kind) {
+  if (kind === "thumbnail") {
+    return preview.thumbnailUrl || preview.thumbnailPath || preview.imageUrl || preview.imagePath || "";
+  }
+  return preview.imageUrl || preview.imagePath || "";
+}
+
+function updateObservedThumbnail(card, force = false) {
+  if (!card.visible || (!force && !card.nearViewport)) return;
+  const source = previewSource(card.theme.previews[state.mode], "thumbnail");
+  if (card.image.dataset.source === source) return;
+  card.image.src = source;
+  card.image.dataset.source = source;
+}
+
+function ensureThumbnailObserver() {
+  if (state.thumbnailObserver || !("IntersectionObserver" in window)) return;
+  state.thumbnailObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      const card = state.themeCards.get(entry.target.dataset.themeId);
+      if (!card) return;
+      card.nearViewport = entry.isIntersecting;
+      if (entry.isIntersecting) updateObservedThumbnail(card);
+    });
+  }, {
+    root: elements.themeList,
+    rootMargin: "180px 0px",
+  });
+}
+
+function resetThumbnailObserver() {
+  state.thumbnailObserver?.disconnect();
+  state.thumbnailObserver = null;
+}
+
+function createThemeCard(theme) {
+  const button = document.createElement("button");
+  button.type = "button";
+  button.dataset.themeId = theme.id;
+
+  const thumb = document.createElement("span");
+  thumb.className = "theme-thumb";
+  const image = document.createElement("img");
+  image.alt = "";
+  image.width = 320;
+  image.height = 180;
+  image.loading = "lazy";
+  image.decoding = "async";
+  thumb.append(image);
+
+  const copy = document.createElement("span");
+  copy.className = "theme-list-copy";
+  const meta = document.createElement("small");
+  meta.className = "theme-card-meta";
+  const title = document.createElement("strong");
+  const subtitle = document.createElement("small");
+  copy.append(meta, title, subtitle);
+
+  const detail = document.createElement("span");
+  detail.className = "theme-detail-action";
+  button.append(thumb, copy, detail);
+  const card = {
+    theme,
+    button,
+    image,
+    meta,
+    title,
+    subtitle,
+    detail,
+    visible: false,
+    nearViewport: false,
+  };
+  state.themeCards.set(theme.id, card);
+  return card;
+}
+
+function ensureThemeCards() {
+  if (!state.catalog) return;
+  const catalogIds = state.catalog.themes.map((theme) => theme.id);
+  const intact = catalogIds.length === state.themeCards.size
+    && catalogIds.every((id) => state.themeCards.has(id));
+  if (intact) return;
+  resetThumbnailObserver();
+  state.themeCards.clear();
+  const fragment = document.createDocumentFragment();
+  state.catalog.themes.forEach((theme) => fragment.append(createThemeCard(theme).button));
+  elements.themeList.replaceChildren(fragment);
+}
+
+function updateThemeCard(theme, visible, visibleIndex) {
+  const card = state.themeCards.get(theme.id);
+  if (!card) return;
+  const active = theme.id === state.themeId;
+  card.button.hidden = !visible;
+  card.button.classList.toggle("is-active", active);
+  card.button.setAttribute("aria-pressed", String(active));
+  card.visible = visible;
+  if (!visible) {
+    card.nearViewport = false;
+    state.thumbnailObserver?.unobserve(card.button);
+    card.image.removeAttribute("src");
+    delete card.image.dataset.source;
+    return;
+  }
+
+  const collection = state.catalog.collections.find((record) => record.id === theme.collection);
+  const name = localized(theme.name);
+  card.meta.textContent = localized(collection?.name) + " · " + t(theme.variant);
+  card.title.textContent = name;
+  card.subtitle.textContent = localized(theme.tagline);
+  card.detail.textContent = t("viewDetails") + " →";
+  card.button.setAttribute("aria-label", name + " · " + t("viewDetails"));
+  ensureThumbnailObserver();
+  if (state.thumbnailObserver) {
+    state.thumbnailObserver.observe(card.button);
+    updateObservedThumbnail(card);
+  } else if (visibleIndex < 4) {
+    updateObservedThumbnail(card, true);
+  }
+  card.image.fetchPriority = visibleIndex < 2 ? "high" : "auto";
+}
+
 function renderThemeList() {
   const themes = filteredThemes();
+  ensureThemeCards();
   elements.resultCount.textContent = t("resultsCount", { count: themes.length });
   if (themes.length && !themes.some((theme) => theme.id === state.themeId)) {
     state.themeId = themes[0].id;
   }
   if (!themes.length) state.themeId = null;
-  const fragment = document.createDocumentFragment();
-  themes.forEach((theme) => {
-    const button = document.createElement("button");
-    button.type = "button";
-    button.role = "option";
-    button.dataset.themeId = theme.id;
-    button.setAttribute("aria-selected", String(theme.id === state.themeId));
-    button.classList.toggle("is-active", theme.id === state.themeId);
-
-    const thumb = document.createElement("span");
-    thumb.className = "theme-thumb";
-    const image = document.createElement("img");
-    image.src = theme.previews[state.mode].imageUrl;
-    image.alt = "";
-    thumb.append(image);
-    const copy = document.createElement("span");
-    copy.className = "theme-list-copy";
-    const meta = document.createElement("small");
-    meta.className = "theme-card-meta";
-    meta.textContent = localized(state.catalog.collections.find((collection) => collection.id === theme.collection)?.name)
-      + " · " + t(theme.variant);
-    const title = document.createElement("strong");
-    title.textContent = localized(theme.name);
-    const subtitle = document.createElement("small");
-    subtitle.textContent = localized(theme.tagline);
-    copy.append(meta, title, subtitle);
-    const arrow = document.createElement("span");
-    arrow.className = "theme-arrow";
-    arrow.textContent = "↗";
-    button.append(thumb, copy, arrow);
-    fragment.append(button);
+  const visibleIndexes = new Map(themes.map((theme, index) => [theme.id, index]));
+  state.catalog.themes.forEach((theme) => {
+    updateThemeCard(theme, visibleIndexes.has(theme.id), visibleIndexes.get(theme.id));
   });
-  elements.themeList.replaceChildren(fragment);
+  themes.forEach((theme) => elements.themeList.append(state.themeCards.get(theme.id).button));
   elements.emptyState.hidden = themes.length > 0;
   if (themes.length) {
     renderSelectedTheme();
   } else {
     elements.themeCapture.removeAttribute("src");
     elements.themeCapture.alt = "";
+    elements.captureBadgeLabel.textContent = "";
+    elements.captureVersion.textContent = "";
+    elements.captureProofLabel.textContent = "";
+    elements.captureHash.textContent = "";
     elements.collectionName.textContent = "";
     elements.themeName.textContent = t("emptyState");
     elements.themeTagline.textContent = "";
@@ -611,9 +905,16 @@ function renderSelectedTheme() {
   if (!theme) return;
   elements.applySkin.disabled = state.targets.length === 0;
   const preview = theme.previews[state.mode];
-  elements.themeCapture.src = preview.imageUrl;
-  elements.themeCapture.alt = localized(theme.name) + " · " + t(state.mode) + " · " + t("captureAlt");
-  elements.captureVersion.textContent = preview.capture.appVersion;
+  const captureVerified = captureEvidenceIsVerified();
+  elements.themeCapture.src = previewSource(preview, "image");
+  elements.themeCapture.alt = localized(theme.name) + " · " + t(state.mode) + " · "
+    + t(captureVerified ? "captureAlt" : "referenceCaptureAlt");
+  elements.captureBadgeLabel.textContent = t(captureVerified ? "verifiedCapture" : "referenceCapture");
+  elements.captureVersion.textContent = t(
+    captureVerified ? "captureVersionVerified" : "captureVersionReference",
+    { version: preview.capture.appVersion },
+  );
+  elements.captureProofLabel.textContent = t(captureVerified ? "captureProof" : "referenceCaptureProof");
   elements.captureHash.textContent = shortHash(preview.capture.sha256);
   elements.collectionName.textContent = localized(currentCollection()?.name) + " / " + t(theme.variant).toUpperCase();
   elements.themeName.textContent = localized(theme.name);
@@ -630,10 +931,53 @@ function renderSelectedTheme() {
   elements.themeList.querySelectorAll("[data-theme-id]").forEach((button) => {
     const active = button.dataset.themeId === state.themeId;
     button.classList.toggle("is-active", active);
-    button.setAttribute("aria-selected", String(active));
+    button.setAttribute("aria-pressed", String(active));
   });
   renderSkinState();
   renderPersistenceState();
+}
+
+function targetDiagnosticLabel(diagnostic) {
+  const labels = {
+    "command-unavailable": "targetDiagnosticCommandUnavailable",
+    "permission-denied": "targetDiagnosticPermissionDenied",
+    "malformed-package": "targetDiagnosticMalformedPackage",
+    "malformed-output": "targetDiagnosticMalformedOutput",
+    "command-failed": "targetDiagnosticCommandFailed",
+    "unsupported-platform": "targetDiagnosticUnsupported",
+  };
+  return t(labels[diagnostic?.code] || "targetDiagnosticCommandFailed");
+}
+
+function targetDiagnosticText() {
+  const diagnostic = state.targetDiagnostic;
+  if (!diagnostic) return "";
+  const detail = String(diagnostic.detail || "").replace(/\s+/gu, " ").trim();
+  return `${targetDiagnosticLabel(diagnostic)}\nCode: ${diagnostic.code || "command-failed"}${detail ? `\n${detail}` : ""}`;
+}
+
+async function refreshTargets() {
+  const discovery = await window.act.discoverTargets();
+  state.targets = discovery.targets || [];
+  state.targetDiagnostic = discovery.diagnostic || null;
+  renderTargets();
+}
+
+async function copyPlainText(text) {
+  if (navigator.clipboard?.writeText) {
+    await navigator.clipboard.writeText(text);
+    return;
+  }
+  const input = document.createElement("textarea");
+  input.value = text;
+  input.setAttribute("readonly", "");
+  input.style.position = "fixed";
+  input.style.opacity = "0";
+  document.body.append(input);
+  input.select();
+  const copied = document.execCommand("copy");
+  input.remove();
+  if (!copied) throw new Error("Clipboard is unavailable");
 }
 
 function renderTargets() {
@@ -641,7 +985,9 @@ function renderTargets() {
   if (!state.targets.length) {
     const option = document.createElement("option");
     option.value = "";
-    option.textContent = t("noTarget");
+    option.textContent = state.targetDiagnostic
+      ? targetDiagnosticLabel(state.targetDiagnostic)
+      : t("noTarget");
     fragment.append(option);
   } else {
     state.targets.forEach((target) => {
@@ -652,6 +998,7 @@ function renderTargets() {
     });
   }
   elements.targetSelect.replaceChildren(fragment);
+  elements.targetDiagnosticActions.hidden = !state.targetDiagnostic;
   elements.applySkin.disabled = state.targets.length === 0 || !state.themeId;
   renderSkinState();
   renderPersistenceState();
@@ -669,13 +1016,23 @@ function renderSkinState() {
   elements.applySkinLabel.textContent = sameSelection ? t("reapplySkin") : t("applySkin");
   elements.restoreSkin.disabled = !skin.active && !state.persistenceState?.enabled;
   const active = sameSessionSelection ? skin : persistentActive ? state.persistenceState : null;
-  elements.skinStatus.textContent = active
+  const monitorKey = {
+    healthy: "monitorHealthy",
+    recovering: "monitorRecovering",
+    degraded: "monitorDegraded",
+    stopped: "monitorStopped",
+  }[skin.monitorState];
+  const monitorSuffix = skin.active && monitorKey ? " " + t(monitorKey) : "";
+  const status = (active
     ? t("skinActive", {
       target: active.channel === "beta" ? "ChatGPT Beta" : "ChatGPT",
       theme: active.themeId,
       mode: t(active.mode),
     })
-    : t("skinIdle");
+    : t("skinIdle")) + monitorSuffix;
+  elements.skinStatus.textContent = state.targetDiagnostic && !state.targets.length
+    ? targetDiagnosticText()
+    : status;
 }
 
 function persistenceMatchesSelection(persistence, channel = elements.targetSelect.value) {
@@ -714,10 +1071,12 @@ function renderPersistenceState() {
       "version-blocked": "persistenceBlocked",
       "retry-blocked": "persistenceError",
       error: "persistenceError",
+      "needs-user-close": "persistenceNeedsUserClose",
+      "force-closing": "persistenceForceClosing",
     };
     const label = t(labels[persistence.phase] || "persistenceDisabled");
     elements.persistenceStatus.textContent = persistence.detail
-      && ["blocked", "target-missing", "version-blocked", "retrying", "retry-blocked", "error"].includes(persistence.phase)
+      && ["blocked", "target-missing", "version-blocked", "retrying", "retry-blocked", "error", "needs-user-close", "force-closing"].includes(persistence.phase)
       ? `${label} · ${persistence.detail}`
       : label;
   }
@@ -725,6 +1084,12 @@ function renderPersistenceState() {
   const busy = ["starting", "restarting"].includes(persistence.phase);
   elements.persistenceToggle.disabled = busy
     || (!sameSelection && (state.targets.length === 0 || !state.themeId || !channel));
+  const forceRestartAvailable = state.platform === "win32"
+    && persistence.enabled
+    && persistence.channel === channel
+    && ["needs-user-close", "force-closing"].includes(persistence.phase);
+  elements.forceRestart.hidden = !forceRestartAvailable;
+  elements.forceRestart.disabled = !forceRestartAvailable;
   elements.restoreSkin.disabled = !(state.skinState?.active || persistence.enabled);
 }
 
@@ -750,7 +1115,6 @@ function renderUpdateState() {
 function renderShortcuts() {
   const modifier = state.platform === "darwin" ? "⌘" : "Ctrl";
   elements.searchShortcut.textContent = modifier + " K";
-  elements.copyShortcut.textContent = modifier + " C";
   elements.applyShortcut.textContent = modifier + " ↵";
 }
 
@@ -780,6 +1144,7 @@ function renderLanguage() {
   if (state.catalog) {
     normalizeCollectionSelection();
     renderCatalogStatus();
+    renderCapabilitySummary();
     renderStyleTabs();
     renderCollectionTabs();
     renderFacetOptions();
@@ -798,7 +1163,20 @@ function acceptCatalog(payload) {
     status: payload.status,
     message: payload.message,
   };
-  if (payload.catalog) state.catalog = payload.catalog;
+  if (payload.catalog) {
+    const nextKey = [
+      payload.catalog.registrySha256 || "",
+      payload.catalog.source || "",
+      payload.catalog.themes?.map((theme) => theme.id).join(",") || "",
+    ].join("|");
+    if (nextKey !== state.catalogKey) {
+      resetThumbnailObserver();
+      state.themeCards.clear();
+      elements.themeList.replaceChildren();
+      state.catalogKey = nextKey;
+    }
+    state.catalog = payload.catalog;
+  }
   if (!state.catalog) return;
   const ordered = state.catalog.themes.slice().sort(compareThemePriority);
   state.themeId = state.catalog.themes.some((theme) => theme.id === previousTheme)
@@ -806,6 +1184,7 @@ function acceptCatalog(payload) {
     : ordered[0]?.id;
   normalizeCollectionSelection();
   renderCatalogStatus();
+  renderCapabilitySummary();
   renderStyleTabs();
   renderCollectionTabs();
   renderFacetOptions();
@@ -919,6 +1298,28 @@ elements.refreshCatalog.addEventListener("click", async () => {
   }
 });
 
+elements.retryTargetDiscovery.addEventListener("click", async () => {
+  elements.retryTargetDiscovery.disabled = true;
+  try {
+    await refreshTargets();
+  } catch (error) {
+    toast(friendlyError(error, "targetDiagnosticCommandFailed"), "error");
+  } finally {
+    elements.retryTargetDiscovery.disabled = false;
+  }
+});
+
+elements.copyTargetDiagnostic.addEventListener("click", async () => {
+  const text = targetDiagnosticText();
+  if (!text) return;
+  try {
+    await copyPlainText(text);
+    toast(t("toastDiagnosticCopied"));
+  } catch {
+    toast(t("toastCopyFailed"), "error");
+  }
+});
+
 elements.copyTheme.addEventListener("click", async () => {
   try {
     await window.act.copyTheme(state.themeId, state.mode);
@@ -928,10 +1329,25 @@ elements.copyTheme.addEventListener("click", async () => {
   }
 });
 
+elements.forceRestart.addEventListener("click", async () => {
+  const channel = elements.targetSelect.value;
+  if (!channel || !await requestForceRestartConsent()) return;
+  elements.forceRestart.disabled = true;
+  try {
+    state.persistenceState = await window.act.forceRestartPersistentTheme(channel, true);
+    renderPersistenceState();
+    toast(t("toastForceRestartRequested"));
+  } catch (error) {
+    toast(friendlyError(error, "toastPersistenceFailed"), "error");
+  } finally {
+    renderPersistenceState();
+  }
+});
+
 elements.applySkin.addEventListener("click", async () => {
   const channel = elements.targetSelect.value;
   if (!channel || !state.themeId) return;
-  if (!state.persistenceState?.enabled && !await requestPersistenceConsent()) return;
+  if (!state.persistenceState?.enabled && !await requestPersistenceConsent(elements.applySkin)) return;
   elements.applySkin.disabled = true;
   elements.applySkinLabel.textContent = t("applyingSkin");
   try {
@@ -990,7 +1406,7 @@ elements.persistenceToggle.addEventListener("change", async () => {
     renderPersistenceState();
     return;
   }
-  if (enable && !await requestPersistenceConsent()) {
+  if (enable && !await requestPersistenceConsent(elements.persistenceToggle)) {
     renderPersistenceState();
     return;
   }
@@ -1011,15 +1427,27 @@ elements.persistenceToggle.addEventListener("change", async () => {
 
 elements.persistenceConsentCancel.addEventListener("click", () => finishPersistenceConsent(false));
 elements.persistenceConsentConfirm.addEventListener("click", () => finishPersistenceConsent(true));
-elements.persistenceConsentDialog.addEventListener("click", (event) => {
-  if (event.target === elements.persistenceConsentDialog) finishPersistenceConsent(false);
+elements.persistenceConsentDialog.addEventListener("cancel", (event) => {
+  if (!consentUsesNativeDialog) return;
+  event.preventDefault();
+  finishPersistenceConsent(false);
+});
+elements.persistenceConsentDialog.addEventListener("close", () => {
+  if (consentUsesNativeDialog && consentResolver) finishPersistenceConsent(false);
+});
+elements.forceRestartCancel.addEventListener("click", () => finishForceRestartConsent(false));
+elements.forceRestartConfirm.addEventListener("click", () => finishForceRestartConsent(true));
+elements.forceRestartDialog.addEventListener("click", (event) => {
+  if (event.target === elements.forceRestartDialog) finishForceRestartConsent(false);
 });
 document.addEventListener("keydown", (event) => {
-  if (event.key === "Escape" && !elements.persistenceConsentDialog.hidden) {
+  if (event.key === "Escape" && !elements.forceRestartDialog.hidden) {
     event.preventDefault();
-    finishPersistenceConsent(false);
+    finishForceRestartConsent(false);
   }
 });
+elements.persistenceConsentBackdrop.addEventListener("click", () => finishPersistenceConsent(false));
+document.addEventListener("keydown", trapFallbackConsentFocus);
 
 elements.openGallery.addEventListener("click", () => window.act.openExternal("gallery"));
 elements.openRepository.addEventListener("click", () => window.act.openExternal("repository"));
@@ -1037,16 +1465,18 @@ elements.updateButton.addEventListener("click", async () => {
 });
 
 document.addEventListener("keydown", (event) => {
+  if (event.defaultPrevented) return;
   const command = event.metaKey || event.ctrlKey;
-  if (command && event.key.toLowerCase() === "k") {
+  const key = event.key.toLowerCase();
+  if (command && key === "k" && !elements.persistenceConsentDialog.open) {
     event.preventDefault();
     elements.search.focus();
   }
-  if (command && event.key.toLowerCase() === "c" && document.activeElement !== elements.search) {
-    event.preventDefault();
-    elements.copyTheme.click();
-  }
-  if (command && event.key === "Enter") {
+  if (command && key === "enter" && canUseGlobalActionShortcut({
+    dialogOpen: elements.persistenceConsentDialog.open,
+    selection: window.getSelection(),
+    target: document.activeElement,
+  })) {
     event.preventDefault();
     elements.applySkin.click();
   }
@@ -1067,6 +1497,7 @@ try {
   state.platform = bootstrap.platform;
   renderWindowChrome();
   state.targets = bootstrap.targets;
+  state.targetDiagnostic = bootstrap.targetDiagnostic || null;
   state.skinState = bootstrap.skinState;
   state.persistenceState = bootstrap.persistenceState;
   state.updateState = bootstrap.updateState;
@@ -1080,7 +1511,9 @@ try {
   setTimeout(() => void refreshAppUpdateState().catch(() => {}), 1800);
   setInterval(async () => {
     try {
+      state.skinState = await window.act.getSkinState();
       state.persistenceState = await window.act.getPersistenceState();
+      renderSkinState();
       renderPersistenceState();
     } catch {
       // Keep the last verified state; the next poll may recover.

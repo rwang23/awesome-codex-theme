@@ -4,11 +4,23 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { readPngDimensions } from "./lib/png.mjs";
+import {
+  CAPTURE_PRESENTATION_RENDERER,
+  CAPTURE_PRESENTATION_SIZES,
+  GALLERY_MEDIA_BUDGET,
+  presentationFingerprint,
+  presentationManifestPathFor,
+  presentationPathFor,
+} from "./lib/capture-presentation.mjs";
 import { extractStoredEntry, listZipEntries } from "./lib/zip.mjs";
 import {
   CODEX_NATIVE_TESTED_VERSION,
   parseCodexNativeTheme,
 } from "./lib/codex-native-theme.mjs";
+import { readReleaseMetadata, releaseForRegistry } from "./lib/release-metadata.mjs";
+import { assessSourceArt, parseImageSize } from "./lib/source-art-policy.mjs";
+import { computeCoverCrop, renderFingerprint } from "./lib/source-art-contract.mjs";
+import { loadSourceArtReviews, resolveSourceArtReview } from "./lib/source-art-reviews.mjs";
 
 const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(SCRIPT_DIR, "..");
@@ -18,12 +30,6 @@ const HEX = /^#[0-9A-Fa-f]{6}$/;
 const FAN_ART_LICENSE_ID = "LicenseRef-ACT-Fan-Art-Notice";
 const FORBIDDEN_PROMPT = /凡人修仙传|仙逆|剑来|斗破苍穹|studio\s+ghibli|makoto\s+shinkai|hayao\s+miyazaki|style\s+of/i;
 const MAX_IMAGE_BYTES = 16 * 1024 * 1024;
-const CODEX_BETA_CAPTURE_VERSION = "26.715.3651.0";
-const CODEX_BETA_PACKAGE = "OpenAI.CodexBeta_26.715.3651.0_x64__2p2nqsd0c76g0";
-const FULL_SKIN_FORMAT = "act-full-skin-v1";
-const SOURCE_ART_RENDERER_ID = "act-source-art-renderer-v1";
-const SOURCE_WIDTH = 1536;
-const SOURCE_HEIGHT = 1024;
 const CANONICAL_ENTRIES = [
   "assets/background-dark.png",
   "assets/background-light.png",
@@ -36,17 +42,9 @@ function sha256(buffer) {
   return createHash("sha256").update(buffer).digest("hex");
 }
 
-function renderFingerprint(theme, mode, sourceProvenance, width, height) {
-  return sha256(Buffer.from(JSON.stringify({
-    renderer: SOURCE_ART_RENDERER_ID,
-    sourceSha256: sourceProvenance.sourceSha256,
-    mode,
-    width,
-    height,
-    background: theme[mode].tokens.background,
-  }), "utf8"));
+function runtimeImplementationVersionFor(runtimeJs) {
+  return /const implementationVersion = "([^"]+)";/u.exec(runtimeJs)?.[1] || "";
 }
-
 function check(condition, message, errors) {
   if (!condition) errors.push(message);
 }
@@ -119,8 +117,28 @@ function validateTokens(themeId, mode, tokens, errors) {
     errors,
   );
   check(
+    contrastRatio(tokens.text, tokens.surfaceAlt) >= 4.5,
+    themeId + " " + mode + " text/surfaceAlt contrast is below 4.5",
+    errors,
+  );
+  check(
+    contrastRatio(tokens.muted, tokens.surfaceAlt) >= 4.5,
+    themeId + " " + mode + " muted/surfaceAlt contrast is below 4.5",
+    errors,
+  );
+  check(
     contrastRatio(tokens.accent, tokens.background) >= 3,
     themeId + " " + mode + " accent/background contrast is below 3.0",
+    errors,
+  );
+  check(
+    contrastRatio(tokens.accent, tokens.surface) >= 3,
+    themeId + " " + mode + " accent/surface interactive-boundary contrast is below 3.0",
+    errors,
+  );
+  check(
+    contrastRatio(tokens.accent, tokens.surfaceAlt) >= 3,
+    themeId + " " + mode + " accent/surfaceAlt interactive-boundary contrast is below 3.0",
     errors,
   );
   check(
@@ -178,24 +196,93 @@ function validateNativeTheme(theme, mode, nativeBytes, modeRecord, manifestMode,
 
 export async function validateRepository() {
   const errors = [];
+  const release = readReleaseMetadata(ROOT);
   let captureCount = 0;
+  let presentationVariantCount = 0;
+  let largestCardPresentationBytes = 0;
+  let largestPresentationBytes = 0;
   let fullSkinCount = 0;
+  const focalCropDiagnostics = {
+    horizontallyAdjustable: 0,
+    sources: 0,
+    verticallyAdjustable: 0,
+  };
   const nativeThemeOwners = new Map();
-  const [catalog, registry, sourceJobs, captureManifest, themeSchema, registrySchema, runtimeCss, runtimeJs] = await Promise.all([
+  const captureManifestPath = "screenshots/codex-beta-" + release.capture.appVersion + "/manifest.json";
+  const capturePresentationManifestPath = presentationManifestPathFor(captureManifestPath);
+  const [catalog, registry, sourceJobs, captureManifest, presentationManifest, themeSchema, registrySchema, sourceReviewSchema, runtimeCss, runtimeJs] = await Promise.all([
     readJson("themes/catalog.json"),
     readJson("themes/registry.json"),
     readJson("themes/source-art/jobs.json"),
-    readJson("screenshots/codex-beta-26.715.3651.0/manifest.json"),
+    readJson(captureManifestPath),
+    readJson(capturePresentationManifestPath),
     readJson("schemas/theme-pack.schema.json"),
     readJson("schemas/registry.schema.json"),
+    readJson("schemas/source-art-review.schema.json"),
     readFile(path.join(ROOT, "packages", "full-skin", "runtime.css"), "utf8"),
     readFile(path.join(ROOT, "packages", "full-skin", "runtime.js"), "utf8"),
   ]);
   const runtimeSha256 = sha256(Buffer.from(runtimeCss + "\n" + runtimeJs, "utf8"));
+  const runtimeImplementationVersion = runtimeImplementationVersionFor(runtimeJs);
+  const capturedRuntime = captureManifest.runtime || {};
+  const evidenceStatus = capturedRuntime.evidenceStatus || "verified";
+  const currentRuntime = capturedRuntime.currentRuntime || {
+    implementationVersion: capturedRuntime.implementationVersion,
+    sha256: capturedRuntime.sha256,
+    verification: "verified",
+  };
+  const expectedRuntimeEvidence = {
+    status: evidenceStatus,
+    capturedRuntime: {
+      implementationVersion: capturedRuntime.implementationVersion,
+      sha256: capturedRuntime.sha256,
+    },
+    currentRuntime,
+  };
+  const sourceReviews = await loadSourceArtReviews(ROOT, catalog);
 
   check(themeSchema.$schema?.includes("2020-12"), "Theme schema is not JSON Schema 2020-12", errors);
   check(registrySchema.$schema?.includes("2020-12"), "Registry schema is not JSON Schema 2020-12", errors);
+  check(sourceReviewSchema.$schema?.includes("2020-12"), "Source-art review schema is not JSON Schema 2020-12", errors);
   check(registry.standard === "act-theme-pack-v1", "Registry standard id mismatch", errors);
+  check(JSON.stringify(registry.release) === JSON.stringify(releaseForRegistry(release)), "Registry release metadata drifted", errors);
+  check(JSON.stringify(registry.capabilities) === JSON.stringify(release.capabilities), "Registry capability disclosure drifted", errors);
+  check(CODEX_NATIVE_TESTED_VERSION === release.runtime.nativeTestedVersion, "Native helper version drifted from release metadata", errors);
+  check(
+    captureManifest.testBench?.version === release.capture.appVersion
+      && captureManifest.testBench?.packageFullName === release.capture.packageFullName
+      && captureManifest.fixture?.id === release.capture.fixture,
+    "Capture manifest drifted from release metadata",
+    errors,
+  );
+  check(
+    presentationManifest.schemaVersion === "act-capture-presentation-manifest-v1",
+    "Capture presentation manifest schema mismatch",
+    errors,
+  );
+  check(
+    presentationManifest.renderer === CAPTURE_PRESENTATION_RENDERER,
+    "Capture presentation renderer mismatch",
+    errors,
+  );
+  check(
+    presentationManifest.sourceManifest === captureManifestPath,
+    "Capture presentation manifest source mismatch",
+    errors,
+  );
+  const presentationRecords = Array.isArray(presentationManifest.captures)
+    ? presentationManifest.captures
+    : [];
+  const presentationByCapture = new Map(presentationRecords.map((record) => [
+    record.themeId + "|" + record.mode,
+    record,
+  ]));
+  check(
+    presentationRecords.length === registry.themes.length * 2
+      && presentationByCapture.size === presentationRecords.length,
+    "Capture presentation manifest must have one unique record for every theme mode",
+    errors,
+  );
   check(
     Number.isInteger(catalog.catalogRevision)
       && catalog.catalogRevision > 0
@@ -209,11 +296,44 @@ export async function validateRepository() {
     /^\d{8}$/u.test(catalogRevisionDate)
       && /^\d{8}$/u.test(captureDate)
       && catalogRevisionDate >= captureDate,
-    "Catalog revision predates the latest verified screenshot capture",
+    "Catalog revision predates the latest recorded screenshot capture",
     errors,
   );
+  check(capturedRuntime.format === release.runtime.fullSkinFormat, "Capture runtime format mismatch", errors);
+  check(typeof capturedRuntime.implementationVersion === "string" && capturedRuntime.implementationVersion.length > 0, "Capture runtime implementation version is missing", errors);
+  check(SHA256.test(capturedRuntime.sha256 || ""), "Capture runtime hash is invalid", errors);
+  check(["verified", "reference"].includes(evidenceStatus), "Capture runtime evidence status is invalid", errors);
+  check(runtimeImplementationVersion.length > 0, "Current Full Skin runtime implementation version is missing", errors);
+  check(currentRuntime.implementationVersion === runtimeImplementationVersion, "Current runtime implementation version does not match source", errors);
+  check(currentRuntime.sha256 === runtimeSha256, "Current runtime hash does not match source", errors);
+  check(
+    currentRuntime.verification === (evidenceStatus === "verified" ? "verified" : "source-tested-recapture-required"),
+    "Current runtime verification state does not match capture evidence status",
+    errors,
+  );
+  if (evidenceStatus === "verified") {
+    check(capturedRuntime.implementationVersion === runtimeImplementationVersion, "Verified capture implementation version does not match source", errors);
+    check(capturedRuntime.sha256 === runtimeSha256, "Verified capture runtime hash does not match source", errors);
+  } else {
+    check(capturedRuntime.sha256 !== runtimeSha256, "Reference capture runtime hash must differ from current source", errors);
+  }
+  check(
+    JSON.stringify(registry.runtimeEvidence) === JSON.stringify(expectedRuntimeEvidence),
+    "Registry runtime evidence does not match the capture manifest and current source",
+    errors,
+  );
+  check(Array.isArray(captureManifest.captures), "Capture manifest captures are missing", errors);
+  for (const capture of captureManifest.captures || []) {
+    check(capture.runtimeSha256 === capturedRuntime.sha256, "Captured " + capture.themeId + " " + capture.mode + " runtime hash mismatch", errors);
+    check(capture.implementationVersion === capturedRuntime.implementationVersion, "Captured " + capture.themeId + " " + capture.mode + " runtime implementation version mismatch", errors);
+  }
   check(sourceJobs.workflow?.runner === "openai-image-job", "Source-art workflow mismatch", errors);
-  check(sourceJobs.workflow?.size === SOURCE_WIDTH + "x" + SOURCE_HEIGHT, "Source-art dimensions mismatch", errors);
+  try {
+    parseImageSize(sourceJobs.workflow?.size);
+  } catch {
+    errors.push("Source-art workflow size is invalid");
+  }
+  check(Boolean(sourceJobs.sourceArtPolicy), "Source-art policy is missing", errors);
   check(Array.isArray(sourceJobs.jobs), "Source-art jobs are missing", errors);
   check(Array.isArray(catalog.collections) && catalog.collections.length > 0, "Catalog must declare at least one collection", errors);
   check(Array.isArray(registry.collections), "Registry collections are missing", errors);
@@ -358,6 +478,14 @@ export async function validateRepository() {
     const sourceDimensions = readPngDimensions(sourceArt);
     const rightsProfile = catalogTheme.rightsProfile || "original";
     const fanArt = rightsProfile === "fan-art";
+    let sourceReview;
+    try {
+      sourceReview = resolveSourceArtReview(catalogTheme, sourceProvenance, sourceReviews);
+    } catch (error) {
+      errors.push(error.message);
+      continue;
+    }
+    const rightsVerified = sourceReview?.decision === "approved";
     const commonPrompt = sourceJob.promptProfile === "tribute"
       ? sourceJobs.tributePrompt
       : sourceJob.promptProfile === "global"
@@ -380,11 +508,31 @@ export async function validateRepository() {
       ? commonPrompt.replace(promptCommonReplacement.find, promptCommonReplacement.replace)
       : commonPrompt;
     const completePrompt = effectiveCommonPrompt + "\n\nScene brief: " + sourceJob.prompt;
+    const sourcePolicy = assessSourceArt(sourceJobs.sourceArtPolicy, catalogTheme.id, sourceDimensions);
     check(
-      sourceDimensions.width === SOURCE_WIDTH && sourceDimensions.height === SOURCE_HEIGHT,
-      catalogTheme.id + " source-art dimensions mismatch",
+      sourcePolicy.accepted,
+      catalogTheme.id + " " + (sourcePolicy.reason || "source-art policy rejected the source"),
       errors,
     );
+    const crop = computeCoverCrop({
+      sourceWidth: sourceDimensions.width,
+      sourceHeight: sourceDimensions.height,
+      targetWidth: 2560,
+      targetHeight: 1440,
+      focusX: catalogTheme.art.focusX,
+      focusY: catalogTheme.art.focusY,
+    });
+    const sourceFocusX = crop.focusX * sourceDimensions.width;
+    const sourceFocusY = crop.focusY * sourceDimensions.height;
+    check(
+      sourceFocusX >= crop.cropX - 0.001 && sourceFocusX <= crop.cropX + crop.cropWidth + 0.001
+        && sourceFocusY >= crop.cropY - 0.001 && sourceFocusY <= crop.cropY + crop.cropHeight + 0.001,
+      catalogTheme.id + " focal point falls outside its 16:9 crop",
+      errors,
+    );
+    focalCropDiagnostics.sources += 1;
+    if (crop.cropWidth < sourceDimensions.width) focalCropDiagnostics.horizontallyAdjustable += 1;
+    if (crop.cropHeight < sourceDimensions.height) focalCropDiagnostics.verticallyAdjustable += 1;
     check(sourceArt.length > 0 && sourceArt.length <= MAX_IMAGE_BYTES, catalogTheme.id + " source-art size invalid", errors);
     check(sourceProvenance.themeId === catalogTheme.id, catalogTheme.id + " source provenance identity mismatch", errors);
     check(sourceJob.rightsProfile === rightsProfile || (!sourceJob.rightsProfile && rightsProfile === "original"), catalogTheme.id + " source job rights-profile mismatch", errors);
@@ -400,7 +548,12 @@ export async function validateRepository() {
     check(typeof sourceProvenance.jobId === "string" && sourceProvenance.jobId.length > 10, catalogTheme.id + " source job id missing", errors);
     check(sourceProvenance.sourceSha256 === sha256(sourceArt), catalogTheme.id + " source image hash mismatch", errors);
     check(
-      sourceProvenance.promptSha256 === sha256(Buffer.from(completePrompt, "utf8")),
+      sourceProvenance.promptSha256 === sha256(Buffer.from(
+        completePrompt + (sourcePolicy.kind === "canonical"
+          ? "\n\n" + sourceJobs.sourceArtPolicy.newThemePrompt
+          : ""),
+        "utf8",
+      )),
       catalogTheme.id + " source prompt hash mismatch",
       errors,
     );
@@ -425,7 +578,7 @@ export async function validateRepository() {
     check(theme.provenance?.aiGenerated === true, theme.id + " registry AI disclosure mismatch", errors);
     check(JSON.stringify(theme.tagline) === JSON.stringify(catalogTheme.tagline), theme.id + " registry tagline mismatch", errors);
     check(theme.rightsProfile === rightsProfile, theme.id + " registry rights-profile mismatch", errors);
-    check(theme.provenance?.rightsVerified === !fanArt, theme.id + " registry rights status mismatch", errors);
+    check(theme.provenance?.rightsVerified === rightsVerified, theme.id + " registry rights status mismatch", errors);
     check(theme.provenance?.type === (fanArt ? "fan-art" : "original"), theme.id + " registry provenance type mismatch", errors);
     check(theme.provenance?.record === provenancePath, theme.id + " registry provenance record mismatch", errors);
     check(theme.provenance?.sourceArt === sourcePath, theme.id + " registry source-art path mismatch", errors);
@@ -433,8 +586,13 @@ export async function validateRepository() {
     check(theme.provenance?.promptSha256 === sourceProvenance.promptSha256, theme.id + " registry prompt hash mismatch", errors);
     check(theme.provenance?.jobId === sourceProvenance.jobId, theme.id + " registry image job mismatch", errors);
     check(
+      JSON.stringify(theme.provenance?.review || null) === JSON.stringify(sourceReview || null),
+      theme.id + " registry source-art review mismatch",
+      errors,
+    );
+    check(
       theme.license?.spdx === (fanArt ? FAN_ART_LICENSE_ID : "CC0-1.0")
-        && theme.license?.rightsVerified === !fanArt,
+        && theme.license?.rightsVerified === rightsVerified,
       theme.id + " license or rights disclosure mismatch",
       errors,
     );
@@ -467,7 +625,7 @@ export async function validateRepository() {
       theme.id + " registry featured rank mismatch",
       errors,
     );
-    check(manifest.provenance?.rightsVerified === !fanArt, theme.id + " canonical rights status mismatch", errors);
+    check(manifest.provenance?.rightsVerified === rightsVerified, theme.id + " canonical rights status mismatch", errors);
     check(manifest.provenance?.aiGenerated === true, theme.id + " generated-art disclosure mismatch", errors);
     check(manifest.provenance?.type === (fanArt ? "fan-art" : "original"), theme.id + " generated-art provenance type mismatch", errors);
     if (fanArt) {
@@ -478,13 +636,18 @@ export async function validateRepository() {
     check(manifest.provenance?.jobId === sourceProvenance.jobId, theme.id + " manifest image job mismatch", errors);
     check(manifest.provenance?.promptSha256 === sourceProvenance.promptSha256, theme.id + " manifest prompt hash mismatch", errors);
     check(manifest.provenance?.sourceSha256 === sourceProvenance.sourceSha256, theme.id + " manifest source hash mismatch", errors);
+    check(
+      JSON.stringify(manifest.provenance?.review || null) === JSON.stringify(sourceReview || null),
+      theme.id + " manifest source-art review mismatch",
+      errors,
+    );
     check(manifest.motion?.default === "reduced" && manifest.motion?.animated === false, theme.id + " canonical motion mismatch", errors);
     check(
       JSON.stringify(manifest.compatibility?.engines) === JSON.stringify([
         {
           id: "codex-full-skin",
           coverage: "full-skin-v1",
-          testedVersion: CODEX_BETA_CAPTURE_VERSION,
+          testedVersion: release.capture.appVersion,
         },
         {
           id: "codex-native",
@@ -501,8 +664,8 @@ export async function validateRepository() {
       errors,
     );
     check(theme.exports?.["codex-full-skin"]?.coverage === "full-skin-v1", theme.id + " full-skin registry coverage mismatch", errors);
-    check(theme.exports?.["codex-full-skin"]?.format === FULL_SKIN_FORMAT, theme.id + " full-skin registry format mismatch", errors);
-    check(theme.exports?.["codex-full-skin"]?.testedVersion === CODEX_BETA_CAPTURE_VERSION, theme.id + " full-skin registry version mismatch", errors);
+    check(theme.exports?.["codex-full-skin"]?.format === release.runtime.fullSkinFormat, theme.id + " full-skin registry format mismatch", errors);
+    check(theme.exports?.["codex-full-skin"]?.testedVersion === release.capture.appVersion, theme.id + " full-skin registry version mismatch", errors);
     check(theme.exports?.["codex-native"]?.coverage === "native-theme-v1", theme.id + " native registry coverage mismatch", errors);
     check(theme.exports?.["codex-native"]?.testedVersion === CODEX_NATIVE_TESTED_VERSION, theme.id + " native registry version mismatch", errors);
     validateCanonicalZip(theme.id, packageBytes, manifestBytes, errors);
@@ -532,13 +695,42 @@ export async function validateRepository() {
       );
       check(sha256(asset) === modeRecord.assetSha256, theme.id + " " + mode + " registry asset hash mismatch", errors);
       check(asset.length === manifestMode.integrity.bytes && asset.length === modeRecord.assetBytes, theme.id + " " + mode + " asset byte count mismatch", errors);
-      check(modeRecord.fullSkin?.format === FULL_SKIN_FORMAT, theme.id + " " + mode + " full-skin format mismatch", errors);
+      check(manifestMode.preview?.path === "previews/" + mode + ".png", theme.id + " " + mode + " preview path mismatch", errors);
+      check(
+        manifestMode.preview?.integrity?.renderFingerprint
+          === renderFingerprint(catalogTheme, mode, sourceProvenance, 960, 540),
+        theme.id + " " + mode + " preview render fingerprint mismatch",
+        errors,
+      );
+      check(
+        sha256(preview) === manifestMode.preview?.integrity?.sha256,
+        theme.id + " " + mode + " manifest preview hash mismatch",
+        errors,
+      );
+      check(
+        preview.length === manifestMode.preview?.integrity?.bytes,
+        theme.id + " " + mode + " manifest preview byte count mismatch",
+        errors,
+      );
+      check(
+        previewDimensions.width === manifestMode.preview?.integrity?.width
+          && previewDimensions.height === manifestMode.preview?.integrity?.height,
+        theme.id + " " + mode + " manifest preview dimensions mismatch",
+        errors,
+      );
+      check(modeRecord.previewBytes === preview.length, theme.id + " " + mode + " registry preview byte count mismatch", errors);
+      check(
+        modeRecord.previewRenderFingerprint === manifestMode.preview?.integrity?.renderFingerprint,
+        theme.id + " " + mode + " registry preview render fingerprint mismatch",
+        errors,
+      );
+      check(modeRecord.fullSkin?.format === release.runtime.fullSkinFormat, theme.id + " " + mode + " full-skin format mismatch", errors);
       check(modeRecord.fullSkin?.asset === "themes/" + theme.id + "/" + manifestMode.asset, theme.id + " " + mode + " full-skin asset path mismatch", errors);
       check(modeRecord.fullSkin?.sha256 === sha256(asset), theme.id + " " + mode + " full-skin asset hash mismatch", errors);
       check(modeRecord.fullSkin?.bytes === asset.length, theme.id + " " + mode + " full-skin asset byte count mismatch", errors);
       check(JSON.stringify(modeRecord.fullSkin?.art) === JSON.stringify(manifestMode.art), theme.id + " " + mode + " full-skin art contract mismatch", errors);
       check(JSON.stringify(modeRecord.fullSkin?.tokens) === JSON.stringify(manifestMode.tokens), theme.id + " " + mode + " full-skin token contract mismatch", errors);
-      check(modeRecord.fullSkin?.testedVersion === CODEX_BETA_CAPTURE_VERSION, theme.id + " " + mode + " full-skin tested version mismatch", errors);
+      check(modeRecord.fullSkin?.testedVersion === release.capture.appVersion, theme.id + " " + mode + " full-skin tested version mismatch", errors);
       fullSkinCount += 1;
       check(sha256(preview) === modeRecord.previewSha256, theme.id + " " + mode + " preview hash mismatch", errors);
       check(sha256(nativeTheme) === modeRecord.nativeTheme.sha256, theme.id + " " + mode + " native theme hash mismatch", errors);
@@ -552,35 +744,122 @@ export async function validateRepository() {
       );
       if (!duplicateOwner) nativeThemeOwners.set(nativeThemeSha256, theme.id + " " + mode);
       const capture = modeRecord.capture;
-      check(Boolean(capture), theme.id + " " + mode + " is missing a real Codex Beta capture", errors);
-      if (capture) {
+      const evidence = capture?.evidence;
+      check(Boolean(evidence), theme.id + " " + mode + " is missing a recorded Codex Beta capture", errors);
+      if (evidence) {
         captureCount += 1;
-        check(isSafeRelativePath(capture.path), theme.id + " " + mode + " capture path is unsafe", errors);
+        check(isSafeRelativePath(evidence.path), theme.id + " " + mode + " capture path is unsafe", errors);
         check(
-          capture.path === "screenshots/codex-beta-" + CODEX_BETA_CAPTURE_VERSION + "/" + theme.id + "-" + mode + ".png",
+          evidence.path === "screenshots/codex-beta-" + release.capture.appVersion + "/" + theme.id + "-" + mode + ".png",
           theme.id + " " + mode + " capture path mismatch",
           errors,
         );
-        const captureBytes = await readBytes(capture.path);
+        const captureBytes = await readBytes(evidence.path);
         const captureDimensions = readPngDimensions(captureBytes);
         check(captureDimensions.width === 1440 && captureDimensions.height === 810, theme.id + " " + mode + " capture dimensions mismatch", errors);
-        check(capture.width === 1440 && capture.height === 810, theme.id + " " + mode + " capture metadata dimensions mismatch", errors);
-        check(capture.bytes === captureBytes.length, theme.id + " " + mode + " capture byte count mismatch", errors);
-        check(capture.sha256 === sha256(captureBytes), theme.id + " " + mode + " capture hash mismatch", errors);
-        check(capture.assetSha256 === modeRecord.fullSkin.sha256, theme.id + " " + mode + " capture asset hash mismatch", errors);
-        check(capture.runtimeSha256 === runtimeSha256, theme.id + " " + mode + " capture runtime hash mismatch", errors);
-        check(capture.markerVersion === FULL_SKIN_FORMAT, theme.id + " " + mode + " capture marker mismatch", errors);
-        check(capture.selectors?.main === true, theme.id + " " + mode + " capture main selector was not verified", errors);
-        check(capture.appVersion === CODEX_BETA_CAPTURE_VERSION, theme.id + " " + mode + " capture app version mismatch", errors);
-        check(capture.packageFullName === CODEX_BETA_PACKAGE, theme.id + " " + mode + " capture package identity mismatch", errors);
-        check(capture.fixture === "full-skin-home-v1", theme.id + " " + mode + " capture fixture mismatch", errors);
+        check(evidence.width === 1440 && evidence.height === 810, theme.id + " " + mode + " capture metadata dimensions mismatch", errors);
+        check(evidence.bytes === captureBytes.length, theme.id + " " + mode + " capture byte count mismatch", errors);
+        check(evidence.sha256 === sha256(captureBytes), theme.id + " " + mode + " capture hash mismatch", errors);
+        check(evidence.assetSha256 === modeRecord.fullSkin.sha256, theme.id + " " + mode + " capture asset hash mismatch", errors);
+        check(evidence.runtimeSha256 === capturedRuntime.sha256, theme.id + " " + mode + " capture runtime hash mismatch", errors);
+        check(evidence.markerVersion === release.runtime.fullSkinFormat, theme.id + " " + mode + " capture marker mismatch", errors);
+        check(evidence.selectors?.main === true, theme.id + " " + mode + " capture main selector was not verified", errors);
+        check(evidence.appVersion === release.capture.appVersion, theme.id + " " + mode + " capture app version mismatch", errors);
+        check(evidence.packageFullName === release.capture.packageFullName, theme.id + " " + mode + " capture package identity mismatch", errors);
+        check(evidence.fixture === release.capture.fixture, theme.id + " " + mode + " capture fixture mismatch", errors);
+
+        const presentation = Array.isArray(capture?.presentation) ? capture.presentation : [];
+        check(
+          presentation.length === CAPTURE_PRESENTATION_SIZES.length,
+          theme.id + " " + mode + " must have every required capture presentation size",
+          errors,
+        );
+        const expectedPresentation = [];
+        for (const size of CAPTURE_PRESENTATION_SIZES) {
+          const variant = presentation.find((candidate) => candidate?.width === size.width);
+          check(Boolean(variant), theme.id + " " + mode + " is missing the " + size.width + "px presentation", errors);
+          if (!variant) continue;
+          expectedPresentation.push(variant);
+          check(isSafeRelativePath(variant.path), theme.id + " " + mode + " presentation path is unsafe", errors);
+          check(
+            variant.path === presentationPathFor(evidence.path, size.width),
+            theme.id + " " + mode + " presentation path mismatch for " + size.width + "px",
+            errors,
+          );
+          check(variant.format === "png", theme.id + " " + mode + " presentation format mismatch", errors);
+          check(
+            variant.width === size.width && variant.height === size.height,
+            theme.id + " " + mode + " presentation dimensions mismatch for " + size.width + "px",
+            errors,
+          );
+          check(variant.evidenceSha256 === evidence.sha256, theme.id + " " + mode + " presentation evidence hash mismatch", errors);
+          check(
+            variant.renderFingerprint === presentationFingerprint(evidence, size),
+            theme.id + " " + mode + " presentation render fingerprint mismatch",
+            errors,
+          );
+          const presentationBytes = await readBytes(variant.path);
+          const presentationDimensions = readPngDimensions(presentationBytes);
+          check(
+            presentationDimensions.width === size.width && presentationDimensions.height === size.height,
+            theme.id + " " + mode + " presentation file dimensions mismatch for " + size.width + "px",
+            errors,
+          );
+          check(variant.bytes === presentationBytes.length, theme.id + " " + mode + " presentation byte count mismatch", errors);
+          check(variant.sha256 === sha256(presentationBytes), theme.id + " " + mode + " presentation hash mismatch", errors);
+          check(
+            presentationBytes.length <= 1024 * 1024,
+            theme.id + " " + mode + " presentation exceeds the per-asset byte limit",
+            errors,
+          );
+          largestPresentationBytes = Math.max(largestPresentationBytes, presentationBytes.length);
+          if (size.width === 480) {
+            largestCardPresentationBytes = Math.max(largestCardPresentationBytes, presentationBytes.length);
+            check(
+              presentationBytes.length <= GALLERY_MEDIA_BUDGET.maxCardBytes,
+              theme.id + " " + mode + " 480px card presentation exceeds the gallery byte budget",
+              errors,
+            );
+          }
+          presentationVariantCount += 1;
+        }
+        const manifestRecord = presentationByCapture.get(theme.id + "|" + mode);
+        check(Boolean(manifestRecord), theme.id + " " + mode + " is missing from the presentation manifest", errors);
+        if (manifestRecord) {
+          check(
+            JSON.stringify(manifestRecord.evidence) === JSON.stringify({
+              path: evidence.path,
+              sha256: evidence.sha256,
+              bytes: evidence.bytes,
+              width: evidence.width,
+              height: evidence.height,
+            }),
+            theme.id + " " + mode + " presentation manifest evidence mismatch",
+            errors,
+          );
+          check(
+            JSON.stringify(manifestRecord.presentation) === JSON.stringify(expectedPresentation),
+            theme.id + " " + mode + " presentation manifest variants mismatch",
+            errors,
+          );
+        }
       }
       validateTokens(theme.id, mode, manifestMode.tokens, errors);
       validateNativeTheme(theme, mode, nativeTheme, modeRecord, manifestMode, packageBytes, errors);
     }
   }
 
-  check(captureCount === registry.themes.length * 2, "Registry must expose one real capture for every theme mode", errors);
+  check(captureCount === registry.themes.length * 2, "Registry must expose one recorded capture for every theme mode", errors);
+  check(
+    presentationVariantCount === registry.themes.length * 2 * CAPTURE_PRESENTATION_SIZES.length,
+    "Registry must expose every required capture presentation variant",
+    errors,
+  );
+  check(
+    3 * largestPresentationBytes <= GALLERY_MEDIA_BUDGET.maxInitialBytes,
+    "High-DPR Gallery initial-media byte budget is exceeded",
+    errors,
+  );
   check(fullSkinCount === registry.themes.length * 2, "Registry must expose one full-skin record for every theme mode", errors);
   if (errors.length) {
     throw new Error("Validation failed:\n- " + errors.join("\n- "));
@@ -593,6 +872,9 @@ export async function validateRepository() {
     fullSkinExports: fullSkinCount,
     nativeExports: registry.themes.length * 2,
     captures: captureCount,
+    presentationVariants: presentationVariantCount,
+    conservativeGalleryInitialBytes: 3 * largestPresentationBytes,
+    focalCropDiagnostics,
   };
 }
 
@@ -602,7 +884,12 @@ async function main() {
     "Validated " + result.sources + " source images, " + result.themes + " themes, " + result.modes + " modes, "
     + result.packages + " code-free packages, " + result.fullSkinExports + " full-skin records, "
     + result.nativeExports + " Codex Native fallbacks, and "
-    + result.captures + " real Beta captures.",
+    + result.captures + " recorded Beta captures with " + result.presentationVariants
+    + " presentation variants (conservative initial Gallery media: "
+    + result.conservativeGalleryInitialBytes + " bytes). Focal crop diagnostics: "
+    + result.focalCropDiagnostics.sources + " sources ("
+    + result.focalCropDiagnostics.horizontallyAdjustable + " horizontal, "
+    + result.focalCropDiagnostics.verticallyAdjustable + " vertical adjustments).",
   );
 }
 
