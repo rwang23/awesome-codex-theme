@@ -49,7 +49,7 @@ jobs:
           node-version: 22
 
       - name: Generate, validate, and test public artifacts
-        run: npm run generate && npm run validate && npm test
+        run: npm run test:ci
 
   desktop:
     needs: validate

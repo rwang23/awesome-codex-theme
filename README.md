@@ -71,10 +71,12 @@ The complete agent contract, including expected checks and source-build instruct
 For contributors, the base requirement is Node.js 22+. Desktop builds also need stable Rust and the platform toolchain.
 
 ```bash
-npm run generate
-npm run validate
-npm test
-npm run build
+npm test                 # fast, source-only checks; works in a clean checkout
+npm run generate         # expensive: renders the full generated catalog
+npm run validate          # generated-artifact validation
+npm run test:generated    # Registry/package/site assertions
+npm run build             # generated-artifact Pages build
+npm run check:full        # release-grade full generation, validation, test, desktop, and build path
 ```
 
 ### Method C: Install the desktop app manually
@@ -196,9 +198,14 @@ Useful commands:
 
 ```bash
 npm run art:generate
+npm test
+npm run test:source
+npm run test:generated
+npm run test:ci
 npm run generate
 npm run generate:check
 npm run validate
+npm run check:full
 npm run screenshots:capture
 npm run desktop:check
 npm run desktop:start
