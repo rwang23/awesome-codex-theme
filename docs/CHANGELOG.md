@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 0.3.3 - 2026-07-27
+
 - Added a Chinese collaboration guide explaining local worktrees, branches,
   Issues, draft PRs, reviews, merging, and post-merge verification.
 - Replaced the Theme Manager's custom persistence overlay and incomplete

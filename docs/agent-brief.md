@@ -2,7 +2,7 @@
 
 ## Project snapshot
 
-- Last reviewed: 2026-07-22
+- Last reviewed: 2026-07-27
 - Project: Awesome Codex Theme
 - Project root: `C:\projects\50-developer\codex-tools\awesome-codex-theme`
 - Purpose: free declarative Full Skin standard, Registry, Validator, Gallery,
