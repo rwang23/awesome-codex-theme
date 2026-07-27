@@ -154,6 +154,10 @@
                 <select id="targetSelect" aria-label="选择 ChatGPT 版本"></select>
                 <button id="restoreSkin" type="button" data-i18n="restoreSkin">恢复原生</button>
               </div>
+              <div class="launch-row" id="targetDiagnosticActions" hidden>
+                <button id="retryTargetDiscovery" type="button" data-i18n="retryTargetDiscovery">重新检测</button>
+                <button id="copyTargetDiagnostic" type="button" data-i18n="copyDiagnostic">复制诊断</button>
+              </div>
               <label class="persistence-control" id="persistenceControl">
                 <input id="persistenceToggle" type="checkbox">
                 <span class="persistence-copy">
@@ -162,6 +166,7 @@
                 </span>
                 <span class="switch-track" aria-hidden="true"><span></span></span>
               </label>
+              <button class="secondary-action" id="forceRestart" type="button" hidden data-i18n="forceRestart">强制关闭并重新应用</button>
               <button class="secondary-action" id="copyTheme" type="button">
                 <span data-i18n="copyNative">只复制原生配色</span>
               </button>
@@ -220,6 +225,21 @@
           <button class="consent-confirm" id="persistenceConsentConfirm" type="button" data-i18n="confirmApply">Apply &amp; Keep</button>
         </div>
     </dialog>
+
+    <div class="consent-overlay" id="forceRestartDialog" hidden>
+      <section class="consent-dialog" role="dialog" aria-modal="true" aria-labelledby="forceRestartTitle" aria-describedby="forceRestartBody">
+        <div class="consent-icon" aria-hidden="true">!</div>
+        <div class="consent-copy">
+          <p class="eyebrow" data-i18n="forceRestartEyebrow">RESTART SAFETY</p>
+          <h2 id="forceRestartTitle" data-i18n="forceRestartTitle">Force close the selected ChatGPT?</h2>
+          <p id="forceRestartBody" data-i18n="forceRestartWarning">ChatGPT did not close after a normal request. Force closing may lose unsent prompts or other unsaved input. Cancel leaves the app and theme unchanged.</p>
+          <div class="consent-actions">
+            <button id="forceRestartCancel" type="button" data-i18n="cancel">Cancel</button>
+            <button class="consent-confirm" id="forceRestartConfirm" type="button" data-i18n="forceRestartConfirm">Force close &amp; restart</button>
+          </div>
+        </div>
+      </section>
+    </div>
     <script type="module" src="./app.js"></script>
   </body>
 </html>

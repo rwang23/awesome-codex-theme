@@ -71,10 +71,10 @@ Rust owns:
 - exact Stable/Beta discovery;
 - PNG download, cache, byte-count, signature, and SHA-256 checks;
 - loopback CDP session startup;
-- target and WebSocket validation;
+- target and WebSocket validation, including structured discovery diagnostics;
   - early and current-page injection;
   - restore state;
-  - consent-gated per-user persistence state, autostart, version gates, and bounded replay;
+  - consent-gated per-user persistence state, autostart, version gates, bounded replay, and a normal-close-first restart path; a Windows force close is available only after the manager shows a second data-loss warning;
   - Native fallback copy;
 - release-update state.
 

@@ -49,6 +49,7 @@ struct BootstrapView {
     catalog: Value,
     catalog_state: CatalogStatus,
     targets: Vec<platform::TargetView>,
+    target_diagnostic: Option<platform::DiscoveryDiagnostic>,
     skin_state: skin_runtime::SkinRuntimeView,
     persistence_state: persistence::PersistenceView,
     update_state: UpdateView,
@@ -152,16 +153,23 @@ async fn bootstrap(
         .lock()
         .unwrap_or_else(|poisoned| poisoned.into_inner())
         .clone();
+    let target_discovery = platform::discover_targets();
     Ok(BootstrapView {
         app_version: app.package_info().version.to_string(),
         platform: platform_name(),
         catalog: catalog::present_catalog(&app, &catalog)?,
         catalog_state,
-        targets: platform::discover_targets(),
+        targets: target_discovery.targets,
+        target_diagnostic: target_discovery.diagnostic,
         skin_state: state.skin_runtime.current(),
         persistence_state: persistence::current(&app)?,
         update_state: state.updater.current(),
     })
+}
+
+#[tauri::command]
+fn discover_targets() -> platform::TargetDiscovery {
+    platform::discover_targets()
 }
 
 #[tauri::command]
@@ -319,6 +327,15 @@ async fn disable_persistent_theme(
 }
 
 #[tauri::command]
+fn force_restart_persistent_theme(
+    app: AppHandle,
+    channel: String,
+    confirmed: bool,
+) -> Result<persistence::PersistenceView, String> {
+    persistence::force_restart(&app, &channel, confirmed)
+}
+
+#[tauri::command]
 fn open_external(app: AppHandle, target: String) -> Result<bool, String> {
     let url = match target.as_str() {
         "gallery" => "https://rwang23.github.io/awesome-codex-theme/",
@@ -378,6 +395,7 @@ pub fn run() {
         })
         .invoke_handler(tauri::generate_handler![
             bootstrap,
+            discover_targets,
             refresh_catalog,
             copy_theme,
             open_codex,
@@ -387,6 +405,7 @@ pub fn run() {
             get_persistence_state,
             enable_persistent_theme,
             disable_persistent_theme,
+            force_restart_persistent_theme,
             open_external,
             check_for_app_update,
             install_app_update
