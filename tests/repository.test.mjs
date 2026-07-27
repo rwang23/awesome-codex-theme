@@ -726,6 +726,7 @@ test("desktop beta release uses a static updater feed and discloses deferred pla
   assert.match(workflow, /run: npm run test:ci/);
   assert.match(workflow, /run: npm run desktop:prepare/);
   assert.match(workflow, /name: act-generated-theme-assets/);
+  assert.match(workflow, /screenshots\/\*\/presentation\/\*\*/);
   const releaseLabel = releaseMetadata.desktop.channel.slice(0, 1).toUpperCase()
     + releaseMetadata.desktop.channel.slice(1);
   const versionPattern = releaseMetadata.desktop.version.replaceAll(".", "\\.");

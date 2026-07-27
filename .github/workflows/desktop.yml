@@ -85,6 +85,7 @@ jobs:
             themes/*/manifest.json
             themes/*/assets/**
             themes/*/previews/**
+            screenshots/*/presentation/**
             packages/**
             apps/theme-manager/build/**
           retention-days: 2
