@@ -556,8 +556,7 @@ function sampleBilinear(image, x, y) {
   return result;
 }
 
-export function resizePng(buffer, width, height) {
-  const image = decodePng(buffer);
+export function resizeDecodedPng(image, width, height) {
   const scaleX = image.width / width;
   const scaleY = image.height / height;
   return encodePng(width, height, (x, y) => sampleBilinear(
@@ -565,6 +564,10 @@ export function resizePng(buffer, width, height) {
     (x + 0.5) * scaleX - 0.5,
     (y + 0.5) * scaleY - 0.5,
   ));
+}
+
+export function resizePng(buffer, width, height) {
+  return resizeDecodedPng(decodePng(buffer), width, height);
 }
 
 function gradeSourcePixel(pixel, theme, mode, normalizedX, normalizedY) {

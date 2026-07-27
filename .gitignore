@@ -20,6 +20,7 @@ themes/registry.json
 themes/*/
 !themes/source-art/
 !themes/source-art/**
+screenshots/codex-beta-*/presentation/
 .DS_Store
 Thumbs.db
 *.log

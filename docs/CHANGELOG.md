@@ -22,6 +22,10 @@
 - Changed draft Beta releases to GitHub prereleases and marked the updater
   channel unreleased until a signed, cross-platform static feed is separately
   published and verified.
+- Added integrity-bound 320px, 480px, and 960px presentation derivatives for
+  every recorded Beta capture. Gallery cards and the hero now use responsive
+  `srcset` media, the original evidence is an explicit metadata-backed action,
+  and Theme Manager reuses stable keyed cards with shared list/detail assets.
 - Reworked theme generation into a bounded, incremental pipeline with
   source-art provenance checks, complete render fingerprints, atomic per-theme
   writes, cache-aware progress, and reproducible benchmark commands.

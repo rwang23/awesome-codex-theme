@@ -42,6 +42,7 @@ const translations = {
     scene: "Scene",
     resultsCount: "{count} themes",
     emptyState: "No themes match these filters.",
+    viewDetails: "View details",
     light: "Light",
     dark: "Dark",
     verifiedCapture: "Real Beta capture",
@@ -182,6 +183,7 @@ const translations = {
     scene: "名场面",
     resultsCount: "{count} 套主题",
     emptyState: "没有找到符合条件的主题。",
+    viewDetails: "查看详情",
     light: "明亮",
     dark: "暗色",
     verifiedCapture: "Beta 实机截图",
@@ -316,6 +318,9 @@ const state = {
   style: "all",
   query: "",
   themeId: null,
+  themeCards: new Map(),
+  thumbnailObserver: null,
+  catalogKey: null,
   mode: window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light",
 };
 
@@ -740,45 +745,141 @@ function filteredThemes() {
   }).sort(compareThemePriority);
 }
 
+function previewSource(preview, kind) {
+  if (kind === "thumbnail") {
+    return preview.thumbnailUrl || preview.thumbnailPath || preview.imageUrl || preview.imagePath || "";
+  }
+  return preview.imageUrl || preview.imagePath || "";
+}
+
+function updateObservedThumbnail(card, force = false) {
+  if (!card.visible || (!force && !card.nearViewport)) return;
+  const source = previewSource(card.theme.previews[state.mode], "thumbnail");
+  if (card.image.dataset.source === source) return;
+  card.image.src = source;
+  card.image.dataset.source = source;
+}
+
+function ensureThumbnailObserver() {
+  if (state.thumbnailObserver || !("IntersectionObserver" in window)) return;
+  state.thumbnailObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      const card = state.themeCards.get(entry.target.dataset.themeId);
+      if (!card) return;
+      card.nearViewport = entry.isIntersecting;
+      if (entry.isIntersecting) updateObservedThumbnail(card);
+    });
+  }, {
+    root: elements.themeList,
+    rootMargin: "180px 0px",
+  });
+}
+
+function resetThumbnailObserver() {
+  state.thumbnailObserver?.disconnect();
+  state.thumbnailObserver = null;
+}
+
+function createThemeCard(theme) {
+  const button = document.createElement("button");
+  button.type = "button";
+  button.dataset.themeId = theme.id;
+
+  const thumb = document.createElement("span");
+  thumb.className = "theme-thumb";
+  const image = document.createElement("img");
+  image.alt = "";
+  image.width = 320;
+  image.height = 180;
+  image.loading = "lazy";
+  image.decoding = "async";
+  thumb.append(image);
+
+  const copy = document.createElement("span");
+  copy.className = "theme-list-copy";
+  const meta = document.createElement("small");
+  meta.className = "theme-card-meta";
+  const title = document.createElement("strong");
+  const subtitle = document.createElement("small");
+  copy.append(meta, title, subtitle);
+
+  const detail = document.createElement("span");
+  detail.className = "theme-detail-action";
+  button.append(thumb, copy, detail);
+  const card = {
+    theme,
+    button,
+    image,
+    meta,
+    title,
+    subtitle,
+    detail,
+    visible: false,
+    nearViewport: false,
+  };
+  state.themeCards.set(theme.id, card);
+  return card;
+}
+
+function ensureThemeCards() {
+  if (!state.catalog) return;
+  const catalogIds = state.catalog.themes.map((theme) => theme.id);
+  const intact = catalogIds.length === state.themeCards.size
+    && catalogIds.every((id) => state.themeCards.has(id));
+  if (intact) return;
+  resetThumbnailObserver();
+  state.themeCards.clear();
+  const fragment = document.createDocumentFragment();
+  state.catalog.themes.forEach((theme) => fragment.append(createThemeCard(theme).button));
+  elements.themeList.replaceChildren(fragment);
+}
+
+function updateThemeCard(theme, visible, visibleIndex) {
+  const card = state.themeCards.get(theme.id);
+  if (!card) return;
+  const active = theme.id === state.themeId;
+  card.button.hidden = !visible;
+  card.button.classList.toggle("is-active", active);
+  card.button.setAttribute("aria-selected", String(active));
+  card.visible = visible;
+  if (!visible) {
+    card.nearViewport = false;
+    state.thumbnailObserver?.unobserve(card.button);
+    card.image.removeAttribute("src");
+    delete card.image.dataset.source;
+    return;
+  }
+
+  const collection = state.catalog.collections.find((record) => record.id === theme.collection);
+  const name = localized(theme.name);
+  card.meta.textContent = localized(collection?.name) + " · " + t(theme.variant);
+  card.title.textContent = name;
+  card.subtitle.textContent = localized(theme.tagline);
+  card.detail.textContent = t("viewDetails") + " →";
+  card.button.setAttribute("aria-label", name + " · " + t("viewDetails"));
+  ensureThumbnailObserver();
+  if (state.thumbnailObserver) {
+    state.thumbnailObserver.observe(card.button);
+    updateObservedThumbnail(card);
+  } else if (visibleIndex < 4) {
+    updateObservedThumbnail(card, true);
+  }
+  card.image.fetchPriority = visibleIndex < 2 ? "high" : "auto";
+}
+
 function renderThemeList() {
   const themes = filteredThemes();
+  ensureThemeCards();
   elements.resultCount.textContent = t("resultsCount", { count: themes.length });
   if (themes.length && !themes.some((theme) => theme.id === state.themeId)) {
     state.themeId = themes[0].id;
   }
   if (!themes.length) state.themeId = null;
-  const fragment = document.createDocumentFragment();
-  themes.forEach((theme) => {
-    const button = document.createElement("button");
-    button.type = "button";
-    button.dataset.themeId = theme.id;
-    button.setAttribute("aria-pressed", String(theme.id === state.themeId));
-    button.classList.toggle("is-active", theme.id === state.themeId);
-
-    const thumb = document.createElement("span");
-    thumb.className = "theme-thumb";
-    const image = document.createElement("img");
-    image.src = theme.previews[state.mode].imageUrl;
-    image.alt = "";
-    thumb.append(image);
-    const copy = document.createElement("span");
-    copy.className = "theme-list-copy";
-    const meta = document.createElement("small");
-    meta.className = "theme-card-meta";
-    meta.textContent = localized(state.catalog.collections.find((collection) => collection.id === theme.collection)?.name)
-      + " · " + t(theme.variant);
-    const title = document.createElement("strong");
-    title.textContent = localized(theme.name);
-    const subtitle = document.createElement("small");
-    subtitle.textContent = localized(theme.tagline);
-    copy.append(meta, title, subtitle);
-    const arrow = document.createElement("span");
-    arrow.className = "theme-arrow";
-    arrow.textContent = "↗";
-    button.append(thumb, copy, arrow);
-    fragment.append(button);
+  const visibleIndexes = new Map(themes.map((theme, index) => [theme.id, index]));
+  state.catalog.themes.forEach((theme) => {
+    updateThemeCard(theme, visibleIndexes.has(theme.id), visibleIndexes.get(theme.id));
   });
-  elements.themeList.replaceChildren(fragment);
+  themes.forEach((theme) => elements.themeList.append(state.themeCards.get(theme.id).button));
   elements.emptyState.hidden = themes.length > 0;
   if (themes.length) {
     renderSelectedTheme();
@@ -805,7 +906,7 @@ function renderSelectedTheme() {
   elements.applySkin.disabled = state.targets.length === 0;
   const preview = theme.previews[state.mode];
   const captureVerified = captureEvidenceIsVerified();
-  elements.themeCapture.src = preview.imageUrl;
+  elements.themeCapture.src = previewSource(preview, "image");
   elements.themeCapture.alt = localized(theme.name) + " · " + t(state.mode) + " · "
     + t(captureVerified ? "captureAlt" : "referenceCaptureAlt");
   elements.captureBadgeLabel.textContent = t(captureVerified ? "verifiedCapture" : "referenceCapture");
@@ -1062,7 +1163,20 @@ function acceptCatalog(payload) {
     status: payload.status,
     message: payload.message,
   };
-  if (payload.catalog) state.catalog = payload.catalog;
+  if (payload.catalog) {
+    const nextKey = [
+      payload.catalog.registrySha256 || "",
+      payload.catalog.source || "",
+      payload.catalog.themes?.map((theme) => theme.id).join(",") || "",
+    ].join("|");
+    if (nextKey !== state.catalogKey) {
+      resetThumbnailObserver();
+      state.themeCards.clear();
+      elements.themeList.replaceChildren();
+      state.catalogKey = nextKey;
+    }
+    state.catalog = payload.catalog;
+  }
   if (!state.catalog) return;
   const ordered = state.catalog.themes.slice().sort(compareThemePriority);
   state.themeId = state.catalog.themes.some((theme) => theme.id === previousTheme)

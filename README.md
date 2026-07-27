@@ -148,7 +148,7 @@ The collection currently includes 68 themes and 136 light/dark modes. The Englis
 - 2 disclosed, unofficial Codex community tributes;
 - the broader original and fan-art catalog, available through language-aware discovery in the Gallery.
 
-Every mode has a 1440×810 v2 reference capture from the pinned Beta test bench. Registry records bind each capture to the exact app version, background hash, runtime hash, byte count, and renderer readback; the current v3 runtime remains recapture-required until that exact test bench is rerun.
+Every mode retains a 1440×810 v2 reference capture from the pinned Beta test bench. The generator derives integrity-bound 320, 480, and 960px presentation PNGs from that evidence; Gallery browsing uses those responsive variants, while the full original is loaded only after you explicitly choose **View original evidence**. Registry records bind both layers to the exact app version, background hash, runtime hash, byte count, and renderer readback; the current v3 runtime remains recapture-required until that exact test bench is rerun.
 
 “Saint Tibo” is an affectionate, unofficial community parody. It is not endorsed by OpenAI or by the person depicted, and no official product artwork is bundled.
 

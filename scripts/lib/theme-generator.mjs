@@ -4,6 +4,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { Worker } from "node:worker_threads";
 
+import { generateCapturePresentations } from "./capture-presentation.mjs";
 import { readPngDimensions } from "./png.mjs";
 import { renderFingerprint, SOURCE_ART_RENDERER_ID } from "./source-art-contract.mjs";
 import { createZip } from "./zip.mjs";
@@ -401,12 +402,29 @@ function createThemeOutputs(theme, assets, previews, nativeThemes, manifest, man
   ];
 }
 
-function registryRecordFor(theme, manifest, manifestBuffer, canonicalPackage, previews, assets, nativeThemes, sourceProvenance, sourceReview, captureContext, release) {
+function registryRecordFor(
+  theme,
+  manifest,
+  manifestBuffer,
+  canonicalPackage,
+  previews,
+  assets,
+  nativeThemes,
+  sourceProvenance,
+  sourceReview,
+  captureContext,
+  presentationIndex,
+  release,
+) {
   const rights = rightsFor(theme, sourceReview);
   const themeRoot = "themes/" + theme.id;
   const modeRecords = {};
   for (const mode of MODES) {
     const capture = captureContext.index.get(theme.id + "|" + mode);
+    const presentation = presentationIndex.get(theme.id + "|" + mode);
+    if (capture && !presentation) {
+      throw new Error("Capture presentation metadata is missing for " + theme.id + " " + mode);
+    }
     modeRecords[mode] = {
       preview: themeRoot + "/previews/" + mode + ".png",
       previewSha256: sha256(previews[mode]),
@@ -433,20 +451,23 @@ function registryRecordFor(theme, manifest, manifestBuffer, canonicalPackage, pr
       },
       ...(capture ? {
         capture: {
-          path: capture.path,
-          sha256: capture.sha256,
-          bytes: capture.bytes,
-          width: capture.width,
-          height: capture.height,
-          assetSha256: capture.assetSha256,
-          runtimeSha256: capture.runtimeSha256,
-          markerVersion: capture.markerVersion,
-          selectors: capture.selectors,
-          appVersion: captureContext.manifest.testBench.version,
-          packageFullName: captureContext.manifest.testBench.packageFullName,
-          fixture: captureContext.manifest.fixture.id,
-          modelLabel: capture.modelLabel,
-          capturedAt: capture.capturedAt,
+          evidence: {
+            path: capture.path,
+            sha256: capture.sha256,
+            bytes: capture.bytes,
+            width: capture.width,
+            height: capture.height,
+            assetSha256: capture.assetSha256,
+            runtimeSha256: capture.runtimeSha256,
+            markerVersion: capture.markerVersion,
+            selectors: capture.selectors,
+            appVersion: captureContext.manifest.testBench.version,
+            packageFullName: captureContext.manifest.testBench.packageFullName,
+            fixture: captureContext.manifest.fixture.id,
+            modelLabel: capture.modelLabel,
+            capturedAt: capture.capturedAt,
+          },
+          presentation,
         },
       } : {}),
     };
@@ -567,7 +588,19 @@ async function runBounded(items, concurrency, worker) {
   return results;
 }
 
-async function generateTheme({ root, theme, sourceProvenance, sourceReview, existingManifest, existingRecord, force, render, captureContext, release }) {
+async function generateTheme({
+  root,
+  theme,
+  sourceProvenance,
+  sourceReview,
+  existingManifest,
+  existingRecord,
+  force,
+  render,
+  captureContext,
+  presentationIndex,
+  release,
+}) {
   const assets = {};
   const previews = {};
   const missing = [];
@@ -640,6 +673,7 @@ async function generateTheme({ root, theme, sourceProvenance, sourceReview, exis
       sourceProvenance,
       sourceReview,
       captureContext,
+      presentationIndex,
       release,
     ),
   };
@@ -658,6 +692,9 @@ function hasCurrentRegistryRecord(record) {
   return MODES.every((mode) => (
     Number.isInteger(record?.previews?.[mode]?.previewBytes)
     && typeof record.previews[mode].previewRenderFingerprint === "string"
+    && typeof record.previews[mode].capture?.evidence?.path === "string"
+    && Array.isArray(record.previews[mode].capture?.presentation)
+    && record.previews[mode].capture.presentation.length === 3
   ));
 }
 
@@ -792,8 +829,13 @@ export async function generateRepository({
 
   const captureContext = await loadCaptureContext(root, release);
   const runtimeEvidence = runtimeEvidenceFor(captureContext.manifest);
+  const capturePresentations = await generateCapturePresentations({
+    root,
+    captureContext,
+    check: normalized.check,
+  });
   const records = new Map(existingRecords);
-  const drift = [];
+  const drift = [...capturePresentations.drift];
   const stats = {
     cacheHits: 0,
     cacheMisses: 0,
@@ -824,6 +866,7 @@ export async function generateRepository({
         force: normalized.force,
         render,
         captureContext,
+        presentationIndex: capturePresentations.index,
         release,
       });
       for (const output of result.outputs) {
@@ -852,12 +895,14 @@ export async function generateRepository({
   }
 
   const summary = {
-    cacheHits: stats.cacheHits,
-    cacheMisses: stats.cacheMisses,
+    cacheHits: stats.cacheHits + capturePresentations.cacheHits,
+    cacheMisses: stats.cacheMisses + capturePresentations.cacheMisses,
     elapsedMs: Date.now() - stats.startedAt,
     generatedThemes: themes.length,
     peakRssBytes: stats.peakRssBytes,
     renderer: SOURCE_ART_RENDERER_ID,
+    presentationCacheHits: capturePresentations.cacheHits,
+    presentationCacheMisses: capturePresentations.cacheMisses,
     totalThemes: catalog.themes.length,
     ...(drift.length ? { drift } : {}),
   };

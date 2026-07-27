@@ -386,7 +386,8 @@
         "assetSha256",
         "assetBytes",
         "fullSkin",
-        "nativeTheme"
+        "nativeTheme",
+        "capture"
       ],
       "properties": {
         "preview": {
@@ -533,6 +534,24 @@
     "captureRecord": {
       "type": "object",
       "additionalProperties": false,
+      "required": ["evidence", "presentation"],
+      "properties": {
+        "evidence": {
+          "$ref": "#/$defs/captureEvidenceRecord"
+        },
+        "presentation": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "items": {
+            "$ref": "#/$defs/capturePresentationRecord"
+          }
+        }
+      }
+    },
+    "captureEvidenceRecord": {
+      "type": "object",
+      "additionalProperties": false,
       "required": [
         "path",
         "sha256",
@@ -615,6 +634,52 @@
         "capturedAt": {
           "type": "string",
           "format": "date-time"
+        }
+      }
+    },
+    "capturePresentationRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "format",
+        "width",
+        "height",
+        "sha256",
+        "bytes",
+        "evidenceSha256",
+        "renderFingerprint"
+      ],
+      "properties": {
+        "path": {
+          "type": "string",
+          "pattern": "^screenshots/codex-beta-[0-9.]+/presentation/[a-z0-9-]+-(light|dark)-(320|480|960)\\.png$"
+        },
+        "format": {
+          "const": "png"
+        },
+        "width": {
+          "enum": [320, 480, 960]
+        },
+        "height": {
+          "enum": [180, 270, 540]
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1048576
+        },
+        "evidenceSha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "renderFingerprint": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
         }
       }
     },

@@ -4,6 +4,7 @@ import os from "node:os";
 import path from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
+import { runInNewContext } from "node:vm";
 
 import { buildSite } from "../scripts/build.mjs";
 import { buildWindowsInstaller } from "../scripts/build-installer.mjs";
@@ -29,15 +30,15 @@ async function exists(target) {
 
 test("repository validates sixty-eight dual-mode code-free themes in eleven collections", async function () {
   const result = await validateRepository();
-  assert.deepEqual(result, {
-    sources: 68,
-    themes: 68,
-    modes: 136,
-    packages: 68,
-    fullSkinExports: 136,
-    nativeExports: 136,
-    captures: 136
-  });
+  assert.equal(result.sources, 68);
+  assert.equal(result.themes, 68);
+  assert.equal(result.modes, 136);
+  assert.equal(result.packages, 68);
+  assert.equal(result.fullSkinExports, 136);
+  assert.equal(result.nativeExports, 136);
+  assert.equal(result.captures, 136);
+  assert.equal(result.presentationVariants, 408);
+  assert.ok(result.conservativeGalleryInitialBytes <= 3 * 1024 * 1024);
 });
 
 test("registry exposes original and disclosed fan-art collections", async function () {
@@ -98,15 +99,22 @@ test("registry exposes original and disclosed fan-art collections", async functi
   assert.equal(registry.themes.every(function (theme) {
     return ["light", "dark"].every(function (mode) {
       const capture = theme.previews[mode].capture;
-      return capture?.appVersion === "26.715.3651.0"
-        && capture.fixture === "full-skin-home-v1"
-        && capture.modelLabel === "5.6 Sol Max"
-        && capture.width === 1440
-        && capture.height === 810
-        && capture.assetSha256 === theme.previews[mode].fullSkin.sha256
-        && capture.markerVersion === "act-full-skin-v1"
-        && capture.selectors.main === true
-        && capture.selectors.composer === true;
+      const evidence = capture?.evidence;
+      return evidence?.appVersion === "26.715.3651.0"
+        && evidence.fixture === "full-skin-home-v1"
+        && evidence.modelLabel === "5.6 Sol Max"
+        && evidence.width === 1440
+        && evidence.height === 810
+        && evidence.assetSha256 === theme.previews[mode].fullSkin.sha256
+        && evidence.markerVersion === "act-full-skin-v1"
+        && evidence.selectors.main === true
+        && evidence.selectors.composer === true
+        && capture.presentation?.length === 3
+        && [320, 480, 960].every(function (width) {
+          return capture.presentation.some(function (variant) {
+            return variant.width === width && variant.evidenceSha256 === evidence.sha256;
+          });
+        });
     });
   }), true);
   assert.equal(registry.themes.every(function (theme) {
@@ -250,15 +258,22 @@ test("static gallery builds with every public contract artifact", async function
       for (const mode of ["light", "dark"]) {
         const fullSkinPath = theme.previews[mode].fullSkin.asset;
         const nativePath = theme.previews[mode].nativeTheme.path;
-        const capturePath = theme.previews[mode].capture.path;
+        const capture = theme.previews[mode].capture;
+        const capturePath = capture.evidence.path;
         assert.equal(await exists(path.join(output, ...fullSkinPath.split("/"))), true, fullSkinPath);
         assert.equal(await exists(path.join(output, ...nativePath.split("/"))), true, nativePath);
         assert.equal(await exists(path.join(output, ...capturePath.split("/"))), true, capturePath);
+        for (const variant of capture.presentation) {
+          assert.equal(await exists(path.join(output, ...variant.path.split("/"))), true, variant.path);
+        }
       }
     }
     assert.match(html, /Awesome Codex Theme/);
     assert.match(html, /id="trustNote"/);
     assert.match(html, /id="dialogRights"/);
+    assert.match(html, /id="evidenceMetadata"/);
+    assert.match(html, /id="viewEvidence"/);
+    assert.doesNotMatch(html, /id="heroPreview" src=/);
     assert.match(html, /docs\/fan-art-policy\.md/);
     assert.match(html, /data-filter="scene"/);
     assert.match(html, /id="rightsGroup"/);
@@ -278,7 +293,14 @@ test("static gallery builds with every public contract artifact", async function
     assert.match(app, /Download Theme Manager/);
     assert.match(app, /社区投稿暂未开放/);
     assert.match(app, /nativeTheme\.path/);
-    assert.match(app, /modeRecord\.capture/);
+    assert.match(app, /capture\.evidence/);
+    assert.match(app, /function presentationSrcset/);
+    assert.match(app, /viewEvidence/);
+    assert.match(app, /presentationFallback/);
+    assert.match(app, /image\.onerror = fallback/);
+    assert.match(app, /function fallbackVisual/);
+    const updateDialog = app.slice(app.indexOf("function updateDialog()"), app.indexOf("function showToast("));
+    assert.match(updateDialog, /visualFor\(modeRecord, "hero"\)/);
     assert.match(app, /function renderCollectionIntro/);
     assert.doesNotMatch(app, /39 original themes|39 套原创主题/);
     assert.doesNotMatch(app, /Beta 26\.707\.3351\.0/);
@@ -330,6 +352,9 @@ test("Tauri manager keeps theme values in Rust and limits desktop capabilities",
   }));
   assert.match(catalog, /native_value_for/);
   assert.match(catalog, /REMOTE_CATALOG_URL/);
+  assert.match(catalog, /PRESENTATION_SIZES/);
+  assert.match(catalog, /thumbnailUrl/);
+  assert.match(catalog, /presentation_path/);
   assert.match(catalog, /registry_bytes\.len\(\) != expected_bytes/);
   assert.match(backend, /copy_theme/);
   assert.match(backend, /native_value_for\(&catalog, &theme_id, &mode\)/);
@@ -410,6 +435,8 @@ test("Tauri manager keeps theme values in Rust and limits desktop capabilities",
   assert.match(platform, /\["ChatGPT Beta", "Codex Beta"\]/);
   assert.match(platform, /std::process::Command::new\(executable\)/);
   assert.doesNotMatch(bridge, /nativeTheme.*value|nativeValue/i);
+  assert.match(bridge, /preview\.thumbnailUrl = convertFileSrc\(preview\.thumbnailPath\)/);
+  assert.match(bridge, /delete preview\.thumbnailPath/);
   assert.match(bridge, /applyNow = false/);
   assert.match(bridge, /applyNow \}/);
   assert.match(updater, /ACT_UPDATER_PUBKEY/);
@@ -418,6 +445,52 @@ test("Tauri manager keeps theme values in Rust and limits desktop capabilities",
   assert.match(appPackage, /@tauri-apps\/cli/);
   assert.doesNotMatch(appPackage, /electron/i);
   assert.doesNotMatch(backend + catalog + runtime + platform, /WindowsApps.*(?:write|copy)|app\.asar.*(?:write|copy)/i);
+});
+
+test("Tauri bridge converts both local presentation paths before the list renders", async function () {
+  const bridge = await readFile(path.join(ROOT, "apps", "theme-manager", "src", "renderer", "bridge.js"), "utf8");
+  const catalog = {
+    themes: [{
+      previews: {
+        light: {
+          thumbnailPath: "/catalog/screenshots/presentation/fixture-light-320.png",
+          imagePath: "/catalog/screenshots/presentation/fixture-light-960.png",
+        },
+        dark: {},
+      },
+    }],
+  };
+  const eventTarget = { addEventListener() {} };
+  const context = {
+    document: { querySelector: () => eventTarget },
+    window: {
+      __TAURI__: {
+        core: {
+          convertFileSrc: (value) => "asset://" + value,
+          invoke: async (command) => {
+            assert.equal(command, "bootstrap");
+            return { catalog };
+          },
+        },
+        event: { listen: async () => () => {} },
+        window: {
+          getCurrentWindow: () => ({
+            toggleMaximize() {},
+            startDragging() {},
+            minimize() {},
+            close() {},
+          }),
+        },
+      },
+    },
+  };
+  runInNewContext(bridge, context);
+  const payload = await context.window.act.bootstrap();
+  const preview = payload.catalog.themes[0].previews.light;
+  assert.equal(preview.thumbnailUrl, "asset:///catalog/screenshots/presentation/fixture-light-320.png");
+  assert.equal(preview.imageUrl, "asset:///catalog/screenshots/presentation/fixture-light-960.png");
+  assert.equal("thumbnailPath" in preview, false);
+  assert.equal("imagePath" in preview, false);
 });
 
 test("Theme Manager renders a compact Copy action, footer version, and macOS traffic-light chrome", async function () {
@@ -576,6 +649,16 @@ test("desktop manager localizes from the system and makes visual styles the prim
   assert.match(app, /async function waitForPersistentApply\(/);
   assert.match(app, /"retry-blocked"/);
   assert.match(app, /state\.persistenceState = await waitForPersistentApply/);
+  assert.match(app, /themeCards: new Map\(\)/);
+  assert.match(app, /function ensureThemeCards\(\)/);
+  assert.match(app, /image\.loading = "lazy"/);
+  assert.match(app, /thumbnailUrl/);
+  assert.match(app, /new IntersectionObserver/);
+  assert.match(app, /root: elements\.themeList/);
+  assert.match(app, /if \(!card\.visible \|\| \(!force && !card\.nearViewport\)\) return;/);
+  const renderThemeList = app.slice(app.indexOf("function renderThemeList()"), app.indexOf("function renderSelectedTheme()"));
+  assert.match(renderThemeList, /updateThemeCard/);
+  assert.doesNotMatch(renderThemeList, /replaceChildren/);
 });
 
 test("READMEs recommend Agent installation first and manual desktop installation last", async function () {
@@ -618,7 +701,10 @@ test("desktop beta release uses a static updater feed and discloses deferred pla
   const releaseLabel = releaseMetadata.desktop.channel.slice(0, 1).toUpperCase()
     + releaseMetadata.desktop.channel.slice(1);
   const versionPattern = releaseMetadata.desktop.version.replaceAll(".", "\\.");
-  assert.match(workflow, /npm run generate && npm run validate && npm run desktop:prepare/);
+  assert.match(
+    workflow,
+    /Generate, validate, and test public artifacts once[\s\S]*run: npm run test:ci[\s\S]*Prepare desktop assets once[\s\S]*run: npm run desktop:prepare/,
+  );
   assert.match(workflow, /DESKTOP_RELEASE_READY/);
   assert.match(workflow, /TAURI_SIGNING_PRIVATE_KEY/);
   assert.match(workflow, /TAURI_SIGNING_PRIVATE_KEY_PASSWORD/);
@@ -655,9 +741,9 @@ test("desktop beta release uses a static updater feed and discloses deferred pla
 
 test("desktop preparation derives compact thumbnails from recorded captures", async function () {
   const prepare = await readFile(path.join(ROOT, "scripts", "prepare-desktop.mjs"), "utf8");
-  assert.match(prepare, /CAPTURE_WIDTH = 720/);
-  assert.match(prepare, /CAPTURE_HEIGHT = 405/);
-  assert.match(prepare, /resizePng/);
+  assert.match(prepare, /PRESENTATION_SIZES/);
+  assert.match(prepare, /copyFile/);
+  assert.match(prepare, /capture\?\.presentation/);
+  assert.doesNotMatch(prepare, /resizePng/);
   assert.match(prepare, /DESKTOP_CATALOG\.startsWith\(DESKTOP_BUILD \+ path\.sep\)/);
-  assert.match(prepare, /capture\?\.path/);
 });

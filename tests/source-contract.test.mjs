@@ -22,6 +22,14 @@ import {
   SOURCE_ART_RENDERER_CONSTANTS,
 } from "../scripts/lib/source-art-contract.mjs";
 import {
+  CAPTURE_PRESENTATION_SIZES,
+  GALLERY_MEDIA_BUDGET,
+  generateCapturePresentations,
+  presentationFingerprint,
+  presentationPathFor,
+} from "../scripts/lib/capture-presentation.mjs";
+import { encodePng } from "../scripts/lib/png.mjs";
+import {
   isGalleryRequestFailure,
   parseOptions as parseGalleryCheckOptions,
 } from "../scripts/verify-gallery.mjs";
@@ -272,6 +280,63 @@ test("public and desktop capture labels derive current verification from runtime
   assert.doesNotMatch(managerHtml, /data-i18n="verifiedCapture"/);
   assert.match(validator, /source-tested-recapture-required/);
   assert.match(validator, /Registry runtime evidence does not match/);
+});
+
+test("capture presentation paths and integrity fingerprints are deterministic", function () {
+  const capture = {
+    path: "screenshots/codex-beta-26.715.3651.0/fixture-dark.png",
+    sha256: "a".repeat(64),
+  };
+  assert.deepEqual(CAPTURE_PRESENTATION_SIZES, [
+    { width: 320, height: 180 },
+    { width: 480, height: 270 },
+    { width: 960, height: 540 },
+  ]);
+  assert.equal(
+    presentationPathFor(capture.path, 480),
+    "screenshots/codex-beta-26.715.3651.0/presentation/fixture-dark-480.png",
+  );
+  assert.notEqual(
+    presentationFingerprint(capture, CAPTURE_PRESENTATION_SIZES[0]),
+    presentationFingerprint(capture, CAPTURE_PRESENTATION_SIZES[1]),
+  );
+  assert.equal(GALLERY_MEDIA_BUDGET.maxCardBytes, 768 * 1024);
+  assert.equal(GALLERY_MEDIA_BUDGET.maxInitialBytes, 3 * 1024 * 1024);
+});
+
+test("capture presentation generation detects a missing cached variant", async function () {
+  const temporary = await mkdtemp(path.join(os.tmpdir(), "awesome-codex-theme-presentation-"));
+  const capturePath = "screenshots/codex-beta-fixture/fixture-light.png";
+  const source = encodePng(16, 9, function (x, y) {
+    return [x * 16, y * 28, 120, 255];
+  });
+  const capture = {
+    themeId: "fixture",
+    mode: "light",
+    path: capturePath,
+    sha256: createHash("sha256").update(source).digest("hex"),
+    bytes: source.length,
+    width: 16,
+    height: 9,
+  };
+
+  try {
+    const sourcePath = path.join(temporary, ...capturePath.split("/"));
+    await mkdir(path.dirname(sourcePath), { recursive: true });
+    await writeFile(sourcePath, source);
+    const captureContext = { manifest: { captures: [capture] } };
+    const generated = await generateCapturePresentations({ root: temporary, captureContext });
+    assert.equal(generated.cacheMisses, 3);
+    const variants = generated.index.get("fixture|light");
+    assert.equal(variants.length, 3);
+
+    const missingPath = variants[1].path;
+    await rm(path.join(temporary, ...missingPath.split("/")));
+    const checked = await generateCapturePresentations({ root: temporary, captureContext, check: true });
+    assert.deepEqual(checked.drift, [missingPath]);
+  } finally {
+    await rm(temporary, { recursive: true, force: true });
+  }
 });
 
 test("package scripts keep source checks fast and generated checks explicit", async function () {
