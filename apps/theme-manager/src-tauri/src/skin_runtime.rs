@@ -63,10 +63,20 @@ const TARGET_RUNTIME_STATE_TEMPLATE: &str = r#"(() => {
   };
 })()"#;
 
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize)]
+#[serde(rename_all = "lowercase")]
+pub enum MonitorState {
+    Healthy,
+    Recovering,
+    Degraded,
+    Stopped,
+}
+
 #[derive(Clone, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SkinRuntimeView {
     pub active: bool,
+    pub monitor_state: MonitorState,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub theme_id: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -95,19 +105,23 @@ struct SkinSession {
     tested_version: String,
     port: u16,
     target: platform::TargetView,
+    script: String,
     targets: Arc<Mutex<Vec<InjectedTarget>>>,
     monitor_stop: Arc<AtomicBool>,
     monitor_running: Arc<AtomicBool>,
+    monitor_state: Arc<Mutex<MonitorState>>,
 }
 
 pub struct SkinRuntime {
     session: Mutex<Option<SkinSession>>,
+    operation: tokio::sync::Mutex<()>,
 }
 
 impl Default for SkinRuntime {
     fn default() -> Self {
         Self {
             session: Mutex::new(None),
+            operation: tokio::sync::Mutex::new(()),
         }
     }
 }
@@ -121,6 +135,10 @@ impl SkinRuntime {
             .clone();
         SkinRuntimeView {
             active: session.is_some(),
+            monitor_state: session
+                .as_ref()
+                .map(monitor_state_for)
+                .unwrap_or(MonitorState::Stopped),
             theme_id: session.as_ref().map(|value| value.theme_id.clone()),
             mode: session.as_ref().map(|value| value.mode.clone()),
             channel: session.as_ref().map(|value| value.channel.clone()),
@@ -138,12 +156,42 @@ impl SkinRuntime {
             .take()
     }
 
+    fn snapshot(&self) -> Option<SkinSession> {
+        self.session
+            .lock()
+            .unwrap_or_else(|poisoned| poisoned.into_inner())
+            .clone()
+    }
+
     fn replace(&self, session: SkinSession) {
         *self
             .session
             .lock()
             .unwrap_or_else(|poisoned| poisoned.into_inner()) = Some(session);
     }
+}
+
+fn monitor_state_for(session: &SkinSession) -> MonitorState {
+    *session
+        .monitor_state
+        .lock()
+        .unwrap_or_else(|poisoned| poisoned.into_inner())
+}
+
+fn set_monitor_state(session: &SkinSession, state: MonitorState) {
+    *session
+        .monitor_state
+        .lock()
+        .unwrap_or_else(|poisoned| poisoned.into_inner()) = state;
+}
+
+fn start_session_monitor(session: SkinSession) {
+    session.monitor_stop.store(false, Ordering::Release);
+    set_monitor_state(&session, MonitorState::Healthy);
+    let script = session.script.clone();
+    let _ = tauri::async_runtime::spawn(async move {
+        monitor_skin_session(session, script).await;
+    });
 }
 
 #[derive(Clone, Deserialize)]
@@ -488,12 +536,21 @@ fn inject_target(target: CdpTarget, script: &str) -> Result<InjectedTarget, Stri
         .as_str()
         .ok_or("CDP 没有返回早期注入标识")?
         .to_owned();
-    evaluate_target_runtime(&mut socket, 2, &target.id, script)?;
-    Ok(InjectedTarget {
-        id: target.id,
+    let injected = InjectedTarget {
+        id: target.id.clone(),
         script_id,
         last_health_check: Instant::now(),
-    })
+    };
+    if let Err(apply_error) = evaluate_target_runtime(&mut socket, 2, &injected.id, script) {
+        let cleanup_error = remove_from_targets(vec![target], vec![injected]);
+        return Err(match cleanup_error {
+            Ok(()) => format!("候选页面注入失败并已清理：{apply_error}"),
+            Err(cleanup_error) => {
+                format!("候选页面注入失败：{apply_error}；候选清理也失败：{cleanup_error}")
+            }
+        });
+    }
+    Ok(injected)
 }
 
 fn refresh_target(target: &CdpTarget, script: &str) -> Result<(), String> {
@@ -501,10 +558,26 @@ fn refresh_target(target: &CdpTarget, script: &str) -> Result<(), String> {
     evaluate_target_runtime(&mut socket, 1, &target.id, script)
 }
 
-fn inject_targets(targets: Vec<CdpTarget>, script: String) -> Result<Vec<InjectedTarget>, String> {
+fn inject_transactionally<T: Clone, R: Clone>(
+    targets: Vec<T>,
+    mut inject_one: impl FnMut(&T) -> Result<R, String>,
+    mut rollback: impl FnMut(&[T], &[R]) -> Result<(), String>,
+) -> Result<Vec<R>, String> {
     let mut injected = Vec::new();
+    let mut touched = Vec::new();
     for target in targets {
-        injected.push(inject_target(target, &script)?);
+        touched.push(target.clone());
+        match inject_one(&target) {
+            Ok(candidate) => injected.push(candidate),
+            Err(apply_error) => {
+                return Err(match rollback(&touched, &injected) {
+                    Ok(()) => format!("候选 Full Skin 注入失败并已回滚：{apply_error}"),
+                    Err(rollback_error) => format!(
+                        "候选 Full Skin 注入失败：{apply_error}；候选回滚也失败：{rollback_error}"
+                    ),
+                });
+            }
+        }
     }
     if injected.is_empty() {
         return Err("没有 ChatGPT 页面接受 Full Skin".into());
@@ -547,6 +620,18 @@ fn mark_target_health_checked(targets: &Arc<Mutex<Vec<InjectedTarget>>>, target_
 
 fn health_check_due(target: &InjectedTarget, now: Instant) -> bool {
     now.saturating_duration_since(target.last_health_check) >= TARGET_HEALTH_INTERVAL
+}
+
+fn monitor_state_after_cycle(keep_monitoring: bool, consecutive_errors: u8) -> MonitorState {
+    if !keep_monitoring {
+        MonitorState::Stopped
+    } else if consecutive_errors >= TARGET_MONITOR_MAX_ERRORS {
+        MonitorState::Degraded
+    } else if consecutive_errors == 0 {
+        MonitorState::Healthy
+    } else {
+        MonitorState::Recovering
+    }
 }
 
 fn remove_from_targets(
@@ -614,6 +699,89 @@ fn remove_from_targets(
     Ok(())
 }
 
+fn remove_early_scripts_from_targets(
+    targets: &[CdpTarget],
+    injected_targets: &[InjectedTarget],
+) -> Result<(), String> {
+    let mut errors = Vec::new();
+    for record in injected_targets {
+        let Some(target) = targets.iter().find(|target| target.id == record.id) else {
+            continue;
+        };
+        let mut socket = match connect_target_with_timeout(target, CDP_CLEANUP_TIMEOUT) {
+            Ok(socket) => socket,
+            Err(error) => {
+                errors.push(format!("{}: {error}", record.id));
+                continue;
+            }
+        };
+        if let Err(error) = cdp_call(
+            &mut socket,
+            1,
+            "Page.removeScriptToEvaluateOnNewDocument",
+            json!({ "identifier": record.script_id }),
+        ) {
+            if !missing_early_script_registration(&error) {
+                errors.push(format!("{}: {error}", record.id));
+            }
+        }
+    }
+    if errors.is_empty() {
+        Ok(())
+    } else {
+        Err(format!(
+            "旧 Full Skin 早期脚本没有完成清理：{}",
+            errors.join("; ")
+        ))
+    }
+}
+
+fn restore_targets(targets: &[CdpTarget], script: &str) -> Result<(), String> {
+    let mut errors = Vec::new();
+    for target in targets {
+        if let Err(error) = refresh_target(target, script) {
+            errors.push(format!("{}: {error}", target.id));
+        }
+    }
+    if errors.is_empty() {
+        Ok(())
+    } else {
+        Err(format!("旧 Full Skin 没有完成恢复：{}", errors.join("; ")))
+    }
+}
+
+fn rollback_candidate_targets(
+    targets: &[CdpTarget],
+    candidate: &[InjectedTarget],
+    previous_script: Option<&str>,
+) -> Result<(), String> {
+    let cleanup = remove_from_targets(targets.to_vec(), candidate.to_vec());
+    let restore = previous_script.map(|script| restore_targets(targets, script));
+    match (cleanup, restore) {
+        (Ok(()), None | Some(Ok(()))) => Ok(()),
+        (Err(cleanup_error), None) => Err(cleanup_error),
+        (Err(cleanup_error), Some(Ok(()))) => Err(cleanup_error),
+        (Ok(()), Some(Err(restore_error))) => Err(restore_error),
+        (Err(cleanup_error), Some(Err(restore_error))) => {
+            Err(format!("{cleanup_error}；{restore_error}"))
+        }
+    }
+}
+
+fn inject_candidate_targets(
+    targets: Vec<CdpTarget>,
+    script: String,
+    previous_script: Option<String>,
+) -> Result<Vec<InjectedTarget>, String> {
+    inject_transactionally(
+        targets,
+        |target| inject_target(target.clone(), &script),
+        |touched, candidate| {
+            rollback_candidate_targets(touched, candidate, previous_script.as_deref())
+        },
+    )
+}
+
 async fn listener_matches_session_target(session: &SkinSession) -> Result<bool, String> {
     let port = session.port;
     let target = session.target.clone();
@@ -675,6 +843,7 @@ async fn register_target_runtime(
 
 async fn monitor_skin_session(session: SkinSession, script: String) {
     if session.monitor_stop.load(Ordering::Acquire) {
+        set_monitor_state(&session, MonitorState::Stopped);
         return;
     }
     session.monitor_running.store(true, Ordering::Release);
@@ -686,7 +855,7 @@ async fn monitor_skin_session(session: SkinSession, script: String) {
         let mut keep_monitoring = true;
         match cdp_targets(session.port).await {
             Ok((_, targets)) => {
-                let mut had_error = false;
+                let mut had_error = targets.is_empty();
                 let active_ids: HashSet<String> =
                     targets.iter().map(|target| target.id.clone()).collect();
                 retain_active_targets(&session.targets, &active_ids);
@@ -743,10 +912,19 @@ async fn monitor_skin_session(session: SkinSession, script: String) {
                 consecutive_errors = consecutive_errors.saturating_add(1);
             }
         }
-        if !keep_monitoring || consecutive_errors >= TARGET_MONITOR_MAX_ERRORS {
+        let monitor_state = monitor_state_after_cycle(keep_monitoring, consecutive_errors);
+        if matches!(
+            monitor_state,
+            MonitorState::Stopped | MonitorState::Degraded
+        ) {
+            set_monitor_state(&session, monitor_state);
             break;
         }
+        set_monitor_state(&session, monitor_state);
         tokio::time::sleep(TARGET_DISCOVERY_INTERVAL).await;
+    }
+    if session.monitor_stop.load(Ordering::Acquire) {
+        set_monitor_state(&session, MonitorState::Stopped);
     }
     session.monitor_running.store(false, Ordering::Release);
 }
@@ -775,6 +953,17 @@ async fn remove_session(session: SkinSession) -> Result<(), String> {
         .map_err(|error| format!("Full Skin 清理任务失败：{error}"))?
 }
 
+async fn restore_session_runtime(session: &SkinSession) -> Result<(), String> {
+    if !listener_matches_session_target(session).await? {
+        return Err("无法确认旧 Full Skin 会话仍属于所选 ChatGPT".into());
+    }
+    let (_, targets) = cdp_targets(session.port).await?;
+    let script = session.script.clone();
+    tauri::async_runtime::spawn_blocking(move || restore_targets(&targets, &script))
+        .await
+        .map_err(|error| format!("旧 Full Skin 恢复任务失败：{error}"))?
+}
+
 pub async fn apply(
     app: &AppHandle,
     runtime: &SkinRuntime,
@@ -783,29 +972,21 @@ pub async fn apply(
     mode: &str,
     channel: &str,
 ) -> Result<SkinRuntimeView, String> {
-    let mut reusable_port = None;
-    if let Some(previous) = runtime.take() {
-        let same_channel = previous.channel == channel;
-        let previous_port = previous.port;
-        if let Err(error) = remove_session(previous.clone()).await {
-            runtime.replace(previous);
-            return Err(error);
-        }
-        if same_channel {
-            reusable_port = Some(previous_port);
-        }
-    }
-
+    let _operation = runtime.operation.lock().await;
     let skin = catalog::full_skin_for(catalog, theme_id, mode)?;
     let target = platform::find_target(channel)?;
     platform::validate_full_skin_target(&target)?;
     let art = load_art(app, &skin).await?;
     let script = runtime_script(&skin, &art)?;
+    let previous = runtime.snapshot();
     let running = platform::target_is_running(&target)?;
+    let reusable_port = previous.as_ref().and_then(|session| {
+        (session.channel == channel
+            && platform::listener_belongs_to_target(session.port, &target).unwrap_or(false))
+        .then_some(session.port)
+    });
     let port = if running {
-        reusable_port
-            .filter(|port| platform::listener_belongs_to_target(*port, &target).unwrap_or(false))
-            .ok_or("所选 ChatGPT 已经在普通模式运行。请先关闭它，再应用完整皮肤。")?
+        reusable_port.ok_or("所选 ChatGPT 已经在普通模式运行。请先关闭它，再应用完整皮肤。")?
     } else {
         select_loopback_port()?
     };
@@ -816,11 +997,33 @@ pub async fn apply(
         )?;
     }
     let (_, targets) = wait_for_targets(port, &target).await?;
-    let initial_script = script.clone();
-    let injected =
-        tauri::async_runtime::spawn_blocking(move || inject_targets(targets, initial_script))
-            .await
-            .map_err(|error| format!("Full Skin 注入任务失败：{error}"))??;
+    if let Some(previous) = &previous {
+        if let Err(error) = stop_session_monitor(previous).await {
+            set_monitor_state(previous, MonitorState::Degraded);
+            return Err(error);
+        }
+    }
+
+    let candidate_targets = targets.clone();
+    let candidate_script = script.clone();
+    let rollback_script = previous
+        .as_ref()
+        .filter(|session| session.port == port)
+        .map(|session| session.script.clone());
+    let injected = match tauri::async_runtime::spawn_blocking(move || {
+        inject_candidate_targets(targets, candidate_script, rollback_script)
+    })
+    .await
+    .map_err(|error| format!("Full Skin 候选注入任务失败：{error}"))?
+    {
+        Ok(injected) => injected,
+        Err(error) => {
+            if let Some(previous) = previous {
+                start_session_monitor(previous);
+            }
+            return Err(error);
+        }
+    };
     let session = SkinSession {
         theme_id: skin.theme_id,
         mode: skin.mode,
@@ -828,20 +1031,64 @@ pub async fn apply(
         tested_version: skin.tested_version,
         port,
         target,
+        script: script.clone(),
         targets: Arc::new(Mutex::new(injected)),
         monitor_stop: Arc::new(AtomicBool::new(false)),
         monitor_running: Arc::new(AtomicBool::new(false)),
+        monitor_state: Arc::new(Mutex::new(MonitorState::Healthy)),
     };
+
+    if let Some(previous) = &previous {
+        let previous_records = injected_targets_snapshot(&previous.targets);
+        let cleanup = if previous.port == port {
+            let targets = candidate_targets.clone();
+            tauri::async_runtime::spawn_blocking(move || {
+                remove_early_scripts_from_targets(&targets, &previous_records)
+            })
+            .await
+            .map_err(|error| format!("旧 Full Skin 脚本清理任务失败：{error}"))?
+        } else {
+            remove_session(previous.clone()).await
+        };
+        if let Err(cleanup_error) = cleanup {
+            let candidates = injected_targets_snapshot(&session.targets);
+            let targets = candidate_targets.clone();
+            let restore_script = (previous.port == port).then(|| previous.script.clone());
+            let rollback = tauri::async_runtime::spawn_blocking(move || {
+                rollback_candidate_targets(&targets, &candidates, restore_script.as_deref())
+            })
+            .await
+            .map_err(|error| format!("候选 Full Skin 回滚任务失败：{error}"))?;
+            let previous_restore = if previous.port == port {
+                Ok(())
+            } else {
+                restore_session_runtime(previous).await
+            };
+            start_session_monitor(previous.clone());
+            return Err(match (rollback, previous_restore) {
+                (Ok(()), Ok(())) => format!("旧 Full Skin 清理失败，候选已回滚：{cleanup_error}"),
+                (Err(rollback_error), Ok(())) => format!(
+                    "旧 Full Skin 清理失败：{cleanup_error}；候选回滚也失败：{rollback_error}"
+                ),
+                (Ok(()), Err(restore_error)) => format!(
+                    "旧 Full Skin 清理失败：{cleanup_error}；旧主题恢复也失败：{restore_error}"
+                ),
+                (Err(rollback_error), Err(restore_error)) => format!(
+                    "旧 Full Skin 清理失败：{cleanup_error}；候选回滚失败：{rollback_error}；旧主题恢复失败：{restore_error}"
+                ),
+            });
+        }
+    }
     runtime.replace(session.clone());
-    let _ = tauri::async_runtime::spawn(async move {
-        monitor_skin_session(session, script).await;
-    });
+    start_session_monitor(session);
     Ok(runtime.current())
 }
 
 pub async fn restore(runtime: &SkinRuntime) -> Result<SkinRuntimeView, String> {
+    let _operation = runtime.operation.lock().await;
     if let Some(session) = runtime.take() {
         if let Err(error) = remove_session(session.clone()).await {
+            set_monitor_state(&session, MonitorState::Degraded);
             runtime.replace(session);
             return Err(error);
         }
@@ -852,6 +1099,7 @@ pub async fn restore(runtime: &SkinRuntime) -> Result<SkinRuntimeView, String> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use std::{cell::RefCell, rc::Rc};
 
     #[test]
     fn runtime_template_expands_without_executable_theme_fields() {
@@ -953,11 +1201,56 @@ mod tests {
     }
 
     #[test]
+    fn monitor_failures_remain_visible_after_the_retry_budget_is_exhausted() {
+        assert_eq!(monitor_state_after_cycle(true, 0), MonitorState::Healthy);
+        assert_eq!(monitor_state_after_cycle(true, 1), MonitorState::Recovering);
+        assert_eq!(
+            monitor_state_after_cycle(true, TARGET_MONITOR_MAX_ERRORS),
+            MonitorState::Degraded
+        );
+        assert_eq!(monitor_state_after_cycle(false, 0), MonitorState::Stopped);
+    }
+
+    #[test]
     fn selected_loopback_port_is_available() {
         let port = select_loopback_port().expect("loopback port should be selected");
         assert_ne!(port, 0);
         let listener = TcpListener::bind(("127.0.0.1", port))
             .expect("selected port should be available immediately after selection");
         assert_eq!(listener.local_addr().expect("local address").port(), port);
+    }
+
+    #[test]
+    fn candidate_transaction_rolls_back_the_first_target_when_the_second_fails() {
+        let events = Rc::new(RefCell::new(Vec::new()));
+        let inject_events = events.clone();
+        let rollback_events = events.clone();
+        let result = inject_transactionally(
+            vec!["target-1", "target-2"],
+            move |target| {
+                inject_events.borrow_mut().push(format!("inject:{target}"));
+                if *target == "target-2" {
+                    Err("target-2 rejected the candidate".into())
+                } else {
+                    Ok(format!("candidate:{target}"))
+                }
+            },
+            move |touched, injected| {
+                rollback_events
+                    .borrow_mut()
+                    .push(format!("rollback:{touched:?}:{injected:?}"));
+                Ok(())
+            },
+        );
+
+        assert!(result.is_err());
+        assert_eq!(
+            events.borrow().as_slice(),
+            [
+                "inject:target-1",
+                "inject:target-2",
+                "rollback:[\"target-1\", \"target-2\"]:[\"candidate:target-1\"]",
+            ]
+        );
     }
 }
