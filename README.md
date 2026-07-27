@@ -79,6 +79,8 @@ npm run build             # generated-artifact Pages build
 npm run check:full        # release-grade full generation, validation, test, desktop, and build path
 ```
 
+The generator streams one theme at a time, reuses verified mode-and-size outputs, and reports cache, elapsed-time, and peak-RSS telemetry. Use `npm run generate -- --ids=qinglan-odyssey --summary` for a targeted regeneration, `npm run generate:check -- --concurrency=1 --summary` for a reproducibility readback, and `npm run generate:benchmark -- --scenario=warm` for the 60-second warm-cache budget.
+
 ### Method C: Install the desktop app manually
 
 1. Download the build for your operating system and CPU from [GitHub Releases](https://github.com/rwang23/awesome-codex-theme/releases).
@@ -204,6 +206,8 @@ npm run test:generated
 npm run test:ci
 npm run generate
 npm run generate:check
+npm run generate -- --ids=qinglan-odyssey --summary
+npm run generate:benchmark -- --scenario=warm
 npm run validate
 npm run check:full
 npm run screenshots:capture

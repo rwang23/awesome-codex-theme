@@ -1,5 +1,7 @@
 import { deflateSync, inflateSync } from "node:zlib";
 
+import { SOURCE_ART_RENDERER_CONSTANTS } from "./source-art-contract.mjs";
+
 const PNG_SIGNATURE = Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]);
 const CRC_TABLE = new Uint32Array(256);
 
@@ -566,27 +568,30 @@ export function resizePng(buffer, width, height) {
 }
 
 function gradeSourcePixel(pixel, theme, mode, normalizedX, normalizedY) {
+  const grading = SOURCE_ART_RENDERER_CONSTANTS.grading;
   const background = parseHex(theme[mode].tokens.background);
   let color = pixel.slice(0, 3);
 
   if (mode === "dark") {
-    color = color.map((value) => value * 0.76);
-    color = mix(color, background, 0.31);
+    color = color.map((value) => value * grading.darkScale);
+    color = mix(color, background, grading.darkBackgroundMix);
   } else {
-    color = mix(color, [255, 255, 255], 0.035);
-    color = mix(color, background, 0.07);
+    color = mix(color, [255, 255, 255], grading.lightWhiteMix);
+    color = mix(color, background, grading.lightBackgroundMix);
   }
 
-  const quietEdge = 1 - smoothstep(0.08, 0.6, normalizedX);
+  const quietEdge = 1 - smoothstep(grading.quietEdgeStart, grading.quietEdgeEnd, normalizedX);
   const safeAreaOpacity = mode === "dark"
-    ? 0.12 + quietEdge * 0.46
-    : 0.05 + quietEdge * 0.35;
+    ? grading.darkSafeAreaBase + quietEdge * grading.darkSafeAreaRange
+    : grading.lightSafeAreaBase + quietEdge * grading.lightSafeAreaRange;
   color = mix(color, background, safeAreaOpacity);
 
-  const topShade = smoothstep(0, 0.18, normalizedY);
-  const bottomShade = 1 - smoothstep(0.78, 1, normalizedY);
+  const topShade = smoothstep(0, grading.verticalTopEnd, normalizedY);
+  const bottomShade = 1 - smoothstep(grading.verticalBottomStart, 1, normalizedY);
   const edgeShade = Math.min(topShade, bottomShade);
-  if (mode === "dark") color = color.map((value) => value * (0.94 + edgeShade * 0.06));
+  if (mode === "dark") {
+    color = color.map((value) => value * (grading.darkEdgeFloor + edgeShade * grading.darkEdgeRange));
+  }
 
   return [
     clampByte(color[0]),
@@ -596,8 +601,7 @@ function gradeSourcePixel(pixel, theme, mode, normalizedX, normalizedY) {
   ];
 }
 
-export function renderSourceArtPng(sourceBuffer, theme, mode, width, height) {
-  const image = decodePng(sourceBuffer);
+export function renderSourceArtImage(image, theme, mode, width, height) {
   const targetAspect = width / height;
   const sourceAspect = image.width / image.height;
   let cropX = 0;
@@ -625,4 +629,8 @@ export function renderSourceArtPng(sourceBuffer, theme, mode, width, height) {
       normalizedY,
     );
   });
+}
+
+export function renderSourceArtPng(sourceBuffer, theme, mode, width, height) {
+  return renderSourceArtImage(decodePng(sourceBuffer), theme, mode, width, height);
 }
