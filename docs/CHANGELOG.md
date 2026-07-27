@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Added a Chinese collaboration guide explaining local worktrees, branches,
+  Issues, draft PRs, reviews, merging, and post-merge verification.
 - Replaced the Theme Manager's custom persistence overlay and incomplete
   composite control semantics with a native dialog, a tested inert/focus-trap
   fallback, and ordinary button groups; restored invoking focus after

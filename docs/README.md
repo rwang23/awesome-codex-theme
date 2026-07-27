@@ -46,6 +46,8 @@ locations are reserved for execution evidence or closed history when needed.
   Windows-verified no-patch per-user controller
 - agent-install.md: copy-ready installation contract, trust checks, and
   explicit stop conditions for coding agents
+- git-pr-collaboration-guide.zh-CN.md: plain-language Chinese guide to local
+  worktrees, branches, Issues, draft PRs, review, merge, and post-merge checks
 - community-platform.md: custom-domain, hosted submission, voting, storage,
   moderation, deployed private Beta, and staged backend architecture
 - native-testing.md: isolated Full Skin validation, Theme Manager smoke, and
