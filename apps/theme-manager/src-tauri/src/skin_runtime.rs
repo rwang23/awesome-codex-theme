@@ -19,8 +19,9 @@ use tauri::{AppHandle, Manager};
 use tungstenite::{Message, WebSocket, connect, stream::MaybeTlsStream};
 
 use crate::{
+    cache,
     catalog::{self, Catalog, FullSkinDescriptor},
-    platform,
+    network, platform,
 };
 
 const RUNTIME_CSS: &str = include_str!("../../../../packages/full-skin/runtime.css");
@@ -269,9 +270,7 @@ fn cache_path(app: &AppHandle, skin: &FullSkinDescriptor) -> Result<PathBuf, Str
         .map(|path| {
             path.join("full-skin").join(format!(
                 "{}-{}-{}.png",
-                skin.theme_id,
-                skin.mode,
-                &skin.sha256[..12]
+                skin.theme_id, skin.mode, skin.sha256,
             ))
         })
         .map_err(|error| format!("无法定位 Full Skin 缓存：{error}"))
@@ -292,6 +291,8 @@ async fn load_art(app: &AppHandle, skin: &FullSkinDescriptor) -> Result<Vec<u8>,
     let url = format!("{}{}", catalog::REMOTE_SITE_ROOT, skin.asset);
     let response = reqwest::Client::builder()
         .timeout(Duration::from_secs(30))
+        .connect_timeout(Duration::from_secs(5))
+        .redirect(reqwest::redirect::Policy::none())
         .build()
         .map_err(|error| format!("无法创建素材下载客户端：{error}"))?
         .get(&url)
@@ -301,17 +302,8 @@ async fn load_art(app: &AppHandle, skin: &FullSkinDescriptor) -> Result<Vec<u8>,
         .map_err(|error| format!("Full Skin 素材下载失败：{error}"))?
         .error_for_status()
         .map_err(|error| format!("Full Skin 素材返回错误：{error}"))?;
-    if response
-        .content_length()
-        .is_some_and(|bytes| bytes != skin.bytes as u64)
-    {
-        return Err("Full Skin 素材响应字节数不匹配".into());
-    }
-    let bytes = response
-        .bytes()
-        .await
-        .map_err(|error| format!("无法读取 Full Skin 素材：{error}"))?
-        .to_vec();
+    let bytes =
+        network::read_capped_response(response, skin.bytes, "image/png", "Full Skin 素材").await?;
     if bytes.len() != skin.bytes || sha256_hex(&bytes) != skin.sha256 {
         return Err("Full Skin 素材哈希或字节数不匹配".into());
     }
@@ -319,16 +311,10 @@ async fn load_art(app: &AppHandle, skin: &FullSkinDescriptor) -> Result<Vec<u8>,
         return Err("Full Skin 素材不是经过声明的 PNG".into());
     }
 
-    let parent = destination.parent().ok_or("Full Skin 缓存目录无效")?;
-    fs::create_dir_all(parent).map_err(|error| format!("无法创建 Full Skin 缓存：{error}"))?;
-    let temporary = destination.with_extension("png.tmp");
-    fs::write(&temporary, &bytes).map_err(|error| format!("无法写入 Full Skin 缓存：{error}"))?;
-    if destination.exists() {
-        fs::remove_file(&destination)
-            .map_err(|error| format!("无法更新 Full Skin 缓存：{error}"))?;
-    }
-    fs::rename(&temporary, &destination)
-        .map_err(|error| format!("无法提交 Full Skin 缓存：{error}"))?;
+    // Cache keys include the complete digest. If a stale or corrupt entry
+    // already occupies that key, keep it intact and use this verified download
+    // for the current session rather than deleting a possible last-known-good file.
+    let _ = cache::publish_new_file(&destination, &bytes, "Full Skin 缓存")?;
     Ok(bytes)
 }
 
