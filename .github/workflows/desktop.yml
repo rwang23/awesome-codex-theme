@@ -377,7 +377,7 @@ jobs:
         shell: bash
         env:
           RELEASE_TAG: ${{ github.ref_name }}
-        run: test "$RELEASE_TAG" = "v0.3.2"
+        run: test "$RELEASE_TAG" = "v0.3.3"
 
       - name: Build updater-signed beta artifacts and publish the tagged release
         uses: tauri-apps/tauri-action@944946e3e4cac6603d1fe8f514171e9ecd3c78aa # v1
@@ -390,9 +390,9 @@ jobs:
           projectPath: apps/theme-manager
           args: "--config src-tauri/tauri.release.conf.json ${{ matrix.build-args }}"
           tagName: ${{ github.ref_name }}
-          releaseName: "Awesome Codex Theme v0.3.2 Beta"
+          releaseName: "Awesome Codex Theme v0.3.3 Beta"
           releaseAssetNamePattern: ${{ matrix.release-asset-name }}
-          releaseBody: "Updater-signed Tauri Theme Manager beta with ACT Full Skin v1. Windows Authenticode and Apple Developer ID signing/notarization are not included in this beta, so the operating system may show an unknown-publisher warning. macOS bundles carry an ad-hoc signature for package integrity only. The app applies verified backgrounds, materials, colors, and theme copy without modifying ChatGPT application files."
+          releaseBody: "Updater-signed Tauri Theme Manager beta with ACT Full Skin v1. The current v3 runtime is source-tested and requires real-app recapture before a physical-app verification claim; the updater feed remains unreleased. Windows Authenticode and Apple Developer ID signing/notarization are not included in this beta, so the operating system may show an unknown-publisher warning. macOS bundles carry an ad-hoc signature for package integrity only. The app uses only the selected package's loopback target and never modifies application files, user data, or conversations."
           prerelease: true
           releaseDraft: true
 

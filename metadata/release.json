@@ -6,7 +6,7 @@
     "releases": "https://github.com/rwang23/awesome-codex-theme/releases"
   },
   "desktop": {
-    "version": "0.3.2",
+    "version": "0.3.3",
     "channel": "beta",
     "githubPrerelease": true,
     "updater": {

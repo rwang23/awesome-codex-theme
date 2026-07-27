@@ -2,7 +2,7 @@
 
 This file is generated from [`metadata/release.json`](../metadata/release.json). Do not edit it by hand.
 
-- Desktop version: `0.3.2`
+- Desktop version: `0.3.3`
 - Channel: `beta`
 - GitHub prerelease: `true`
 - Update-feed state: `unreleased`

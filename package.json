@@ -1,6 +1,6 @@
 {
   "name": "awesome-codex-theme",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "private": true,
   "type": "module",
   "description": "A free declarative Codex Full Skin standard, registry, validator, gallery, and manager.",
