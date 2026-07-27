@@ -21,7 +21,7 @@
   "runtime": {
     "fullSkinFormat": "act-full-skin-v1",
     "implementationVersion": "act-full-skin-runtime-v3",
-    "sourceArtRenderer": "act-source-art-renderer-v2",
+    "sourceArtRenderer": "act-source-art-renderer-v3",
     "nativeTestedVersion": "26.715.2305.0"
   },
   "capture": {

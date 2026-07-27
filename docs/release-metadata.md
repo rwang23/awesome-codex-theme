@@ -9,7 +9,7 @@ This file is generated from [`metadata/release.json`](../metadata/release.json).
 - Update endpoint: `https://rwang23.github.io/awesome-codex-theme/updates/stable.json`
 - Full Skin format: `act-full-skin-v1`
 - Full Skin capture: ChatGPT Beta `26.715.3651.0` / `OpenAI.CodexBeta_26.715.3651.0_x64__2p2nqsd0c76g0`
-- Catalog: `68` themes / `136` modes / revision `2026072201`
+- Catalog: `68` themes / `136` modes / revision `2026072701`
 
 ## Capability disclosure
 

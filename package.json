@@ -6,6 +6,8 @@
   "description": "A free declarative Codex Full Skin standard, registry, validator, gallery, and manager.",
   "scripts": {
     "art:generate": "node scripts/run-image-jobs.mjs",
+    "art:review": "node scripts/review-source-art.mjs --check",
+    "art:review:write": "node scripts/review-source-art.mjs --write",
     "generate": "node scripts/generate-themes.mjs",
     "generate:check": "node scripts/generate-themes.mjs --check",
     "generate:benchmark": "node scripts/benchmark-generator.mjs",
@@ -16,7 +18,7 @@
     "test": "npm run test:source",
     "test:source": "node --test tests/source-contract.test.mjs tests/full-skin-runtime.test.mjs",
     "test:generated": "node scripts/ensure-generated.mjs && node --test tests/repository.test.mjs",
-    "test:ci": "npm run generate && npm run validate && npm run test:source && npm run test:generated",
+    "test:ci": "npm run generate && npm run art:review && npm run validate && npm run test:source && npm run test:generated",
     "installer:build": "node scripts/build-installer.mjs",
     "installer:validate": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File installer/windows/ACT-Installer.ps1 -RegistryPath themes/registry.json -HeadlessValidate",
     "screenshots:probe": "node scripts/capture-full-skin-screenshots.mjs",

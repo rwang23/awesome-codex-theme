@@ -42,6 +42,10 @@
   budget. Existing Beta v2 screenshots are now explicit reference evidence;
   the current v3 runtime is source-tested and recapture-required rather than
   being presented as current app verification.
+- Replaced centered source-art cropping with a versioned focal-cover renderer, added directional safe-area grading, raised the new-source baseline to 2560x1440 16:9, and committed reproducible contact-sheet review evidence for the existing catalog.
+- Made the desktop check prepare its required capture catalog without relying
+  on the Tauri CLI, and bound its bundled-registry assertion to the current
+  catalog revision.
 - Changed the Gallery community section to clearly state that public community
   submissions are not open and removed its hosted-community link. Added a
   direct Theme Manager download action to the Gallery hero.

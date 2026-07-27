@@ -840,7 +840,7 @@ function updateThemeCard(theme, visible, visibleIndex) {
   const active = theme.id === state.themeId;
   card.button.hidden = !visible;
   card.button.classList.toggle("is-active", active);
-  card.button.setAttribute("aria-selected", String(active));
+  card.button.setAttribute("aria-pressed", String(active));
   card.visible = visible;
   if (!visible) {
     card.nearViewport = false;
