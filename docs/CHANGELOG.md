@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+- Replaced the Theme Manager's custom persistence overlay and incomplete
+  composite control semantics with a native dialog, a tested inert/focus-trap
+  fallback, and ordinary button groups; restored invoking focus after
+  Escape/cancel, preserved normal copy behavior, improved essential
+  explanatory/status text contrast and size, and added an isolated Chromium
+  axe regression gate for serious/critical violations.
 - Made CI generate the canonical theme artifacts once and reuse them across
   desktop and Gallery jobs; pinned Actions, isolated release credentials and
   write permission, added workflow security linting, and made stale runs

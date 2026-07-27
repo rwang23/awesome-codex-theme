@@ -1,4 +1,5 @@
 import "./bridge.js";
+import { canUseGlobalActionShortcut } from "./shortcuts.js";
 
 const translations = {
   en: {
@@ -287,7 +288,6 @@ const elements = {
   applySkinLabel: document.querySelector("#applySkinLabel"),
   applyShortcut: document.querySelector("#applyShortcut"),
   copyTheme: document.querySelector("#copyTheme"),
-  copyShortcut: document.querySelector("#copyShortcut"),
   targetSelect: document.querySelector("#targetSelect"),
   restoreSkin: document.querySelector("#restoreSkin"),
   persistenceControl: document.querySelector("#persistenceControl"),
@@ -301,6 +301,7 @@ const elements = {
   openRepository: document.querySelector("#openRepository"),
   updateButton: document.querySelector("#updateButton"),
   updateLabel: document.querySelector("#updateLabel"),
+  persistenceConsentBackdrop: document.querySelector("#persistenceConsentBackdrop"),
   persistenceConsentDialog: document.querySelector("#persistenceConsentDialog"),
   persistenceConsentCancel: document.querySelector("#persistenceConsentCancel"),
   persistenceConsentConfirm: document.querySelector("#persistenceConsentConfirm"),
@@ -308,19 +309,95 @@ const elements = {
 };
 
 let consentResolver = null;
+let consentTrigger = null;
+let consentUsesNativeDialog = false;
+const FALLBACK_FOCUSABLE_SELECTOR = [
+  "a[href]",
+  "button:not([disabled])",
+  "input:not([disabled])",
+  "select:not([disabled])",
+  "textarea:not([disabled])",
+  "[tabindex]:not([tabindex='-1'])",
+].join(", ");
 
-function finishPersistenceConsent(confirmed) {
-  if (!consentResolver) return;
-  const resolve = consentResolver;
-  consentResolver = null;
-  elements.persistenceConsentDialog.hidden = true;
-  resolve(confirmed);
+function supportsNativeDialog() {
+  return typeof elements.persistenceConsentDialog.showModal === "function"
+    && typeof elements.persistenceConsentDialog.close === "function";
 }
 
-function requestPersistenceConsent() {
-  if (consentResolver) return Promise.resolve(false);
-  elements.persistenceConsentDialog.hidden = false;
-  elements.persistenceConsentConfirm.focus();
+function setFallbackBackgroundInert(inert) {
+  if ("inert" in elements.appShell) elements.appShell.inert = inert;
+  if (inert) elements.appShell.setAttribute("aria-hidden", "true");
+  else elements.appShell.removeAttribute("aria-hidden");
+}
+
+function openConsentDialog() {
+  consentUsesNativeDialog = supportsNativeDialog();
+  if (consentUsesNativeDialog) {
+    elements.persistenceConsentDialog.showModal();
+    return;
+  }
+  elements.persistenceConsentDialog.dataset.fallback = "true";
+  elements.persistenceConsentBackdrop.hidden = false;
+  setFallbackBackgroundInert(true);
+  elements.persistenceConsentDialog.setAttribute("open", "");
+}
+
+function closeConsentDialog() {
+  if (consentUsesNativeDialog) {
+    if (elements.persistenceConsentDialog.open) elements.persistenceConsentDialog.close();
+  } else {
+    elements.persistenceConsentDialog.removeAttribute("open");
+    delete elements.persistenceConsentDialog.dataset.fallback;
+    elements.persistenceConsentBackdrop.hidden = true;
+    setFallbackBackgroundInert(false);
+  }
+  consentUsesNativeDialog = false;
+}
+
+function trapFallbackConsentFocus(event) {
+  if (!elements.persistenceConsentDialog.dataset.fallback) return;
+  if (event.key === "Escape") {
+    event.preventDefault();
+    finishPersistenceConsent(false);
+    return;
+  }
+  if (event.key !== "Tab") return;
+  const focusable = [...elements.persistenceConsentDialog.querySelectorAll(FALLBACK_FOCUSABLE_SELECTOR)]
+    .filter((node) => !node.hidden && node.getAttribute("aria-hidden") !== "true" && node.offsetParent !== null);
+  if (!focusable.length) return;
+  const first = focusable[0];
+  const last = focusable.at(-1);
+  if (event.shiftKey && document.activeElement === first) {
+    event.preventDefault();
+    last.focus();
+  } else if (!event.shiftKey && document.activeElement === last) {
+    event.preventDefault();
+    first.focus();
+  }
+}
+
+function restoreConsentTrigger() {
+  const trigger = consentTrigger;
+  consentTrigger = null;
+  if (trigger instanceof HTMLElement && trigger.isConnected) {
+    trigger.focus({ preventScroll: true });
+  }
+}
+
+function finishPersistenceConsent(confirmed) {
+  const resolve = consentResolver;
+  consentResolver = null;
+  closeConsentDialog();
+  restoreConsentTrigger();
+  resolve?.(confirmed);
+}
+
+function requestPersistenceConsent(trigger) {
+  if (consentResolver || elements.persistenceConsentDialog.open) return Promise.resolve(false);
+  consentTrigger = trigger instanceof HTMLElement ? trigger : document.activeElement;
+  openConsentDialog();
+  elements.persistenceConsentCancel.focus({ preventScroll: true });
   return new Promise((resolve) => {
     consentResolver = resolve;
   });
@@ -460,9 +537,8 @@ function renderStyleTabs() {
   styleDefinitions.forEach(([id, labelKey, symbol]) => {
     const button = document.createElement("button");
     button.type = "button";
-    button.role = "tab";
     button.dataset.style = id;
-    button.setAttribute("aria-selected", String(id === state.style));
+    button.setAttribute("aria-pressed", String(id === state.style));
     button.classList.toggle("is-active", id === state.style);
 
     const icon = document.createElement("span");
@@ -494,9 +570,8 @@ function renderCollectionTabs() {
   records.forEach((collection) => {
     const button = document.createElement("button");
     button.type = "button";
-    button.role = "tab";
     button.dataset.collection = collection.id;
-    button.setAttribute("aria-selected", String(collection.id === state.collection));
+    button.setAttribute("aria-pressed", String(collection.id === state.collection));
     button.classList.toggle("is-active", collection.id === state.collection);
     const label = document.createElement("span");
     label.textContent = localized(collection.name);
@@ -561,9 +636,8 @@ function renderThemeList() {
   themes.forEach((theme) => {
     const button = document.createElement("button");
     button.type = "button";
-    button.role = "option";
     button.dataset.themeId = theme.id;
-    button.setAttribute("aria-selected", String(theme.id === state.themeId));
+    button.setAttribute("aria-pressed", String(theme.id === state.themeId));
     button.classList.toggle("is-active", theme.id === state.themeId);
 
     const thumb = document.createElement("span");
@@ -630,7 +704,7 @@ function renderSelectedTheme() {
   elements.themeList.querySelectorAll("[data-theme-id]").forEach((button) => {
     const active = button.dataset.themeId === state.themeId;
     button.classList.toggle("is-active", active);
-    button.setAttribute("aria-selected", String(active));
+    button.setAttribute("aria-pressed", String(active));
   });
   renderSkinState();
   renderPersistenceState();
@@ -750,7 +824,6 @@ function renderUpdateState() {
 function renderShortcuts() {
   const modifier = state.platform === "darwin" ? "⌘" : "Ctrl";
   elements.searchShortcut.textContent = modifier + " K";
-  elements.copyShortcut.textContent = modifier + " C";
   elements.applyShortcut.textContent = modifier + " ↵";
 }
 
@@ -931,7 +1004,7 @@ elements.copyTheme.addEventListener("click", async () => {
 elements.applySkin.addEventListener("click", async () => {
   const channel = elements.targetSelect.value;
   if (!channel || !state.themeId) return;
-  if (!state.persistenceState?.enabled && !await requestPersistenceConsent()) return;
+  if (!state.persistenceState?.enabled && !await requestPersistenceConsent(elements.applySkin)) return;
   elements.applySkin.disabled = true;
   elements.applySkinLabel.textContent = t("applyingSkin");
   try {
@@ -990,7 +1063,7 @@ elements.persistenceToggle.addEventListener("change", async () => {
     renderPersistenceState();
     return;
   }
-  if (enable && !await requestPersistenceConsent()) {
+  if (enable && !await requestPersistenceConsent(elements.persistenceToggle)) {
     renderPersistenceState();
     return;
   }
@@ -1011,15 +1084,16 @@ elements.persistenceToggle.addEventListener("change", async () => {
 
 elements.persistenceConsentCancel.addEventListener("click", () => finishPersistenceConsent(false));
 elements.persistenceConsentConfirm.addEventListener("click", () => finishPersistenceConsent(true));
-elements.persistenceConsentDialog.addEventListener("click", (event) => {
-  if (event.target === elements.persistenceConsentDialog) finishPersistenceConsent(false);
+elements.persistenceConsentDialog.addEventListener("cancel", (event) => {
+  if (!consentUsesNativeDialog) return;
+  event.preventDefault();
+  finishPersistenceConsent(false);
 });
-document.addEventListener("keydown", (event) => {
-  if (event.key === "Escape" && !elements.persistenceConsentDialog.hidden) {
-    event.preventDefault();
-    finishPersistenceConsent(false);
-  }
+elements.persistenceConsentDialog.addEventListener("close", () => {
+  if (consentUsesNativeDialog && consentResolver) finishPersistenceConsent(false);
 });
+elements.persistenceConsentBackdrop.addEventListener("click", () => finishPersistenceConsent(false));
+document.addEventListener("keydown", trapFallbackConsentFocus);
 
 elements.openGallery.addEventListener("click", () => window.act.openExternal("gallery"));
 elements.openRepository.addEventListener("click", () => window.act.openExternal("repository"));
@@ -1037,16 +1111,18 @@ elements.updateButton.addEventListener("click", async () => {
 });
 
 document.addEventListener("keydown", (event) => {
+  if (event.defaultPrevented) return;
   const command = event.metaKey || event.ctrlKey;
-  if (command && event.key.toLowerCase() === "k") {
+  const key = event.key.toLowerCase();
+  if (command && key === "k" && !elements.persistenceConsentDialog.open) {
     event.preventDefault();
     elements.search.focus();
   }
-  if (command && event.key.toLowerCase() === "c" && document.activeElement !== elements.search) {
-    event.preventDefault();
-    elements.copyTheme.click();
-  }
-  if (command && event.key === "Enter") {
+  if (command && key === "enter" && canUseGlobalActionShortcut({
+    dialogOpen: elements.persistenceConsentDialog.open,
+    selection: window.getSelection(),
+    target: document.activeElement,
+  })) {
     event.preventDefault();
     elements.applySkin.click();
   }
