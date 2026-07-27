@@ -17,7 +17,7 @@ const WIDTH = 1440;
 const HEIGHT = 810;
 const CAPTURE_VERSION = "26.715.3651.0";
 const CAPTURE_MODEL_LABEL = "5.6 Sol Max";
-const RUNTIME_IMPLEMENTATION = "act-full-skin-runtime-v2";
+const RUNTIME_IMPLEMENTATION = "act-full-skin-runtime-v3";
 const CAPTURE_ROOT = "screenshots/codex-beta-" + CAPTURE_VERSION;
 const CAPTURE_DIR = path.join(ROOT, ...CAPTURE_ROOT.split("/"));
 const MANIFEST_PATH = path.join(CAPTURE_DIR, "manifest.json");
@@ -863,6 +863,12 @@ async function main() {
       format: "act-full-skin-v1",
       implementationVersion: RUNTIME_IMPLEMENTATION,
       sha256: runtimeSha256,
+      evidenceStatus: "verified",
+      currentRuntime: {
+        implementationVersion: RUNTIME_IMPLEMENTATION,
+        sha256: runtimeSha256,
+        verification: "verified",
+      },
       earlyInjection: true,
       removedAfterCapture: runtimeRemoved,
     },

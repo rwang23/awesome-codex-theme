@@ -214,6 +214,26 @@ async function loadCaptureContext(root) {
   }
 }
 
+function runtimeEvidenceFor(manifest) {
+  const capturedRuntime = manifest?.runtime;
+  if (!capturedRuntime) {
+    throw new Error("A capture manifest is required to build Registry runtime evidence");
+  }
+  const currentRuntime = capturedRuntime.currentRuntime || {
+    implementationVersion: capturedRuntime.implementationVersion,
+    sha256: capturedRuntime.sha256,
+    verification: "verified",
+  };
+  return {
+    status: capturedRuntime.evidenceStatus || "verified",
+    capturedRuntime: {
+      implementationVersion: capturedRuntime.implementationVersion,
+      sha256: capturedRuntime.sha256,
+    },
+    currentRuntime,
+  };
+}
+
 async function readExistingManifest(root, themeId) {
   try {
     return await readJson(root, "themes/" + themeId + "/manifest.json");
@@ -631,12 +651,13 @@ function hasCurrentRegistryRecord(record) {
   ));
 }
 
-function createRegistry(catalog, records) {
+function createRegistry(catalog, records, runtimeEvidence) {
   return {
     schemaVersion: 1,
     standard: "act-theme-pack-v1",
     generatedBy: GENERATOR_ID,
     catalogRevision: catalog.catalogRevision,
+    runtimeEvidence,
     collections: catalog.collections.map((collection) => ({
       ...collection,
       themeCount: catalog.themes.filter((theme) => theme.collection === collection.id).length,
@@ -755,6 +776,7 @@ export async function generateRepository({
   }
 
   const captureContext = await loadCaptureContext(root);
+  const runtimeEvidence = runtimeEvidenceFor(captureContext.manifest);
   const records = new Map(existingRecords);
   const drift = [];
   const stats = {
@@ -798,7 +820,7 @@ export async function generateRepository({
     });
     void generated;
 
-    const registry = createRegistry(catalog, records);
+    const registry = createRegistry(catalog, records, runtimeEvidence);
     await reconcileFile(
       root,
       { relativePath: REGISTRY_PATH, data: jsonBuffer(registry) },

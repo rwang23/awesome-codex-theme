@@ -26,6 +26,10 @@ import {
 } from "../scripts/verify-gallery.mjs";
 import { canUseGlobalActionShortcut } from "../apps/theme-manager/src/renderer/shortcuts.js";
 import { contrastRatio, isSafeRelativePath } from "../scripts/validate.mjs";
+import {
+  assertRuntimeBudget,
+  runFullSkinRuntimeBenchmark,
+} from "../scripts/lib/full-skin-runtime-benchmark.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -115,12 +119,77 @@ test("source-only guards reject unsafe paths and undeclared Native fields", func
   );
 });
 
+test("Full Skin semantic-state fixture preserves native semantic colors outside structural surfaces", async function () {
+  const [css, fixture] = await Promise.all([
+    readFile(path.join(ROOT, "packages", "full-skin", "runtime.css"), "utf8"),
+    readFile(path.join(ROOT, "tests", "fixtures", "full-skin-semantic-states.html"), "utf8"),
+  ]);
+
+  for (const state of [
+    "link",
+    "error",
+    "warning",
+    "success",
+    "disabled",
+    "focus",
+    "selection",
+    "diff-added",
+    "diff-removed",
+  ]) {
+    assert.match(fixture, new RegExp(`data-act-semantic-state="${state}"`));
+  }
+
+  assert.match(css, /:focus-visible/);
+  assert.match(css, /::selection/);
+  assert.match(css, /:disabled/);
+  assert.match(css, /@media \(forced-colors: active\)/);
+  assert.doesNotMatch(css, /\.composer-surface-chrome \*/);
+  assert.doesNotMatch(css, /\[class\*="text-token-foreground"\]/);
+  assert.doesNotMatch(css, /\[class\*="text-"\]/);
+  assert.doesNotMatch(css, /\.composer-surface-chrome svg/);
+});
+
+test("Full Skin long-session benchmark records a bounded unrelated-output path", async function () {
+  const result = await runFullSkinRuntimeBenchmark({ iterations: 2000 });
+
+  assertRuntimeBudget(result);
+  assert.equal(result.observerCallbacks, 2000);
+  assert.equal(result.ignoredMutationCallbacks, 2000);
+  assert.equal(result.relevantMutationCallbacks, 0);
+  assert.equal(result.ensureCalls, 0);
+  assert.ok(result.ensureDurationMs >= 0);
+  assert.ok(result.cpuMs >= 0);
+  assert.ok(Number.isFinite(result.heapGrowthBytes));
+  assert.ok(result.eventLoopDelayMs >= 0);
+});
+
+test("public and desktop capture labels derive current verification from runtime evidence", async function () {
+  const [gallery, manager, managerHtml, validator] = await Promise.all([
+    readFile(path.join(ROOT, "site", "assets", "app.js"), "utf8"),
+    readFile(path.join(ROOT, "apps", "theme-manager", "src", "renderer", "app.js"), "utf8"),
+    readFile(path.join(ROOT, "apps", "theme-manager", "src", "renderer", "index.html"), "utf8"),
+    readFile(path.join(ROOT, "scripts", "validate.mjs"), "utf8"),
+  ]);
+
+  assert.match(gallery, /function captureEvidenceIsVerified/);
+  assert.match(gallery, /capabilityRuntimePending/);
+  assert.match(gallery, /referenceVisualKind/);
+  assert.match(manager, /function captureEvidenceIsVerified/);
+  assert.match(manager, /referenceCaptureProof/);
+  assert.match(managerHtml, /id="captureBadgeLabel"/);
+  assert.match(managerHtml, /id="captureProofLabel"/);
+  assert.doesNotMatch(managerHtml, /data-i18n="verifiedCapture"/);
+  assert.match(validator, /source-tested-recapture-required/);
+  assert.match(validator, /Registry runtime evidence does not match/);
+});
+
 test("package scripts keep source checks fast and generated checks explicit", async function () {
   const packageJson = JSON.parse(await readFile(path.join(ROOT, "package.json"), "utf8"));
 
   assert.equal(packageJson.scripts.test, "npm run test:source");
   assert.match(packageJson.scripts["test:source"], /source-contract\.test\.mjs/);
   assert.match(packageJson.scripts["test:generated"], /ensure-generated\.mjs/);
+  assert.equal(packageJson.scripts["runtime:benchmark"], "node scripts/benchmark-full-skin-runtime.mjs");
   assert.match(packageJson.scripts["test:ci"], /^npm run generate/);
   assert.match(packageJson.scripts["check:full"], /npm run test:ci/);
   assert.equal(packageJson.scripts["gallery:check"], "node scripts/verify-gallery.mjs");
@@ -183,7 +252,11 @@ test("Theme Manager uses native dialog semantics and simple button selectors", a
   ]);
 
   assert.match(html, /<dialog\s+class="consent-dialog"\s+id="persistenceConsentDialog"/);
-  assert.doesNotMatch(html, /role="tablist"|role="listbox"|role="dialog"/);
+  assert.doesNotMatch(html, /role="tablist"|role="listbox"/);
+  assert.doesNotMatch(
+    html,
+    /id="persistenceConsentDialog"[^>]*role="dialog"|role="dialog"[^>]*id="persistenceConsentDialog"/,
+  );
   assert.match(app, /persistenceConsentDialog\.showModal\(\)/);
   assert.match(app, /persistenceConsentDialog\.addEventListener\("cancel"/);
   assert.match(app, /setFallbackBackgroundInert/);

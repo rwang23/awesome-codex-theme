@@ -23,6 +23,11 @@
   unchanged and requires a second, explicit data-loss warning before a force
   close can be requested. macOS persistence hosts are now limited to
   `/Applications` or the current user's `Applications` folder.
+- Preserved native Full Skin semantic colors and states, scoped runtime repair to
+  relevant document mutations, and added a synthetic long-session performance
+  budget. Existing Beta v2 screenshots are now explicit reference evidence;
+  the current v3 runtime is source-tested and recapture-required rather than
+  being presented as current app verification.
 - Changed the Gallery community section to clearly state that public community
   submissions are not open and removed its hosted-community link. Added a
   direct Theme Manager download action to the Gallery hero.

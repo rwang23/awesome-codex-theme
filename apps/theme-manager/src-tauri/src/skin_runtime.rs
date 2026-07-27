@@ -27,7 +27,7 @@ use crate::{
 const RUNTIME_CSS: &str = include_str!("../../../../packages/full-skin/runtime.css");
 const RUNTIME_JS: &str = include_str!("../../../../packages/full-skin/runtime.js");
 const RUNTIME_FORMAT: &str = "act-full-skin-v1";
-const RUNTIME_IMPLEMENTATION: &str = "act-full-skin-runtime-v2";
+const RUNTIME_IMPLEMENTATION: &str = "act-full-skin-runtime-v3";
 const MAX_ART_BYTES: usize = 16 * 1024 * 1024;
 const APPLY_TIMEOUT: Duration = Duration::from_secs(45);
 const CDP_CALL_TIMEOUT: Duration = Duration::from_secs(20);
@@ -50,7 +50,7 @@ const TARGET_RUNTIME_STATE_TEMPLATE: &str = r#"(() => {
     healthy: Boolean(
       root.classList.contains("act-full-skin")
       && state?.version === "act-full-skin-v1"
-      && state?.implementationVersion === "act-full-skin-runtime-v2"
+      && state?.implementationVersion === "act-full-skin-runtime-v3"
       && state?.themeId === expected.themeId
       && state?.mode === expected.mode
       && state?.artwork?.loaded === true
@@ -1131,7 +1131,7 @@ mod tests {
         };
         let script = runtime_script(&skin, b"\x89PNG\r\n\x1a\n").expect("runtime should build");
         assert!(script.contains("act-full-skin-v1"));
-        assert!(script.contains("act-full-skin-runtime-v2"));
+        assert!(script.contains("act-full-skin-runtime-v3"));
         assert!(script.contains("test-theme"));
         assert!(script.contains("DOMContentLoaded"));
         assert!(!script.contains("__ACT_THEME_JSON__"));
@@ -1175,7 +1175,7 @@ mod tests {
         assert!(expression.contains("test-theme"));
         assert!(expression.contains("state?.version === \"act-full-skin-v1\""));
         assert!(
-            expression.contains("state?.implementationVersion === \"act-full-skin-runtime-v2\"")
+            expression.contains("state?.implementationVersion === \"act-full-skin-runtime-v3\"")
         );
         assert!(expression.contains("state.artUrl.startsWith(\"blob:\")"));
         assert!(expression.contains("artValue.includes(state.artUrl)"));

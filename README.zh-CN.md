@@ -1,7 +1,7 @@
 <h1 align="center">Awesome Codex Theme</h1>
 
 <p align="center">
-  面向 Codex 桌面版的完整视觉皮肤。主题包不带代码，展示图来自真实应用。
+  面向 Codex 桌面版的完整视觉皮肤。主题包不带代码，展示图是绑定版本的应用截图证据。
 </p>
 
 <p align="center">
@@ -23,9 +23,9 @@
   <img alt="主题包不带代码" src="https://img.shields.io/badge/theme%20packs-code--free-059669">
 </p>
 
-![提博大神主题在真实 ChatGPT Beta 测试台中的效果](screenshots/codex-beta-26.715.3651.0/tibo-reset-immortal-light.png)
+![提博大神主题在 ChatGPT Beta v2 参考截图中的效果](screenshots/codex-beta-26.715.3651.0/tibo-reset-immortal-light.png)
 
-上图来自 ChatGPT Beta `26.715.3651.0`：皮肤真正应用到页面并完成运行时读回后才截图，不是把壁纸贴进应用效果图。
+上图是 ChatGPT Beta `26.715.3651.0` 中 `act-full-skin-runtime-v2` 的真实截图：皮肤真正应用到页面并完成运行时读回后才截图，不是把壁纸贴进应用效果图。当前 v3 运行时已完成源码测试但标为需要重新采集，因此该图是参考证据，不是对当前 v3 实机验证的声明。
 
 > 桌面安装包只会发布在官方 [GitHub Releases 页面](https://github.com/rwang23/awesome-codex-theme/releases)。如果页面上没有与你的操作系统和 CPU 匹配的文件，就表示当前没有支持该目标的公开安装包。
 
@@ -134,7 +134,7 @@ Windows 版“应用并保持完整皮肤”已经通过 ChatGPT Beta `26.715.36
 - 5 套面向美国工作场景的原创主题，包括海岸工作室和深夜餐馆；
 - 1 套 2007 桌面怀旧 Q 版主题，以及 2 套 Codex 社区致意主题。
 
-每个模式都有固定 Beta 测试台生成的 1440×810 实机截图。Registry 会把截图与准确应用版本、背景哈希、运行时哈希、字节数和页面读回结果绑定。
+每个模式都有固定 Beta 测试台生成的 1440×810 v2 参考截图。Registry 会把截图与准确应用版本、背景哈希、运行时哈希、字节数和页面读回结果绑定；当前 v3 运行时要在该准确测试台重新采集后，才可成为当前实机验证。
 
 “提博大神”是社区表达喜爱的非官方戏仿与致意，不代表 OpenAI 或被描绘者背书，也不包含官方产品素材。
 
@@ -191,7 +191,7 @@ schemas/                     Theme Pack 与 Registry Schema
 themes/catalog.json          人工维护的主题目录
 themes/source-art/           image job、源图与 provenance
 themes/registry.json         自动生成的公共 Registry
-screenshots/                 绑定版本的真实应用截图
+screenshots/                 绑定版本的应用截图证据
 scripts/                     构建、校验、截图与站点工具
 site/                        无依赖 Gallery
 ```

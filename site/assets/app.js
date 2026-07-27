@@ -21,17 +21,17 @@ const translations = {
     statContrast: "contrast gate",
     managerEyebrow: "Windows + macOS desktop manager",
     managerTitle: "Find a theme that feels like your workspace.",
-    managerIntro: "Browse verified themes, compare light and dark modes, then apply the one you like to the desktop app you selected.",
+    managerIntro: "Browse themes, compare light and dark modes, then apply the one you like to the desktop app you selected.",
     managerFeatureOneTitle: "See the result before you choose",
-    managerFeatureOneBody: "Every mode includes a real app capture, so you can compare the look before applying it.",
+    managerFeatureOneBody: "Every mode includes a recorded app capture, so you can compare the look before applying it.",
     managerFeatureTwoTitle: "Apply a complete visual skin",
-    managerFeatureTwoBody: "Theme Manager applies the verified background, materials, colors, and theme copy together.",
+    managerFeatureTwoBody: "Theme Manager applies the background, materials, colors, and theme copy together.",
     managerFeatureThreeTitle: "Restore the original look anytime",
     managerFeatureThreeBody: "Choose Restore Native whenever you want to return to the app's original interface.",
     managerReleases: "Read the Theme Manager guide",
     legacyWindowsHelper: "Portable Windows helper",
     managerSigningNote: "Choose the build that matches your system and CPU. This beta may still show an operating-system security prompt.",
-    managerScreenshotCaption: "Theme Manager on Windows · real app theme capture inside",
+    managerScreenshotCaption: "Theme Manager on Windows · recorded app theme capture inside",
     collectionEyebrow: "Theme library",
     collectionTitle: "Original worlds, city light, and scenes fans remember.",
     collectionIntro: "The library now includes {original} original themes and {fanArt} clearly disclosed unofficial fan-art tributes. Every source image is generated through an image job and reviewed by hand.",
@@ -58,10 +58,10 @@ const translations = {
     stepVerifyTitle: "Verify",
     stepVerifyBody: "SHA-256, file size, dimensions, package allowlist, rights fields, and WCAG contrast.",
     stepExportTitle: "Export",
-    stepExportBody: "Generate Full Skin records, real-app evidence, and a Native palette fallback.",
+    stepExportBody: "Generate Full Skin records, app-capture evidence, and a Native palette fallback.",
     compatibilityEyebrow: "ACT Full Skin + Native",
     compatibilityTitle: "Full Skin is the main delivery; Native is the lightweight fallback.",
-    compatibilityIntro: "The Theme Manager loads verified backgrounds and materials through one fixed, reviewable runtime without modifying app files or private data. Codex Native v1 remains available for palette import, but it cannot install a background.",
+    compatibilityIntro: "The Theme Manager loads reviewed backgrounds and materials through one fixed, reviewable runtime without modifying app files or private data. Codex Native v1 remains available for palette import, but it cannot install a background.",
     tableTarget: "Target",
     tableCoverage: "Coverage",
     tableDelivery: "Delivery",
@@ -106,8 +106,12 @@ const translations = {
     fanArtNotice: "Unofficial AI fan art. No official stills, logos, or promotional assets were used. No license or endorsement from the underlying rights holders is claimed; personal, non-commercial use only.",
     coverArt: "GALLERY COVER",
     coverBadge: "COVER",
-    realCapture: "REAL BETA CAPTURE",
-    captureBadge: "CAPTURE",
+    realCapture: "VERIFIED BETA CAPTURE",
+    referenceCapture: "RECORDED BETA CAPTURE",
+    captureBadge: "VERIFIED",
+    referenceBadge: "REFERENCE",
+    verifiedVisualKind: "BETA CAPTURE",
+    referenceVisualKind: "CAPTURE REFERENCE",
     cinematic: "Cinematic",
     chibi: "Chibi",
     cityscape: "City study",
@@ -117,7 +121,8 @@ const translations = {
     copied: "Codex Native theme copied.",
     copyFailed: "Copy failed. Select the theme string manually.",
     loadFailed: "The registry could not be loaded. Run the build and serve this directory over HTTP.",
-    capabilityNative: "ACT Full Skin v1 is verified with ChatGPT Beta 26.715.3651.0 and the available 5.6 Sol Max setting across all 106 theme modes. It applies the background, materials, colors, and theme copy; Native v1 remains a palette-only fallback.",
+    capabilityNative: "ACT Full Skin v1 has current app-capture evidence for the named ChatGPT Beta test bench. It applies the background, materials, colors, and theme copy; Native v1 remains a palette-only fallback.",
+    capabilityRuntimePending: "These Beta screenshots are recorded v2 reference evidence. The current Full Skin runtime is source-tested and must be recaptured on the named Beta test bench before it can be presented as current app verification; Native v1 remains a palette-only fallback.",
     resultCount: "themes shown",
     allCollections: "All collections",
     allCollectionsCaption: "Original, city, and unofficial fan-art themes",
@@ -146,17 +151,17 @@ const translations = {
     statContrast: "对比度门槛",
     managerEyebrow: "Windows + macOS 桌面管理器",
     managerTitle: "选一套喜欢的主题，让工作区更像你自己。",
-    managerIntro: "浏览已验证的主题，比较明亮和暗色模式，然后应用到你选定的桌面应用。",
+    managerIntro: "浏览主题，比较明亮和暗色模式，然后应用到你选定的桌面应用。",
     managerFeatureOneTitle: "先看效果，再做选择",
-    managerFeatureOneBody: "每种模式都有真实应用截图，先看清楚再应用。",
+    managerFeatureOneBody: "每种模式都有已记录的应用截图，先看清楚再应用。",
     managerFeatureTwoTitle: "一键应用完整皮肤",
-    managerFeatureTwoBody: "Theme Manager 会把已验证的背景、材质、配色和主题文字一起应用。",
+    managerFeatureTwoBody: "Theme Manager 会把背景、材质、配色和主题文字一起应用。",
     managerFeatureThreeTitle: "随时恢复原样",
     managerFeatureThreeBody: "不喜欢时选择“恢复原生”，即可回到应用原本的界面。",
     managerReleases: "查看 Theme Manager 使用说明",
     legacyWindowsHelper: "Windows 便携助手",
     managerSigningNote: "请选择与你的系统和 CPU 匹配的版本。当前 Beta 仍可能显示系统安全提示。",
-    managerScreenshotCaption: "Windows 上的 Theme Manager · 内嵌真实主题截图",
+    managerScreenshotCaption: "Windows 上的 Theme Manager · 内嵌已记录主题截图",
     collectionEyebrow: "主题馆藏",
     collectionTitle: "原创世界、城市灯火，也有一眼认出的名场面。",
     collectionIntro: "馆藏现有 {original} 套原创主题，以及 {fanArt} 套明确标注的非官方 Fan Art。全部源图都通过 image job 生成并经过人工审查。",
@@ -183,10 +188,10 @@ const translations = {
     stepVerifyTitle: "验证",
     stepVerifyBody: "自动检查 SHA-256、体积、尺寸、文件白名单、版权字段与 WCAG 对比度。",
     stepExportTitle: "导出",
-    stepExportBody: "生成 Full Skin 记录、实机证据和 Native 配色回退。",
+    stepExportBody: "生成 Full Skin 记录、应用截图证据和 Native 配色回退。",
     compatibilityEyebrow: "ACT Full Skin + Native",
     compatibilityTitle: "完整皮肤是主交付，原生配色是轻量回退。",
-    compatibilityIntro: "Theme Manager 用固定、可审查的运行时加载已校验背景与材质，不修改应用文件或私有数据。Codex Native v1 仍可单独导入配色，但它不能安装背景。",
+    compatibilityIntro: "Theme Manager 用固定、可审查的运行时加载经审查的背景与材质，不修改应用文件或私有数据。Codex Native v1 仍可单独导入配色，但它不能安装背景。",
     tableTarget: "目标",
     tableCoverage: "覆盖程度",
     tableDelivery: "交付方式",
@@ -231,8 +236,12 @@ const translations = {
     fanArtNotice: "这是非官方 AI Fan Art，未使用官方剧照、Logo 或宣传素材，也不声称获得权利方授权或背书，仅限个人非商业使用。",
     coverArt: "馆藏封面",
     coverBadge: "封面",
-    realCapture: "Beta 实机截图",
-    captureBadge: "实机",
+    realCapture: "已验证 Beta 实机截图",
+    referenceCapture: "已记录 Beta 截图",
+    captureBadge: "已验证",
+    referenceBadge: "参考",
+    verifiedVisualKind: "BETA 截图",
+    referenceVisualKind: "截图参考",
     cinematic: "原画感",
     chibi: "Q 版",
     cityscape: "城市图景",
@@ -242,7 +251,8 @@ const translations = {
     copied: "Codex Native 主题已复制。",
     copyFailed: "复制失败，请手动选择主题字符串。",
     loadFailed: "无法读取 Registry。请先构建项目，并通过 HTTP 服务访问。",
-    capabilityNative: "ACT Full Skin v1 已使用 ChatGPT Beta 26.715.3651.0 与当前测试台实际提供的 5.6 Sol Max 完成全部 106 个模式的实机验证，可应用背景、材质、配色和主题文字；Native v1 只保留为配色回退。",
+    capabilityNative: "ACT Full Skin v1 已具备指定 ChatGPT Beta 测试台的当前实机截图证据，可应用背景、材质、配色和主题文字；Native v1 只保留为配色回退。",
+    capabilityRuntimePending: "这里的 Beta 截图是 v2 的已记录参考证据。当前 Full Skin 运行时已完成源码测试，必须在指定 Beta 测试台重新采集后，才可称为当前实机验证；Native v1 仍只保留为配色回退。",
     resultCount: "套主题",
     allCollections: "全部系列",
     allCollectionsCaption: "原创、城市与非官方 Fan Art 主题",
@@ -318,6 +328,11 @@ function t(key) {
   return translations[state.locale][key] || translations.en[key] || key;
 }
 
+function captureEvidenceIsVerified() {
+  const evidence = state.registry?.runtimeEvidence;
+  return evidence?.status === "verified" && evidence.currentRuntime?.verification === "verified";
+}
+
 function renderCollectionIntro() {
   if (!state.registry || !elements.collectionIntro) return;
   const original = state.registry.themes.filter(function (theme) {
@@ -378,10 +393,11 @@ function reorderGalleryForLocale() {
 
 function visualFor(modeRecord) {
   if (modeRecord.capture) {
+    const verified = captureEvidenceIsVerified();
     return {
       path: modeRecord.capture.path,
-      label: t("realCapture"),
-      badge: t("captureBadge") + " · BETA " + modeRecord.capture.appVersion
+      label: t(verified ? "realCapture" : "referenceCapture"),
+      badge: t(verified ? "captureBadge" : "referenceBadge") + " · BETA " + modeRecord.capture.appVersion
     };
   }
   return {
@@ -489,7 +505,9 @@ function updateHero(theme = state.heroTheme) {
   elements.heroPreview.alt = localized(theme.name) + " · " + visual.label + " · " + t(state.heroMode);
   elements.heroThemeName.textContent = localized(theme.name);
   elements.heroThemeMeta.textContent = visual.label + " · " + localized(collectionFor(theme)?.name) + " · " + t(state.heroMode);
-  elements.heroVisualKind.textContent = theme.previews[state.heroMode].capture ? "BETA CAPTURE" : "COVER ART";
+  elements.heroVisualKind.textContent = theme.previews[state.heroMode].capture
+    ? t(captureEvidenceIsVerified() ? "verifiedVisualKind" : "referenceVisualKind")
+    : "COVER ART";
   setActiveButton(elements.heroMode, "data-mode", state.heroMode);
 }
 
@@ -694,7 +712,7 @@ function updateDialog() {
   elements.dialogPreview.src = assetUrl(visual.path);
   elements.dialogPreview.alt = localized(theme.name) + " · " + visual.label + " · " + t(state.dialogMode);
   elements.dialogVariant.textContent = visual.label + " · " + localized(collectionFor(theme)?.name) + " · " + t(theme.variant);
-  elements.capabilityNote.textContent = t("capabilityNative");
+  elements.capabilityNote.textContent = t(captureEvidenceIsVerified() ? "capabilityNative" : "capabilityRuntimePending");
   elements.dialogRights.hidden = theme.rightsProfile !== "fan-art";
   elements.dialogRights.textContent = theme.rightsProfile === "fan-art"
     ? localized(theme.fanArt?.work) + " · " + t("fanArtNotice")

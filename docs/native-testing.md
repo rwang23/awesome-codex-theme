@@ -18,7 +18,7 @@
 
 主题包和公开 Registry 继续使用 `act-full-skin-v1`。这个版本号描述声明式主题包的格式，没有发生不兼容变化。
 
-注入实现使用单独的 `act-full-skin-runtime-v2` 标记。管理器会同时检查两层版本，因此旧运行时不会被误判为健康，新实现也不会破坏现有主题包、Schema 或 Validator。
+注入实现当前使用单独的 `act-full-skin-runtime-v3` 标记。公开 manifest 中的 136 张截图仍记录 `act-full-skin-runtime-v2`，并以 `runtime.evidenceStatus: "reference"` 保存为历史实机参考；`runtime.currentRuntime` 记录 v3 的源码哈希和 `source-tested-recapture-required` 状态。管理器会同时检查主题包格式与运行时证据，因此旧截图不会被误判为当前运行时健康证明，新实现也不会破坏现有主题包、Schema 或 Validator。
 
 ## 测试前提
 
@@ -58,9 +58,18 @@
 screenshots/codex-beta-26.715.3651.0/manifest.json
 ```
 
-结果是 136/136 捕获成功，`fixture.project` 为 `none`，
-`runtime.implementationVersion` 为 `act-full-skin-runtime-v2`，
+历史批次结果是 136/136 捕获成功，`fixture.project` 为 `none`，
+记录的 `runtime.implementationVersion` 为 `act-full-skin-runtime-v2`，
 `runtime.earlyInjection` 为 `true`，`runtime.removedAfterCapture` 为 `true`。
+这些是指定 Beta 包的真实 v2 截图，但不能作为 v3 的当前实机验证；重新采集前，Gallery 与 Theme Manager 会将它们显示为参考证据。
+
+## Runtime v3 兼容性与长会话检查
+
+v3 的 CSS 只为结构性表面设置材质，不再通过通配后代、`text-*` 类子串或全局 SVG 颜色覆盖原生错误、警告、成功、diff、链接与状态图标。`tests/fixtures/full-skin-semantic-states.html` 覆盖亮/暗模式下的语义标记、禁用、焦点和选中态；源码合同还覆盖 reduced motion 与 forced colors。
+
+观察器只监听 `document.body` 的 `childList` 与 `subtree`，并先过滤与主区域、首页和运行时标记无关的节点。无关高输出 mutation 不会读取路由或调用 `ensure()`；标记移除、主区域替换、路由切换和重复导航仍会安排一次修复。`npm run runtime:benchmark` 用 10,000 次合成无关输出测量回调、ensure、CPU、堆增长和事件循环延迟代理，并使用显式预算门槛。这不是浏览器帧率、GPU 或真实设备功耗证明。
+
+`background-attachment: fixed` 暂时保持不变。对该设置的任何规范性修改前，必须完成可复核的 Windows 与 macOS 实机对比；当前没有把源码测试或旧截图替代为这项物理证据。
 
 ## Theme Manager 端到端测试
 
@@ -111,4 +120,4 @@ Validator 仍解析 136 份 `codex-theme-v1:` 字符串，核对字段白名单�
 
 ## English summary
 
-The pinned Beta `26.715.3651.0` test bench produced 136 real Full Skin captures. The public package contract remains `act-full-skin-v1`; each capture also records the `act-full-skin-runtime-v2` implementation. The fixture clears the selected project before capture, verifies the Blob-backed document background, and binds every screenshot to the theme asset, runtime hash, exact package, and selector readback. A separate persistent-runtime smoke test opens a built-in route and a real conversation, returns to the home view, and confirms that the image remains visible through transparent content layers. The controller stays enabled after that test. These results apply only to the pinned Beta version and must be rerun after a Codex update.
+The pinned Beta `26.715.3651.0` test bench produced 136 real Full Skin captures for `act-full-skin-runtime-v2`. The public package contract remains `act-full-skin-v1`; those captures are retained as v2 reference evidence, while the current `act-full-skin-runtime-v3` is source-tested and explicitly marked recapture-required. The fixture clears the selected project before capture, verifies the Blob-backed document background, and binds every screenshot to the theme asset, runtime hash, exact package, and selector readback. A fresh exact-package capture, plus a physical Windows/macOS fixed-background comparison before changing that behavior, remains required for current release evidence.

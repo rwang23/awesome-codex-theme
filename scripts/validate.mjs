@@ -36,6 +36,9 @@ function sha256(buffer) {
   return createHash("sha256").update(buffer).digest("hex");
 }
 
+function runtimeImplementationVersionFor(runtimeJs) {
+  return /const implementationVersion = "([^"]+)";/u.exec(runtimeJs)?.[1] || "";
+}
 function check(condition, message, errors) {
   if (!condition) errors.push(message);
 }
@@ -181,6 +184,22 @@ export async function validateRepository() {
     readFile(path.join(ROOT, "packages", "full-skin", "runtime.js"), "utf8"),
   ]);
   const runtimeSha256 = sha256(Buffer.from(runtimeCss + "\n" + runtimeJs, "utf8"));
+  const runtimeImplementationVersion = runtimeImplementationVersionFor(runtimeJs);
+  const capturedRuntime = captureManifest.runtime || {};
+  const evidenceStatus = capturedRuntime.evidenceStatus || "verified";
+  const currentRuntime = capturedRuntime.currentRuntime || {
+    implementationVersion: capturedRuntime.implementationVersion,
+    sha256: capturedRuntime.sha256,
+    verification: "verified",
+  };
+  const expectedRuntimeEvidence = {
+    status: evidenceStatus,
+    capturedRuntime: {
+      implementationVersion: capturedRuntime.implementationVersion,
+      sha256: capturedRuntime.sha256,
+    },
+    currentRuntime,
+  };
 
   check(themeSchema.$schema?.includes("2020-12"), "Theme schema is not JSON Schema 2020-12", errors);
   check(registrySchema.$schema?.includes("2020-12"), "Registry schema is not JSON Schema 2020-12", errors);
@@ -198,9 +217,37 @@ export async function validateRepository() {
     /^\d{8}$/u.test(catalogRevisionDate)
       && /^\d{8}$/u.test(captureDate)
       && catalogRevisionDate >= captureDate,
-    "Catalog revision predates the latest verified screenshot capture",
+    "Catalog revision predates the latest recorded screenshot capture",
     errors,
   );
+  check(capturedRuntime.format === FULL_SKIN_FORMAT, "Capture runtime format mismatch", errors);
+  check(typeof capturedRuntime.implementationVersion === "string" && capturedRuntime.implementationVersion.length > 0, "Capture runtime implementation version is missing", errors);
+  check(SHA256.test(capturedRuntime.sha256 || ""), "Capture runtime hash is invalid", errors);
+  check(["verified", "reference"].includes(evidenceStatus), "Capture runtime evidence status is invalid", errors);
+  check(runtimeImplementationVersion.length > 0, "Current Full Skin runtime implementation version is missing", errors);
+  check(currentRuntime.implementationVersion === runtimeImplementationVersion, "Current runtime implementation version does not match source", errors);
+  check(currentRuntime.sha256 === runtimeSha256, "Current runtime hash does not match source", errors);
+  check(
+    currentRuntime.verification === (evidenceStatus === "verified" ? "verified" : "source-tested-recapture-required"),
+    "Current runtime verification state does not match capture evidence status",
+    errors,
+  );
+  if (evidenceStatus === "verified") {
+    check(capturedRuntime.implementationVersion === runtimeImplementationVersion, "Verified capture implementation version does not match source", errors);
+    check(capturedRuntime.sha256 === runtimeSha256, "Verified capture runtime hash does not match source", errors);
+  } else {
+    check(capturedRuntime.sha256 !== runtimeSha256, "Reference capture runtime hash must differ from current source", errors);
+  }
+  check(
+    JSON.stringify(registry.runtimeEvidence) === JSON.stringify(expectedRuntimeEvidence),
+    "Registry runtime evidence does not match the capture manifest and current source",
+    errors,
+  );
+  check(Array.isArray(captureManifest.captures), "Capture manifest captures are missing", errors);
+  for (const capture of captureManifest.captures || []) {
+    check(capture.runtimeSha256 === capturedRuntime.sha256, "Captured " + capture.themeId + " " + capture.mode + " runtime hash mismatch", errors);
+    check(capture.implementationVersion === capturedRuntime.implementationVersion, "Captured " + capture.themeId + " " + capture.mode + " runtime implementation version mismatch", errors);
+  }
   check(sourceJobs.workflow?.runner === "openai-image-job", "Source-art workflow mismatch", errors);
   check(sourceJobs.workflow?.size === SOURCE_WIDTH + "x" + SOURCE_HEIGHT, "Source-art dimensions mismatch", errors);
   check(Array.isArray(sourceJobs.jobs), "Source-art jobs are missing", errors);
@@ -570,7 +617,7 @@ export async function validateRepository() {
       );
       if (!duplicateOwner) nativeThemeOwners.set(nativeThemeSha256, theme.id + " " + mode);
       const capture = modeRecord.capture;
-      check(Boolean(capture), theme.id + " " + mode + " is missing a real Codex Beta capture", errors);
+      check(Boolean(capture), theme.id + " " + mode + " is missing a recorded Codex Beta capture", errors);
       if (capture) {
         captureCount += 1;
         check(isSafeRelativePath(capture.path), theme.id + " " + mode + " capture path is unsafe", errors);
@@ -586,7 +633,7 @@ export async function validateRepository() {
         check(capture.bytes === captureBytes.length, theme.id + " " + mode + " capture byte count mismatch", errors);
         check(capture.sha256 === sha256(captureBytes), theme.id + " " + mode + " capture hash mismatch", errors);
         check(capture.assetSha256 === modeRecord.fullSkin.sha256, theme.id + " " + mode + " capture asset hash mismatch", errors);
-        check(capture.runtimeSha256 === runtimeSha256, theme.id + " " + mode + " capture runtime hash mismatch", errors);
+        check(capture.runtimeSha256 === capturedRuntime.sha256, theme.id + " " + mode + " capture runtime hash mismatch", errors);
         check(capture.markerVersion === FULL_SKIN_FORMAT, theme.id + " " + mode + " capture marker mismatch", errors);
         check(capture.selectors?.main === true, theme.id + " " + mode + " capture main selector was not verified", errors);
         check(capture.appVersion === CODEX_BETA_CAPTURE_VERSION, theme.id + " " + mode + " capture app version mismatch", errors);
@@ -598,7 +645,7 @@ export async function validateRepository() {
     }
   }
 
-  check(captureCount === registry.themes.length * 2, "Registry must expose one real capture for every theme mode", errors);
+  check(captureCount === registry.themes.length * 2, "Registry must expose one recorded capture for every theme mode", errors);
   check(fullSkinCount === registry.themes.length * 2, "Registry must expose one full-skin record for every theme mode", errors);
   if (errors.length) {
     throw new Error("Validation failed:\n- " + errors.join("\n- "));
@@ -620,7 +667,7 @@ async function main() {
     "Validated " + result.sources + " source images, " + result.themes + " themes, " + result.modes + " modes, "
     + result.packages + " code-free packages, " + result.fullSkinExports + " full-skin records, "
     + result.nativeExports + " Codex Native fallbacks, and "
-    + result.captures + " real Beta captures.",
+    + result.captures + " recorded Beta captures.",
   );
 }
 

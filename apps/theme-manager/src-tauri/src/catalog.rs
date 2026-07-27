@@ -161,6 +161,46 @@ fn valid_sha256(value: &str) -> bool {
     value.len() == 64 && value.chars().all(|character| character.is_ascii_hexdigit())
 }
 
+fn validate_runtime_evidence(value: &Value) -> Result<(), String> {
+    // Registries produced before evidence state existed remain safe to display as
+    // reference-only in the renderer. New registries must make that state explicit.
+    if value.is_null() {
+        return Ok(());
+    }
+    let evidence = object(value, "runtimeEvidence")?;
+    let status = evidence["status"].as_str().unwrap_or_default();
+    if !matches!(status, "verified" | "reference") {
+        return fail("Runtime 证据状态无效");
+    }
+    let captured = object(&evidence["capturedRuntime"], "capturedRuntime")?;
+    let current = object(&evidence["currentRuntime"], "currentRuntime")?;
+    let captured_version = captured["implementationVersion"]
+        .as_str()
+        .unwrap_or_default();
+    let captured_sha = captured["sha256"].as_str().unwrap_or_default();
+    let current_version = current["implementationVersion"]
+        .as_str()
+        .unwrap_or_default();
+    let current_sha = current["sha256"].as_str().unwrap_or_default();
+    let verification = current["verification"].as_str().unwrap_or_default();
+    if captured_version.is_empty()
+        || current_version.is_empty()
+        || !valid_sha256(captured_sha)
+        || !valid_sha256(current_sha)
+    {
+        return fail("Runtime 证据记录无效");
+    }
+    if (status == "verified"
+        && (verification != "verified"
+            || captured_version != current_version
+            || captured_sha != current_sha))
+        || (status == "reference" && verification != "source-tested-recapture-required")
+    {
+        return fail("Runtime 证据状态与版本不一致");
+    }
+    Ok(())
+}
+
 fn valid_hex_color(value: &str) -> bool {
     value.len() == 7
         && value.starts_with('#')
@@ -337,6 +377,7 @@ pub fn validate_registry(bytes: &[u8]) -> Result<Value, String> {
     {
         return fail("Registry 标准不受支持");
     }
+    validate_runtime_evidence(&registry["runtimeEvidence"])?;
 
     let collections = array(&registry["collections"], "collections")?;
     let themes = array(&registry["themes"], "themes")?;
@@ -831,6 +872,15 @@ mod tests {
         let registry = validate_registry(REGISTRY).expect("registry should validate");
         assert_eq!(registry["catalogRevision"].as_u64(), Some(2026072201));
         assert_eq!(registry["themes"].as_array().map(Vec::len), Some(68));
+    }
+
+    #[test]
+    fn registry_rejects_malformed_runtime_evidence() {
+        let mut registry: Value =
+            serde_json::from_slice(REGISTRY).expect("registry JSON should parse");
+        registry["runtimeEvidence"]["status"] = json!("unknown");
+        let encoded = serde_json::to_vec(&registry).expect("registry JSON should encode");
+        assert!(validate_registry(&encoded).is_err());
     }
 
     #[test]

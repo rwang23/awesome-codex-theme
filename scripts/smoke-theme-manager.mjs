@@ -336,7 +336,7 @@ function expectedFullSkinStateExpression() {
         && bodyBackground.includes(runtime.artUrl)
     };
     return state.version === "act-full-skin-v1"
-      && state.implementationVersion === "act-full-skin-runtime-v2"
+      && state.implementationVersion === "act-full-skin-runtime-v3"
       && state.themeId === ${JSON.stringify(THEME_ID)}
       && state.mode === ${JSON.stringify(MODE)}
       && state.root

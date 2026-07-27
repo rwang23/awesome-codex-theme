@@ -25,6 +25,12 @@
     "format": "act-full-skin-v1",
     "implementationVersion": "act-full-skin-runtime-v2",
     "sha256": "6b598f36b5b621166e539f4dc23135562fdbb3bc8b92611b0033a41dcfa57079",
+    "evidenceStatus": "reference",
+    "currentRuntime": {
+      "implementationVersion": "act-full-skin-runtime-v3",
+      "sha256": "7e601b402ce1aae3b1a72e55cfaffc2b23cf03951401100d3e0918138ca2445d",
+      "verification": "source-tested-recapture-required"
+    },
     "earlyInjection": true,
     "removedAfterCapture": true
   },
