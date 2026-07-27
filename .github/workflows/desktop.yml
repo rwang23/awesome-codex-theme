@@ -374,7 +374,9 @@ jobs:
       - name: Verify release tag matches metadata
         if: startsWith(github.ref, 'refs/tags/v') && vars.DESKTOP_RELEASE_READY == 'true'
         shell: bash
-        run: test "${{ github.ref_name }}" = "v0.3.2"
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: test "$RELEASE_TAG" = "v0.3.2"
 
       - name: Build updater-signed beta artifacts and publish the tagged release
         uses: tauri-apps/tauri-action@944946e3e4cac6603d1fe8f514171e9ecd3c78aa # v1
