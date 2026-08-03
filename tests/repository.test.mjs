@@ -296,7 +296,9 @@ test("Tauri manager keeps theme values in Rust and limits desktop capabilities",
   assert.match(backend, /native_value_for\(&catalog, &theme_id, &mode\)/);
   assert.match(backend, /apply_full_skin/);
   assert.match(backend, /restore_full_skin/);
-  assert.match(smoke, /Get-CimInstance Win32_Process/);
+  assert.doesNotMatch(smoke, /Get-CimInstance|Get-NetTCPConnection/);
+  assert.match(smoke, /CreateToolhelp32Snapshot/);
+  assert.match(smoke, /netstat\.exe/);
   assert.match(smoke, /No pinned Beta root process owns a loopback CDP listener/);
   assert.doesNotMatch(smoke, /DevToolsActivePort/);
   assert.match(runtime, /Page\.addScriptToEvaluateOnNewDocument/);
@@ -469,6 +471,11 @@ test("desktop beta release requires updater signing and discloses deferred platf
   assert.match(workflow, /Signature=adhoc/);
   assert.match(workflow, /--bundles app,dmg/);
   assert.match(workflow, /\.app\.tar\.gz\.sig/);
+  assert.match(workflow, /releaseAssetNamePattern:/);
+  assert.match(workflow, /Awesome-Codex-Theme-\[version\]-Windows-x64/);
+  assert.match(workflow, /Awesome-Codex-Theme-\[version\]-macOS-Apple-Silicon/);
+  assert.match(workflow, /Awesome-Codex-Theme-\[version\]-macOS-Intel/);
+  assert.doesNotMatch(workflow, /desktop-macos-(?:arm64|x64)/);
   assert.equal(tauriConfig.bundle.macOS.signingIdentity, "-");
   assert.match(tauriConfig.plugins.updater.pubkey, /^[A-Za-z0-9+/=]{100,}$/);
 });

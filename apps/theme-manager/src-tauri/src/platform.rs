@@ -417,6 +417,26 @@ pub fn stop_target(_target: &TargetView) -> Result<(), String> {
     Err("当前平台暂不支持受控重启".into())
 }
 
+#[cfg(any(target_os = "windows", test))]
+fn windows_listener_owner_pid(output: &str, port: u16) -> Option<u32> {
+    output.lines().find_map(|line| {
+        let fields = line.split_ascii_whitespace().collect::<Vec<_>>();
+        if fields.len() != 5
+            || !fields[0].eq_ignore_ascii_case("TCP")
+            || !fields[3].eq_ignore_ascii_case("LISTENING")
+        {
+            return None;
+        }
+        let (host, candidate_port) = fields[1].rsplit_once(":")?;
+        if !matches!(host, "127.0.0.1" | "::1" | "[::1]")
+            || candidate_port.parse::<u16>().ok()? != port
+        {
+            return None;
+        }
+        fields[4].parse::<u32>().ok()
+    })
+}
+
 #[cfg(target_os = "windows")]
 pub fn listener_belongs_to_target(port: u16, target: &TargetView) -> Result<bool, String> {
     let executable = target
@@ -427,25 +447,38 @@ pub fn listener_belongs_to_target(port: u16, target: &TargetView) -> Result<bool
         .package_full_name
         .as_deref()
         .ok_or("Windows 包身份缺失")?;
-    let script = r#"
-$connection = Get-NetTCPConnection -State Listen -LocalPort ([int]$env:ACT_PORT) -ErrorAction SilentlyContinue |
-  Where-Object { $_.LocalAddress -in @("127.0.0.1", "::1") } |
-  Select-Object -First 1
-if ($null -eq $connection) { "false"; exit 0 }
-$process = Get-CimInstance Win32_Process -Filter "ProcessId = $($connection.OwningProcess)" -ErrorAction Stop
-$matches = $process.ExecutablePath -and
-  $process.ExecutablePath -ieq $env:ACT_EXECUTABLE -and
-  $process.ExecutablePath -like ("*\" + $env:ACT_PACKAGE + "\*")
-if ($matches) { "true" } else { "false" }
-"#;
-    let output = hidden_command("powershell.exe")
-        .args(["-NoProfile", "-NonInteractive", "-Command", script])
-        .env("ACT_PORT", port.to_string())
-        .env("ACT_EXECUTABLE", executable)
-        .env("ACT_PACKAGE", package)
+    let listeners = hidden_command("netstat.exe")
+        .args(["-ano", "-p", "tcp"])
         .output()
-        .map_err(|error| format!("无法验证 CDP 监听进程：{error}"))?;
-    Ok(output.status.success() && String::from_utf8_lossy(&output.stdout).trim() == "true")
+        .map_err(|error| format!("无法检查 Windows CDP 监听：{error}"))?;
+    if !listeners.status.success() {
+        return Err("Windows CDP 监听检查失败".into());
+    }
+    let Some(owner_pid) =
+        windows_listener_owner_pid(&String::from_utf8_lossy(&listeners.stdout), port)
+    else {
+        return Ok(false);
+    };
+    let process = hidden_command("powershell.exe")
+        .args([
+            "-NoProfile",
+            "-NonInteractive",
+            "-Command",
+            "(Get-Process -Id ([int]$env:ACT_OWNER_PID) -ErrorAction Stop).Path",
+        ])
+        .env("ACT_OWNER_PID", owner_pid.to_string())
+        .output()
+        .map_err(|error| format!("无法检查 Windows CDP 所有者：{error}"))?;
+    if !process.status.success() {
+        return Ok(false);
+    }
+    let actual = String::from_utf8_lossy(&process.stdout)
+        .trim()
+        .replace("/", "\\");
+    let expected = executable.replace("/", "\\");
+    let package_fragment = format!("\\{package}\\").to_ascii_lowercase();
+    Ok(actual.eq_ignore_ascii_case(&expected)
+        && actual.to_ascii_lowercase().contains(&package_fragment))
 }
 
 #[cfg(target_os = "macos")]
@@ -497,7 +530,7 @@ fn macos_open_arguments(bundle_path: &str, arguments: Option<&str>) -> Result<Ve
     {
         return Err("macOS 应用包路径无效".into());
     }
-    let mut command = vec!["-n".into(), "-a".into(), bundle_path.into()];
+    let mut command = vec!["-n".into(), bundle_path.into()];
     if let Some(arguments) = arguments {
         let arguments = arguments
             .split_ascii_whitespace()
@@ -639,7 +672,6 @@ mod tests {
             arguments,
             vec![
                 "-n",
-                "-a",
                 "/Applications/ChatGPT.app",
                 "--args",
                 "--remote-debugging-address=127.0.0.1",
@@ -651,5 +683,16 @@ mod tests {
     #[test]
     fn macos_full_skin_rejects_a_bundle_identifier_as_a_path() {
         assert!(macos_open_arguments("com.openai.codex", None).is_err());
+    }
+
+    #[test]
+    fn windows_listener_owner_parser_requires_the_exact_loopback_port() {
+        let output = r#"
+  TCP    127.0.0.1:49152        0.0.0.0:0              LISTENING       4242
+  TCP    0.0.0.0:49153          0.0.0.0:0              LISTENING       5151
+"#;
+        assert_eq!(windows_listener_owner_pid(output, 49152), Some(4242));
+        assert_eq!(windows_listener_owner_pid(output, 49153), None);
+        assert_eq!(windows_listener_owner_pid(output, 49154), None);
     }
 }

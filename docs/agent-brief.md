@@ -4,7 +4,7 @@
 
 - Last reviewed: 2026-07-18
 - Project: Awesome Codex Theme
-- Project root: `C:\projects\tools\awesome-codex-theme`
+- Project root: `C:\projects\50-developer\codex-tools\awesome-codex-theme`
 - Purpose: free declarative Full Skin standard, Registry, Validator, Gallery,
   and cross-platform Theme Manager for Codex
 - Primary users: international and Chinese-speaking Codex desktop users and theme contributors

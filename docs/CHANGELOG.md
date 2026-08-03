@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+- Repaired Full Skin startup on both desktop platforms without weakening the
+  exact-app trust boundary: Windows now resolves the loopback listener through
+  `netstat` and the owning process path instead of unreliable CIM queries, and
+  macOS opens the validated `.app` bundle path directly with preserved debug
+  arguments.
+- Release downloads now identify Windows x64, macOS Apple Silicon, and macOS
+  Intel explicitly. The Native palette copy action is also more compact so the
+  control panel stays clear of the preview at shorter window heights.
 - Added a localized GitHub repository link to Theme Manager. The English and
   Chinese READMEs now recommend Agent installation first, source builds second,
   and manual desktop installation last.
