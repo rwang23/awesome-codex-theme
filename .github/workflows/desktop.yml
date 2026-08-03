@@ -159,16 +159,19 @@ jobs:
             rust-target: ""
             build-args: "--bundles nsis"
             artifact: Awesome-Codex-Theme-Windows-x64
+            release-asset-name: Awesome-Codex-Theme-[version]-Windows-x64[setup][ext]
             artifact-path: apps/theme-manager/src-tauri/target/release/bundle/nsis/*.exe
           - os: macos-14
             rust-target: aarch64-apple-darwin
             build-args: "--target aarch64-apple-darwin --bundles app,dmg"
             artifact: Awesome-Codex-Theme-macOS-Apple-Silicon
+            release-asset-name: Awesome-Codex-Theme-[version]-macOS-Apple-Silicon[ext]
             artifact-path: apps/theme-manager/src-tauri/target/aarch64-apple-darwin/release/bundle/dmg/*.dmg
           - os: macos-14
             rust-target: x86_64-apple-darwin
             build-args: "--target x86_64-apple-darwin --bundles app,dmg"
             artifact: Awesome-Codex-Theme-macOS-Intel
+            release-asset-name: Awesome-Codex-Theme-[version]-macOS-Intel[ext]
             artifact-path: apps/theme-manager/src-tauri/target/x86_64-apple-darwin/release/bundle/dmg/*.dmg
     steps:
       - name: Check out repository

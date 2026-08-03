@@ -1433,6 +1433,10 @@ dialog.consent-dialog[data-fallback="true"] {
 }
 
 @media (min-width: 1051px) and (max-height: 840px) {
+  .capture-frame {
+    width: min(100%, 630px);
+  }
+
   .catalog-panel {
     gap: 9px;
     padding-top: 12px;
@@ -1476,10 +1480,36 @@ dialog.consent-dialog[data-fallback="true"] {
     padding: 9px;
   }
 
+  .action-card-heading {
+    margin-bottom: 5px;
+  }
+
+  .primary-action {
+    height: 32px;
+  }
+
+  .launch-row {
+    margin-top: 3px;
+  }
+
+  .launch-row select,
+  .launch-row button {
+    height: 28px;
+  }
+
   .persistence-control {
     min-height: 36px;
-    margin-top: 4px;
-    padding-block: 4px;
+    margin-top: 3px;
+    padding: 4px 8px;
+  }
+
+  .secondary-action {
+    height: 24px;
+    margin-top: 3px;
+  }
+
+  .action-card > p {
+    margin-top: 5px;
   }
 }
 
