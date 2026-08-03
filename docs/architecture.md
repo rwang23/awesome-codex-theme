@@ -23,7 +23,7 @@ generator -> manifest / .act-theme / Registry / Native fallback
 
 ## Theme data
 
-`themes/catalog.json` and source-art provenance are the maintained inputs. The generator creates:
+`themes/catalog.json`, source-art policy, and source-art provenance are the maintained inputs. The generator creates:
 
 - `themes/<id>/manifest.json`;
 - light and dark 2560×1440 PNGs;
@@ -32,7 +32,9 @@ generator -> manifest / .act-theme / Registry / Native fallback
 - one code-free `.act-theme` archive;
 - `themes/registry.json`.
 
-The Registry is the public index. Every path is repository-relative and paired with SHA-256 and byte count. A mode also contains Full Skin composition data and tokens.
+The Registry is the public index. Every path is repository-relative and paired with SHA-256 and byte count. A mode also contains Full Skin composition data and tokens. Root-level `runtimeEvidence` separates the recorded capture runtime from the current source runtime, so UI surfaces can distinguish verified app evidence from a recapture-required reference.
+
+New source art is 16:9 at 2560x1440 or larger. The named legacy exception in `themes/source-art/jobs.json` records the current catalog's lower-resolution source material and does not apply to new IDs. A shared focal-cover calculation derives every output crop from declared focus coordinates, while directional safe-area shading remains separate. `scripts/review-source-art.mjs` writes deterministic before-and-after contact sheets, safe-area fixtures, and the reviewed manifest that bind an approval to the renderer version.
 
 Canonical theme archives contain only:
 
@@ -52,11 +54,11 @@ No theme package contains CSS or JavaScript.
 
 The runtime:
 
-- creates a fixed, verified in-memory image element behind the Codex app root;
+- decodes the verified image into a Blob URL held by the document-level `body` background;
 - sets mode, focus, safe-area, and token variables;
-- styles native Codex surfaces without moving the DOM;
+- styles only native structural surfaces without moving the DOM or flattening semantic-state colors;
 - adds a small home-screen theme caption;
-- watches only for home/task context changes;
+- observes `document.body` child-list mutations, filters unrelated output, and uses a bounded health check for route or marker repair;
 - exposes one cleanup function.
 
 Theme data is serialized with `serde_json` before it is inserted into the template. There is no executable field in `act-theme-pack-v1`.
@@ -71,10 +73,10 @@ Rust owns:
 - exact Stable/Beta discovery;
 - PNG download, cache, byte-count, signature, and SHA-256 checks;
 - loopback CDP session startup;
-- target and WebSocket validation;
+- target and WebSocket validation, including structured discovery diagnostics;
   - early and current-page injection;
   - restore state;
-  - consent-gated per-user persistence state, autostart, version gates, and bounded replay;
+  - consent-gated per-user persistence state, autostart, version gates, bounded replay, and a normal-close-first restart path; a Windows force close is available only after the manager shows a second data-loss warning;
   - Native fallback copy;
 - release-update state.
 
@@ -90,15 +92,15 @@ The site build copies:
 - theme packages and manifests;
 - Full Skin background assets;
 - Native fallback files;
-- real Beta screenshots;
+- recorded Beta screenshot evidence and their 320px, 480px, and 960px presentation variants;
 - manager screenshot;
 - portable Windows Native helper.
 
-Gallery cards use the Registry capture first and fall back to the reviewed preview only when capture evidence is absent.
+Gallery cards and the hero use responsive presentation variants, never the original evidence PNG during ordinary browsing. Opening the explicit evidence action loads the original 1440×810 capture together with its version, SHA-256, byte count, and fixture metadata. Each presentation variant carries its own hash, dimensions, renderer fingerprint, and a binding to the original evidence hash. Labels derive from `runtimeEvidence`, so a recorded capture cannot be shown as current verification after a runtime change.
 
 ### Desktop application
 
-The manager ships a bundled Registry and verified screenshots for browsing. Every catalog carries a monotonically increasing `catalogRevision`; a stale cache or remote descriptor can never replace a newer bundled catalog. The manager also checks the fixed catalog URL, revision, byte count, theme count, and SHA-256 before accepting a remote Registry. Full Skin PNGs are downloaded on demand and retained in the application cache only after hash verification.
+The manager ships a bundled Registry plus shared 320px list and 960px detail presentations; it does not duplicate the original 1440×810 evidence PNGs for its browse surface. Cards are keyed by theme ID and retained across search, filter, and mode changes. An `IntersectionObserver` rooted at the list assigns list image sources only to visible or near-visible cards, so a mode change does not mutate distant card images. Every catalog carries a monotonically increasing `catalogRevision`; a stale cache or remote descriptor can never replace a newer bundled catalog. The manager also checks the fixed catalog URL, revision, byte count, theme count, and SHA-256 before accepting a remote Registry. Full Skin PNGs are downloaded on demand and retained in the application cache only after hash verification.
 
 ### Native fallback
 
@@ -112,7 +114,7 @@ The portable helper and Gallery can copy a strict `codex-theme-v1:` string. Fina
 4. Runtime code is manager-owned and versioned.
 5. Remote images are accepted only after exact path, size, PNG signature, and SHA-256 checks.
 6. CDP accepts only OS-selected loopback ports, exact package ownership, and `app://` targets.
-7. Screenshots are evidence only for the named Beta package.
+7. Screenshots are evidence only for the named Beta package and the recorded runtime hash; changed runtime source requires recapture.
 8. Signing, notarization, and updater keys are release gates, not documentation claims.
 
 ## Product boundary

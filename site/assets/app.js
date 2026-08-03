@@ -21,17 +21,17 @@ const translations = {
     statContrast: "contrast gate",
     managerEyebrow: "Windows + macOS desktop manager",
     managerTitle: "Find a theme that feels like your workspace.",
-    managerIntro: "Browse verified themes, compare light and dark modes, then apply the one you like to the desktop app you selected.",
+    managerIntro: "Browse themes, compare light and dark modes, then apply the one you like to the desktop app you selected.",
     managerFeatureOneTitle: "See the result before you choose",
-    managerFeatureOneBody: "Every mode includes a real app capture, so you can compare the look before applying it.",
+    managerFeatureOneBody: "Every mode includes a recorded app capture, so you can compare the look before applying it.",
     managerFeatureTwoTitle: "Apply a complete visual skin",
-    managerFeatureTwoBody: "Theme Manager applies the verified background, materials, colors, and theme copy together.",
+    managerFeatureTwoBody: "Theme Manager applies the background, materials, colors, and theme copy together.",
     managerFeatureThreeTitle: "Restore the original look anytime",
     managerFeatureThreeBody: "Choose Restore Native whenever you want to return to the app's original interface.",
     managerReleases: "Read the Theme Manager guide",
     legacyWindowsHelper: "Portable Windows helper",
     managerSigningNote: "Choose the build that matches your system and CPU. This beta may still show an operating-system security prompt.",
-    managerScreenshotCaption: "Theme Manager on Windows · real app theme capture inside",
+    managerScreenshotCaption: "Theme Manager on Windows · recorded app theme capture inside",
     collectionEyebrow: "Theme library",
     collectionTitle: "Original worlds, city light, and scenes fans remember.",
     collectionIntro: "The library now includes {original} original themes and {fanArt} clearly disclosed unofficial fan-art tributes. Every source image is generated through an image job and reviewed by hand.",
@@ -49,6 +49,13 @@ const translations = {
     filterScene: "Memory scene",
     clearFilters: "Clear filters",
     emptyState: "No themes match this view.",
+    viewDetails: "View details",
+    viewEvidence: "View original evidence",
+    previewMode: "Preview mode",
+    heroMode: "Hero preview mode",
+    closeDialog: "Close details",
+    evidenceMetadata: "Original evidence · Beta {version} · SHA-256 {hash} · {bytes} bytes · {fixture}",
+    presentationFallback: "Presentation image unavailable; showing reviewed cover art.",
     standardEyebrow: "ACT theme pack standard",
     standardTitle: "Before a theme looks good, it should earn your trust.",
     standardIntro: "The canonical .act-theme file is a ZIP-compatible package with one manifest and declared assets. JavaScript, shell scripts, remote CSS, and hidden runtime behavior are not allowed inside it.",
@@ -58,10 +65,10 @@ const translations = {
     stepVerifyTitle: "Verify",
     stepVerifyBody: "SHA-256, file size, dimensions, package allowlist, rights fields, and WCAG contrast.",
     stepExportTitle: "Export",
-    stepExportBody: "Generate Full Skin records, real-app evidence, and a Native palette fallback.",
+    stepExportBody: "Generate Full Skin records, app-capture evidence, and a Native palette fallback.",
     compatibilityEyebrow: "ACT Full Skin + Native",
     compatibilityTitle: "Full Skin is the main delivery; Native is the lightweight fallback.",
-    compatibilityIntro: "The Theme Manager loads verified backgrounds and materials through one fixed, reviewable runtime without modifying app files or private data. Codex Native v1 remains available for palette import, but it cannot install a background.",
+    compatibilityIntro: "The Theme Manager loads reviewed backgrounds and materials through one fixed, reviewable runtime without modifying app files or private data. Codex Native v1 remains available for palette import, but it cannot install a background.",
     tableTarget: "Target",
     tableCoverage: "Coverage",
     tableDelivery: "Delivery",
@@ -106,8 +113,12 @@ const translations = {
     fanArtNotice: "Unofficial AI fan art. No official stills, logos, or promotional assets were used. No license or endorsement from the underlying rights holders is claimed; personal, non-commercial use only.",
     coverArt: "GALLERY COVER",
     coverBadge: "COVER",
-    realCapture: "REAL BETA CAPTURE",
-    captureBadge: "CAPTURE",
+    realCapture: "VERIFIED BETA CAPTURE",
+    referenceCapture: "RECORDED BETA CAPTURE",
+    captureBadge: "VERIFIED",
+    referenceBadge: "REFERENCE",
+    verifiedVisualKind: "BETA CAPTURE",
+    referenceVisualKind: "CAPTURE REFERENCE",
     cinematic: "Cinematic",
     chibi: "Chibi",
     cityscape: "City study",
@@ -117,7 +128,17 @@ const translations = {
     copied: "Codex Native theme copied.",
     copyFailed: "Copy failed. Select the theme string manually.",
     loadFailed: "The registry could not be loaded. Run the build and serve this directory over HTTP.",
-    capabilityNative: "ACT Full Skin v1 is verified with ChatGPT Beta 26.715.3651.0 and the available 5.6 Sol Max setting across all 106 theme modes. It applies the background, materials, colors, and theme copy; Native v1 remains a palette-only fallback.",
+    capabilityNative: "ACT Full Skin v1 has current app-capture evidence for the named ChatGPT Beta test bench. It applies the background, materials, colors, and theme copy; Native v1 remains a palette-only fallback.",
+    capabilityRuntimePending: "These Beta screenshots are recorded v2 reference evidence. The current Full Skin runtime is source-tested and must be recaptured on the named Beta test bench before it can be presented as current app verification; Native v1 remains a palette-only fallback.",
+    capabilityNote: "{format} is verified with ChatGPT Beta {version} and {model} across {modes} theme modes. {updater}",
+    capabilityMatrixTitle: "Platform evidence",
+    capabilityFullSkin: "Full Skin",
+    capabilityNativeFallback: "Native fallback",
+    capabilityPersistence: "Persistence",
+    capabilityStatusVerified: "Verified",
+    capabilityStatusBuildOnly: "Build-only",
+    capabilityStatusUnverified: "Unverified",
+    capabilityStatusReference: "Recorded reference",
     resultCount: "themes shown",
     allCollections: "All collections",
     allCollectionsCaption: "Original, city, and unofficial fan-art themes",
@@ -146,17 +167,17 @@ const translations = {
     statContrast: "对比度门槛",
     managerEyebrow: "Windows + macOS 桌面管理器",
     managerTitle: "选一套喜欢的主题，让工作区更像你自己。",
-    managerIntro: "浏览已验证的主题，比较明亮和暗色模式，然后应用到你选定的桌面应用。",
+    managerIntro: "浏览主题，比较明亮和暗色模式，然后应用到你选定的桌面应用。",
     managerFeatureOneTitle: "先看效果，再做选择",
-    managerFeatureOneBody: "每种模式都有真实应用截图，先看清楚再应用。",
+    managerFeatureOneBody: "每种模式都有已记录的应用截图，先看清楚再应用。",
     managerFeatureTwoTitle: "一键应用完整皮肤",
-    managerFeatureTwoBody: "Theme Manager 会把已验证的背景、材质、配色和主题文字一起应用。",
+    managerFeatureTwoBody: "Theme Manager 会把背景、材质、配色和主题文字一起应用。",
     managerFeatureThreeTitle: "随时恢复原样",
     managerFeatureThreeBody: "不喜欢时选择“恢复原生”，即可回到应用原本的界面。",
     managerReleases: "查看 Theme Manager 使用说明",
     legacyWindowsHelper: "Windows 便携助手",
     managerSigningNote: "请选择与你的系统和 CPU 匹配的版本。当前 Beta 仍可能显示系统安全提示。",
-    managerScreenshotCaption: "Windows 上的 Theme Manager · 内嵌真实主题截图",
+    managerScreenshotCaption: "Windows 上的 Theme Manager · 内嵌已记录主题截图",
     collectionEyebrow: "主题馆藏",
     collectionTitle: "原创世界、城市灯火，也有一眼认出的名场面。",
     collectionIntro: "馆藏现有 {original} 套原创主题，以及 {fanArt} 套明确标注的非官方 Fan Art。全部源图都通过 image job 生成并经过人工审查。",
@@ -174,6 +195,13 @@ const translations = {
     filterScene: "名场面",
     clearFilters: "清除筛选",
     emptyState: "当前条件下没有主题。",
+    viewDetails: "查看详情",
+    viewEvidence: "查看原始证据",
+    previewMode: "预览模式",
+    heroMode: "首页预览模式",
+    closeDialog: "关闭详情",
+    evidenceMetadata: "原始证据 · Beta {version} · SHA-256 {hash} · {bytes} 字节 · {fixture}",
+    presentationFallback: "展示图暂不可用，正在显示已审查的封面图。",
     standardEyebrow: "ACT 主题包标准",
     standardTitle: "好看之前，先让一套主题值得信任。",
     standardIntro: "标准 .act-theme 是兼容 ZIP 的纯声明包，只包含一份 manifest 和已声明素材。包内不允许 JavaScript、Shell 脚本、远程 CSS 或隐藏运行逻辑。",
@@ -183,10 +211,10 @@ const translations = {
     stepVerifyTitle: "验证",
     stepVerifyBody: "自动检查 SHA-256、体积、尺寸、文件白名单、版权字段与 WCAG 对比度。",
     stepExportTitle: "导出",
-    stepExportBody: "生成 Full Skin 记录、实机证据和 Native 配色回退。",
+    stepExportBody: "生成 Full Skin 记录、应用截图证据和 Native 配色回退。",
     compatibilityEyebrow: "ACT Full Skin + Native",
     compatibilityTitle: "完整皮肤是主交付，原生配色是轻量回退。",
-    compatibilityIntro: "Theme Manager 用固定、可审查的运行时加载已校验背景与材质，不修改应用文件或私有数据。Codex Native v1 仍可单独导入配色，但它不能安装背景。",
+    compatibilityIntro: "Theme Manager 用固定、可审查的运行时加载经审查的背景与材质，不修改应用文件或私有数据。Codex Native v1 仍可单独导入配色，但它不能安装背景。",
     tableTarget: "目标",
     tableCoverage: "覆盖程度",
     tableDelivery: "交付方式",
@@ -231,8 +259,12 @@ const translations = {
     fanArtNotice: "这是非官方 AI Fan Art，未使用官方剧照、Logo 或宣传素材，也不声称获得权利方授权或背书，仅限个人非商业使用。",
     coverArt: "馆藏封面",
     coverBadge: "封面",
-    realCapture: "Beta 实机截图",
-    captureBadge: "实机",
+    realCapture: "已验证 Beta 实机截图",
+    referenceCapture: "已记录 Beta 截图",
+    captureBadge: "已验证",
+    referenceBadge: "参考",
+    verifiedVisualKind: "BETA 截图",
+    referenceVisualKind: "截图参考",
     cinematic: "原画感",
     chibi: "Q 版",
     cityscape: "城市图景",
@@ -242,7 +274,17 @@ const translations = {
     copied: "Codex Native 主题已复制。",
     copyFailed: "复制失败，请手动选择主题字符串。",
     loadFailed: "无法读取 Registry。请先构建项目，并通过 HTTP 服务访问。",
-    capabilityNative: "ACT Full Skin v1 已使用 ChatGPT Beta 26.715.3651.0 与当前测试台实际提供的 5.6 Sol Max 完成全部 106 个模式的实机验证，可应用背景、材质、配色和主题文字；Native v1 只保留为配色回退。",
+    capabilityNative: "ACT Full Skin v1 已具备指定 ChatGPT Beta 测试台的当前实机截图证据，可应用背景、材质、配色和主题文字；Native v1 只保留为配色回退。",
+    capabilityRuntimePending: "这里的 Beta 截图是 v2 的已记录参考证据。当前 Full Skin 运行时已完成源码测试，必须在指定 Beta 测试台重新采集后，才可称为当前实机验证；Native v1 仍只保留为配色回退。",
+    capabilityNote: "{format} 已使用 ChatGPT Beta {version} 与 {model} 完成全部 {modes} 个主题模式的实机验证。{updater}",
+    capabilityMatrixTitle: "平台证据",
+    capabilityFullSkin: "Full Skin",
+    capabilityNativeFallback: "Native 回退",
+    capabilityPersistence: "常驻",
+    capabilityStatusVerified: "已验证",
+    capabilityStatusBuildOnly: "仅构建",
+    capabilityStatusUnverified: "未验证",
+    capabilityStatusReference: "已记录参考",
     resultCount: "套主题",
     allCollections: "全部系列",
     allCollectionsCaption: "原创、城市与非官方 Fan Art 主题",
@@ -298,24 +340,42 @@ const elements = {
   gallery: document.querySelector("#gallery"),
   empty: document.querySelector("#emptyState"),
   dialog: document.querySelector("#installDialog"),
+  dialogClose: document.querySelector(".dialog-close"),
   dialogPreview: document.querySelector("#dialogPreview"),
   dialogVariant: document.querySelector("#dialogVariant"),
   dialogTitle: document.querySelector("#dialogTitle"),
   dialogTagline: document.querySelector("#dialogTagline"),
   dialogDescription: document.querySelector("#dialogDescription"),
+  evidenceMetadata: document.querySelector("#evidenceMetadata"),
   dialogMode: document.querySelector("#dialogMode"),
   capabilityNote: document.querySelector("#capabilityNote"),
+  capabilityMatrix: document.querySelector("#capabilityMatrix"),
   dialogRights: document.querySelector("#dialogRights"),
   nativeThemeString: document.querySelector("#nativeThemeString"),
   copyTheme: document.querySelector("#copyTheme"),
   downloadNativeTheme: document.querySelector("#downloadNativeTheme"),
+  viewEvidence: document.querySelector("#viewEvidence"),
   downloadPackage: document.querySelector("#downloadPackage"),
   trustNote: document.querySelector("#trustNote"),
   toast: document.querySelector("#toast")
 };
 
-function t(key) {
-  return translations[state.locale][key] || translations.en[key] || key;
+function t(key, values = {}) {
+  const template = translations[state.locale][key] || translations.en[key] || key;
+  return Object.entries(values).reduce(function (result, entry) {
+    return result.replaceAll("{" + entry[0] + "}", String(entry[1]));
+  }, template);
+}
+
+function captureEvidenceIsVerified() {
+  const evidence = state.registry?.runtimeEvidence;
+  return evidence?.status === "verified" && evidence.currentRuntime?.verification === "verified";
+}
+
+function interpolate(template, values) {
+  return Object.entries(values).reduce(function (result, entry) {
+    return result.replaceAll("{" + entry[0] + "}", String(entry[1] ?? ""));
+  }, template);
 }
 
 function renderCollectionIntro() {
@@ -329,6 +389,80 @@ function renderCollectionIntro() {
   elements.collectionIntro.textContent = t("collectionIntro")
     .replace("{original}", String(original))
     .replace("{fanArt}", String(fanArt));
+}
+
+function capabilityStatus(status) {
+  const keys = {
+    verified: "capabilityStatusVerified",
+    "build-only": "capabilityStatusBuildOnly",
+    unverified: "capabilityStatusUnverified",
+    reference: "capabilityStatusReference"
+  };
+  return t(keys[status] || "capabilityStatusUnverified");
+}
+
+function buildCapabilityNote() {
+  if (!captureEvidenceIsVerified()) return t("capabilityRuntimePending");
+  const release = state.registry?.release;
+  const capture = release?.capture || {};
+  return interpolate(t("capabilityNote"), {
+    format: release?.runtime?.fullSkinFormat || "ACT Full Skin v1",
+    version: capture.appVersion || "—",
+    model: capture.modelLabel || "—",
+    modes: (state.registry?.themes?.length || 0) * 2,
+    updater: localized(release?.desktop?.updater?.message)
+  });
+}
+
+function renderCapabilityMatrix() {
+  const capabilities = state.registry?.capabilities;
+  if (!elements.capabilityMatrix || !Array.isArray(capabilities) || capabilities.length === 0) {
+    elements.capabilityMatrix?.replaceChildren();
+    if (elements.capabilityMatrix) elements.capabilityMatrix.hidden = true;
+    return;
+  }
+  const featureLabels = [
+    ["fullSkin", "capabilityFullSkin"],
+    ["native", "capabilityNativeFallback"],
+    ["persistence", "capabilityPersistence"]
+  ];
+  const fragment = document.createDocumentFragment();
+  const heading = document.createElement("h3");
+  heading.textContent = t("capabilityMatrixTitle");
+  fragment.append(heading);
+  capabilities.forEach(function (capability) {
+    const card = document.createElement("article");
+    card.className = "capability-card";
+    const title = document.createElement("h4");
+    title.textContent = localized(capability.title) || capability.id;
+    const list = document.createElement("dl");
+    featureLabels.forEach(function (entry) {
+      const feature = capability[entry[0]];
+      if (!feature || typeof feature !== "object") return;
+      const row = document.createElement("div");
+      const term = document.createElement("dt");
+      term.textContent = t(entry[1]);
+      const definition = document.createElement("dd");
+      const displayStatus = entry[0] === "fullSkin" && !captureEvidenceIsVerified()
+        ? "reference"
+        : feature.status;
+      const status = document.createElement("span");
+      status.className = "capability-status is-" + displayStatus;
+      status.textContent = capabilityStatus(displayStatus)
+        + (feature.testedVersion ? " · " + feature.testedVersion : "");
+      const detail = document.createElement("small");
+      detail.textContent = displayStatus === "reference"
+        ? t("capabilityRuntimePending")
+        : localized(feature.detail);
+      definition.append(status, detail);
+      row.append(term, definition);
+      list.append(row);
+    });
+    card.append(title, list);
+    fragment.append(card);
+  });
+  elements.capabilityMatrix.replaceChildren(fragment);
+  elements.capabilityMatrix.hidden = false;
 }
 
 function localized(record) {
@@ -376,18 +510,58 @@ function reorderGalleryForLocale() {
   state.heroTheme = themes[0] || null;
 }
 
-function visualFor(modeRecord) {
-  if (modeRecord.capture) {
+function captureEvidence(modeRecord) {
+  const capture = modeRecord.capture;
+  if (!capture) return null;
+  return capture.evidence || (capture.path ? capture : null);
+}
+
+function presentationFor(modeRecord, width) {
+  return modeRecord.capture?.presentation?.find(function (variant) {
+    return variant.width === width;
+  }) || null;
+}
+
+function presentationSrcset(modeRecord) {
+  const presentation = modeRecord.capture?.presentation;
+  if (!Array.isArray(presentation)) return "";
+  return presentation
+    .slice()
+    .sort(function (left, right) { return left.width - right.width; })
+    .map(function (variant) { return assetUrl(variant.path) + " " + variant.width + "w"; })
+    .join(", ");
+}
+
+function visualFor(modeRecord, purpose = "card") {
+  const evidence = captureEvidence(modeRecord);
+  const presentation = presentationFor(modeRecord, purpose === "card" ? 480 : 960);
+  if (presentation && evidence) {
+    const verified = captureEvidenceIsVerified();
     return {
-      path: modeRecord.capture.path,
-      label: t("realCapture"),
-      badge: t("captureBadge") + " · BETA " + modeRecord.capture.appVersion
+      path: presentation.path,
+      label: t(verified ? "realCapture" : "referenceCapture"),
+      badge: t(verified ? "captureBadge" : "referenceBadge") + " · BETA " + evidence.appVersion,
+      width: presentation.width,
+      height: presentation.height,
+      srcset: presentationSrcset(modeRecord)
     };
   }
   return {
     path: modeRecord.preview,
     label: t("coverArt"),
-    badge: t("coverBadge")
+    badge: t("coverBadge"),
+    width: 960,
+    height: 540
+  };
+}
+
+function fallbackVisual(modeRecord) {
+  return {
+    path: modeRecord.preview,
+    label: t("coverArt"),
+    badge: t("coverBadge"),
+    width: 960,
+    height: 540
   };
 }
 
@@ -399,6 +573,26 @@ function collectionFor(theme) {
 
 function assetUrl(relativePath) {
   return new URL("./" + relativePath, window.location.href).href;
+}
+
+function setVisualImage(image, visual, sizes, fallback = null, onFallback = null) {
+  const source = assetUrl(visual.path);
+  image.dataset.visualSource = source;
+  image.onerror = fallback && fallback.path !== visual.path ? function () {
+    if (image.dataset.visualSource !== source) return;
+    onFallback?.(fallback);
+    setVisualImage(image, fallback, sizes);
+  } : null;
+  if (visual.srcset) {
+    image.srcset = visual.srcset;
+    image.sizes = sizes;
+  } else {
+    image.removeAttribute("srcset");
+    image.removeAttribute("sizes");
+  }
+  if (visual.width) image.width = visual.width;
+  if (visual.height) image.height = visual.height;
+  image.src = source;
 }
 
 function setActiveButton(container, attribute, value) {
@@ -484,12 +678,25 @@ function renderFilterLabels() {
 function updateHero(theme = state.heroTheme) {
   if (!theme) return;
   state.heroTheme = theme;
-  const visual = visualFor(theme.previews[state.heroMode]);
-  elements.heroPreview.src = assetUrl(visual.path);
+  const modeRecord = theme.previews[state.heroMode];
+  const visual = visualFor(modeRecord, "hero");
+  setVisualImage(
+    elements.heroPreview,
+    visual,
+    "(max-width: 720px) 100vw, (max-width: 1200px) 80vw, 960px",
+    fallbackVisual(modeRecord),
+    function (fallback) {
+      elements.heroPreview.alt = localized(theme.name) + " · " + fallback.label + " · " + t(state.heroMode);
+      elements.heroThemeMeta.textContent = fallback.label + " · " + localized(collectionFor(theme)?.name) + " · " + t(state.heroMode);
+      elements.heroVisualKind.textContent = "COVER ART";
+    },
+  );
   elements.heroPreview.alt = localized(theme.name) + " · " + visual.label + " · " + t(state.heroMode);
   elements.heroThemeName.textContent = localized(theme.name);
   elements.heroThemeMeta.textContent = visual.label + " · " + localized(collectionFor(theme)?.name) + " · " + t(state.heroMode);
-  elements.heroVisualKind.textContent = theme.previews[state.heroMode].capture ? "BETA CAPTURE" : "COVER ART";
+  elements.heroVisualKind.textContent = captureEvidence(theme.previews[state.heroMode])
+    ? t(captureEvidenceIsVerified() ? "verifiedVisualKind" : "referenceVisualKind")
+    : "COVER ART";
   setActiveButton(elements.heroMode, "data-mode", state.heroMode);
 }
 
@@ -503,10 +710,13 @@ function updateLanguage() {
   document.querySelectorAll("[data-i18n-placeholder]").forEach(function (node) {
     node.placeholder = t(node.dataset.i18nPlaceholder);
   });
+  elements.heroMode.setAttribute("aria-label", t("heroMode"));
+  elements.dialogClose.setAttribute("aria-label", t("closeDialog"));
 
   renderCollectionPicker();
   renderFilterLabels();
   renderCollectionIntro();
+  renderCapabilityMatrix();
   reorderGalleryForLocale();
 
   state.cards.forEach(function (card, id) {
@@ -517,7 +727,9 @@ function updateLanguage() {
     card.variant.textContent = t(theme.variant);
     card.original.textContent = theme.rightsProfile === "fan-art" ? t("fanArtBadge") : t("original");
     card.collection.textContent = localized(collectionFor(theme)?.name);
-    card.install.setAttribute("aria-label", t("installTheme") + ": " + localized(theme.name));
+    card.install.setAttribute("aria-label", t("viewDetails") + ": " + localized(theme.name));
+    card.install.textContent = t("viewDetails");
+    card.toggle.setAttribute("aria-label", t("previewMode"));
     card.lightButton.setAttribute("aria-label", t("light"));
     card.darkButton.setAttribute("aria-label", t("dark"));
     card.lightButton.textContent = state.locale === "zh-CN" ? "日" : "L";
@@ -539,7 +751,7 @@ function makeButton(label, className) {
   return button;
 }
 
-function createCard(theme, index) {
+function createCard(theme) {
   const article = document.createElement("article");
   article.className = "theme-card";
   article.dataset.variant = theme.variant;
@@ -550,14 +762,14 @@ function createCard(theme, index) {
   const visual = document.createElement("div");
   visual.className = "card-visual";
   const image = document.createElement("img");
-  image.loading = index < 2 ? "eager" : "lazy";
+  image.loading = "lazy";
   image.decoding = "async";
   visual.append(image);
 
   const toggle = document.createElement("div");
   toggle.className = "card-mode-toggle";
   toggle.setAttribute("role", "group");
-  toggle.setAttribute("aria-label", "Preview mode");
+  toggle.setAttribute("aria-label", t("previewMode"));
   const lightButton = makeButton(state.locale === "zh-CN" ? "日" : "L");
   const darkButton = makeButton(state.locale === "zh-CN" ? "夜" : "D");
   lightButton.dataset.mode = "light";
@@ -587,7 +799,8 @@ function createCard(theme, index) {
   const description = document.createElement("p");
   description.className = "card-description";
   copy.append(meta, title, tagline, description);
-  const install = makeButton("↗", "card-install");
+  const install = makeButton(t("viewDetails"), "card-install");
+  install.setAttribute("aria-label", t("viewDetails") + ": " + localized(theme.name));
   body.append(copy, install);
   article.append(visual, body);
 
@@ -596,8 +809,18 @@ function createCard(theme, index) {
 
   function updateMode(mode) {
     state.cardModes.set(theme.id, mode);
-    const visualRecord = visualFor(theme.previews[mode]);
-    image.src = assetUrl(visualRecord.path);
+    const modeRecord = theme.previews[mode];
+    const visualRecord = visualFor(modeRecord, "card");
+    setVisualImage(
+      image,
+      visualRecord,
+      "(max-width: 720px) 100vw, (max-width: 1100px) 50vw, 520px",
+      fallbackVisual(modeRecord),
+      function (fallback) {
+        image.alt = localized(theme.name) + " · " + fallback.label + " · " + t(mode);
+        license.textContent = t("presentationFallback");
+      },
+    );
     image.alt = localized(theme.name) + " · " + visualRecord.label + " · " + t(mode);
     license.textContent = visualRecord.badge;
     setActiveButton(toggle, "data-mode", mode);
@@ -632,6 +855,7 @@ function createCard(theme, index) {
     variant,
     collection,
     install,
+    toggle,
     lightButton,
     darkButton,
     updateMode
@@ -687,14 +911,40 @@ function updateDialog() {
   const theme = state.currentTheme;
   if (!theme) return;
   const modeRecord = theme.previews[state.dialogMode];
-  const visual = visualFor(modeRecord);
+  const visual = visualFor(modeRecord, "hero");
+  const evidence = captureEvidence(modeRecord);
   elements.dialogTitle.textContent = localized(theme.name);
   elements.dialogTagline.textContent = localized(theme.tagline);
   elements.dialogDescription.textContent = localized(theme.description);
-  elements.dialogPreview.src = assetUrl(visual.path);
+  const evidenceMetadata = evidence
+    ? t("evidenceMetadata", {
+      version: evidence.appVersion,
+      hash: evidence.sha256,
+      bytes: new Intl.NumberFormat(state.locale).format(evidence.bytes),
+      fixture: evidence.fixture
+    })
+    : "";
+  setVisualImage(
+    elements.dialogPreview,
+    visual,
+    "100vw",
+    fallbackVisual(modeRecord),
+    function (fallback) {
+      elements.dialogPreview.alt = localized(theme.name) + " · " + fallback.label + " · " + t(state.dialogMode);
+      elements.evidenceMetadata.textContent = [t("presentationFallback"), evidenceMetadata].filter(Boolean).join(" ");
+    },
+  );
   elements.dialogPreview.alt = localized(theme.name) + " · " + visual.label + " · " + t(state.dialogMode);
   elements.dialogVariant.textContent = visual.label + " · " + localized(collectionFor(theme)?.name) + " · " + t(theme.variant);
-  elements.capabilityNote.textContent = t("capabilityNative");
+  elements.evidenceMetadata.textContent = evidenceMetadata;
+  elements.evidenceMetadata.hidden = !evidence;
+  elements.viewEvidence.hidden = !evidence;
+  if (evidence) {
+    elements.viewEvidence.href = assetUrl(evidence.path);
+  } else {
+    elements.viewEvidence.removeAttribute("href");
+  }
+  elements.capabilityNote.textContent = buildCapabilityNote();
   elements.dialogRights.hidden = theme.rightsProfile !== "fan-art";
   elements.dialogRights.textContent = theme.rightsProfile === "fan-art"
     ? localized(theme.fanArt?.work) + " · " + t("fanArtNotice")
@@ -830,8 +1080,8 @@ async function loadRegistry() {
     elements.themeStatValue.textContent = String(registry.themes.length).padStart(2, "0");
     renderCollectionPicker();
     const fragment = document.createDocumentFragment();
-    registry.themes.forEach(function (theme, index) {
-      fragment.append(createCard(theme, index));
+    registry.themes.forEach(function (theme) {
+      fragment.append(createCard(theme));
     });
     elements.gallery.replaceChildren(fragment);
     elements.gallery.setAttribute("aria-busy", "false");

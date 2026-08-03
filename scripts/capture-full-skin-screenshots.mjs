@@ -5,6 +5,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { readPngDimensions } from "./lib/png.mjs";
+import { readReleaseMetadata } from "./lib/release-metadata.mjs";
 
 const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(SCRIPT_DIR, "..");
@@ -15,9 +16,10 @@ const REQUESTED_IDS = new Set(splitArgument("--ids"));
 const REQUESTED_MODES = new Set(splitArgument("--modes"));
 const WIDTH = 1440;
 const HEIGHT = 810;
-const CAPTURE_VERSION = "26.715.3651.0";
-const CAPTURE_MODEL_LABEL = "5.6 Sol Max";
-const RUNTIME_IMPLEMENTATION = "act-full-skin-runtime-v2";
+const RELEASE = readReleaseMetadata(ROOT);
+const CAPTURE_VERSION = RELEASE.capture.appVersion;
+const CAPTURE_MODEL_LABEL = RELEASE.capture.modelLabel;
+const RUNTIME_IMPLEMENTATION = RELEASE.runtime.implementationVersion;
 const CAPTURE_ROOT = "screenshots/codex-beta-" + CAPTURE_VERSION;
 const CAPTURE_DIR = path.join(ROOT, ...CAPTURE_ROOT.split("/"));
 const MANIFEST_PATH = path.join(CAPTURE_DIR, "manifest.json");
@@ -25,11 +27,11 @@ const RUNTIME_CSS_PATH = path.join(ROOT, "packages", "full-skin", "runtime.css")
 const RUNTIME_JS_PATH = path.join(ROOT, "packages", "full-skin", "runtime.js");
 
 const TEST_BENCH = Object.freeze({
-  packageFamilyName: "OpenAI.CodexBeta_2p2nqsd0c76g0",
-  packageFullName: "OpenAI.CodexBeta_26.715.3651.0_x64__2p2nqsd0c76g0",
+  packageFamilyName: RELEASE.capture.packageFamilyName,
+  packageFullName: RELEASE.capture.packageFullName,
   version: CAPTURE_VERSION,
-  aumid: "OpenAI.CodexBeta_2p2nqsd0c76g0!App",
-  executable: "ChatGPT (Beta).exe",
+  aumid: RELEASE.capture.aumid,
+  executable: RELEASE.capture.executable,
   targetUrlPrefix: "app://",
 });
 
@@ -863,6 +865,12 @@ async function main() {
       format: "act-full-skin-v1",
       implementationVersion: RUNTIME_IMPLEMENTATION,
       sha256: runtimeSha256,
+      evidenceStatus: "verified",
+      currentRuntime: {
+        implementationVersion: RUNTIME_IMPLEMENTATION,
+        sha256: runtimeSha256,
+        verification: "verified",
+      },
       earlyInjection: true,
       removedAfterCapture: runtimeRemoved,
     },

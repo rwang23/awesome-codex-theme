@@ -10,12 +10,28 @@ use serde_json::{Map, Value, json};
 use sha2::{Digest, Sha256};
 use tauri::{AppHandle, Manager};
 
+use crate::{cache, network};
+
 pub const REMOTE_SITE_ROOT: &str = "https://rwang23.github.io/awesome-codex-theme/";
 const REMOTE_CATALOG_URL: &str =
     "https://rwang23.github.io/awesome-codex-theme/downloads/catalog.json";
 const REMOTE_REGISTRY_URL: &str =
     "https://rwang23.github.io/awesome-codex-theme/themes/registry.json";
 const MODES: [&str; 2] = ["light", "dark"];
+const MAX_CATALOG_BYTES: usize = 256 * 1024;
+const MAX_REGISTRY_BYTES: usize = 8 * 1024 * 1024;
+const CACHE_FILE_PREFIX: &str = "catalog-cache-";
+const CACHE_FILE_SUFFIX: &str = ".json";
+const PRESENTATION_SIZES: [(u64, u64); 3] = [(320, 180), (480, 270), (960, 540)];
+
+#[derive(Clone)]
+struct ReleaseContract {
+    full_skin_format: String,
+    native_tested_version: String,
+    capture_version: String,
+    capture_package: String,
+    capture_fixture: String,
+}
 
 #[derive(Clone)]
 pub struct Catalog {
@@ -155,12 +171,204 @@ fn valid_sha256(value: &str) -> bool {
     value.len() == 64 && value.chars().all(|character| character.is_ascii_hexdigit())
 }
 
+fn validate_runtime_evidence(value: &Value) -> Result<(), String> {
+    // Registries produced before evidence state existed remain safe to display as
+    // reference-only in the renderer. New registries must make that state explicit.
+    if value.is_null() {
+        return Ok(());
+    }
+    let evidence = object(value, "runtimeEvidence")?;
+    let status = evidence["status"].as_str().unwrap_or_default();
+    if !matches!(status, "verified" | "reference") {
+        return fail("Runtime 证据状态无效");
+    }
+    let captured = object(&evidence["capturedRuntime"], "capturedRuntime")?;
+    let current = object(&evidence["currentRuntime"], "currentRuntime")?;
+    let captured_version = captured["implementationVersion"]
+        .as_str()
+        .unwrap_or_default();
+    let captured_sha = captured["sha256"].as_str().unwrap_or_default();
+    let current_version = current["implementationVersion"]
+        .as_str()
+        .unwrap_or_default();
+    let current_sha = current["sha256"].as_str().unwrap_or_default();
+    let verification = current["verification"].as_str().unwrap_or_default();
+    if captured_version.is_empty()
+        || current_version.is_empty()
+        || !valid_sha256(captured_sha)
+        || !valid_sha256(current_sha)
+    {
+        return fail("Runtime 证据记录无效");
+    }
+    if (status == "verified"
+        && (verification != "verified"
+            || captured_version != current_version
+            || captured_sha != current_sha))
+        || (status == "reference" && verification != "source-tested-recapture-required")
+    {
+        return fail("Runtime 证据状态与版本不一致");
+    }
+    Ok(())
+}
+
 fn valid_hex_color(value: &str) -> bool {
     value.len() == 7
         && value.starts_with('#')
         && value[1..]
             .chars()
             .all(|character| character.is_ascii_hexdigit())
+}
+
+fn required_string(value: &Value, label: &str) -> Result<String, String> {
+    value
+        .as_str()
+        .filter(|value| !value.trim().is_empty())
+        .map(str::to_owned)
+        .ok_or_else(|| format!("{label} 必须是非空字符串"))
+}
+
+fn validate_release(registry: &Value) -> Result<ReleaseContract, String> {
+    let release = object(&registry["release"], "release")?;
+    let product = object(
+        release.get("product").unwrap_or(&Value::Null),
+        "release.product",
+    )?;
+    for field in ["name", "repository", "releases"] {
+        required_string(
+            product.get(field).unwrap_or(&Value::Null),
+            &format!("release.product.{field}"),
+        )?;
+    }
+    let desktop = object(
+        release.get("desktop").unwrap_or(&Value::Null),
+        "release.desktop",
+    )?;
+    required_string(
+        desktop.get("version").unwrap_or(&Value::Null),
+        "release.desktop.version",
+    )?;
+    if !matches!(
+        desktop.get("channel").and_then(Value::as_str),
+        Some("beta" | "stable")
+    ) {
+        return fail("release.desktop.channel 无效");
+    }
+    let updater = object(
+        desktop.get("updater").unwrap_or(&Value::Null),
+        "release.desktop.updater",
+    )?;
+    if !matches!(
+        updater.get("status").and_then(Value::as_str),
+        Some("unreleased" | "available")
+    ) {
+        return fail("release.desktop.updater.status 无效");
+    }
+    localized(
+        updater.get("message").unwrap_or(&Value::Null),
+        "release.desktop.updater.message",
+    )?;
+    let runtime = object(
+        release.get("runtime").unwrap_or(&Value::Null),
+        "release.runtime",
+    )?;
+    let full_skin_format = required_string(
+        runtime.get("fullSkinFormat").unwrap_or(&Value::Null),
+        "release.runtime.fullSkinFormat",
+    )?;
+    if full_skin_format != "act-full-skin-v1" {
+        return fail("release.runtime.fullSkinFormat 不受支持");
+    }
+    required_string(
+        runtime.get("implementationVersion").unwrap_or(&Value::Null),
+        "release.runtime.implementationVersion",
+    )?;
+    required_string(
+        runtime.get("sourceArtRenderer").unwrap_or(&Value::Null),
+        "release.runtime.sourceArtRenderer",
+    )?;
+    let native_tested_version = required_string(
+        runtime.get("nativeTestedVersion").unwrap_or(&Value::Null),
+        "release.runtime.nativeTestedVersion",
+    )?;
+    let capture = object(
+        release.get("capture").unwrap_or(&Value::Null),
+        "release.capture",
+    )?;
+    if capture.get("channel").and_then(Value::as_str) != Some("beta") {
+        return fail("release.capture.channel 必须是 beta");
+    }
+    let capture_version = required_string(
+        capture.get("appVersion").unwrap_or(&Value::Null),
+        "release.capture.appVersion",
+    )?;
+    let capture_package = required_string(
+        capture.get("packageFullName").unwrap_or(&Value::Null),
+        "release.capture.packageFullName",
+    )?;
+    if !capture_package.starts_with("OpenAI.CodexBeta_") {
+        return fail("release.capture.packageFullName 不是 Codex Beta 包");
+    }
+    let capture_fixture = required_string(
+        capture.get("fixture").unwrap_or(&Value::Null),
+        "release.capture.fixture",
+    )?;
+    required_string(
+        capture.get("modelLabel").unwrap_or(&Value::Null),
+        "release.capture.modelLabel",
+    )?;
+    Ok(ReleaseContract {
+        full_skin_format,
+        native_tested_version,
+        capture_version,
+        capture_package,
+        capture_fixture,
+    })
+}
+
+fn validate_capabilities(value: &Value) -> Result<(), String> {
+    let capabilities = array(value, "capabilities")?;
+    if capabilities.is_empty() || capabilities.len() > 16 {
+        return fail("capabilities 数量超出边界");
+    }
+    let mut ids = HashSet::new();
+    for capability in capabilities {
+        let id = capability["id"].as_str().unwrap_or_default();
+        if !safe_id(id) || !ids.insert(id.to_owned()) {
+            return fail("capability ID 无效或重复");
+        }
+        if !matches!(capability["platform"].as_str(), Some("windows" | "macos"))
+            || !matches!(
+                capability["architecture"].as_str(),
+                Some("x64" | "aarch64" | "x86_64")
+            )
+        {
+            return fail(format!("{id} capability 平台或架构无效"));
+        }
+        localized(&capability["title"], &format!("{id} capability title"))?;
+        for feature_name in ["fullSkin", "native", "persistence"] {
+            let feature = object(&capability[feature_name], &format!("{id} {feature_name}"))?;
+            if !matches!(
+                feature.get("status").and_then(Value::as_str),
+                Some("verified" | "build-only" | "unverified")
+            ) {
+                return fail(format!("{id} {feature_name} status 无效"));
+            }
+            feature
+                .get("testedVersion")
+                .and_then(Value::as_str)
+                .ok_or_else(|| format!("{id} {feature_name} testedVersion 无效"))?;
+            localized(
+                feature.get("detail").unwrap_or(&Value::Null),
+                &format!("{id} {feature_name} detail"),
+            )?;
+        }
+    }
+    for id in ["windows-x64", "macos-aarch64", "macos-x86-64"] {
+        if !ids.contains(id) {
+            return fail(format!("capabilities 缺少 {id}"));
+        }
+    }
+    Ok(())
 }
 
 fn validate_native_theme(value: &str, mode: &str) -> Result<(), String> {
@@ -227,6 +435,7 @@ fn validate_mode(
     theme: &Value,
     mode: &str,
     native_values: &mut HashSet<String>,
+    release: &ReleaseContract,
 ) -> Result<(), String> {
     let record = theme["previews"]
         .get(mode)
@@ -237,37 +446,66 @@ fn validate_mode(
     }
 
     let capture = &record["capture"];
-    let capture_path = capture["path"].as_str().unwrap_or_default();
+    let evidence = &capture["evidence"];
+    let capture_path = evidence["path"].as_str().unwrap_or_default();
     if !safe_relative_path(capture_path)
         || !capture_path.starts_with("screenshots/")
-        || !capture["sha256"].as_str().is_some_and(valid_sha256)
-        || !capture["assetSha256"].as_str().is_some_and(valid_sha256)
-        || !capture["runtimeSha256"].as_str().is_some_and(valid_sha256)
-        || capture["markerVersion"].as_str() != Some("act-full-skin-v1")
-        || capture["width"].as_u64() != Some(1440)
-        || capture["height"].as_u64() != Some(810)
-        || capture["fixture"].as_str() != Some("full-skin-home-v1")
-        || capture["appVersion"]
-            .as_str()
-            .unwrap_or_default()
-            .is_empty()
+        || !evidence["sha256"].as_str().is_some_and(valid_sha256)
+        || !evidence["assetSha256"].as_str().is_some_and(valid_sha256)
+        || !evidence["runtimeSha256"].as_str().is_some_and(valid_sha256)
+        || evidence["markerVersion"].as_str() != Some(release.full_skin_format.as_str())
+        || evidence["width"].as_u64() != Some(1440)
+        || evidence["height"].as_u64() != Some(810)
+        || evidence["appVersion"].as_str() != Some(release.capture_version.as_str())
+        || evidence["packageFullName"].as_str() != Some(release.capture_package.as_str())
+        || evidence["fixture"].as_str() != Some(release.capture_fixture.as_str())
     {
         return fail(format!("{theme_id} {mode} 实机截图记录无效"));
+    }
+    let (capture_directory, capture_file) = capture_path
+        .rsplit_once('/')
+        .ok_or_else(|| format!("{theme_id} {mode} 实机截图路径无效"))?;
+    let capture_stem = capture_file
+        .strip_suffix(".png")
+        .ok_or_else(|| format!("{theme_id} {mode} 实机截图格式无效"))?;
+    let presentation = array(&capture["presentation"], "capture.presentation")?;
+    if presentation.len() != PRESENTATION_SIZES.len() {
+        return fail(format!("{theme_id} {mode} 缩略图数量无效"));
+    }
+    for (width, height) in PRESENTATION_SIZES {
+        let variant = presentation
+            .iter()
+            .find(|candidate| candidate["width"].as_u64() == Some(width))
+            .ok_or_else(|| format!("{theme_id} {mode} 缺少 {width}px 缩略图"))?;
+        let variant_path = variant["path"].as_str().unwrap_or_default();
+        let expected_path = format!("{capture_directory}/presentation/{capture_stem}-{width}.png");
+        if !safe_relative_path(variant_path)
+            || variant_path != expected_path
+            || variant["format"].as_str() != Some("png")
+            || variant["height"].as_u64() != Some(height)
+            || !variant["sha256"].as_str().is_some_and(valid_sha256)
+            || variant["bytes"]
+                .as_u64()
+                .is_none_or(|bytes| bytes == 0 || bytes > 1_048_576)
+            || variant["evidenceSha256"] != evidence["sha256"]
+            || !variant["renderFingerprint"]
+                .as_str()
+                .is_some_and(valid_sha256)
+        {
+            return fail(format!("{theme_id} {mode} {width}px 缩略图记录无效"));
+        }
     }
 
     let full_skin = &record["fullSkin"];
     let full_skin_asset = full_skin["asset"].as_str().unwrap_or_default();
-    if full_skin["format"].as_str() != Some("act-full-skin-v1")
+    if full_skin["format"].as_str() != Some(release.full_skin_format.as_str())
         || !safe_relative_path(full_skin_asset)
         || full_skin_asset != format!("themes/{theme_id}/assets/background-{mode}.png")
         || !full_skin["sha256"].as_str().is_some_and(valid_sha256)
         || full_skin["sha256"] != record["assetSha256"]
         || full_skin["bytes"].as_u64().is_none()
         || full_skin["bytes"] != record["assetBytes"]
-        || full_skin["testedVersion"]
-            .as_str()
-            .unwrap_or_default()
-            .is_empty()
+        || full_skin["testedVersion"].as_str() != Some(release.capture_version.as_str())
     {
         return fail(format!("{theme_id} {mode} Full Skin 记录无效"));
     }
@@ -303,6 +541,7 @@ fn validate_mode(
     if native["format"].as_str() != Some("codex-theme-v1")
         || !safe_relative_path(native_path)
         || !native["sha256"].as_str().is_some_and(valid_sha256)
+        || native["testedVersion"].as_str() != Some(release.native_tested_version.as_str())
     {
         return fail(format!("{theme_id} {mode} Native 记录无效"));
     }
@@ -331,7 +570,10 @@ pub fn validate_registry(bytes: &[u8]) -> Result<Value, String> {
     {
         return fail("Registry 标准不受支持");
     }
+    validate_runtime_evidence(&registry["runtimeEvidence"])?;
 
+    let release = validate_release(&registry)?;
+    validate_capabilities(&registry["capabilities"])?;
     let collections = array(&registry["collections"], "collections")?;
     let themes = array(&registry["themes"], "themes")?;
     if collections.is_empty() || themes.is_empty() || themes.len() > 500 {
@@ -367,7 +609,7 @@ pub fn validate_registry(bytes: &[u8]) -> Result<Value, String> {
             return fail(format!("{id} 权利标记无效"));
         }
         for mode in MODES {
-            validate_mode(id, theme, mode, &mut native_values)?;
+            validate_mode(id, theme, mode, &mut native_values, &release)?;
         }
     }
     Ok(registry)
@@ -384,11 +626,65 @@ fn bundled_registry_path(app: &AppHandle) -> Result<PathBuf, String> {
         .map_err(|error| format!("无法定位内置 Registry：{error}"))
 }
 
-fn cache_path(app: &AppHandle) -> Result<PathBuf, String> {
+fn cache_directory(app: &AppHandle) -> Result<PathBuf, String> {
     app.path()
         .app_cache_dir()
-        .map(|path| path.join("catalog-cache.json"))
         .map_err(|error| format!("无法定位主题缓存：{error}"))
+}
+
+fn cache_path_for_hash(directory: &Path, registry_sha256: &str) -> PathBuf {
+    directory.join(format!(
+        "{CACHE_FILE_PREFIX}{registry_sha256}{CACHE_FILE_SUFFIX}"
+    ))
+}
+
+fn catalog_from_cache_bytes(bytes: &[u8]) -> Result<Catalog, String> {
+    let cache: CatalogCache =
+        serde_json::from_slice(bytes).map_err(|error| format!("主题缓存无效：{error}"))?;
+    if cache.schema_version != 1
+        || sha256_hex(cache.registry_text.as_bytes()) != cache.registry_sha256
+    {
+        return fail("主题缓存哈希无效");
+    }
+    let registry = validate_registry(cache.registry_text.as_bytes())?;
+    Ok(Catalog {
+        source: "cache".into(),
+        registry,
+        registry_sha256: cache.registry_sha256,
+        registry_bytes: cache.registry_text.len(),
+        asset_base_url: Some(REMOTE_SITE_ROOT.into()),
+    })
+}
+
+fn cache_candidate_paths(directory: &Path) -> Result<Vec<PathBuf>, String> {
+    let mut candidates = Vec::new();
+    let legacy = directory.join("catalog-cache.json");
+    if legacy.is_file() {
+        candidates.push(legacy);
+    }
+
+    let entries = match fs::read_dir(directory) {
+        Ok(entries) => entries,
+        Err(error) if error.kind() == std::io::ErrorKind::NotFound => return Ok(candidates),
+        Err(error) => return Err(format!("无法读取主题缓存目录：{error}")),
+    };
+    for entry in entries {
+        let entry = entry.map_err(|error| format!("无法读取主题缓存目录：{error}"))?;
+        if !entry
+            .file_type()
+            .map_err(|error| format!("无法读取主题缓存条目：{error}"))?
+            .is_file()
+        {
+            continue;
+        }
+        let name = entry.file_name();
+        let name = name.to_string_lossy();
+        if name.starts_with(CACHE_FILE_PREFIX) && name.ends_with(CACHE_FILE_SUFFIX) {
+            candidates.push(entry.path());
+        }
+    }
+    candidates.sort();
+    Ok(candidates)
 }
 
 pub fn load_bundled(app: &AppHandle) -> Result<Catalog, String> {
@@ -405,29 +701,34 @@ pub fn load_bundled(app: &AppHandle) -> Result<Catalog, String> {
 }
 
 pub fn load_cached(app: &AppHandle) -> Result<Catalog, String> {
-    let bytes = fs::read(cache_path(app)?).map_err(|error| format!("无法读取主题缓存：{error}"))?;
-    let cache: CatalogCache =
-        serde_json::from_slice(&bytes).map_err(|error| format!("主题缓存无效：{error}"))?;
-    if cache.schema_version != 1
-        || sha256_hex(cache.registry_text.as_bytes()) != cache.registry_sha256
-    {
-        return fail("主题缓存哈希无效");
+    let directory = cache_directory(app)?;
+    let mut selected = None;
+    let mut last_error = None;
+    for path in cache_candidate_paths(&directory)? {
+        let candidate = fs::read(&path)
+            .map_err(|error| format!("无法读取主题缓存：{error}"))
+            .and_then(|bytes| catalog_from_cache_bytes(&bytes));
+        match candidate {
+            Ok(candidate)
+                if selected
+                    .as_ref()
+                    .is_none_or(|current: &Catalog| revision(&candidate) > revision(current)) =>
+            {
+                selected = Some(candidate);
+            }
+            Ok(_) => {}
+            Err(error) => last_error = Some(error),
+        }
     }
-    let registry = validate_registry(cache.registry_text.as_bytes())?;
-    Ok(Catalog {
-        source: "cache".into(),
-        registry,
-        registry_sha256: cache.registry_sha256,
-        registry_bytes: cache.registry_text.len(),
-        asset_base_url: Some(REMOTE_SITE_ROOT.into()),
-    })
+    selected.ok_or_else(|| last_error.unwrap_or_else(|| "未找到可验证的主题缓存".into()))
 }
 
 pub fn save_cached(app: &AppHandle, catalog: &Catalog, registry_text: &str) -> Result<(), String> {
-    let destination = cache_path(app)?;
-    let parent = destination.parent().ok_or("主题缓存路径无效")?;
-    fs::create_dir_all(parent).map_err(|error| format!("无法创建主题缓存目录：{error}"))?;
-    let temporary = destination.with_extension("json.tmp");
+    if !valid_sha256(&catalog.registry_sha256) {
+        return fail("主题缓存 Registry 哈希无效");
+    }
+    let directory = cache_directory(app)?;
+    let destination = cache_path_for_hash(&directory, &catalog.registry_sha256);
     let payload = CatalogCache {
         schema_version: 1,
         registry_sha256: catalog.registry_sha256.clone(),
@@ -435,14 +736,32 @@ pub fn save_cached(app: &AppHandle, catalog: &Catalog, registry_text: &str) -> R
     };
     let bytes = serde_json::to_vec_pretty(&payload)
         .map_err(|error| format!("无法序列化主题缓存：{error}"))?;
-    fs::write(&temporary, bytes).map_err(|error| format!("无法写入主题缓存：{error}"))?;
-    if destination.exists() {
-        fs::remove_file(&destination).map_err(|error| format!("无法替换主题缓存：{error}"))?;
+    if let Ok(existing) = fs::read(&destination)
+        && let Ok(existing) = catalog_from_cache_bytes(&existing)
+        && existing.registry_sha256 == catalog.registry_sha256
+    {
+        return Ok(());
     }
-    fs::rename(&temporary, &destination).map_err(|error| format!("无法提交主题缓存：{error}"))
+    if destination.exists() {
+        fs::remove_file(&destination).map_err(|error| format!("无法移除无效主题缓存：{error}"))?;
+    }
+    if cache::publish_new_file(&destination, &bytes, "主题缓存")? {
+        return Ok(());
+    }
+    let existing = fs::read(&destination).map_err(|error| format!("无法读取主题缓存：{error}"))?;
+    let existing = catalog_from_cache_bytes(&existing)?;
+    if existing.registry_sha256 == catalog.registry_sha256 {
+        Ok(())
+    } else {
+        fail("主题缓存候选与当前 Registry 不匹配")
+    }
 }
 
-async fn fetch_bytes(client: &reqwest::Client, url: &str) -> Result<Vec<u8>, String> {
+async fn fetch_bytes(
+    client: &reqwest::Client,
+    url: &str,
+    max_bytes: usize,
+) -> Result<Vec<u8>, String> {
     let response = client
         .get(url)
         .header("Accept", "application/json")
@@ -452,19 +771,17 @@ async fn fetch_bytes(client: &reqwest::Client, url: &str) -> Result<Vec<u8>, Str
     if !response.status().is_success() {
         return fail(format!("主题目录返回 HTTP {}", response.status()));
     }
-    response
-        .bytes()
-        .await
-        .map(|bytes| bytes.to_vec())
-        .map_err(|error| format!("无法读取主题目录响应：{error}"))
+    network::read_capped_response(response, max_bytes, "application/json", "主题目录").await
 }
 
 pub async fn load_remote() -> Result<(Catalog, String), String> {
     let client = reqwest::Client::builder()
         .timeout(Duration::from_secs(8))
+        .connect_timeout(Duration::from_secs(3))
+        .redirect(reqwest::redirect::Policy::none())
         .build()
         .map_err(|error| format!("无法创建主题目录客户端：{error}"))?;
-    let manifest_bytes = fetch_bytes(&client, REMOTE_CATALOG_URL).await?;
+    let manifest_bytes = fetch_bytes(&client, REMOTE_CATALOG_URL, MAX_CATALOG_BYTES).await?;
     let manifest: Value = serde_json::from_slice(&manifest_bytes)
         .map_err(|error| format!("Catalog manifest 无效：{error}"))?;
     if manifest["schemaVersion"].as_u64() != Some(1)
@@ -480,34 +797,44 @@ pub async fn load_remote() -> Result<(Catalog, String), String> {
         .ok_or("远程 Registry 哈希无效")?;
     let expected_bytes = manifest["registry"]["bytes"]
         .as_u64()
-        .ok_or("远程 Registry 字节数无效")? as usize;
+        .ok_or("远程 Registry 字节数无效")
+        .and_then(|bytes| usize::try_from(bytes).map_err(|_| "远程 Registry 字节数无效"))?;
+    if expected_bytes == 0 || expected_bytes > MAX_REGISTRY_BYTES {
+        return fail("远程 Registry 声明字节数超出安全上限");
+    }
     let expected_revision = manifest["registry"]["catalogRevision"]
         .as_u64()
         .filter(|revision| *revision > 0)
         .ok_or("远程 Registry 版本无效")?;
     let expected_themes = manifest["registry"]["themeCount"]
         .as_u64()
-        .ok_or("远程 Registry 主题数无效")? as usize;
+        .ok_or("远程 Registry 主题数无效")
+        .and_then(|count| usize::try_from(count).map_err(|_| "远程 Registry 主题数无效"))?;
 
-    let registry_bytes = fetch_bytes(&client, REMOTE_REGISTRY_URL).await?;
+    let registry_bytes = fetch_bytes(&client, REMOTE_REGISTRY_URL, expected_bytes).await?;
     if registry_bytes.len() != expected_bytes || sha256_hex(&registry_bytes) != expected_hash {
         return fail("远程 Registry 大小或哈希不匹配");
     }
-    let registry = validate_registry(&registry_bytes)?;
+    let registry_text = String::from_utf8(registry_bytes)
+        .map_err(|error| format!("远程 Registry 不是 UTF-8：{error}"))?;
+    let registry = validate_registry(registry_text.as_bytes())?;
     if registry["catalogRevision"].as_u64() != Some(expected_revision) {
         return fail("远程 Registry 版本不匹配");
     }
     if registry["themes"].as_array().map(Vec::len) != Some(expected_themes) {
         return fail("远程 Registry 主题数量不匹配");
     }
-    let registry_text = String::from_utf8(registry_bytes.clone())
-        .map_err(|error| format!("远程 Registry 不是 UTF-8：{error}"))?;
+    if manifest["release"] != registry["release"]
+        || manifest["capabilities"] != registry["capabilities"]
+    {
+        return fail("远程 Registry 发布元数据不匹配");
+    }
     Ok((
         Catalog {
             source: "remote".into(),
             registry,
             registry_sha256: expected_hash.into(),
-            registry_bytes: registry_bytes.len(),
+            registry_bytes: registry_text.len(),
             asset_base_url: Some(REMOTE_SITE_ROOT.into()),
         },
         registry_text,
@@ -523,6 +850,16 @@ fn local_capture_path(app: &AppHandle, relative: &str) -> Result<String, String>
     Ok(path.to_string_lossy().into_owned())
 }
 
+fn presentation_path(capture: &Value, width: u64) -> Result<&str, String> {
+    let variant = array(&capture["presentation"], "capture.presentation")?
+        .iter()
+        .find(|candidate| candidate["width"].as_u64() == Some(width))
+        .ok_or_else(|| format!("缺少 {width}px 缩略图"))?;
+    variant["path"]
+        .as_str()
+        .ok_or_else(|| format!("{width}px 缩略图路径无效"))
+}
+
 pub fn present_catalog(app: &AppHandle, catalog: &Catalog) -> Result<Value, String> {
     let collections = catalog.registry["collections"].clone();
     let themes = array(&catalog.registry["themes"], "themes")?
@@ -532,19 +869,28 @@ pub fn present_catalog(app: &AppHandle, catalog: &Catalog) -> Result<Value, Stri
                 .iter()
                 .map(|mode| {
                     let record = &theme["previews"][mode];
-                    let capture_path = record["capture"]["path"].as_str().unwrap_or_default();
-                    let image = if let Some(base) = &catalog.asset_base_url {
-                        json!({ "imageUrl": format!("{base}{capture_path}") })
+                    let capture = &record["capture"];
+                    let thumbnail_path = presentation_path(capture, 320)?;
+                    let image_path = presentation_path(capture, 960)?;
+                    let images = if let Some(base) = &catalog.asset_base_url {
+                        json!({
+                            "thumbnailUrl": format!("{base}{thumbnail_path}"),
+                            "imageUrl": format!("{base}{image_path}")
+                        })
                     } else {
-                        json!({ "imagePath": local_capture_path(app, capture_path)? })
+                        json!({
+                            "thumbnailPath": local_capture_path(app, thumbnail_path)?,
+                            "imagePath": local_capture_path(app, image_path)?
+                        })
                     };
-                    let mut preview = image.as_object().cloned().unwrap_or_default();
+                    let mut preview = images.as_object().cloned().unwrap_or_default();
                     preview.insert(
                         "capture".into(),
                         json!({
-                            "appVersion": record["capture"]["appVersion"],
-                            "sha256": record["capture"]["sha256"],
-                            "nativeSha256": record["capture"]["nativeSha256"]
+                            "appVersion": capture["evidence"]["appVersion"],
+                            "sha256": capture["evidence"]["sha256"],
+                            "bytes": capture["evidence"]["bytes"],
+                            "fixture": capture["evidence"]["fixture"]
                         }),
                     );
                     preview.insert(
@@ -583,6 +929,8 @@ pub fn present_catalog(app: &AppHandle, catalog: &Catalog) -> Result<Value, Stri
         "registrySha256": catalog.registry_sha256,
         "registryBytes": catalog.registry_bytes,
         "standard": catalog.registry["standard"],
+        "release": catalog.registry["release"],
+        "capabilities": catalog.registry["capabilities"],
         "collections": collections,
         "themes": themes
     }))
@@ -660,14 +1008,105 @@ pub fn native_value_for(catalog: &Catalog, theme_id: &str, mode: &str) -> Result
 #[cfg(test)]
 mod tests {
     use super::*;
+    use std::{
+        io::{Read, Write},
+        net::TcpListener,
+        thread,
+        time::Duration,
+    };
 
     const REGISTRY: &[u8] = include_bytes!("../../../../themes/registry.json");
+    const CATALOG: &[u8] = include_bytes!("../../../../themes/catalog.json");
+
+    fn serve_chunked_json(chunks: Vec<Vec<u8>>) -> (String, thread::JoinHandle<()>) {
+        let listener = TcpListener::bind(("127.0.0.1", 0)).expect("test server should bind");
+        let address = listener
+            .local_addr()
+            .expect("test server should expose an address");
+        let worker = thread::spawn(move || {
+            let (mut stream, _) = listener
+                .accept()
+                .expect("test server should accept a request");
+            let mut request = [0_u8; 1024];
+            let _ = stream.read(&mut request);
+            stream
+                .write_all(
+                    b"HTTP/1.1 200 OK\r\nContent-Type: application/json\r\nTransfer-Encoding: chunked\r\nConnection: close\r\n\r\n",
+                )
+                .expect("test server should write response headers");
+            for chunk in chunks {
+                stream
+                    .write_all(format!("{:X}\r\n", chunk.len()).as_bytes())
+                    .expect("test server should write chunk size");
+                stream
+                    .write_all(&chunk)
+                    .expect("test server should write chunk body");
+                stream
+                    .write_all(b"\r\n")
+                    .expect("test server should write chunk terminator");
+            }
+            stream
+                .write_all(b"0\r\n\r\n")
+                .expect("test server should finish chunked response");
+        });
+        (format!("http://{address}/catalog.json"), worker)
+    }
+
+    fn serve_response(
+        content_type: &str,
+        content_length: Option<usize>,
+        body: Vec<u8>,
+        delay: Duration,
+    ) -> (String, thread::JoinHandle<()>) {
+        let listener = TcpListener::bind(("127.0.0.1", 0)).expect("test server should bind");
+        let address = listener
+            .local_addr()
+            .expect("test server should expose an address");
+        let content_length = content_length
+            .map(|length| format!("Content-Length: {length}\r\n"))
+            .unwrap_or_default();
+        let headers = format!(
+            "HTTP/1.1 200 OK\r\nContent-Type: {content_type}\r\n{content_length}Connection: close\r\n\r\n"
+        );
+        let worker = thread::spawn(move || {
+            let (mut stream, _) = listener
+                .accept()
+                .expect("test server should accept a request");
+            let mut request = [0_u8; 1024];
+            let _ = stream.read(&mut request);
+            thread::sleep(delay);
+            let _ = stream.write_all(headers.as_bytes());
+            let _ = stream.write_all(&body);
+        });
+        (format!("http://{address}/catalog.json"), worker)
+    }
+
+    fn test_client(timeout: Duration) -> reqwest::Client {
+        crate::install_crypto_provider();
+        reqwest::Client::builder()
+            .timeout(timeout)
+            .build()
+            .expect("test client should build")
+    }
 
     #[test]
-    fn bundled_registry_has_sixty_eight_valid_dual_mode_themes() {
+    fn bundled_registry_matches_the_source_catalog() {
         let registry = validate_registry(REGISTRY).expect("registry should validate");
-        assert_eq!(registry["catalogRevision"].as_u64(), Some(2026072201));
-        assert_eq!(registry["themes"].as_array().map(Vec::len), Some(68));
+        let catalog: Value = serde_json::from_slice(CATALOG).expect("source catalog should parse");
+        assert_eq!(registry["catalogRevision"], catalog["catalogRevision"]);
+        assert_eq!(
+            registry["themes"].as_array().map(Vec::len),
+            catalog["themes"].as_array().map(Vec::len),
+        );
+    }
+
+    #[test]
+    fn registry_rejects_malformed_runtime_evidence() {
+        let mut registry: Value =
+            serde_json::from_slice(REGISTRY).expect("registry JSON should parse");
+        registry["runtimeEvidence"]["status"] = json!("unknown");
+        let encoded = serde_json::to_vec(&registry).expect("registry JSON should encode");
+        assert!(validate_registry(&encoded).is_err());
     }
 
     #[test]
@@ -686,6 +1125,90 @@ mod tests {
             native_value_for(&catalog, "qinglan-odyssey", "light")
                 .expect("theme should exist")
                 .starts_with("codex-theme-v1:")
+        );
+    }
+
+    #[test]
+    fn remote_catalog_fetch_rejects_an_oversized_chunked_response() {
+        let (url, worker) = serve_chunked_json(vec![vec![b'x'; 96 * 1024]]);
+        let client = test_client(Duration::from_secs(1));
+        let result = tauri::async_runtime::block_on(fetch_bytes(&client, &url, 64 * 1024));
+        worker.join().expect("test server should finish");
+
+        assert!(
+            result.is_err(),
+            "chunked catalog responses must be rejected before they can be fully buffered"
+        );
+    }
+
+    #[test]
+    fn remote_catalog_fetch_rejects_an_oversized_declared_response() {
+        let (url, worker) = serve_response(
+            "application/json",
+            Some(64 * 1024 + 1),
+            Vec::new(),
+            Duration::ZERO,
+        );
+        let client = test_client(Duration::from_secs(1));
+        let result = tauri::async_runtime::block_on(fetch_bytes(&client, &url, 64 * 1024));
+        worker.join().expect("test server should finish");
+
+        assert!(
+            result.is_err(),
+            "declared catalog responses above the hard limit must be rejected before reading"
+        );
+    }
+
+    #[test]
+    fn remote_catalog_fetch_rejects_the_wrong_content_type() {
+        let (url, worker) = serve_response("text/html", Some(2), b"{}".to_vec(), Duration::ZERO);
+        let client = test_client(Duration::from_secs(1));
+        let result = tauri::async_runtime::block_on(fetch_bytes(&client, &url, 64 * 1024));
+        worker.join().expect("test server should finish");
+
+        assert!(
+            result.is_err(),
+            "catalog responses with an unexpected content type must be rejected"
+        );
+    }
+
+    #[test]
+    fn remote_catalog_fetch_rejects_truncated_data() {
+        let (url, worker) =
+            serve_response("application/json", Some(64), b"{}".to_vec(), Duration::ZERO);
+        let client = test_client(Duration::from_secs(1));
+        let result = tauri::async_runtime::block_on(fetch_bytes(&client, &url, 64 * 1024));
+        worker.join().expect("test server should finish");
+
+        assert!(result.is_err(), "truncated catalog data must be rejected");
+    }
+
+    #[test]
+    fn remote_catalog_fetch_times_out_before_response_headers_arrive() {
+        let (url, worker) = serve_response(
+            "application/json",
+            Some(2),
+            b"{}".to_vec(),
+            Duration::from_millis(250),
+        );
+        let client = test_client(Duration::from_millis(50));
+        let result = tauri::async_runtime::block_on(fetch_bytes(&client, &url, 64 * 1024));
+        worker.join().expect("test server should finish");
+
+        assert!(
+            result.is_err(),
+            "catalog requests must respect the client timeout"
+        );
+    }
+
+    #[test]
+    fn registry_rejects_invalid_presentation_metadata() {
+        let mut registry: Value = serde_json::from_slice(REGISTRY).expect("registry should parse");
+        registry["themes"][0]["previews"]["light"]["capture"]["presentation"][0]["format"] =
+            json!("jpg");
+        assert!(
+            validate_registry(&serde_json::to_vec(&registry).expect("registry should serialize"))
+                .is_err()
         );
     }
 }

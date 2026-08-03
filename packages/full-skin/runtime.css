@@ -18,6 +18,7 @@ html.act-full-skin body {
   background-position: var(--act-art-position) !important;
   background-repeat: no-repeat !important;
   background-size: cover !important;
+  /* Keep the existing fixed attachment until it has a physical Windows/macOS comparison. */
   background-attachment: fixed !important;
   color: var(--act-text);
 }
@@ -69,10 +70,10 @@ html.act-full-skin main.main-surface .app-shell-main-content-top-fade {
 }
 
 html.act-full-skin .composer-surface-chrome,
-html.act-full-skin .composer-surface-chrome [class*="bg-token-side-bar-background"],
-html.act-full-skin .composer-surface-chrome [class*="bg-token-bg-fog"],
-html.act-full-skin.act-full-skin-home [role="main"] [class*="bg-token-side-bar-background"],
-html.act-full-skin.act-full-skin-home [role="main"] [class*="bg-token-bg-fog"] {
+html.act-full-skin .composer-surface-chrome .bg-token-side-bar-background,
+html.act-full-skin .composer-surface-chrome .bg-token-bg-fog,
+html.act-full-skin.act-full-skin-home [role="main"] .bg-token-side-bar-background,
+html.act-full-skin.act-full-skin-home [role="main"] .bg-token-bg-fog {
   border-color: color-mix(in srgb, var(--act-border) 66%, transparent) !important;
   background:
     linear-gradient(
@@ -87,7 +88,7 @@ html.act-full-skin.act-full-skin-home [role="main"] [class*="bg-token-bg-fog"] {
 }
 
 html.act-full-skin .group\/home-suggestions button,
-html.act-full-skin [class*="home-suggestions"] button {
+html.act-full-skin .group\/home-suggestions [role="button"] {
   border-color: color-mix(in srgb, var(--act-border) 65%, transparent) !important;
   background:
     linear-gradient(
@@ -102,49 +103,38 @@ html.act-full-skin [class*="home-suggestions"] button {
 html.act-full-skin aside.app-shell-left-panel button:hover,
 html.act-full-skin aside.app-shell-left-panel a:hover,
 html.act-full-skin .group\/home-suggestions button:hover,
-html.act-full-skin [class*="home-suggestions"] button:hover {
+html.act-full-skin .group\/home-suggestions [role="button"]:hover {
   border-color: color-mix(in srgb, var(--act-accent) 55%, transparent) !important;
   background-color: color-mix(in srgb, var(--act-accent) 12%, transparent) !important;
 }
 
-html.act-full-skin aside.app-shell-left-panel,
-html.act-full-skin aside.app-shell-left-panel button,
-html.act-full-skin aside.app-shell-left-panel a,
-html.act-full-skin .group\/home-suggestions button,
-html.act-full-skin [class*="home-suggestions"] button {
-  color: var(--act-text) !important;
-}
-
-html.act-full-skin [class*="text-token-foreground"],
-html.act-full-skin .group\/home-suggestions [class*="text-"],
-html.act-full-skin [class*="home-suggestions"] [class*="text-"],
-html.act-full-skin .composer-surface-chrome *,
-html.act-full-skin .composer-surface-chrome [class*="text-"],
-html.act-full-skin.act-full-skin-home [role="main"] [class*="bg-token-side-bar-background"] [class*="text-"],
-html.act-full-skin.act-full-skin-home [role="main"] [class*="bg-token-bg-fog"] [class*="text-"] {
-  color: var(--act-text) !important;
-}
-
-html.act-full-skin [class*="text-token-text-secondary"],
-html.act-full-skin [class*="text-token-text-tertiary"],
-html.act-full-skin [class*="text-token-foreground-secondary"],
-html.act-full-skin [class*="text-token-foreground-tertiary"],
+/*
+ * Semantic-state compatibility: only structural surfaces receive an ACT
+ * background. Native error, warning, success, diff, link, and status-icon
+ * colors retain their own foreground declarations instead of being flattened
+ * by wildcard descendants or class-substring color overrides.
+ */
 html.act-full-skin .composer-surface-chrome textarea::placeholder,
 html.act-full-skin .composer-surface-chrome input::placeholder,
-html.act-full-skin .composer-surface-chrome [data-placeholder]::before,
-html.act-full-skin .composer-surface-chrome .is-editor-empty::before,
 html.act-full-skin [role="main"] textarea::placeholder,
 html.act-full-skin [role="main"] input::placeholder {
   color: var(--act-muted) !important;
 }
 
-html.act-full-skin aside.app-shell-left-panel svg,
-html.act-full-skin .group\/home-suggestions svg,
-html.act-full-skin [class*="home-suggestions"] svg,
-html.act-full-skin .composer-surface-chrome svg,
-html.act-full-skin.act-full-skin-home [role="main"] [class*="bg-token-side-bar-background"] svg,
-html.act-full-skin.act-full-skin-home [role="main"] [class*="bg-token-bg-fog"] svg {
-  color: var(--act-accent) !important;
+html.act-full-skin :is(button, input, textarea, select):disabled,
+html.act-full-skin [aria-disabled="true"] {
+  cursor: not-allowed;
+  opacity: 0.58;
+}
+
+html.act-full-skin :focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--act-accent) 78%, white) !important;
+  outline-offset: 2px;
+}
+
+html.act-full-skin ::selection {
+  color: var(--act-accent-contrast);
+  background: var(--act-accent);
 }
 
 #act-full-skin-caption {
@@ -222,5 +212,15 @@ html.act-full-skin[data-act-safe-area="center"] #act-full-skin-caption {
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
+  }
+}
+
+@media (forced-colors: active) {
+  html.act-full-skin {
+    forced-color-adjust: auto;
+  }
+
+  html.act-full-skin :focus-visible {
+    outline-color: Highlight !important;
   }
 }

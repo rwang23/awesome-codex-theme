@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://awesome-codex-theme.dev/schemas/source-art-review.schema.json",
+  "title": "Awesome Codex Theme source-art review ledger",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "review", "attestations"],
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "review": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["reviewer", "reviewedAt", "checks", "notes"],
+      "properties": {
+        "reviewer": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 120
+        },
+        "reviewedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "checks": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "noThirdPartyLogo",
+            "noSignatureOrWatermark",
+            "noUnintendedText",
+            "rightsProfileMatches",
+            "safeAreaReviewed",
+            "lightDarkCaptureReviewed"
+          ],
+          "properties": {
+            "noThirdPartyLogo": { "const": true },
+            "noSignatureOrWatermark": { "const": true },
+            "noUnintendedText": { "const": true },
+            "rightsProfileMatches": { "const": true },
+            "safeAreaReviewed": { "const": true },
+            "lightDarkCaptureReviewed": { "const": true }
+          }
+        },
+        "notes": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 500
+        }
+      }
+    },
+    "attestations": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["themeId", "sourceSha256", "decision"],
+        "properties": {
+          "themeId": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+          },
+          "sourceSha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "decision": {
+            "const": "approved"
+          }
+        }
+      }
+    }
+  }
+}

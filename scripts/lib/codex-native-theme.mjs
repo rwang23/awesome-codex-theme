@@ -1,4 +1,6 @@
-export const CODEX_NATIVE_TESTED_VERSION = "26.715.2305.0";
+import { CODEX_NATIVE_TESTED_VERSION as METADATA_NATIVE_TESTED_VERSION } from "./release-metadata.mjs";
+
+export const CODEX_NATIVE_TESTED_VERSION = METADATA_NATIVE_TESTED_VERSION;
 export const CODEX_THEME_PREFIX = "codex-theme-v1:";
 
 const HEX = /^#[0-9A-Fa-f]{6}$/;

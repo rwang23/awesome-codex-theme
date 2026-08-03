@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Deserialize, Serialize)]
+#[derive(Clone, Debug, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct TargetView {
     pub channel: String,
@@ -27,8 +27,37 @@ pub struct TargetView {
     executable_path: Option<String>,
 }
 
+#[derive(Clone, Debug, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct DiscoveryDiagnostic {
+    pub code: String,
+    pub detail: String,
+}
+
+impl DiscoveryDiagnostic {
+    fn new(code: &str, detail: impl Into<String>) -> Self {
+        Self {
+            code: code.into(),
+            detail: detail.into(),
+        }
+    }
+
+    fn message(&self) -> String {
+        format!("[{}] {}", self.code, self.detail)
+    }
+}
+
+#[derive(Clone, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct TargetDiscovery {
+    pub targets: Vec<TargetView>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub diagnostic: Option<DiscoveryDiagnostic>,
+}
+
 #[cfg(target_os = "windows")]
 const WINDOWS_TARGET_SCRIPT: &str = r#"
+$ErrorActionPreference = "Stop"
 $definitions = @(
   @{ channel = "stable"; package = "OpenAI.Codex"; executable = "app\ChatGPT.exe"; label = "ChatGPT" },
   @{ channel = "beta"; package = "OpenAI.CodexBeta"; executable = "app\ChatGPT (Beta).exe"; label = "ChatGPT Beta" }
@@ -43,11 +72,13 @@ foreach ($definition in $definitions) {
   $applications = @($manifest.Package.Applications.Application | Where-Object {
     "$($_.Executable)".Replace("/", "\") -ieq $definition.executable
   })
-  if ($applications.Count -ne 1) { continue }
+  if ($applications.Count -ne 1) {
+    throw "ACT_MALFORMED_PACKAGE: $($definition.package) has unexpected application metadata"
+  }
   $family = "$($package.PackageFamilyName)"
   $applicationId = "$($applications[0].Id)"
   if ($family -notmatch "^[A-Za-z0-9._-]{1,128}$" -or $applicationId -notmatch "^[A-Za-z0-9._-]{1,64}$") {
-    continue
+    throw "ACT_MALFORMED_PACKAGE: $($definition.package) has an invalid package identity"
   }
   $targets += @{
     channel = $definition.channel
@@ -71,8 +102,59 @@ fn hidden_command(program: &str) -> std::process::Command {
     command
 }
 
+#[cfg(any(target_os = "windows", target_os = "macos", test))]
+fn discovery_error_code(error: &std::io::Error) -> &'static str {
+    match error.kind() {
+        std::io::ErrorKind::NotFound => "command-unavailable",
+        std::io::ErrorKind::PermissionDenied => "permission-denied",
+        _ => "command-failed",
+    }
+}
+
+fn discovery_output_error_code(detail: &str) -> &'static str {
+    let detail = detail.to_ascii_lowercase();
+    if detail.contains("act_malformed_package") {
+        "malformed-package"
+    } else if detail.contains("access is denied")
+        || detail.contains("permission denied")
+        || detail.contains("operation not permitted")
+        || detail.contains("拒绝访问")
+    {
+        "permission-denied"
+    } else {
+        "command-failed"
+    }
+}
+
+#[cfg(any(target_os = "windows", test))]
+fn parse_windows_targets(text: &str) -> Result<Vec<TargetView>, DiscoveryDiagnostic> {
+    if text.trim().is_empty() {
+        return Ok(Vec::new());
+    }
+    let value: serde_json::Value = serde_json::from_str(text.trim()).map_err(|error| {
+        DiscoveryDiagnostic::new(
+            "malformed-output",
+            format!("Windows 应用检查结果无效：{error}"),
+        )
+    })?;
+    if value.is_array() {
+        serde_json::from_value(value).map_err(|error| {
+            DiscoveryDiagnostic::new("malformed-output", format!("Windows 应用列表无效：{error}"))
+        })
+    } else {
+        serde_json::from_value(value)
+            .map(|target| vec![target])
+            .map_err(|error| {
+                DiscoveryDiagnostic::new(
+                    "malformed-output",
+                    format!("Windows 应用记录无效：{error}"),
+                )
+            })
+    }
+}
+
 #[cfg(target_os = "windows")]
-fn discover_platform_targets() -> Result<Vec<TargetView>, String> {
+fn discover_platform_targets() -> Result<Vec<TargetView>, DiscoveryDiagnostic> {
     let output = hidden_command("powershell.exe")
         .args([
             "-NoProfile",
@@ -83,24 +165,31 @@ fn discover_platform_targets() -> Result<Vec<TargetView>, String> {
             WINDOWS_TARGET_SCRIPT,
         ])
         .output()
-        .map_err(|error| format!("无法检查 Windows ChatGPT 应用：{error}"))?;
+        .map_err(|error| {
+            DiscoveryDiagnostic::new(
+                discovery_error_code(&error),
+                format!("无法检查 Windows ChatGPT 应用：{error}"),
+            )
+        })?;
     if !output.status.success() {
-        return Err("Windows ChatGPT 应用检查失败".into());
+        let detail = String::from_utf8_lossy(&output.stderr).trim().to_owned();
+        let code = discovery_output_error_code(&detail);
+        return Err(DiscoveryDiagnostic::new(
+            code,
+            if detail.is_empty() {
+                "Windows ChatGPT 应用检查失败".into()
+            } else {
+                format!("Windows ChatGPT 应用检查失败：{detail}")
+            },
+        ));
     }
-    let text = String::from_utf8(output.stdout)
-        .map_err(|error| format!("Windows 应用检查结果不是 UTF-8：{error}"))?;
-    if text.trim().is_empty() {
-        return Ok(Vec::new());
-    }
-    let value: serde_json::Value = serde_json::from_str(text.trim())
-        .map_err(|error| format!("Windows 应用检查结果无效：{error}"))?;
-    if value.is_array() {
-        serde_json::from_value(value).map_err(|error| format!("Windows 应用列表无效：{error}"))
-    } else {
-        serde_json::from_value(value)
-            .map(|target| vec![target])
-            .map_err(|error| format!("Windows 应用记录无效：{error}"))
-    }
+    let text = String::from_utf8(output.stdout).map_err(|error| {
+        DiscoveryDiagnostic::new(
+            "malformed-output",
+            format!("Windows 应用检查结果不是 UTF-8：{error}"),
+        )
+    })?;
+    parse_windows_targets(&text)
 }
 
 #[cfg(any(target_os = "macos", test))]
@@ -173,13 +262,17 @@ fn macos_target_from_bundle(
 }
 
 #[cfg(target_os = "macos")]
-fn discover_macos_target(channel: &str, label: &str, expected_bundle: &str) -> Option<TargetView> {
+fn discover_macos_target(
+    channel: &str,
+    label: &str,
+    expected_bundle: &str,
+) -> Result<Option<TargetView>, DiscoveryDiagnostic> {
     let home = std::env::var("HOME").ok().unwrap_or_default();
     let names = macos_application_names(channel);
     for candidate in macos_named_bundle_paths(&home, names) {
         if let Some(target) = macos_target_from_bundle(channel, label, expected_bundle, &candidate)
         {
-            return Some(target);
+            return Ok(Some(target));
         }
     }
     let output = std::process::Command::new("/usr/bin/mdfind")
@@ -187,34 +280,67 @@ fn discover_macos_target(channel: &str, label: &str, expected_bundle: &str) -> O
             "kMDItemCFBundleIdentifier == \"{expected_bundle}\""
         ))
         .output()
-        .ok()?;
+        .map_err(|error| {
+            DiscoveryDiagnostic::new(
+                discovery_error_code(&error),
+                format!("无法检查 macOS ChatGPT 应用：{error}"),
+            )
+        })?;
     if !output.status.success() {
-        return None;
+        let detail = String::from_utf8_lossy(&output.stderr).trim().to_owned();
+        return Err(DiscoveryDiagnostic::new(
+            discovery_output_error_code(&detail),
+            if detail.is_empty() {
+                "macOS ChatGPT 应用检查失败".into()
+            } else {
+                format!("macOS ChatGPT 应用检查失败：{detail}")
+            },
+        ));
     }
-    String::from_utf8(output.stdout)
-        .ok()?
+    let output = String::from_utf8(output.stdout).map_err(|error| {
+        DiscoveryDiagnostic::new(
+            "malformed-output",
+            format!("macOS 应用检查结果不是 UTF-8：{error}"),
+        )
+    })?;
+    Ok(output
         .lines()
-        .find_map(|candidate| macos_target_from_bundle(channel, label, expected_bundle, candidate))
+        .find_map(|candidate| macos_target_from_bundle(channel, label, expected_bundle, candidate)))
 }
 
 #[cfg(target_os = "macos")]
-fn discover_platform_targets() -> Result<Vec<TargetView>, String> {
-    Ok([
+fn discover_platform_targets() -> Result<Vec<TargetView>, DiscoveryDiagnostic> {
+    let mut targets = Vec::new();
+    for (channel, label, bundle_id) in [
         ("stable", "ChatGPT", "com.openai.codex"),
         ("beta", "ChatGPT Beta", "com.openai.codex.beta"),
-    ]
-    .into_iter()
-    .filter_map(|(channel, label, bundle_id)| discover_macos_target(channel, label, bundle_id))
-    .collect())
+    ] {
+        if let Some(target) = discover_macos_target(channel, label, bundle_id)? {
+            targets.push(target);
+        }
+    }
+    Ok(targets)
 }
 
 #[cfg(not(any(target_os = "windows", target_os = "macos")))]
-fn discover_platform_targets() -> Result<Vec<TargetView>, String> {
-    Ok(Vec::new())
+fn discover_platform_targets() -> Result<Vec<TargetView>, DiscoveryDiagnostic> {
+    Err(DiscoveryDiagnostic::new(
+        "unsupported-platform",
+        "当前平台暂不支持 ChatGPT Full Skin 目标检测",
+    ))
 }
 
-pub fn discover_targets() -> Vec<TargetView> {
-    discover_platform_targets().unwrap_or_default()
+pub fn discover_targets() -> TargetDiscovery {
+    match discover_platform_targets() {
+        Ok(targets) => TargetDiscovery {
+            targets,
+            diagnostic: None,
+        },
+        Err(diagnostic) => TargetDiscovery {
+            targets: Vec::new(),
+            diagnostic: Some(diagnostic),
+        },
+    }
 }
 
 fn safe_channel(channel: &str) -> bool {
@@ -225,10 +351,11 @@ pub fn find_target(channel: &str) -> Result<TargetView, String> {
     if !safe_channel(channel) {
         return Err("未知的 ChatGPT 渠道".into());
     }
-    discover_platform_targets()?
+    discover_platform_targets()
+        .map_err(|diagnostic| diagnostic.message())?
         .into_iter()
         .find(|target| target.channel == channel)
-        .ok_or_else(|| "没有检测到所选 ChatGPT 应用".into())
+        .ok_or_else(|| "[not-installed] 没有检测到所选 ChatGPT 应用".into())
 }
 
 fn full_skin_target_can_start_runtime_probe(
@@ -244,7 +371,7 @@ pub fn validate_full_skin_target(target: &TargetView) -> Result<(), String> {
     }
     if !full_skin_target_can_start_runtime_probe(&target.channel, target.version.as_deref()) {
         return Err(format!(
-            "无法读取所选 {} 的准确版本；Full Skin 无法把本机兼容性探测绑定到该应用。",
+            "[unsupported-version] 无法读取所选 {} 的准确版本；Full Skin 无法把本机兼容性探测绑定到该应用。",
             target.label
         ));
     }
@@ -418,7 +545,19 @@ if ($matches.Count -eq 0) { "false" } else { "true" }
         .env("ACT_PACKAGE", package)
         .output()
         .map_err(|error| format!("无法检查 ChatGPT 进程：{error}"))?;
-    Ok(output.status.success() && String::from_utf8_lossy(&output.stdout).trim() == "true")
+    if !output.status.success() {
+        let detail = String::from_utf8_lossy(&output.stderr).trim().to_owned();
+        return Err(if detail.is_empty() {
+            "无法检查 ChatGPT 进程".into()
+        } else {
+            format!("无法检查 ChatGPT 进程：{detail}")
+        });
+    }
+    match String::from_utf8_lossy(&output.stdout).trim() {
+        "true" => Ok(true),
+        "false" => Ok(false),
+        _ => Err("ChatGPT 进程检查结果无效".into()),
+    }
 }
 
 #[cfg(target_os = "macos")]
@@ -451,8 +590,66 @@ pub fn target_is_running(_target: &TargetView) -> Result<bool, String> {
     Ok(false)
 }
 
+#[cfg(any(target_os = "windows", test))]
+const WINDOWS_GRACEFUL_STOP_SCRIPT: &str = r#"
+$ErrorActionPreference = "Stop"
+$matches = @(Get-Process | ForEach-Object {
+  try { $path = $_.Path } catch { $path = $null }
+  if ($path -and
+      $path -ieq $env:ACT_EXECUTABLE -and
+      $path -like ("*\" + $env:ACT_PACKAGE + "\*")) {
+    $_
+  }
+})
+if ($matches.Count -eq 0) { "not-running"; exit 0 }
+foreach ($match in $matches) {
+  [void]$match.CloseMainWindow()
+}
+"requested"
+"#;
+
+#[cfg(any(target_os = "windows", test))]
+fn graceful_stop_was_requested(output: &str) -> bool {
+    matches!(output.trim(), "requested" | "not-running")
+}
+
 #[cfg(target_os = "windows")]
 pub fn stop_target(target: &TargetView) -> Result<(), String> {
+    let executable = target
+        .executable_path
+        .as_deref()
+        .ok_or("Windows 可执行文件身份缺失")?;
+    let package = target
+        .package_full_name
+        .as_deref()
+        .ok_or("Windows 包身份缺失")?;
+    let output = hidden_command("powershell.exe")
+        .args([
+            "-NoProfile",
+            "-NonInteractive",
+            "-Command",
+            WINDOWS_GRACEFUL_STOP_SCRIPT,
+        ])
+        .env("ACT_EXECUTABLE", executable)
+        .env("ACT_PACKAGE", package)
+        .output()
+        .map_err(|error| format!("无法关闭所选 ChatGPT：{error}"))?;
+    if !output.status.success() {
+        let detail = String::from_utf8_lossy(&output.stderr).trim().to_owned();
+        return Err(if detail.is_empty() {
+            "无法请求所选 ChatGPT 正常退出".into()
+        } else {
+            format!("无法请求所选 ChatGPT 正常退出：{detail}")
+        });
+    }
+    if !graceful_stop_was_requested(&String::from_utf8_lossy(&output.stdout)) {
+        return Err("所选 ChatGPT 没有接受正常退出请求".into());
+    }
+    Ok(())
+}
+
+#[cfg(target_os = "windows")]
+pub fn force_stop_target(target: &TargetView) -> Result<(), String> {
     let executable = target
         .executable_path
         .as_deref()
@@ -474,16 +671,16 @@ $matches = @(Get-Process | ForEach-Object {
 foreach ($match in $matches) {
   Stop-Process -Id $match.Id -Force -ErrorAction Stop
 }
-"true"
+"stopped"
 "#;
     let output = hidden_command("powershell.exe")
         .args(["-NoProfile", "-NonInteractive", "-Command", script])
         .env("ACT_EXECUTABLE", executable)
         .env("ACT_PACKAGE", package)
         .output()
-        .map_err(|error| format!("无法关闭所选 ChatGPT：{error}"))?;
-    if !output.status.success() || String::from_utf8_lossy(&output.stdout).trim() != "true" {
-        return Err("无法安全关闭所选 ChatGPT".into());
+        .map_err(|error| format!("无法强制关闭所选 ChatGPT：{error}"))?;
+    if !output.status.success() || String::from_utf8_lossy(&output.stdout).trim() != "stopped" {
+        return Err("无法强制关闭所选 ChatGPT".into());
     }
     Ok(())
 }
@@ -502,9 +699,19 @@ pub fn stop_target(target: &TargetView) -> Result<(), String> {
     Ok(())
 }
 
+#[cfg(target_os = "macos")]
+pub fn force_stop_target(_target: &TargetView) -> Result<(), String> {
+    Err("请手动关闭 macOS ChatGPT；Theme Manager 不会强制终止它。".into())
+}
+
 #[cfg(not(any(target_os = "windows", target_os = "macos")))]
 pub fn stop_target(_target: &TargetView) -> Result<(), String> {
     Err("当前平台暂不支持受控重启".into())
+}
+
+#[cfg(not(any(target_os = "windows", target_os = "macos")))]
+pub fn force_stop_target(_target: &TargetView) -> Result<(), String> {
+    Err("当前平台暂不支持强制关闭 ChatGPT".into())
 }
 
 #[cfg(any(target_os = "windows", test))]
@@ -699,8 +906,29 @@ fn macos_process_is_target_or_descendant(pid: &str, executable: &str) -> Result<
 }
 
 #[cfg(any(target_os = "macos", test))]
-fn persistence_host_path_is_durable(path: &str) -> bool {
-    !path.starts_with("/Volumes/") && path.contains(".app/Contents/MacOS/")
+fn persistence_host_path_is_durable(path: &str, home: &str) -> bool {
+    let path = std::path::Path::new(path);
+    [
+        std::path::PathBuf::from("/Applications"),
+        std::path::Path::new(home).join("Applications"),
+    ]
+    .iter()
+    .any(|root| {
+        let Ok(relative) = path.strip_prefix(root) else {
+            return false;
+        };
+        let mut parts = relative.components();
+        let Some(std::path::Component::Normal(bundle)) = parts.next() else {
+            return false;
+        };
+        if !bundle.to_string_lossy().ends_with(".app")
+            || !matches!(parts.next(), Some(std::path::Component::Normal(part)) if part == std::ffi::OsStr::new("Contents"))
+            || !matches!(parts.next(), Some(std::path::Component::Normal(part)) if part == std::ffi::OsStr::new("MacOS"))
+        {
+            return false;
+        }
+        matches!(parts.next(), Some(std::path::Component::Normal(_))) && parts.next().is_none()
+    })
 }
 
 #[cfg(target_os = "macos")]
@@ -709,7 +937,8 @@ pub fn validate_persistence_host() -> Result<(), String> {
         .and_then(std::fs::canonicalize)
         .map_err(|error| format!("无法定位 Theme Manager 安装路径：{error}"))?;
     let path = executable.to_string_lossy();
-    if !persistence_host_path_is_durable(&path) {
+    let home = std::env::var("HOME").map_err(|error| format!("无法定位当前用户主目录：{error}"))?;
+    if !persistence_host_path_is_durable(&path, &home) {
         return Err("请先把 Awesome Codex Theme 拖入 Applications，再开启“始终应用”。".into());
     }
     Ok(())
@@ -733,16 +962,88 @@ mod tests {
     fn macos_persistence_rejects_transient_disk_images() {
         assert!(!persistence_host_path_is_durable(
             "/Volumes/Awesome Codex Theme/Awesome Codex Theme.app/Contents/MacOS/awesome-codex-theme",
+            "/Users/test",
         ));
         assert!(persistence_host_path_is_durable(
             "/Applications/Awesome Codex Theme.app/Contents/MacOS/awesome-codex-theme",
+            "/Users/test",
         ));
         assert!(persistence_host_path_is_durable(
             "/Users/test/Applications/Awesome Codex Theme.app/Contents/MacOS/awesome-codex-theme",
+            "/Users/test",
         ));
         assert!(!persistence_host_path_is_durable(
-            "/usr/local/bin/awesome-codex-theme"
+            "/usr/local/bin/awesome-codex-theme",
+            "/Users/test",
         ));
+        assert!(!persistence_host_path_is_durable(
+            "/tmp/Awesome Codex Theme.app/Contents/MacOS/awesome-codex-theme",
+            "/Users/test",
+        ));
+        assert!(!persistence_host_path_is_durable(
+            "/Users/other/Applications/Awesome Codex Theme.app/Contents/MacOS/awesome-codex-theme",
+            "/Users/test",
+        ));
+    }
+
+    #[cfg(target_os = "windows")]
+    #[test]
+    fn windows_graceful_stop_never_forces_termination() {
+        assert!(WINDOWS_GRACEFUL_STOP_SCRIPT.contains("CloseMainWindow"));
+        assert!(!WINDOWS_GRACEFUL_STOP_SCRIPT.contains("-Force"));
+    }
+
+    #[cfg(target_os = "windows")]
+    #[test]
+    fn malformed_windows_discovery_is_a_diagnostic() {
+        let diagnostic = parse_windows_targets("not json").expect_err("invalid JSON should fail");
+        assert_eq!(diagnostic.code, "malformed-output");
+    }
+
+    #[test]
+    fn discovery_error_codes_preserve_command_and_permission_failures() {
+        assert_eq!(
+            discovery_error_code(&std::io::Error::new(
+                std::io::ErrorKind::NotFound,
+                "missing"
+            )),
+            "command-unavailable"
+        );
+        assert_eq!(
+            discovery_error_code(&std::io::Error::new(
+                std::io::ErrorKind::PermissionDenied,
+                "denied",
+            )),
+            "permission-denied"
+        );
+        assert_eq!(
+            discovery_output_error_code("Access is denied"),
+            "permission-denied"
+        );
+        assert_eq!(
+            discovery_output_error_code("ACT_MALFORMED_PACKAGE: invalid metadata"),
+            "malformed-package"
+        );
+    }
+
+    #[cfg(target_os = "windows")]
+    #[test]
+    fn windows_discovery_keeps_multiple_targets() {
+        let targets = parse_windows_targets(
+            r#"[{"channel":"stable","label":"ChatGPT","version":"1"},{"channel":"beta","label":"ChatGPT Beta","version":"2"}]"#,
+        )
+        .expect("two valid targets should parse");
+        assert_eq!(targets.len(), 2);
+        assert_eq!(targets[0].channel, "stable");
+        assert_eq!(targets[1].channel, "beta");
+    }
+
+    #[cfg(target_os = "windows")]
+    #[test]
+    fn graceful_stop_accepts_a_normal_close_or_already_stopped_target() {
+        assert!(graceful_stop_was_requested("requested"));
+        assert!(graceful_stop_was_requested("not-running"));
+        assert!(!graceful_stop_was_requested("stopped"));
     }
 
     #[test]

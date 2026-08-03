@@ -1,4 +1,4 @@
-name: Build desktop theme manager
+name: Verify theme artifacts, build Theme Manager, and publish gallery
 
 on:
   push:
@@ -7,54 +7,121 @@ on:
     tags:
       - "v*"
     paths:
-      - ".github/workflows/desktop.yml"
+      - ".github/dependabot.yml"
+      - ".github/workflows/**"
       - "apps/theme-manager/**"
-      - "packages/full-skin/**"
-      - "scripts/prepare-desktop.mjs"
-      - "scripts/capture-full-skin-screenshots.mjs"
-      - "scripts/smoke-theme-manager.mjs"
-      - "scripts/lib/png.mjs"
-      - "themes/catalog.json"
-      - "themes/source-art/**"
-      - "screenshots/**"
+      - "assets/**"
+      - "docs/assets/**"
+      - "index.html"
+      - "installer/**"
+      - "LICENSE"
+      - "NOTICE.md"
       - "package.json"
+      - "packages/**"
+      - "schemas/**"
+      - "scripts/**"
+      - "screenshots/**"
+      - "site/**"
+      - "tests/**"
+      - "themes/**"
   pull_request:
     paths:
-      - ".github/workflows/desktop.yml"
+      - ".github/dependabot.yml"
+      - ".github/workflows/**"
       - "apps/theme-manager/**"
-      - "packages/full-skin/**"
-      - "scripts/prepare-desktop.mjs"
-      - "scripts/capture-full-skin-screenshots.mjs"
-      - "scripts/smoke-theme-manager.mjs"
-      - "scripts/lib/png.mjs"
-      - "themes/catalog.json"
-      - "themes/source-art/**"
-      - "screenshots/**"
+      - "assets/**"
+      - "docs/assets/**"
+      - "index.html"
+      - "installer/**"
+      - "LICENSE"
+      - "NOTICE.md"
       - "package.json"
+      - "packages/**"
+      - "schemas/**"
+      - "scripts/**"
+      - "screenshots/**"
+      - "site/**"
+      - "tests/**"
+      - "themes/**"
   workflow_dispatch:
 
 permissions:
   contents: read
 
+concurrency:
+  group: theme-artifacts-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  validate:
+  prepare:
+    name: Generate and validate canonical artifacts
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: Check out repository
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
 
       - name: Set up Node.js
-        uses: actions/setup-node@v7
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
         with:
           node-version: 22
+          package-manager-cache: false
 
-      - name: Generate, validate, and test public artifacts
-        run: npm run generate && npm run validate && npm test
+      - name: Generate, validate, and test public artifacts once
+        run: npm run test:ci
+
+      - name: Prepare desktop assets once
+        run: npm run desktop:prepare
+
+      - name: Upload generated artifact set
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: act-generated-theme-assets
+          path: |
+            themes/registry.json
+            themes/*/manifest.json
+            themes/*/assets/**
+            themes/*/previews/**
+            screenshots/*/presentation/**
+            packages/**
+            apps/theme-manager/build/**
+          retention-days: 2
+          if-no-files-found: error
+
+  a11y:
+    name: Verify Theme Manager accessibility
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version: 22
+          package-manager-cache: false
+
+      - name: Install accessibility test dependencies
+        run: npm ci --prefix apps/theme-manager
+
+      - name: Assert Theme Manager accessibility in Chromium
+        env:
+          ACT_CHROME_BIN: google-chrome
+        run: npm run a11y:check --prefix apps/theme-manager
 
   desktop:
-    needs: validate
+    name: Desktop ${{ matrix.os }} ${{ matrix.rust-target || 'native' }}
+    needs: prepare
+    runs-on: ${{ matrix.os }}
     permissions:
-      contents: write
+      contents: read
     strategy:
       fail-fast: false
       matrix:
@@ -63,44 +130,39 @@ jobs:
             rust-target: ""
             build-args: "--bundles nsis"
             artifact: Awesome-Codex-Theme-Windows-x64
-            release-asset-name: Awesome-Codex-Theme-[version]-Windows-x64[setup][ext]
             artifact-path: apps/theme-manager/src-tauri/target/release/bundle/nsis/*.exe
           - os: macos-14
             rust-target: aarch64-apple-darwin
             build-args: "--target aarch64-apple-darwin --bundles app,dmg"
             artifact: Awesome-Codex-Theme-macOS-Apple-Silicon
-            release-asset-name: Awesome-Codex-Theme-[version]-macOS-Apple-Silicon[ext]
             artifact-path: apps/theme-manager/src-tauri/target/aarch64-apple-darwin/release/bundle/dmg/*.dmg
           - os: macos-14
             rust-target: x86_64-apple-darwin
             build-args: "--target x86_64-apple-darwin --bundles app,dmg"
             artifact: Awesome-Codex-Theme-macOS-Intel
-            release-asset-name: Awesome-Codex-Theme-[version]-macOS-Intel[ext]
             artifact-path: apps/theme-manager/src-tauri/target/x86_64-apple-darwin/release/bundle/dmg/*.dmg
-    runs-on: ${{ matrix.os }}
     steps:
       - name: Check out repository
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+
+      - name: Download generated artifact set
+        uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7
+        with:
+          name: act-generated-theme-assets
+          path: .
 
       - name: Set up Node.js
-        uses: actions/setup-node@v7
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
         with:
           node-version: 22
-          cache: npm
-          cache-dependency-path: apps/theme-manager/package-lock.json
+          package-manager-cache: false
 
       - name: Set up Rust
-        uses: dtolnay/rust-toolchain@stable
+        uses: dtolnay/rust-toolchain@4cda84d5c5c54efe2404f9d843567869ab1699d4 # stable
         with:
           targets: ${{ matrix.rust-target }}
-
-      - name: Cache Rust build
-        uses: swatinem/rust-cache@v2
-        with:
-          workspaces: apps/theme-manager/src-tauri -> target
-
-      - name: Generate, validate, and prepare desktop assets
-        run: npm run generate && npm run validate && npm run desktop:prepare
 
       - name: Validate Windows portable helper
         if: runner.os == 'Windows'
@@ -113,15 +175,16 @@ jobs:
         run: npm run desktop:check
 
       - name: Build platform-untrusted CI artifact
-        if: ${{ !startsWith(github.ref, 'refs/tags/v') || vars.DESKTOP_RELEASE_READY != 'true' }}
         working-directory: apps/theme-manager
         run: npm run tauri -- build ${{ matrix.build-args }}
 
       - name: Verify macOS disk image, bundle identity, and ad-hoc signature
-        if: ${{ (!startsWith(github.ref, 'refs/tags/v') || vars.DESKTOP_RELEASE_READY != 'true') && startsWith(matrix.os, 'macos-') }}
+        if: startsWith(matrix.os, 'macos-')
         shell: bash
         run: |
-          artifacts=( ${{ matrix.artifact-path }} )
+          dmg_dir="apps/theme-manager/src-tauri/target/${{ matrix.rust-target }}/release/bundle/dmg"
+          shopt -s nullglob
+          artifacts=("$dmg_dir"/*.dmg)
           if [ "${#artifacts[@]}" -ne 1 ]; then
             echo "::error::Expected exactly one macOS DMG, found ${#artifacts[@]}."
             exit 1
@@ -137,11 +200,12 @@ jobs:
           trap cleanup EXIT
           hdiutil attach "$dmg" -nobrowse -readonly -mountpoint "$mount_dir"
 
-          app_path="$(find "$mount_dir" -maxdepth 1 -type d -name '*.app' -print -quit)"
-          if [ -z "$app_path" ]; then
-            echo "::error::The DMG does not contain a macOS application bundle."
+          apps=("$mount_dir"/*.app)
+          if [ "${#apps[@]}" -ne 1 ]; then
+            echo "::error::Expected exactly one macOS application bundle."
             exit 1
           fi
+          app_path="${apps[0]}"
 
           info_plist="$app_path/Contents/Info.plist"
           bundle_id="$(/usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' "$info_plist")"
@@ -180,15 +244,121 @@ jobs:
           fi
 
       - name: Upload platform-untrusted CI artifact
-        if: ${{ !startsWith(github.ref, 'refs/tags/v') || vars.DESKTOP_RELEASE_READY != 'true' }}
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
           name: ${{ matrix.artifact }}
           path: ${{ matrix.artifact-path }}
           if-no-files-found: error
 
+  pages:
+    name: Build and verify gallery
+    needs: prepare
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+
+      - name: Download generated artifact set
+        uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7
+        with:
+          name: act-generated-theme-assets
+          path: .
+
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version: 22
+          package-manager-cache: false
+
+      - name: Build gallery from the canonical artifact set
+        run: npm run build
+
+      - name: Assert live gallery behavior in Chromium
+        run: npm run gallery:check -- --screenshot gallery-home.png
+
+      - name: Upload gallery screenshot evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: gallery-screenshot
+          path: gallery-home.png
+          if-no-files-found: warn
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5
+        with:
+          path: dist
+
+  deploy:
+    if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+    needs: pages
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+    steps:
+      - name: Deploy GitHub Pages
+        uses: actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128 # v5
+
+  release:
+    if: startsWith(github.ref, 'refs/tags/v') && vars.DESKTOP_RELEASE_READY == 'true'
+    needs:
+      - prepare
+      - desktop
+    name: Release ${{ matrix.os }} ${{ matrix.rust-target || 'native' }}
+    runs-on: ${{ matrix.os }}
+    permissions:
+      contents: write
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            rust-target: ""
+            build-args: "--bundles nsis"
+            release-asset-name: Awesome-Codex-Theme-[version]-Windows-x64[setup][ext]
+          - os: macos-14
+            rust-target: aarch64-apple-darwin
+            build-args: "--target aarch64-apple-darwin --bundles app,dmg"
+            release-asset-name: Awesome-Codex-Theme-[version]-macOS-Apple-Silicon[ext]
+          - os: macos-14
+            rust-target: x86_64-apple-darwin
+            build-args: "--target x86_64-apple-darwin --bundles app,dmg"
+            release-asset-name: Awesome-Codex-Theme-[version]-macOS-Intel[ext]
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+
+      - name: Download generated artifact set
+        uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7
+        with:
+          name: act-generated-theme-assets
+          path: .
+
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version: 22
+          package-manager-cache: false
+
+      - name: Set up Rust
+        uses: dtolnay/rust-toolchain@4cda84d5c5c54efe2404f9d843567869ab1699d4 # stable
+        with:
+          targets: ${{ matrix.rust-target }}
+
+      - name: Install desktop dependencies
+        run: npm ci --prefix apps/theme-manager
+
       - name: Check updater release credentials
-        if: startsWith(github.ref, 'refs/tags/v') && vars.DESKTOP_RELEASE_READY == 'true'
         shell: bash
         env:
           ACT_UPDATER_PUBKEY: ${{ vars.TAURI_UPDATER_PUBKEY }}
@@ -202,9 +372,15 @@ jobs:
             fi
           done
 
-      - name: Build updater-signed beta artifacts and publish the tagged release
+      - name: Verify release tag matches metadata
         if: startsWith(github.ref, 'refs/tags/v') && vars.DESKTOP_RELEASE_READY == 'true'
-        uses: tauri-apps/tauri-action@v1
+        shell: bash
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: test "$RELEASE_TAG" = "v0.3.3"
+
+      - name: Build updater-signed beta artifacts and publish the tagged release
+        uses: tauri-apps/tauri-action@944946e3e4cac6603d1fe8f514171e9ecd3c78aa # v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ACT_UPDATER_PUBKEY: ${{ vars.TAURI_UPDATER_PUBKEY }}
@@ -214,17 +390,19 @@ jobs:
           projectPath: apps/theme-manager
           args: "--config src-tauri/tauri.release.conf.json ${{ matrix.build-args }}"
           tagName: ${{ github.ref_name }}
-          releaseName: "Awesome Codex Theme ${{ github.ref_name }} Beta"
+          releaseName: "Awesome Codex Theme v0.3.3 Beta"
           releaseAssetNamePattern: ${{ matrix.release-asset-name }}
-          releaseBody: "Updater-signed Tauri Theme Manager beta with ACT Full Skin v1. Windows Authenticode and Apple Developer ID signing/notarization are not included in this beta, so the operating system may show an unknown-publisher warning. macOS bundles carry an ad-hoc signature for package integrity only. The app applies verified backgrounds, materials, colors, and theme copy without modifying ChatGPT application files."
-          prerelease: false
+          releaseBody: "Updater-signed Tauri Theme Manager beta with ACT Full Skin v1. The current v3 runtime is source-tested and requires real-app recapture before a physical-app verification claim; the updater feed remains unreleased. Windows Authenticode and Apple Developer ID signing/notarization are not included in this beta, so the operating system may show an unknown-publisher warning. macOS bundles carry an ad-hoc signature for package integrity only. The app uses only the selected package's loopback target and never modifies application files, user data, or conversations."
+          prerelease: true
           releaseDraft: true
 
       - name: Verify release macOS disk image and ad-hoc signature
-        if: startsWith(github.ref, 'refs/tags/v') && vars.DESKTOP_RELEASE_READY == 'true' && startsWith(matrix.os, 'macos-')
+        if: startsWith(matrix.os, 'macos-')
         shell: bash
         run: |
-          artifacts=( ${{ matrix.artifact-path }} )
+          dmg_dir="apps/theme-manager/src-tauri/target/${{ matrix.rust-target }}/release/bundle/dmg"
+          shopt -s nullglob
+          artifacts=("$dmg_dir"/*.dmg)
           if [ "${#artifacts[@]}" -ne 1 ]; then
             echo "::error::Expected exactly one release DMG, found ${#artifacts[@]}."
             exit 1
@@ -239,11 +417,12 @@ jobs:
           }
           trap cleanup EXIT
           hdiutil attach "$dmg" -nobrowse -readonly -mountpoint "$mount_dir"
-          app_path="$(find "$mount_dir" -maxdepth 1 -type d -name '*.app' -print -quit)"
-          if [ -z "$app_path" ]; then
-            echo "::error::The release DMG does not contain a macOS application bundle."
+          apps=("$mount_dir"/*.app)
+          if [ "${#apps[@]}" -ne 1 ]; then
+            echo "::error::Expected exactly one macOS application bundle."
             exit 1
           fi
+          app_path="${apps[0]}"
 
           codesign --verify --deep --strict --verbose=2 "$app_path"
           signing_details="$(codesign --display --verbose=4 "$app_path" 2>&1)"
@@ -253,11 +432,18 @@ jobs:
             exit 1
           fi
 
-          updater_archives=( apps/theme-manager/src-tauri/target/${{ matrix.rust-target }}/release/bundle/macos/*.app.tar.gz )
-          updater_signatures=( apps/theme-manager/src-tauri/target/${{ matrix.rust-target }}/release/bundle/macos/*.app.tar.gz.sig )
-          if [ "${#updater_archives[@]}" -ne 1 ] || [ "${#updater_signatures[@]}" -ne 1 ]; then
-            echo "::error::Expected one macOS updater archive and one signature."
+          updater_dir="apps/theme-manager/src-tauri/target/${{ matrix.rust-target }}/release/bundle/macos"
+          updater_archives=("$updater_dir"/*.app.tar.gz)
+          if [ "${#updater_archives[@]}" -ne 1 ]; then
+            echo "::error::Expected exactly one macOS updater archive."
             exit 1
           fi
-          test -s "${updater_archives[0]}"
-          test -s "${updater_signatures[0]}"
+          updater_archive="${updater_archives[0]}"
+          updater_signatures=("$updater_dir"/*.app.tar.gz.sig)
+          if [ "${#updater_signatures[@]}" -ne 1 ]; then
+            echo "::error::Expected exactly one macOS updater signature."
+            exit 1
+          fi
+          updater_signature="${updater_signatures[0]}"
+          test -s "$updater_archive"
+          test -s "$updater_signature"

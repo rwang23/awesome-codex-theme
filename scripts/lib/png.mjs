@@ -1,5 +1,11 @@
 import { deflateSync, inflateSync } from "node:zlib";
 
+import {
+  computeCoverCrop,
+  safeAreaWeight,
+  SOURCE_ART_RENDERER_CONSTANTS,
+} from "./source-art-contract.mjs";
+
 const PNG_SIGNATURE = Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]);
 const CRC_TABLE = new Uint32Array(256);
 
@@ -554,8 +560,7 @@ function sampleBilinear(image, x, y) {
   return result;
 }
 
-export function resizePng(buffer, width, height) {
-  const image = decodePng(buffer);
+export function resizeDecodedPng(image, width, height) {
   const scaleX = image.width / width;
   const scaleY = image.height / height;
   return encodePng(width, height, (x, y) => sampleBilinear(
@@ -565,28 +570,35 @@ export function resizePng(buffer, width, height) {
   ));
 }
 
+export function resizePng(buffer, width, height) {
+  return resizeDecodedPng(decodePng(buffer), width, height);
+}
+
 function gradeSourcePixel(pixel, theme, mode, normalizedX, normalizedY) {
+  const grading = SOURCE_ART_RENDERER_CONSTANTS.grading;
   const background = parseHex(theme[mode].tokens.background);
   let color = pixel.slice(0, 3);
 
   if (mode === "dark") {
-    color = color.map((value) => value * 0.76);
-    color = mix(color, background, 0.31);
+    color = color.map((value) => value * grading.darkScale);
+    color = mix(color, background, grading.darkBackgroundMix);
   } else {
-    color = mix(color, [255, 255, 255], 0.035);
-    color = mix(color, background, 0.07);
+    color = mix(color, [255, 255, 255], grading.lightWhiteMix);
+    color = mix(color, background, grading.lightBackgroundMix);
   }
 
-  const quietEdge = 1 - smoothstep(0.08, 0.6, normalizedX);
+  const safeAreaWeightAtPixel = safeAreaWeight(normalizedX, theme.art.safeArea);
   const safeAreaOpacity = mode === "dark"
-    ? 0.12 + quietEdge * 0.46
-    : 0.05 + quietEdge * 0.35;
+    ? grading.darkSafeAreaBase + safeAreaWeightAtPixel * grading.darkSafeAreaRange
+    : grading.lightSafeAreaBase + safeAreaWeightAtPixel * grading.lightSafeAreaRange;
   color = mix(color, background, safeAreaOpacity);
 
-  const topShade = smoothstep(0, 0.18, normalizedY);
-  const bottomShade = 1 - smoothstep(0.78, 1, normalizedY);
+  const topShade = smoothstep(0, grading.verticalTopEnd, normalizedY);
+  const bottomShade = 1 - smoothstep(grading.verticalBottomStart, 1, normalizedY);
   const edgeShade = Math.min(topShade, bottomShade);
-  if (mode === "dark") color = color.map((value) => value * (0.94 + edgeShade * 0.06));
+  if (mode === "dark") {
+    color = color.map((value) => value * (grading.darkEdgeFloor + edgeShade * grading.darkEdgeRange));
+  }
 
   return [
     clampByte(color[0]),
@@ -596,27 +608,12 @@ function gradeSourcePixel(pixel, theme, mode, normalizedX, normalizedY) {
   ];
 }
 
-export function renderSourceArtPng(sourceBuffer, theme, mode, width, height) {
-  const image = decodePng(sourceBuffer);
-  const targetAspect = width / height;
-  const sourceAspect = image.width / image.height;
-  let cropX = 0;
-  let cropY = 0;
-  let cropWidth = image.width;
-  let cropHeight = image.height;
-  if (sourceAspect > targetAspect) {
-    cropWidth = image.height * targetAspect;
-    cropX = (image.width - cropWidth) / 2;
-  } else {
-    cropHeight = image.width / targetAspect;
-    cropY = (image.height - cropHeight) / 2;
-  }
-
+function renderSourceArtCrop(image, theme, mode, width, height, crop) {
   return encodePng(width, height, (x, y) => {
     const normalizedX = x / Math.max(1, width - 1);
     const normalizedY = y / Math.max(1, height - 1);
-    const sourceX = cropX + normalizedX * Math.max(1, cropWidth - 1);
-    const sourceY = cropY + normalizedY * Math.max(1, cropHeight - 1);
+    const sourceX = crop.cropX + normalizedX * Math.max(1, crop.cropWidth - 1);
+    const sourceY = crop.cropY + normalizedY * Math.max(1, crop.cropHeight - 1);
     return gradeSourcePixel(
       sampleBilinear(image, sourceX, sourceY),
       theme,
@@ -625,4 +622,34 @@ export function renderSourceArtPng(sourceBuffer, theme, mode, width, height) {
       normalizedY,
     );
   });
+}
+
+export function renderSourceArtImage(image, theme, mode, width, height) {
+  return renderSourceArtCrop(image, theme, mode, width, height, computeCoverCrop({
+    sourceWidth: image.width,
+    sourceHeight: image.height,
+    targetWidth: width,
+    targetHeight: height,
+    focusX: theme.art.focusX,
+    focusY: theme.art.focusY,
+  }));
+}
+
+// Review-only baseline for before/after contact sheets. Production rendering
+// must call renderSourceArtImage so no new output can retain center-only crop.
+export function renderLegacySourceArtImage(image, theme, mode, width, height) {
+  const targetAspect = width / height;
+  const sourceAspect = image.width / image.height;
+  const cropWidth = sourceAspect > targetAspect ? image.height * targetAspect : image.width;
+  const cropHeight = sourceAspect > targetAspect ? image.height : image.width / targetAspect;
+  return renderSourceArtCrop(image, theme, mode, width, height, {
+    cropX: (image.width - cropWidth) / 2,
+    cropY: (image.height - cropHeight) / 2,
+    cropWidth,
+    cropHeight,
+  });
+}
+
+export function renderSourceArtPng(sourceBuffer, theme, mode, width, height) {
+  return renderSourceArtImage(decodePng(sourceBuffer), theme, mode, width, height);
 }

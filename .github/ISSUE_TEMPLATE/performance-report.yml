@@ -1,0 +1,51 @@
+name: Performance report / 性能报告
+description: Report measurable slowness, memory pressure, rendering jank, or generator regressions.
+title: "[Performance] "
+labels: ["performance"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use privacy-safe measurements. Do not upload full process dumps, private pages, account data, or credentials.
+
+  - type: dropdown
+    id: surface
+    attributes:
+      label: Surface / 受影响部分
+      options:
+        - Gallery load, search, or filter
+        - Theme generator
+        - Theme Manager interface
+        - Full Skin apply or restore
+        - Persistent replay
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment and build / 环境与构建
+      description: OS, architecture, app/browser version, catalog revision, and hardware class. Omit serial numbers and private paths.
+    validations:
+      required: true
+
+  - type: textarea
+    id: measurement
+    attributes:
+      label: Measurement / 测量结果
+      description: State baseline, observed time or memory, sample count, and how you measured it.
+      placeholder: "Baseline: ...\nObserved: ...\nSamples: ...\nMethod: ..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Reproduction path / 复现路径
+    validations:
+      required: true
+
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Privacy-safe trace or screenshot / 脱敏追踪或截图

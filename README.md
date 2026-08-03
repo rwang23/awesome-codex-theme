@@ -1,7 +1,7 @@
 <h1 align="center">Awesome Codex Theme</h1>
 
 <p align="center">
-  Full visual skins for Codex Desktop, backed by real app captures and code-free theme packs.
+  Full visual skins for Codex Desktop, backed by version-bound app-capture evidence and code-free theme packs.
 </p>
 
 <p align="center">
@@ -23,11 +23,26 @@
   <img alt="Code-free packs" src="https://img.shields.io/badge/theme%20packs-code--free-059669">
 </p>
 
-![Saint Tibo theme running in the real ChatGPT Beta test bench](screenshots/codex-beta-26.715.3651.0/tibo-reset-saint-dark.png)
+![Saint Tibo theme in the ChatGPT Beta v2 reference capture](screenshots/codex-beta-26.715.3651.0/tibo-reset-saint-dark.png)
 
-The screenshot above comes from ChatGPT Beta `26.715.3651.0` after the skin was applied and read back from the live renderer. It is not a wallpaper pasted into an app mockup.
+The screenshot above is a real `act-full-skin-runtime-v2` capture from ChatGPT Beta `26.715.3651.0`, after the skin was applied and read back from the live renderer. It is not a wallpaper pasted into an app mockup. The current v3 runtime is source-tested and marked recapture-required, so this image is reference evidence rather than a claim of current v3 app verification.
 
 > Desktop builds are published only on the official [GitHub Releases page](https://github.com/rwang23/awesome-codex-theme/releases). If that page has no asset compatible with your operating system and CPU, there is no supported public installer for that target.
+
+<!-- ACT:CAPABILITY-MATRIX:START -->
+## Current platform capability matrix
+
+This table is generated from [`metadata/release.json`](metadata/release.json) and checked by `npm run metadata:check`.
+
+| Target | Full Skin | Native fallback | Persistence |
+| --- | --- | --- | --- |
+| Windows x64 | Build-only (`26.715.3651.0`) | Verified (`26.715.2305.0`) | Verified (`26.715.3651.0`) |
+| macOS Apple silicon | Build-only | Build-only | Unverified |
+| macOS Intel | Build-only | Build-only | Unverified |
+
+The current catalog has **68 themes** and **136 modes** (revision `2026072701`).
+The current `beta` update-feed status is `unreleased`; in-app updates are not claimed until a signed static feed covers every platform.
+<!-- ACT:CAPABILITY-MATRIX:END -->
 
 ## More than a color palette
 
@@ -71,11 +86,15 @@ The complete agent contract, including expected checks and source-build instruct
 For contributors, the base requirement is Node.js 22+. Desktop builds also need stable Rust and the platform toolchain.
 
 ```bash
-npm run generate
-npm run validate
-npm test
-npm run build
+npm test                 # fast, source-only checks; works in a clean checkout
+npm run generate         # expensive: renders the full generated catalog
+npm run validate          # generated-artifact validation
+npm run test:generated    # Registry/package/site assertions
+npm run build             # generated-artifact Pages build
+npm run check:full        # release-grade full generation, validation, test, desktop, and build path
 ```
+
+The generator streams one theme at a time, reuses verified mode-and-size outputs, and reports cache, elapsed-time, and peak-RSS telemetry. Use `npm run generate -- --ids=qinglan-odyssey --summary` for a targeted regeneration, `npm run generate:check -- --concurrency=1 --summary` for a reproducibility readback, and `npm run generate:benchmark -- --scenario=warm` for the 60-second warm-cache budget.
 
 ### Method C: Install the desktop app manually
 
@@ -90,7 +109,7 @@ The Windows implementation of **Apply & Keep Full Skin** has passed an exact Cha
 
 Theme updates and app updates are independent. The manager refreshes the verified Registry on startup, so newly published themes appear immediately without reinstalling or restarting the app. A signed app update is needed only when the manager itself changes, such as its runtime, compatibility rules, security boundary, platform integration, or interface.
 
-The public beta uses Tauri updater signatures so future app updates can be verified. macOS bundles also carry an ad-hoc signature for package integrity, but Windows Authenticode, Apple Developer ID, and notarization are deferred. The operating system may still show an unknown-publisher warning; neither the updater signature nor the ad-hoc Mac signature removes SmartScreen or Gatekeeper warnings. See [release trust and signing](docs/release-signing.md).
+The public beta uses Tauri updater signatures for the future signed-update path. The current update-feed state is intentionally **unreleased**: a GitHub prerelease alone does not enable in-app updates until a signed static feed covers every platform and passes action-after verification. macOS bundles also carry an ad-hoc signature for package integrity, but Windows Authenticode, Apple Developer ID, and notarization are deferred. The operating system may still show an unknown-publisher warning; neither the updater signature nor the ad-hoc Mac signature removes SmartScreen or Gatekeeper warnings. See [release metadata](docs/release-metadata.md) and [release trust and signing](docs/release-signing.md).
 
 ## See the real result
 
@@ -129,7 +148,7 @@ The collection currently includes 68 themes and 136 light/dark modes. The Englis
 - 2 disclosed, unofficial Codex community tributes;
 - the broader original and fan-art catalog, available through language-aware discovery in the Gallery.
 
-Every mode has a 1440×810 capture from the pinned Beta test bench. Registry records bind each capture to the exact app version, background hash, runtime hash, byte count, and renderer readback.
+Every mode retains a 1440×810 v2 reference capture from the pinned Beta test bench. The generator derives integrity-bound 320, 480, and 960px presentation PNGs from that evidence; Gallery browsing uses those responsive variants, while the full original is loaded only after you explicitly choose **View original evidence**. Registry records bind both layers to the exact app version, background hash, runtime hash, byte count, and renderer readback; the current v3 runtime remains recapture-required until that exact test bench is rerun.
 
 “Saint Tibo” is an affectionate, unofficial community parody. It is not endorsed by OpenAI or by the person depicted, and no official product artwork is bundled.
 
@@ -159,7 +178,7 @@ Use $create-codex-theme to add an original "Suzhou Canal Mist" theme.
 Keep the left work area quiet, provide light and dark modes, and run every check.
 ```
 
-The Skill prepares an art brief and image job, checks original or fan-art disclosure, configures safe areas and contrast, updates the Registry, and guides the real-app capture step.
+The Skill prepares an art brief and image job, checks original or fan-art disclosure, configures focal composition, safe areas, and contrast, updates the Registry, and guides the real-app capture step. New source art must be 16:9 at 2560x1440 or larger. The current 1536x1024 catalog material has a named legacy exception and is not a template for new themes. Run `npm run art:review:write` to create the composition contact sheets, inspect them, then keep `npm run art:review` green before the exact-app capture.
 
 ## Join the community
 
@@ -187,7 +206,7 @@ schemas/                     Theme Pack and Registry schemas
 themes/catalog.json          Hand-maintained theme catalog
 themes/source-art/           Image jobs, source art, and provenance
 themes/registry.json         Generated public Registry
-screenshots/                 Version-pinned real app captures
+screenshots/                 Version-pinned app-capture evidence
 scripts/                     Build, validation, capture, and site tooling
 site/                        Dependency-free Gallery
 ```
@@ -196,9 +215,16 @@ Useful commands:
 
 ```bash
 npm run art:generate
+npm test
+npm run test:source
+npm run test:generated
+npm run test:ci
 npm run generate
 npm run generate:check
+npm run generate -- --ids=qinglan-odyssey --summary
+npm run generate:benchmark -- --scenario=warm
 npm run validate
+npm run check:full
 npm run screenshots:capture
 npm run desktop:check
 npm run desktop:start

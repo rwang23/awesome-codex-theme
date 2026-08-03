@@ -7,6 +7,10 @@ function normalizeCatalog(catalog) {
   for (const theme of catalog.themes || []) {
     for (const mode of ["light", "dark"]) {
       const preview = theme.previews?.[mode];
+      if (preview?.thumbnailPath) {
+        preview.thumbnailUrl = convertFileSrc(preview.thumbnailPath);
+        delete preview.thumbnailPath;
+      }
       if (preview?.imagePath) {
         preview.imageUrl = convertFileSrc(preview.imagePath);
         delete preview.imagePath;
@@ -39,6 +43,7 @@ function subscribe(channel, callback) {
 
 window.act = Object.freeze({
   bootstrap: async () => normalizeCatalogPayload(await invoke("bootstrap")),
+  discoverTargets: () => invoke("discover_targets"),
   refreshCatalog: async () => normalizeCatalogPayload(await invoke("refresh_catalog")),
   copyTheme: (themeId, mode) => invoke("copy_theme", { themeId, mode }),
   openCodex: (channel) => invoke("open_codex", { channel }),
@@ -49,6 +54,8 @@ window.act = Object.freeze({
   enablePersistentTheme: (themeId, mode, channel, consent, applyNow = false) =>
     invoke("enable_persistent_theme", { themeId, mode, channel, consent, applyNow }),
   disablePersistentTheme: () => invoke("disable_persistent_theme"),
+  forceRestartPersistentTheme: (channel, confirmed) =>
+    invoke("force_restart_persistent_theme", { channel, confirmed }),
   openExternal: (target) => invoke("open_external", { target }),
   checkForAppUpdate: () => invoke("check_for_app_update"),
   installAppUpdate: () => invoke("install_app_update"),
