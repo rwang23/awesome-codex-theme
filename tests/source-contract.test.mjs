@@ -489,10 +489,38 @@ test("CI reuses canonical generated assets with pinned, least-privilege workflow
   assert.match(desktopWorkflow, /- "screenshots\/\*\*"/);
   assert.match(desktopWorkflow, /- "LICENSE"/);
   assert.match(desktopWorkflow, /- "NOTICE\.md"/);
+  const triggerSection = desktopWorkflow.slice(0, desktopWorkflow.indexOf("\njobs:"));
+  assert.match(triggerSection, /push:\n\s+branches:\n\s+- main\n\s+tags:\n\s+- "v\*"/);
+  assert.match(triggerSection, /pull_request:/);
+  assert.match(triggerSection, /workflow_dispatch:/);
+  const prFastJob = desktopWorkflow.slice(
+    desktopWorkflow.indexOf("\n  pr_fast:"),
+    desktopWorkflow.indexOf("\n  prepare:"),
+  );
+  const prepareJob = desktopWorkflow.slice(
+    desktopWorkflow.indexOf("\n  prepare:"),
+    desktopWorkflow.indexOf("\n  a11y:"),
+  );
   const desktopJob = desktopWorkflow.slice(
     desktopWorkflow.indexOf("\n  desktop:"),
     desktopWorkflow.indexOf("\n  pages:"),
   );
+  const pagesJob = desktopWorkflow.slice(
+    desktopWorkflow.indexOf("\n  pages:"),
+    desktopWorkflow.indexOf("\n  deploy:"),
+  );
+  assert.match(prFastJob, /if: github\.event_name == 'pull_request'/);
+  assert.match(prFastJob, /run: npm run metadata:check/);
+  assert.match(prFastJob, /run: npm run test:source/);
+  assert.doesNotMatch(prFastJob, /npm run generate/);
+  assert.doesNotMatch(prFastJob, /npm run validate/);
+  assert.doesNotMatch(prFastJob, /npm run test:generated/);
+  assert.doesNotMatch(prFastJob, /npm run build/);
+  assert.doesNotMatch(prFastJob, /gallery:check/);
+  assert.doesNotMatch(prFastJob, /tauri -- build/);
+  assert.match(prepareJob, /if: github\.event_name != 'pull_request'/);
+  assert.match(desktopJob, /if: github\.event_name != 'pull_request'/);
+  assert.match(pagesJob, /if: github\.event_name != 'pull_request'/);
   const releaseJob = desktopWorkflow.slice(desktopWorkflow.indexOf("\n  release:"));
   assert.match(releaseJob, /permissions:\n\s+contents: write/);
   assert.doesNotMatch(desktopJob, /contents: write/);

@@ -53,7 +53,35 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  pr_fast:
+    if: github.event_name == 'pull_request'
+    name: Fast pull request validation
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version: 22
+          package-manager-cache: false
+
+      - name: Review source-art metadata
+        run: npm run art:review
+
+      - name: Check synchronized release metadata
+        run: npm run metadata:check
+
+      - name: Run source contract tests
+        run: npm run test:source
+
   prepare:
+    if: github.event_name != 'pull_request'
     name: Generate and validate canonical artifacts
     runs-on: ubuntu-latest
     permissions:
@@ -117,6 +145,7 @@ jobs:
         run: npm run a11y:check --prefix apps/theme-manager
 
   desktop:
+    if: github.event_name != 'pull_request'
     name: Desktop ${{ matrix.os }} ${{ matrix.rust-target || 'native' }}
     needs: prepare
     runs-on: ${{ matrix.os }}
@@ -251,6 +280,7 @@ jobs:
           if-no-files-found: error
 
   pages:
+    if: github.event_name != 'pull_request'
     name: Build and verify gallery
     needs: prepare
     runs-on: ubuntu-latest
