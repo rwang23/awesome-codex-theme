@@ -1,42 +1,41 @@
 # Tool index
 
+Role: reference
+Lifecycle: current/tooling
+Audience: contributors and coding agents
+Authority: canonical helper and execution-boundary index
+Status: active
+Last reviewed: 2026-08-12
+
+Reusable helpers live in `scripts/` and the project-local theme Skill. This
+file is the context entry point for their purpose, write boundary, and proof;
+it is not a duplicate copy of the scripts.
+
 ## Active reusable tools
 
 | Tool | Role | Writes | Verification |
 | --- | --- | --- | --- |
-| scripts/run-image-jobs.mjs | Generate source art to the 2560 x 1440 16:9 baseline through the shared OpenAI image-job runner; named reviewed 1536 x 1024 exceptions remain legacy-only | themes/source-art/*.png and compact provenance | visual review plus source hashes |
-| scripts/generate-themes.mjs | Decode source art and generate 68 deterministic dual-mode packs, Full Skin backgrounds, Native fallbacks, and Registry | themes/<theme-id>/, packages/, themes/registry.json | npm run generate:check |
-| scripts/validate.mjs | Validate ids, paths, dimensions, hashes, allowlists, contrast, rights rules, Full Skin records, Native fallbacks, and capture evidence | none | npm run validate |
-| scripts/build-installer.mjs | Build the no-admin Windows companion installer with a bundled Registry snapshot | dist/downloads/*.zip and installer manifest | npm run installer:validate |
-| scripts/capture-full-skin-screenshots.mjs | Apply the fixed runtime to the pinned Beta test bench, clear project context, capture all 136 Full Skin modes with the verified available `5.6 Sol Max` label, restore the prior model choice, and prove cleanup | screenshots/codex-beta-26.715.3651.0/*.png and manifest | npm run screenshots:probe plus `npm run screenshots:capture` with explicit authorization |
-| scripts/smoke-theme-manager.mjs | Drive the real Tauri UI, apply one Full Skin, discover the dynamic Beta endpoint, read back markers, capture the manager, restore, and verify cleanup | docs/assets/theme-manager-windows.png | explicit `--apply`, an OS-selected Manager port, exact process ownership, and final marker readback |
-| scripts/build.mjs | Assemble the static Pages artifact | dist/ | npm run build |
-| scripts/prepare-desktop.mjs | Generate the deterministic desktop icon and compact verified-capture thumbnails for packaging | apps/theme-manager/build/icon.png and apps/theme-manager/build/catalog/screenshots/ | npm run desktop:prepare |
-| scripts/serve.mjs | Serve dist/ on localhost | none | browser smoke |
-| .codex/skills/create-codex-theme/scripts/scaffold-theme.mjs | Dry-run or append a validated theme brief to the catalog and image-job queue | themes/catalog.json, themes/source-art/jobs.json with --apply | dry run, then npm run check |
-The image-job runner writes only inside `themes/source-art/`. The Full Skin
-capture and manager smoke scripts can change only the explicitly selected,
-isolated ChatGPT session and must prove cleanup. They do not write Codex private
-app data. The companion installer can copy a selected Native fallback string;
-Native import remains an explicit action inside ChatGPT Settings.
+| `scripts/run-image-jobs.mjs` | Generate reviewed source art | `themes/source-art/*.png` and compact provenance | visual review plus source hashes |
+| `scripts/generate-themes.mjs` | Generate declarative packs, Full Skin backgrounds, Native fallbacks, and Registry | `themes/<theme-id>/`, `packages/`, `themes/registry.json` | `npm run generate:check` |
+| `scripts/validate.mjs` | Validate schema, paths, dimensions, hashes, rights, Full Skin, Native, and capture evidence | none | `npm run validate` |
+| `scripts/build-installer.mjs` | Build the no-admin Windows Native helper | `dist/downloads/*.zip` and installer manifest | `npm run installer:validate` |
+| `scripts/capture-full-skin-screenshots.mjs` | Capture the fixed Full Skin fixture on the pinned Beta bench | `screenshots/codex-beta-26.715.3651.0/*.png` and manifest | probe, capture, privacy review, and cleanup |
+| `scripts/smoke-theme-manager.mjs` | Drive one isolated Theme Manager apply/restore smoke | `docs/20-architecture/assets/theme-manager-windows.png` | exact process/port identity and cleanup readback |
+| `scripts/build.mjs` | Assemble the static Pages artifact | `dist/` | `npm run build` |
+| `scripts/serve.mjs` | Serve `dist/` locally | none | browser interaction smoke |
+| `.codex/skills/create-codex-theme/scripts/scaffold-theme.mjs` | Scaffold a validated theme brief | `themes/catalog.json`, `themes/source-art/jobs.json` with `--apply` | dry run then `npm run check` |
 
-The Tauri Theme Manager keeps its CLI dependency, Rust backend, and generated
-release output under `apps/theme-manager/`. It can cache a validated public
-Registry and hash-bound background in its own application data directory, copy
-the selected Native fallback, and launch an exact ChatGPT package with a
-OS-selected, loopback-only debugging port. It applies one fixed, manager-owned runtime and
-does not modify ChatGPT application files, private data, or chats.
+## Safety boundary
 
-## Safety
+- Theme packs remain code-free; Native output is a declarative
+  `codex-theme-v1:` string.
+- Full Skin and real-app scripts may affect only the explicitly selected,
+  isolated package/session and must prove cleanup.
+- They must not write ChatGPT application files, private data, chats,
+  credentials, or arbitrary remote registries.
+- Registry paths, hashes, dimensions, capture identity, and artwork provenance
+  must pass before distribution.
 
-- Registry paths, Full Skin and Native hashes, byte counts, manifest identity,
-  capture evidence, and artwork hashes must pass before distribution.
-- Native exports are declarative `codex-theme-v1` strings with no executable
-  code or remote resource.
-- The Gallery cannot apply Full Skin by itself. It hands off to the local Theme
-  Manager.
-- Real-app application and screenshots follow `docs/native-testing.md` and
-  require an isolated or explicitly approved Codex instance.
-- Capture mode pins the exact Beta package and loopback listener, uses a
-  privacy-safe home fixture, records action-after markers, and removes current
-  styles plus every registered early script before completion.
+One-off scripts and generated outputs belong in a task package under
+`context/raw/` and are deleted after their conclusion is captured. No
+undocumented development viewer is retained here.

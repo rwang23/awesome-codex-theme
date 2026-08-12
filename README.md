@@ -7,7 +7,7 @@
 <p align="center">
   <a href="https://rwang23.github.io/awesome-codex-theme/"><strong>Explore the Gallery</strong></a>
   ·
-  <a href="docs/agent-install.md"><strong>Install with an Agent</strong></a>
+  <a href="docs/00-foundation/agent-install.md"><strong>Install with an Agent</strong></a>
   ·
   <a href="https://community.ecomstack.net/"><strong>Theme Community</strong></a>
   ·
@@ -79,7 +79,7 @@ without asking me first. If no compatible release exists, stop and tell me
 instead of building or downloading from another source.
 ```
 
-The complete agent contract, including expected checks and source-build instructions, is in [docs/agent-install.md](docs/agent-install.md).
+The complete agent contract, including expected checks and source-build instructions, is in [docs/00-foundation/agent-install.md](docs/00-foundation/agent-install.md).
 
 ### Method B: Build from source
 
@@ -105,11 +105,11 @@ The generator streams one theme at a time, reuses verified mode-and-size outputs
 5. The selected theme is now reapplied whenever you open that verified ChatGPT target. Later **Apply & Keep** actions replace the saved choice.
 6. Select **Restore Native** whenever you want the original interface back. This also turns off persistence.
 
-The Windows implementation of **Apply & Keep Full Skin** has passed an exact ChatGPT Beta `26.715.3651.0` persistence and cleanup smoke test. Any detected Stable or Beta build with a readable exact version may start one user-requested, loopback-only compatibility probe; the manager records that build for future replay only after the app target and runtime marker read back successfully. A later ChatGPT update stays native until the user chooses **Reapply & Keep Full Skin** and the new local probe succeeds. It never patches ChatGPT files. Physical-Mac persistence testing is still pending, so the macOS build must not yet be treated as verified for this feature. See [Keep My Theme On](docs/persistent-theme.md).
+The Windows implementation of **Apply & Keep Full Skin** has passed an exact ChatGPT Beta `26.715.3651.0` persistence and cleanup smoke test. Any detected Stable or Beta build with a readable exact version may start one user-requested, loopback-only compatibility probe; the manager records that build for future replay only after the app target and runtime marker read back successfully. A later ChatGPT update stays native until the user chooses **Reapply & Keep Full Skin** and the new local probe succeeds. It never patches ChatGPT files. Physical-Mac persistence testing is still pending, so the macOS build must not yet be treated as verified for this feature. See [Keep My Theme On](docs/20-architecture/persistent-theme.md).
 
 Theme updates and app updates are independent. The manager refreshes the verified Registry on startup, so newly published themes appear immediately without reinstalling or restarting the app. A signed app update is needed only when the manager itself changes, such as its runtime, compatibility rules, security boundary, platform integration, or interface.
 
-The public beta uses Tauri updater signatures for the future signed-update path. The current update-feed state is intentionally **unreleased**: a GitHub prerelease alone does not enable in-app updates until a signed static feed covers every platform and passes action-after verification. macOS bundles also carry an ad-hoc signature for package integrity, but Windows Authenticode, Apple Developer ID, and notarization are deferred. The operating system may still show an unknown-publisher warning; neither the updater signature nor the ad-hoc Mac signature removes SmartScreen or Gatekeeper warnings. See [release metadata](docs/release-metadata.md) and [release trust and signing](docs/release-signing.md).
+The public beta uses Tauri updater signatures for the future signed-update path. The current update-feed state is intentionally **unreleased**: a GitHub prerelease alone does not enable in-app updates until a signed static feed covers every platform and passes action-after verification. macOS bundles also carry an ad-hoc signature for package integrity, but Windows Authenticode, Apple Developer ID, and notarization are deferred. The operating system may still show an unknown-publisher warning; neither the updater signature nor the ad-hoc Mac signature removes SmartScreen or Gatekeeper warnings. See [release metadata](docs/50-operations/release-metadata.md) and [release trust and signing](docs/50-operations/release-signing.md).
 
 ## See the real result
 
@@ -191,7 +191,7 @@ Community approval and votes do not publish a theme into the official Registry. 
 - repository Validator and CI checks;
 - apply, capture, and restore evidence from a pinned Codex build.
 
-The hosted service is intentionally separate from this open-source runtime repository. See [community platform architecture](docs/community-platform.md) and the [Registry promotion route](docs/community-registry.md).
+The hosted service is intentionally separate from this open-source runtime repository. See [community platform architecture](docs/40-community/community-platform.md) and the [Registry promotion route](docs/40-community/community-registry.md).
 
 ## Project map
 
@@ -240,6 +240,6 @@ Generated theme directories, `.act-theme` archives, the Registry, and `dist/` sh
 
 Project code is MIT. First-party AI-generated artwork is released under CC0 1.0 where applicable. Fan art uses `LicenseRef-ACT-Fan-Art-Notice`, sets `rightsVerified: false`, and is limited to personal, non-commercial fan use.
 
-AI generation does not clear copyright, character, likeness, trademark, or source-asset rights. Contributors must review every input and output. See [NOTICE.md](NOTICE.md) and the [Fan Art policy](docs/fan-art-policy.md).
+AI generation does not clear copyright, character, likeness, trademark, or source-asset rights. Contributors must review every input and output. See [NOTICE.md](NOTICE.md) and the [Fan Art policy](docs/30-design/fan-art-policy.md).
 
 If this project gives your coding workspace a little more personality, [star the repository](https://github.com/rwang23/awesome-codex-theme) and share a privacy-safe screenshot.

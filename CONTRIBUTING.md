@@ -11,7 +11,7 @@
 
 准备进入 Gallery 时，再通过 Pull Request 提交主题包。只有通过 Validator、
 素材权利审查和固定 Codex 版本实机验证的主题，才会进入 Verified 分类与后续排行。
-完整社区路线见 [docs/community-registry.md](docs/community-registry.md)。
+完整社区路线见 [docs/40-community/community-registry.md](docs/40-community/community-registry.md)。
 
 推荐直接使用仓库内的 `$create-codex-theme` Skill：
 
@@ -32,7 +32,7 @@
 - 只出现 manifest 已声明的作品与角色
 - 使用 `LicenseRef-ACT-Fan-Art-Notice`，并保持 `rightsVerified: false`
 
-任何轨道都不要提交名人肖像、未经同意的真实人物仿制、品牌素材、无法核对来源的图片或未披露的受保护角色。Fan Art 的详细下架和权利边界见 [docs/fan-art-policy.md](docs/fan-art-policy.md)。
+任何轨道都不要提交名人肖像、未经同意的真实人物仿制、品牌素材、无法核对来源的图片或未披露的受保护角色。Fan Art 的详细下架和权利边界见 [docs/30-design/fan-art-policy.md](docs/30-design/fan-art-policy.md)。
 
 使用 AI 生成不等于自动获得版权许可。贡献者仍然要对输入权利和输出审查负责。
 

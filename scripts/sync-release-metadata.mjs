@@ -119,7 +119,7 @@ function releaseMetadataDocument(metadata, summary) {
   return [
     "# Release metadata",
     "",
-    "This file is generated from [`metadata/release.json`](../metadata/release.json). Do not edit it by hand.",
+    "This file is generated from [`metadata/release.json`](../../metadata/release.json). Do not edit it by hand.",
     "",
     "- Desktop version: `" + metadata.desktop.version + "`",
     "- Channel: `" + metadata.desktop.channel + "`",
@@ -221,8 +221,8 @@ async function expectedOutputs(metadata) {
       ),
     },
     {
-      path: path.join(ROOT, "docs", "release-metadata.md"),
-      relative: "docs/release-metadata.md",
+      path: path.join(ROOT, "docs", "50-operations", "release-metadata.md"),
+      relative: "docs/50-operations/release-metadata.md",
       data: releaseMetadataDocument(metadata, summary),
     },
     {

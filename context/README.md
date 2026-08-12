@@ -1,9 +1,19 @@
 # Context
 
-This directory indexes reusable project tooling. It does not hold generated
-site output or theme art.
+Role: guide
+Lifecycle: current/tooling
+Audience: contributors and coding agents
+Authority: canonical context-surface index
+Status: active
+Last reviewed: 2026-08-12
 
-- tools/README.md: active scripts and execution packs
+`context/` is task-time material, not a second `docs/` tree. It does not hold
+generated site output or theme art.
 
-Use context/raw/ only when a future task needs temporary evidence or resumable
-state, and add its own README before retaining files there.
+- [tools/README.md](tools/README.md): reusable repository helper index.
+- [raw/README.md](raw/README.md): package rules for temporary evidence and
+  the current hygiene record.
+
+Optional `reference/`, `deliverables/`, `roles/`, and `content/` surfaces are
+not created until a workflow has a named consumer, owner, retention cue, and
+index. Do not put durable project rules here; promote them to `docs/` instead.

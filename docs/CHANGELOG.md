@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+- Reorganized durable documentation into numbered foundation, architecture,
+  design, community, operations, audit, report, and record surfaces; added
+  indexes and a provisional structure baseline; reconciled and removed
+  obsolete docs/context execution artifacts with a recoverable cleanup record.
+
 ## 0.3.3 - 2026-07-27
 
 - Added a Chinese collaboration guide explaining local worktrees, branches,

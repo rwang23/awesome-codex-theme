@@ -1,0 +1,16 @@
+flowchart LR
+  A[themes/catalog.json] --> G[scripts/generate-themes.mjs]
+  S[68 source-art PNG + provenance] --> G
+  C[136 real Full Skin captures] --> G
+  G --> R[themes/registry.json]
+  G --> P[68 .act-theme packages]
+  G --> B[2560x1440 backgrounds]
+  G --> V[960x540 previews]
+  R --> W[Static Gallery]
+  R --> D[Tauri Theme Manager]
+  C --> W
+  C --> T[Desktop 720x405 thumbnails]
+  D --> N[Native palette copy]
+  D --> F[Full Skin runtime]
+  F --> L[Loopback CDP target]
+  F --> M[Persistence controller]

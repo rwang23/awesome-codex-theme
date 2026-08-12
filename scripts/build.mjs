@@ -61,7 +61,7 @@ export async function buildSite(outputPath = DEFAULT_OUTPUT) {
     copyRelative("schemas/theme-pack.schema.json", output),
     copyRelative("schemas/registry.schema.json", output),
     copyRelative("schemas/source-art-review.schema.json", output),
-    copyRelative("docs/assets/theme-manager-windows.png", output),
+    copyRelative("docs/20-architecture/assets/theme-manager-windows.png", output),
     copyRelative("LICENSE", output),
     copyRelative("NOTICE.md", output),
   ]);

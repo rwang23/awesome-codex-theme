@@ -1,0 +1,177 @@
+{
+  "repository_file_count": 435,
+  "repository_bytes": 301622716,
+  "theme_count": 68,
+  "collection_count": 11,
+  "source_art_count": 68,
+  "source_art_bytes": 161635231,
+  "current_full_skin_capture_count": 136,
+  "current_full_skin_capture_bytes": 134635912,
+  "historic_native_capture_count": 56,
+  "historic_native_capture_bytes": 2452498,
+  "source_hash_mismatch_count": 0,
+  "prompt_hash_mismatch_count": 0,
+  "duplicate_source_sha_groups": 0,
+  "duplicate_job_ids": 0,
+  "capture_hash_mismatch_count": 0,
+  "native_capture_hash_mismatch_count": 0,
+  "safe_area_counts": {
+    "left": 68
+  },
+  "task_mode_counts": {
+    "ambient": 63,
+    "banner": 5
+  },
+  "variant_counts": {
+    "cinematic": 16,
+    "chibi": 9,
+    "cityscape": 20,
+    "scene": 23
+  },
+  "rights_profile_counts": {
+    "original": 49,
+    "fan-art": 19
+  },
+  "capture_bytes_median": 979532.5,
+  "capture_bytes_max": 1425503,
+  "source_bytes_median": 2383990.5,
+  "source_bytes_max": 3203325,
+  "token_contrast_minima": {
+    "text_vs_background": 11.53005326527368,
+    "text_vs_surface": 13.125692402362336,
+    "text_vs_surfaceAlt": 8.94433847936448,
+    "muted_vs_background": 4.7834139250683005,
+    "muted_vs_surface": 5.187328761797001,
+    "muted_vs_surfaceAlt": 3.7606848205885006,
+    "accentContrast_vs_accent": 5.011573393362894,
+    "accent_vs_background": 4.4541542063276856,
+    "accent_vs_surface": 5.011573393362894,
+    "border_vs_background": 1.6467454879667096,
+    "border_vs_surface": 1.7982393941213162
+  },
+  "token_contrast_fail_counts": {
+    "text_vs_background": 0,
+    "text_vs_surface": 0,
+    "text_vs_surfaceAlt": 0,
+    "muted_vs_background": 0,
+    "muted_vs_surface": 0,
+    "muted_vs_surfaceAlt": 23,
+    "accentContrast_vs_accent": 0,
+    "accent_vs_background": 0,
+    "accent_vs_surface": 0,
+    "border_vs_background": 128,
+    "border_vs_surface": 136
+  },
+  "highest_safe_area_complexity": [
+    {
+      "theme_id": "shenzhen-circuit-rain",
+      "score": 0.3136130925267935
+    },
+    {
+      "theme_id": "sword-of-coming-duo",
+      "score": 0.30286514945328236
+    },
+    {
+      "theme_id": "nanjing-wall-plum",
+      "score": 0.2969565959647298
+    },
+    {
+      "theme_id": "sword-of-coming-chibi",
+      "score": 0.26286837365478277
+    },
+    {
+      "theme_id": "shanghai-afterglow",
+      "score": 0.24129719473421574
+    },
+    {
+      "theme_id": "beijing-meridian",
+      "score": 0.22991257719695568
+    },
+    {
+      "theme_id": "battle-through-duo",
+      "score": 0.22926555993035436
+    },
+    {
+      "theme_id": "appalachian-cabin-focus",
+      "score": 0.21993229258805513
+    },
+    {
+      "theme_id": "mortal-talisman-rain",
+      "score": 0.21207198034971952
+    },
+    {
+      "theme_id": "paris-rooftop-dawn",
+      "score": 0.20517067005857825
+    },
+    {
+      "theme_id": "mortal-journey-chibi",
+      "score": 0.20339769031852484
+    },
+    {
+      "theme_id": "jiangnan-rain-courtyard",
+      "score": 0.198619500733912
+    }
+  ],
+  "largest_captures": [
+    {
+      "theme_id": "sword-of-coming-duo",
+      "mode": "light",
+      "bytes": 1425503
+    },
+    {
+      "theme_id": "tibo-reset-immortal",
+      "mode": "light",
+      "bytes": 1422221
+    },
+    {
+      "theme_id": "tibo-reset-saint",
+      "mode": "light",
+      "bytes": 1396447
+    },
+    {
+      "theme_id": "shenzhen-circuit-rain",
+      "mode": "light",
+      "bytes": 1357529
+    },
+    {
+      "theme_id": "sky-garden-herbarium",
+      "mode": "light",
+      "bytes": 1304979
+    },
+    {
+      "theme_id": "chengdu-teahouse-rain",
+      "mode": "light",
+      "bytes": 1298500
+    },
+    {
+      "theme_id": "jiangnan-rain-courtyard",
+      "mode": "light",
+      "bytes": 1289174
+    },
+    {
+      "theme_id": "guangzhou-riverwind",
+      "mode": "light",
+      "bytes": 1257677
+    },
+    {
+      "theme_id": "mortal-herb-lantern",
+      "mode": "light",
+      "bytes": 1255884
+    },
+    {
+      "theme_id": "sword-of-coming-chibi",
+      "mode": "light",
+      "bytes": 1254708
+    },
+    {
+      "theme_id": "dunhuang-starlight",
+      "mode": "light",
+      "bytes": 1247896
+    },
+    {
+      "theme_id": "sydney-harbour-morning",
+      "mode": "light",
+      "bytes": 1247559
+    }
+  ]
+}

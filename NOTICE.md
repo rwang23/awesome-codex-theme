@@ -32,7 +32,7 @@ their respective owners.
 AI generation and a new composition do not establish copyright clearance or
 remove underlying franchise rights. The project will respond to substantiated
 rights-holder requests by reviewing, disabling, or removing affected material.
-See docs/fan-art-policy.md for the public policy and contact route.
+See docs/30-design/fan-art-policy.md for the public policy and contact route.
 
 Contributor-supplied artwork may use another approved redistribution license
 when the registry records it clearly. Contributors remain responsible for

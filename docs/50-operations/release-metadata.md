@@ -1,6 +1,6 @@
 # Release metadata
 
-This file is generated from [`metadata/release.json`](../metadata/release.json). Do not edit it by hand.
+This file is generated from [`metadata/release.json`](../../metadata/release.json). Do not edit it by hand.
 
 - Desktop version: `0.3.3`
 - Channel: `beta`

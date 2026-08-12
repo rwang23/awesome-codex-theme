@@ -219,7 +219,7 @@ export async function renderSourceArtReview({ root = ROOT, write = false } = {})
   const sheets = [];
   for (let index = 0; index < entries.length; index += THEMES_PER_SHEET) {
     const group = entries.slice(index, index + THEMES_PER_SHEET);
-    const relativePath = "docs/assets/source-art-review/focal-aware-v3-"
+    const relativePath = "docs/30-design/assets/source-art-review/focal-aware-v3-"
       + String(sheets.length + 1).padStart(2, "0") + ".png";
     const data = createContactSheet(group);
     await reconcile(relativePath, data, write);
@@ -233,7 +233,7 @@ export async function renderSourceArtReview({ root = ROOT, write = false } = {})
 
   const fixtureTheme = entries.find((entry) => entry.theme.id === "qinglan-odyssey") || entries[0];
   const fixtureData = createFixtureSheet(fixtureTheme.theme, fixtureTheme);
-  const fixturePath = "docs/assets/source-art-review/focal-aware-v3-fixtures.png";
+  const fixturePath = "docs/30-design/assets/source-art-review/focal-aware-v3-fixtures.png";
   await reconcile(fixturePath, fixtureData, write);
 
   const approval = {

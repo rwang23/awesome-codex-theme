@@ -1,0 +1,14 @@
+stateDiagram-v2
+  [*] --> Native
+  Native --> Preparing: user applies theme
+  Preparing --> CandidateInjected: all targets injected
+  Preparing --> Native: validation/download/injection failed
+  CandidateInjected --> Active: readback + health check passed
+  CandidateInjected --> Native: rollback candidate
+  Active --> Degraded: monitor error threshold reached
+  Degraded --> Active: recovery succeeds
+  Degraded --> Native: explicit restore / safe fallback
+  Active --> Switching: user changes theme
+  Switching --> Active: candidate succeeds, old session cleaned
+  Switching --> Active: candidate fails, old session preserved
+  Active --> Native: restore completes

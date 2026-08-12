@@ -1,71 +1,69 @@
 # Documentation map
 
-## Reading order
+Role: guide
+Lifecycle: current
+Audience: contributors, operators, and coding agents
+Authority: canonical project documentation index
+Status: active
+Last reviewed: 2026-08-12
 
-1. agent-brief.md
-2. architecture.md
-3. standard.md
-4. adapters.md
-5. desktop-manager.md
-6. release-signing.md
-7. macos-testing.md
-8. native-testing.md
-9. community-registry.md
-10. persistent-theme.md
-11. agent-install.md
-12. community-platform.md
+## First Read Order
 
-Read landscape.md when positioning or upstream compatibility changes. Do not
-use context/raw/, docs/archive/, or docs/report/ as first-read material; those
-locations are reserved for execution evidence or closed history when needed.
+1. [Agent brief](agent-brief.md) — project boundaries, current focus, and required checks.
+2. [Foundation](00-foundation/README.md) — standard, onboarding, and positioning.
+3. [Architecture](20-architecture/README.md) — system, Full Skin, manager, and persistence.
+4. [Design](30-design/README.md) — Gallery, source art, and rights boundaries.
+5. [Community](40-community/README.md) — contribution and Registry intake.
+6. [Operations](50-operations/README.md) — testing, release, and signing.
 
-## Current documents
+Read the dated [audit](91-audit/README.md), [reports](92-report/README.md), and
+[records](93-records/README.md) only when historical evidence or release history
+is needed. They never override current source or current-band documentation.
 
-- agent-brief.md: first-read project router
-- architecture.md: package, Gallery, Full Skin runtime, Native fallback, and
-  trust boundaries
-- art-direction.md: reviewed image-job direction for Xianxia 01
-- city-atlas-art-direction.md: city identity, anti-landmark, and composition rules
-- fan-art-direction.md: declared-character and remembered-scene art direction
-- fan-art-policy.md: public rights boundary, non-commercial terms, and takedown path
-- gallery-design.md: redesign evidence and the independent Gallery visual system
-- standard.md: version 1 canonical manifest and package contract
-- assets/source-art-review/ and ../themes/source-art/reviews/: deterministic focal-crop contact sheets, safe-area fixtures, and approval records
-- adapters.md: ACT Full Skin contract, Native fallback, and unsupported
-  capabilities
-- desktop-manager.md: Tauri architecture, catalog refresh, signed app updates,
-  measured package comparison, and macOS signing boundary
-- release-signing.md: updater keys, Windows signing choices, Apple developer
-  account, the updater-signed Beta boundary, and the release-ready gate
-- release-notes/: bilingual source notes for published desktop Beta Releases
-- macos-testing.md: ad-hoc-signed DMG boundary, real-Mac installation, Full
-  Skin apply/restore, Gatekeeper, and evidence checklist
-- community-registry.md: GitHub-native proposals, independent Gallery facets,
-  hosted-beta submissions, verified rankings, and official Registry promotion
-- persistent-theme.md: reviewed upstream persistence mechanisms and the
-  Windows-verified no-patch per-user controller
-- agent-install.md: copy-ready installation contract, trust checks, and
-  explicit stop conditions for coding agents
-- git-pr-collaboration-guide.zh-CN.md: plain-language Chinese guide to local
-  worktrees, branches, Issues, draft PRs, review, merge, and post-merge checks
-- community-platform.md: custom-domain, hosted submission, voting, storage,
-  moderation, deployed private Beta, and staged backend architecture
-- native-testing.md: isolated Full Skin validation, Theme Manager smoke, and
-  screenshot evidence
-- landscape.md: dated reference-project research and positioning
-- CHANGELOG.md: delivered project changes
-- ../README.md: default English consumer-facing overview and setup
-- ../README.zh-CN.md: full Chinese overview
-- ../README.en.md: compatibility pointer to the default English README
-- ../.codex/skills/create-codex-theme/: project-local theme creation Skill
-- ../context/tools/README.md: script and execution-pack index
+## Document model
 
-Generated files belong under dist/, packages/, themes/<theme-id>/, and
-themes/registry.json. The editable sources are site/, themes/catalog.json,
-themes/source-art/, scripts/, apps/theme-manager/, and .codex/skills/.
+Current guidance is profile-composed and lifecycle-separated: the numbered
+bands are the first-read knowledge surface, while audit, report, and record
+folders retain dated evidence without competing with current authority.
+
+## Current knowledge bands
+
+| Band | Role | Entry point |
+| --- | --- | --- |
+| `00-foundation/` | Standard, onboarding, and project positioning | [README](00-foundation/README.md) |
+| `20-architecture/` | Architecture, compatibility, manager, and persistence | [README](20-architecture/README.md) |
+| `30-design/` | Gallery UX, source-art direction, visual rules, and rights | [README](30-design/README.md) |
+| `40-community/` | Community platform, Registry, and collaboration | [README](40-community/README.md) |
+| `50-operations/` | Testing, release metadata, signing, and operational gates | [README](50-operations/README.md) |
+
+The root is intentionally limited to this index, the compact agent brief,
+`CHANGELOG.md`, and `document-structure-baseline.json`.
+
+## Historical lifecycle surfaces
+
+- `docs/91-audit/`: historical dated audits retained for traceability; not first-read guidance.
+- `docs/92-report/`: historical curated delivery and analysis reports with an index.
+- `docs/93-records/`: historical retained release notes and published project records.
+- `docs/94-archive/`: reserved historical/raw archive surface; it is not created until
+  a durable retention need and owner are established.
+
+These surfaces are declared by [document-structure-baseline.json](document-structure-baseline.json).
+New top-level docs categories use `NN-semantic-name`; numbering expresses
+reading order or lifecycle, while the semantic name and index explain purpose.
+
+## Source-of-truth boundaries
+
+Generated files belong under `dist/`, `packages/`, `themes/<theme-id>/`, and
+`themes/registry.json`. Editable sources are `site/`, `themes/catalog.json`,
+`themes/source-art/`, `scripts/`, `apps/theme-manager/`, and `.codex/skills/`.
+Reusable helper guidance is indexed in [context/tools/README.md](../context/tools/README.md).
 
 ## Maintenance
 
-Keep current documents concise and update them only when durable behavior
-changes. Move closed investigations or dated evidence out of the first-read
-path instead of growing active documents into history logs.
+Keep current documents concise and update the existing authority when durable
+behavior changes. Put execution logs, mappings, snapshots, and one-off reports
+in a task-scoped `context/` package; do not grow current docs with process
+history. `context/raw/` is historical/raw task material and is never a
+first-read source of project authority. Update the baseline and the owning
+index whenever a new docs surface is intentionally introduced. The baseline remains `provisional` until the
+project owner confirms the post-change hygiene report.

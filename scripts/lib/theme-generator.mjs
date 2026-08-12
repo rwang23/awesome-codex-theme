@@ -26,7 +26,7 @@ const CATALOG_PATH = "themes/catalog.json";
 const REGISTRY_PATH = "themes/registry.json";
 const GENERATOR_ID = "act-theme-generator-v5.0";
 const FAN_ART_LICENSE_ID = "LicenseRef-ACT-Fan-Art-Notice";
-const FAN_ART_POLICY_URL = "https://github.com/rwang23/awesome-codex-theme/blob/main/docs/fan-art-policy.md";
+const FAN_ART_POLICY_URL = "https://github.com/rwang23/awesome-codex-theme/blob/main/docs/30-design/fan-art-policy.md";
 const OUTPUTS = Object.freeze([
   Object.freeze({ kind: "asset", width: 2560, height: 1440 }),
   Object.freeze({ kind: "preview", width: 960, height: 540 }),

@@ -23,7 +23,7 @@
   },
   "contactSheets": [
     {
-      "path": "docs/assets/source-art-review/focal-aware-v3-01.png",
+      "path": "docs/30-design/assets/source-art-review/focal-aware-v3-01.png",
       "sha256": "5fac6cf51788c9a697ed669708bd6889382526b3e947452f5fb683f9904c7d91",
       "bytes": 1528540,
       "themeIds": [
@@ -48,7 +48,7 @@
       ]
     },
     {
-      "path": "docs/assets/source-art-review/focal-aware-v3-02.png",
+      "path": "docs/30-design/assets/source-art-review/focal-aware-v3-02.png",
       "sha256": "cbfd27a4a5a0c1e960ed940478653339d4befe92d669a1713fe348d670117a28",
       "bytes": 1492983,
       "themeIds": [
@@ -73,7 +73,7 @@
       ]
     },
     {
-      "path": "docs/assets/source-art-review/focal-aware-v3-03.png",
+      "path": "docs/30-design/assets/source-art-review/focal-aware-v3-03.png",
       "sha256": "c0290c0df52bf6ba83f03107d865ac1e545820128d33060c82f8889505d44426",
       "bytes": 1628573,
       "themeIds": [
@@ -98,7 +98,7 @@
       ]
     },
     {
-      "path": "docs/assets/source-art-review/focal-aware-v3-04.png",
+      "path": "docs/30-design/assets/source-art-review/focal-aware-v3-04.png",
       "sha256": "388faf7aec5482f0f84002530c0bdc347ac2f5a99b11bd27267e62ad95b10713",
       "bytes": 1223824,
       "themeIds": [
@@ -120,7 +120,7 @@
     }
   ],
   "fixtureSheet": {
-    "path": "docs/assets/source-art-review/focal-aware-v3-fixtures.png",
+    "path": "docs/30-design/assets/source-art-review/focal-aware-v3-fixtures.png",
     "sha256": "e248b4cc6391bdf864dcf6501d65d89887e553d9de4caaf87e2ccc4c4fb19f53",
     "bytes": 130230,
     "themeId": "qinglan-odyssey",

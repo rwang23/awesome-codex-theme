@@ -263,7 +263,7 @@ test("static gallery builds with every public contract artifact", async function
       "downloads/awesome-codex-theme-installer-windows.zip",
       "downloads/installer.json",
       "downloads/catalog.json",
-      "docs/assets/theme-manager-windows.png",
+      "docs/20-architecture/assets/theme-manager-windows.png",
       ".nojekyll"
     ];
     for (const relative of required) {
@@ -302,7 +302,7 @@ test("static gallery builds with every public contract artifact", async function
     assert.match(html, /id="evidenceMetadata"/);
     assert.match(html, /id="viewEvidence"/);
     assert.doesNotMatch(html, /id="heroPreview" src=/);
-    assert.match(html, /docs\/fan-art-policy\.md/);
+    assert.match(html, /docs\/30-design\/fan-art-policy\.md/);
     assert.match(html, /data-filter="scene"/);
     assert.match(html, /id="rightsGroup"/);
     assert.match(html, /id="community"/);

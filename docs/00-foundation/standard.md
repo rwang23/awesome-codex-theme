@@ -70,7 +70,7 @@ New production source art must be 16:9 and at least 2560x1440. A smaller or diff
 
 The renderer uses clamped `focusX` and `focusY` coordinates with `focal-cover-v1`, so a crop follows its declared subject when the source aspect ratio leaves room to move. `safeArea` can be `left`, `right`, `center`, or `none`; it controls the readability wash independently of the crop anchor.
 
-Every source-art renderer revision has deterministic contact sheets and a safe-area fixture under `docs/assets/source-art-review/`, plus a machine-readable approval record under `themes/source-art/reviews/`. They prove the reviewed generated composition. A new Full Skin runtime or asset still requires a fresh exact-app capture and cleanup readback.
+Every source-art renderer revision has deterministic contact sheets and a safe-area fixture under `docs/30-design/assets/source-art-review/`, plus a machine-readable approval record under `themes/source-art/reviews/`. They prove the reviewed generated composition. A new Full Skin runtime or asset still requires a fresh exact-app capture and cleanup readback.
 
 ## Color roles
 

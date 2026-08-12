@@ -10,6 +10,9 @@
 - Primary users: international and Chinese-speaking Codex desktop users and theme contributors
 - Main stack: dependency-free static HTML/CSS/JavaScript, Node.js built-ins,
   and a Tauri 2 desktop app with a narrow Rust backend
+- Project profiles: web-product, platform-automation, creative-tooling
+- Document model: profile-composed; lifecycle-separated
+- Structure baseline: [document-structure-baseline.json](document-structure-baseline.json) (provisional after the 2026-08-12 hygiene run)
 - Canonical package manager: npm; desktop dependencies live only under
   `apps/theme-manager`
 - Deployment: public Gallery through GitHub Pages; separate private community
@@ -44,7 +47,7 @@
 - A "real screenshot verified" claim requires the same named app version,
   exact package and listener ownership, action-after runtime markers, fixed
   capture fixture, privacy review, and baseline restore under
-  `docs/native-testing.md`.
+  `docs/50-operations/native-testing.md`.
 - A "macOS auto-update ready" claim additionally requires signed, notarized
   artifacts and a macOS action-after readback; source compatibility alone is
   not enough
@@ -62,17 +65,18 @@
 
 1. `AGENTS.md`
 2. `README.md`
-3. `docs/architecture.md`
+3. `docs/20-architecture/architecture.md`
 4. `context/tools/README.md`
 
-Avoid `dist/`, `context/raw/`, `docs/archive/`, and generated history unless required.
+Avoid `dist/`, `context/raw/`, `docs/91-audit/`, `docs/92-report/`,
+`docs/93-records/`, and generated history unless required.
 
 ## Workflow routing
 
 - Small edits: edit directly and run the focused check.
 - Multi-file behavior: use a short plan, run `npm run check`, then browser smoke.
 - Theme additions: use `$create-codex-theme`, select the original or fan-art rights profile, generate source art, inspect it, regenerate, and validate.
-- Full Skin compatibility claims: update `docs/adapters.md` and prove the
+- Full Skin compatibility claims: update `docs/20-architecture/adapters.md` and prove the
   exact runtime against the named Codex package. Native claims still require
   strict parser validation.
 - Publishing, remote creation, Pages activation, app installation, and current-app setting changes require authorization bound to the exact target.

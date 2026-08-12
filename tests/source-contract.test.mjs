@@ -167,7 +167,7 @@ test("Gallery and compatibility docs consume generated metadata instead of stale
   const [index, gallery, adapters, build] = await Promise.all([
     readFile(path.join(ROOT, "site", "index.html"), "utf8"),
     readFile(path.join(ROOT, "site", "assets", "app.js"), "utf8"),
-    readFile(path.join(ROOT, "docs", "adapters.md"), "utf8"),
+    readFile(path.join(ROOT, "docs", "20-architecture", "adapters.md"), "utf8"),
     readFile(path.join(ROOT, "scripts", "build.mjs"), "utf8"),
   ]);
   assert.match(index, /id="themeStatValue">—/);

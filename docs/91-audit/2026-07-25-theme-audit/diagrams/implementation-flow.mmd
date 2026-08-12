@@ -1,0 +1,11 @@
+flowchart TD
+  P0[Baseline + guardrails] --> P1[Build/test pipeline]
+  P1 --> P2[Runtime transaction + download caps]
+  P2 --> P3[Platform restart diagnostics]
+  P1 --> P4[Thumbnail pipeline]
+  P4 --> P5[Gallery/Desktop UI a11y]
+  P2 --> P6[Compatibility + observability]
+  P3 --> P6
+  P5 --> P7[Visual QA and safe-area diversification]
+  P6 --> P8[Release hardening]
+  P7 --> P8

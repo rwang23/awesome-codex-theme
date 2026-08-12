@@ -1,6 +1,6 @@
 # Full Skin 测试与实机截图
 
-这个文件沿用原来的 `native-testing.md` 路径，避免旧链接失效。当前主要记录 Full Skin；Native 只作为配色回退。
+这是当前的 Full Skin 实机验证权威。Native 只作为配色回退；本页不把源图、生成预览或历史截图当作真实安装证明。
 
 ## 固定测试台
 

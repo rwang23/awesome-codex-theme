@@ -1,0 +1,126 @@
+{
+  "schema_version": 2,
+  "status": "provisional",
+  "last_reviewed": "2026-08-12",
+  "owner": "rwang23",
+  "confirmed_by": null,
+  "confirmed_at": null,
+  "project_profiles": [
+    "web-product",
+    "platform-automation",
+    "creative-tooling"
+  ],
+  "profile_confidence": "high",
+  "document_model": "profile-composed; lifecycle-separated",
+  "number_bands": {
+    "00": {
+      "name": "foundation",
+      "path": "00-foundation",
+      "purpose": "Project contract, onboarding, standard, and positioning"
+    },
+    "20": {
+      "name": "architecture",
+      "path": "20-architecture",
+      "purpose": "System boundaries, compatibility, runtime, manager, and persistence"
+    },
+    "30": {
+      "name": "design",
+      "path": "30-design",
+      "purpose": "Gallery UX, source-art direction, visual rules, and rights boundaries"
+    },
+    "40": {
+      "name": "community",
+      "path": "40-community",
+      "purpose": "Contribution, Registry intake, and hosted community operations"
+    },
+    "50": {
+      "name": "operations",
+      "path": "50-operations",
+      "purpose": "Testing, release, signing, and capability evidence"
+    },
+    "91": {
+      "name": "audit",
+      "path": "91-audit",
+      "purpose": "Dated audits retained for traceability",
+      "optional": true
+    },
+    "92": {
+      "name": "report",
+      "path": "92-report",
+      "purpose": "Curated delivery and analysis reports",
+      "optional": true
+    },
+    "93": {
+      "name": "records",
+      "path": "93-records",
+      "purpose": "Published release and other retained project records",
+      "optional": true
+    },
+    "94": {
+      "name": "archive",
+      "path": "94-archive",
+      "purpose": "Reserved long-term historical/raw archive when retention requires it",
+      "optional": true,
+      "reserved": true
+    }
+  },
+  "lifecycle_roots": {
+    "current": [
+      "00-foundation",
+      "20-architecture",
+      "30-design",
+      "40-community",
+      "50-operations"
+    ],
+    "audit": "91-audit",
+    "report": "92-report",
+    "records": "93-records",
+    "archive": "94-archive"
+  },
+  "context_model": "task-scoped; optional-surfaces",
+  "context_surfaces": {
+    "raw": {
+      "path": "context/raw",
+      "asset_kind": "execution evidence and temporary outputs",
+      "lifecycle": "raw",
+      "index": "context/raw/README.md",
+      "owner": "task owner",
+      "consumer": "active task or explicitly retained evidence",
+      "retention": "retain only active, unique, or recovery-required material"
+    },
+    "tools": {
+      "path": "context/tools",
+      "asset_kind": "reusable tool index and execution guidance",
+      "lifecycle": "current/tooling",
+      "index": "context/tools/README.md",
+      "owner": "project maintainers",
+      "consumer": "contributors and coding agents",
+      "retention": "retain while the tool is documented and safely reusable"
+    }
+  },
+  "docs_index": "README.md",
+  "structure_authority": "document-structure-baseline.json",
+  "content_authorities": {
+    "theme-pack-standard": "00-foundation/standard.md",
+    "system-architecture": "20-architecture/architecture.md",
+    "full-skin-compatibility": "20-architecture/adapters.md",
+    "visual-direction": "30-design/",
+    "community-intake": "40-community/community-registry.md",
+    "release-metadata": "50-operations/release-metadata.md"
+  },
+  "new_folder_policy": {
+    "allowed": true,
+    "requires": [
+      "purpose",
+      "profile_fit",
+      "role_and_lifecycle",
+      "index_entry",
+      "baseline_update"
+    ]
+  },
+  "change_control": {
+    "pre_change_approval_required": false,
+    "post_change_report_required": true,
+    "baseline_confirmation_required": true
+  }
+}

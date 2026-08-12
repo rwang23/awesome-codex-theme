@@ -75,8 +75,8 @@ DESKTOP_RELEASE_READY=true
 5. 创建 draft Beta Release。
 
 发布状态、版本与 updater endpoint 由
-[`metadata/release.json`](../metadata/release.json) 统一声明，并由
-[`docs/release-metadata.md`](release-metadata.md) 生成可读摘要。当前 Beta 的
+[`metadata/release.json`](../../metadata/release.json) 统一声明，并由
+[`docs/50-operations/release-metadata.md`](release-metadata.md) 生成可读摘要。当前 Beta 的
 GitHub Release 是 `prerelease: true`，但其 updater 状态明确为 `unreleased`：
 应用只指向预留的稳定静态清单位置，尚没有公开、签名且覆盖全部平台的更新清单。
 

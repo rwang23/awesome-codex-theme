@@ -74,9 +74,9 @@ GitHub 原生阶段可以由定时 Action 读取提案反应数，生成不含�
 
 - [进入 Codex Theme Community](https://community.ecomstack.net/)
 - [提交主题提案](https://github.com/rwang23/awesome-codex-theme/issues/new?template=theme-proposal.yml)
-- [贡献指南](../CONTRIBUTING.md)
-- [主题包标准](standard.md)
-- [Fan Art 政策](fan-art-policy.md)
+- [贡献指南](../../CONTRIBUTING.md)
+- [主题包标准](../00-foundation/standard.md)
+- [Fan Art 政策](../30-design/fan-art-policy.md)
 
 ## English summary
 

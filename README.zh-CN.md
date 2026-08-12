@@ -7,7 +7,7 @@
 <p align="center">
   <a href="https://rwang23.github.io/awesome-codex-theme/"><strong>浏览主题 Gallery</strong></a>
   ·
-  <a href="docs/agent-install.md"><strong>让 Agent 帮你安装</strong></a>
+  <a href="docs/00-foundation/agent-install.md"><strong>让 Agent 帮你安装</strong></a>
   ·
   <a href="https://community.ecomstack.net/"><strong>主题社区</strong></a>
   ·
@@ -78,7 +78,7 @@ ChatGPT/Codex。如果当前没有兼容的 Release，请停止并告诉我，�
 下载，也不要自行从源码构建。
 ```
 
-完整 Agent 契约、核对清单与源码构建提示见 [docs/agent-install.md](docs/agent-install.md)。
+完整 Agent 契约、核对清单与源码构建提示见 [docs/00-foundation/agent-install.md](docs/00-foundation/agent-install.md)。
 
 ### 方式 B：从源码构建
 
@@ -104,11 +104,11 @@ npm run check:full        # 发布级完整生成、校验、测试、桌面检�
 5. 以后每次打开这个已验证的 ChatGPT 目标时，主题都会自动恢复；之后再次“应用并保持”会替换已保存的主题。
 6. 想回到原生界面时，点击“恢复原生”。这也会关闭常驻。
 
-Windows 版“应用并保持完整皮肤”已经通过 ChatGPT Beta `26.715.3651.0` 的准确版本常驻与清理闭环测试。首次确认后，它保存当前用户级选择，并在以后打开已验证版本时安全重放 Full Skin，不会修改 ChatGPT 文件；未知版本会保持原生界面。macOS 仍缺少真机常驻闭环，暂时不能把这项能力视为已在 Mac 验证。详见[主题常驻方案](docs/persistent-theme.md)。
+Windows 版“应用并保持完整皮肤”已经通过 ChatGPT Beta `26.715.3651.0` 的准确版本常驻与清理闭环测试。首次确认后，它保存当前用户级选择，并在以后打开已验证版本时安全重放 Full Skin，不会修改 ChatGPT 文件；未知版本会保持原生界面。macOS 仍缺少真机常驻闭环，暂时不能把这项能力视为已在 Mac 验证。详见[主题常驻方案](docs/20-architecture/persistent-theme.md)。
 
 主题更新与应用更新彼此独立。管理器启动时会刷新经过验证的 Registry，所以新发布的主题无需重装或重启应用就会直接出现。只有管理器自身的运行时、兼容规则、安全边界、平台集成或界面发生变化时，才需要安装签名应用更新。
 
-公开 Beta 为未来的签名更新链路保留 Tauri updater 签名。当前更新源状态明确为**尚未发布**：仅有 GitHub prerelease 并不代表可以应用内更新，必须先有覆盖全部平台的签名静态清单并完成 action-after 验证。macOS 应用包还带有只用于包完整性的 ad-hoc 签名。Windows Authenticode、Apple Developer ID 与公证暂时延后，所以系统仍可能显示未知发布者提示。Updater 与 ad-hoc 签名都不能消除 SmartScreen 或 Gatekeeper 提示，详见[发布元数据](docs/release-metadata.md)与[发布信任与签名](docs/release-signing.md)。
+公开 Beta 为未来的签名更新链路保留 Tauri updater 签名。当前更新源状态明确为**尚未发布**：仅有 GitHub prerelease 并不代表可以应用内更新，必须先有覆盖全部平台的签名静态清单并完成 action-after 验证。macOS 应用包还带有只用于包完整性的 ad-hoc 签名。Windows Authenticode、Apple Developer ID 与公证暂时延后，所以系统仍可能显示未知发布者提示。Updater 与 ad-hoc 签名都不能消除 SmartScreen 或 Gatekeeper 提示，详见[发布元数据](docs/50-operations/release-metadata.md)与[发布信任与签名](docs/50-operations/release-signing.md)。
 
 ## 真实使用效果
 
@@ -191,7 +191,7 @@ Skill 会准备美术 brief 和 image job，检查原创或 Fan Art 披露，配
 - 仓库 Validator 与 CI；
 - 在固定 Codex 版本中完成应用、截图和恢复证据。
 
-社区服务与这个开源运行时仓库保持独立。完整边界见[社区平台架构](docs/community-platform.md)与[Registry 收录路线](docs/community-registry.md)。
+社区服务与这个开源运行时仓库保持独立。完整边界见[社区平台架构](docs/40-community/community-platform.md)与[Registry 收录路线](docs/40-community/community-registry.md)。
 
 ## 项目结构
 
@@ -240,6 +240,6 @@ npm run desktop:build:mac
 
 项目代码采用 MIT。第一方 AI 原创素材在适用范围内采用 CC0 1.0。Fan Art 使用 `LicenseRef-ACT-Fan-Art-Notice`，设置 `rightsVerified: false`，并仅限个人、非商业的粉丝使用。
 
-AI 生成不会自动解决版权、角色、肖像、商标或来源素材权利。贡献者仍需检查每个输入和输出。详见 [NOTICE.md](NOTICE.md) 与 [Fan Art 政策](docs/fan-art-policy.md)。
+AI 生成不会自动解决版权、角色、肖像、商标或来源素材权利。贡献者仍需检查每个输入和输出。详见 [NOTICE.md](NOTICE.md) 与 [Fan Art 政策](docs/30-design/fan-art-policy.md)。
 
 如果它让你的工作区更像自己的空间，欢迎[给仓库点一个 Star](https://github.com/rwang23/awesome-codex-theme)，再分享一张不含隐私的实机截图。

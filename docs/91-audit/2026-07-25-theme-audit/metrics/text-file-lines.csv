@@ -1,0 +1,163 @@
+﻿path,language,lines,nonblank_lines,bytes
+README.zh-CN.md,Markdown,219,160,12635
+CONTRIBUTING.md,Markdown,67,46,3889
+README.en.md,Markdown,5,3,166
+README.md,Markdown,219,160,13534
+package.json,JSON,32,32,1562
+NOTICE.md,Markdown,39,31,2082
+AGENTS.md,Markdown,15,13,1956
+SECURITY.md,Markdown,25,18,868
+scripts/validate.mjs,JavaScript modules,616,586,33599
+scripts/generate-themes.mjs,JavaScript modules,431,408,15383
+scripts/run-image-jobs.mjs,JavaScript modules,204,189,6852
+scripts/build.mjs,JavaScript modules,139,129,4942
+scripts/build-installer.mjs,JavaScript modules,79,69,2750
+scripts/capture-full-skin-screenshots.mjs,JavaScript modules,897,855,34006
+scripts/smoke-theme-manager.mjs,JavaScript modules,1129,1080,43855
+scripts/serve.mjs,JavaScript modules,60,57,2324
+scripts/prepare-desktop.mjs,JavaScript modules,101,93,4149
+scripts/capture-native-screenshots.mjs,JavaScript modules,850,795,29931
+themes/catalog.json,JSON,4913,4913,141538
+docs/community-registry.md,Markdown,83,54,4732
+docs/fan-art-direction.md,Markdown,25,16,1611
+docs/city-atlas-art-direction.md,Markdown,37,27,2216
+docs/architecture.md,Markdown,120,88,4930
+docs/agent-install.md,Markdown,102,76,5464
+docs/standard.md,Markdown,72,51,2965
+docs/fan-art-policy.md,Markdown,32,19,2380
+docs/README.md,Markdown,68,60,3231
+docs/desktop-manager.md,Markdown,183,136,9972
+docs/art-direction.md,Markdown,30,19,2045
+docs/adapters.md,Markdown,88,59,4431
+docs/CHANGELOG.md,Markdown,332,298,19218
+docs/agent-brief.md,Markdown,164,143,8167
+docs/persistent-theme.md,Markdown,174,122,8493
+docs/landscape.md,Markdown,33,26,2010
+docs/macos-testing.md,Markdown,121,87,7247
+docs/community-platform.md,Markdown,186,131,7850
+docs/native-testing.md,Markdown,114,79,7291
+docs/release-signing.md,Markdown,153,104,7221
+docs/gallery-design.md,Markdown,25,16,1432
+tests/repository.test.mjs,JavaScript modules,629,608,33406
+tests/full-skin-runtime.test.mjs,JavaScript modules,348,305,9758
+context/README.md,Markdown,9,6,308
+site/index.html,HTML,468,446,23902
+schemas/registry.schema.json,JSON,417,417,11442
+schemas/theme-pack.schema.json,JSON,459,459,11180
+.codex/skills/create-codex-theme/SKILL.md,Markdown,114,79,5444
+.codex/skills/create-codex-theme/scripts/scaffold-theme.mjs,JavaScript modules,167,157,7017
+.codex/skills/create-codex-theme/assets/theme-brief.template.json,JSON,58,58,1804
+.codex/skills/create-codex-theme/assets/fan-art-theme-brief.template.json,JSON,74,74,2169
+.codex/skills/create-codex-theme/references/theme-authoring.md,Markdown,74,48,3911
+.codex/skills/create-codex-theme/references/image-job-playbook.md,Markdown,52,35,1849
+.codex/skills/create-codex-theme/agents/openai.yaml,YAML,5,5,315
+installer/windows/copy.json,JSON,46,46,2784
+installer/windows/ACT-Installer.ps1,PowerShell,531,479,20143
+screenshots/codex-beta-26.715.3651.0/manifest.json,JSON,3781,3781,130066
+screenshots/codex-beta-26.707.3351.0/manifest.json,JSON,791,791,33573
+site/assets/styles.css,CSS,2334,2011,41137
+site/assets/app.js,JavaScript,850,797,38199
+context/raw/README.md,Markdown,28,22,1483
+context/tools/README.md,Markdown,42,37,3776
+context/tools/city-atlas-studio.html,HTML,565,504,19770
+.github/ISSUE_TEMPLATE/theme-proposal.yml,YAML,113,102,4040
+.github/ISSUE_TEMPLATE/config.yml,YAML,8,8,461
+.github/workflows/desktop.yml,YAML,263,235,10752
+.github/workflows/pages.yml,YAML,66,56,1691
+docs/release-notes/v0.3.0-alpha.3.md,Markdown,143,112,7322
+docs/release-notes/v0.3.0-alpha.4.md,Markdown,105,70,7705
+docs/release-notes/v0.3.1.md,Markdown,119,96,6888
+docs/release-notes/v0.3.2.md,Markdown,88,70,4896
+docs/report/2026-07-18-theme-community-release.md,Markdown,161,120,7925
+themes/source-art/rainy-library.provenance.json,JSON,13,13,570
+themes/source-art/starbound-rebel.provenance.json,JSON,12,12,541
+themes/source-art/shanghai-afterglow.provenance.json,JSON,13,13,575
+themes/source-art/hangzhou-lake-letter.provenance.json,JSON,13,13,577
+themes/source-art/mortal-journey-chibi.provenance.json,JSON,29,29,880
+themes/source-art/battle-three-year-pact.provenance.json,JSON,29,29,866
+themes/source-art/synthwave-night-drive.provenance.json,JSON,13,13,578
+themes/source-art/sky-garden-herbarium.provenance.json,JSON,13,13,577
+themes/source-art/battle-through-chibi.provenance.json,JSON,29,29,877
+themes/source-art/starbound-sprite.provenance.json,JSON,12,12,542
+themes/source-art/qinglan-odyssey.provenance.json,JSON,12,12,541
+themes/source-art/mortal-herb-lantern.provenance.json,JSON,27,27,835
+themes/source-art/cloud-forge-quiet.provenance.json,JSON,13,13,574
+themes/source-art/retro-boss-2007.provenance.json,JSON,13,13,572
+themes/source-art/renegade-wedding-storm.provenance.json,JSON,29,29,844
+themes/source-art/shenzhen-circuit-rain.provenance.json,JSON,13,13,578
+themes/source-art/singapore-garden-rain.provenance.json,JSON,13,13,578
+themes/source-art/northeast-snow-train.provenance.json,JSON,13,13,577
+themes/source-art/deep-ocean-lab.provenance.json,JSON,13,13,571
+themes/source-art/guangzhou-riverwind.provenance.json,JSON,13,13,576
+themes/source-art/sydney-harbour-morning.provenance.json,JSON,13,13,579
+themes/source-art/renegade-immortal-chibi.provenance.json,JSON,29,29,845
+themes/source-art/beijing-meridian.provenance.json,JSON,13,13,573
+themes/source-art/jiangnan-rain-courtyard.provenance.json,JSON,13,13,580
+themes/source-art/new-york-rainline.provenance.json,JSON,13,13,574
+themes/source-art/rome-terrace-gold.provenance.json,JSON,13,13,574
+themes/source-art/desert-observatory-night.provenance.json,JSON,13,13,581
+themes/source-art/mortal-void-hall.provenance.json,JSON,27,27,832
+themes/source-art/dunhuang-starlight.provenance.json,JSON,13,13,575
+themes/source-art/london-rainlight.provenance.json,JSON,13,13,573
+themes/source-art/tokyo-rain-signal.provenance.json,JSON,13,13,574
+themes/source-art/appalachian-cabin-focus.provenance.json,JSON,13,13,580
+themes/source-art/alpine-cabin-code.provenance.json,JSON,13,13,574
+themes/source-art/orbital-dawn.provenance.json,JSON,13,13,569
+themes/source-art/berlin-night-grid.provenance.json,JSON,13,13,574
+themes/source-art/mortal-moon-market.provenance.json,JSON,29,29,878
+themes/source-art/chicago-lakewind.provenance.json,JSON,13,13,573
+themes/source-art/chengdu-teahouse-rain.provenance.json,JSON,13,13,578
+themes/source-art/plum-sword-snow.provenance.json,JSON,13,13,572
+themes/source-art/jade-archive-dawn.provenance.json,JSON,13,13,574
+themes/source-art/battle-through-duo.provenance.json,JSON,29,29,875
+themes/source-art/late-diner-afterhours.provenance.json,JSON,13,13,578
+themes/source-art/cloudsea-pact.provenance.json,JSON,12,12,539
+themes/source-art/sword-of-coming-duo.provenance.json,JSON,29,29,843
+themes/source-art/nanjing-wall-plum.provenance.json,JSON,13,13,574
+themes/source-art/san-francisco-fogline.provenance.json,JSON,13,13,578
+themes/source-art/paris-rooftop-dawn.provenance.json,JSON,13,13,575
+themes/source-art/sword-of-coming-chibi.provenance.json,JSON,29,29,845
+themes/source-art/mountain-swordling.provenance.json,JSON,12,12,544
+themes/source-art/mortal-river-ferry.provenance.json,JSON,29,29,878
+themes/source-art/sword-confession-alley.provenance.json,JSON,29,29,846
+themes/source-art/tibo-reset-saint.provenance.json,JSON,27,27,827
+themes/source-art/toronto-blue-hour.provenance.json,JSON,13,13,574
+themes/source-art/great-lakes-rainroom.provenance.json,JSON,13,13,577
+themes/source-art/mortal-bamboo-thunder.provenance.json,JSON,27,27,837
+themes/source-art/mortal-talisman-rain.provenance.json,JSON,27,27,836
+themes/source-art/firefly-river-pact.provenance.json,JSON,13,13,575
+themes/source-art/jobs.json,JSON,694,694,65892
+themes/source-art/qinglan-sprite.provenance.json,JSON,12,12,540
+themes/source-art/chongqing-vertical-night.provenance.json,JSON,13,13,581
+themes/source-art/vancouver-rain-harbour.provenance.json,JSON,13,13,579
+themes/source-art/changan-lanterns.provenance.json,JSON,13,13,573
+themes/source-art/coastal-studio-morning.provenance.json,JSON,13,13,579
+themes/source-art/bamboo-tea-rain.provenance.json,JSON,13,13,572
+themes/source-art/mortal-journey-duo.provenance.json,JSON,29,29,878
+themes/source-art/cloudsea-mochi.provenance.json,JSON,12,12,540
+themes/source-art/renegade-immortal-duo.provenance.json,JSON,29,29,843
+themes/source-art/mountain-sword.provenance.json,JSON,12,12,540
+themes/source-art/tibo-reset-immortal.provenance.json,JSON,27,27,830
+apps/theme-manager/package.json,JSON,25,25,1213
+apps/theme-manager/package-lock.json,JSON,248,248,7503
+apps/theme-manager/src-tauri/Cargo.toml,TOML,37,33,1031
+apps/theme-manager/src-tauri/tauri.release.conf.json,JSON,5,5,57
+apps/theme-manager/src-tauri/build.rs,Rust,3,3,39
+apps/theme-manager/src-tauri/tauri.conf.json,JSON,81,81,2579
+apps/theme-manager/src-tauri/src/persistence.rs,Rust,998,941,33151
+apps/theme-manager/src-tauri/src/platform.rs,Rust,842,788,29419
+apps/theme-manager/src-tauri/src/catalog.rs,Rust,691,644,25143
+apps/theme-manager/src-tauri/src/lib.rs,Rust,405,377,12144
+apps/theme-manager/src-tauri/src/skin_runtime.rs,Rust,977,919,34741
+apps/theme-manager/src-tauri/src/updater.rs,Rust,220,202,6627
+apps/theme-manager/src-tauri/src/main.rs,Rust,5,4,118
+apps/theme-manager/src-tauri/capabilities/default.json,JSON,14,14,404
+apps/theme-manager/src/renderer/styles.css,CSS,1521,1319,28039
+apps/theme-manager/src/renderer/bridge.js,JavaScript,67,62,2847
+apps/theme-manager/src/renderer/app.js,JavaScript,1092,1021,44974
+apps/theme-manager/src/renderer/index.html,HTML,227,218,11140
+packages/full-skin/runtime.css,CSS,226,202,7835
+packages/full-skin/runtime.js,JavaScript,283,263,9323
+scripts/lib/zip.mjs,JavaScript modules,120,110,4516
+scripts/lib/png.mjs,JavaScript modules,628,560,23738
+scripts/lib/codex-native-theme.mjs,JavaScript modules,107,98,3579
