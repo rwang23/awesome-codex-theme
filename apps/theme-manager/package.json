@@ -20,7 +20,7 @@
   },
   "devDependencies": {
     "@tauri-apps/cli": "2.11.4",
-    "axe-core": "4.12.1"
+    "axe-core": "4.13.0"
   },
   "author": "Awesome Codex Theme contributors",
   "license": "MIT"
