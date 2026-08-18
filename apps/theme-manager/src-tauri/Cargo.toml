@@ -14,7 +14,7 @@ tauri-build = { version = "2.6.3", features = [] }
 
 [dependencies]
 arboard = "3.6.1"
-base64 = "0.22.1"
+base64 = "0.23.1"
 fs2 = "0.4.3"
 hex = "0.4.3"
 reqwest = { version = "0.13.4", default-features = false, features = ["rustls-no-provider"] }
