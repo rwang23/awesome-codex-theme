@@ -1,8 +1,12 @@
 <h1 align="center">Awesome Codex Theme</h1>
 
 <p align="center">
-  Full visual skins for Codex Desktop, backed by version-bound app-capture evidence and code-free theme packs.
+  Browse and apply code-free visual themes in Codex Desktop through a local Theme Manager and Gallery. Compatibility evidence is tied to the exact app builds listed below.
 </p>
+
+![Conceptual light and dark theme palette preview across sample workspaces](.github/readme/readme-demo.gif)
+
+*Conceptual light and dark palette preview using sample workspace data, not a recorded Gallery-to-Manager interaction. The platform matrix and version-pinned captures below describe the available evidence. [Open the poster](.github/readme/readme-demo-poster.png).*
 
 <p align="center">
   <a href="https://rwang23.github.io/awesome-codex-theme/"><strong>Explore the Gallery</strong></a>

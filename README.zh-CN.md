@@ -1,8 +1,12 @@
 <h1 align="center">Awesome Codex Theme</h1>
 
 <p align="center">
-  面向 Codex 桌面版的完整视觉皮肤。主题包不带代码，展示图是绑定版本的应用截图证据。
+  通过本地 Theme Manager 和 Gallery 挑选、应用不带代码的 Codex 桌面主题。兼容性证据对应下方列出的具体应用版本。
 </p>
+
+![主题配色概念动图：样例工作区中的浅色与深色配色](.github/readme/readme-demo.gif)
+
+*这是样例工作区的配色概念预览，不是 Gallery 到 Manager 的实录。实际证据见下方的平台矩阵与带版本标记的截图。[查看静态图](.github/readme/readme-demo-poster.png)。*
 
 <p align="center">
   <a href="https://rwang23.github.io/awesome-codex-theme/"><strong>浏览主题 Gallery</strong></a>

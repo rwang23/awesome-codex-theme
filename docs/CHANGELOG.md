@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Clarified the English and Chinese README introductions and added a light/dark
+  palette illustration with an explicit conceptual-preview label; preserved
+  version-bound screenshots and platform compatibility notices.
 - Reorganized durable documentation into numbered foundation, architecture,
   design, community, operations, audit, report, and record surfaces; added
   indexes and a provisional structure baseline; reconciled and removed
